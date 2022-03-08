@@ -62,6 +62,18 @@
         </listOfAlgorithmParameters>
       </algorithm>
     </uniformTimeCourse>
+    <uniformTimeCourse id="Parameter_scan_over_stiffness" name="Parameter scan over stiffness" initialTime="0.0" outputStartTime="0.0" outputEndTime="2000.0" numberOfPoints="400">
+      <notes>
+        <p xmlns="http://www.w3.org/1999/xhtml">Actual Solver Name : 'Combined Stiff Solver (IDA/CVODE)'.</p>
+      </notes>
+      <algorithm kisaoID="KISAO:0000019">
+        <listOfAlgorithmParameters>
+          <algorithmParameter kisaoID="KISAO:0000211" value="1.0E-9" />
+          <algorithmParameter kisaoID="KISAO:0000209" value="1.0E-9" />
+          <algorithmParameter kisaoID="KISAO:0000467" value="1.0" />
+        </listOfAlgorithmParameters>
+      </algorithm>
+    </uniformTimeCourse>
   </listOfSimulations>
   <listOfModels>
     <model id="SA_314_2xD_Fig_5_6" name="SA 314 2xD Fig 5,6" language="urn:sedml:language:sbml" source="biomodel_200301683_SA_314_2xD_Fig_5_6.xml" />
@@ -180,6 +192,24 @@
       </listOfChanges>
       <listOfSubTasks>
         <subTask order="0" task="tsk_4_0" />
+      </listOfSubTasks>
+    </repeatedTask>
+    <task id="tsk_5_0" name="Parameter scan over stiffness" modelReference="Compartmental_model" simulationReference="Parameter_scan_over_stiffness" />
+    <repeatedTask id="repTsk_5_0" name="repTsk_5_0" resetModel="true" range="range_5_0_Emol">
+      <listOfRanges>
+        <uniformRange id="range_5_0_Emol" start="0.1" end="100.0" numberOfPoints="4" type="linear" />
+      </listOfRanges>
+      <listOfChanges>
+        <setValue range="range_5_0_Emol" modelReference="Compartmental_model" target="/sbml:sbml/sbml:model/sbml:listOfParameters/sbml:parameter[@id='Emol']">
+          <listOfVariables />
+          <listOfParameters />
+          <math:math>
+            <math:ci>range_5_0_Emol</math:ci>
+          </math:math>
+        </setValue>
+      </listOfChanges>
+      <listOfSubTasks>
+        <subTask order="0" task="tsk_5_0" />
       </listOfSubTasks>
     </repeatedTask>
   </listOfTasks>
@@ -1184,8 +1214,239 @@
         <math:ci>LaminAp_repTsk_4_0</math:ci>
       </math:math>
     </dataGenerator>
+    <dataGenerator id="time_repTsk_5_0" name="time_repTsk_5_0">
+      <listOfVariables>
+        <variable id="t_repTsk_5_0" name="t" taskReference="repTsk_5_0" symbol="urn:sedml:symbol:time" />
+      </listOfVariables>
+      <math:math>
+        <math:ci>t_repTsk_5_0</math:ci>
+      </math:math>
+    </dataGenerator>
+    <dataGenerator id="dataGen_repTsk_5_0_RhoAGTP_MEM" name="dataGen_repTsk_5_0_RhoAGTP_MEM">
+      <listOfVariables>
+        <variable id="RhoAGTP_MEM_repTsk_5_0" name="RhoAGTP_MEM" taskReference="repTsk_5_0" target="/sbml:sbml/sbml:model/sbml:listOfSpecies/sbml:species[@id='RhoAGTP_MEM']" />
+      </listOfVariables>
+      <math:math>
+        <math:ci>RhoAGTP_MEM_repTsk_5_0</math:ci>
+      </math:math>
+    </dataGenerator>
+    <dataGenerator id="dataGen_repTsk_5_0_Fakp" name="dataGen_repTsk_5_0_Fakp">
+      <listOfVariables>
+        <variable id="Fakp_repTsk_5_0" name="Fakp" taskReference="repTsk_5_0" target="/sbml:sbml/sbml:model/sbml:listOfSpecies/sbml:species[@id='Fakp']" />
+      </listOfVariables>
+      <math:math>
+        <math:ci>Fakp_repTsk_5_0</math:ci>
+      </math:math>
+    </dataGenerator>
+    <dataGenerator id="dataGen_repTsk_5_0_RhoAGDP" name="dataGen_repTsk_5_0_RhoAGDP">
+      <listOfVariables>
+        <variable id="RhoAGDP_repTsk_5_0" name="RhoAGDP" taskReference="repTsk_5_0" target="/sbml:sbml/sbml:model/sbml:listOfSpecies/sbml:species[@id='RhoAGDP']" />
+      </listOfVariables>
+      <math:math>
+        <math:ci>RhoAGDP_repTsk_5_0</math:ci>
+      </math:math>
+    </dataGenerator>
+    <dataGenerator id="dataGen_repTsk_5_0_Fak" name="dataGen_repTsk_5_0_Fak">
+      <listOfVariables>
+        <variable id="Fak_repTsk_5_0" name="Fak" taskReference="repTsk_5_0" target="/sbml:sbml/sbml:model/sbml:listOfSpecies/sbml:species[@id='Fak']" />
+      </listOfVariables>
+      <math:math>
+        <math:ci>Fak_repTsk_5_0</math:ci>
+      </math:math>
+    </dataGenerator>
+    <dataGenerator id="dataGen_repTsk_5_0_ROCKA" name="dataGen_repTsk_5_0_ROCKA">
+      <listOfVariables>
+        <variable id="ROCKA_repTsk_5_0" name="ROCKA" taskReference="repTsk_5_0" target="/sbml:sbml/sbml:model/sbml:listOfSpecies/sbml:species[@id='ROCKA']" />
+      </listOfVariables>
+      <math:math>
+        <math:ci>ROCKA_repTsk_5_0</math:ci>
+      </math:math>
+    </dataGenerator>
+    <dataGenerator id="dataGen_repTsk_5_0_ROCK" name="dataGen_repTsk_5_0_ROCK">
+      <listOfVariables>
+        <variable id="ROCK_repTsk_5_0" name="ROCK" taskReference="repTsk_5_0" target="/sbml:sbml/sbml:model/sbml:listOfSpecies/sbml:species[@id='ROCK']" />
+      </listOfVariables>
+      <math:math>
+        <math:ci>ROCK_repTsk_5_0</math:ci>
+      </math:math>
+    </dataGenerator>
+    <dataGenerator id="dataGen_repTsk_5_0_mDia" name="dataGen_repTsk_5_0_mDia">
+      <listOfVariables>
+        <variable id="mDia_repTsk_5_0" name="mDia" taskReference="repTsk_5_0" target="/sbml:sbml/sbml:model/sbml:listOfSpecies/sbml:species[@id='mDia']" />
+      </listOfVariables>
+      <math:math>
+        <math:ci>mDia_repTsk_5_0</math:ci>
+      </math:math>
+    </dataGenerator>
+    <dataGenerator id="dataGen_repTsk_5_0_mDiaA" name="dataGen_repTsk_5_0_mDiaA">
+      <listOfVariables>
+        <variable id="mDiaA_repTsk_5_0" name="mDiaA" taskReference="repTsk_5_0" target="/sbml:sbml/sbml:model/sbml:listOfSpecies/sbml:species[@id='mDiaA']" />
+      </listOfVariables>
+      <math:math>
+        <math:ci>mDiaA_repTsk_5_0</math:ci>
+      </math:math>
+    </dataGenerator>
+    <dataGenerator id="dataGen_repTsk_5_0_Myo" name="dataGen_repTsk_5_0_Myo">
+      <listOfVariables>
+        <variable id="Myo_repTsk_5_0" name="Myo" taskReference="repTsk_5_0" target="/sbml:sbml/sbml:model/sbml:listOfSpecies/sbml:species[@id='Myo']" />
+      </listOfVariables>
+      <math:math>
+        <math:ci>Myo_repTsk_5_0</math:ci>
+      </math:math>
+    </dataGenerator>
+    <dataGenerator id="dataGen_repTsk_5_0_MyoA" name="dataGen_repTsk_5_0_MyoA">
+      <listOfVariables>
+        <variable id="MyoA_repTsk_5_0" name="MyoA" taskReference="repTsk_5_0" target="/sbml:sbml/sbml:model/sbml:listOfSpecies/sbml:species[@id='MyoA']" />
+      </listOfVariables>
+      <math:math>
+        <math:ci>MyoA_repTsk_5_0</math:ci>
+      </math:math>
+    </dataGenerator>
+    <dataGenerator id="dataGen_repTsk_5_0_LIMK" name="dataGen_repTsk_5_0_LIMK">
+      <listOfVariables>
+        <variable id="LIMK_repTsk_5_0" name="LIMK" taskReference="repTsk_5_0" target="/sbml:sbml/sbml:model/sbml:listOfSpecies/sbml:species[@id='LIMK']" />
+      </listOfVariables>
+      <math:math>
+        <math:ci>LIMK_repTsk_5_0</math:ci>
+      </math:math>
+    </dataGenerator>
+    <dataGenerator id="dataGen_repTsk_5_0_CofilinP" name="dataGen_repTsk_5_0_CofilinP">
+      <listOfVariables>
+        <variable id="CofilinP_repTsk_5_0" name="CofilinP" taskReference="repTsk_5_0" target="/sbml:sbml/sbml:model/sbml:listOfSpecies/sbml:species[@id='CofilinP']" />
+      </listOfVariables>
+      <math:math>
+        <math:ci>CofilinP_repTsk_5_0</math:ci>
+      </math:math>
+    </dataGenerator>
+    <dataGenerator id="dataGen_repTsk_5_0_LIMKA" name="dataGen_repTsk_5_0_LIMKA">
+      <listOfVariables>
+        <variable id="LIMKA_repTsk_5_0" name="LIMKA" taskReference="repTsk_5_0" target="/sbml:sbml/sbml:model/sbml:listOfSpecies/sbml:species[@id='LIMKA']" />
+      </listOfVariables>
+      <math:math>
+        <math:ci>LIMKA_repTsk_5_0</math:ci>
+      </math:math>
+    </dataGenerator>
+    <dataGenerator id="dataGen_repTsk_5_0_CofilinNP" name="dataGen_repTsk_5_0_CofilinNP">
+      <listOfVariables>
+        <variable id="CofilinNP_repTsk_5_0" name="CofilinNP" taskReference="repTsk_5_0" target="/sbml:sbml/sbml:model/sbml:listOfSpecies/sbml:species[@id='CofilinNP']" />
+      </listOfVariables>
+      <math:math>
+        <math:ci>CofilinNP_repTsk_5_0</math:ci>
+      </math:math>
+    </dataGenerator>
+    <dataGenerator id="dataGen_repTsk_5_0_Fcyto" name="dataGen_repTsk_5_0_Fcyto">
+      <listOfVariables>
+        <variable id="Fcyto_repTsk_5_0" name="Fcyto" taskReference="repTsk_5_0" target="/sbml:sbml/sbml:model/sbml:listOfSpecies/sbml:species[@id='Fcyto']" />
+      </listOfVariables>
+      <math:math>
+        <math:ci>Fcyto_repTsk_5_0</math:ci>
+      </math:math>
+    </dataGenerator>
+    <dataGenerator id="dataGen_repTsk_5_0_Gactin" name="dataGen_repTsk_5_0_Gactin">
+      <listOfVariables>
+        <variable id="Gactin_repTsk_5_0" name="Gactin" taskReference="repTsk_5_0" target="/sbml:sbml/sbml:model/sbml:listOfSpecies/sbml:species[@id='Gactin']" />
+      </listOfVariables>
+      <math:math>
+        <math:ci>Gactin_repTsk_5_0</math:ci>
+      </math:math>
+    </dataGenerator>
+    <dataGenerator id="dataGen_repTsk_5_0_YAPTAZP" name="dataGen_repTsk_5_0_YAPTAZP">
+      <listOfVariables>
+        <variable id="YAPTAZP_repTsk_5_0" name="YAPTAZP" taskReference="repTsk_5_0" target="/sbml:sbml/sbml:model/sbml:listOfSpecies/sbml:species[@id='YAPTAZP']" />
+      </listOfVariables>
+      <math:math>
+        <math:ci>YAPTAZP_repTsk_5_0</math:ci>
+      </math:math>
+    </dataGenerator>
+    <dataGenerator id="dataGen_repTsk_5_0_YAPTAZN" name="dataGen_repTsk_5_0_YAPTAZN">
+      <listOfVariables>
+        <variable id="YAPTAZN_repTsk_5_0" name="YAPTAZN" taskReference="repTsk_5_0" target="/sbml:sbml/sbml:model/sbml:listOfSpecies/sbml:species[@id='YAPTAZN']" />
+      </listOfVariables>
+      <math:math>
+        <math:ci>YAPTAZN_repTsk_5_0</math:ci>
+      </math:math>
+    </dataGenerator>
+    <dataGenerator id="dataGen_repTsk_5_0_YAPTAZnuc" name="dataGen_repTsk_5_0_YAPTAZnuc">
+      <listOfVariables>
+        <variable id="YAPTAZnuc_repTsk_5_0" name="YAPTAZnuc" taskReference="repTsk_5_0" target="/sbml:sbml/sbml:model/sbml:listOfSpecies/sbml:species[@id='YAPTAZnuc']" />
+      </listOfVariables>
+      <math:math>
+        <math:ci>YAPTAZnuc_repTsk_5_0</math:ci>
+      </math:math>
+    </dataGenerator>
+    <dataGenerator id="dataGen_repTsk_5_0_Positionboolean" name="dataGen_repTsk_5_0_Positionboolean">
+      <listOfVariables>
+        <variable id="Positionboolean_repTsk_5_0" name="Positionboolean" taskReference="repTsk_5_0" target="/sbml:sbml/sbml:model/sbml:listOfSpecies/sbml:species[@id='Positionboolean']" />
+      </listOfVariables>
+      <math:math>
+        <math:ci>Positionboolean_repTsk_5_0</math:ci>
+      </math:math>
+    </dataGenerator>
+    <dataGenerator id="dataGen_repTsk_5_0_NPCA" name="dataGen_repTsk_5_0_NPCA">
+      <listOfVariables>
+        <variable id="NPCA_repTsk_5_0" name="NPCA" taskReference="repTsk_5_0" target="/sbml:sbml/sbml:model/sbml:listOfSpecies/sbml:species[@id='NPCA']" />
+      </listOfVariables>
+      <math:math>
+        <math:ci>NPCA_repTsk_5_0</math:ci>
+      </math:math>
+    </dataGenerator>
+    <dataGenerator id="dataGen_repTsk_5_0_NPC" name="dataGen_repTsk_5_0_NPC">
+      <listOfVariables>
+        <variable id="NPC_repTsk_5_0" name="NPC" taskReference="repTsk_5_0" target="/sbml:sbml/sbml:model/sbml:listOfSpecies/sbml:species[@id='NPC']" />
+      </listOfVariables>
+      <math:math>
+        <math:ci>NPC_repTsk_5_0</math:ci>
+      </math:math>
+    </dataGenerator>
+    <dataGenerator id="dataGen_repTsk_5_0_LaminA" name="dataGen_repTsk_5_0_LaminA">
+      <listOfVariables>
+        <variable id="LaminA_repTsk_5_0" name="LaminA" taskReference="repTsk_5_0" target="/sbml:sbml/sbml:model/sbml:listOfSpecies/sbml:species[@id='LaminA']" />
+      </listOfVariables>
+      <math:math>
+        <math:ci>LaminA_repTsk_5_0</math:ci>
+      </math:math>
+    </dataGenerator>
+    <dataGenerator id="dataGen_repTsk_5_0_LaminAp" name="dataGen_repTsk_5_0_LaminAp">
+      <listOfVariables>
+        <variable id="LaminAp_repTsk_5_0" name="LaminAp" taskReference="repTsk_5_0" target="/sbml:sbml/sbml:model/sbml:listOfSpecies/sbml:species[@id='LaminAp']" />
+      </listOfVariables>
+      <math:math>
+        <math:ci>LaminAp_repTsk_5_0</math:ci>
+      </math:math>
+    </dataGenerator>
   </listOfDataGenerators>
   <listOfOutputs>
+    <plot2D id="plot2d_Parameter_scan_over_stiffness" name="Compartmental model_Parameter scan over stiffness_plot">
+      <notes>
+        <p xmlns="http://www.w3.org/1999/xhtml">Plot of all variables and output functions from application 'Compartmental model' ; simulation 'Parameter scan over stiffness' in VCell model</p>
+      </notes>
+      <listOfCurves>
+        <curve id="curve_plot2d_Parameter_scan_over_stiffness_dataGen_repTsk_5_0_RhoAGTP_MEM" name="dataGen_repTsk_5_0_RhoAGTP_MEM" logX="false" logY="false" xDataReference="time_repTsk_5_0" yDataReference="dataGen_repTsk_5_0_RhoAGTP_MEM" />
+        <curve id="curve_plot2d_Parameter_scan_over_stiffness_dataGen_repTsk_5_0_Fakp" name="dataGen_repTsk_5_0_Fakp" logX="false" logY="false" xDataReference="time_repTsk_5_0" yDataReference="dataGen_repTsk_5_0_Fakp" />
+        <curve id="curve_plot2d_Parameter_scan_over_stiffness_dataGen_repTsk_5_0_RhoAGDP" name="dataGen_repTsk_5_0_RhoAGDP" logX="false" logY="false" xDataReference="time_repTsk_5_0" yDataReference="dataGen_repTsk_5_0_RhoAGDP" />
+        <curve id="curve_plot2d_Parameter_scan_over_stiffness_dataGen_repTsk_5_0_Fak" name="dataGen_repTsk_5_0_Fak" logX="false" logY="false" xDataReference="time_repTsk_5_0" yDataReference="dataGen_repTsk_5_0_Fak" />
+        <curve id="curve_plot2d_Parameter_scan_over_stiffness_dataGen_repTsk_5_0_ROCKA" name="dataGen_repTsk_5_0_ROCKA" logX="false" logY="false" xDataReference="time_repTsk_5_0" yDataReference="dataGen_repTsk_5_0_ROCKA" />
+        <curve id="curve_plot2d_Parameter_scan_over_stiffness_dataGen_repTsk_5_0_ROCK" name="dataGen_repTsk_5_0_ROCK" logX="false" logY="false" xDataReference="time_repTsk_5_0" yDataReference="dataGen_repTsk_5_0_ROCK" />
+        <curve id="curve_plot2d_Parameter_scan_over_stiffness_dataGen_repTsk_5_0_mDia" name="dataGen_repTsk_5_0_mDia" logX="false" logY="false" xDataReference="time_repTsk_5_0" yDataReference="dataGen_repTsk_5_0_mDia" />
+        <curve id="curve_plot2d_Parameter_scan_over_stiffness_dataGen_repTsk_5_0_mDiaA" name="dataGen_repTsk_5_0_mDiaA" logX="false" logY="false" xDataReference="time_repTsk_5_0" yDataReference="dataGen_repTsk_5_0_mDiaA" />
+        <curve id="curve_plot2d_Parameter_scan_over_stiffness_dataGen_repTsk_5_0_Myo" name="dataGen_repTsk_5_0_Myo" logX="false" logY="false" xDataReference="time_repTsk_5_0" yDataReference="dataGen_repTsk_5_0_Myo" />
+        <curve id="curve_plot2d_Parameter_scan_over_stiffness_dataGen_repTsk_5_0_MyoA" name="dataGen_repTsk_5_0_MyoA" logX="false" logY="false" xDataReference="time_repTsk_5_0" yDataReference="dataGen_repTsk_5_0_MyoA" />
+        <curve id="curve_plot2d_Parameter_scan_over_stiffness_dataGen_repTsk_5_0_LIMK" name="dataGen_repTsk_5_0_LIMK" logX="false" logY="false" xDataReference="time_repTsk_5_0" yDataReference="dataGen_repTsk_5_0_LIMK" />
+        <curve id="curve_plot2d_Parameter_scan_over_stiffness_dataGen_repTsk_5_0_CofilinP" name="dataGen_repTsk_5_0_CofilinP" logX="false" logY="false" xDataReference="time_repTsk_5_0" yDataReference="dataGen_repTsk_5_0_CofilinP" />
+        <curve id="curve_plot2d_Parameter_scan_over_stiffness_dataGen_repTsk_5_0_LIMKA" name="dataGen_repTsk_5_0_LIMKA" logX="false" logY="false" xDataReference="time_repTsk_5_0" yDataReference="dataGen_repTsk_5_0_LIMKA" />
+        <curve id="curve_plot2d_Parameter_scan_over_stiffness_dataGen_repTsk_5_0_CofilinNP" name="dataGen_repTsk_5_0_CofilinNP" logX="false" logY="false" xDataReference="time_repTsk_5_0" yDataReference="dataGen_repTsk_5_0_CofilinNP" />
+        <curve id="curve_plot2d_Parameter_scan_over_stiffness_dataGen_repTsk_5_0_Fcyto" name="dataGen_repTsk_5_0_Fcyto" logX="false" logY="false" xDataReference="time_repTsk_5_0" yDataReference="dataGen_repTsk_5_0_Fcyto" />
+        <curve id="curve_plot2d_Parameter_scan_over_stiffness_dataGen_repTsk_5_0_Gactin" name="dataGen_repTsk_5_0_Gactin" logX="false" logY="false" xDataReference="time_repTsk_5_0" yDataReference="dataGen_repTsk_5_0_Gactin" />
+        <curve id="curve_plot2d_Parameter_scan_over_stiffness_dataGen_repTsk_5_0_YAPTAZP" name="dataGen_repTsk_5_0_YAPTAZP" logX="false" logY="false" xDataReference="time_repTsk_5_0" yDataReference="dataGen_repTsk_5_0_YAPTAZP" />
+        <curve id="curve_plot2d_Parameter_scan_over_stiffness_dataGen_repTsk_5_0_YAPTAZN" name="dataGen_repTsk_5_0_YAPTAZN" logX="false" logY="false" xDataReference="time_repTsk_5_0" yDataReference="dataGen_repTsk_5_0_YAPTAZN" />
+        <curve id="curve_plot2d_Parameter_scan_over_stiffness_dataGen_repTsk_5_0_YAPTAZnuc" name="dataGen_repTsk_5_0_YAPTAZnuc" logX="false" logY="false" xDataReference="time_repTsk_5_0" yDataReference="dataGen_repTsk_5_0_YAPTAZnuc" />
+        <curve id="curve_plot2d_Parameter_scan_over_stiffness_dataGen_repTsk_5_0_Positionboolean" name="dataGen_repTsk_5_0_Positionboolean" logX="false" logY="false" xDataReference="time_repTsk_5_0" yDataReference="dataGen_repTsk_5_0_Positionboolean" />
+        <curve id="curve_plot2d_Parameter_scan_over_stiffness_dataGen_repTsk_5_0_NPCA" name="dataGen_repTsk_5_0_NPCA" logX="false" logY="false" xDataReference="time_repTsk_5_0" yDataReference="dataGen_repTsk_5_0_NPCA" />
+        <curve id="curve_plot2d_Parameter_scan_over_stiffness_dataGen_repTsk_5_0_NPC" name="dataGen_repTsk_5_0_NPC" logX="false" logY="false" xDataReference="time_repTsk_5_0" yDataReference="dataGen_repTsk_5_0_NPC" />
+        <curve id="curve_plot2d_Parameter_scan_over_stiffness_dataGen_repTsk_5_0_LaminA" name="dataGen_repTsk_5_0_LaminA" logX="false" logY="false" xDataReference="time_repTsk_5_0" yDataReference="dataGen_repTsk_5_0_LaminA" />
+        <curve id="curve_plot2d_Parameter_scan_over_stiffness_dataGen_repTsk_5_0_LaminAp" name="dataGen_repTsk_5_0_LaminAp" logX="false" logY="false" xDataReference="time_repTsk_5_0" yDataReference="dataGen_repTsk_5_0_LaminAp" />
+      </listOfCurves>
+    </plot2D>
     <report id="report_R_20_Bot_0_1_5_7_70E6" name="SA 314 2xD Fig 5,6plots">
       <notes>
         <p xmlns="http://www.w3.org/1999/xhtml">Report of all variables and output functions from application 'SA 314 2xD Fig 5,6' ; simulation 'R 20 Bot 0.1,5.7,70E6' in VCell model</p>
@@ -1344,6 +1605,38 @@
         <dataSet dataReference="dataGen_repTsk_4_0_NPC" id="__data_set__plot3d_R_16_Bot_0_1_5_7_70E6dataGen_repTsk_4_0_NPC" name="dataGen_repTsk_4_0_NPC" label="dataGen_repTsk_4_0_NPC" />
         <dataSet dataReference="dataGen_repTsk_4_0_LaminA" id="__data_set__plot3d_R_16_Bot_0_1_5_7_70E6dataGen_repTsk_4_0_LaminA" name="dataGen_repTsk_4_0_LaminA" label="dataGen_repTsk_4_0_LaminA" />
         <dataSet dataReference="dataGen_repTsk_4_0_LaminAp" id="__data_set__plot3d_R_16_Bot_0_1_5_7_70E6dataGen_repTsk_4_0_LaminAp" name="dataGen_repTsk_4_0_LaminAp" label="dataGen_repTsk_4_0_LaminAp" />
+      </listOfDataSets>
+    </report>
+    <report id="report_Parameter_scan_over_stiffness" name="Compartmental model_Parameter scan over stiffness_plot">
+      <notes>
+        <p xmlns="http://www.w3.org/1999/xhtml">Report of all variables and output functions from application 'Compartmental model' ; simulation 'Parameter scan over stiffness' in VCell model</p>
+      </notes>
+      <listOfDataSets>
+        <dataSet dataReference="time_repTsk_5_0" id="__data_set__plot2d_Parameter_scan_over_stiffnesstime_repTsk_5_0" name="time" label="time_repTsk_5_0" />
+        <dataSet dataReference="dataGen_repTsk_5_0_RhoAGTP_MEM" id="__data_set__plot2d_Parameter_scan_over_stiffnessdataGen_repTsk_5_0_RhoAGTP_MEM" name="dataGen_repTsk_5_0_RhoAGTP_MEM" label="dataGen_repTsk_5_0_RhoAGTP_MEM" />
+        <dataSet dataReference="dataGen_repTsk_5_0_Fakp" id="__data_set__plot2d_Parameter_scan_over_stiffnessdataGen_repTsk_5_0_Fakp" name="dataGen_repTsk_5_0_Fakp" label="dataGen_repTsk_5_0_Fakp" />
+        <dataSet dataReference="dataGen_repTsk_5_0_RhoAGDP" id="__data_set__plot2d_Parameter_scan_over_stiffnessdataGen_repTsk_5_0_RhoAGDP" name="dataGen_repTsk_5_0_RhoAGDP" label="dataGen_repTsk_5_0_RhoAGDP" />
+        <dataSet dataReference="dataGen_repTsk_5_0_Fak" id="__data_set__plot2d_Parameter_scan_over_stiffnessdataGen_repTsk_5_0_Fak" name="dataGen_repTsk_5_0_Fak" label="dataGen_repTsk_5_0_Fak" />
+        <dataSet dataReference="dataGen_repTsk_5_0_ROCKA" id="__data_set__plot2d_Parameter_scan_over_stiffnessdataGen_repTsk_5_0_ROCKA" name="dataGen_repTsk_5_0_ROCKA" label="dataGen_repTsk_5_0_ROCKA" />
+        <dataSet dataReference="dataGen_repTsk_5_0_ROCK" id="__data_set__plot2d_Parameter_scan_over_stiffnessdataGen_repTsk_5_0_ROCK" name="dataGen_repTsk_5_0_ROCK" label="dataGen_repTsk_5_0_ROCK" />
+        <dataSet dataReference="dataGen_repTsk_5_0_mDia" id="__data_set__plot2d_Parameter_scan_over_stiffnessdataGen_repTsk_5_0_mDia" name="dataGen_repTsk_5_0_mDia" label="dataGen_repTsk_5_0_mDia" />
+        <dataSet dataReference="dataGen_repTsk_5_0_mDiaA" id="__data_set__plot2d_Parameter_scan_over_stiffnessdataGen_repTsk_5_0_mDiaA" name="dataGen_repTsk_5_0_mDiaA" label="dataGen_repTsk_5_0_mDiaA" />
+        <dataSet dataReference="dataGen_repTsk_5_0_Myo" id="__data_set__plot2d_Parameter_scan_over_stiffnessdataGen_repTsk_5_0_Myo" name="dataGen_repTsk_5_0_Myo" label="dataGen_repTsk_5_0_Myo" />
+        <dataSet dataReference="dataGen_repTsk_5_0_MyoA" id="__data_set__plot2d_Parameter_scan_over_stiffnessdataGen_repTsk_5_0_MyoA" name="dataGen_repTsk_5_0_MyoA" label="dataGen_repTsk_5_0_MyoA" />
+        <dataSet dataReference="dataGen_repTsk_5_0_LIMK" id="__data_set__plot2d_Parameter_scan_over_stiffnessdataGen_repTsk_5_0_LIMK" name="dataGen_repTsk_5_0_LIMK" label="dataGen_repTsk_5_0_LIMK" />
+        <dataSet dataReference="dataGen_repTsk_5_0_CofilinP" id="__data_set__plot2d_Parameter_scan_over_stiffnessdataGen_repTsk_5_0_CofilinP" name="dataGen_repTsk_5_0_CofilinP" label="dataGen_repTsk_5_0_CofilinP" />
+        <dataSet dataReference="dataGen_repTsk_5_0_LIMKA" id="__data_set__plot2d_Parameter_scan_over_stiffnessdataGen_repTsk_5_0_LIMKA" name="dataGen_repTsk_5_0_LIMKA" label="dataGen_repTsk_5_0_LIMKA" />
+        <dataSet dataReference="dataGen_repTsk_5_0_CofilinNP" id="__data_set__plot2d_Parameter_scan_over_stiffnessdataGen_repTsk_5_0_CofilinNP" name="dataGen_repTsk_5_0_CofilinNP" label="dataGen_repTsk_5_0_CofilinNP" />
+        <dataSet dataReference="dataGen_repTsk_5_0_Fcyto" id="__data_set__plot2d_Parameter_scan_over_stiffnessdataGen_repTsk_5_0_Fcyto" name="dataGen_repTsk_5_0_Fcyto" label="dataGen_repTsk_5_0_Fcyto" />
+        <dataSet dataReference="dataGen_repTsk_5_0_Gactin" id="__data_set__plot2d_Parameter_scan_over_stiffnessdataGen_repTsk_5_0_Gactin" name="dataGen_repTsk_5_0_Gactin" label="dataGen_repTsk_5_0_Gactin" />
+        <dataSet dataReference="dataGen_repTsk_5_0_YAPTAZP" id="__data_set__plot2d_Parameter_scan_over_stiffnessdataGen_repTsk_5_0_YAPTAZP" name="dataGen_repTsk_5_0_YAPTAZP" label="dataGen_repTsk_5_0_YAPTAZP" />
+        <dataSet dataReference="dataGen_repTsk_5_0_YAPTAZN" id="__data_set__plot2d_Parameter_scan_over_stiffnessdataGen_repTsk_5_0_YAPTAZN" name="dataGen_repTsk_5_0_YAPTAZN" label="dataGen_repTsk_5_0_YAPTAZN" />
+        <dataSet dataReference="dataGen_repTsk_5_0_YAPTAZnuc" id="__data_set__plot2d_Parameter_scan_over_stiffnessdataGen_repTsk_5_0_YAPTAZnuc" name="dataGen_repTsk_5_0_YAPTAZnuc" label="dataGen_repTsk_5_0_YAPTAZnuc" />
+        <dataSet dataReference="dataGen_repTsk_5_0_Positionboolean" id="__data_set__plot2d_Parameter_scan_over_stiffnessdataGen_repTsk_5_0_Positionboolean" name="dataGen_repTsk_5_0_Positionboolean" label="dataGen_repTsk_5_0_Positionboolean" />
+        <dataSet dataReference="dataGen_repTsk_5_0_NPCA" id="__data_set__plot2d_Parameter_scan_over_stiffnessdataGen_repTsk_5_0_NPCA" name="dataGen_repTsk_5_0_NPCA" label="dataGen_repTsk_5_0_NPCA" />
+        <dataSet dataReference="dataGen_repTsk_5_0_NPC" id="__data_set__plot2d_Parameter_scan_over_stiffnessdataGen_repTsk_5_0_NPC" name="dataGen_repTsk_5_0_NPC" label="dataGen_repTsk_5_0_NPC" />
+        <dataSet dataReference="dataGen_repTsk_5_0_LaminA" id="__data_set__plot2d_Parameter_scan_over_stiffnessdataGen_repTsk_5_0_LaminA" name="dataGen_repTsk_5_0_LaminA" label="dataGen_repTsk_5_0_LaminA" />
+        <dataSet dataReference="dataGen_repTsk_5_0_LaminAp" id="__data_set__plot2d_Parameter_scan_over_stiffnessdataGen_repTsk_5_0_LaminAp" name="dataGen_repTsk_5_0_LaminAp" label="dataGen_repTsk_5_0_LaminAp" />
       </listOfDataSets>
     </report>
   </listOfOutputs>
