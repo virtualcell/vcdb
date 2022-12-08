@@ -1,0 +1,419 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--This biomodel was generated in VCML Version Alpha_Version_7.4.0_build_87-->
+<vcml xmlns="http://sourceforge.net/projects/vcell/vcml" Version="Alpha_Version_7.4.0_build_87">
+  <BioModel Name="BMED8813 IC HW6">
+    <Model Name="unnamed">
+      <Compound Name="receptor" />
+      <Compound Name="Ligand" />
+      <Compound Name="complex" />
+      <Compound Name="pre-freeR" />
+      <Compound Name="Rvesicle" />
+      <Compound Name="Clyso" />
+      <Compound Name="Cdeg" />
+      <Feature Name="Unnamed compartment" KeyValue="49089646" />
+      <Feature Name="cell" KeyValue="49089649" />
+      <Membrane InsideFeature="cell" OutsideFeature="Unnamed compartment" PositiveFeature="cell" NegativeFeature="Unnamed compartment" MembraneVoltage="Voltage_membrane" Name="membrane" KeyValue="49089648" />
+      <LocalizedCompound Name="receptor_membrane" CompoundRef="receptor" Structure="membrane" OverrideName="true" KeyValue="49089652" />
+      <LocalizedCompound Name="Ligand_Unnamed_compartment" CompoundRef="Ligand" Structure="Unnamed compartment" OverrideName="true" KeyValue="49089653" />
+      <LocalizedCompound Name="complex_membrane" CompoundRef="complex" Structure="membrane" OverrideName="true" KeyValue="49089654" />
+      <LocalizedCompound Name="pre_freeR_cell" CompoundRef="pre-freeR" Structure="cell" OverrideName="true" KeyValue="49089655" />
+      <LocalizedCompound Name="Rvesicle_cell" CompoundRef="Rvesicle" Structure="cell" OverrideName="true" KeyValue="49089656" />
+      <LocalizedCompound Name="Clyso_cell" CompoundRef="Clyso" Structure="cell" OverrideName="true" KeyValue="49089657" />
+      <LocalizedCompound Name="Cdeg_cell" CompoundRef="Cdeg" Structure="cell" OverrideName="true" KeyValue="49089658" />
+      <SimpleReaction Structure="membrane" Name="RL binding" Reversible="true" FluxOption="MolecularOnly" KeyValue="49089659">
+        <Reactant LocalizedCompoundRef="Ligand_Unnamed_compartment" Stoichiometry="1" KeyValue="49089660" />
+        <Reactant LocalizedCompoundRef="receptor_membrane" Stoichiometry="1" KeyValue="49089661" />
+        <Product LocalizedCompoundRef="complex_membrane" Stoichiometry="1" KeyValue="49089662" />
+        <Kinetics KineticsType="MassAction">
+          <Parameter Name="J" Role="reaction rate" Unit="molecules.um-2.s-1">(((Kf * Ligand_Unnamed_compartment) * receptor_membrane) - (Kr * complex_membrane))</Parameter>
+          <Parameter Name="I" Role="inward current density" Unit="pA.um-2">0.0</Parameter>
+          <Parameter Name="netValence" Role="net charge valence" Unit="1">0.0</Parameter>
+          <Parameter Name="Kf" Role="forward rate constant" Unit="s-1.uM-1">1.0</Parameter>
+          <Parameter Name="Kr" Role="reverse rate constant" Unit="s-1">0.01</Parameter>
+        </Kinetics>
+      </SimpleReaction>
+      <SimpleReaction Structure="membrane" Name="Complex internalization" Reversible="true" FluxOption="MolecularOnly" KeyValue="49089663">
+        <Reactant LocalizedCompoundRef="complex_membrane" Stoichiometry="1" KeyValue="49089664" />
+        <Product LocalizedCompoundRef="Clyso_cell" Stoichiometry="1" KeyValue="49089665" />
+        <Kinetics KineticsType="GeneralLumpedKinetics">
+          <Parameter Name="LumpedI" Role="lumped current" Unit="pA">0.0</Parameter>
+          <Parameter Name="LumpedJ" Role="lumped reaction rate" Unit="molecules.s-1">(314.0 * ((Kf * complex_membrane) - (Kr * Clyso_cell)))</Parameter>
+          <Parameter Name="netValence" Role="net charge valence" Unit="1">0.0</Parameter>
+          <Parameter Name="Kr" Role="user defined" Unit="molecules.um-2.uM-1.s-1">0.0</Parameter>
+          <Parameter Name="Kf" Role="user defined" Unit="s-1">0.005</Parameter>
+        </Kinetics>
+      </SimpleReaction>
+      <SimpleReaction Structure="membrane" Name="Receptor synthesis" Reversible="true" FluxOption="MolecularOnly" KeyValue="49089666">
+        <Reactant LocalizedCompoundRef="pre_freeR_cell" Stoichiometry="1" KeyValue="49089667" />
+        <Product LocalizedCompoundRef="receptor_membrane" Stoichiometry="1" KeyValue="49089668" />
+        <Kinetics KineticsType="GeneralLumpedKinetics">
+          <Parameter Name="LumpedI" Role="lumped current" Unit="pA">0.0</Parameter>
+          <Parameter Name="LumpedJ" Role="lumped reaction rate" Unit="molecules.s-1">2.0</Parameter>
+          <Parameter Name="netValence" Role="net charge valence" Unit="1">0.0</Parameter>
+        </Kinetics>
+      </SimpleReaction>
+      <SimpleReaction Structure="membrane" Name="Receptor internalization" Reversible="true" FluxOption="MolecularOnly" KeyValue="49089669">
+        <Reactant LocalizedCompoundRef="receptor_membrane" Stoichiometry="1" KeyValue="49089670" />
+        <Product LocalizedCompoundRef="Rvesicle_cell" Stoichiometry="1" KeyValue="49089671" />
+        <Kinetics KineticsType="GeneralLumpedKinetics">
+          <Parameter Name="LumpedI" Role="lumped current" Unit="pA">0.0</Parameter>
+          <Parameter Name="LumpedJ" Role="lumped reaction rate" Unit="molecules.s-1">(314.0 * ((Kf * receptor_membrane) - (Kr * Rvesicle_cell)))</Parameter>
+          <Parameter Name="netValence" Role="net charge valence" Unit="1">0.0</Parameter>
+          <Parameter Name="Kr" Role="user defined" Unit="molecules.um-2.uM-1.s-1">0.0</Parameter>
+          <Parameter Name="Kf" Role="user defined" Unit="s-1">5.0E-4</Parameter>
+        </Kinetics>
+      </SimpleReaction>
+      <SimpleReaction Structure="membrane" Name="Complex_degradation" Reversible="true" FluxOption="MolecularOnly" KeyValue="49089672">
+        <Reactant LocalizedCompoundRef="Clyso_cell" Stoichiometry="1" KeyValue="49089673" />
+        <Product LocalizedCompoundRef="Cdeg_cell" Stoichiometry="1" KeyValue="49089674" />
+        <Kinetics KineticsType="GeneralLumpedKinetics">
+          <Parameter Name="LumpedI" Role="lumped current" Unit="pA">0.0</Parameter>
+          <Parameter Name="LumpedJ" Role="lumped reaction rate" Unit="molecules.s-1">(314.0 * ((Kf * Clyso_cell) - (Kr * Cdeg_cell)))</Parameter>
+          <Parameter Name="netValence" Role="net charge valence" Unit="1">0.0</Parameter>
+          <Parameter Name="Kr" Role="user defined" Unit="molecules.um-2.uM-1.s-1">0.0</Parameter>
+          <Parameter Name="Kf" Role="user defined" Unit="s-1">5.0E-5</Parameter>
+        </Kinetics>
+      </SimpleReaction>
+      <Diagram Name="Unnamed compartment" Structure="Unnamed compartment" />
+      <Diagram Name="membrane" Structure="membrane">
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="receptor_membrane" LocationX="50" LocationY="48" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="complex_membrane" LocationX="53" LocationY="173" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="pre_freeR_cell" LocationX="0" LocationY="408" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="Rvesicle_cell" LocationX="34" LocationY="342" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="Clyso_cell" LocationX="52" LocationY="292" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="Cdeg_cell" LocationX="46" LocationY="105" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="Ligand_Unnamed_compartment" LocationX="67" LocationY="67" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="full" SimpleReactionRef="RL binding" LocationX="52" LocationY="107" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="full" SimpleReactionRef="Complex internalization" LocationX="228" LocationY="151" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="full" SimpleReactionRef="Receptor synthesis" LocationX="240" LocationY="77" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="full" SimpleReactionRef="Receptor internalization" LocationX="191" LocationY="283" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="full" SimpleReactionRef="Complex_degradation" LocationX="59" LocationY="340" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="receptor_membrane" LocationX="50" LocationY="48" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="complex_membrane" LocationX="53" LocationY="173" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="pre_freeR_cell" LocationX="0" LocationY="408" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="Rvesicle_cell" LocationX="34" LocationY="342" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="Clyso_cell" LocationX="52" LocationY="292" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="Cdeg_cell" LocationX="46" LocationY="105" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="Ligand_Unnamed_compartment" LocationX="67" LocationY="67" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="molecule" SimpleReactionRef="RL binding" LocationX="52" LocationY="107" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="molecule" SimpleReactionRef="Complex internalization" LocationX="228" LocationY="151" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="molecule" SimpleReactionRef="Receptor synthesis" LocationX="240" LocationY="77" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="molecule" SimpleReactionRef="Receptor internalization" LocationX="191" LocationY="283" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="molecule" SimpleReactionRef="Complex_degradation" LocationX="59" LocationY="340" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="receptor_membrane" LocationX="50" LocationY="48" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="complex_membrane" LocationX="53" LocationY="173" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="pre_freeR_cell" LocationX="0" LocationY="408" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="Rvesicle_cell" LocationX="34" LocationY="342" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="Clyso_cell" LocationX="52" LocationY="292" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="Cdeg_cell" LocationX="46" LocationY="105" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="Ligand_Unnamed_compartment" LocationX="67" LocationY="67" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="rule" SimpleReactionRef="RL binding" LocationX="52" LocationY="107" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="rule" SimpleReactionRef="Complex internalization" LocationX="228" LocationY="151" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="rule" SimpleReactionRef="Receptor synthesis" LocationX="240" LocationY="77" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="rule" SimpleReactionRef="Receptor internalization" LocationX="191" LocationY="283" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="rule" SimpleReactionRef="Complex_degradation" LocationX="59" LocationY="340" />
+      </Diagram>
+      <Diagram Name="cell" Structure="cell">
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="pre_freeR_cell" LocationX="67" LocationY="175" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="Rvesicle_cell" LocationX="64" LocationY="261" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="Clyso_cell" LocationX="62" LocationY="28" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="Cdeg_cell" LocationX="242" LocationY="103" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="full" SimpleReactionRef="complex degradation" LocationX="137" LocationY="73" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="pre_freeR_cell" LocationX="67" LocationY="175" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="Rvesicle_cell" LocationX="64" LocationY="261" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="Clyso_cell" LocationX="62" LocationY="28" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="Cdeg_cell" LocationX="242" LocationY="103" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="molecule" SimpleReactionRef="complex degradation" LocationX="137" LocationY="73" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="pre_freeR_cell" LocationX="67" LocationY="175" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="Rvesicle_cell" LocationX="64" LocationY="261" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="Clyso_cell" LocationX="62" LocationY="28" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="Cdeg_cell" LocationX="242" LocationY="103" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="rule" SimpleReactionRef="complex degradation" LocationX="137" LocationY="73" />
+      </Diagram>
+      <Version Name="unnamed" KeyValue="49089637" BranchId="49084361" Archived="0" Date="24-Sep-2010 17:11:44" FromVersionable="false">
+        <Owner Name="kpark5" Identifier="48847122" />
+        <GroupAccess Type="1" />
+      </Version>
+      <ModelUnitSystem VolumeSubstanceUnit="uM.um3" MembraneSubstanceUnit="molecules" LumpedReactionSubstanceUnit="molecules" VolumeUnit="um3" AreaUnit="um2" LengthUnit="um" TimeUnit="s" />
+    </Model>
+    <SimulationSpec Name="RL binding" Stochastic="false" UseConcentration="true" RuleBased="false" MassConservationModelReduction="true" InsufficientIterations="false" InsufficientMaxMolecules="false">
+      <NetworkConstraints RbmMaxIteration="1" RbmMaxMoleculesPerSpecies="10" RbmSpeciesLimit="800" RbmReactionsLimit="2500" />
+      <Annotation />
+      <Geometry Name="non-spatial727199427" Dimension="0">
+        <Extent X="10.0" Y="10.0" Z="10.0" />
+        <Origin X="0.0" Y="0.0" Z="0.0" />
+        <SubVolume Name="Compartment" Handle="0" Type="Compartmental" KeyValue="49084809" />
+        <Version Name="non-spatial727199427" KeyValue="49084805" BranchId="49084806" Archived="0" Date="24-Sep-2010 15:14:14" FromVersionable="false">
+          <Owner Name="kpark5" Identifier="48847122" />
+          <GroupAccess Type="1" />
+        </Version>
+      </Geometry>
+      <GeometryContext>
+        <FeatureMapping Feature="Unnamed compartment" GeometryClass="Compartment" SubVolume="Compartment" Size="1000000.0">
+          <BoundariesTypes Xm="Flux" Xp="Flux" Ym="Flux" Yp="Flux" Zm="Flux" Zp="Flux" />
+        </FeatureMapping>
+        <FeatureMapping Feature="cell" GeometryClass="Compartment" SubVolume="Compartment" Size="1570.0">
+          <BoundariesTypes Xm="Flux" Xp="Flux" Ym="Flux" Yp="Flux" Zm="Flux" Zp="Flux" />
+        </FeatureMapping>
+        <MembraneMapping Membrane="membrane" SurfaceToVolumeRatio="0.2" VolumeFraction="0.0015675389638267919" Size="314.0" CalculateVoltage="false" SpecificCapacitance="1.0" InitialVoltage="0.0" GeometryClass="Compartment">
+          <BoundariesTypes Xm="Flux" Xp="Flux" Ym="Flux" Yp="Flux" Zm="Flux" Zp="Flux" />
+        </MembraneMapping>
+      </GeometryContext>
+      <ReactionContext>
+        <LocalizedCompoundSpec LocalizedCompoundRef="Ligand_Unnamed_compartment" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>5.0E-4</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="pre_freeR_cell" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>0.0</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="Rvesicle_cell" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>0.0</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="Clyso_cell" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>0.0</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="Cdeg_cell" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>0.0</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="receptor_membrane" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>10.0</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="complex_membrane" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>0.0</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <ReactionSpec ReactionStepRef="RL binding" ReactionMapping="included" />
+        <ReactionSpec ReactionStepRef="Complex internalization" ReactionMapping="included" />
+        <ReactionSpec ReactionStepRef="Receptor synthesis" ReactionMapping="included" />
+        <ReactionSpec ReactionStepRef="Receptor internalization" ReactionMapping="included" />
+        <ReactionSpec ReactionStepRef="Complex_degradation" ReactionMapping="included" />
+      </ReactionContext>
+      <MathDescription Name="RL binding_generated">
+        <Constant Name="_F_">96480.0</Constant>
+        <Constant Name="_F_nmol_">9.648E-5</Constant>
+        <Constant Name="_K_GHK_">1.0E-9</Constant>
+        <Constant Name="_N_pmol_">6.02E11</Constant>
+        <Constant Name="_R_">8314.0</Constant>
+        <Constant Name="_T_">300.0</Constant>
+        <Constant Name="Cdeg_cell_init">0.0</Constant>
+        <Constant Name="Clyso_cell_init">0.0</Constant>
+        <Constant Name="complex_membrane_init">0.0</Constant>
+        <Constant Name="K_millivolts_per_volt">1000.0</Constant>
+        <Constant Name="Kf_Complex_degradation">5.0E-5</Constant>
+        <Constant Name="Kf_Complex_internalization">0.005</Constant>
+        <Constant Name="Kf_Receptor_internalization">5.0E-4</Constant>
+        <Constant Name="Kf_RL_binding">1.0</Constant>
+        <Constant Name="KMOLE">0.0016611295681063123</Constant>
+        <Constant Name="Kr_Complex_degradation">0.0</Constant>
+        <Constant Name="Kr_Complex_internalization">0.0</Constant>
+        <Constant Name="Kr_Receptor_internalization">0.0</Constant>
+        <Constant Name="Kr_RL_binding">0.01</Constant>
+        <Constant Name="Ligand_Unnamed_compartment_init">5.0E-4</Constant>
+        <Constant Name="LumpedJ_Receptor_synthesis">2.0</Constant>
+        <Constant Name="pre_freeR_cell_init">0.0</Constant>
+        <Constant Name="receptor_membrane_init">10.0</Constant>
+        <Constant Name="Rvesicle_cell_init">0.0</Constant>
+        <Constant Name="Size_cell">1570.0</Constant>
+        <Constant Name="Size_membrane">314.0</Constant>
+        <Constant Name="Size_Unnamed_compartment">1000000.0</Constant>
+        <Constant Name="SurfToVol_membrane">0.2</Constant>
+        <Constant Name="VolFract_cell">0.0015675389638267919</Constant>
+        <Constant Name="Voltage_membrane">0.0</Constant>
+        <VolumeVariable Name="Cdeg_cell" />
+        <VolumeVariable Name="Clyso_cell" />
+        <VolumeVariable Name="complex_membrane" />
+        <VolumeVariable Name="receptor_membrane" />
+        <VolumeVariable Name="Rvesicle_cell" />
+        <Function Name="J_RL_binding">((receptor_membrane * Kf_RL_binding * Ligand_Unnamed_compartment) - (Kr_RL_binding * complex_membrane))</Function>
+        <Function Name="K_Ligand_Unnamed_compartment_total">((complex_membrane_init * SurfToVol_membrane * VolFract_cell * KMOLE) + (VolFract_cell * Cdeg_cell_init) + ((1.0 - VolFract_cell) * Ligand_Unnamed_compartment_init) + (VolFract_cell * Clyso_cell_init))</Function>
+        <Function Name="K_pre_freeR_cell_total">((complex_membrane_init * SurfToVol_membrane * VolFract_cell * KMOLE) + (receptor_membrane_init * SurfToVol_membrane * VolFract_cell * KMOLE) + (VolFract_cell * Cdeg_cell_init) + (VolFract_cell * Clyso_cell_init) + (VolFract_cell * pre_freeR_cell_init) + (VolFract_cell * Rvesicle_cell_init))</Function>
+        <Function Name="KFlux_membrane_mapping_cell">SurfToVol_membrane</Function>
+        <Function Name="KFlux_membrane_mapping_Unnamed_compartment">(SurfToVol_membrane * VolFract_cell / (1.0 - VolFract_cell))</Function>
+        <Function Name="Ligand_Unnamed_compartment">(( - (complex_membrane * SurfToVol_membrane * VolFract_cell * KMOLE) - (VolFract_cell * Cdeg_cell) + K_Ligand_Unnamed_compartment_total - (VolFract_cell * Clyso_cell)) / (1.0 - VolFract_cell))</Function>
+        <Function Name="LumpedJ_Complex_degradation">(314.0 * ((Kf_Complex_degradation * Clyso_cell) - (Kr_Complex_degradation * Cdeg_cell)))</Function>
+        <Function Name="LumpedJ_Complex_internalization">(314.0 * ((Kf_Complex_internalization * complex_membrane) - (Kr_Complex_internalization * Clyso_cell)))</Function>
+        <Function Name="LumpedJ_Receptor_internalization">(314.0 * ((Kf_Receptor_internalization * receptor_membrane) - (Kr_Receptor_internalization * Rvesicle_cell)))</Function>
+        <Function Name="pre_freeR_cell">(( - (complex_membrane * SurfToVol_membrane * VolFract_cell * KMOLE) - (receptor_membrane * SurfToVol_membrane * VolFract_cell * KMOLE) - (VolFract_cell * Cdeg_cell) - (VolFract_cell * Clyso_cell) + K_pre_freeR_cell_total - (VolFract_cell * Rvesicle_cell)) / VolFract_cell)</Function>
+        <CompartmentSubDomain Name="Compartment">
+          <BoundaryType Boundary="Xm" Type="Value" />
+          <BoundaryType Boundary="Xp" Type="Value" />
+          <BoundaryType Boundary="Ym" Type="Value" />
+          <BoundaryType Boundary="Yp" Type="Value" />
+          <BoundaryType Boundary="Zm" Type="Value" />
+          <BoundaryType Boundary="Zp" Type="Value" />
+          <OdeEquation Name="Rvesicle_cell" SolutionType="Unknown">
+            <Rate>(KFlux_membrane_mapping_cell * KMOLE * LumpedJ_Receptor_internalization / Size_membrane)</Rate>
+            <Initial>Rvesicle_cell_init</Initial>
+          </OdeEquation>
+          <OdeEquation Name="Clyso_cell" SolutionType="Unknown">
+            <Rate>((KFlux_membrane_mapping_cell * KMOLE * LumpedJ_Complex_internalization / Size_membrane) - (KFlux_membrane_mapping_cell * KMOLE * LumpedJ_Complex_degradation / Size_membrane))</Rate>
+            <Initial>Clyso_cell_init</Initial>
+          </OdeEquation>
+          <OdeEquation Name="Cdeg_cell" SolutionType="Unknown">
+            <Rate>(KFlux_membrane_mapping_cell * KMOLE * LumpedJ_Complex_degradation / Size_membrane)</Rate>
+            <Initial>Cdeg_cell_init</Initial>
+          </OdeEquation>
+          <OdeEquation Name="receptor_membrane" SolutionType="Unknown">
+            <Rate>( - (LumpedJ_Receptor_internalization / Size_membrane) - J_RL_binding + (LumpedJ_Receptor_synthesis / Size_membrane))</Rate>
+            <Initial>receptor_membrane_init</Initial>
+          </OdeEquation>
+          <OdeEquation Name="complex_membrane" SolutionType="Unknown">
+            <Rate>(J_RL_binding - (LumpedJ_Complex_internalization / Size_membrane))</Rate>
+            <Initial>complex_membrane_init</Initial>
+          </OdeEquation>
+        </CompartmentSubDomain>
+        <Version Name="RL binding_generated" KeyValue="49089635" BranchId="49084811" Archived="0" Date="24-Sep-2010 17:11:44" FromVersionable="false">
+          <Owner Name="kpark5" Identifier="48847122" />
+          <GroupAccess Type="1" />
+        </Version>
+      </MathDescription>
+      <Simulation Name="Simulation0">
+        <SolverTaskDescription TaskType="Unsteady" UseSymbolicJacobian="false" Solver="Runge-Kutta-Fehlberg (Fifth Order, Variable Time Step)">
+          <TimeBound StartTime="0.0" EndTime="3600.0" />
+          <TimeStep DefaultTime="0.1" MinTime="1.0E-8" MaxTime="1.0" />
+          <ErrorTolerance Absolut="1.0E-9" Relative="1.0E-9" />
+          <OutputOptions KeepEvery="1" KeepAtMost="1000" />
+          <Constant Name="Kf_Complex_internalization">0.0</Constant>
+          <NumberProcessors>1</NumberProcessors>
+        </SolverTaskDescription>
+        <MathOverrides />
+        <Version Name="Simulation0" KeyValue="49090107" BranchId="49084876" Archived="0" Date="24-Sep-2010 17:34:49" FromVersionable="false">
+          <Owner Name="kpark5" Identifier="48847122" />
+          <GroupAccess Type="1" />
+        </Version>
+      </Simulation>
+      <AnalysisTaskList>
+        <ParameterEstimationTask Name="task1">
+          <parameterMappingSpecList>
+            <parameterMappingSpec parameterReferenceAttribute="unnamed.RL_binding.netValence" lowLimit="0.0" highLimit="0.0" currentValue="0.0" selected="false" />
+            <parameterMappingSpec parameterReferenceAttribute="unnamed.RL_binding.Kf" lowLimit="0.0" highLimit="10.0" currentValue="1.0" selected="false" />
+            <parameterMappingSpec parameterReferenceAttribute="unnamed.RL_binding.Kr" lowLimit="0.0" highLimit="0.1" currentValue="0.01" selected="false" />
+            <parameterMappingSpec parameterReferenceAttribute="unnamed.Complex_internalization.netValence" lowLimit="0.0" highLimit="0.0" currentValue="0.0" selected="false" />
+            <parameterMappingSpec parameterReferenceAttribute="unnamed.Complex_internalization.Kr" lowLimit="0.0" highLimit="0.0" currentValue="0.0" selected="false" />
+            <parameterMappingSpec parameterReferenceAttribute="unnamed.Complex_internalization.Kf" lowLimit="5.0E-4" highLimit="0.05" currentValue="0.005" selected="false" />
+            <parameterMappingSpec parameterReferenceAttribute="unnamed.Receptor_synthesis.LumpedJ" lowLimit="0.2" highLimit="20.0" currentValue="2.0" selected="false" />
+            <parameterMappingSpec parameterReferenceAttribute="unnamed.Receptor_synthesis.netValence" lowLimit="0.0" highLimit="0.0" currentValue="0.0" selected="false" />
+            <parameterMappingSpec parameterReferenceAttribute="unnamed.Receptor_internalization.netValence" lowLimit="0.0" highLimit="0.0" currentValue="0.0" selected="false" />
+            <parameterMappingSpec parameterReferenceAttribute="unnamed.Receptor_internalization.Kr" lowLimit="0.0" highLimit="0.0" currentValue="0.0" selected="false" />
+            <parameterMappingSpec parameterReferenceAttribute="unnamed.Receptor_internalization.Kf" lowLimit="5.0E-5" highLimit="0.005" currentValue="5.0E-4" selected="false" />
+            <parameterMappingSpec parameterReferenceAttribute="unnamed.Complex_degradation.netValence" lowLimit="0.0" highLimit="0.0" currentValue="0.0" selected="false" />
+            <parameterMappingSpec parameterReferenceAttribute="unnamed.Complex_degradation.Kr" lowLimit="0.0" highLimit="0.0" currentValue="0.0" selected="false" />
+            <parameterMappingSpec parameterReferenceAttribute="unnamed.Complex_degradation.Kf" lowLimit="5.0E-6" highLimit="5.0E-4" currentValue="5.0E-5" selected="false" />
+            <parameterMappingSpec parameterReferenceAttribute="RL_binding.Ligand_Unnamed_compartment_scs.initConc" lowLimit="0.0" highLimit="0.005" currentValue="5.0E-4" selected="false" />
+            <parameterMappingSpec parameterReferenceAttribute="RL_binding.pre_freeR_cell_scs.initConc" lowLimit="0.0" highLimit="0.0" currentValue="0.0" selected="false" />
+            <parameterMappingSpec parameterReferenceAttribute="RL_binding.Rvesicle_cell_scs.initConc" lowLimit="0.0" highLimit="0.0" currentValue="0.0" selected="false" />
+            <parameterMappingSpec parameterReferenceAttribute="RL_binding.Clyso_cell_scs.initConc" lowLimit="0.0" highLimit="0.0" currentValue="0.0" selected="false" />
+            <parameterMappingSpec parameterReferenceAttribute="RL_binding.Cdeg_cell_scs.initConc" lowLimit="0.0" highLimit="0.0" currentValue="0.0" selected="false" />
+            <parameterMappingSpec parameterReferenceAttribute="RL_binding.receptor_membrane_scs.initConc" lowLimit="0.0" highLimit="100.0" currentValue="10.0" selected="false" />
+            <parameterMappingSpec parameterReferenceAttribute="RL_binding.complex_membrane_scs.initConc" lowLimit="0.0" highLimit="0.0" currentValue="0.0" selected="false" />
+            <parameterMappingSpec parameterReferenceAttribute="RL_binding.Unnamed_compartment_mapping.Size" lowLimit="0.0" highLimit="1.0E7" currentValue="1000000.0" selected="false" />
+            <parameterMappingSpec parameterReferenceAttribute="RL_binding.cell_mapping.Size" lowLimit="0.0" highLimit="15700.0" currentValue="1570.0" selected="false" />
+            <parameterMappingSpec parameterReferenceAttribute="RL_binding.membrane_mapping.Voltage_membrane_init" lowLimit="-120.0" highLimit="60.0" currentValue="0.0" selected="false" />
+            <parameterMappingSpec parameterReferenceAttribute="RL_binding.membrane_mapping.SurfToVolRatio" lowLimit="0.001" highLimit="10000.0" currentValue="0.2" selected="false" />
+            <parameterMappingSpec parameterReferenceAttribute="RL_binding.membrane_mapping.VolFraction" lowLimit="1.567538963826792E-4" highLimit="0.01567538963826792" currentValue="0.0015675389638267919" selected="false" />
+            <parameterMappingSpec parameterReferenceAttribute="RL_binding.membrane_mapping.Size" lowLimit="0.0" highLimit="3140.0" currentValue="314.0" selected="false" />
+          </parameterMappingSpecList>
+          <referenceData numRows="7" numColumns="4">
+            <dataColumnList>
+              <dataColumn Name="t" weight="1.0" />
+              <dataColumn Name="complex_membrane" weight="1.0" />
+              <dataColumn Name="Clyso_cell" weight="1.0" />
+              <dataColumn Name="Ligand_unnamed_compartment" weight="1.0" />
+            </dataColumnList>
+            <dataRowList>
+              <dataRow>0.0 29.61783 0.0 0.0</dataRow>
+              <dataRow>60.0 18.4 0.00177 3.09E-6</dataRow>
+              <dataRow>120.0 17.47452 0.00216 2.78E-6</dataRow>
+              <dataRow>240.0 3.850318 0.00511 4.63E-6</dataRow>
+              <dataRow>360.0 5.184713 0.00472 4.94E-6</dataRow>
+              <dataRow>600.0 1.480892 0.00492 5.87E-6</dataRow>
+              <dataRow>900.0 2.073248 0.00462 5.71E-6</dataRow>
+            </dataRowList>
+          </referenceData>
+          <referenceDataMappingSpecList>
+            <referenceDataMappingSpec referenceDataColumnName="t" referenceDataModelSymbol="t" />
+            <referenceDataMappingSpec referenceDataColumnName="complex_membrane" referenceDataModelSymbol="complex_membrane" />
+            <referenceDataMappingSpec referenceDataColumnName="Clyso_cell" referenceDataModelSymbol="Clyso_cell" />
+            <referenceDataMappingSpec referenceDataColumnName="Ligand_unnamed_compartment" referenceDataModelSymbol="Ligand_Unnamed_compartment" />
+          </referenceDataMappingSpecList>
+          <optimizationSolverSpec optimizationSolverType="Evolutionary Programming" NumOfRuns="1">
+            <ListOfParameters>
+              <Parameter Name="Number of Generations" Value="200.0" />
+              <Parameter Name="Population Size" Value="20.0" />
+              <Parameter Name="Random Number Generator" Value="1.0" />
+              <Parameter Name="Seed" Value="0.0" />
+            </ListOfParameters>
+          </optimizationSolverSpec>
+        </ParameterEstimationTask>
+        <ParameterEstimationTask Name="task2">
+          <parameterMappingSpecList>
+            <parameterMappingSpec parameterReferenceAttribute="unnamed.RL_binding.netValence" lowLimit="0.0" highLimit="0.0" currentValue="0.0" selected="false" />
+            <parameterMappingSpec parameterReferenceAttribute="unnamed.RL_binding.Kf" lowLimit="0.0" highLimit="10.0" currentValue="1.0" selected="false" />
+            <parameterMappingSpec parameterReferenceAttribute="unnamed.RL_binding.Kr" lowLimit="0.0" highLimit="0.1" currentValue="0.01" selected="false" />
+            <parameterMappingSpec parameterReferenceAttribute="unnamed.Complex_internalization.netValence" lowLimit="0.0" highLimit="0.0" currentValue="0.0" selected="false" />
+            <parameterMappingSpec parameterReferenceAttribute="unnamed.Complex_internalization.Kr" lowLimit="0.0" highLimit="0.0" currentValue="0.0" selected="false" />
+            <parameterMappingSpec parameterReferenceAttribute="unnamed.Complex_internalization.Kf" lowLimit="5.0E-4" highLimit="0.05" currentValue="0.005" selected="false" />
+            <parameterMappingSpec parameterReferenceAttribute="unnamed.Receptor_synthesis.LumpedJ" lowLimit="0.2" highLimit="20.0" currentValue="2.0" selected="false" />
+            <parameterMappingSpec parameterReferenceAttribute="unnamed.Receptor_synthesis.netValence" lowLimit="0.0" highLimit="0.0" currentValue="0.0" selected="false" />
+            <parameterMappingSpec parameterReferenceAttribute="unnamed.Receptor_internalization.netValence" lowLimit="0.0" highLimit="0.0" currentValue="0.0" selected="false" />
+            <parameterMappingSpec parameterReferenceAttribute="unnamed.Receptor_internalization.Kr" lowLimit="0.0" highLimit="0.0" currentValue="0.0" selected="false" />
+            <parameterMappingSpec parameterReferenceAttribute="unnamed.Receptor_internalization.Kf" lowLimit="5.0E-5" highLimit="0.005" currentValue="5.0E-4" selected="false" />
+            <parameterMappingSpec parameterReferenceAttribute="unnamed.Complex_degradation.netValence" lowLimit="0.0" highLimit="0.0" currentValue="0.0" selected="false" />
+            <parameterMappingSpec parameterReferenceAttribute="unnamed.Complex_degradation.Kr" lowLimit="0.0" highLimit="0.0" currentValue="0.0" selected="false" />
+            <parameterMappingSpec parameterReferenceAttribute="unnamed.Complex_degradation.Kf" lowLimit="5.0E-6" highLimit="5.0E-4" currentValue="5.0E-5" selected="false" />
+            <parameterMappingSpec parameterReferenceAttribute="RL_binding.Ligand_Unnamed_compartment_scs.initConc" lowLimit="0.0" highLimit="0.005" currentValue="5.0E-4" selected="false" />
+            <parameterMappingSpec parameterReferenceAttribute="RL_binding.pre_freeR_cell_scs.initConc" lowLimit="0.0" highLimit="0.0" currentValue="0.0" selected="false" />
+            <parameterMappingSpec parameterReferenceAttribute="RL_binding.Rvesicle_cell_scs.initConc" lowLimit="0.0" highLimit="0.0" currentValue="0.0" selected="false" />
+            <parameterMappingSpec parameterReferenceAttribute="RL_binding.Clyso_cell_scs.initConc" lowLimit="0.0" highLimit="0.0" currentValue="0.0" selected="false" />
+            <parameterMappingSpec parameterReferenceAttribute="RL_binding.Cdeg_cell_scs.initConc" lowLimit="0.0" highLimit="0.0" currentValue="0.0" selected="false" />
+            <parameterMappingSpec parameterReferenceAttribute="RL_binding.receptor_membrane_scs.initConc" lowLimit="0.0" highLimit="100.0" currentValue="10.0" selected="false" />
+            <parameterMappingSpec parameterReferenceAttribute="RL_binding.complex_membrane_scs.initConc" lowLimit="0.0" highLimit="0.0" currentValue="0.0" selected="false" />
+            <parameterMappingSpec parameterReferenceAttribute="RL_binding.Unnamed_compartment_mapping.Size" lowLimit="0.0" highLimit="1.0E7" currentValue="1000000.0" selected="false" />
+            <parameterMappingSpec parameterReferenceAttribute="RL_binding.cell_mapping.Size" lowLimit="0.0" highLimit="15700.0" currentValue="1570.0" selected="false" />
+            <parameterMappingSpec parameterReferenceAttribute="RL_binding.membrane_mapping.Voltage_membrane_init" lowLimit="-120.0" highLimit="60.0" currentValue="0.0" selected="false" />
+            <parameterMappingSpec parameterReferenceAttribute="RL_binding.membrane_mapping.SurfToVolRatio" lowLimit="0.001" highLimit="10000.0" currentValue="0.2" selected="false" />
+            <parameterMappingSpec parameterReferenceAttribute="RL_binding.membrane_mapping.VolFraction" lowLimit="1.567538963826792E-4" highLimit="0.01567538963826792" currentValue="0.0015675389638267919" selected="false" />
+            <parameterMappingSpec parameterReferenceAttribute="RL_binding.membrane_mapping.Size" lowLimit="0.0" highLimit="3140.0" currentValue="314.0" selected="false" />
+          </parameterMappingSpecList>
+          <optimizationSolverSpec optimizationSolverType="Evolutionary Programming" NumOfRuns="1">
+            <ListOfParameters>
+              <Parameter Name="Number of Generations" Value="200.0" />
+              <Parameter Name="Population Size" Value="20.0" />
+              <Parameter Name="Random Number Generator" Value="1.0" />
+              <Parameter Name="Seed" Value="0.0" />
+            </ListOfParameters>
+          </optimizationSolverSpec>
+        </ParameterEstimationTask>
+      </AnalysisTaskList>
+      <Version Name="RL binding" KeyValue="49089678" BranchId="49084857" Archived="0" Date="24-Sep-2010 17:11:44" FromVersionable="false">
+        <Owner Name="kpark5" Identifier="48847122" />
+        <GroupAccess Type="1" />
+      </Version>
+      <MicroscopeMeasurement Name="fluor">
+        <ConvolutionKernel Type="ProjectionZKernel" />
+      </MicroscopeMeasurement>
+    </SimulationSpec>
+    <Version Name="BMED8813 IC HW6" KeyValue="49090109" BranchId="49084387" Archived="0" Date="24-Sep-2010 17:34:49" FromVersionable="false">
+      <Owner Name="kpark5" Identifier="48847122" />
+      <GroupAccess Type="1" />
+    </Version>
+    <pathwayModel>
+      <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:bp="http://www.biopax.org/release/biopax-level3.owl#" version="3.0" />
+    </pathwayModel>
+    <relationshipModel>
+      <RMNS version="3.0" />
+    </relationshipModel>
+    <vcmetadata>
+      <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" />
+      <nonrdfAnnotationList />
+      <uriBindingList />
+    </vcmetadata>
+  </BioModel>
+</vcml>
+

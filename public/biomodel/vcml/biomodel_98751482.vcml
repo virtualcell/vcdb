@@ -1,0 +1,674 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--This biomodel was generated in VCML Version Alpha_Version_7.4.0_build_87-->
+<vcml xmlns="http://sourceforge.net/projects/vcell/vcml" Version="Alpha_Version_7.4.0_build_87">
+  <BioModel Name="Fumiya Tatsuki et al Involvement of Ca2 Dependent Hyperpolarization in Sleep Duration in Mammals">
+    <Model Name="model">
+      <ModelParameters>
+        <Parameter Name="f" Role="user defined" Unit="uM.s-1">(1.0 / (1.0 + exp(( - (V - 20.0) / 2.0))))</Parameter>
+        <Parameter Name="g_Ca" Role="user defined" Unit="tbd">0.0717984</Parameter>
+        <Parameter Name="m_Ca_inf" Role="user defined" Unit="tbd">(1.0 / (1.0 + (1.0 * exp(( - (V + 20.0) / 9.0)))))</Parameter>
+        <Parameter Name="V_Ca" Role="user defined" Unit="tbd">120.0</Parameter>
+        <Parameter Name="V_NMDA" Role="user defined" Unit="uM">1.0E-8</Parameter>
+        <Parameter Name="g_NMDA" Role="user defined" Unit="s-1.uM-1">0.00434132</Parameter>
+        <Parameter Name="V_K" Role="user defined" Unit="tbd">- 100.0</Parameter>
+        <Parameter Name="V_Na" Role="user defined" Unit="tbd">55.0</Parameter>
+        <Parameter Name="C" Role="user defined" Unit="tbd">1.0E-6</Parameter>
+        <Parameter Name="A" Role="user defined" Unit="1">0.02</Parameter>
+        <Parameter Name="scale" Role="user defined" Unit="tbd">1.0</Parameter>
+        <Parameter Name="flux_scale" Role="user defined" Unit="tbd">1.0</Parameter>
+        <Parameter Name="beta_scale" Role="user defined" Unit="tbd">1.0</Parameter>
+      </ModelParameters>
+      <Compound Name="s0" />
+      <Compound Name="s1" />
+      <Compound Name="s2" />
+      <Compound Name="s3" />
+      <Compound Name="s4" />
+      <Compound Name="s5" />
+      <Compound Name="s6" />
+      <Compound Name="s7" />
+      <Compound Name="s8" />
+      <Compound Name="s9" />
+      <Feature Name="c0" KeyValue="98751305" />
+      <LocalizedCompound Name="V" CompoundRef="s0" Structure="c0" OverrideName="true" KeyValue="98751307" />
+      <LocalizedCompound Name="h_Na" CompoundRef="s1" Structure="c0" OverrideName="true" KeyValue="98751308" />
+      <LocalizedCompound Name="n_K" CompoundRef="s2" Structure="c0" OverrideName="true" KeyValue="98751309" />
+      <LocalizedCompound Name="h_A" CompoundRef="s3" Structure="c0" OverrideName="true" KeyValue="98751310" />
+      <LocalizedCompound Name="m_KS" CompoundRef="s4" Structure="c0" OverrideName="true" KeyValue="98751311" />
+      <LocalizedCompound Name="s_AMPA" CompoundRef="s5" Structure="c0" OverrideName="true" KeyValue="98751312" />
+      <LocalizedCompound Name="s_NMDA" CompoundRef="s6" Structure="c0" OverrideName="true" KeyValue="98751313" />
+      <LocalizedCompound Name="x_NMDA" CompoundRef="s7" Structure="c0" OverrideName="true" KeyValue="98751314" />
+      <LocalizedCompound Name="s_GABA" CompoundRef="s8" Structure="c0" OverrideName="true" KeyValue="98751315" />
+      <LocalizedCompound Name="Ca" CompoundRef="s9" Structure="c0" OverrideName="true" KeyValue="98751316" />
+      <SimpleReaction Structure="c0" Name="I_L" Reversible="true" FluxOption="MolecularOnly" KeyValue="98751317">
+        <Reactant LocalizedCompoundRef="V" Stoichiometry="1" KeyValue="98751318" />
+        <Kinetics KineticsType="GeneralKinetics">
+          <Parameter Name="J" Role="reaction rate" Unit="uM.s-1">((g_L * (V - V_L)) / C * scale)</Parameter>
+          <Parameter Name="V_L" Role="user defined" Unit="uM">-60.95</Parameter>
+          <Parameter Name="g_L" Role="user defined" Unit="s-1">0.03573</Parameter>
+        </Kinetics>
+      </SimpleReaction>
+      <SimpleReaction Structure="c0" Name="I_Na" Reversible="true" FluxOption="MolecularOnly" KeyValue="98751319">
+        <Reactant LocalizedCompoundRef="V" Stoichiometry="1" KeyValue="98751320" />
+        <Modifier LocalizedCompoundRef="h_Na" />
+        <Kinetics KineticsType="GeneralKinetics">
+          <Parameter Name="J" Role="reaction rate" Unit="uM.s-1">((g_Na * (m_Na_inf ^ 3.0) * h_Na * (V - V_Na)) / C * scale)</Parameter>
+          <Parameter Name="m_Na_inf" Role="user defined" Unit="tbd">(alpha_m / (alpha_m + beta_m))</Parameter>
+          <Parameter Name="g_Na" Role="user defined" Unit="tbd">12.24381</Parameter>
+          <Parameter Name="alpha_m" Role="user defined" Unit="tbd">(0.1 * (V + 33.0) / (1.0 - exp(( - (V + 33.0) / 10.0))))</Parameter>
+          <Parameter Name="beta_m" Role="user defined" Unit="tbd">(4.0 * exp(( - (V + 53.7) / 12.0)))</Parameter>
+        </Kinetics>
+      </SimpleReaction>
+      <SimpleReaction Structure="c0" Name="I_K" Reversible="true" FluxOption="MolecularOnly" KeyValue="98751322">
+        <Reactant LocalizedCompoundRef="V" Stoichiometry="1" KeyValue="98751323" />
+        <Modifier LocalizedCompoundRef="n_K" />
+        <Kinetics KineticsType="GeneralKinetics">
+          <Parameter Name="J" Role="reaction rate" Unit="uM.s-1">((g_k * (n_K ^ 4.0) * (V - V_K)) / C * scale)</Parameter>
+          <Parameter Name="g_k" Role="user defined" Unit="tbd">2.61868</Parameter>
+        </Kinetics>
+      </SimpleReaction>
+      <SimpleReaction Structure="c0" Name="I_A" Reversible="true" FluxOption="MolecularOnly" KeyValue="98751325">
+        <Reactant LocalizedCompoundRef="V" Stoichiometry="1" KeyValue="98751326" />
+        <Modifier LocalizedCompoundRef="h_A" />
+        <Kinetics KineticsType="GeneralKinetics">
+          <Parameter Name="J" Role="reaction rate" Unit="uM.s-1">((g_A * (m_A_inf ^ 3.0) * h_A * (V - V_K)) / C * scale)</Parameter>
+          <Parameter Name="m_A_inf" Role="user defined" Unit="tbd">(1.0 / (1.0 + exp(( - (V + 50.0) / 20.0))))</Parameter>
+          <Parameter Name="g_A" Role="user defined" Unit="tbd">1.79259</Parameter>
+        </Kinetics>
+      </SimpleReaction>
+      <SimpleReaction Structure="c0" Name="I_KS" Reversible="true" FluxOption="MolecularOnly" KeyValue="98751328">
+        <Reactant LocalizedCompoundRef="V" Stoichiometry="1" KeyValue="98751329" />
+        <Modifier LocalizedCompoundRef="m_KS" />
+        <Kinetics KineticsType="GeneralKinetics">
+          <Parameter Name="J" Role="reaction rate" Unit="uM.s-1">((g_KS * m_KS * (V - V_K)) / C * scale)</Parameter>
+          <Parameter Name="g_KS" Role="user defined" Unit="s-1.uM-1">0.0350135</Parameter>
+        </Kinetics>
+      </SimpleReaction>
+      <SimpleReaction Structure="c0" Name="I_Ca" Reversible="true" FluxOption="MolecularOnly" KeyValue="98751331">
+        <Reactant LocalizedCompoundRef="V" Stoichiometry="1" KeyValue="98751332" />
+        <Kinetics KineticsType="GeneralKinetics">
+          <Parameter Name="J" Role="reaction rate" Unit="uM.s-1">((g_Ca * (m_Ca_inf ^ 2.0) * (V - V_Ca)) / C * scale)</Parameter>
+        </Kinetics>
+      </SimpleReaction>
+      <SimpleReaction Structure="c0" Name="I_KCa" Reversible="true" FluxOption="MolecularOnly" KeyValue="98751333">
+        <Reactant LocalizedCompoundRef="V" Stoichiometry="1" KeyValue="98751334" />
+        <Modifier LocalizedCompoundRef="Ca" />
+        <Kinetics KineticsType="GeneralKinetics">
+          <Parameter Name="J" Role="reaction rate" Unit="uM.s-1">((g_K_Ca * m_K_Ca_inf * (V - V_K)) / C * scale)</Parameter>
+          <Parameter Name="g_K_Ca" Role="user defined" Unit="tbd">0.0166454</Parameter>
+          <Parameter Name="m_K_Ca_inf" Role="user defined" Unit="tbd">(1.0 / (1.0 + ((K_D / Ca) ^ 3.5)))</Parameter>
+          <Parameter Name="K_D" Role="user defined" Unit="tbd">30.0</Parameter>
+        </Kinetics>
+      </SimpleReaction>
+      <SimpleReaction Structure="c0" Name="I_NaP" Reversible="true" FluxOption="MolecularOnly" KeyValue="98751336">
+        <Reactant LocalizedCompoundRef="V" Stoichiometry="1" KeyValue="98751337" />
+        <Kinetics KineticsType="GeneralKinetics">
+          <Parameter Name="J" Role="reaction rate" Unit="uM.s-1">((g_Na_P * m_Na_P_inf * (V - V_Na)) / C * scale)</Parameter>
+          <Parameter Name="m_Na_P_inf" Role="user defined" Unit="tbd">(1.0 / (1.0 + exp(( - (V + 55.7) / 7.7))))</Parameter>
+          <Parameter Name="g_Na_P" Role="user defined" Unit="tbd">0.0256867</Parameter>
+        </Kinetics>
+      </SimpleReaction>
+      <SimpleReaction Structure="c0" Name="I_AR" Reversible="true" FluxOption="MolecularOnly" KeyValue="98751338">
+        <Reactant LocalizedCompoundRef="V" Stoichiometry="1" KeyValue="98751339" />
+        <Kinetics KineticsType="GeneralKinetics">
+          <Parameter Name="J" Role="reaction rate" Unit="uM.s-1">((g_AR * h_AR_inf * (V - V_K)) / C * scale)</Parameter>
+          <Parameter Name="g_AR" Role="user defined" Unit="tbd">2.34906</Parameter>
+          <Parameter Name="h_AR_inf" Role="user defined" Unit="tbd">(1.0 / (1.0 + exp(((V + 75.0) / 4.0))))</Parameter>
+        </Kinetics>
+      </SimpleReaction>
+      <SimpleReaction Structure="c0" Name="I_NMDA" Reversible="true" FluxOption="MolecularOnly" KeyValue="98751340">
+        <Reactant LocalizedCompoundRef="V" Stoichiometry="1" KeyValue="98751341" />
+        <Modifier LocalizedCompoundRef="s_NMDA" />
+        <Kinetics KineticsType="GeneralKinetics">
+          <Parameter Name="J" Role="reaction rate" Unit="uM.s-1">(((g_NMDA * s_NMDA * (V - V_NMDA)) / (C * A)) * scale)</Parameter>
+        </Kinetics>
+      </SimpleReaction>
+      <SimpleReaction Structure="c0" Name="I_AMPA" Reversible="true" FluxOption="MolecularOnly" KeyValue="98751343">
+        <Reactant LocalizedCompoundRef="V" Stoichiometry="1" KeyValue="98751344" />
+        <Modifier LocalizedCompoundRef="s_AMPA" />
+        <Kinetics KineticsType="GeneralKinetics">
+          <Parameter Name="J" Role="reaction rate" Unit="uM.s-1">(((g_AMPA * s_AMPA * (V - V_AMPA)) / (C * A)) * scale)</Parameter>
+          <Parameter Name="g_AMPA" Role="user defined" Unit="s-1.uM-1">0.513425</Parameter>
+          <Parameter Name="V_AMPA" Role="user defined" Unit="uM">1.0E-6</Parameter>
+        </Kinetics>
+      </SimpleReaction>
+      <SimpleReaction Structure="c0" Name="I_GABA" Reversible="true" FluxOption="MolecularOnly" KeyValue="98751346">
+        <Reactant LocalizedCompoundRef="V" Stoichiometry="1" KeyValue="98751347" />
+        <Modifier LocalizedCompoundRef="s_GABA" />
+        <Kinetics KineticsType="GeneralKinetics">
+          <Parameter Name="J" Role="reaction rate" Unit="uM.s-1">(((g_GABA * s_GABA * (V - V_GABA)) / (C * A)) * scale)</Parameter>
+          <Parameter Name="g_GABA" Role="user defined" Unit="s-1.uM-1">0.00252916</Parameter>
+          <Parameter Name="V_GABA" Role="user defined" Unit="uM">( - 70.0 * 0.001)</Parameter>
+        </Kinetics>
+      </SimpleReaction>
+      <SimpleReaction Structure="c0" Name="dh_Na" Reversible="true" FluxOption="MolecularOnly" KeyValue="98751349">
+        <Product LocalizedCompoundRef="h_Na" Stoichiometry="1" KeyValue="98751350" />
+        <Modifier LocalizedCompoundRef="V" />
+        <Kinetics KineticsType="GeneralKinetics">
+          <Parameter Name="J" Role="reaction rate" Unit="uM.s-1">((4.0 * ((alpha_h * (1.0 - h_Na)) - (beta_h * h_Na))) * flux_scale)</Parameter>
+          <Parameter Name="alpha_h" Role="user defined" Unit="s-1">(0.07 * exp(( - (V + 50.0) / 10.0)))</Parameter>
+          <Parameter Name="beta_h" Role="user defined" Unit="s-1">(1.0 / (1.0 + exp(( - (V + 20.0) / 10.0))))</Parameter>
+        </Kinetics>
+      </SimpleReaction>
+      <SimpleReaction Structure="c0" Name="dn_K" Reversible="true" FluxOption="MolecularOnly" KeyValue="98751351">
+        <Product LocalizedCompoundRef="n_K" Stoichiometry="1" KeyValue="98751352" />
+        <Modifier LocalizedCompoundRef="V" />
+        <Kinetics KineticsType="GeneralKinetics">
+          <Parameter Name="J" Role="reaction rate" Unit="uM.s-1">((4.0 * ((alpha_n * (1.0 - n_K)) - (beta_n * n_K * beta_scale))) * flux_scale)</Parameter>
+          <Parameter Name="alpha_n" Role="user defined" Unit="s-1">(0.01 * (V + 34.0) / (1.0 - exp(( - (V + 34.0) / 10.0))))</Parameter>
+          <Parameter Name="beta_n" Role="user defined" Unit="s-1">(0.125 * exp(( - (V + 44.0) / 25.0)))</Parameter>
+        </Kinetics>
+      </SimpleReaction>
+      <SimpleReaction Structure="c0" Name="dh_A" Reversible="true" FluxOption="MolecularOnly" KeyValue="98751353">
+        <Product LocalizedCompoundRef="h_A" Stoichiometry="1" KeyValue="98751354" />
+        <Modifier LocalizedCompoundRef="V" />
+        <Kinetics KineticsType="GeneralKinetics">
+          <Parameter Name="J" Role="reaction rate" Unit="uM.s-1">(((h_A_inf - h_A) / tau_h_A) * flux_scale)</Parameter>
+          <Parameter Name="tau_h_A" Role="user defined" Unit="s">15.0</Parameter>
+          <Parameter Name="h_A_inf" Role="user defined" Unit="uM">(1.0 / (1.0 + exp(((V + 80.0) / 6.0))))</Parameter>
+        </Kinetics>
+      </SimpleReaction>
+      <SimpleReaction Structure="c0" Name="dm_KS" Reversible="true" FluxOption="MolecularOnly" KeyValue="98751355">
+        <Product LocalizedCompoundRef="m_KS" Stoichiometry="1" KeyValue="98751356" />
+        <Modifier LocalizedCompoundRef="V" />
+        <Kinetics KineticsType="GeneralKinetics">
+          <Parameter Name="J" Role="reaction rate" Unit="uM.s-1">(((m_KS_inf - m_KS) / tau_m_KS) * flux_scale)</Parameter>
+          <Parameter Name="m_KS_inf" Role="user defined" Unit="uM">(1.0 / (1.0 + exp(( - (V + 34.0) / 6.5))))</Parameter>
+          <Parameter Name="tau_m_KS" Role="user defined" Unit="s">(8.0 / (exp(( - (V + 55.0) / 30.0)) + exp(((V + 50.0) / 30.0))))</Parameter>
+        </Kinetics>
+      </SimpleReaction>
+      <SimpleReaction Structure="c0" Name="ds_AMPA" Reversible="true" FluxOption="MolecularOnly" KeyValue="98751357">
+        <Product LocalizedCompoundRef="s_AMPA" Stoichiometry="1" KeyValue="98751358" />
+        <Kinetics KineticsType="GeneralKinetics">
+          <Parameter Name="J" Role="reaction rate" Unit="uM.s-1">(((3.48 * f) - (s_AMPA / tau_AMPA)) * flux_scale)</Parameter>
+          <Parameter Name="tau_AMPA" Role="user defined" Unit="s">2.0</Parameter>
+        </Kinetics>
+      </SimpleReaction>
+      <SimpleReaction Structure="c0" Name="ds_NMDA" Reversible="true" FluxOption="MolecularOnly" KeyValue="98751359">
+        <Product LocalizedCompoundRef="s_NMDA" Stoichiometry="1" KeyValue="98751360" />
+        <Modifier LocalizedCompoundRef="x_NMDA" />
+        <Kinetics KineticsType="GeneralKinetics">
+          <Parameter Name="J" Role="reaction rate" Unit="uM.s-1">(((0.5 * x_NMDA * (1.0 - s_NMDA)) - (s_NMDA / tau_s_NMDA)) * flux_scale)</Parameter>
+          <Parameter Name="tau_s_NMDA" Role="user defined" Unit="s">2.0</Parameter>
+        </Kinetics>
+      </SimpleReaction>
+      <SimpleReaction Structure="c0" Name="dx_NMDA" Reversible="true" FluxOption="MolecularOnly" KeyValue="98751362">
+        <Product LocalizedCompoundRef="x_NMDA" Stoichiometry="1" KeyValue="98751363" />
+        <Kinetics KineticsType="GeneralKinetics">
+          <Parameter Name="J" Role="reaction rate" Unit="uM.s-1">(((3.48 * f) - (x_NMDA / tau_x_NMDA)) * flux_scale)</Parameter>
+          <Parameter Name="tau_x_NMDA" Role="user defined" Unit="s">2.0</Parameter>
+        </Kinetics>
+      </SimpleReaction>
+      <SimpleReaction Structure="c0" Name="r0" Reversible="true" FluxOption="MolecularOnly" KeyValue="98751364">
+        <Product LocalizedCompoundRef="s_GABA" Stoichiometry="1" KeyValue="98751365" />
+        <Kinetics KineticsType="GeneralKinetics">
+          <Parameter Name="J" Role="reaction rate" Unit="uM.s-1">((f - (s_GABA / tau_GABA)) * flux_scale)</Parameter>
+          <Parameter Name="tau_GABA" Role="user defined" Unit="s">2.0</Parameter>
+        </Kinetics>
+      </SimpleReaction>
+      <SimpleReaction Structure="c0" Name="dCa" Reversible="true" FluxOption="MolecularOnly" KeyValue="98751366">
+        <Product LocalizedCompoundRef="Ca" Stoichiometry="1" KeyValue="98751367" />
+        <Modifier LocalizedCompoundRef="s_NMDA" />
+        <Modifier LocalizedCompoundRef="V" />
+        <Kinetics KineticsType="GeneralKinetics">
+          <Parameter Name="J" Role="reaction rate" Unit="uM.s-1">((( - alpha_Ca * ((A * I_Ca) + I_NMDA)) - (Ca / tau_Ca)) * flux_scale)</Parameter>
+          <Parameter Name="I_NMDA" Role="user defined" Unit="tbd">(g_NMDA * s_NMDA * (V - V_NMDA))</Parameter>
+          <Parameter Name="I_Ca" Role="user defined" Unit="tbd">(g_Ca * (m_Ca_inf ^ 2.0) * (V - V_Ca))</Parameter>
+          <Parameter Name="alpha_Ca" Role="user defined" Unit="tbd">0.5</Parameter>
+          <Parameter Name="tau_Ca" Role="user defined" Unit="s">2.0</Parameter>
+        </Kinetics>
+      </SimpleReaction>
+      <Diagram Name="c0" Structure="c0">
+        <SimpleReactionShape NodeReferenceModeAttrTag="full" SimpleReactionRef="I_KCa" LocationX="116" LocationY="149" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="Ca" LocationX="58" LocationY="188" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="h_Na" LocationX="341" LocationY="34" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="full" SimpleReactionRef="dn_K" LocationX="327" LocationY="130" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="full" SimpleReactionRef="ds_NMDA" LocationX="68" LocationY="75" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="full" SimpleReactionRef="ds_AMPA" LocationX="10" LocationY="145" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="x_NMDA" LocationX="63" LocationY="46" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="full" SimpleReactionRef="I_KS" LocationX="183" LocationY="171" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="full" SimpleReactionRef="I_GABA" LocationX="150" LocationY="54" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="full" SimpleReactionRef="I_Ca" LocationX="157" LocationY="155" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="full" SimpleReactionRef="I_NaP" LocationX="91" LocationY="135" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="V" LocationX="175" LocationY="86" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="full" SimpleReactionRef="I_AMPA" LocationX="77" LocationY="92" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="full" SimpleReactionRef="I_Na" LocationX="278" LocationY="118" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="full" SimpleReactionRef="dx_NMDA" LocationX="24" LocationY="81" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="s_AMPA" LocationX="9" LocationY="115" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="s_GABA" LocationX="181" LocationY="34" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="full" SimpleReactionRef="I_L" LocationX="348" LocationY="73" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="full" SimpleReactionRef="dCa" LocationX="128" LocationY="213" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="full" SimpleReactionRef="I_A" LocationX="207" LocationY="163" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="full" SimpleReactionRef="dm_KS" LocationX="152" LocationY="196" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="full" SimpleReactionRef="I_AR" LocationX="89" LocationY="112" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="m_KS" LocationX="194" LocationY="196" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="full" SimpleReactionRef="dh_A" LocationX="237" LocationY="203" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="h_A" LocationX="289" LocationY="199" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="full" SimpleReactionRef="r0" LocationX="178" LocationY="36" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="s_NMDA" LocationX="39" LocationY="93" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="n_K" LocationX="370" LocationY="125" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="full" SimpleReactionRef="I_K" LocationX="299" LocationY="162" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="full" SimpleReactionRef="dh_Na" LocationX="281" LocationY="51" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="full" SimpleReactionRef="I_NMDA" LocationX="88" LocationY="76" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="molecule" SimpleReactionRef="I_KCa" LocationX="116" LocationY="149" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="Ca" LocationX="58" LocationY="188" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="h_Na" LocationX="341" LocationY="34" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="molecule" SimpleReactionRef="dn_K" LocationX="327" LocationY="130" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="molecule" SimpleReactionRef="ds_NMDA" LocationX="68" LocationY="75" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="molecule" SimpleReactionRef="ds_AMPA" LocationX="10" LocationY="145" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="x_NMDA" LocationX="63" LocationY="46" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="molecule" SimpleReactionRef="I_KS" LocationX="183" LocationY="171" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="molecule" SimpleReactionRef="I_GABA" LocationX="150" LocationY="54" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="molecule" SimpleReactionRef="I_Ca" LocationX="157" LocationY="155" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="molecule" SimpleReactionRef="I_NaP" LocationX="91" LocationY="135" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="V" LocationX="175" LocationY="86" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="molecule" SimpleReactionRef="I_AMPA" LocationX="77" LocationY="92" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="molecule" SimpleReactionRef="I_Na" LocationX="278" LocationY="118" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="molecule" SimpleReactionRef="dx_NMDA" LocationX="24" LocationY="81" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="s_AMPA" LocationX="9" LocationY="115" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="s_GABA" LocationX="181" LocationY="34" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="molecule" SimpleReactionRef="I_L" LocationX="348" LocationY="73" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="molecule" SimpleReactionRef="dCa" LocationX="128" LocationY="213" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="molecule" SimpleReactionRef="I_A" LocationX="207" LocationY="163" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="molecule" SimpleReactionRef="dm_KS" LocationX="152" LocationY="196" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="molecule" SimpleReactionRef="I_AR" LocationX="89" LocationY="112" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="m_KS" LocationX="194" LocationY="196" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="molecule" SimpleReactionRef="dh_A" LocationX="237" LocationY="203" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="h_A" LocationX="289" LocationY="199" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="molecule" SimpleReactionRef="r0" LocationX="178" LocationY="36" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="s_NMDA" LocationX="39" LocationY="93" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="n_K" LocationX="370" LocationY="125" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="molecule" SimpleReactionRef="I_K" LocationX="299" LocationY="162" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="molecule" SimpleReactionRef="dh_Na" LocationX="281" LocationY="51" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="molecule" SimpleReactionRef="I_NMDA" LocationX="88" LocationY="76" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="rule" SimpleReactionRef="I_KCa" LocationX="116" LocationY="149" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="Ca" LocationX="58" LocationY="188" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="h_Na" LocationX="341" LocationY="34" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="rule" SimpleReactionRef="dn_K" LocationX="327" LocationY="130" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="rule" SimpleReactionRef="ds_NMDA" LocationX="68" LocationY="75" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="rule" SimpleReactionRef="ds_AMPA" LocationX="10" LocationY="145" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="x_NMDA" LocationX="63" LocationY="46" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="rule" SimpleReactionRef="I_KS" LocationX="183" LocationY="171" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="rule" SimpleReactionRef="I_GABA" LocationX="150" LocationY="54" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="rule" SimpleReactionRef="I_Ca" LocationX="157" LocationY="155" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="rule" SimpleReactionRef="I_NaP" LocationX="91" LocationY="135" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="V" LocationX="175" LocationY="86" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="rule" SimpleReactionRef="I_AMPA" LocationX="77" LocationY="92" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="rule" SimpleReactionRef="I_Na" LocationX="278" LocationY="118" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="rule" SimpleReactionRef="dx_NMDA" LocationX="24" LocationY="81" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="s_AMPA" LocationX="9" LocationY="115" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="s_GABA" LocationX="181" LocationY="34" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="rule" SimpleReactionRef="I_L" LocationX="348" LocationY="73" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="rule" SimpleReactionRef="dCa" LocationX="128" LocationY="213" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="rule" SimpleReactionRef="I_A" LocationX="207" LocationY="163" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="rule" SimpleReactionRef="dm_KS" LocationX="152" LocationY="196" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="rule" SimpleReactionRef="I_AR" LocationX="89" LocationY="112" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="m_KS" LocationX="194" LocationY="196" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="rule" SimpleReactionRef="dh_A" LocationX="237" LocationY="203" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="h_A" LocationX="289" LocationY="199" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="rule" SimpleReactionRef="r0" LocationX="178" LocationY="36" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="s_NMDA" LocationX="39" LocationY="93" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="n_K" LocationX="370" LocationY="125" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="rule" SimpleReactionRef="I_K" LocationX="299" LocationY="162" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="rule" SimpleReactionRef="dh_Na" LocationX="281" LocationY="51" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="rule" SimpleReactionRef="I_NMDA" LocationX="88" LocationY="76" />
+      </Diagram>
+      <Version Name="model" KeyValue="98751293" BranchId="98703265" Archived="0" Date="23-Mar-2016 01:18:15" FromVersionable="false">
+        <Owner Name="moutoutan" Identifier="73424874" />
+        <GroupAccess Type="1" />
+      </Version>
+      <ModelUnitSystem VolumeSubstanceUnit="uM.um3" MembraneSubstanceUnit="molecules" LumpedReactionSubstanceUnit="molecules" VolumeUnit="um3" AreaUnit="um2" LengthUnit="um" TimeUnit="s" />
+    </Model>
+    <SimulationSpec Name="Application0" Stochastic="false" UseConcentration="true" RuleBased="false" MassConservationModelReduction="true" InsufficientIterations="false" InsufficientMaxMolecules="false">
+      <NetworkConstraints RbmMaxIteration="3" RbmMaxMoleculesPerSpecies="10" RbmSpeciesLimit="800" RbmReactionsLimit="2500" />
+      <Annotation />
+      <Geometry Name="non-spatial1214314756" Dimension="0">
+        <Extent X="10.0" Y="10.0" Z="10.0" />
+        <Origin X="0.0" Y="0.0" Z="0.0" />
+        <SubVolume Name="Compartment" Handle="0" Type="Compartmental" KeyValue="98704736" />
+        <Version Name="non-spatial1214314756" KeyValue="98704732" BranchId="98704733" Archived="0" Date="18-Mar-2016 06:28:21" FromVersionable="false">
+          <Owner Name="moutoutan" Identifier="73424874" />
+          <GroupAccess Type="1" />
+        </Version>
+      </Geometry>
+      <GeometryContext>
+        <FeatureMapping Feature="c0" GeometryClass="Compartment" SubVolume="Compartment" Size="50000.0">
+          <BoundariesTypes Xm="Flux" Xp="Flux" Ym="Flux" Yp="Flux" Zm="Flux" Zp="Flux" />
+        </FeatureMapping>
+      </GeometryContext>
+      <ReactionContext>
+        <LocalizedCompoundSpec LocalizedCompoundRef="V" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>-50.0</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="h_Na" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>0.1</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="n_K" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>0.5</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="h_A" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>0.9610191201528887</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="m_KS" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>0.5</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="s_AMPA" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>0.002</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="s_NMDA" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>0.02</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="x_NMDA" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>0.017</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="s_GABA" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>5.0E-4</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="Ca" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>0.5</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <ReactionSpec ReactionStepRef="I_L" ReactionMapping="included" />
+        <ReactionSpec ReactionStepRef="I_Na" ReactionMapping="included" />
+        <ReactionSpec ReactionStepRef="I_K" ReactionMapping="included" />
+        <ReactionSpec ReactionStepRef="I_A" ReactionMapping="included" />
+        <ReactionSpec ReactionStepRef="I_KS" ReactionMapping="included" />
+        <ReactionSpec ReactionStepRef="I_Ca" ReactionMapping="included" />
+        <ReactionSpec ReactionStepRef="I_KCa" ReactionMapping="included" />
+        <ReactionSpec ReactionStepRef="I_NaP" ReactionMapping="included" />
+        <ReactionSpec ReactionStepRef="I_AR" ReactionMapping="included" />
+        <ReactionSpec ReactionStepRef="I_NMDA" ReactionMapping="included" />
+        <ReactionSpec ReactionStepRef="I_AMPA" ReactionMapping="included" />
+        <ReactionSpec ReactionStepRef="I_GABA" ReactionMapping="included" />
+        <ReactionSpec ReactionStepRef="dh_Na" ReactionMapping="included" />
+        <ReactionSpec ReactionStepRef="dn_K" ReactionMapping="included" />
+        <ReactionSpec ReactionStepRef="dh_A" ReactionMapping="included" />
+        <ReactionSpec ReactionStepRef="dm_KS" ReactionMapping="included" />
+        <ReactionSpec ReactionStepRef="ds_AMPA" ReactionMapping="included" />
+        <ReactionSpec ReactionStepRef="ds_NMDA" ReactionMapping="included" />
+        <ReactionSpec ReactionStepRef="dx_NMDA" ReactionMapping="included" />
+        <ReactionSpec ReactionStepRef="r0" ReactionMapping="included" />
+        <ReactionSpec ReactionStepRef="dCa" ReactionMapping="included" />
+      </ReactionContext>
+      <MathDescription Name="Application0_generated">
+        <Constant Name="_F_">96480.0</Constant>
+        <Constant Name="_F_nmol_">9.648E-5</Constant>
+        <Constant Name="_K_GHK_">1.0E-9</Constant>
+        <Constant Name="_N_pmol_">6.02E11</Constant>
+        <Constant Name="_PI_">3.141592653589793</Constant>
+        <Constant Name="_R_">8314.0</Constant>
+        <Constant Name="_T_">300.0</Constant>
+        <Constant Name="A">0.02</Constant>
+        <Constant Name="alpha_Ca">0.5</Constant>
+        <Constant Name="beta_scale">1.0</Constant>
+        <Constant Name="C">1.0E-6</Constant>
+        <Constant Name="Ca_init_uM">0.5</Constant>
+        <Constant Name="flux_scale">1.0</Constant>
+        <Constant Name="g_A">1.79259</Constant>
+        <Constant Name="g_AMPA">0.513425</Constant>
+        <Constant Name="g_AR">2.34906</Constant>
+        <Constant Name="g_Ca">0.0717984</Constant>
+        <Constant Name="g_GABA">0.00252916</Constant>
+        <Constant Name="g_k">2.61868</Constant>
+        <Constant Name="g_K_Ca">0.0166454</Constant>
+        <Constant Name="g_KS">0.0350135</Constant>
+        <Constant Name="g_L">0.03573</Constant>
+        <Constant Name="g_Na">12.24381</Constant>
+        <Constant Name="g_Na_P">0.0256867</Constant>
+        <Constant Name="g_NMDA">0.00434132</Constant>
+        <Constant Name="h_A_init_uM">0.9610191201528887</Constant>
+        <Constant Name="h_Na_init_uM">0.1</Constant>
+        <Constant Name="K_D">30.0</Constant>
+        <Constant Name="K_millivolts_per_volt">1000.0</Constant>
+        <Constant Name="KMOLE">(1.0 / 602.0)</Constant>
+        <Constant Name="m_KS_init_uM">0.5</Constant>
+        <Constant Name="n_K_init_uM">0.5</Constant>
+        <Constant Name="s_AMPA_init_uM">0.002</Constant>
+        <Constant Name="s_GABA_init_uM">5.0E-4</Constant>
+        <Constant Name="s_NMDA_init_uM">0.02</Constant>
+        <Constant Name="scale">1.0</Constant>
+        <Constant Name="Size_c0">50000.0</Constant>
+        <Constant Name="tau_AMPA">2.0</Constant>
+        <Constant Name="tau_Ca">2.0</Constant>
+        <Constant Name="tau_GABA">2.0</Constant>
+        <Constant Name="tau_h_A">15.0</Constant>
+        <Constant Name="tau_s_NMDA">2.0</Constant>
+        <Constant Name="tau_x_NMDA">2.0</Constant>
+        <Constant Name="V_AMPA">1.0E-6</Constant>
+        <Constant Name="V_Ca">120.0</Constant>
+        <Constant Name="V_init_uM">-50.0</Constant>
+        <Constant Name="V_L">-60.95</Constant>
+        <Constant Name="V_Na">55.0</Constant>
+        <Constant Name="V_NMDA">1.0E-8</Constant>
+        <Constant Name="x_NMDA_init_uM">0.017</Constant>
+        <VolumeVariable Name="Ca" Domain="Compartment" />
+        <VolumeVariable Name="h_A" Domain="Compartment" />
+        <VolumeVariable Name="h_Na" Domain="Compartment" />
+        <VolumeVariable Name="m_KS" Domain="Compartment" />
+        <VolumeVariable Name="n_K" Domain="Compartment" />
+        <VolumeVariable Name="s_AMPA" Domain="Compartment" />
+        <VolumeVariable Name="s_GABA" Domain="Compartment" />
+        <VolumeVariable Name="s_NMDA" Domain="Compartment" />
+        <VolumeVariable Name="V" Domain="Compartment" />
+        <VolumeVariable Name="x_NMDA" Domain="Compartment" />
+        <Function Name="alpha_h" Domain="Compartment">(0.07 * exp(( - (V + 50.0) / 10.0)))</Function>
+        <Function Name="alpha_m" Domain="Compartment">(0.1 * (V + 33.0) / (1.0 - exp(( - (V + 33.0) / 10.0))))</Function>
+        <Function Name="alpha_n" Domain="Compartment">(0.01 * (V + 34.0) / (1.0 - exp(( - (V + 34.0) / 10.0))))</Function>
+        <Function Name="beta_h" Domain="Compartment">(1.0 / (1.0 + exp(( - (V + 20.0) / 10.0))))</Function>
+        <Function Name="beta_m" Domain="Compartment">(4.0 * exp(( - (V + 53.7) / 12.0)))</Function>
+        <Function Name="beta_n" Domain="Compartment">(0.125 * exp(( - (V + 44.0) / 25.0)))</Function>
+        <Function Name="f">(1.0 / (1.0 + exp(( - (V - 20.0) / 2.0))))</Function>
+        <Function Name="h_A_inf" Domain="Compartment">(1.0 / (1.0 + exp(((V + 80.0) / 6.0))))</Function>
+        <Function Name="h_AR_inf" Domain="Compartment">(1.0 / (1.0 + exp(((V + 75.0) / 4.0))))</Function>
+        <Function Name="I_Ca" Domain="Compartment">(g_Ca * (m_Ca_inf ^ 2.0) * (V - V_Ca))</Function>
+        <Function Name="I_NMDA" Domain="Compartment">(g_NMDA * s_NMDA * (V - V_NMDA))</Function>
+        <Function Name="J_dCa" Domain="Compartment">((( - alpha_Ca * ((A * I_Ca) + I_NMDA)) - (Ca / tau_Ca)) * flux_scale)</Function>
+        <Function Name="J_dh_A" Domain="Compartment">(((h_A_inf - h_A) / tau_h_A) * flux_scale)</Function>
+        <Function Name="J_dh_Na" Domain="Compartment">((4.0 * ((alpha_h * (1.0 - h_Na)) - (beta_h * h_Na))) * flux_scale)</Function>
+        <Function Name="J_dm_KS" Domain="Compartment">(((m_KS_inf - m_KS) / tau_m_KS) * flux_scale)</Function>
+        <Function Name="J_dn_K" Domain="Compartment">((4.0 * ((alpha_n * (1.0 - n_K)) - (beta_n * n_K * beta_scale))) * flux_scale)</Function>
+        <Function Name="J_ds_AMPA" Domain="Compartment">(((3.48 * f) - (s_AMPA / tau_AMPA)) * flux_scale)</Function>
+        <Function Name="J_ds_NMDA" Domain="Compartment">(((0.5 * x_NMDA * (1.0 - s_NMDA)) - (s_NMDA / tau_s_NMDA)) * flux_scale)</Function>
+        <Function Name="J_dx_NMDA" Domain="Compartment">(((3.48 * f) - (x_NMDA / tau_x_NMDA)) * flux_scale)</Function>
+        <Function Name="J_I_A" Domain="Compartment">((g_A * (m_A_inf ^ 3.0) * h_A * (V - V_K)) / C * scale)</Function>
+        <Function Name="J_I_AMPA" Domain="Compartment">(((g_AMPA * s_AMPA * (V - V_AMPA)) / (C * A)) * scale)</Function>
+        <Function Name="J_I_AR" Domain="Compartment">((g_AR * h_AR_inf * (V - V_K)) / C * scale)</Function>
+        <Function Name="J_I_Ca" Domain="Compartment">((g_Ca * (m_Ca_inf ^ 2.0) * (V - V_Ca)) / C * scale)</Function>
+        <Function Name="J_I_GABA" Domain="Compartment">(((g_GABA * s_GABA * (V - V_GABA)) / (C * A)) * scale)</Function>
+        <Function Name="J_I_K" Domain="Compartment">((g_k * (n_K ^ 4.0) * (V - V_K)) / C * scale)</Function>
+        <Function Name="J_I_KCa" Domain="Compartment">((g_K_Ca * m_K_Ca_inf * (V - V_K)) / C * scale)</Function>
+        <Function Name="J_I_KS" Domain="Compartment">((g_KS * m_KS * (V - V_K)) / C * scale)</Function>
+        <Function Name="J_I_L" Domain="Compartment">((g_L * (V - V_L)) / C * scale)</Function>
+        <Function Name="J_I_Na" Domain="Compartment">((g_Na * (m_Na_inf ^ 3.0) * h_Na * (V - V_Na)) / C * scale)</Function>
+        <Function Name="J_I_NaP" Domain="Compartment">((g_Na_P * m_Na_P_inf * (V - V_Na)) / C * scale)</Function>
+        <Function Name="J_I_NMDA" Domain="Compartment">(((g_NMDA * s_NMDA * (V - V_NMDA)) / (C * A)) * scale)</Function>
+        <Function Name="J_r0" Domain="Compartment">((f - (s_GABA / tau_GABA)) * flux_scale)</Function>
+        <Function Name="m_A_inf" Domain="Compartment">(1.0 / (1.0 + exp(( - (V + 50.0) / 20.0))))</Function>
+        <Function Name="m_Ca_inf">(1.0 / (1.0 + (1.0 * exp(( - (V + 20.0) / 9.0)))))</Function>
+        <Function Name="m_K_Ca_inf" Domain="Compartment">(1.0 / (1.0 + ((K_D / Ca) ^ 3.5)))</Function>
+        <Function Name="m_KS_inf" Domain="Compartment">(1.0 / (1.0 + exp(( - (V + 34.0) / 6.5))))</Function>
+        <Function Name="m_Na_inf" Domain="Compartment">(alpha_m / (alpha_m + beta_m))</Function>
+        <Function Name="m_Na_P_inf" Domain="Compartment">(1.0 / (1.0 + exp(( - (V + 55.7) / 7.7))))</Function>
+        <Function Name="tau_m_KS" Domain="Compartment">(8.0 / (exp(( - (V + 55.0) / 30.0)) + exp(((V + 50.0) / 30.0))))</Function>
+        <Function Name="V_GABA" Domain="Compartment">( - 70.0 * 0.001)</Function>
+        <Function Name="V_K">- 100.0</Function>
+        <CompartmentSubDomain Name="Compartment">
+          <BoundaryType Boundary="Xm" Type="Value" />
+          <BoundaryType Boundary="Xp" Type="Value" />
+          <BoundaryType Boundary="Ym" Type="Value" />
+          <BoundaryType Boundary="Yp" Type="Value" />
+          <BoundaryType Boundary="Zm" Type="Value" />
+          <BoundaryType Boundary="Zp" Type="Value" />
+          <OdeEquation Name="V" SolutionType="Unknown">
+            <Rate>( - J_I_L - J_I_Na - J_I_K - J_I_A - J_I_KS - J_I_Ca - J_I_KCa - J_I_NaP - J_I_AR - J_I_NMDA - J_I_AMPA - J_I_GABA)</Rate>
+            <Initial>V_init_uM</Initial>
+          </OdeEquation>
+          <OdeEquation Name="h_Na" SolutionType="Unknown">
+            <Rate>J_dh_Na</Rate>
+            <Initial>h_Na_init_uM</Initial>
+          </OdeEquation>
+          <OdeEquation Name="n_K" SolutionType="Unknown">
+            <Rate>J_dn_K</Rate>
+            <Initial>n_K_init_uM</Initial>
+          </OdeEquation>
+          <OdeEquation Name="h_A" SolutionType="Unknown">
+            <Rate>J_dh_A</Rate>
+            <Initial>h_A_init_uM</Initial>
+          </OdeEquation>
+          <OdeEquation Name="m_KS" SolutionType="Unknown">
+            <Rate>J_dm_KS</Rate>
+            <Initial>m_KS_init_uM</Initial>
+          </OdeEquation>
+          <OdeEquation Name="s_AMPA" SolutionType="Unknown">
+            <Rate>J_ds_AMPA</Rate>
+            <Initial>s_AMPA_init_uM</Initial>
+          </OdeEquation>
+          <OdeEquation Name="s_NMDA" SolutionType="Unknown">
+            <Rate>J_ds_NMDA</Rate>
+            <Initial>s_NMDA_init_uM</Initial>
+          </OdeEquation>
+          <OdeEquation Name="x_NMDA" SolutionType="Unknown">
+            <Rate>J_dx_NMDA</Rate>
+            <Initial>x_NMDA_init_uM</Initial>
+          </OdeEquation>
+          <OdeEquation Name="s_GABA" SolutionType="Unknown">
+            <Rate>J_r0</Rate>
+            <Initial>s_GABA_init_uM</Initial>
+          </OdeEquation>
+          <OdeEquation Name="Ca" SolutionType="Unknown">
+            <Rate>J_dCa</Rate>
+            <Initial>Ca_init_uM</Initial>
+          </OdeEquation>
+        </CompartmentSubDomain>
+        <Version Name="Application0_generated" KeyValue="98751291" BranchId="98704738" Archived="0" Date="23-Mar-2016 01:18:15" FromVersionable="false">
+          <Owner Name="moutoutan" Identifier="73424874" />
+          <GroupAccess Type="1" />
+        </Version>
+      </MathDescription>
+      <Simulation Name="Simulation0">
+        <SolverTaskDescription TaskType="Unsteady" UseSymbolicJacobian="false" Solver="CVODE (Variable Order, Variable Time Step)">
+          <TimeBound StartTime="0.0" EndTime="30.0" />
+          <TimeStep DefaultTime="1.0E-4" MinTime="1.0E-20" MaxTime="1.0" />
+          <ErrorTolerance Absolut="1.0E-9" Relative="1.0E-9" />
+          <OutputOptions KeepEvery="1" KeepAtMost="20000" />
+          <NumberProcessors>1</NumberProcessors>
+        </SolverTaskDescription>
+        <MathOverrides>
+          <Constant Name="g_k">1.3</Constant>
+          <Constant Name="g_KS">0.25</Constant>
+          <Constant Name="g_Na">6.0</Constant>
+          <Constant Name="h_A_init_uM">0.001</Constant>
+          <Constant Name="V_init_uM">-30.0</Constant>
+        </MathOverrides>
+        <Version Name="Simulation0" KeyValue="98751480" BranchId="98707113" Archived="0" Date="23-Mar-2016 02:04:39" FromVersionable="false">
+          <Owner Name="moutoutan" Identifier="73424874" />
+          <GroupAccess Type="1" />
+        </Version>
+      </Simulation>
+      <Simulation Name="Copy of Simulation0">
+        <SolverTaskDescription TaskType="Unsteady" UseSymbolicJacobian="false" Solver="CVODE (Variable Order, Variable Time Step)">
+          <TimeBound StartTime="0.0" EndTime="40.0" />
+          <TimeStep DefaultTime="1.0E-4" MinTime="1.0E-20" MaxTime="1.0" />
+          <ErrorTolerance Absolut="1.0E-9" Relative="1.0E-9" />
+          <OutputOptions KeepEvery="1" KeepAtMost="100000" />
+          <NumberProcessors>1</NumberProcessors>
+        </SolverTaskDescription>
+        <MathOverrides>
+          <Constant Name="A" ConstantArraySpec="1001">0.1 to 0.2, log, 20 values</Constant>
+          <Constant Name="h_A_init_uM">0.001</Constant>
+          <Constant Name="V_init_uM">-30.0</Constant>
+        </MathOverrides>
+        <Version Name="Copy of Simulation0" KeyValue="98751406" BranchId="98712659" Archived="0" Date="23-Mar-2016 01:18:17" FromVersionable="false">
+          <Owner Name="moutoutan" Identifier="73424874" />
+          <GroupAccess Type="1" />
+        </Version>
+      </Simulation>
+      <Simulation Name="Simulation1">
+        <SolverTaskDescription TaskType="Unsteady" UseSymbolicJacobian="false" Solver="Combined Stiff Solver (IDA/CVODE)">
+          <TimeBound StartTime="0.0" EndTime="33.0" />
+          <TimeStep DefaultTime="0.1" MinTime="1.0E-8" MaxTime="1.0" />
+          <ErrorTolerance Absolut="1.0E-9" Relative="1.0E-9" />
+          <OutputOptions KeepEvery="1" KeepAtMost="5555" />
+          <NumberProcessors>1</NumberProcessors>
+        </SolverTaskDescription>
+        <MathOverrides />
+        <Version Name="Simulation1" KeyValue="98751408" BranchId="98713520" Archived="0" Date="23-Mar-2016 01:18:17" FromVersionable="false">
+          <Owner Name="moutoutan" Identifier="73424874" />
+          <GroupAccess Type="1" />
+        </Version>
+      </Simulation>
+      <Simulation Name="Copy of Simulation1">
+        <SolverTaskDescription TaskType="Unsteady" UseSymbolicJacobian="false" Solver="Combined Stiff Solver (IDA/CVODE)">
+          <TimeBound StartTime="0.0" EndTime="33.0" />
+          <TimeStep DefaultTime="0.1" MinTime="1.0E-8" MaxTime="1.0" />
+          <ErrorTolerance Absolut="1.0E-9" Relative="1.0E-9" />
+          <OutputOptions KeepEvery="1" KeepAtMost="10000" />
+          <NumberProcessors>1</NumberProcessors>
+        </SolverTaskDescription>
+        <MathOverrides>
+          <Constant Name="Ca_init_uM">5.0E-5</Constant>
+          <Constant Name="alpha_Ca" ConstantArraySpec="1001">0.01 to 5.0, log, 10 values</Constant>
+          <Constant Name="tau_Ca" ConstantArraySpec="1001">0.5 to 6.0, 10 values</Constant>
+          <Constant Name="s_GABA_init_uM">5.0E-6</Constant>
+          <Constant Name="h_A_init_uM">5.0E-4</Constant>
+          <Constant Name="x_NMDA_init_uM">2.0E-5</Constant>
+          <Constant Name="s_AMPA_init_uM">2.0E-5</Constant>
+          <Constant Name="s_NMDA_init_uM">2.0E-5</Constant>
+        </MathOverrides>
+        <Version Name="Copy of Simulation1" KeyValue="98751410" BranchId="98713846" Archived="0" Date="23-Mar-2016 01:18:17" FromVersionable="false">
+          <Owner Name="moutoutan" Identifier="73424874" />
+          <GroupAccess Type="1" />
+        </Version>
+      </Simulation>
+      <Simulation Name="Copy of Simulation0 1">
+        <SolverTaskDescription TaskType="Unsteady" UseSymbolicJacobian="false" Solver="CVODE (Variable Order, Variable Time Step)">
+          <TimeBound StartTime="0.0" EndTime="22.0" />
+          <TimeStep DefaultTime="1.0E-4" MinTime="1.0E-20" MaxTime="1.0" />
+          <ErrorTolerance Absolut="1.0E-9" Relative="1.0E-9" />
+          <OutputOptions KeepEvery="1" KeepAtMost="20000" />
+          <NumberProcessors>1</NumberProcessors>
+        </SolverTaskDescription>
+        <MathOverrides>
+          <Constant Name="g_k">2.3</Constant>
+          <Constant Name="g_Na">6.0</Constant>
+          <Constant Name="h_A_init_uM">0.001</Constant>
+        </MathOverrides>
+        <Version Name="Copy of Simulation0 1" KeyValue="98751447" BranchId="98751448" Archived="0" Date="23-Mar-2016 01:51:46" FromVersionable="false">
+          <Owner Name="moutoutan" Identifier="73424874" />
+          <GroupAccess Type="1" />
+        </Version>
+      </Simulation>
+      <Version Name="Application0" KeyValue="98751370" BranchId="98704817" Archived="0" Date="23-Mar-2016 01:18:16" FromVersionable="false">
+        <Owner Name="moutoutan" Identifier="73424874" />
+        <GroupAccess Type="1" />
+      </Version>
+      <MicroscopeMeasurement Name="fluor">
+        <ConvolutionKernel Type="ProjectionZKernel" />
+      </MicroscopeMeasurement>
+    </SimulationSpec>
+    <Version Name="Fumiya Tatsuki et al Involvement of Ca2 Dependent Hyperpolarization in Sleep Duration in Mammals" KeyValue="98751482" BranchId="98751483" Archived="0" Date="23-Mar-2016 02:04:39" FromVersionable="false">
+      <Owner Name="moutoutan" Identifier="73424874" />
+      <GroupAccess Type="1" />
+    </Version>
+    <pathwayModel>
+      <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:bp="http://www.biopax.org/release/biopax-level3.owl#" version="3.0" />
+    </pathwayModel>
+    <relationshipModel>
+      <RMNS version="3.0" />
+    </relationshipModel>
+    <vcmetadata>
+      <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" />
+      <nonrdfAnnotationList />
+      <uriBindingList />
+    </vcmetadata>
+  </BioModel>
+</vcml>
+

@@ -1,0 +1,287 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--This biomodel was generated in VCML Version Alpha_Version_7.4.0_build_87-->
+<vcml xmlns="http://sourceforge.net/projects/vcell/vcml" Version="Alpha_Version_7.4.0_build_87">
+  <BioModel Name="PhyB">
+    <Annotation>cloned from 'forfernando' owned by user bfalken</Annotation>
+    <Model Name="unnamed">
+      <Annotation>cloned from 'unnamed' owned by user bfalken</Annotation>
+      <ModelParameters>
+        <Parameter Name="universal" Role="user defined" Unit="s-1">5.0</Parameter>
+        <Parameter Name="start" Role="user defined" Unit="s">100.0</Parameter>
+        <Parameter Name="end" Role="user defined" Unit="s">200.0</Parameter>
+        <Parameter Name="k" Role="user defined" Unit="um2.molecules-1.s-1">0.0</Parameter>
+      </ModelParameters>
+      <Compound Name="PIP" />
+      <Compound Name="pif" />
+      <Compound Name="phy" />
+      <Compound Name="active5P" />
+      <Compound Name="PIP2" />
+      <Compound Name="PI" />
+      <Feature Name="Unnamed compartment" KeyValue="47745336" />
+      <Feature Name="cytosol" KeyValue="47745339" />
+      <Membrane InsideFeature="cytosol" OutsideFeature="Unnamed compartment" PositiveFeature="cytosol" NegativeFeature="Unnamed compartment" MembraneVoltage="Voltage_PM" Name="PM" KeyValue="47745338" />
+      <LocalizedCompound Name="PIP_PM" CompoundRef="PIP" Structure="PM" OverrideName="true" KeyValue="47745342" />
+      <LocalizedCompound Name="pif_cytosol" CompoundRef="pif" Structure="cytosol" OverrideName="true" KeyValue="47745343" />
+      <LocalizedCompound Name="phy_PM" CompoundRef="phy" Structure="PM" OverrideName="true" KeyValue="47745344" />
+      <LocalizedCompound Name="active5P_PM" CompoundRef="active5P" Structure="PM" OverrideName="true" KeyValue="47745345" />
+      <LocalizedCompound Name="PIP2_PM" CompoundRef="PIP2" Structure="PM" OverrideName="true" KeyValue="47745346" />
+      <LocalizedCompound Name="PI_PM" CompoundRef="PI" Structure="PM" OverrideName="true" KeyValue="47745347" />
+      <SimpleReaction Structure="PM" Name="PI4K" Reversible="true" FluxOption="MolecularOnly" KeyValue="47745348">
+        <Reactant LocalizedCompoundRef="PI_PM" Stoichiometry="1" KeyValue="47745349" />
+        <Product LocalizedCompoundRef="PIP_PM" Stoichiometry="1" KeyValue="47745350" />
+        <Kinetics KineticsType="MassAction">
+          <Parameter Name="J" Role="reaction rate" Unit="molecules.um-2.s-1">((Kf * PI_PM) - (Kr * PIP_PM))</Parameter>
+          <Parameter Name="I" Role="inward current density" Unit="pA.um-2">0.0</Parameter>
+          <Parameter Name="netValence" Role="net charge valence" Unit="1">0.0</Parameter>
+          <Parameter Name="Kf" Role="forward rate constant" Unit="s-1">speed</Parameter>
+          <Parameter Name="Kr" Role="reverse rate constant" Unit="s-1">(KD * speed)</Parameter>
+          <Parameter Name="speed" Role="user defined" Unit="s-1">6.0</Parameter>
+          <Parameter Name="KD" Role="user defined" Unit="1">0.1</Parameter>
+        </Kinetics>
+      </SimpleReaction>
+      <SimpleReaction Structure="PM" Name="translocation" Reversible="true" FluxOption="MolecularOnly" KeyValue="47745351">
+        <Reactant LocalizedCompoundRef="phy_PM" Stoichiometry="1" KeyValue="47745352" />
+        <Reactant LocalizedCompoundRef="pif_cytosol" Stoichiometry="1" KeyValue="47745353" />
+        <Product LocalizedCompoundRef="active5P_PM" Stoichiometry="1" KeyValue="47745354" />
+        <Kinetics KineticsType="MassAction">
+          <Parameter Name="J" Role="reaction rate" Unit="molecules.um-2.s-1">(((Kf * phy_PM) * pif_cytosol) - (Kr * active5P_PM))</Parameter>
+          <Parameter Name="I" Role="inward current density" Unit="pA.um-2">0.0</Parameter>
+          <Parameter Name="netValence" Role="net charge valence" Unit="1">0.0</Parameter>
+          <Parameter Name="Kf" Role="forward rate constant" Unit="s-1.uM-1">(kf_trans * lightON)</Parameter>
+          <Parameter Name="Kr" Role="reverse rate constant" Unit="s-1">2.0</Parameter>
+          <Parameter Name="kf_trans" Role="user defined" Unit="tbd">5.0</Parameter>
+          <Parameter Name="lightON" Role="user defined" Unit="uM-1.s-1">((t &gt; start) * (t &lt; end))</Parameter>
+        </Kinetics>
+      </SimpleReaction>
+      <SimpleReaction Structure="PM" Name="PI5K_5P" Reversible="true" FluxOption="MolecularOnly" KeyValue="47745355">
+        <Reactant LocalizedCompoundRef="PIP_PM" Stoichiometry="1" KeyValue="47745356" />
+        <Product LocalizedCompoundRef="PIP2_PM" Stoichiometry="1" KeyValue="47745357" />
+        <Modifier LocalizedCompoundRef="active5P_PM" />
+        <Kinetics KineticsType="MassAction">
+          <Parameter Name="J" Role="reaction rate" Unit="molecules.um-2.s-1">((K5K * PIP_PM) - (K5P * PIP2_PM))</Parameter>
+          <Parameter Name="I" Role="inward current density" Unit="pA.um-2">0.0</Parameter>
+          <Parameter Name="netValence" Role="net charge valence" Unit="1">0.0</Parameter>
+          <Parameter Name="K5K" Role="forward rate constant" Unit="s-1">0.2</Parameter>
+          <Parameter Name="K5P" Role="reverse rate constant" Unit="s-1">(0.2 + (k * active5P_PM))</Parameter>
+          <Parameter Name="k" Role="user defined" Unit="um2.molecules-1.s-1">0.1</Parameter>
+        </Kinetics>
+      </SimpleReaction>
+      <Diagram Name="Unnamed compartment" Structure="Unnamed compartment" />
+      <Diagram Name="PM" Structure="PM">
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="PI_PM" LocationX="90" LocationY="152" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="PIP_PM" LocationX="101" LocationY="288" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="full" SimpleReactionRef="PI4K" LocationX="94" LocationY="210" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="pif_cytosol" LocationX="46" LocationY="224" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="phy_PM" LocationX="212" LocationY="437" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="active5P_PM" LocationX="210" LocationY="247" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="full" SimpleReactionRef="translocation" LocationX="252" LocationY="322" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="PIP2_PM" LocationX="102" LocationY="407" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="full" SimpleReactionRef="PI5K_5P" LocationX="97" LocationY="341" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="PI_PM" LocationX="90" LocationY="152" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="PIP_PM" LocationX="101" LocationY="288" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="molecule" SimpleReactionRef="PI4K" LocationX="94" LocationY="210" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="pif_cytosol" LocationX="46" LocationY="224" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="phy_PM" LocationX="212" LocationY="437" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="active5P_PM" LocationX="210" LocationY="247" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="molecule" SimpleReactionRef="translocation" LocationX="252" LocationY="322" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="PIP2_PM" LocationX="102" LocationY="407" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="molecule" SimpleReactionRef="PI5K_5P" LocationX="97" LocationY="341" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="PI_PM" LocationX="90" LocationY="152" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="PIP_PM" LocationX="101" LocationY="288" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="rule" SimpleReactionRef="PI4K" LocationX="94" LocationY="210" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="pif_cytosol" LocationX="46" LocationY="224" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="phy_PM" LocationX="212" LocationY="437" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="active5P_PM" LocationX="210" LocationY="247" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="rule" SimpleReactionRef="translocation" LocationX="252" LocationY="322" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="PIP2_PM" LocationX="102" LocationY="407" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="rule" SimpleReactionRef="PI5K_5P" LocationX="97" LocationY="341" />
+      </Diagram>
+      <Diagram Name="cytosol" Structure="cytosol" />
+      <Version Name="unnamed" KeyValue="47745327" BranchId="47745328" Archived="0" Date="19-Aug-2010 18:13:53" FromVersionable="false">
+        <Owner Name="IFGonzalez" Identifier="47744957" />
+        <GroupAccess Type="1" />
+        <Annotation>cloned from 'unnamed' owned by user bfalken</Annotation>
+      </Version>
+      <ModelUnitSystem VolumeSubstanceUnit="uM.um3" MembraneSubstanceUnit="molecules" LumpedReactionSubstanceUnit="molecules" VolumeUnit="um3" AreaUnit="um2" LengthUnit="um" TimeUnit="s" />
+    </Model>
+    <SimulationSpec Name="sim1" Stochastic="false" UseConcentration="true" RuleBased="false" MassConservationModelReduction="true" InsufficientIterations="false" InsufficientMaxMolecules="false">
+      <NetworkConstraints RbmMaxIteration="1" RbmMaxMoleculesPerSpecies="10" RbmSpeciesLimit="800" RbmReactionsLimit="2500" />
+      <Annotation>cloned from 'sim1' owned by user bfalken</Annotation>
+      <Geometry Name="non-spatial1716562893" Dimension="0">
+        <Annotation>cloned from 'non-spatial1716562893' owned by user bfalken</Annotation>
+        <Extent X="10.0" Y="10.0" Z="10.0" />
+        <Origin X="0.0" Y="0.0" Z="0.0" />
+        <SubVolume Name="Compartment" Handle="0" Type="Compartmental" KeyValue="47745323" />
+        <Version Name="non-spatial1716562893" KeyValue="47745319" BranchId="47745320" Archived="0" Date="19-Aug-2010 18:13:53" FromVersionable="false">
+          <Owner Name="IFGonzalez" Identifier="47744957" />
+          <GroupAccess Type="1" />
+          <Annotation>cloned from 'non-spatial1716562893' owned by user bfalken</Annotation>
+        </Version>
+      </Geometry>
+      <GeometryContext>
+        <FeatureMapping Feature="Unnamed compartment" GeometryClass="Compartment" SubVolume="Compartment" Size="100000.0">
+          <BoundariesTypes Xm="Flux" Xp="Flux" Ym="Flux" Yp="Flux" Zm="Flux" Zp="Flux" />
+        </FeatureMapping>
+        <FeatureMapping Feature="cytosol" GeometryClass="Compartment" SubVolume="Compartment" Size="700.0">
+          <BoundariesTypes Xm="Flux" Xp="Flux" Ym="Flux" Yp="Flux" Zm="Flux" Zp="Flux" />
+        </FeatureMapping>
+        <MembraneMapping Membrane="PM" SurfaceToVolumeRatio="2.142857142857143" VolumeFraction="0.006951340615690168" Size="1500.0" CalculateVoltage="false" SpecificCapacitance="1.0" InitialVoltage="0.0" GeometryClass="Compartment">
+          <BoundariesTypes Xm="Flux" Xp="Flux" Ym="Flux" Yp="Flux" Zm="Flux" Zp="Flux" />
+        </MembraneMapping>
+      </GeometryContext>
+      <ReactionContext>
+        <LocalizedCompoundSpec LocalizedCompoundRef="pif_cytosol" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>3.0</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="PIP_PM" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>4000.0</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="phy_PM" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>3000.0</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="active5P_PM" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>0.0</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="PIP2_PM" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>5000.0</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="PI_PM" ForceConstant="true" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>140000.0</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <ReactionSpec ReactionStepRef="PI4K" ReactionMapping="included" />
+        <ReactionSpec ReactionStepRef="translocation" ReactionMapping="included" />
+        <ReactionSpec ReactionStepRef="PI5K_5P" ReactionMapping="included" />
+      </ReactionContext>
+      <MathDescription Name="sim1_generated">
+        <Annotation>cloned from 'sim1_generated' owned by user bfalken</Annotation>
+        <Constant Name="_F_">96480.0</Constant>
+        <Constant Name="_F_nmol_">9.648E-5</Constant>
+        <Constant Name="_K_GHK_">1.0E-9</Constant>
+        <Constant Name="_N_pmol_">6.02E11</Constant>
+        <Constant Name="_R_">8314.0</Constant>
+        <Constant Name="_T_">300.0</Constant>
+        <Constant Name="active5P_PM_init">0.0</Constant>
+        <Constant Name="end">200.0</Constant>
+        <Constant Name="k">0.0</Constant>
+        <Constant Name="K5K">0.2</Constant>
+        <Constant Name="K_millivolts_per_volt">1000.0</Constant>
+        <Constant Name="k_PI5K_5P">0.1</Constant>
+        <Constant Name="KD">0.1</Constant>
+        <Constant Name="kf_trans">5.0</Constant>
+        <Constant Name="KMOLE">0.0016611295681063123</Constant>
+        <Constant Name="Kr_translocation">2.0</Constant>
+        <Constant Name="phy_PM_init">3000.0</Constant>
+        <Constant Name="PI_PM">140000.0</Constant>
+        <Constant Name="PI_PM_init">140000.0</Constant>
+        <Constant Name="pif_cytosol_init">3.0</Constant>
+        <Constant Name="PIP2_PM_init">5000.0</Constant>
+        <Constant Name="PIP_PM_init">4000.0</Constant>
+        <Constant Name="Size_cytosol">700.0</Constant>
+        <Constant Name="Size_PM">1500.0</Constant>
+        <Constant Name="Size_Unnamed_compartment">100000.0</Constant>
+        <Constant Name="speed">6.0</Constant>
+        <Constant Name="start">100.0</Constant>
+        <Constant Name="SurfToVol_PM">2.142857142857143</Constant>
+        <Constant Name="universal">5.0</Constant>
+        <Constant Name="VolFract_cytosol">0.006951340615690168</Constant>
+        <Constant Name="Voltage_PM">0.0</Constant>
+        <VolumeVariable Name="active5P_PM" />
+        <VolumeVariable Name="PIP2_PM" />
+        <VolumeVariable Name="PIP_PM" />
+        <Function Name="J_PI4K">((Kf_PI4K * PI_PM) - (Kr_PI4K * PIP_PM))</Function>
+        <Function Name="J_PI5K_5P">((K5K * PIP_PM) - (K5P * PIP2_PM))</Function>
+        <Function Name="J_translocation">((pif_cytosol * Kf_translocation * phy_PM) - (Kr_translocation * active5P_PM))</Function>
+        <Function Name="K5P">(0.2 + (k_PI5K_5P * active5P_PM))</Function>
+        <Function Name="K_phy_PM_total">((phy_PM_init * SurfToVol_PM * VolFract_cytosol * KMOLE) + (active5P_PM_init * SurfToVol_PM * VolFract_cytosol * KMOLE))</Function>
+        <Function Name="K_pif_cytosol_total">((VolFract_cytosol * pif_cytosol_init) + (active5P_PM_init * SurfToVol_PM * VolFract_cytosol * KMOLE))</Function>
+        <Function Name="Kf_PI4K">speed</Function>
+        <Function Name="Kf_translocation">(kf_trans * lightON)</Function>
+        <Function Name="KFlux_PM_mapping_cytosol">SurfToVol_PM</Function>
+        <Function Name="KFlux_PM_mapping_Unnamed_compartment">(SurfToVol_PM * VolFract_cytosol / (1.0 - VolFract_cytosol))</Function>
+        <Function Name="Kr_PI4K">(KD * speed)</Function>
+        <Function Name="lightON">((t &gt; start) * (t &lt; end))</Function>
+        <Function Name="phy_PM">((K_phy_PM_total - (active5P_PM * SurfToVol_PM * VolFract_cytosol * KMOLE)) / (SurfToVol_PM * VolFract_cytosol * KMOLE))</Function>
+        <Function Name="pif_cytosol">((K_pif_cytosol_total - (active5P_PM * SurfToVol_PM * VolFract_cytosol * KMOLE)) / VolFract_cytosol)</Function>
+        <CompartmentSubDomain Name="Compartment">
+          <BoundaryType Boundary="Xm" Type="Value" />
+          <BoundaryType Boundary="Xp" Type="Value" />
+          <BoundaryType Boundary="Ym" Type="Value" />
+          <BoundaryType Boundary="Yp" Type="Value" />
+          <BoundaryType Boundary="Zm" Type="Value" />
+          <BoundaryType Boundary="Zp" Type="Value" />
+          <OdeEquation Name="PIP_PM" SolutionType="Unknown">
+            <Rate>(J_PI4K - J_PI5K_5P)</Rate>
+            <Initial>PIP_PM_init</Initial>
+          </OdeEquation>
+          <OdeEquation Name="active5P_PM" SolutionType="Unknown">
+            <Rate>J_translocation</Rate>
+            <Initial>active5P_PM_init</Initial>
+          </OdeEquation>
+          <OdeEquation Name="PIP2_PM" SolutionType="Unknown">
+            <Rate>J_PI5K_5P</Rate>
+            <Initial>PIP2_PM_init</Initial>
+          </OdeEquation>
+        </CompartmentSubDomain>
+        <Version Name="sim1_generated" KeyValue="47745324" BranchId="47745325" Archived="0" Date="19-Aug-2010 18:13:53" FromVersionable="false">
+          <Owner Name="IFGonzalez" Identifier="47744957" />
+          <GroupAccess Type="1" />
+          <Annotation>cloned from 'sim1_generated' owned by user bfalken</Annotation>
+        </Version>
+      </MathDescription>
+      <Simulation Name="Simulation0">
+        <Annotation>cloned from 'Simulation0' owned by user bfalken</Annotation>
+        <SolverTaskDescription TaskType="Unsteady" UseSymbolicJacobian="false" Solver="Combined Stiff Solver (IDA/CVODE)">
+          <TimeBound StartTime="0.0" EndTime="300.0" />
+          <TimeStep DefaultTime="0.1" MinTime="1.0E-8" MaxTime="1.0" />
+          <ErrorTolerance Absolut="1.0E-9" Relative="1.0E-9" />
+          <OutputOptions KeepEvery="10" KeepAtMost="1000" />
+          <NumberProcessors>1</NumberProcessors>
+        </SolverTaskDescription>
+        <MathOverrides>
+          <Constant Name="_T_">279.0</Constant>
+          <Constant Name="kf_trans" ConstantArraySpec="1000">"0.1", "0.01", "1.0"</Constant>
+        </MathOverrides>
+        <Version Name="Simulation0" KeyValue="47745378" BranchId="47745379" Archived="0" Date="19-Aug-2010 18:13:53" FromVersionable="false">
+          <Owner Name="IFGonzalez" Identifier="47744957" />
+          <GroupAccess Type="1" />
+          <Annotation>cloned from 'Simulation0' owned by user bfalken</Annotation>
+        </Version>
+      </Simulation>
+      <Version Name="sim1" KeyValue="47745363" BranchId="47745364" Archived="0" Date="19-Aug-2010 18:13:53" FromVersionable="false">
+        <Owner Name="IFGonzalez" Identifier="47744957" />
+        <GroupAccess Type="1" />
+        <Annotation>cloned from 'sim1' owned by user bfalken</Annotation>
+      </Version>
+      <MicroscopeMeasurement Name="fluor">
+        <ConvolutionKernel Type="ProjectionZKernel" />
+      </MicroscopeMeasurement>
+    </SimulationSpec>
+    <Version Name="PhyB" KeyValue="47745387" BranchId="47745388" Archived="0" Date="19-Aug-2010 18:14:43" FromVersionable="false">
+      <Owner Name="IFGonzalez" Identifier="47744957" />
+      <GroupAccess Type="1" />
+      <Annotation>cloned from 'forfernando' owned by user bfalken</Annotation>
+    </Version>
+    <pathwayModel>
+      <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:bp="http://www.biopax.org/release/biopax-level3.owl#" version="3.0" />
+    </pathwayModel>
+    <relationshipModel>
+      <RMNS version="3.0" />
+    </relationshipModel>
+    <vcmetadata>
+      <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" />
+      <nonrdfAnnotationList>
+        <nonrdfAnnotation vcid="BioModel(PhyB)">
+          <freetext>cloned from 'forfernando' owned by user bfalken</freetext>
+        </nonrdfAnnotation>
+      </nonrdfAnnotationList>
+      <uriBindingList />
+    </vcmetadata>
+  </BioModel>
+</vcml>
+

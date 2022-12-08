@@ -1,0 +1,247 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--This biomodel was generated in VCML Version Alpha_Version_7.4.0_build_87-->
+<vcml xmlns="http://sourceforge.net/projects/vcell/vcml" Version="Alpha_Version_7.4.0_build_87">
+  <BioModel Name="NicA">
+    <Model Name="model">
+      <Compound Name="s0" />
+      <Compound Name="s4" />
+      <Compound Name="s2" />
+      <Compound Name="s6" />
+      <Compound Name="NikRNi" />
+      <Compound Name="NikRNiDNA" />
+      <Compound Name="NikR" />
+      <Feature Name="c0" KeyValue="191983817" />
+      <LocalizedCompound Name="FreeNi" CompoundRef="s0" Structure="c0" OverrideName="true" KeyValue="191983819" />
+      <LocalizedCompound Name="DNA" CompoundRef="s4" Structure="c0" OverrideName="true" KeyValue="191983820" />
+      <LocalizedCompound Name="BufferNi" CompoundRef="s2" Structure="c0" OverrideName="true" KeyValue="191983821" />
+      <LocalizedCompound Name="Buffer" CompoundRef="s6" Structure="c0" OverrideName="true" KeyValue="191983822" />
+      <LocalizedCompound Name="NikRNi" CompoundRef="NikRNi" Structure="c0" OverrideName="true" KeyValue="191983823" />
+      <LocalizedCompound Name="NikRNiDNA" CompoundRef="NikRNiDNA" Structure="c0" OverrideName="true" KeyValue="191983824" />
+      <LocalizedCompound Name="NikR" CompoundRef="NikR" Structure="c0" OverrideName="true" KeyValue="191983825" />
+      <SimpleReaction Structure="c0" Name="Kregulator" Reversible="true" FluxOption="MolecularOnly" KeyValue="191983826">
+        <Reactant LocalizedCompoundRef="FreeNi" Stoichiometry="1" KeyValue="191983827" />
+        <Reactant LocalizedCompoundRef="NikR" Stoichiometry="1" KeyValue="191983828" />
+        <Product LocalizedCompoundRef="NikRNi" Stoichiometry="1" KeyValue="191983829" />
+        <Kinetics KineticsType="MassAction">
+          <Parameter Name="J" Role="reaction rate" Unit="uM.s-1">(((Kf * FreeNi) * NikR) - (Kr * NikRNi))</Parameter>
+          <Parameter Name="Kf" Role="forward rate constant" Unit="s-1.uM-1">100.0</Parameter>
+          <Parameter Name="Kr" Role="reverse rate constant" Unit="s-1">2.5E-4</Parameter>
+        </Kinetics>
+      </SimpleReaction>
+      <SimpleReaction Structure="c0" Name="KDNA" Reversible="true" FluxOption="MolecularOnly" KeyValue="191983830">
+        <Reactant LocalizedCompoundRef="DNA" Stoichiometry="1" KeyValue="191983831" />
+        <Reactant LocalizedCompoundRef="NikRNi" Stoichiometry="1" KeyValue="191983832" />
+        <Product LocalizedCompoundRef="NikRNiDNA" Stoichiometry="1" KeyValue="191983833" />
+        <Kinetics KineticsType="MassAction">
+          <Parameter Name="J" Role="reaction rate" Unit="uM.s-1">(((Kf * DNA) * NikRNi) - (Kr * NikRNiDNA))</Parameter>
+          <Parameter Name="Kf" Role="forward rate constant" Unit="s-1.uM-1">100.0</Parameter>
+          <Parameter Name="Kr" Role="reverse rate constant" Unit="s-1">0.95</Parameter>
+        </Kinetics>
+      </SimpleReaction>
+      <SimpleReaction Structure="c0" Name="Kbuffer" Reversible="true" FluxOption="MolecularOnly" KeyValue="191983834">
+        <Reactant LocalizedCompoundRef="BufferNi" Stoichiometry="1" KeyValue="191983835" />
+        <Product LocalizedCompoundRef="Buffer" Stoichiometry="1" KeyValue="191983836" />
+        <Product LocalizedCompoundRef="FreeNi" Stoichiometry="1" KeyValue="191983837" />
+        <Kinetics KineticsType="MassAction">
+          <Parameter Name="J" Role="reaction rate" Unit="uM.s-1">((Kf * BufferNi) - ((Kr * Buffer) * FreeNi))</Parameter>
+          <Parameter Name="Kf" Role="forward rate constant" Unit="s-1">1.0</Parameter>
+          <Parameter Name="Kr" Role="reverse rate constant" Unit="s-1.uM-1">100.0</Parameter>
+        </Kinetics>
+      </SimpleReaction>
+      <Diagram Name="c0" Structure="c0">
+        <SimpleReactionShape NodeReferenceModeAttrTag="full" SimpleReactionRef="Kregulator" LocationX="242" LocationY="134" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="full" SimpleReactionRef="Kbuffer" LocationX="148" LocationY="71" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="NikRNiDNA" LocationX="419" LocationY="165" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="BufferNi" LocationX="79" LocationY="69" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="full" SimpleReactionRef="KDNA" LocationX="357" LocationY="166" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="FreeNi" LocationX="195" LocationY="98" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="Buffer" LocationX="190" LocationY="45" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="DNA" LocationX="304" LocationY="206" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="NikR" LocationX="188" LocationY="172" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="NikRNi" LocationX="297" LocationY="134" />
+      </Diagram>
+      <Version Name="model" KeyValue="191983808" BranchId="191501161" Archived="0" Date="19-Oct-2020 11:08:40" FromVersionable="false">
+        <Owner Name="jacobdbradbury" Identifier="191500596" />
+        <GroupAccess Type="1" />
+      </Version>
+      <ModelUnitSystem VolumeSubstanceUnit="uM.um3" MembraneSubstanceUnit="molecules" LumpedReactionSubstanceUnit="molecules" VolumeUnit="um3" AreaUnit="um2" LengthUnit="um" TimeUnit="s" />
+    </Model>
+    <SimulationSpec Name="Application0" Stochastic="false" UseConcentration="true" RuleBased="false" MassConservationModelReduction="false" InsufficientIterations="false" InsufficientMaxMolecules="false">
+      <NetworkConstraints RbmMaxIteration="3" RbmMaxMoleculesPerSpecies="10" RbmSpeciesLimit="800" RbmReactionsLimit="2500" />
+      <Annotation />
+      <Geometry Name="non-spatial" Dimension="0">
+        <Extent X="10.0" Y="10.0" Z="10.0" />
+        <Origin X="0.0" Y="0.0" Z="0.0" />
+        <SubVolume Name="Compartment" Handle="0" Type="Compartmental" KeyValue="191501847" />
+        <Version Name="non-spatial" KeyValue="191501843" BranchId="191501844" Archived="0" Date="13-Oct-2020 09:19:45" FromVersionable="false">
+          <Owner Name="jacobdbradbury" Identifier="191500596" />
+          <GroupAccess Type="1" />
+        </Version>
+      </Geometry>
+      <GeometryContext>
+        <FeatureMapping Feature="c0" GeometryClass="Compartment" SubVolume="Compartment" Size="1.0">
+          <BoundariesTypes Xm="Flux" Xp="Flux" Ym="Flux" Yp="Flux" Zm="Flux" Zp="Flux" />
+        </FeatureMapping>
+      </GeometryContext>
+      <ReactionContext>
+        <LocalizedCompoundSpec LocalizedCompoundRef="FreeNi" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>0.0</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="DNA" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>0.00332</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="BufferNi" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>100.0</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="Buffer" ForceConstant="true" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>1000.0</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="NikRNi" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>0.0</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="NikRNiDNA" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>0.0</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="NikR" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>0.1345</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <ReactionSpec ReactionStepRef="Kregulator" ReactionMapping="included" />
+        <ReactionSpec ReactionStepRef="KDNA" ReactionMapping="included" />
+        <ReactionSpec ReactionStepRef="Kbuffer" ReactionMapping="included" />
+      </ReactionContext>
+      <MathDescription Name="Application0_generated">
+        <Constant Name="_F_">96485.3321</Constant>
+        <Constant Name="_F_nmol_">9.64853321E-5</Constant>
+        <Constant Name="_K_GHK_">1.0E-9</Constant>
+        <Constant Name="_N_pmol_">6.02214179E11</Constant>
+        <Constant Name="_PI_">3.141592653589793</Constant>
+        <Constant Name="_R_">8314.46261815</Constant>
+        <Constant Name="_T_">300.0</Constant>
+        <Constant Name="Buffer_init_uM">1000.0</Constant>
+        <Constant Name="BufferNi_init_uM">100.0</Constant>
+        <Constant Name="DNA_init_uM">0.00332</Constant>
+        <Constant Name="FreeNi_init_uM">0.0</Constant>
+        <Constant Name="K_millivolts_per_volt">1000.0</Constant>
+        <Constant Name="Kf_Kbuffer">1.0</Constant>
+        <Constant Name="Kf_KDNA">100.0</Constant>
+        <Constant Name="Kf_Kregulator">100.0</Constant>
+        <Constant Name="KMOLE">0.001660538783162726</Constant>
+        <Constant Name="Kr_Kbuffer">100.0</Constant>
+        <Constant Name="Kr_KDNA">0.95</Constant>
+        <Constant Name="Kr_Kregulator">2.5E-4</Constant>
+        <Constant Name="NikR_init_uM">0.1345</Constant>
+        <Constant Name="NikRNi_init_uM">0.0</Constant>
+        <Constant Name="NikRNiDNA_init_uM">0.0</Constant>
+        <Constant Name="Size_c0">1.0</Constant>
+        <VolumeVariable Name="BufferNi" Domain="Compartment" />
+        <VolumeVariable Name="DNA" Domain="Compartment" />
+        <VolumeVariable Name="FreeNi" Domain="Compartment" />
+        <VolumeVariable Name="NikR" Domain="Compartment" />
+        <VolumeVariable Name="NikRNi" Domain="Compartment" />
+        <VolumeVariable Name="NikRNiDNA" Domain="Compartment" />
+        <Function Name="Buffer" Domain="Compartment">Buffer_init_uM</Function>
+        <Function Name="J_Kbuffer" Domain="Compartment">((Kf_Kbuffer * BufferNi) - ((Kr_Kbuffer * Buffer) * FreeNi))</Function>
+        <Function Name="J_KDNA" Domain="Compartment">(((Kf_KDNA * DNA) * NikRNi) - (Kr_KDNA * NikRNiDNA))</Function>
+        <Function Name="J_Kregulator" Domain="Compartment">(((Kf_Kregulator * FreeNi) * NikR) - (Kr_Kregulator * NikRNi))</Function>
+        <CompartmentSubDomain Name="Compartment">
+          <BoundaryType Boundary="Xm" Type="Value" />
+          <BoundaryType Boundary="Xp" Type="Value" />
+          <BoundaryType Boundary="Ym" Type="Value" />
+          <BoundaryType Boundary="Yp" Type="Value" />
+          <BoundaryType Boundary="Zm" Type="Value" />
+          <BoundaryType Boundary="Zp" Type="Value" />
+          <OdeEquation Name="FreeNi" SolutionType="Unknown">
+            <Rate>( - J_Kregulator + J_Kbuffer)</Rate>
+            <Initial>FreeNi_init_uM</Initial>
+          </OdeEquation>
+          <OdeEquation Name="DNA" SolutionType="Unknown">
+            <Rate>- J_KDNA</Rate>
+            <Initial>DNA_init_uM</Initial>
+          </OdeEquation>
+          <OdeEquation Name="BufferNi" SolutionType="Unknown">
+            <Rate>- J_Kbuffer</Rate>
+            <Initial>BufferNi_init_uM</Initial>
+          </OdeEquation>
+          <OdeEquation Name="NikRNi" SolutionType="Unknown">
+            <Rate>(J_Kregulator - J_KDNA)</Rate>
+            <Initial>NikRNi_init_uM</Initial>
+          </OdeEquation>
+          <OdeEquation Name="NikRNiDNA" SolutionType="Unknown">
+            <Rate>J_KDNA</Rate>
+            <Initial>NikRNiDNA_init_uM</Initial>
+          </OdeEquation>
+          <OdeEquation Name="NikR" SolutionType="Unknown">
+            <Rate>- J_Kregulator</Rate>
+            <Initial>NikR_init_uM</Initial>
+          </OdeEquation>
+        </CompartmentSubDomain>
+        <Version Name="Application0_generated" KeyValue="191984175" BranchId="191501849" Archived="0" Date="19-Oct-2020 11:14:17" FromVersionable="false">
+          <Owner Name="jacobdbradbury" Identifier="191500596" />
+          <GroupAccess Type="1" />
+        </Version>
+      </MathDescription>
+      <Simulation Name="Simulation0">
+        <SolverTaskDescription TaskType="Unsteady" UseSymbolicJacobian="false" Solver="Combined Stiff Solver (IDA/CVODE)">
+          <TimeBound StartTime="0.0" EndTime="1.0" />
+          <TimeStep DefaultTime="0.1" MinTime="1.0E-8" MaxTime="1.0" />
+          <ErrorTolerance Absolut="1.0E-9" Relative="1.0E-9" />
+          <OutputOptions KeepEvery="1" KeepAtMost="1000" />
+          <NumberProcessors>1</NumberProcessors>
+        </SolverTaskDescription>
+        <MathOverrides>
+          <Constant Name="Kr_r2" ConstantArraySpec="1001">1.0 to 1.0E9, log, 8 values</Constant>
+        </MathOverrides>
+        <Version Name="Simulation0" KeyValue="191984190" BranchId="191501886" Archived="0" Date="19-Oct-2020 11:14:18" FromVersionable="false">
+          <Owner Name="jacobdbradbury" Identifier="191500596" />
+          <GroupAccess Type="1" />
+        </Version>
+      </Simulation>
+      <Simulation Name="Simulation1">
+        <SolverTaskDescription TaskType="Unsteady" UseSymbolicJacobian="false" Solver="Combined Stiff Solver (IDA/CVODE)">
+          <TimeBound StartTime="0.0" EndTime="100000.0" />
+          <TimeStep DefaultTime="0.1" MinTime="1.0E-8" MaxTime="1.0" />
+          <ErrorTolerance Absolut="1.0E-9" Relative="1.0E-9" />
+          <OutputOptions KeepEvery="1" KeepAtMost="1000" />
+          <NumberProcessors>1</NumberProcessors>
+        </SolverTaskDescription>
+        <MathOverrides>
+          <Constant Name="Kf_Kbuffer" ConstantArraySpec="1000">"1.0E-8", "1.0E-7", "1.0E-6", "1.0E-5", "1.0E-4", "0.001", "0.01", "0.1", "1.0", "10.0", "100.0", "1000.0", "10000.0", "100000.0", "1000000.0", "1.0E7", "1.0E8", "1.0E9", "1.0E10", "1.0E11"</Constant>
+        </MathOverrides>
+        <Version Name="Simulation1" KeyValue="193010006" BranchId="191602303" Archived="0" Date="01-Nov-2020 20:20:23" FromVersionable="false">
+          <Owner Name="jacobdbradbury" Identifier="191500596" />
+          <GroupAccess Type="1" />
+        </Version>
+      </Simulation>
+      <Version Name="Application0" KeyValue="191984177" BranchId="191501875" Archived="0" Date="19-Oct-2020 11:14:18" FromVersionable="false">
+        <Owner Name="jacobdbradbury" Identifier="191500596" />
+        <GroupAccess Type="1" />
+      </Version>
+      <MicroscopeMeasurement Name="fluor">
+        <ConvolutionKernel Type="ProjectionZKernel" />
+      </MicroscopeMeasurement>
+    </SimulationSpec>
+    <Version Name="NicA" KeyValue="193010008" BranchId="191603333" Archived="0" Date="01-Nov-2020 20:20:23" FromVersionable="false">
+      <Owner Name="jacobdbradbury" Identifier="191500596" />
+      <GroupAccess Type="1" />
+    </Version>
+    <pathwayModel>
+      <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:bp="http://www.biopax.org/release/biopax-level3.owl#" version="3.0" />
+    </pathwayModel>
+    <relationshipModel>
+      <RMNS version="3.0" />
+    </relationshipModel>
+    <vcmetadata>
+      <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" />
+      <nonrdfAnnotationList />
+      <uriBindingList />
+    </vcmetadata>
+  </BioModel>
+</vcml>
+

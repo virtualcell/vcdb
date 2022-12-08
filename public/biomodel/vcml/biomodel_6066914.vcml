@@ -1,0 +1,990 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--This biomodel was generated in VCML Version Alpha_Version_7.4.0_build_87-->
+<vcml xmlns="http://sourceforge.net/projects/vcell/vcml" Version="Alpha_Version_7.4.0_build_87">
+  <BioModel Name="test">
+    <Model Name="unnamed">
+      <Compound Name="pH" />
+      <Feature Name="cyto" KeyValue="6066622" />
+      <Feature Name="nuc" KeyValue="6066626" />
+      <Feature Name="out" KeyValue="6066619" />
+      <Membrane InsideFeature="nuc" OutsideFeature="cyto" PositiveFeature="nuc" NegativeFeature="cyto" MembraneVoltage="Voltage_mem2" Name="mem2" KeyValue="6066624" />
+      <Membrane InsideFeature="cyto" OutsideFeature="out" PositiveFeature="cyto" NegativeFeature="out" MembraneVoltage="Voltage_membrane" Name="mem1" KeyValue="6066620" />
+      <LocalizedCompound Name="pH_nuc" CompoundRef="pH" Structure="nuc" OverrideName="true" KeyValue="6066630" />
+      <LocalizedCompound Name="pH_out" CompoundRef="pH" Structure="out" OverrideName="true" KeyValue="6066631" />
+      <LocalizedCompound Name="pH_cyto" CompoundRef="pH" Structure="cyto" OverrideName="true" KeyValue="6066629" />
+      <SimpleReaction Structure="cyto" Name="decay" Reversible="true" FluxOption="MolecularOnly" KeyValue="6066632">
+        <Reactant LocalizedCompoundRef="pH_cyto" Stoichiometry="1" KeyValue="6066633" />
+        <Kinetics KineticsType="GeneralKinetics">
+          <Parameter Name="J_reaction_cyto" Role="reaction rate" Unit="uM.s-1">(1.0E-4 * ( - 0.025 + pH_cyto))</Parameter>
+        </Kinetics>
+      </SimpleReaction>
+      <SimpleReaction Structure="nuc" Name="reaction0" Reversible="true" FluxOption="MolecularOnly" KeyValue="6066634">
+        <Product LocalizedCompoundRef="pH_nuc" Stoichiometry="1" KeyValue="6066635" />
+        <Kinetics KineticsType="GeneralKinetics">
+          <Parameter Name="J_reaction0" Role="reaction rate" Unit="uM.s-1">(10.0 * (1.12 - pH_nuc))</Parameter>
+        </Kinetics>
+      </SimpleReaction>
+      <FluxStep Name="flux1" Structure="mem2" Reversible="true" FluxOption="MolecularOnly" KeyValue="6066636">
+        <Reactant LocalizedCompoundRef="pH_cyto" Stoichiometry="1" />
+        <Product LocalizedCompoundRef="pH_nuc" Stoichiometry="1" />
+        <Kinetics KineticsType="GeneralKinetics">
+          <Parameter Name="J_flux1" Role="reaction rate" Unit="uM.um.s-1">(k_nuc * (pH_cyto - pH_nuc))</Parameter>
+          <Parameter Name="I" Role="inward current density" Unit="pA.um-2">0.0</Parameter>
+          <Parameter Name="netValence" Role="net charge valence" Unit="1">0.0</Parameter>
+          <Parameter Name="k_nuc" Role="user defined" Unit="um.s-1">50.0</Parameter>
+        </Kinetics>
+      </FluxStep>
+      <FluxStep Name="flux0" Structure="mem1" Reversible="true" FluxOption="MolecularOnly" KeyValue="6066639">
+        <Reactant LocalizedCompoundRef="pH_out" Stoichiometry="1" />
+        <Product LocalizedCompoundRef="pH_cyto" Stoichiometry="1" />
+        <Kinetics KineticsType="GeneralKinetics">
+          <Parameter Name="J_flux0" Role="reaction rate" Unit="uM.um.s-1">0.0</Parameter>
+          <Parameter Name="I" Role="inward current density" Unit="pA.um-2">0.0</Parameter>
+          <Parameter Name="netValence" Role="net charge valence" Unit="1">0.0</Parameter>
+        </Kinetics>
+      </FluxStep>
+      <Diagram Name="unnamed" Structure="out" />
+      <Diagram Name="membrane" Structure="mem1">
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="pH_cyto" LocationX="11" LocationY="73" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="pH_out" LocationX="67" LocationY="73" />
+        <FluxReactionShape NodeReferenceModeAttrTag="full" FluxReactionRef="flux0" LocationX="106" LocationY="145" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="pH_cyto" LocationX="11" LocationY="73" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="pH_out" LocationX="67" LocationY="73" />
+        <FluxReactionShape NodeReferenceModeAttrTag="molecule" FluxReactionRef="flux0" LocationX="106" LocationY="145" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="pH_cyto" LocationX="11" LocationY="73" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="pH_out" LocationX="67" LocationY="73" />
+        <FluxReactionShape NodeReferenceModeAttrTag="rule" FluxReactionRef="flux0" LocationX="106" LocationY="145" />
+      </Diagram>
+      <Diagram Name="cyto" Structure="cyto">
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="pH_cyto" LocationX="25" LocationY="30" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="full" SimpleReactionRef="reaction0" LocationX="106" LocationY="56" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="pH_cyto" LocationX="25" LocationY="30" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="molecule" SimpleReactionRef="reaction0" LocationX="106" LocationY="56" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="pH_cyto" LocationX="25" LocationY="30" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="rule" SimpleReactionRef="reaction0" LocationX="106" LocationY="56" />
+      </Diagram>
+      <Diagram Name="mem2" Structure="mem2">
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="pH_nuc" LocationX="55" LocationY="44" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="pH_cyto" LocationX="55" LocationY="44" />
+        <FluxReactionShape NodeReferenceModeAttrTag="full" FluxReactionRef="flux1" LocationX="146" LocationY="113" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="pH_nuc" LocationX="55" LocationY="44" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="pH_cyto" LocationX="55" LocationY="44" />
+        <FluxReactionShape NodeReferenceModeAttrTag="molecule" FluxReactionRef="flux1" LocationX="146" LocationY="113" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="pH_nuc" LocationX="55" LocationY="44" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="pH_cyto" LocationX="55" LocationY="44" />
+        <FluxReactionShape NodeReferenceModeAttrTag="rule" FluxReactionRef="flux1" LocationX="146" LocationY="113" />
+      </Diagram>
+      <Diagram Name="nuc" Structure="nuc">
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="pH_nuc" LocationX="37" LocationY="58" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="full" SimpleReactionRef="reaction0" LocationX="156" LocationY="105" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="pH_nuc" LocationX="37" LocationY="58" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="molecule" SimpleReactionRef="reaction0" LocationX="156" LocationY="105" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="pH_nuc" LocationX="37" LocationY="58" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="rule" SimpleReactionRef="reaction0" LocationX="156" LocationY="105" />
+      </Diagram>
+      <Version Name="unnamed" KeyValue="6066617" BranchId="6048901" Archived="0" Date="05-Sep-2003 13:32:53" FromVersionable="false">
+        <Owner Name="wolg" Identifier="6036774" />
+        <GroupAccess Type="1" />
+      </Version>
+      <ModelUnitSystem VolumeSubstanceUnit="uM.um3" MembraneSubstanceUnit="molecules" LumpedReactionSubstanceUnit="molecules" VolumeUnit="um3" AreaUnit="um2" LengthUnit="um" TimeUnit="s" />
+    </Model>
+    <SimulationSpec Name="pH" Stochastic="false" UseConcentration="true" RuleBased="false" MassConservationModelReduction="true" InsufficientIterations="false" InsufficientMaxMolecules="false" CharacteristicSize="0.02">
+      <NetworkConstraints RbmMaxIteration="1" RbmMaxMoleculesPerSpecies="10" RbmSpeciesLimit="800" RbmReactionsLimit="2500" />
+      <Annotation />
+      <Geometry Name="test_cell" Dimension="2">
+        <Extent X="10.0" Y="10.0" Z="10.0" />
+        <Origin X="0.0" Y="0.0" Z="0.0" />
+        <SubVolume Name="subVolume0" Handle="1" Type="Analytical" KeyValue="6048896">
+          <AnalyticExpression>(((( - 5.0 + x) * ( - 5.0 + x)) + (0.7 * ( - 2.9 + y) * ( - 2.9 + y))) &lt; 4.0)</AnalyticExpression>
+        </SubVolume>
+        <SubVolume Name="subVolume1" Handle="0" Type="Analytical" KeyValue="6048897">
+          <AnalyticExpression>(((3.0 * ( - 5.0 + x) * ( - 5.0 + x)) + (( - 5.0 + y) * ( - 5.0 + y))) &lt; 22.0)</AnalyticExpression>
+        </SubVolume>
+        <SubVolume Name="subVolume2" Handle="2" Type="Analytical" KeyValue="6048898">
+          <AnalyticExpression>1.0</AnalyticExpression>
+        </SubVolume>
+        <SurfaceClass Name="subVolume1_subVolume2_membrane" SubVolume1Ref="subVolume1" SubVolume2Ref="subVolume2" />
+        <SurfaceClass Name="subVolume0_subVolume1_membrane" SubVolume1Ref="subVolume0" SubVolume2Ref="subVolume1" />
+        <SurfaceDescription NumSamplesX="101" NumSamplesY="101" NumSamplesZ="1" CutoffFrequency="0.3">
+          <VolumeRegion Name="subVolume20" RegionID="0" SubVolume="subVolume2" Size="60.050000000000004" Unit="um2" />
+          <VolumeRegion Name="subVolume11" RegionID="1" SubVolume="subVolume1" Size="25.020000000000003" Unit="um2" />
+          <VolumeRegion Name="subVolume02" RegionID="2" SubVolume="subVolume0" Size="14.930000000000001" Unit="um2" />
+          <MembraneRegion Name="membrane_subVolume20_subVolume11" VolumeRegion1="subVolume11" VolumeRegion2="subVolume20" Size="235.1708130622938" Unit="um" />
+          <MembraneRegion Name="membrane_subVolume11_subVolume02" VolumeRegion1="subVolume02" VolumeRegion2="subVolume11" Size="136.69823439692564" Unit="um" />
+        </SurfaceDescription>
+        <Version Name="test_cell" KeyValue="6048893" BranchId="6048894" Archived="0" Date="04-Sep-2003 08:46:04" FromVersionable="false">
+          <Owner Name="wolg" Identifier="6036774" />
+          <GroupAccess Type="1" />
+        </Version>
+      </Geometry>
+      <GeometryContext>
+        <FeatureMapping Feature="cyto" GeometryClass="subVolume1" SubVolume="subVolume1">
+          <BoundariesTypes Xm="Flux" Xp="Flux" Ym="Flux" Yp="Flux" Zm="Flux" Zp="Flux" />
+        </FeatureMapping>
+        <FeatureMapping Feature="nuc" GeometryClass="subVolume0" SubVolume="subVolume0">
+          <BoundariesTypes Xm="Flux" Xp="Flux" Ym="Flux" Yp="Flux" Zm="Flux" Zp="Flux" />
+        </FeatureMapping>
+        <FeatureMapping Feature="out" GeometryClass="subVolume2" SubVolume="subVolume2">
+          <BoundariesTypes Xm="Flux" Xp="Flux" Ym="Flux" Yp="Flux" Zm="Flux" Zp="Flux" />
+        </FeatureMapping>
+        <MembraneMapping Membrane="mem2" SurfaceToVolumeRatio="1.0" VolumeFraction="0.2" CalculateVoltage="false" SpecificCapacitance="0.01" InitialVoltage="0.0" GeometryClass="subVolume0_subVolume1_membrane">
+          <BoundariesTypes Xm="Flux" Xp="Flux" Ym="Flux" Yp="Flux" Zm="Flux" Zp="Flux" />
+        </MembraneMapping>
+        <MembraneMapping Membrane="mem1" SurfaceToVolumeRatio="1.0" VolumeFraction="0.2" CalculateVoltage="false" SpecificCapacitance="0.01" InitialVoltage="0.0" GeometryClass="subVolume1_subVolume2_membrane">
+          <BoundariesTypes Xm="Flux" Xp="Flux" Ym="Flux" Yp="Flux" Zm="Flux" Zp="Flux" />
+        </MembraneMapping>
+      </GeometryContext>
+      <ReactionContext>
+        <LocalizedCompoundSpec LocalizedCompoundRef="pH_cyto" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>0.5</InitialConcentration>
+          <Diffusion>1.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="pH_nuc" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>1.12</InitialConcentration>
+          <Diffusion>1.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="pH_out" ForceConstant="true" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>0.025</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <ReactionSpec ReactionStepRef="decay" ReactionMapping="included" />
+        <ReactionSpec ReactionStepRef="reaction0" ReactionMapping="included" />
+        <ReactionSpec ReactionStepRef="flux1" ReactionMapping="included" />
+        <ReactionSpec ReactionStepRef="flux0" ReactionMapping="included" />
+      </ReactionContext>
+      <MathDescription Name="pH_generated">
+        <Constant Name="_F_">96480.0</Constant>
+        <Constant Name="_R_">8314.0</Constant>
+        <Constant Name="_T_">300.0</Constant>
+        <Constant Name="J_flux0">0.0</Constant>
+        <Constant Name="K_milliVolts_per_Volt">1000.0</Constant>
+        <Constant Name="k_nuc">50.0</Constant>
+        <Constant Name="KMOLE">0.0016611295681063123</Constant>
+        <Constant Name="pH_cyto_init">0.5</Constant>
+        <Constant Name="pH_nuc_init">1.12</Constant>
+        <Constant Name="pH_out">0.025</Constant>
+        <Constant Name="pH_out_init">0.025</Constant>
+        <VolumeVariable Name="pH" />
+        <Function Name="J_flux1">(k_nuc * (pH_OUTSIDE - pH_INSIDE))</Function>
+        <Function Name="J_reaction0">(10.0 * (1.12 - pH))</Function>
+        <Function Name="J_reaction_cyto">(1.0E-4 * ( - 0.025 + pH))</Function>
+        <Function Name="Voltage_mem2">0.0</Function>
+        <Function Name="Voltage_membrane">0.0</Function>
+        <CompartmentSubDomain Name="subVolume0">
+          <BoundaryType Boundary="Xm" Type="Flux" />
+          <BoundaryType Boundary="Xp" Type="Flux" />
+          <BoundaryType Boundary="Ym" Type="Flux" />
+          <BoundaryType Boundary="Yp" Type="Flux" />
+          <BoundaryType Boundary="Zm" Type="Value" />
+          <BoundaryType Boundary="Zp" Type="Value" />
+          <PdeEquation Name="pH" SolutionType="Unknown">
+            <Rate>J_reaction0</Rate>
+            <Diffusion>1.0</Diffusion>
+            <Initial>pH_nuc_init</Initial>
+          </PdeEquation>
+        </CompartmentSubDomain>
+        <CompartmentSubDomain Name="subVolume1">
+          <BoundaryType Boundary="Xm" Type="Flux" />
+          <BoundaryType Boundary="Xp" Type="Flux" />
+          <BoundaryType Boundary="Ym" Type="Flux" />
+          <BoundaryType Boundary="Yp" Type="Flux" />
+          <BoundaryType Boundary="Zm" Type="Value" />
+          <BoundaryType Boundary="Zp" Type="Value" />
+          <PdeEquation Name="pH" SolutionType="Unknown">
+            <Rate>- J_reaction_cyto</Rate>
+            <Diffusion>1.0</Diffusion>
+            <Initial>pH_cyto_init</Initial>
+          </PdeEquation>
+        </CompartmentSubDomain>
+        <CompartmentSubDomain Name="subVolume2">
+          <BoundaryType Boundary="Xm" Type="Flux" />
+          <BoundaryType Boundary="Xp" Type="Flux" />
+          <BoundaryType Boundary="Ym" Type="Flux" />
+          <BoundaryType Boundary="Yp" Type="Flux" />
+          <BoundaryType Boundary="Zm" Type="Value" />
+          <BoundaryType Boundary="Zp" Type="Value" />
+          <PdeEquation Name="pH" SolutionType="Unknown">
+            <Rate>0.0</Rate>
+            <Diffusion>1.0</Diffusion>
+            <Initial>0.0</Initial>
+          </PdeEquation>
+        </CompartmentSubDomain>
+        <MembraneSubDomain Name="subVolume0_subVolume1_membrane" InsideCompartment="subVolume0" OutsideCompartment="subVolume1">
+          <BoundaryType Boundary="Xm" Type="Value" />
+          <BoundaryType Boundary="Xp" Type="Value" />
+          <BoundaryType Boundary="Ym" Type="Value" />
+          <BoundaryType Boundary="Yp" Type="Value" />
+          <BoundaryType Boundary="Zm" Type="Value" />
+          <BoundaryType Boundary="Zp" Type="Value" />
+          <JumpCondition Name="pH">
+            <InFlux>J_flux1</InFlux>
+            <OutFlux>- J_flux1</OutFlux>
+          </JumpCondition>
+        </MembraneSubDomain>
+        <MembraneSubDomain Name="subVolume1_subVolume2_membrane" InsideCompartment="subVolume1" OutsideCompartment="subVolume2">
+          <BoundaryType Boundary="Xm" Type="Value" />
+          <BoundaryType Boundary="Xp" Type="Value" />
+          <BoundaryType Boundary="Ym" Type="Value" />
+          <BoundaryType Boundary="Yp" Type="Value" />
+          <BoundaryType Boundary="Zm" Type="Value" />
+          <BoundaryType Boundary="Zp" Type="Value" />
+          <JumpCondition Name="pH">
+            <InFlux>J_flux0</InFlux>
+            <OutFlux>0.0</OutFlux>
+          </JumpCondition>
+        </MembraneSubDomain>
+        <Version Name="pH_generated" KeyValue="6066649" BranchId="6049182" Archived="0" Date="05-Sep-2003 13:32:57" FromVersionable="false">
+          <Owner Name="wolg" Identifier="6036774" />
+          <GroupAccess Type="1" />
+        </Version>
+      </MathDescription>
+      <Simulation Name="Simulation 1">
+        <SolverTaskDescription TaskType="Unsteady" UseSymbolicJacobian="false" Solver="Finite Volume, Regular Grid">
+          <TimeBound StartTime="0.0" EndTime="10.0" />
+          <TimeStep DefaultTime="0.001" MinTime="1.0E-8" MaxTime="1.0" />
+          <ErrorTolerance Absolut="1.0E-9" Relative="1.0E-9" />
+          <OutputOptions KeepEvery="100" KeepAtMost="1000" />
+          <NumberProcessors>1</NumberProcessors>
+        </SolverTaskDescription>
+        <MathOverrides />
+        <MeshSpecification>
+          <Size X="101" Y="101" Z="1" />
+        </MeshSpecification>
+        <Version Name="Simulation 1" KeyValue="6066712" BranchId="6060974" Archived="0" Date="05-Sep-2003 13:33:05" FromVersionable="false">
+          <Owner Name="wolg" Identifier="6036774" />
+          <GroupAccess Type="1" />
+        </Version>
+      </Simulation>
+      <SpatialObjects>
+        <SpatialObject Name="vobj_subVolume20" Type="Volume" subVolume="subVolume2" regionId="0">
+          <QuantityCategoryList>
+            <QuantityCategory Name="VolumeCentroid" Enabled="false" />
+            <QuantityCategory Name="InteriorVelocity" Enabled="false" />
+            <QuantityCategory Name="VolumeRegionSize" Enabled="true" />
+          </QuantityCategoryList>
+        </SpatialObject>
+        <SpatialObject Name="vobj_subVolume11" Type="Volume" subVolume="subVolume1" regionId="1">
+          <QuantityCategoryList>
+            <QuantityCategory Name="VolumeCentroid" Enabled="false" />
+            <QuantityCategory Name="InteriorVelocity" Enabled="false" />
+            <QuantityCategory Name="VolumeRegionSize" Enabled="true" />
+          </QuantityCategoryList>
+        </SpatialObject>
+        <SpatialObject Name="vobj_subVolume02" Type="Volume" subVolume="subVolume0" regionId="2">
+          <QuantityCategoryList>
+            <QuantityCategory Name="VolumeCentroid" Enabled="false" />
+            <QuantityCategory Name="InteriorVelocity" Enabled="false" />
+            <QuantityCategory Name="VolumeRegionSize" Enabled="true" />
+          </QuantityCategoryList>
+        </SpatialObject>
+        <SpatialObject Name="sobj_subVolume11_subVolume20" Type="Surface" subVolumeInside="subVolume1" regionIdInside="1" subVolumeOutside="subVolume2" regionIdOutside="0">
+          <QuantityCategoryList>
+            <QuantityCategory Name="SurfaceNormal" Enabled="false" />
+            <QuantityCategory Name="SurfaceVelocity" Enabled="false" />
+            <QuantityCategory Name="DistanceToSurface" Enabled="false" />
+            <QuantityCategory Name="DirectionToSurface" Enabled="false" />
+            <QuantityCategory Name="SurfaceSize" Enabled="true" />
+          </QuantityCategoryList>
+        </SpatialObject>
+        <SpatialObject Name="sobj_subVolume02_subVolume11" Type="Surface" subVolumeInside="subVolume0" regionIdInside="2" subVolumeOutside="subVolume1" regionIdOutside="1">
+          <QuantityCategoryList>
+            <QuantityCategory Name="SurfaceNormal" Enabled="false" />
+            <QuantityCategory Name="SurfaceVelocity" Enabled="false" />
+            <QuantityCategory Name="DistanceToSurface" Enabled="false" />
+            <QuantityCategory Name="DirectionToSurface" Enabled="false" />
+            <QuantityCategory Name="SurfaceSize" Enabled="true" />
+          </QuantityCategoryList>
+        </SpatialObject>
+      </SpatialObjects>
+      <Version Name="pH" KeyValue="6066648" BranchId="6049180" Archived="0" Date="05-Sep-2003 13:32:57" FromVersionable="false">
+        <Owner Name="wolg" Identifier="6036774" />
+        <GroupAccess Type="1" />
+      </Version>
+      <MicroscopeMeasurement Name="fluor">
+        <ConvolutionKernel Type="ProjectionZKernel" />
+      </MicroscopeMeasurement>
+    </SimulationSpec>
+    <SimulationSpec Name="Ascaris" Stochastic="false" UseConcentration="true" RuleBased="false" MassConservationModelReduction="true" InsufficientIterations="false" InsufficientMaxMolecules="false" CharacteristicSize="0.0714828897338403">
+      <NetworkConstraints RbmMaxIteration="1" RbmMaxMoleculesPerSpecies="10" RbmSpeciesLimit="800" RbmReactionsLimit="2500" />
+      <Annotation />
+      <Geometry Name="Ascaris" Dimension="2">
+        <Extent X="14.8" Y="18.8" Z="1.0" />
+        <Origin X="0.0" Y="0.0" Z="0.0" />
+        <Image Name="Ascaris1">
+          <Annotation>Ascaris suum sperm</Annotation>
+          <ImageData X="207" Y="263" Z="1" CompressedSize="1058">789CEDDC5BB2E2300C04D0E5B0249693AD4F315C2024B6E3875A6A09F527A46C9F926DF2006EB74C26C39EED15EB814C676BC77A7883B9D038239D867E7FC42DE82D28C791E9AB1EBD244AD3797AB90515174B47283D5392B3C99AF1CC8A840C2440E1F148613E22068B04E605B2C608515E1C130F02737FAFA010161B0F10A3EE115FFD3591AA066751F56860143D1A16458F1647C9A3C651F0282D9C9D070AD1E5DC019C67C94D3480F26C87E859EEF2ABC70C02F1181606E0319D683B0F46E3DB73D698786438258C630F1767D553D1385D3D358D0967FD5C273CE76F0E5B71D63CC5A25869401CBB2C7A3896CC3767DE43B2031C3C721A73CECAE646CA99F5B072263D8C9C85F25072E6570FA52639EC9C394F723432EB89C529ECD3341E190D0D67D853D47078A6661B2F27CB43CD99F1B073063D15CEDF9D29028F1087A24A621C8E49971C624D27E773147771FA397D21E05C7BBA35C991F7C8699223CFB9F00C68B6FBE7970F1138F6B502728CBE6680D258782E384B1A031098A3EDD96279B60B8F33CE5579BC71C0AB67DF8D7FCEBE171D0F90F3D5C9F315380AC7396B8EAF7BE2D434DE390DA81F4E5D03F55C70A64D750CD4D3C39901B534404F1F67A640558B4F4E937A184220CED9B7C6E901E13867DF3207B3B9F5780A3E018F3AE7B8F38971701F3DD71E8446F85EE8000881B1E34030D61C694D7292A3A6813E476828401A030E0031E2716451E6C03177F0639EE424271EE7DDBC22077AD7637B5F77A871509EEF4EF438D03F6EEBE1C86A7617A2261A84670703689223C291F29872EE07CE22ACD4852E672F5B9C78953E34275B39921AECB7253A3DC3A64663F69CFF11D238E434DB21E10C78DAED7068B64BD0B6DFDF5BA1C06C179EF71197CDB0705A9ECF0197AD38E08CB4C2CF196A858523A3A9EC6D9821B722A3A96DD590213722A461E16C67C58C8667B63DF25D92090C17A7F3A3BF153ACE5A0B649CD516A838EB490E7592C39C609C92C77A482B09C6397BAC07B49458C50936D792C39C02C7B1A7A4F1CB296ADC72CA1A97A02AC5A5A7AD71C6B9C038F35C6BA2711C797A34C9B14A2C4E97263946F9498E1B4F7298931CE67472BC787A393E3CDD1A179E014D348E03CF2F73F83D631C7ACF6F73D83DC9614E7298138C136DA78E765E10EDB4ED972F12ACC7DA91589C114D729433A4A1E78C69D83DA31A62CE3085DA33A7498E462631A49E790DA527395139849E589C254D729059B3EC3C14BA75CD9FE0A8736A3971CC40429A13C7C823C5B925879953E205E2D878701C130F9063420AE60173943D688D2E07AEB9A99E96E2391F57727835C961D624875903E7E86A9243CD4183D439584F729845261C9CC88A83F19869201E430D4064AC11F658636EB21E6BCB33C138621E6BC73BC13832206BC33E511C8744B23C12C9F24924CB23A13035CEEB4DD3A1CDC4752DAA89A5C9643299CC58FE0163BFDC5F</ImageData>
+          <PixelClass Name="region0" ImagePixelValue="39" KeyValue="6061004" />
+          <PixelClass Name="region1" ImagePixelValue="127" KeyValue="6061005" />
+          <PixelClass Name="region2" ImagePixelValue="87" KeyValue="6061006" />
+          <Version Name="Ascaris1" KeyValue="6060999" BranchId="6061000" Archived="0" Date="05-Sep-2003 08:33:57" FromVersionable="false">
+            <Owner Name="wolg" Identifier="6036774" />
+            <GroupAccess Type="1" />
+            <Annotation>Ascaris suum sperm</Annotation>
+          </Version>
+        </Image>
+        <SubVolume Name="region0" Handle="0" Type="Image" ImagePixelValue="39" KeyValue="6061010" />
+        <SubVolume Name="region1" Handle="1" Type="Image" ImagePixelValue="127" KeyValue="6061011" />
+        <SubVolume Name="region2" Handle="2" Type="Image" ImagePixelValue="87" KeyValue="6061012" />
+        <SurfaceClass Name="region0_region1_membrane" SubVolume1Ref="region0" SubVolume2Ref="region1" />
+        <SurfaceClass Name="region1_region2_membrane" SubVolume1Ref="region1" SubVolume2Ref="region2" />
+        <SurfaceDescription NumSamplesX="89" NumSamplesY="113" NumSamplesZ="1" CutoffFrequency="0.3">
+          <VolumeRegion Name="region00" RegionID="0" SubVolume="region0" Size="90.42235389610391" Unit="um2" />
+          <VolumeRegion Name="region11" RegionID="1" SubVolume="region1" Size="124.66597402597405" Unit="um2" />
+          <VolumeRegion Name="region22" RegionID="2" SubVolume="region2" Size="63.15167207792209" Unit="um2" />
+          <MembraneRegion Name="membrane_region00_region11" VolumeRegion1="region11" VolumeRegion2="region00" Size="52.495152985543115" Unit="um" />
+          <MembraneRegion Name="membrane_region11_region22" VolumeRegion1="region22" VolumeRegion2="region11" Size="36.48980371056142" Unit="um" />
+        </SurfaceDescription>
+        <Version Name="Ascaris" KeyValue="6061008" BranchId="6061009" Archived="0" Date="05-Sep-2003 08:35:37" FromVersionable="false">
+          <Owner Name="wolg" Identifier="6036774" />
+          <GroupAccess Type="1" />
+        </Version>
+      </Geometry>
+      <GeometryContext>
+        <FeatureMapping Feature="cyto" GeometryClass="region1" SubVolume="region1">
+          <BoundariesTypes Xm="Flux" Xp="Flux" Ym="Flux" Yp="Flux" Zm="Flux" Zp="Flux" />
+        </FeatureMapping>
+        <FeatureMapping Feature="nuc" GeometryClass="region2" SubVolume="region2">
+          <BoundariesTypes Xm="Flux" Xp="Flux" Ym="Flux" Yp="Flux" Zm="Flux" Zp="Flux" />
+        </FeatureMapping>
+        <FeatureMapping Feature="out" GeometryClass="region0" SubVolume="region0">
+          <BoundariesTypes Xm="Flux" Xp="Flux" Ym="Flux" Yp="Flux" Zm="Flux" Zp="Flux" />
+        </FeatureMapping>
+        <MembraneMapping Membrane="mem2" SurfaceToVolumeRatio="1.0" VolumeFraction="0.2" CalculateVoltage="false" SpecificCapacitance="0.01" InitialVoltage="0.0" GeometryClass="region1_region2_membrane">
+          <BoundariesTypes Xm="Flux" Xp="Flux" Ym="Flux" Yp="Flux" Zm="Flux" Zp="Flux" />
+        </MembraneMapping>
+        <MembraneMapping Membrane="mem1" SurfaceToVolumeRatio="1.0" VolumeFraction="0.2" CalculateVoltage="false" SpecificCapacitance="0.01" InitialVoltage="0.0" GeometryClass="region0_region1_membrane">
+          <BoundariesTypes Xm="Flux" Xp="Flux" Ym="Flux" Yp="Flux" Zm="Flux" Zp="Flux" />
+        </MembraneMapping>
+      </GeometryContext>
+      <ReactionContext>
+        <LocalizedCompoundSpec LocalizedCompoundRef="pH_cyto" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>0.5</InitialConcentration>
+          <Diffusion>1.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="pH_nuc" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>1.12</InitialConcentration>
+          <Diffusion>1.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="pH_out" ForceConstant="true" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>0.025</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <ReactionSpec ReactionStepRef="decay" ReactionMapping="included" />
+        <ReactionSpec ReactionStepRef="reaction0" ReactionMapping="included" />
+        <ReactionSpec ReactionStepRef="flux1" ReactionMapping="included" />
+        <ReactionSpec ReactionStepRef="flux0" ReactionMapping="included" />
+      </ReactionContext>
+      <MathDescription Name="Ascaris_generated">
+        <Constant Name="_F_">96480.0</Constant>
+        <Constant Name="_R_">8314.0</Constant>
+        <Constant Name="_T_">300.0</Constant>
+        <Constant Name="J_flux0">0.0</Constant>
+        <Constant Name="K_milliVolts_per_Volt">1000.0</Constant>
+        <Constant Name="k_nuc">50.0</Constant>
+        <Constant Name="KMOLE">0.0016611295681063123</Constant>
+        <Constant Name="pH_cyto_init">0.5</Constant>
+        <Constant Name="pH_nuc_init">1.12</Constant>
+        <Constant Name="pH_out">0.025</Constant>
+        <Constant Name="pH_out_init">0.025</Constant>
+        <VolumeVariable Name="pH" />
+        <Function Name="J_flux1">(k_nuc * (pH_OUTSIDE - pH_INSIDE))</Function>
+        <Function Name="J_reaction0">(10.0 * (1.12 - pH))</Function>
+        <Function Name="J_reaction_cyto">(1.0E-4 * ( - 0.025 + pH))</Function>
+        <Function Name="Voltage_mem2">0.0</Function>
+        <Function Name="Voltage_membrane">0.0</Function>
+        <CompartmentSubDomain Name="region0">
+          <BoundaryType Boundary="Xm" Type="Flux" />
+          <BoundaryType Boundary="Xp" Type="Flux" />
+          <BoundaryType Boundary="Ym" Type="Flux" />
+          <BoundaryType Boundary="Yp" Type="Flux" />
+          <BoundaryType Boundary="Zm" Type="Value" />
+          <BoundaryType Boundary="Zp" Type="Value" />
+          <PdeEquation Name="pH" SolutionType="Unknown">
+            <Rate>0.0</Rate>
+            <Diffusion>1.0</Diffusion>
+            <Initial>0.0</Initial>
+          </PdeEquation>
+        </CompartmentSubDomain>
+        <CompartmentSubDomain Name="region1">
+          <BoundaryType Boundary="Xm" Type="Flux" />
+          <BoundaryType Boundary="Xp" Type="Flux" />
+          <BoundaryType Boundary="Ym" Type="Flux" />
+          <BoundaryType Boundary="Yp" Type="Flux" />
+          <BoundaryType Boundary="Zm" Type="Value" />
+          <BoundaryType Boundary="Zp" Type="Value" />
+          <PdeEquation Name="pH" SolutionType="Unknown">
+            <Rate>- J_reaction_cyto</Rate>
+            <Diffusion>1.0</Diffusion>
+            <Initial>pH_cyto_init</Initial>
+          </PdeEquation>
+        </CompartmentSubDomain>
+        <CompartmentSubDomain Name="region2">
+          <BoundaryType Boundary="Xm" Type="Flux" />
+          <BoundaryType Boundary="Xp" Type="Flux" />
+          <BoundaryType Boundary="Ym" Type="Flux" />
+          <BoundaryType Boundary="Yp" Type="Flux" />
+          <BoundaryType Boundary="Zm" Type="Value" />
+          <BoundaryType Boundary="Zp" Type="Value" />
+          <PdeEquation Name="pH" SolutionType="Unknown">
+            <Rate>J_reaction0</Rate>
+            <Diffusion>1.0</Diffusion>
+            <Initial>pH_nuc_init</Initial>
+          </PdeEquation>
+        </CompartmentSubDomain>
+        <MembraneSubDomain Name="region0_region1_membrane" InsideCompartment="region1" OutsideCompartment="region0">
+          <BoundaryType Boundary="Xm" Type="Value" />
+          <BoundaryType Boundary="Xp" Type="Value" />
+          <BoundaryType Boundary="Ym" Type="Value" />
+          <BoundaryType Boundary="Yp" Type="Value" />
+          <BoundaryType Boundary="Zm" Type="Value" />
+          <BoundaryType Boundary="Zp" Type="Value" />
+          <JumpCondition Name="pH">
+            <InFlux>J_flux0</InFlux>
+            <OutFlux>0.0</OutFlux>
+          </JumpCondition>
+        </MembraneSubDomain>
+        <MembraneSubDomain Name="region1_region2_membrane" InsideCompartment="region2" OutsideCompartment="region1">
+          <BoundaryType Boundary="Xm" Type="Value" />
+          <BoundaryType Boundary="Xp" Type="Value" />
+          <BoundaryType Boundary="Ym" Type="Value" />
+          <BoundaryType Boundary="Yp" Type="Value" />
+          <BoundaryType Boundary="Zm" Type="Value" />
+          <BoundaryType Boundary="Zp" Type="Value" />
+          <JumpCondition Name="pH">
+            <InFlux>J_flux1</InFlux>
+            <OutFlux>- J_flux1</OutFlux>
+          </JumpCondition>
+        </MembraneSubDomain>
+        <Version Name="Ascaris_generated" KeyValue="6066669" BranchId="6061805" Archived="0" Date="05-Sep-2003 13:32:59" FromVersionable="false">
+          <Owner Name="wolg" Identifier="6036774" />
+          <GroupAccess Type="1" />
+        </Version>
+      </MathDescription>
+      <Simulation Name="Simulation 2">
+        <SolverTaskDescription TaskType="Unsteady" UseSymbolicJacobian="false" Solver="Finite Volume, Regular Grid">
+          <TimeBound StartTime="0.0" EndTime="20.0" />
+          <TimeStep DefaultTime="0.001" MinTime="1.0E-8" MaxTime="1.0" />
+          <ErrorTolerance Absolut="1.0E-9" Relative="1.0E-9" />
+          <OutputOptions KeepEvery="200" KeepAtMost="1000" />
+          <NumberProcessors>1</NumberProcessors>
+        </SolverTaskDescription>
+        <MathOverrides />
+        <MeshSpecification>
+          <Size X="89" Y="114" Z="1" />
+        </MeshSpecification>
+        <Version Name="Simulation 2" KeyValue="6066718" BranchId="6062431" Archived="0" Date="05-Sep-2003 13:33:06" FromVersionable="false">
+          <Owner Name="wolg" Identifier="6036774" />
+          <GroupAccess Type="1" />
+        </Version>
+      </Simulation>
+      <SpatialObjects>
+        <SpatialObject Name="vobj_region00" Type="Volume" subVolume="region0" regionId="0">
+          <QuantityCategoryList>
+            <QuantityCategory Name="VolumeCentroid" Enabled="false" />
+            <QuantityCategory Name="InteriorVelocity" Enabled="false" />
+            <QuantityCategory Name="VolumeRegionSize" Enabled="true" />
+          </QuantityCategoryList>
+        </SpatialObject>
+        <SpatialObject Name="vobj_region11" Type="Volume" subVolume="region1" regionId="1">
+          <QuantityCategoryList>
+            <QuantityCategory Name="VolumeCentroid" Enabled="false" />
+            <QuantityCategory Name="InteriorVelocity" Enabled="false" />
+            <QuantityCategory Name="VolumeRegionSize" Enabled="true" />
+          </QuantityCategoryList>
+        </SpatialObject>
+        <SpatialObject Name="vobj_region22" Type="Volume" subVolume="region2" regionId="2">
+          <QuantityCategoryList>
+            <QuantityCategory Name="VolumeCentroid" Enabled="false" />
+            <QuantityCategory Name="InteriorVelocity" Enabled="false" />
+            <QuantityCategory Name="VolumeRegionSize" Enabled="true" />
+          </QuantityCategoryList>
+        </SpatialObject>
+        <SpatialObject Name="sobj_region11_region00" Type="Surface" subVolumeInside="region1" regionIdInside="1" subVolumeOutside="region0" regionIdOutside="0">
+          <QuantityCategoryList>
+            <QuantityCategory Name="SurfaceNormal" Enabled="false" />
+            <QuantityCategory Name="SurfaceVelocity" Enabled="false" />
+            <QuantityCategory Name="DistanceToSurface" Enabled="false" />
+            <QuantityCategory Name="DirectionToSurface" Enabled="false" />
+            <QuantityCategory Name="SurfaceSize" Enabled="true" />
+          </QuantityCategoryList>
+        </SpatialObject>
+        <SpatialObject Name="sobj_region22_region11" Type="Surface" subVolumeInside="region2" regionIdInside="2" subVolumeOutside="region1" regionIdOutside="1">
+          <QuantityCategoryList>
+            <QuantityCategory Name="SurfaceNormal" Enabled="false" />
+            <QuantityCategory Name="SurfaceVelocity" Enabled="false" />
+            <QuantityCategory Name="DistanceToSurface" Enabled="false" />
+            <QuantityCategory Name="DirectionToSurface" Enabled="false" />
+            <QuantityCategory Name="SurfaceSize" Enabled="true" />
+          </QuantityCategoryList>
+        </SpatialObject>
+      </SpatialObjects>
+      <Version Name="Ascaris" KeyValue="6066668" BranchId="6061803" Archived="0" Date="05-Sep-2003 13:32:59" FromVersionable="false">
+        <Owner Name="wolg" Identifier="6036774" />
+        <GroupAccess Type="1" />
+      </Version>
+      <MicroscopeMeasurement Name="fluor">
+        <ConvolutionKernel Type="ProjectionZKernel" />
+      </MicroscopeMeasurement>
+    </SimulationSpec>
+    <SimulationSpec Name="Ascaris2" Stochastic="false" UseConcentration="true" RuleBased="false" MassConservationModelReduction="true" InsufficientIterations="false" InsufficientMaxMolecules="false" CharacteristicSize="0.1429657794676806">
+      <NetworkConstraints RbmMaxIteration="1" RbmMaxMoleculesPerSpecies="10" RbmSpeciesLimit="800" RbmReactionsLimit="2500" />
+      <Annotation />
+      <Geometry Name="Ascaris" Dimension="2">
+        <Extent X="29.6" Y="37.6" Z="1.0" />
+        <Origin X="0.0" Y="0.0" Z="0.0" />
+        <Image Name="Ascaris1">
+          <Annotation>Ascaris suum sperm</Annotation>
+          <ImageData X="207" Y="263" Z="1" CompressedSize="1058">789CEDDC5BB2E2300C04D0E5B0249693AD4F315C2024B6E3875A6A09F527A46C9F926DF2006EB74C26C39EED15EB814C676BC77A7883B9D038239D867E7FC42DE82D28C791E9AB1EBD244AD3797AB90515174B47283D5392B3C99AF1CC8A840C2440E1F148613E22068B04E605B2C608515E1C130F02737FAFA010161B0F10A3EE115FFD3591AA066751F56860143D1A16458F1647C9A3C651F0282D9C9D070AD1E5DC019C67C94D3480F26C87E859EEF2ABC70C02F1181606E0319D683B0F46E3DB73D698786438258C630F1767D553D1385D3D358D0967FD5C273CE76F0E5B71D63CC5A25869401CBB2C7A3896CC3767DE43B2031C3C721A73CECAE646CA99F5B072263D8C9C85F25072E6570FA52639EC9C394F723432EB89C529ECD3341E190D0D67D853D47078A6661B2F27CB43CD99F1B073063D15CEDF9D29028F1087A24A621C8E49971C624D27E773147771FA397D21E05C7BBA35C991F7C8699223CFB9F00C68B6FBE7970F1138F6B502728CBE6680D258782E384B1A031098A3EDD96279B60B8F33CE5579BC71C0AB67DF8D7FCEBE171D0F90F3D5C9F315380AC7396B8EAF7BE2D434DE390DA81F4E5D03F55C70A64D750CD4D3C39901B534404F1F67A640558B4F4E937A184220CED9B7C6E901E13867DF3207B3B9F5780A3E018F3AE7B8F38971701F3DD71E8446F85EE8000881B1E34030D61C694D7292A3A6813E476828401A030E0031E2716451E6C03177F0639EE424271EE7DDBC22077AD7637B5F77A871509EEF4EF438D03F6EEBE1C86A7617A2261A84670703689223C291F29872EE07CE22ACD4852E672F5B9C78953E34275B39921AECB7253A3DC3A64663F69CFF11D238E434DB21E10C78DAED7068B64BD0B6DFDF5BA1C06C179EF71197CDB0705A9ECF0197AD38E08CB4C2CF196A858523A3A9EC6D9821B722A3A96DD590213722A461E16C67C58C8667B63DF25D92090C17A7F3A3BF153ACE5A0B649CD516A838EB490E7592C39C609C92C77A482B09C6397BAC07B49458C50936D792C39C02C7B1A7A4F1CB296ADC72CA1A97A02AC5A5A7AD71C6B9C038F35C6BA2711C797A34C9B14A2C4E97263946F9498E1B4F7298931CE67472BC787A393E3CDD1A179E014D348E03CF2F73F83D631C7ACF6F73D83DC9614E7298138C136DA78E765E10EDB4ED972F12ACC7DA91589C114D729433A4A1E78C69D83DA31A62CE3085DA33A7498E462631A49E790DA527395139849E589C254D729059B3EC3C14BA75CD9FE0A8736A3971CC40429A13C7C823C5B925879953E205E2D878701C130F9063420AE60173943D688D2E07AEB9A99E96E2391F57727835C961D624875903E7E86A9243CD4183D439584F729845261C9CC88A83F19869201E430D4064AC11F658636EB21E6BCB33C138621E6BC73BC13832206BC33E511C8744B23C12C9F24924CB23A13035CEEB4DD3A1CDC4752DAA89A5C9643299CC58FE0163BFDC5F</ImageData>
+          <PixelClass Name="region0" ImagePixelValue="39" KeyValue="6066019" />
+          <PixelClass Name="region1" ImagePixelValue="127" KeyValue="6066020" />
+          <PixelClass Name="region2" ImagePixelValue="87" KeyValue="6066021" />
+          <Version Name="Ascaris1" KeyValue="6066015" BranchId="6061000" Archived="0" Date="05-Sep-2003 13:16:10" FromVersionable="false">
+            <Owner Name="wolg" Identifier="6036774" />
+            <GroupAccess Type="1" />
+            <Annotation>Ascaris suum sperm</Annotation>
+          </Version>
+        </Image>
+        <SubVolume Name="region0" Handle="0" Type="Image" ImagePixelValue="39" KeyValue="6066112" />
+        <SubVolume Name="region1" Handle="1" Type="Image" ImagePixelValue="127" KeyValue="6066113" />
+        <SubVolume Name="region2" Handle="2" Type="Image" ImagePixelValue="87" KeyValue="6066114" />
+        <SurfaceClass Name="region0_region1_membrane" SubVolume1Ref="region0" SubVolume2Ref="region1" />
+        <SurfaceClass Name="region1_region2_membrane" SubVolume1Ref="region1" SubVolume2Ref="region2" />
+        <SurfaceDescription NumSamplesX="89" NumSamplesY="113" NumSamplesZ="1" CutoffFrequency="0.3">
+          <VolumeRegion Name="region00" RegionID="0" SubVolume="region0" Size="361.68941558441566" Unit="um2" />
+          <VolumeRegion Name="region11" RegionID="1" SubVolume="region1" Size="498.6638961038962" Unit="um2" />
+          <VolumeRegion Name="region22" RegionID="2" SubVolume="region2" Size="252.60668831168837" Unit="um2" />
+          <MembraneRegion Name="membrane_region00_region11" VolumeRegion1="region11" VolumeRegion2="region00" Size="104.99030597108623" Unit="um" />
+          <MembraneRegion Name="membrane_region11_region22" VolumeRegion1="region22" VolumeRegion2="region11" Size="72.97960742112284" Unit="um" />
+        </SurfaceDescription>
+        <Version Name="Ascaris" KeyValue="6066014" BranchId="6061009" Archived="0" Date="05-Sep-2003 13:16:07" FromVersionable="false">
+          <Owner Name="wolg" Identifier="6036774" />
+          <GroupAccess Type="1" />
+        </Version>
+      </Geometry>
+      <GeometryContext>
+        <FeatureMapping Feature="cyto" Size="50000.0">
+          <BoundariesTypes Xm="Flux" Xp="Flux" Ym="Flux" Yp="Flux" Zm="Flux" Zp="Flux" />
+        </FeatureMapping>
+        <FeatureMapping Feature="nuc" Size="50000.0">
+          <BoundariesTypes Xm="Flux" Xp="Flux" Ym="Flux" Yp="Flux" Zm="Flux" Zp="Flux" />
+        </FeatureMapping>
+        <FeatureMapping Feature="out" Size="50000.0">
+          <BoundariesTypes Xm="Flux" Xp="Flux" Ym="Flux" Yp="Flux" Zm="Flux" Zp="Flux" />
+        </FeatureMapping>
+        <MembraneMapping Membrane="mem2" Size="6563.0" CalculateVoltage="false" SpecificCapacitance="1.0" InitialVoltage="0.0">
+          <BoundariesTypes Xm="Flux" Xp="Flux" Ym="Flux" Yp="Flux" Zm="Flux" Zp="Flux" />
+        </MembraneMapping>
+        <MembraneMapping Membrane="mem1" Size="6563.0" CalculateVoltage="false" SpecificCapacitance="1.0" InitialVoltage="0.0">
+          <BoundariesTypes Xm="Flux" Xp="Flux" Ym="Flux" Yp="Flux" Zm="Flux" Zp="Flux" />
+        </MembraneMapping>
+      </GeometryContext>
+      <ReactionContext>
+        <LocalizedCompoundSpec LocalizedCompoundRef="pH_cyto" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>0.5</InitialConcentration>
+          <Diffusion>1.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="pH_nuc" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>1.12</InitialConcentration>
+          <Diffusion>1.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="pH_out" ForceConstant="true" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>0.025</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <ReactionSpec ReactionStepRef="decay" ReactionMapping="included" />
+        <ReactionSpec ReactionStepRef="reaction0" ReactionMapping="included" />
+        <ReactionSpec ReactionStepRef="flux1" ReactionMapping="included" />
+        <ReactionSpec ReactionStepRef="flux0" ReactionMapping="included" />
+      </ReactionContext>
+      <MathDescription Name="Ascaris2_generated">
+        <Constant Name="_F_">96480.0</Constant>
+        <Constant Name="_R_">8314.0</Constant>
+        <Constant Name="_T_">300.0</Constant>
+        <Constant Name="J_flux0">0.0</Constant>
+        <Constant Name="K_milliVolts_per_Volt">1000.0</Constant>
+        <Constant Name="k_nuc">50.0</Constant>
+        <Constant Name="KMOLE">0.0016611295681063123</Constant>
+        <Constant Name="pH_cyto_init">0.5</Constant>
+        <Constant Name="pH_nuc_init">1.12</Constant>
+        <Constant Name="pH_out">0.025</Constant>
+        <Constant Name="pH_out_init">0.025</Constant>
+        <VolumeVariable Name="pH" />
+        <Function Name="J_flux1">(k_nuc * (pH_OUTSIDE - pH_INSIDE))</Function>
+        <Function Name="J_reaction0">(10.0 * (1.12 - pH))</Function>
+        <Function Name="J_reaction_cyto">(1.0E-4 * ( - 0.025 + pH))</Function>
+        <Function Name="Voltage_mem2">0.0</Function>
+        <Function Name="Voltage_membrane">0.0</Function>
+        <CompartmentSubDomain Name="region0">
+          <BoundaryType Boundary="Xm" Type="Flux" />
+          <BoundaryType Boundary="Xp" Type="Flux" />
+          <BoundaryType Boundary="Ym" Type="Flux" />
+          <BoundaryType Boundary="Yp" Type="Flux" />
+          <BoundaryType Boundary="Zm" Type="Value" />
+          <BoundaryType Boundary="Zp" Type="Value" />
+          <PdeEquation Name="pH" SolutionType="Unknown">
+            <Rate>0.0</Rate>
+            <Diffusion>1.0</Diffusion>
+            <Initial>0.0</Initial>
+          </PdeEquation>
+        </CompartmentSubDomain>
+        <CompartmentSubDomain Name="region1">
+          <BoundaryType Boundary="Xm" Type="Flux" />
+          <BoundaryType Boundary="Xp" Type="Flux" />
+          <BoundaryType Boundary="Ym" Type="Flux" />
+          <BoundaryType Boundary="Yp" Type="Flux" />
+          <BoundaryType Boundary="Zm" Type="Value" />
+          <BoundaryType Boundary="Zp" Type="Value" />
+          <PdeEquation Name="pH" SolutionType="Unknown">
+            <Rate>- J_reaction_cyto</Rate>
+            <Diffusion>1.0</Diffusion>
+            <Initial>pH_cyto_init</Initial>
+          </PdeEquation>
+        </CompartmentSubDomain>
+        <CompartmentSubDomain Name="region2">
+          <BoundaryType Boundary="Xm" Type="Flux" />
+          <BoundaryType Boundary="Xp" Type="Flux" />
+          <BoundaryType Boundary="Ym" Type="Flux" />
+          <BoundaryType Boundary="Yp" Type="Flux" />
+          <BoundaryType Boundary="Zm" Type="Value" />
+          <BoundaryType Boundary="Zp" Type="Value" />
+          <PdeEquation Name="pH" SolutionType="Unknown">
+            <Rate>J_reaction0</Rate>
+            <Diffusion>1.0</Diffusion>
+            <Initial>pH_nuc_init</Initial>
+          </PdeEquation>
+        </CompartmentSubDomain>
+        <MembraneSubDomain Name="region0_region1_membrane" InsideCompartment="region1" OutsideCompartment="region0">
+          <BoundaryType Boundary="Xm" Type="Value" />
+          <BoundaryType Boundary="Xp" Type="Value" />
+          <BoundaryType Boundary="Ym" Type="Value" />
+          <BoundaryType Boundary="Yp" Type="Value" />
+          <BoundaryType Boundary="Zm" Type="Value" />
+          <BoundaryType Boundary="Zp" Type="Value" />
+          <JumpCondition Name="pH">
+            <InFlux>J_flux0</InFlux>
+            <OutFlux>0.0</OutFlux>
+          </JumpCondition>
+        </MembraneSubDomain>
+        <MembraneSubDomain Name="region1_region2_membrane" InsideCompartment="region2" OutsideCompartment="region1">
+          <BoundaryType Boundary="Xm" Type="Value" />
+          <BoundaryType Boundary="Xp" Type="Value" />
+          <BoundaryType Boundary="Ym" Type="Value" />
+          <BoundaryType Boundary="Yp" Type="Value" />
+          <BoundaryType Boundary="Zm" Type="Value" />
+          <BoundaryType Boundary="Zp" Type="Value" />
+          <JumpCondition Name="pH">
+            <InFlux>J_flux1</InFlux>
+            <OutFlux>- J_flux1</OutFlux>
+          </JumpCondition>
+        </MembraneSubDomain>
+        <Version Name="Ascaris2_generated" KeyValue="6066691" BranchId="6066166" Archived="0" Date="05-Sep-2003 13:33:03" FromVersionable="false">
+          <Owner Name="wolg" Identifier="6036774" />
+          <GroupAccess Type="1" />
+        </Version>
+      </MathDescription>
+      <Simulation Name="Simulation 3">
+        <SolverTaskDescription TaskType="Unsteady" UseSymbolicJacobian="false" Solver="Finite Volume, Regular Grid">
+          <TimeBound StartTime="0.0" EndTime="20.0" />
+          <TimeStep DefaultTime="0.001" MinTime="1.0E-8" MaxTime="1.0" />
+          <ErrorTolerance Absolut="1.0E-9" Relative="1.0E-9" />
+          <OutputOptions KeepEvery="200" KeepAtMost="1000" />
+          <NumberProcessors>1</NumberProcessors>
+        </SolverTaskDescription>
+        <MathOverrides />
+        <MeshSpecification>
+          <Size X="89" Y="114" Z="1" />
+        </MeshSpecification>
+        <Version Name="Simulation 3" KeyValue="6066746" BranchId="6066747" Archived="0" Date="05-Sep-2003 13:33:57" FromVersionable="false">
+          <Owner Name="wolg" Identifier="6036774" />
+          <GroupAccess Type="1" />
+        </Version>
+      </Simulation>
+      <SpatialObjects>
+        <SpatialObject Name="vobj_region00" Type="Volume" subVolume="region0" regionId="0">
+          <QuantityCategoryList>
+            <QuantityCategory Name="VolumeCentroid" Enabled="false" />
+            <QuantityCategory Name="InteriorVelocity" Enabled="false" />
+            <QuantityCategory Name="VolumeRegionSize" Enabled="true" />
+          </QuantityCategoryList>
+        </SpatialObject>
+        <SpatialObject Name="vobj_region11" Type="Volume" subVolume="region1" regionId="1">
+          <QuantityCategoryList>
+            <QuantityCategory Name="VolumeCentroid" Enabled="false" />
+            <QuantityCategory Name="InteriorVelocity" Enabled="false" />
+            <QuantityCategory Name="VolumeRegionSize" Enabled="true" />
+          </QuantityCategoryList>
+        </SpatialObject>
+        <SpatialObject Name="vobj_region22" Type="Volume" subVolume="region2" regionId="2">
+          <QuantityCategoryList>
+            <QuantityCategory Name="VolumeCentroid" Enabled="false" />
+            <QuantityCategory Name="InteriorVelocity" Enabled="false" />
+            <QuantityCategory Name="VolumeRegionSize" Enabled="true" />
+          </QuantityCategoryList>
+        </SpatialObject>
+        <SpatialObject Name="sobj_region11_region00" Type="Surface" subVolumeInside="region1" regionIdInside="1" subVolumeOutside="region0" regionIdOutside="0">
+          <QuantityCategoryList>
+            <QuantityCategory Name="SurfaceNormal" Enabled="false" />
+            <QuantityCategory Name="SurfaceVelocity" Enabled="false" />
+            <QuantityCategory Name="DistanceToSurface" Enabled="false" />
+            <QuantityCategory Name="DirectionToSurface" Enabled="false" />
+            <QuantityCategory Name="SurfaceSize" Enabled="true" />
+          </QuantityCategoryList>
+        </SpatialObject>
+        <SpatialObject Name="sobj_region22_region11" Type="Surface" subVolumeInside="region2" regionIdInside="2" subVolumeOutside="region1" regionIdOutside="1">
+          <QuantityCategoryList>
+            <QuantityCategory Name="SurfaceNormal" Enabled="false" />
+            <QuantityCategory Name="SurfaceVelocity" Enabled="false" />
+            <QuantityCategory Name="DistanceToSurface" Enabled="false" />
+            <QuantityCategory Name="DirectionToSurface" Enabled="false" />
+            <QuantityCategory Name="SurfaceSize" Enabled="true" />
+          </QuantityCategoryList>
+        </SpatialObject>
+      </SpatialObjects>
+      <Version Name="Ascaris2" KeyValue="6066690" BranchId="6066164" Archived="0" Date="05-Sep-2003 13:33:03" FromVersionable="false">
+        <Owner Name="wolg" Identifier="6036774" />
+        <GroupAccess Type="1" />
+      </Version>
+      <MicroscopeMeasurement Name="fluor">
+        <ConvolutionKernel Type="ProjectionZKernel" />
+      </MicroscopeMeasurement>
+    </SimulationSpec>
+    <SimulationSpec Name="C_elegans" Stochastic="false" UseConcentration="true" RuleBased="false" MassConservationModelReduction="true" InsufficientIterations="false" InsufficientMaxMolecules="false" CharacteristicSize="0.14285714285714285">
+      <NetworkConstraints RbmMaxIteration="1" RbmMaxMoleculesPerSpecies="10" RbmSpeciesLimit="800" RbmReactionsLimit="2500" />
+      <Annotation />
+      <Geometry Name="C_elegans" Dimension="2">
+        <Extent X="8.3" Y="8.0" Z="1.0" />
+        <Origin X="0.0" Y="0.0" Z="0.0" />
+        <Image Name="C_elegans">
+          <Annotation>C. elegans sperm</Annotation>
+          <ImageData X="58" Y="56" Z="1" CompressedSize="187">789CCDD44B0E80300804D08BF4483D1FE7D5F88D02C3406C2A0B37FA98B692B636BBE4A882EC5BA5ED0A7ABF6C42DFEED4E9C024558EA53A91A43664A803575A8C0CA50F43E9C260A32032A008420923E1F44308677FA874282377FC6A800FE89646342F53AB459183A408A270DEBF92F46F51F0DDC0BF842269DDB5C83DA5B2080AD82D74FAA0125597F28DCC353024492DC95153523427F797D783A7DED7311D2C4D3A5A5A9494864EC856200F598053642BC3DFD50215697138</ImageData>
+          <PixelClass Name="region0" ImagePixelValue="28" KeyValue="6064389" />
+          <PixelClass Name="region1" ImagePixelValue="150" KeyValue="6064390" />
+          <PixelClass Name="region2" ImagePixelValue="76" KeyValue="6064391" />
+          <Version Name="C_elegans" KeyValue="6064384" BranchId="6064385" Archived="0" Date="05-Sep-2003 11:33:27" FromVersionable="false">
+            <Owner Name="wolg" Identifier="6036774" />
+            <GroupAccess Type="1" />
+            <Annotation>C. elegans sperm</Annotation>
+          </Version>
+        </Image>
+        <SubVolume Name="region0" Handle="0" Type="Image" ImagePixelValue="28" KeyValue="6066823" />
+        <SubVolume Name="region1" Handle="1" Type="Image" ImagePixelValue="150" KeyValue="6066824" />
+        <SubVolume Name="region2" Handle="2" Type="Image" ImagePixelValue="76" KeyValue="6066825" />
+        <SurfaceClass Name="region0_region1_membrane" SubVolume1Ref="region0" SubVolume2Ref="region1" />
+        <SurfaceClass Name="region1_region2_membrane" SubVolume1Ref="region1" SubVolume2Ref="region2" />
+        <SurfaceDescription NumSamplesX="58" NumSamplesY="56" NumSamplesZ="1" CutoffFrequency="0.3">
+          <VolumeRegion Name="region00" RegionID="0" SubVolume="region0" Size="34.2060606060606" Unit="um2" />
+          <VolumeRegion Name="region11" RegionID="1" SubVolume="region1" Size="17.64312599681021" Unit="um2" />
+          <VolumeRegion Name="region22" RegionID="2" SubVolume="region2" Size="14.550813397129188" Unit="um2" />
+          <MembraneRegion Name="membrane_region00_region11" VolumeRegion1="region11" VolumeRegion2="region00" Size="24.116138450168474" Unit="um" />
+          <MembraneRegion Name="membrane_region11_region22" VolumeRegion1="region22" VolumeRegion2="region11" Size="13.45026490210405" Unit="um" />
+        </SurfaceDescription>
+        <Version Name="C_elegans" KeyValue="6066821" BranchId="6066822" Archived="0" Date="05-Sep-2003 13:40:43" FromVersionable="false">
+          <Owner Name="wolg" Identifier="6036774" />
+          <GroupAccess Type="1" />
+        </Version>
+      </Geometry>
+      <GeometryContext>
+        <FeatureMapping Feature="cyto" GeometryClass="region1" SubVolume="region1">
+          <BoundariesTypes Xm="Flux" Xp="Flux" Ym="Flux" Yp="Flux" Zm="Flux" Zp="Flux" />
+        </FeatureMapping>
+        <FeatureMapping Feature="nuc" GeometryClass="region2" SubVolume="region2">
+          <BoundariesTypes Xm="Flux" Xp="Flux" Ym="Flux" Yp="Flux" Zm="Flux" Zp="Flux" />
+        </FeatureMapping>
+        <FeatureMapping Feature="out" GeometryClass="region0" SubVolume="region0">
+          <BoundariesTypes Xm="Flux" Xp="Flux" Ym="Flux" Yp="Flux" Zm="Flux" Zp="Flux" />
+        </FeatureMapping>
+        <MembraneMapping Membrane="mem2" SurfaceToVolumeRatio="1.0" VolumeFraction="0.2" CalculateVoltage="false" SpecificCapacitance="0.01" InitialVoltage="0.0" GeometryClass="region1_region2_membrane">
+          <BoundariesTypes Xm="Flux" Xp="Flux" Ym="Flux" Yp="Flux" Zm="Flux" Zp="Flux" />
+        </MembraneMapping>
+        <MembraneMapping Membrane="mem1" SurfaceToVolumeRatio="1.0" VolumeFraction="0.2" CalculateVoltage="false" SpecificCapacitance="0.01" InitialVoltage="0.0" GeometryClass="region0_region1_membrane">
+          <BoundariesTypes Xm="Flux" Xp="Flux" Ym="Flux" Yp="Flux" Zm="Flux" Zp="Flux" />
+        </MembraneMapping>
+      </GeometryContext>
+      <ReactionContext>
+        <LocalizedCompoundSpec LocalizedCompoundRef="pH_cyto" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>0.5</InitialConcentration>
+          <Diffusion>1.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="pH_nuc" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>1.12</InitialConcentration>
+          <Diffusion>1.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="pH_out" ForceConstant="true" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>0.025</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <ReactionSpec ReactionStepRef="decay" ReactionMapping="included" />
+        <ReactionSpec ReactionStepRef="reaction0" ReactionMapping="included" />
+        <ReactionSpec ReactionStepRef="flux1" ReactionMapping="included" />
+        <ReactionSpec ReactionStepRef="flux0" ReactionMapping="included" />
+      </ReactionContext>
+      <MathDescription Name="C_elegans_generated">
+        <Constant Name="_F_">96480.0</Constant>
+        <Constant Name="_R_">8314.0</Constant>
+        <Constant Name="_T_">300.0</Constant>
+        <Constant Name="J_flux0">0.0</Constant>
+        <Constant Name="K_milliVolts_per_Volt">1000.0</Constant>
+        <Constant Name="k_nuc">50.0</Constant>
+        <Constant Name="KMOLE">0.0016611295681063123</Constant>
+        <Constant Name="pH_cyto_init">0.5</Constant>
+        <Constant Name="pH_nuc_init">1.12</Constant>
+        <Constant Name="pH_out">0.025</Constant>
+        <Constant Name="pH_out_init">0.025</Constant>
+        <VolumeVariable Name="pH" />
+        <Function Name="J_flux1">(k_nuc * (pH_OUTSIDE - pH_INSIDE))</Function>
+        <Function Name="J_reaction0">(10.0 * (1.12 - pH))</Function>
+        <Function Name="J_reaction_cyto">(1.0E-4 * ( - 0.025 + pH))</Function>
+        <Function Name="Voltage_mem2">0.0</Function>
+        <Function Name="Voltage_membrane">0.0</Function>
+        <CompartmentSubDomain Name="region0">
+          <BoundaryType Boundary="Xm" Type="Flux" />
+          <BoundaryType Boundary="Xp" Type="Flux" />
+          <BoundaryType Boundary="Ym" Type="Flux" />
+          <BoundaryType Boundary="Yp" Type="Flux" />
+          <BoundaryType Boundary="Zm" Type="Value" />
+          <BoundaryType Boundary="Zp" Type="Value" />
+          <PdeEquation Name="pH" SolutionType="Unknown">
+            <Rate>0.0</Rate>
+            <Diffusion>1.0</Diffusion>
+            <Initial>0.0</Initial>
+          </PdeEquation>
+        </CompartmentSubDomain>
+        <CompartmentSubDomain Name="region1">
+          <BoundaryType Boundary="Xm" Type="Flux" />
+          <BoundaryType Boundary="Xp" Type="Flux" />
+          <BoundaryType Boundary="Ym" Type="Flux" />
+          <BoundaryType Boundary="Yp" Type="Flux" />
+          <BoundaryType Boundary="Zm" Type="Value" />
+          <BoundaryType Boundary="Zp" Type="Value" />
+          <PdeEquation Name="pH" SolutionType="Unknown">
+            <Rate>- J_reaction_cyto</Rate>
+            <Diffusion>1.0</Diffusion>
+            <Initial>pH_cyto_init</Initial>
+          </PdeEquation>
+        </CompartmentSubDomain>
+        <CompartmentSubDomain Name="region2">
+          <BoundaryType Boundary="Xm" Type="Flux" />
+          <BoundaryType Boundary="Xp" Type="Flux" />
+          <BoundaryType Boundary="Ym" Type="Flux" />
+          <BoundaryType Boundary="Yp" Type="Flux" />
+          <BoundaryType Boundary="Zm" Type="Value" />
+          <BoundaryType Boundary="Zp" Type="Value" />
+          <PdeEquation Name="pH" SolutionType="Unknown">
+            <Rate>J_reaction0</Rate>
+            <Diffusion>1.0</Diffusion>
+            <Initial>pH_nuc_init</Initial>
+          </PdeEquation>
+        </CompartmentSubDomain>
+        <MembraneSubDomain Name="region0_region1_membrane" InsideCompartment="region1" OutsideCompartment="region0">
+          <BoundaryType Boundary="Xm" Type="Value" />
+          <BoundaryType Boundary="Xp" Type="Value" />
+          <BoundaryType Boundary="Ym" Type="Value" />
+          <BoundaryType Boundary="Yp" Type="Value" />
+          <BoundaryType Boundary="Zm" Type="Value" />
+          <BoundaryType Boundary="Zp" Type="Value" />
+          <JumpCondition Name="pH">
+            <InFlux>J_flux0</InFlux>
+            <OutFlux>0.0</OutFlux>
+          </JumpCondition>
+        </MembraneSubDomain>
+        <MembraneSubDomain Name="region1_region2_membrane" InsideCompartment="region2" OutsideCompartment="region1">
+          <BoundaryType Boundary="Xm" Type="Value" />
+          <BoundaryType Boundary="Xp" Type="Value" />
+          <BoundaryType Boundary="Ym" Type="Value" />
+          <BoundaryType Boundary="Yp" Type="Value" />
+          <BoundaryType Boundary="Zm" Type="Value" />
+          <BoundaryType Boundary="Zp" Type="Value" />
+          <JumpCondition Name="pH">
+            <InFlux>J_flux1</InFlux>
+            <OutFlux>- J_flux1</OutFlux>
+          </JumpCondition>
+        </MembraneSubDomain>
+        <Version Name="C_elegans_generated" KeyValue="6066856" BranchId="6066857" Archived="0" Date="05-Sep-2003 13:50:45" FromVersionable="false">
+          <Owner Name="wolg" Identifier="6036774" />
+          <GroupAccess Type="1" />
+        </Version>
+      </MathDescription>
+      <Simulation Name="Simulation 4">
+        <SolverTaskDescription TaskType="Unsteady" UseSymbolicJacobian="false" Solver="Finite Volume, Regular Grid">
+          <TimeBound StartTime="0.0" EndTime="20.0" />
+          <TimeStep DefaultTime="0.001" MinTime="1.0E-8" MaxTime="1.0" />
+          <ErrorTolerance Absolut="1.0E-9" Relative="1.0E-9" />
+          <OutputOptions KeepEvery="200" KeepAtMost="1000" />
+          <NumberProcessors>1</NumberProcessors>
+        </SolverTaskDescription>
+        <MathOverrides />
+        <MeshSpecification>
+          <Size X="103" Y="99" Z="1" />
+        </MeshSpecification>
+        <Version Name="Simulation 4" KeyValue="6066906" BranchId="6066907" Archived="0" Date="05-Sep-2003 13:51:15" FromVersionable="false">
+          <Owner Name="wolg" Identifier="6036774" />
+          <GroupAccess Type="1" />
+        </Version>
+      </Simulation>
+      <SpatialObjects>
+        <SpatialObject Name="vobj_region00" Type="Volume" subVolume="region0" regionId="0">
+          <QuantityCategoryList>
+            <QuantityCategory Name="VolumeCentroid" Enabled="false" />
+            <QuantityCategory Name="InteriorVelocity" Enabled="false" />
+            <QuantityCategory Name="VolumeRegionSize" Enabled="true" />
+          </QuantityCategoryList>
+        </SpatialObject>
+        <SpatialObject Name="vobj_region11" Type="Volume" subVolume="region1" regionId="1">
+          <QuantityCategoryList>
+            <QuantityCategory Name="VolumeCentroid" Enabled="false" />
+            <QuantityCategory Name="InteriorVelocity" Enabled="false" />
+            <QuantityCategory Name="VolumeRegionSize" Enabled="true" />
+          </QuantityCategoryList>
+        </SpatialObject>
+        <SpatialObject Name="vobj_region22" Type="Volume" subVolume="region2" regionId="2">
+          <QuantityCategoryList>
+            <QuantityCategory Name="VolumeCentroid" Enabled="false" />
+            <QuantityCategory Name="InteriorVelocity" Enabled="false" />
+            <QuantityCategory Name="VolumeRegionSize" Enabled="true" />
+          </QuantityCategoryList>
+        </SpatialObject>
+        <SpatialObject Name="sobj_region11_region00" Type="Surface" subVolumeInside="region1" regionIdInside="1" subVolumeOutside="region0" regionIdOutside="0">
+          <QuantityCategoryList>
+            <QuantityCategory Name="SurfaceNormal" Enabled="false" />
+            <QuantityCategory Name="SurfaceVelocity" Enabled="false" />
+            <QuantityCategory Name="DistanceToSurface" Enabled="false" />
+            <QuantityCategory Name="DirectionToSurface" Enabled="false" />
+            <QuantityCategory Name="SurfaceSize" Enabled="true" />
+          </QuantityCategoryList>
+        </SpatialObject>
+        <SpatialObject Name="sobj_region22_region11" Type="Surface" subVolumeInside="region2" regionIdInside="2" subVolumeOutside="region1" regionIdOutside="1">
+          <QuantityCategoryList>
+            <QuantityCategory Name="SurfaceNormal" Enabled="false" />
+            <QuantityCategory Name="SurfaceVelocity" Enabled="false" />
+            <QuantityCategory Name="DistanceToSurface" Enabled="false" />
+            <QuantityCategory Name="DirectionToSurface" Enabled="false" />
+            <QuantityCategory Name="SurfaceSize" Enabled="true" />
+          </QuantityCategoryList>
+        </SpatialObject>
+      </SpatialObjects>
+      <Version Name="C_elegans" KeyValue="6066854" BranchId="6066855" Archived="0" Date="05-Sep-2003 13:50:44" FromVersionable="false">
+        <Owner Name="wolg" Identifier="6036774" />
+        <GroupAccess Type="1" />
+      </Version>
+      <MicroscopeMeasurement Name="fluor">
+        <ConvolutionKernel Type="ProjectionZKernel" />
+      </MicroscopeMeasurement>
+    </SimulationSpec>
+    <Version Name="test" KeyValue="6066914" BranchId="6048907" Archived="0" Date="05-Sep-2003 13:51:16" FromVersionable="false">
+      <Owner Name="wolg" Identifier="6036774" />
+      <GroupAccess Type="0" />
+    </Version>
+    <pathwayModel>
+      <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:bp="http://www.biopax.org/release/biopax-level3.owl#" version="3.0" />
+    </pathwayModel>
+    <relationshipModel>
+      <RMNS version="3.0" />
+    </relationshipModel>
+    <vcmetadata>
+      <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" />
+      <nonrdfAnnotationList />
+      <uriBindingList />
+    </vcmetadata>
+  </BioModel>
+</vcml>
+

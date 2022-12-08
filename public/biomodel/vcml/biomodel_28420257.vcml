@@ -1,0 +1,208 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--This biomodel was generated in VCML Version Alpha_Version_7.4.0_build_87-->
+<vcml xmlns="http://sourceforge.net/projects/vcell/vcml" Version="Alpha_Version_7.4.0_build_87">
+  <BioModel Name="E. coli model">
+    <Model Name="unnamed">
+      <Compound Name="species1" />
+      <Feature Name="Unnamed compartment" KeyValue="28419639" />
+      <Feature Name="inside" KeyValue="28419642" />
+      <Membrane InsideFeature="inside" OutsideFeature="Unnamed compartment" PositiveFeature="inside" NegativeFeature="Unnamed compartment" MembraneVoltage="Voltage_membrane" Name="membrane" KeyValue="28419641" />
+      <LocalizedCompound Name="species1_membrane" CompoundRef="species1" Structure="membrane" OverrideName="true" KeyValue="28419645" />
+      <Diagram Name="Unnamed compartment" Structure="Unnamed compartment" />
+      <Diagram Name="membrane" Structure="membrane" />
+      <Diagram Name="inside" Structure="inside" />
+      <Version Name="unnamed" KeyValue="28419636" BranchId="28419471" Archived="0" Date="30-Jul-2008 11:33:46" FromVersionable="false">
+        <Owner Name="longtu" Identifier="27524085" />
+        <GroupAccess Type="1" />
+      </Version>
+      <ModelUnitSystem VolumeSubstanceUnit="uM.um3" MembraneSubstanceUnit="molecules" LumpedReactionSubstanceUnit="molecules" VolumeUnit="um3" AreaUnit="um2" LengthUnit="um" TimeUnit="s" />
+    </Model>
+    <SimulationSpec Name="diffusion" Stochastic="false" UseConcentration="true" RuleBased="false" MassConservationModelReduction="true" InsufficientIterations="false" InsufficientMaxMolecules="false" CharacteristicSize="0.0148123128870617">
+      <NetworkConstraints RbmMaxIteration="1" RbmMaxMoleculesPerSpecies="10" RbmSpeciesLimit="800" RbmReactionsLimit="2500" />
+      <Annotation />
+      <Geometry Name="E. Coli cell" Dimension="3">
+        <Extent X="1.0" Y="1.0" Z="3.0" />
+        <Origin X="-0.5" Y="-0.5" Z="-1.5" />
+        <SubVolume Name="subVolume0" Handle="1" Type="Analytical" KeyValue="28419407">
+          <AnalyticExpression>(((((x ^ 2.0) + (y ^ 2.0) + ((1.0 + z) ^ 2.0)) &lt;= 0.25) || ((z &gt;  - 1.0) * (((x ^ 2.0) + (y ^ 2.0)) &lt; 0.25) * (z &lt;= 1.0)) || (((x ^ 2.0) + (y ^ 2.0) + (( - 1.0 + z) ^ 2.0)) &lt;= 0.25)) &amp;&amp; !((((y * cos((10.0 * z))) &lt;= (x * sin((10.0 * z)))) * ((y * cos((0.5 + (10.0 * z)))) &gt;= (x * sin((0.5 + (10.0 * z))))))) &amp;&amp; !(((((x ^ 2.0) + (y ^ 2.0) + ((1.0 + z) ^ 2.0)) &lt;= 0.22) || ((z &gt;  - 1.0) * (((x ^ 2.0) + (y ^ 2.0)) &lt; 0.22) * (z &lt;= 1.0)) || (((x ^ 2.0) + (y ^ 2.0) + (( - 1.0 + z) ^ 2.0)) &lt;= 0.22))))</AnalyticExpression>
+        </SubVolume>
+        <SubVolume Name="subVolume2" Handle="2" Type="Analytical" KeyValue="28419408">
+          <AnalyticExpression>1.0</AnalyticExpression>
+        </SubVolume>
+        <SurfaceClass Name="subVolume0_subVolume2_membrane" SubVolume1Ref="subVolume0" SubVolume2Ref="subVolume2" />
+        <SurfaceDescription NumSamplesX="100" NumSamplesY="100" NumSamplesZ="100" CutoffFrequency="0.45">
+          <VolumeRegion Name="subVolume20" RegionID="0" SubVolume="subVolume2" Size="2.7452238949025" Unit="um3" />
+          <VolumeRegion Name="subVolume01" RegionID="1" SubVolume="subVolume0" Size="0.2547761050975009" Unit="um3" />
+          <MembraneRegion Name="membrane_subVolume20_subVolume01" VolumeRegion1="subVolume01" VolumeRegion2="subVolume20" Size="17.72239200631108" Unit="um2" />
+        </SurfaceDescription>
+        <Version Name="E. Coli cell" KeyValue="28419404" BranchId="28414240" Archived="0" Date="30-Jul-2008 11:11:13" FromVersionable="false">
+          <Owner Name="longtu" Identifier="27524085" />
+          <GroupAccess Type="1" />
+        </Version>
+      </Geometry>
+      <GeometryContext>
+        <FeatureMapping Feature="Unnamed compartment" GeometryClass="subVolume2" SubVolume="subVolume2">
+          <BoundariesTypes Xm="Flux" Xp="Flux" Ym="Flux" Yp="Flux" Zm="Flux" Zp="Flux" />
+        </FeatureMapping>
+        <FeatureMapping Feature="inside" GeometryClass="subVolume0" SubVolume="subVolume0">
+          <BoundariesTypes Xm="Flux" Xp="Flux" Ym="Flux" Yp="Flux" Zm="Flux" Zp="Flux" />
+        </FeatureMapping>
+        <MembraneMapping Membrane="membrane" SurfaceToVolumeRatio="1.0" VolumeFraction="0.2" CalculateVoltage="false" SpecificCapacitance="1.0" InitialVoltage="0.0" GeometryClass="subVolume0_subVolume2_membrane">
+          <BoundariesTypes Xm="Flux" Xp="Flux" Ym="Flux" Yp="Flux" Zm="Flux" Zp="Flux" />
+        </MembraneMapping>
+      </GeometryContext>
+      <ReactionContext>
+        <LocalizedCompoundSpec LocalizedCompoundRef="species1_membrane" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>((x &gt; 0.0) * (y &gt;  - 0.1) * (y &lt; 0.1) * (z &gt;  - 0.1) * (z &lt; 0.1))</InitialConcentration>
+          <Diffusion>1.0</Diffusion>
+        </LocalizedCompoundSpec>
+      </ReactionContext>
+      <MathDescription Name="diffusion_generated">
+        <Constant Name="_F_">96480.0</Constant>
+        <Constant Name="_F_nmol_">9.648E-5</Constant>
+        <Constant Name="_K_GHK_">1.0E-9</Constant>
+        <Constant Name="_N_pmol_">6.02E11</Constant>
+        <Constant Name="_R_">8314.0</Constant>
+        <Constant Name="_T_">300.0</Constant>
+        <Constant Name="K_millivolts_per_volt">1000.0</Constant>
+        <Constant Name="KMOLE">0.0016611295681063123</Constant>
+        <Constant Name="species1_membrane_diffusionRate">1.0</Constant>
+        <Constant Name="Voltage_membrane">0.0</Constant>
+        <MembraneVariable Name="species1_membrane" />
+        <Function Name="species1_membrane_init">((x &gt; 0.0) * (y &gt;  - 0.1) * (y &lt; 0.1) * (z &gt;  - 0.1) * (z &lt; 0.1))</Function>
+        <CompartmentSubDomain Name="subVolume0">
+          <BoundaryType Boundary="Xm" Type="Flux" />
+          <BoundaryType Boundary="Xp" Type="Flux" />
+          <BoundaryType Boundary="Ym" Type="Flux" />
+          <BoundaryType Boundary="Yp" Type="Flux" />
+          <BoundaryType Boundary="Zm" Type="Flux" />
+          <BoundaryType Boundary="Zp" Type="Flux" />
+        </CompartmentSubDomain>
+        <CompartmentSubDomain Name="subVolume2">
+          <BoundaryType Boundary="Xm" Type="Flux" />
+          <BoundaryType Boundary="Xp" Type="Flux" />
+          <BoundaryType Boundary="Ym" Type="Flux" />
+          <BoundaryType Boundary="Yp" Type="Flux" />
+          <BoundaryType Boundary="Zm" Type="Flux" />
+          <BoundaryType Boundary="Zp" Type="Flux" />
+        </CompartmentSubDomain>
+        <MembraneSubDomain Name="subVolume0_subVolume2_membrane" InsideCompartment="subVolume0" OutsideCompartment="subVolume2">
+          <BoundaryType Boundary="Xm" Type="Value" />
+          <BoundaryType Boundary="Xp" Type="Value" />
+          <BoundaryType Boundary="Ym" Type="Value" />
+          <BoundaryType Boundary="Yp" Type="Value" />
+          <BoundaryType Boundary="Zm" Type="Value" />
+          <BoundaryType Boundary="Zp" Type="Value" />
+          <PdeEquation Name="species1_membrane" SolutionType="Unknown">
+            <Rate>0.0</Rate>
+            <Diffusion>species1_membrane_diffusionRate</Diffusion>
+            <Initial>species1_membrane_init</Initial>
+          </PdeEquation>
+        </MembraneSubDomain>
+        <Version Name="diffusion_generated" KeyValue="28419634" BranchId="28419468" Archived="0" Date="30-Jul-2008 11:33:46" FromVersionable="false">
+          <Owner Name="longtu" Identifier="27524085" />
+          <GroupAccess Type="1" />
+        </Version>
+      </MathDescription>
+      <Simulation Name="Simulation0">
+        <SolverTaskDescription TaskType="Unsteady" UseSymbolicJacobian="false" Solver="Finite Volume, Regular Grid">
+          <TimeBound StartTime="0.0" EndTime="0.1" />
+          <TimeStep DefaultTime="0.001" MinTime="1.0E-8" MaxTime="1.0" />
+          <ErrorTolerance Absolut="1.0E-9" Relative="1.0E-9" />
+          <OutputOptions KeepEvery="1" KeepAtMost="1000" />
+          <NumberProcessors>1</NumberProcessors>
+        </SolverTaskDescription>
+        <MathOverrides />
+        <MeshSpecification>
+          <Size X="120" Y="120" Z="360" />
+        </MeshSpecification>
+        <Version Name="Simulation0" KeyValue="28419655" BranchId="28419493" Archived="0" Date="30-Jul-2008 11:33:46" FromVersionable="false">
+          <Owner Name="longtu" Identifier="27524085" />
+          <GroupAccess Type="1" />
+        </Version>
+      </Simulation>
+      <Simulation Name="Copy of Simulation0">
+        <SolverTaskDescription TaskType="Unsteady" UseSymbolicJacobian="false" Solver="Finite Volume, Regular Grid">
+          <TimeBound StartTime="0.0" EndTime="0.1" />
+          <TimeStep DefaultTime="0.001" MinTime="1.0E-8" MaxTime="1.0" />
+          <ErrorTolerance Absolut="1.0E-9" Relative="1.0E-9" />
+          <OutputOptions KeepEvery="1" KeepAtMost="1000" />
+          <NumberProcessors>1</NumberProcessors>
+        </SolverTaskDescription>
+        <MathOverrides />
+        <MeshSpecification>
+          <Size X="40" Y="40" Z="120" />
+        </MeshSpecification>
+        <Version Name="Copy of Simulation0" KeyValue="28419657" BranchId="28419623" Archived="0" Date="30-Jul-2008 11:33:46" FromVersionable="false">
+          <Owner Name="longtu" Identifier="27524085" />
+          <GroupAccess Type="1" />
+        </Version>
+      </Simulation>
+      <Simulation Name="Copy of Copy of Simulation0">
+        <SolverTaskDescription TaskType="Unsteady" UseSymbolicJacobian="false" Solver="Finite Volume, Regular Grid">
+          <TimeBound StartTime="0.0" EndTime="0.1" />
+          <TimeStep DefaultTime="0.001" MinTime="1.0E-8" MaxTime="1.0" />
+          <ErrorTolerance Absolut="1.0E-9" Relative="1.0E-9" />
+          <OutputOptions KeepEvery="1" KeepAtMost="1000" />
+          <NumberProcessors>1</NumberProcessors>
+        </SolverTaskDescription>
+        <MathOverrides />
+        <MeshSpecification>
+          <Size X="80" Y="80" Z="240" />
+        </MeshSpecification>
+        <Version Name="Copy of Copy of Simulation0" KeyValue="28420254" BranchId="28420255" Archived="0" Date="30-Jul-2008 11:49:39" FromVersionable="false">
+          <Owner Name="longtu" Identifier="27524085" />
+          <GroupAccess Type="1" />
+        </Version>
+      </Simulation>
+      <SpatialObjects>
+        <SpatialObject Name="vobj_subVolume20" Type="Volume" subVolume="subVolume2" regionId="0">
+          <QuantityCategoryList>
+            <QuantityCategory Name="VolumeCentroid" Enabled="false" />
+            <QuantityCategory Name="InteriorVelocity" Enabled="false" />
+            <QuantityCategory Name="VolumeRegionSize" Enabled="true" />
+          </QuantityCategoryList>
+        </SpatialObject>
+        <SpatialObject Name="vobj_subVolume01" Type="Volume" subVolume="subVolume0" regionId="1">
+          <QuantityCategoryList>
+            <QuantityCategory Name="VolumeCentroid" Enabled="false" />
+            <QuantityCategory Name="InteriorVelocity" Enabled="false" />
+            <QuantityCategory Name="VolumeRegionSize" Enabled="true" />
+          </QuantityCategoryList>
+        </SpatialObject>
+        <SpatialObject Name="sobj_subVolume01_subVolume20" Type="Surface" subVolumeInside="subVolume0" regionIdInside="1" subVolumeOutside="subVolume2" regionIdOutside="0">
+          <QuantityCategoryList>
+            <QuantityCategory Name="SurfaceNormal" Enabled="false" />
+            <QuantityCategory Name="SurfaceVelocity" Enabled="false" />
+            <QuantityCategory Name="DistanceToSurface" Enabled="false" />
+            <QuantityCategory Name="DirectionToSurface" Enabled="false" />
+            <QuantityCategory Name="SurfaceSize" Enabled="true" />
+          </QuantityCategoryList>
+        </SpatialObject>
+      </SpatialObjects>
+      <Version Name="diffusion" KeyValue="28419649" BranchId="28419486" Archived="0" Date="30-Jul-2008 11:33:46" FromVersionable="false">
+        <Owner Name="longtu" Identifier="27524085" />
+        <GroupAccess Type="1" />
+      </Version>
+      <MicroscopeMeasurement Name="fluor">
+        <ConvolutionKernel Type="ProjectionZKernel" />
+      </MicroscopeMeasurement>
+    </SimulationSpec>
+    <Version Name="E. coli model" KeyValue="28420257" BranchId="28419496" Archived="0" Date="30-Jul-2008 11:49:39" FromVersionable="false">
+      <Owner Name="longtu" Identifier="27524085" />
+      <GroupAccess Type="1" />
+    </Version>
+    <pathwayModel>
+      <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:bp="http://www.biopax.org/release/biopax-level3.owl#" version="3.0" />
+    </pathwayModel>
+    <relationshipModel>
+      <RMNS version="3.0" />
+    </relationshipModel>
+    <vcmetadata>
+      <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" />
+      <nonrdfAnnotationList />
+      <uriBindingList />
+    </vcmetadata>
+  </BioModel>
+</vcml>
+

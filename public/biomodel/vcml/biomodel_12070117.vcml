@@ -1,0 +1,1951 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--This biomodel was generated in VCML Version Alpha_Version_7.4.0_build_87-->
+<vcml xmlns="http://sourceforge.net/projects/vcell/vcml" Version="Alpha_Version_7.4.0_build_87">
+  <BioModel Name="Intracellular Ca-signaling_SOC_Z_COS7">
+    <Model Name="unnamed">
+      <Compound Name="SOC">
+        <Annotation>Store-op channel</Annotation>
+      </Compound>
+      <Compound Name="IP3R">
+        <Annotation>IP3R</Annotation>
+      </Compound>
+      <Compound Name="G_protein">
+        <SpeciesBinding KeyValue="6204270" Type="Compound">
+          <DBFormalSpecies KeyValue="2939070" Type="Compound">
+            <SpeciesInfo FormalID="C02815" Type="Compound">
+              <Name>C4b-binding protein</Name>
+            </SpeciesInfo>
+          </DBFormalSpecies>
+        </SpeciesBinding>
+      </Compound>
+      <Compound Name="Ca">
+        <Annotation>Calcium</Annotation>
+      </Compound>
+      <Compound Name="IP3">
+        <Annotation>IP3</Annotation>
+      </Compound>
+      <Compound Name="CaZ">
+        <Annotation>CaSignalZ</Annotation>
+      </Compound>
+      <Compound Name="leak_dist" />
+      <Compound Name="PMCapump">
+        <Annotation>PMCA</Annotation>
+      </Compound>
+      <Compound Name="SERCA">
+        <Annotation>SERCA_pump</Annotation>
+      </Compound>
+      <Feature Name="Cytoplasm" KeyValue="6916745" />
+      <Feature Name="ER" KeyValue="6916749" />
+      <Feature Name="ExtraCellular" KeyValue="6916743" />
+      <Membrane InsideFeature="ER" OutsideFeature="Cytoplasm" PositiveFeature="ER" NegativeFeature="Cytoplasm" MembraneVoltage="V_ER" Name="ER_membrane" KeyValue="6916747" />
+      <Membrane InsideFeature="Cytoplasm" OutsideFeature="ExtraCellular" PositiveFeature="Cytoplasm" NegativeFeature="ExtraCellular" MembraneVoltage="V_PM" Name="PM" KeyValue="6916744" />
+      <LocalizedCompound Name="SOC_PM" CompoundRef="SOC" Structure="PM" OverrideName="true" KeyValue="6916754" />
+      <LocalizedCompound Name="IP3R_ER_membran" CompoundRef="IP3R" Structure="ER_membrane" OverrideName="true" KeyValue="6916755" />
+      <LocalizedCompound Name="G_protein_PM" CompoundRef="G_protein" Structure="PM" OverrideName="true" KeyValue="6916756" />
+      <LocalizedCompound Name="Ca_ER" CompoundRef="Ca" Structure="ER" OverrideName="true" KeyValue="6916757" />
+      <LocalizedCompound Name="Ca_EC" CompoundRef="Ca" Structure="ExtraCellular" OverrideName="true" KeyValue="6916758" />
+      <LocalizedCompound Name="IP3_Cytoplasm" CompoundRef="IP3" Structure="Cytoplasm" OverrideName="true" KeyValue="6916759" />
+      <LocalizedCompound Name="CaZ_ER" CompoundRef="CaZ" Structure="ER" OverrideName="true" KeyValue="6916760" />
+      <LocalizedCompound Name="leak_dist_PM" CompoundRef="leak_dist" Structure="PM" OverrideName="true" KeyValue="6916761" />
+      <LocalizedCompound Name="CaZ_Cytoplasm" CompoundRef="CaZ" Structure="Cytoplasm" OverrideName="true" KeyValue="6916762" />
+      <LocalizedCompound Name="Ca_Cyt" CompoundRef="Ca" Structure="Cytoplasm" OverrideName="true" KeyValue="6916763" />
+      <LocalizedCompound Name="PMCapump_PM" CompoundRef="PMCapump" Structure="PM" OverrideName="true" KeyValue="6916764" />
+      <LocalizedCompound Name="SERCA_ER_membra" CompoundRef="SERCA" Structure="ER_membrane" OverrideName="true" KeyValue="6916753" />
+      <SimpleReaction Structure="PM" Name="IP3prod" Reversible="true" FluxOption="MolecularOnly" KeyValue="6916806">
+        <Product LocalizedCompoundRef="IP3_Cytoplasm" Stoichiometry="1" KeyValue="6916807" />
+        <Modifier LocalizedCompoundRef="G_protein_PM" />
+        <Kinetics KineticsType="GeneralKinetics">
+          <Parameter Name="G_signal" Role="reaction rate" Unit="molecules.um-2.s-1">(G_protein_PM * ((t - t_IP3) &gt; 0.0) * (1.0 + cos((2.0 * pi * (t - t_IP3) / T_IP3prod))))</Parameter>
+          <Parameter Name="I" Role="inward current density" Unit="pA.um-2">0.0</Parameter>
+          <Parameter Name="netValence" Role="net charge valence" Unit="1">0.0</Parameter>
+          <Parameter Name="pi" Role="user defined" Unit="tbd">3.141592653589793</Parameter>
+          <Parameter Name="T_IP3prod" Role="user defined" Unit="tbd">500.0</Parameter>
+          <Parameter Name="t_IP3" Role="user defined" Unit="tbd">150.0</Parameter>
+        </Kinetics>
+      </SimpleReaction>
+      <SimpleReaction Structure="PM" Name="SOC_degrad" Reversible="true" FluxOption="MolecularOnly" KeyValue="6916775">
+        <Reactant LocalizedCompoundRef="SOC_PM" Stoichiometry="1" KeyValue="6916776" />
+        <Kinetics KineticsType="GeneralKinetics">
+          <Parameter Name="J_SOC_deg" Role="reaction rate" Unit="molecules.um-2.s-1">(k_SOC_deg * SOC_PM)</Parameter>
+          <Parameter Name="I" Role="inward current density" Unit="pA.um-2">0.0</Parameter>
+          <Parameter Name="netValence" Role="net charge valence" Unit="1">0.0</Parameter>
+          <Parameter Name="k_SOC_deg" Role="user defined" Unit="s-1">0.002</Parameter>
+        </Kinetics>
+      </SimpleReaction>
+      <SimpleReaction Structure="Cytoplasm" Name="IP3_degrad" Reversible="true" FluxOption="MolecularOnly" KeyValue="6916769">
+        <Reactant LocalizedCompoundRef="IP3_Cytoplasm" Stoichiometry="1" KeyValue="6916770" />
+        <Kinetics KineticsType="GeneralKinetics">
+          <Parameter Name="J_IP3_degrad" Role="reaction rate" Unit="uM.s-1">(I_deg * (IP3_Cytoplasm - IP3min))</Parameter>
+          <Parameter Name="I_deg" Role="user defined" Unit="s-1">0.1</Parameter>
+          <Parameter Name="IP3min" Role="user defined" Unit="uM">0.001</Parameter>
+        </Kinetics>
+      </SimpleReaction>
+      <SimpleReaction Structure="PM" Name="Ca-feedback" Reversible="true" FluxOption="MolecularOnly" KeyValue="6916777">
+        <Product LocalizedCompoundRef="G_protein_PM" Stoichiometry="1" KeyValue="6916778" />
+        <Kinetics KineticsType="GeneralKinetics">
+          <Parameter Name="J_reaction0" Role="reaction rate" Unit="molecules.um-2.s-1">0.0</Parameter>
+          <Parameter Name="I" Role="inward current density" Unit="pA.um-2">0.0</Parameter>
+          <Parameter Name="netValence" Role="net charge valence" Unit="1">0.0</Parameter>
+        </Kinetics>
+      </SimpleReaction>
+      <SimpleReaction Structure="PM" Name="SOC_transition" Reversible="true" FluxOption="MolecularOnly" KeyValue="6916788">
+        <Reactant LocalizedCompoundRef="CaZ_Cytoplasm" Stoichiometry="1" KeyValue="6916789" />
+        <Product LocalizedCompoundRef="SOC_PM" Stoichiometry="1" KeyValue="6916790" />
+        <Kinetics KineticsType="GeneralKinetics">
+          <Parameter Name="J_SOC_transition" Role="reaction rate" Unit="molecules.um-2.s-1">(CaZ_Cytoplasm * k_SOC_prod)</Parameter>
+          <Parameter Name="I" Role="inward current density" Unit="pA.um-2">0.0</Parameter>
+          <Parameter Name="netValence" Role="net charge valence" Unit="1">0.0</Parameter>
+          <Parameter Name="k_SOC_prod" Role="user defined" Unit="molecules.um-2.uM-1.s-1">1.7</Parameter>
+        </Kinetics>
+      </SimpleReaction>
+      <SimpleReaction Structure="ER" Name="SOC release" Reversible="true" FluxOption="MolecularOnly" KeyValue="6916804">
+        <Product LocalizedCompoundRef="CaZ_ER" Stoichiometry="1" KeyValue="6916805" />
+        <Kinetics KineticsType="GeneralKinetics">
+          <Parameter Name="J_SOC_release" Role="reaction rate" Unit="uM.s-1">(V_Zrelease * (CaZ_max - CaZ_ER))</Parameter>
+          <Parameter Name="CaZ_max" Role="user defined" Unit="uM">0.1</Parameter>
+          <Parameter Name="V_Zrelease" Role="user defined" Unit="s-1">2.0E-4</Parameter>
+        </Kinetics>
+      </SimpleReaction>
+      <FluxStep Name="PMCA_pump" Structure="PM" Reversible="true" FluxOption="MolecularOnly" KeyValue="6916784">
+        <Reactant LocalizedCompoundRef="Ca_EC" Stoichiometry="1" />
+        <Product LocalizedCompoundRef="Ca_Cyt" Stoichiometry="1" />
+        <Kinetics KineticsType="GeneralKinetics">
+          <Parameter Name="J_PMCA_pump" Role="reaction rate" Unit="uM.um.s-1">- (VmaxPMCA * J_PMCA)</Parameter>
+          <Parameter Name="I" Role="inward current density" Unit="pA.um-2">0.0</Parameter>
+          <Parameter Name="netValence" Role="net charge valence" Unit="1">0.0</Parameter>
+          <Parameter Name="J_PMCA" Role="user defined" Unit="tbd">(Y * pow(Ca_Cyt,n_PMCA) / (pow(Ca_Cyt,n_PMCA) + pow(K051,n_PMCA)))</Parameter>
+          <Parameter Name="VmaxPMCA" Role="user defined" Unit="tbd">0.147</Parameter>
+          <Parameter Name="K051" Role="user defined" Unit="tbd">0.2</Parameter>
+          <Parameter Name="Y" Role="user defined" Unit="tbd">0.6</Parameter>
+          <Parameter Name="n_PMCA" Role="user defined" Unit="tbd">2.0</Parameter>
+        </Kinetics>
+      </FluxStep>
+      <FluxStep Name="leakER" Structure="ER_membrane" Reversible="true" FluxOption="MolecularAndElectrical" KeyValue="6916795">
+        <Reactant LocalizedCompoundRef="Ca_Cyt" Stoichiometry="1" />
+        <Product LocalizedCompoundRef="Ca_ER" Stoichiometry="1" />
+        <Modifier LocalizedCompoundRef="IP3R_ER_membran" />
+        <Kinetics KineticsType="GeneralKinetics">
+          <Parameter Name="J_leakER" Role="reaction rate" Unit="uM.um.s-1">(v_learER * IP3R_ER_membran * (Ca_Cyt - Ca_ER))</Parameter>
+          <Parameter Name="I" Role="inward current density" Unit="pA.um-2">((netValence * _F_ * J_leakER) * unitFactor)</Parameter>
+          <Parameter Name="netValence" Role="net charge valence" Unit="1">2.0</Parameter>
+          <Parameter Name="unitFactor" Role="electrical unit factor" Unit="pA.s.mol.um-3.uM-1.C-1">(1.0 / 1.0E9)</Parameter>
+          <Parameter Name="v_learER" Role="user defined" Unit="um3.molecules-1.s-1">0.002</Parameter>
+        </Kinetics>
+      </FluxStep>
+      <FluxStep Name="SOC" Structure="PM" Reversible="true" FluxOption="MolecularOnly" KeyValue="6916765">
+        <Reactant LocalizedCompoundRef="Ca_EC" Stoichiometry="1" />
+        <Product LocalizedCompoundRef="Ca_Cyt" Stoichiometry="1" />
+        <Modifier LocalizedCompoundRef="SOC_PM" />
+        <Kinetics KineticsType="GeneralKinetics">
+          <Parameter Name="J_SOC" Role="reaction rate" Unit="uM.um.s-1">(V_SOC * (Ca_EC - Ca_Cyt) * SOC_PM)</Parameter>
+          <Parameter Name="I" Role="inward current density" Unit="pA.um-2">0.0</Parameter>
+          <Parameter Name="netValence" Role="net charge valence" Unit="1">0.0</Parameter>
+          <Parameter Name="V_SOC" Role="user defined" Unit="um3.molecules-1.s-1">1.2E-4</Parameter>
+        </Kinetics>
+      </FluxStep>
+      <FluxStep Name="ZCh" Structure="ER_membrane" Reversible="true" FluxOption="MolecularOnly" KeyValue="6916771">
+        <Reactant LocalizedCompoundRef="CaZ_Cytoplasm" Stoichiometry="1" />
+        <Product LocalizedCompoundRef="CaZ_ER" Stoichiometry="1" />
+        <Modifier LocalizedCompoundRef="Ca_ER" />
+        <Kinetics KineticsType="GeneralKinetics">
+          <Parameter Name="J_ZCh" Role="reaction rate" Unit="uM.um.s-1">- ((CaZ_ER &gt; Zlimit) * (CaZ_ER - CaZ_Cytoplasm) * (Ca_ER &lt; SOClimit) * vZ)</Parameter>
+          <Parameter Name="I" Role="inward current density" Unit="pA.um-2">0.0</Parameter>
+          <Parameter Name="netValence" Role="net charge valence" Unit="1">0.0</Parameter>
+          <Parameter Name="SOClimit" Role="user defined" Unit="uM">50.0</Parameter>
+          <Parameter Name="vZ" Role="user defined" Unit="um.s-1">1.0</Parameter>
+          <Parameter Name="Zlimit" Role="user defined" Unit="uM">0.0</Parameter>
+        </Kinetics>
+      </FluxStep>
+      <FluxStep Name="SERCA_pump" Structure="ER_membrane" Reversible="true" FluxOption="MolecularAndElectrical" KeyValue="6916780">
+        <Reactant LocalizedCompoundRef="Ca_Cyt" Stoichiometry="1" />
+        <Product LocalizedCompoundRef="Ca_ER" Stoichiometry="1" />
+        <Modifier LocalizedCompoundRef="SERCA_ER_membra" />
+        <Kinetics KineticsType="GeneralKinetics">
+          <Parameter Name="J_SERCA_pump" Role="reaction rate" Unit="uM.um.s-1">((t &lt; t_CPA) * SERCA_ER_membra * J_SERCA)</Parameter>
+          <Parameter Name="I" Role="inward current density" Unit="pA.um-2">((netValence * _F_ * J_SERCA_pump) * unitFactor)</Parameter>
+          <Parameter Name="netValence" Role="net charge valence" Unit="1">2.0</Parameter>
+          <Parameter Name="unitFactor" Role="electrical unit factor" Unit="pA.s.mol.um-3.uM-1.C-1">(1.0 / 1.0E9)</Parameter>
+          <Parameter Name="J_SERCA" Role="user defined" Unit="tbd">(X * Vmax * pow(Ca_Cyt,n_SERCA) / (pow(Ca_Cyt,n_SERCA) + pow(K05,n_SERCA)))</Parameter>
+          <Parameter Name="t_CPA" Role="user defined" Unit="tbd">100.0</Parameter>
+          <Parameter Name="n_SERCA" Role="user defined" Unit="tbd">1.0</Parameter>
+          <Parameter Name="K05" Role="user defined" Unit="tbd">0.5</Parameter>
+          <Parameter Name="Vmax" Role="user defined" Unit="tbd">1.9</Parameter>
+          <Parameter Name="X" Role="user defined" Unit="tbd">0.4</Parameter>
+        </Kinetics>
+      </FluxStep>
+      <FluxStep Name="leak" Structure="PM" Reversible="true" FluxOption="MolecularAndElectrical" KeyValue="6916791">
+        <Reactant LocalizedCompoundRef="Ca_EC" Stoichiometry="1" />
+        <Product LocalizedCompoundRef="Ca_Cyt" Stoichiometry="1" />
+        <Modifier LocalizedCompoundRef="leak_dist_PM" />
+        <Kinetics KineticsType="GeneralKinetics">
+          <Parameter Name="J_leak" Role="reaction rate" Unit="uM.um.s-1">(leak_PM * leak_dist_PM * (Ca_EC - Ca_Cyt))</Parameter>
+          <Parameter Name="I" Role="inward current density" Unit="pA.um-2">((netValence * _F_ * J_leak) * unitFactor)</Parameter>
+          <Parameter Name="netValence" Role="net charge valence" Unit="1">2.0</Parameter>
+          <Parameter Name="unitFactor" Role="electrical unit factor" Unit="pA.s.mol.um-3.uM-1.C-1">(1.0 / 1.0E9)</Parameter>
+          <Parameter Name="leak_PM" Role="user defined" Unit="um3.molecules-1.s-1">1.2E-5</Parameter>
+        </Kinetics>
+      </FluxStep>
+      <FluxStep Name="IP3R_Ch" Structure="ER_membrane" Reversible="true" FluxOption="MolecularAndElectrical" KeyValue="6916799">
+        <Reactant LocalizedCompoundRef="Ca_Cyt" Stoichiometry="1" />
+        <Product LocalizedCompoundRef="Ca_ER" Stoichiometry="1" />
+        <Modifier LocalizedCompoundRef="IP3R_ER_membran" />
+        <Modifier LocalizedCompoundRef="IP3_Cytoplasm" />
+        <Kinetics KineticsType="GeneralKinetics">
+          <Parameter Name="J_IP3R_Ch" Role="reaction rate" Unit="uM.um.s-1">- ((Ca_ER - Ca_Cyt) * IP3R_ER_membran * J_IP3R)</Parameter>
+          <Parameter Name="I" Role="inward current density" Unit="pA.um-2">((netValence * _F_ * J_IP3R_Ch) * unitFactor)</Parameter>
+          <Parameter Name="netValence" Role="net charge valence" Unit="1">2.0</Parameter>
+          <Parameter Name="unitFactor" Role="electrical unit factor" Unit="pA.s.mol.um-3.uM-1.C-1">(1.0 / 1.0E9)</Parameter>
+          <Parameter Name="J_IP3R" Role="user defined" Unit="um3.molecules-1.s-1">(V_IP3R / ((1.0 + pow((IP3R_actCa / Ca_Cyt),H_act)) * (1.0 + pow((Ca_Cyt / IP3R_inhCa),H_inh))))</Parameter>
+          <Parameter Name="V_IP3R" Role="user defined" Unit="um3.molecules-1.s-1">0.07</Parameter>
+          <Parameter Name="IP3R_actCa" Role="user defined" Unit="uM">0.21</Parameter>
+          <Parameter Name="H_act" Role="user defined" Unit="1">2.0</Parameter>
+          <Parameter Name="IP3R_inhCa" Role="user defined" Unit="uM">(K_inf / (1.0 + pow((K_IP3 / IP3_Cytoplasm),H_IP3)))</Parameter>
+          <Parameter Name="H_inh" Role="user defined" Unit="1">4.0</Parameter>
+          <Parameter Name="K_inf" Role="user defined" Unit="uM">52.0</Parameter>
+          <Parameter Name="K_IP3" Role="user defined" Unit="uM">0.05</Parameter>
+          <Parameter Name="H_IP3" Role="user defined" Unit="1">4.0</Parameter>
+        </Kinetics>
+      </FluxStep>
+      <Diagram Name="unnamed" Structure="ExtraCellular" />
+      <Diagram Name="Membrane0" Structure="PM">
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="PMCapump_PM" LocationX="158" LocationY="350" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="SOC_PM" LocationX="163" LocationY="155" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="G_protein_PM" LocationX="203" LocationY="381" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="leak_dist_PM" LocationX="160" LocationY="45" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="Ca_Cyt" LocationX="128" LocationY="204" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="IP3_Cytoplasm" LocationX="53" LocationY="441" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="CaZ_Cytoplasm" LocationX="48" LocationY="187" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="Ca_EC" LocationX="46" LocationY="194" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="full" SimpleReactionRef="SOC_degrad" LocationX="61" LocationY="167" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="full" SimpleReactionRef="Ca-feedback" LocationX="198" LocationY="315" />
+        <FluxReactionShape NodeReferenceModeAttrTag="full" FluxReactionRef="PMCA_pump" LocationX="130" LocationY="264" />
+        <FluxReactionShape NodeReferenceModeAttrTag="full" FluxReactionRef="leak" LocationX="135" LocationY="103" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="full" SimpleReactionRef="IP3prod" LocationX="181" LocationY="435" />
+        <FluxReactionShape NodeReferenceModeAttrTag="full" FluxReactionRef="SOC" LocationX="136" LocationY="202" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="full" SimpleReactionRef="SOC_transition" LocationX="220" LocationY="167" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="PMCapump_PM" LocationX="158" LocationY="350" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="SOC_PM" LocationX="163" LocationY="155" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="G_protein_PM" LocationX="203" LocationY="381" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="leak_dist_PM" LocationX="160" LocationY="45" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="Ca_Cyt" LocationX="128" LocationY="204" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="IP3_Cytoplasm" LocationX="53" LocationY="441" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="CaZ_Cytoplasm" LocationX="48" LocationY="187" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="Ca_EC" LocationX="46" LocationY="194" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="molecule" SimpleReactionRef="SOC_degrad" LocationX="61" LocationY="167" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="molecule" SimpleReactionRef="Ca-feedback" LocationX="198" LocationY="315" />
+        <FluxReactionShape NodeReferenceModeAttrTag="molecule" FluxReactionRef="PMCA_pump" LocationX="130" LocationY="264" />
+        <FluxReactionShape NodeReferenceModeAttrTag="molecule" FluxReactionRef="leak" LocationX="135" LocationY="103" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="molecule" SimpleReactionRef="IP3prod" LocationX="181" LocationY="435" />
+        <FluxReactionShape NodeReferenceModeAttrTag="molecule" FluxReactionRef="SOC" LocationX="136" LocationY="202" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="molecule" SimpleReactionRef="SOC_transition" LocationX="220" LocationY="167" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="PMCapump_PM" LocationX="158" LocationY="350" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="SOC_PM" LocationX="163" LocationY="155" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="G_protein_PM" LocationX="203" LocationY="381" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="leak_dist_PM" LocationX="160" LocationY="45" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="Ca_Cyt" LocationX="128" LocationY="204" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="IP3_Cytoplasm" LocationX="53" LocationY="441" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="CaZ_Cytoplasm" LocationX="48" LocationY="187" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="Ca_EC" LocationX="46" LocationY="194" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="rule" SimpleReactionRef="SOC_degrad" LocationX="61" LocationY="167" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="rule" SimpleReactionRef="Ca-feedback" LocationX="198" LocationY="315" />
+        <FluxReactionShape NodeReferenceModeAttrTag="rule" FluxReactionRef="PMCA_pump" LocationX="130" LocationY="264" />
+        <FluxReactionShape NodeReferenceModeAttrTag="rule" FluxReactionRef="leak" LocationX="135" LocationY="103" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="rule" SimpleReactionRef="IP3prod" LocationX="181" LocationY="435" />
+        <FluxReactionShape NodeReferenceModeAttrTag="rule" FluxReactionRef="SOC" LocationX="136" LocationY="202" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="rule" SimpleReactionRef="SOC_transition" LocationX="220" LocationY="167" />
+      </Diagram>
+      <Diagram Name="Feature0" Structure="Cytoplasm">
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="CaZ_Cytoplasm" LocationX="142" LocationY="115" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="Ca_Cyt" LocationX="395" LocationY="83" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="IP3_Cytoplasm" LocationX="110" LocationY="272" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="full" SimpleReactionRef="IP3_degrad" LocationX="311" LocationY="252" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="CaZ_Cytoplasm" LocationX="142" LocationY="115" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="Ca_Cyt" LocationX="395" LocationY="83" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="IP3_Cytoplasm" LocationX="110" LocationY="272" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="molecule" SimpleReactionRef="IP3_degrad" LocationX="311" LocationY="252" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="CaZ_Cytoplasm" LocationX="142" LocationY="115" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="Ca_Cyt" LocationX="395" LocationY="83" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="IP3_Cytoplasm" LocationX="110" LocationY="272" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="rule" SimpleReactionRef="IP3_degrad" LocationX="311" LocationY="252" />
+      </Diagram>
+      <Diagram Name="Membrane0" Structure="ER_membrane">
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="IP3R_ER_membran" LocationX="154" LocationY="133" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="SERCA_ER_membra" LocationX="160" LocationY="299" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="Ca_ER" LocationX="25" LocationY="177" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="CaZ_ER" LocationX="35" LocationY="338" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="IP3_Cytoplasm" LocationX="55" LocationY="88" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="CaZ_Cytoplasm" LocationX="39" LocationY="336" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="Ca_Cyt" LocationX="32" LocationY="177" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="CaZB_Cytoplasm" LocationX="37" LocationY="266" />
+        <FluxReactionShape NodeReferenceModeAttrTag="full" FluxReactionRef="ZCh" LocationX="145" LocationY="333" />
+        <FluxReactionShape NodeReferenceModeAttrTag="full" FluxReactionRef="IP3R_Ch" LocationX="132" LocationY="82" />
+        <FluxReactionShape NodeReferenceModeAttrTag="full" FluxReactionRef="leakER" LocationX="132" LocationY="172" />
+        <FluxReactionShape NodeReferenceModeAttrTag="full" FluxReactionRef="SERCA_pump" LocationX="134" LocationY="240" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="IP3R_ER_membran" LocationX="154" LocationY="133" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="SERCA_ER_membra" LocationX="160" LocationY="299" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="Ca_ER" LocationX="25" LocationY="177" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="CaZ_ER" LocationX="35" LocationY="338" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="IP3_Cytoplasm" LocationX="55" LocationY="88" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="CaZ_Cytoplasm" LocationX="39" LocationY="336" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="Ca_Cyt" LocationX="32" LocationY="177" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="CaZB_Cytoplasm" LocationX="37" LocationY="266" />
+        <FluxReactionShape NodeReferenceModeAttrTag="molecule" FluxReactionRef="ZCh" LocationX="145" LocationY="333" />
+        <FluxReactionShape NodeReferenceModeAttrTag="molecule" FluxReactionRef="IP3R_Ch" LocationX="132" LocationY="82" />
+        <FluxReactionShape NodeReferenceModeAttrTag="molecule" FluxReactionRef="leakER" LocationX="132" LocationY="172" />
+        <FluxReactionShape NodeReferenceModeAttrTag="molecule" FluxReactionRef="SERCA_pump" LocationX="134" LocationY="240" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="IP3R_ER_membran" LocationX="154" LocationY="133" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="SERCA_ER_membra" LocationX="160" LocationY="299" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="Ca_ER" LocationX="25" LocationY="177" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="CaZ_ER" LocationX="35" LocationY="338" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="IP3_Cytoplasm" LocationX="55" LocationY="88" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="CaZ_Cytoplasm" LocationX="39" LocationY="336" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="Ca_Cyt" LocationX="32" LocationY="177" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="CaZB_Cytoplasm" LocationX="37" LocationY="266" />
+        <FluxReactionShape NodeReferenceModeAttrTag="rule" FluxReactionRef="ZCh" LocationX="145" LocationY="333" />
+        <FluxReactionShape NodeReferenceModeAttrTag="rule" FluxReactionRef="IP3R_Ch" LocationX="132" LocationY="82" />
+        <FluxReactionShape NodeReferenceModeAttrTag="rule" FluxReactionRef="leakER" LocationX="132" LocationY="172" />
+        <FluxReactionShape NodeReferenceModeAttrTag="rule" FluxReactionRef="SERCA_pump" LocationX="134" LocationY="240" />
+      </Diagram>
+      <Diagram Name="Feature0" Structure="ER">
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="Ca_ER" LocationX="122" LocationY="207" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="CaZ_ER" LocationX="122" LocationY="68" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="full" SimpleReactionRef="reaction0" LocationX="108" LocationY="138" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="Ca_ER" LocationX="122" LocationY="207" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="CaZ_ER" LocationX="122" LocationY="68" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="molecule" SimpleReactionRef="reaction0" LocationX="108" LocationY="138" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="Ca_ER" LocationX="122" LocationY="207" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="CaZ_ER" LocationX="122" LocationY="68" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="rule" SimpleReactionRef="reaction0" LocationX="108" LocationY="138" />
+      </Diagram>
+      <Version Name="unnamed" KeyValue="6916733" BranchId="3837475" Archived="0" Date="05-Mar-2004 12:16:43" FromVersionable="false">
+        <Owner Name="jacobkow" Identifier="2900169" />
+        <GroupAccess Type="1" />
+      </Version>
+      <ModelUnitSystem VolumeSubstanceUnit="uM.um3" MembraneSubstanceUnit="molecules" LumpedReactionSubstanceUnit="molecules" VolumeUnit="um3" AreaUnit="um2" LengthUnit="um" TimeUnit="s" />
+    </Model>
+    <SimulationSpec Name="ODE" Stochastic="false" UseConcentration="true" RuleBased="false" MassConservationModelReduction="true" InsufficientIterations="false" InsufficientMaxMolecules="false">
+      <NetworkConstraints RbmMaxIteration="1" RbmMaxMoleculesPerSpecies="10" RbmSpeciesLimit="800" RbmReactionsLimit="2500" />
+      <Annotation />
+      <Geometry Name="non-spatial" Dimension="0">
+        <Extent X="10.0" Y="10.0" Z="10.0" />
+        <Origin X="0.0" Y="0.0" Z="0.0" />
+        <SubVolume Name="Compartment" Handle="0" Type="Compartmental" KeyValue="6204170" />
+        <Version Name="non-spatial" KeyValue="6204167" BranchId="6204168" Archived="0" Date="24-Sep-2003 01:50:16" FromVersionable="false">
+          <Owner Name="jacobkow" Identifier="2900169" />
+          <GroupAccess Type="1" />
+        </Version>
+      </Geometry>
+      <GeometryContext>
+        <FeatureMapping Feature="Cytoplasm" GeometryClass="Compartment" SubVolume="Compartment">
+          <BoundariesTypes Xm="Flux" Xp="Flux" Ym="Flux" Yp="Flux" Zm="Flux" Zp="Flux" />
+        </FeatureMapping>
+        <FeatureMapping Feature="ER" GeometryClass="Compartment" SubVolume="Compartment">
+          <BoundariesTypes Xm="Flux" Xp="Flux" Ym="Flux" Yp="Flux" Zm="Flux" Zp="Flux" />
+        </FeatureMapping>
+        <FeatureMapping Feature="ExtraCellular" GeometryClass="Compartment" SubVolume="Compartment">
+          <BoundariesTypes Xm="Flux" Xp="Flux" Ym="Flux" Yp="Flux" Zm="Flux" Zp="Flux" />
+        </FeatureMapping>
+        <MembraneMapping Membrane="ER_membrane" SurfaceToVolumeRatio="1.62" VolumeFraction="0.0185" CalculateVoltage="false" SpecificCapacitance="0.01" InitialVoltage="0.0" GeometryClass="Compartment">
+          <BoundariesTypes Xm="Flux" Xp="Flux" Ym="Flux" Yp="Flux" Zm="Flux" Zp="Flux" />
+        </MembraneMapping>
+        <MembraneMapping Membrane="PM" SurfaceToVolumeRatio="0.3" VolumeFraction="0.1" CalculateVoltage="false" SpecificCapacitance="0.01" InitialVoltage="0.0" GeometryClass="Compartment">
+          <BoundariesTypes Xm="Flux" Xp="Flux" Ym="Flux" Yp="Flux" Zm="Flux" Zp="Flux" />
+        </MembraneMapping>
+      </GeometryContext>
+      <ReactionContext>
+        <LocalizedCompoundSpec LocalizedCompoundRef="IP3_Cytoplasm" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>1.0E-6</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="CaZ_Cytoplasm" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>0.0</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="Ca_Cyt" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>0.095</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="Ca_ER" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>100.0</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="CaZ_ER" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>1.0</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="Ca_EC" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>950.0</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="IP3R_ER_membran" ForceConstant="true" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>1.0</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="SERCA_ER_membra" ForceConstant="true" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>1.0</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="SOC_PM" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>0.0</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="G_protein_PM" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>1.0</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="leak_dist_PM" ForceConstant="true" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>1.0</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="PMCapump_PM" ForceConstant="true" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>1.0</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <ReactionSpec ReactionStepRef="PMCA_pump" ReactionMapping="included" />
+        <ReactionSpec ReactionStepRef="leakER" ReactionMapping="included" />
+        <ReactionSpec ReactionStepRef="IP3prod" ReactionMapping="included" />
+        <ReactionSpec ReactionStepRef="SOC" ReactionMapping="included" />
+        <ReactionSpec ReactionStepRef="SOC_degrad" ReactionMapping="included" />
+        <ReactionSpec ReactionStepRef="IP3_degrad" ReactionMapping="included" />
+        <ReactionSpec ReactionStepRef="ZCh" ReactionMapping="included" />
+        <ReactionSpec ReactionStepRef="SERCA_pump" ReactionMapping="included" />
+        <ReactionSpec ReactionStepRef="leak" ReactionMapping="included" />
+        <ReactionSpec ReactionStepRef="IP3R_Ch" ReactionMapping="included" />
+        <ReactionSpec ReactionStepRef="Ca-feedback" ReactionMapping="included" />
+        <ReactionSpec ReactionStepRef="SOC_transition" ReactionMapping="included" />
+        <ReactionSpec ReactionStepRef="SOC release" ReactionMapping="included" />
+      </ReactionContext>
+      <MathDescription Name="ODE_generated1">
+        <Constant Name="_F_">96480.0</Constant>
+        <Constant Name="_F_nmol_">9.648E-5</Constant>
+        <Constant Name="_K_GHK_">1.0E-9</Constant>
+        <Constant Name="_N_pmol_">6.02E11</Constant>
+        <Constant Name="_R_">8314.0</Constant>
+        <Constant Name="_T_">300.0</Constant>
+        <Constant Name="Ca_Cyt_init">0.095</Constant>
+        <Constant Name="Ca_EC_init">950.0</Constant>
+        <Constant Name="Ca_ER_init">100.0</Constant>
+        <Constant Name="CaZ_Cytoplasm_init">0.0</Constant>
+        <Constant Name="CaZ_ER_init">1.0</Constant>
+        <Constant Name="CaZ_max">0.1</Constant>
+        <Constant Name="G_protein_PM_init">1.0</Constant>
+        <Constant Name="H_act">2.0</Constant>
+        <Constant Name="H_inh">4.0</Constant>
+        <Constant Name="H_IP3">4.0</Constant>
+        <Constant Name="I_deg">0.1</Constant>
+        <Constant Name="IP3_Cytoplasm_init">1.0E-6</Constant>
+        <Constant Name="IP3min">0.001</Constant>
+        <Constant Name="IP3R_actCa">0.21</Constant>
+        <Constant Name="IP3R_ER_membran">1.0</Constant>
+        <Constant Name="IP3R_ER_membran_init">1.0</Constant>
+        <Constant Name="J_reaction0">0.0</Constant>
+        <Constant Name="K05">0.5</Constant>
+        <Constant Name="K051">0.2</Constant>
+        <Constant Name="K_inf">52.0</Constant>
+        <Constant Name="K_IP3">0.05</Constant>
+        <Constant Name="K_millivolts_per_volt">1000.0</Constant>
+        <Constant Name="k_SOC_deg">0.002</Constant>
+        <Constant Name="k_SOC_prod">1.7</Constant>
+        <Constant Name="KMOLE">0.0016611295681063123</Constant>
+        <Constant Name="leak_dist_PM">1.0</Constant>
+        <Constant Name="leak_dist_PM_init">1.0</Constant>
+        <Constant Name="leak_PM">1.2E-5</Constant>
+        <Constant Name="n_PMCA">2.0</Constant>
+        <Constant Name="n_SERCA">1.0</Constant>
+        <Constant Name="pi">3.141592653589793</Constant>
+        <Constant Name="PMCapump_PM">1.0</Constant>
+        <Constant Name="PMCapump_PM_init">1.0</Constant>
+        <Constant Name="SERCA_ER_membra">1.0</Constant>
+        <Constant Name="SERCA_ER_membra_init">1.0</Constant>
+        <Constant Name="SOC_PM_init">0.0</Constant>
+        <Constant Name="SOClimit">50.0</Constant>
+        <Constant Name="SurfToVol_ER_membrane">1.62</Constant>
+        <Constant Name="SurfToVol_PM">0.3</Constant>
+        <Constant Name="t_CPA">100.0</Constant>
+        <Constant Name="t_IP3">150.0</Constant>
+        <Constant Name="T_IP3prod">500.0</Constant>
+        <Constant Name="V_IP3R">0.07</Constant>
+        <Constant Name="v_learER">0.002</Constant>
+        <Constant Name="V_SOC">1.2E-4</Constant>
+        <Constant Name="V_Zrelease">2.0E-4</Constant>
+        <Constant Name="Vmax">1.9</Constant>
+        <Constant Name="VmaxPMCA">0.147</Constant>
+        <Constant Name="VolFract_Cytoplasm">0.1</Constant>
+        <Constant Name="VolFract_ER">0.0185</Constant>
+        <Constant Name="vZ">1.0</Constant>
+        <Constant Name="X">0.4</Constant>
+        <Constant Name="Y">0.6</Constant>
+        <Constant Name="Zlimit">0.0</Constant>
+        <VolumeVariable Name="Ca_EC" />
+        <VolumeVariable Name="Ca_ER" />
+        <VolumeVariable Name="CaZ_Cytoplasm" />
+        <VolumeVariable Name="CaZ_ER" />
+        <VolumeVariable Name="G_protein_PM" />
+        <VolumeVariable Name="IP3_Cytoplasm" />
+        <VolumeVariable Name="SOC_PM" />
+        <Function Name="Ca_Cyt">(( - ((1.0 - VolFract_Cytoplasm) * Ca_EC) + K_Ca_Cyt_total - (Ca_ER * VolFract_ER * VolFract_Cytoplasm)) / ((1.0 - VolFract_ER) * VolFract_Cytoplasm))</Function>
+        <Function Name="G_signal">(G_protein_PM * ((t - t_IP3) &gt; 0.0) * (1.0 + cos((2.0 * pi * (t - t_IP3) / T_IP3prod))))</Function>
+        <Function Name="I_IP3R_Ch">(2.0 * J_IP3R_Ch * _F_nmol_)</Function>
+        <Function Name="I_leak">(2.0 * J_leak * _F_nmol_)</Function>
+        <Function Name="I_leakER">(2.0 * J_leakER * _F_nmol_)</Function>
+        <Function Name="I_SERCA_pump">(2.0 * J_SERCA_pump * _F_nmol_)</Function>
+        <Function Name="IP3R_inhCa">(K_inf / (1.0 + pow((K_IP3 / IP3_Cytoplasm),H_IP3)))</Function>
+        <Function Name="J_IP3_degrad">(I_deg * (IP3_Cytoplasm - IP3min))</Function>
+        <Function Name="J_IP3R">(V_IP3R / ((1.0 + pow((IP3R_actCa / Ca_Cyt),H_act)) * (1.0 + pow((Ca_Cyt / IP3R_inhCa),H_inh))))</Function>
+        <Function Name="J_IP3R_Ch">- ((Ca_ER - Ca_Cyt) * IP3R_ER_membran * J_IP3R)</Function>
+        <Function Name="J_leak">(leak_PM * leak_dist_PM * (Ca_EC - Ca_Cyt))</Function>
+        <Function Name="J_leakER">(v_learER * IP3R_ER_membran * (Ca_Cyt - Ca_ER))</Function>
+        <Function Name="J_PMCA">(Y * pow(Ca_Cyt,n_PMCA) / (pow(Ca_Cyt,n_PMCA) + pow(K051,n_PMCA)))</Function>
+        <Function Name="J_PMCA_pump">- (VmaxPMCA * J_PMCA)</Function>
+        <Function Name="J_SERCA">(X * Vmax * pow(Ca_Cyt,n_SERCA) / (pow(Ca_Cyt,n_SERCA) + pow(K05,n_SERCA)))</Function>
+        <Function Name="J_SERCA_pump">((t &lt; t_CPA) * SERCA_ER_membra * J_SERCA)</Function>
+        <Function Name="J_SOC">(V_SOC * (Ca_EC - Ca_Cyt) * SOC_PM)</Function>
+        <Function Name="J_SOC_deg">(k_SOC_deg * SOC_PM)</Function>
+        <Function Name="J_SOC_release">(V_Zrelease * (CaZ_max - CaZ_ER))</Function>
+        <Function Name="J_SOC_transition">(CaZ_Cytoplasm * k_SOC_prod)</Function>
+        <Function Name="J_ZCh">- ((CaZ_ER &gt; Zlimit) * (CaZ_ER - CaZ_Cytoplasm) * (Ca_ER &lt; SOClimit) * vZ)</Function>
+        <Function Name="K_Ca_Cyt_total">(((1.0 - VolFract_Cytoplasm) * Ca_EC_init) + (Ca_Cyt_init * (1.0 - VolFract_ER) * VolFract_Cytoplasm) + (Ca_ER_init * VolFract_ER * VolFract_Cytoplasm))</Function>
+        <Function Name="KFlux_ER_membrane_Cytoplasm">(SurfToVol_ER_membrane * VolFract_ER / (1.0 - VolFract_ER))</Function>
+        <Function Name="KFlux_ER_membrane_ER">SurfToVol_ER_membrane</Function>
+        <Function Name="KFlux_PM_Cytoplasm">(SurfToVol_PM / (1.0 - VolFract_ER))</Function>
+        <Function Name="KFlux_PM_ExtraCellular">(SurfToVol_PM * VolFract_Cytoplasm / (1.0 - VolFract_Cytoplasm))</Function>
+        <Function Name="V_ER">0.0</Function>
+        <Function Name="V_PM">0.0</Function>
+        <CompartmentSubDomain Name="Compartment">
+          <BoundaryType Boundary="Xm" Type="Value" />
+          <BoundaryType Boundary="Xp" Type="Value" />
+          <BoundaryType Boundary="Ym" Type="Value" />
+          <BoundaryType Boundary="Yp" Type="Value" />
+          <BoundaryType Boundary="Zm" Type="Value" />
+          <BoundaryType Boundary="Zp" Type="Value" />
+          <OdeEquation Name="IP3_Cytoplasm" SolutionType="Unknown">
+            <Rate>((KFlux_PM_Cytoplasm * KMOLE * G_signal) - J_IP3_degrad)</Rate>
+            <Initial>IP3_Cytoplasm_init</Initial>
+          </OdeEquation>
+          <OdeEquation Name="CaZ_Cytoplasm" SolutionType="Unknown">
+            <Rate>( - (KFlux_ER_membrane_Cytoplasm * J_ZCh) - (KFlux_PM_Cytoplasm * KMOLE * J_SOC_transition))</Rate>
+            <Initial>CaZ_Cytoplasm_init</Initial>
+          </OdeEquation>
+          <OdeEquation Name="Ca_ER" SolutionType="Unknown">
+            <Rate>((KFlux_ER_membrane_ER * J_IP3R_Ch) + (KFlux_ER_membrane_ER * J_leakER) + (KFlux_ER_membrane_ER * J_SERCA_pump))</Rate>
+            <Initial>Ca_ER_init</Initial>
+          </OdeEquation>
+          <OdeEquation Name="CaZ_ER" SolutionType="Unknown">
+            <Rate>((KFlux_ER_membrane_ER * J_ZCh) + J_SOC_release)</Rate>
+            <Initial>CaZ_ER_init</Initial>
+          </OdeEquation>
+          <OdeEquation Name="Ca_EC" SolutionType="Unknown">
+            <Rate>( - (KFlux_PM_ExtraCellular * J_leak) - (KFlux_PM_ExtraCellular * J_PMCA_pump) - (KFlux_PM_ExtraCellular * J_SOC))</Rate>
+            <Initial>Ca_EC_init</Initial>
+          </OdeEquation>
+          <OdeEquation Name="SOC_PM" SolutionType="Unknown">
+            <Rate>( - J_SOC_deg + J_SOC_transition)</Rate>
+            <Initial>SOC_PM_init</Initial>
+          </OdeEquation>
+          <OdeEquation Name="G_protein_PM" SolutionType="Unknown">
+            <Rate>J_reaction0</Rate>
+            <Initial>G_protein_PM_init</Initial>
+          </OdeEquation>
+        </CompartmentSubDomain>
+        <Version Name="ODE_generated1" KeyValue="11778274" BranchId="6204166" Archived="0" Date="28-Feb-2005 12:06:44" FromVersionable="false">
+          <Owner Name="jacobkow" Identifier="2900169" />
+          <GroupAccess Type="1" />
+        </Version>
+      </MathDescription>
+      <Simulation Name="Simulation 3">
+        <SolverTaskDescription TaskType="Unsteady" UseSymbolicJacobian="false" Solver="Runge-Kutta-Fehlberg (Fifth Order, Variable Time Step)">
+          <TimeBound StartTime="0.0" EndTime="3000.0" />
+          <TimeStep DefaultTime="1.0" MinTime="1.0E-4" MaxTime="5.0" />
+          <ErrorTolerance Absolut="1.0E-9" Relative="1.0E-9" />
+          <OutputOptions KeepEvery="2" KeepAtMost="5000" />
+          <NumberProcessors>1</NumberProcessors>
+        </SolverTaskDescription>
+        <MathOverrides>
+          <Constant Name="V_SOC">1.0E-4</Constant>
+          <Constant Name="VmaxPMCA">0.03675</Constant>
+          <Constant Name="SOClimit">30.0</Constant>
+          <Constant Name="leak_PM">5.0E-6</Constant>
+          <Constant Name="G_protein_PM_init">1.5</Constant>
+          <Constant Name="t_CPA">100000.0</Constant>
+          <Constant Name="Vmax">4.2</Constant>
+          <Constant Name="T_IP3prod">500000.0</Constant>
+        </MathOverrides>
+        <Version Name="Simulation 3" KeyValue="11778370" BranchId="6236145" Archived="0" Date="28-Feb-2005 12:06:45" FromVersionable="false">
+          <Owner Name="jacobkow" Identifier="2900169" />
+          <GroupAccess Type="1" />
+        </Version>
+      </Simulation>
+      <Simulation Name="Simulation 3 full of bugs!">
+        <SolverTaskDescription TaskType="Unsteady" UseSymbolicJacobian="false" Solver="CVODE (Variable Order, Variable Time Step)">
+          <TimeBound StartTime="0.0" EndTime="3000.0" />
+          <TimeStep DefaultTime="1.0" MinTime="0.01" MaxTime="5.0" />
+          <ErrorTolerance Absolut="1.0E-9" Relative="1.0E-9" />
+          <OutputOptions KeepEvery="2" KeepAtMost="5000" />
+          <NumberProcessors>1</NumberProcessors>
+        </SolverTaskDescription>
+        <MathOverrides>
+          <Constant Name="V_SOC">1.0E-4</Constant>
+          <Constant Name="VmaxPMCA">0.0735</Constant>
+          <Constant Name="SOClimit">30.0</Constant>
+          <Constant Name="leak_PM">9.0E-6</Constant>
+          <Constant Name="G_protein_PM_init">1.5</Constant>
+          <Constant Name="Vmax">4.2</Constant>
+          <Constant Name="t_IP3">100000.0</Constant>
+          <Constant Name="T_IP3prod">500000.0</Constant>
+        </MathOverrides>
+        <Version Name="Simulation 3 full of bugs!" KeyValue="11778371" BranchId="6237620" Archived="0" Date="28-Feb-2005 12:06:45" FromVersionable="false">
+          <Owner Name="jacobkow" Identifier="2900169" />
+          <GroupAccess Type="1" />
+        </Version>
+      </Simulation>
+      <Simulation Name="copy of Simulation 3">
+        <SolverTaskDescription TaskType="Unsteady" UseSymbolicJacobian="false" Solver="Runge-Kutta-Fehlberg (Fifth Order, Variable Time Step)">
+          <TimeBound StartTime="0.0" EndTime="8000.0" />
+          <TimeStep DefaultTime="1.0" MinTime="1.0E-4" MaxTime="5.0" />
+          <ErrorTolerance Absolut="1.0E-9" Relative="1.0E-9" />
+          <OutputOptions KeepEvery="2" KeepAtMost="5000" />
+          <NumberProcessors>1</NumberProcessors>
+        </SolverTaskDescription>
+        <MathOverrides>
+          <Constant Name="G_protein_PM_init">1.5</Constant>
+          <Constant Name="V_IP3R">0.035</Constant>
+          <Constant Name="Vmax">4.2</Constant>
+          <Constant Name="V_SOC">1.3E-5</Constant>
+          <Constant Name="T_IP3prod">500000.0</Constant>
+          <Constant Name="CaZ_ER_init">0.1</Constant>
+          <Constant Name="SOClimit">30.0</Constant>
+          <Constant Name="leak_PM">3.0E-6</Constant>
+          <Constant Name="VmaxPMCA">0.0245</Constant>
+          <Constant Name="t_IP3">150000.0</Constant>
+        </MathOverrides>
+        <Version Name="copy of Simulation 3" KeyValue="11778372" BranchId="6237389" Archived="0" Date="28-Feb-2005 12:06:45" FromVersionable="false">
+          <Owner Name="jacobkow" Identifier="2900169" />
+          <GroupAccess Type="1" />
+        </Version>
+      </Simulation>
+      <Simulation Name="IP3 oscillating">
+        <SolverTaskDescription TaskType="Unsteady" UseSymbolicJacobian="false" Solver="Runge-Kutta-Fehlberg (Fifth Order, Variable Time Step)">
+          <TimeBound StartTime="0.0" EndTime="20000.0" />
+          <TimeStep DefaultTime="1.0" MinTime="1.0E-4" MaxTime="5.0" />
+          <ErrorTolerance Absolut="1.0E-9" Relative="1.0E-9" />
+          <OutputOptions KeepEvery="2" KeepAtMost="5000" />
+          <NumberProcessors>1</NumberProcessors>
+        </SolverTaskDescription>
+        <MathOverrides>
+          <Constant Name="t_CPA">1.0E7</Constant>
+          <Constant Name="G_protein_PM_init">1.5</Constant>
+          <Constant Name="V_IP3R">0.035</Constant>
+          <Constant Name="Vmax">4.2</Constant>
+          <Constant Name="V_SOC">1.1E-5</Constant>
+          <Constant Name="T_IP3prod">1500.0</Constant>
+          <Constant Name="CaZ_ER_init">0.1</Constant>
+          <Constant Name="leak_PM">3.0E-6</Constant>
+          <Constant Name="VmaxPMCA">0.0245</Constant>
+        </MathOverrides>
+        <Version Name="IP3 oscillating" KeyValue="11778373" BranchId="6346024" Archived="0" Date="28-Feb-2005 12:06:45" FromVersionable="false">
+          <Owner Name="jacobkow" Identifier="2900169" />
+          <GroupAccess Type="1" />
+        </Version>
+      </Simulation>
+      <Simulation Name="Control">
+        <SolverTaskDescription TaskType="Unsteady" UseSymbolicJacobian="false" Solver="CVODE (Variable Order, Variable Time Step)">
+          <TimeBound StartTime="0.0" EndTime="2000.0" />
+          <TimeStep DefaultTime="0.5" MinTime="1.0E-4" MaxTime="5.0" />
+          <ErrorTolerance Absolut="1.0E-9" Relative="1.0E-9" />
+          <OutputOptions KeepEvery="2" KeepAtMost="5000" />
+          <NumberProcessors>1</NumberProcessors>
+        </SolverTaskDescription>
+        <MathOverrides>
+          <Constant Name="t_CPA">1000000.0</Constant>
+          <Constant Name="G_protein_PM_init">1.5</Constant>
+          <Constant Name="V_IP3R">0.035</Constant>
+          <Constant Name="Vmax">4.1</Constant>
+          <Constant Name="V_SOC">1.1E-5</Constant>
+          <Constant Name="T_IP3prod">5000000.0</Constant>
+          <Constant Name="CaZ_ER_init">0.1</Constant>
+          <Constant Name="SOClimit">0.0</Constant>
+          <Constant Name="leak_PM">3.0E-6</Constant>
+          <Constant Name="VmaxPMCA">0.03</Constant>
+          <Constant Name="t_IP3">1.5E7</Constant>
+        </MathOverrides>
+        <Version Name="Control" KeyValue="11778374" BranchId="6429632" Archived="0" Date="28-Feb-2005 12:06:45" FromVersionable="false">
+          <Owner Name="jacobkow" Identifier="2900169" />
+          <GroupAccess Type="1" />
+        </Version>
+      </Simulation>
+      <Simulation Name="CPA 1">
+        <SolverTaskDescription TaskType="Unsteady" UseSymbolicJacobian="false" Solver="Runge-Kutta-Fehlberg (Fifth Order, Variable Time Step)">
+          <TimeBound StartTime="0.0" EndTime="20000.0" />
+          <TimeStep DefaultTime="0.5" MinTime="1.0E-4" MaxTime="5.0" />
+          <ErrorTolerance Absolut="1.0E-9" Relative="1.0E-9" />
+          <OutputOptions KeepEvery="2" KeepAtMost="5000" />
+          <NumberProcessors>1</NumberProcessors>
+        </SolverTaskDescription>
+        <MathOverrides>
+          <Constant Name="t_CPA">1000.0</Constant>
+          <Constant Name="G_protein_PM_init">1.5</Constant>
+          <Constant Name="V_IP3R">0.035</Constant>
+          <Constant Name="Vmax">4.1</Constant>
+          <Constant Name="V_SOC">1.8E-5</Constant>
+          <Constant Name="T_IP3prod">5000000.0</Constant>
+          <Constant Name="CaZ_ER_init">0.1</Constant>
+          <Constant Name="SOClimit">30.0</Constant>
+          <Constant Name="leak_PM">3.0E-6</Constant>
+          <Constant Name="VmaxPMCA">0.03</Constant>
+          <Constant Name="t_IP3">1.5E7</Constant>
+        </MathOverrides>
+        <Version Name="CPA 1" KeyValue="11778375" BranchId="6430390" Archived="0" Date="28-Feb-2005 12:06:45" FromVersionable="false">
+          <Owner Name="jacobkow" Identifier="2900169" />
+          <GroupAccess Type="1" />
+        </Version>
+      </Simulation>
+      <Simulation Name="IP3 sustained SOC_30">
+        <SolverTaskDescription TaskType="Unsteady" UseSymbolicJacobian="false" Solver="Runge-Kutta-Fehlberg (Fifth Order, Variable Time Step)">
+          <TimeBound StartTime="0.0" EndTime="20000.0" />
+          <TimeStep DefaultTime="0.5" MinTime="1.0E-4" MaxTime="5.0" />
+          <ErrorTolerance Absolut="1.0E-9" Relative="1.0E-9" />
+          <OutputOptions KeepEvery="2" KeepAtMost="5000" />
+          <NumberProcessors>1</NumberProcessors>
+        </SolverTaskDescription>
+        <MathOverrides>
+          <Constant Name="t_CPA">1000000.0</Constant>
+          <Constant Name="G_protein_PM_init">1.5</Constant>
+          <Constant Name="V_IP3R">0.035</Constant>
+          <Constant Name="Vmax">4.1</Constant>
+          <Constant Name="V_SOC">1.8E-5</Constant>
+          <Constant Name="T_IP3prod">5000000.0</Constant>
+          <Constant Name="CaZ_ER_init">0.1</Constant>
+          <Constant Name="SOClimit">30.0</Constant>
+          <Constant Name="leak_PM">3.0E-6</Constant>
+          <Constant Name="VmaxPMCA">0.03</Constant>
+        </MathOverrides>
+        <Version Name="IP3 sustained SOC_30" KeyValue="11778376" BranchId="6430228" Archived="0" Date="28-Feb-2005 12:06:45" FromVersionable="false">
+          <Owner Name="jacobkow" Identifier="2900169" />
+          <GroupAccess Type="1" />
+        </Version>
+      </Simulation>
+      <Simulation Name="IP3 sustained SOC_50">
+        <SolverTaskDescription TaskType="Unsteady" UseSymbolicJacobian="false" Solver="Runge-Kutta-Fehlberg (Fifth Order, Variable Time Step)">
+          <TimeBound StartTime="0.0" EndTime="20000.0" />
+          <TimeStep DefaultTime="0.5" MinTime="1.0E-4" MaxTime="5.0" />
+          <ErrorTolerance Absolut="1.0E-9" Relative="1.0E-9" />
+          <OutputOptions KeepEvery="2" KeepAtMost="5000" />
+          <NumberProcessors>1</NumberProcessors>
+        </SolverTaskDescription>
+        <MathOverrides>
+          <Constant Name="t_CPA">1000000.0</Constant>
+          <Constant Name="G_protein_PM_init">1.5</Constant>
+          <Constant Name="V_IP3R">0.035</Constant>
+          <Constant Name="Vmax">4.1</Constant>
+          <Constant Name="V_SOC">1.8E-5</Constant>
+          <Constant Name="T_IP3prod">5000000.0</Constant>
+          <Constant Name="CaZ_ER_init">0.1</Constant>
+          <Constant Name="leak_PM">3.0E-6</Constant>
+          <Constant Name="VmaxPMCA">0.03</Constant>
+        </MathOverrides>
+        <Version Name="IP3 sustained SOC_50" KeyValue="11778377" BranchId="6430234" Archived="0" Date="28-Feb-2005 12:06:45" FromVersionable="false">
+          <Owner Name="jacobkow" Identifier="2900169" />
+          <GroupAccess Type="1" />
+        </Version>
+      </Simulation>
+      <Version Name="ODE" KeyValue="11778277" BranchId="6204164" Archived="0" Date="28-Feb-2005 12:06:44" FromVersionable="false">
+        <Owner Name="jacobkow" Identifier="2900169" />
+        <GroupAccess Type="1" />
+      </Version>
+      <MicroscopeMeasurement Name="fluor">
+        <ConvolutionKernel Type="ProjectionZKernel" />
+      </MicroscopeMeasurement>
+    </SimulationSpec>
+    <SimulationSpec Name="ODE1" Stochastic="false" UseConcentration="true" RuleBased="false" MassConservationModelReduction="true" InsufficientIterations="false" InsufficientMaxMolecules="false">
+      <NetworkConstraints RbmMaxIteration="1" RbmMaxMoleculesPerSpecies="10" RbmSpeciesLimit="800" RbmReactionsLimit="2500" />
+      <Annotation>(copied from ODE)</Annotation>
+      <Geometry Name="non-spatial" Dimension="0">
+        <Extent X="10.0" Y="10.0" Z="10.0" />
+        <Origin X="0.0" Y="0.0" Z="0.0" />
+        <SubVolume Name="Compartment" Handle="0" Type="Compartmental" KeyValue="6204170" />
+        <Version Name="non-spatial" KeyValue="6204167" BranchId="6204168" Archived="0" Date="24-Sep-2003 01:50:16" FromVersionable="false">
+          <Owner Name="jacobkow" Identifier="2900169" />
+          <GroupAccess Type="1" />
+        </Version>
+      </Geometry>
+      <GeometryContext>
+        <FeatureMapping Feature="Cytoplasm" GeometryClass="Compartment" SubVolume="Compartment">
+          <BoundariesTypes Xm="Flux" Xp="Flux" Ym="Flux" Yp="Flux" Zm="Flux" Zp="Flux" />
+        </FeatureMapping>
+        <FeatureMapping Feature="ER" GeometryClass="Compartment" SubVolume="Compartment">
+          <BoundariesTypes Xm="Flux" Xp="Flux" Ym="Flux" Yp="Flux" Zm="Flux" Zp="Flux" />
+        </FeatureMapping>
+        <FeatureMapping Feature="ExtraCellular" GeometryClass="Compartment" SubVolume="Compartment">
+          <BoundariesTypes Xm="Flux" Xp="Flux" Ym="Flux" Yp="Flux" Zm="Flux" Zp="Flux" />
+        </FeatureMapping>
+        <MembraneMapping Membrane="ER_membrane" SurfaceToVolumeRatio="1.62" VolumeFraction="0.0185" CalculateVoltage="false" SpecificCapacitance="0.01" InitialVoltage="0.0" GeometryClass="Compartment">
+          <BoundariesTypes Xm="Flux" Xp="Flux" Ym="Flux" Yp="Flux" Zm="Flux" Zp="Flux" />
+        </MembraneMapping>
+        <MembraneMapping Membrane="PM" SurfaceToVolumeRatio="0.3" VolumeFraction="0.1" CalculateVoltage="false" SpecificCapacitance="0.01" InitialVoltage="0.0" GeometryClass="Compartment">
+          <BoundariesTypes Xm="Flux" Xp="Flux" Ym="Flux" Yp="Flux" Zm="Flux" Zp="Flux" />
+        </MembraneMapping>
+      </GeometryContext>
+      <ReactionContext>
+        <LocalizedCompoundSpec LocalizedCompoundRef="IP3_Cytoplasm" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>0.001</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="CaZ_Cytoplasm" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>0.0</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="Ca_Cyt" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>0.095</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="Ca_ER" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>100.0</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="CaZ_ER" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>0.1</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="Ca_EC" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>950.0</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="IP3R_ER_membran" ForceConstant="true" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>1.0</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="SERCA_ER_membra" ForceConstant="true" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>1.0</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="SOC_PM" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>0.0</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="G_protein_PM" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>1.0</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="leak_dist_PM" ForceConstant="true" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>1.0</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="PMCapump_PM" ForceConstant="true" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>1.0</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <ReactionSpec ReactionStepRef="PMCA_pump" ReactionMapping="included" />
+        <ReactionSpec ReactionStepRef="leakER" ReactionMapping="included" />
+        <ReactionSpec ReactionStepRef="IP3prod" ReactionMapping="included" />
+        <ReactionSpec ReactionStepRef="SOC" ReactionMapping="included" />
+        <ReactionSpec ReactionStepRef="SOC_degrad" ReactionMapping="included" />
+        <ReactionSpec ReactionStepRef="IP3_degrad" ReactionMapping="included" />
+        <ReactionSpec ReactionStepRef="ZCh" ReactionMapping="included" />
+        <ReactionSpec ReactionStepRef="SERCA_pump" ReactionMapping="included" />
+        <ReactionSpec ReactionStepRef="leak" ReactionMapping="included" />
+        <ReactionSpec ReactionStepRef="IP3R_Ch" ReactionMapping="included" />
+        <ReactionSpec ReactionStepRef="Ca-feedback" ReactionMapping="included" />
+        <ReactionSpec ReactionStepRef="SOC_transition" ReactionMapping="included" />
+        <ReactionSpec ReactionStepRef="SOC release" ReactionMapping="included" />
+      </ReactionContext>
+      <MathDescription Name="ODE1_generated">
+        <Constant Name="_F_">96480.0</Constant>
+        <Constant Name="_F_nmol_">9.648E-5</Constant>
+        <Constant Name="_K_GHK_">1.0E-9</Constant>
+        <Constant Name="_N_pmol_">6.02E11</Constant>
+        <Constant Name="_R_">8314.0</Constant>
+        <Constant Name="_T_">300.0</Constant>
+        <Constant Name="Ca_Cyt_init">0.095</Constant>
+        <Constant Name="Ca_EC_init">950.0</Constant>
+        <Constant Name="Ca_ER_init">100.0</Constant>
+        <Constant Name="CaZ_Cytoplasm_init">0.0</Constant>
+        <Constant Name="CaZ_ER_init">0.1</Constant>
+        <Constant Name="CaZ_max">0.1</Constant>
+        <Constant Name="G_protein_PM_init">1.0</Constant>
+        <Constant Name="H_act">2.0</Constant>
+        <Constant Name="H_inh">4.0</Constant>
+        <Constant Name="H_IP3">4.0</Constant>
+        <Constant Name="I_deg">0.1</Constant>
+        <Constant Name="IP3_Cytoplasm_init">0.001</Constant>
+        <Constant Name="IP3min">0.001</Constant>
+        <Constant Name="IP3R_actCa">0.21</Constant>
+        <Constant Name="IP3R_ER_membran">1.0</Constant>
+        <Constant Name="IP3R_ER_membran_init">1.0</Constant>
+        <Constant Name="J_reaction0">0.0</Constant>
+        <Constant Name="K05">0.5</Constant>
+        <Constant Name="K051">0.2</Constant>
+        <Constant Name="K_inf">52.0</Constant>
+        <Constant Name="K_IP3">0.05</Constant>
+        <Constant Name="K_millivolts_per_volt">1000.0</Constant>
+        <Constant Name="k_SOC_deg">0.002</Constant>
+        <Constant Name="k_SOC_prod">1.7</Constant>
+        <Constant Name="KMOLE">0.0016611295681063123</Constant>
+        <Constant Name="leak_dist_PM">1.0</Constant>
+        <Constant Name="leak_dist_PM_init">1.0</Constant>
+        <Constant Name="leak_PM">1.2E-5</Constant>
+        <Constant Name="n_PMCA">2.0</Constant>
+        <Constant Name="n_SERCA">1.0</Constant>
+        <Constant Name="pi">3.141592653589793</Constant>
+        <Constant Name="PMCapump_PM">1.0</Constant>
+        <Constant Name="PMCapump_PM_init">1.0</Constant>
+        <Constant Name="SERCA_ER_membra">1.0</Constant>
+        <Constant Name="SERCA_ER_membra_init">1.0</Constant>
+        <Constant Name="SOC_PM_init">0.0</Constant>
+        <Constant Name="SOClimit">50.0</Constant>
+        <Constant Name="SurfToVol_ER_membrane">1.62</Constant>
+        <Constant Name="SurfToVol_PM">0.3</Constant>
+        <Constant Name="t_CPA">100.0</Constant>
+        <Constant Name="t_IP3">150.0</Constant>
+        <Constant Name="T_IP3prod">500.0</Constant>
+        <Constant Name="V_IP3R">0.07</Constant>
+        <Constant Name="v_learER">0.002</Constant>
+        <Constant Name="V_SOC">1.2E-4</Constant>
+        <Constant Name="V_Zrelease">2.0E-4</Constant>
+        <Constant Name="Vmax">1.9</Constant>
+        <Constant Name="VmaxPMCA">0.147</Constant>
+        <Constant Name="VolFract_Cytoplasm">0.1</Constant>
+        <Constant Name="VolFract_ER">0.0185</Constant>
+        <Constant Name="vZ">1.0</Constant>
+        <Constant Name="X">0.4</Constant>
+        <Constant Name="Y">0.6</Constant>
+        <Constant Name="Zlimit">0.0</Constant>
+        <VolumeVariable Name="Ca_EC" />
+        <VolumeVariable Name="Ca_ER" />
+        <VolumeVariable Name="CaZ_Cytoplasm" />
+        <VolumeVariable Name="CaZ_ER" />
+        <VolumeVariable Name="G_protein_PM" />
+        <VolumeVariable Name="IP3_Cytoplasm" />
+        <VolumeVariable Name="SOC_PM" />
+        <Function Name="Ca_Cyt">(( - ((1.0 - VolFract_Cytoplasm) * Ca_EC) + K_Ca_Cyt_total - (Ca_ER * VolFract_ER * VolFract_Cytoplasm)) / ((1.0 - VolFract_ER) * VolFract_Cytoplasm))</Function>
+        <Function Name="G_signal">(G_protein_PM * ((t - t_IP3) &gt; 0.0) * (1.0 + cos((2.0 * pi * (t - t_IP3) / T_IP3prod))))</Function>
+        <Function Name="I_IP3R_Ch">(2.0 * J_IP3R_Ch * _F_nmol_)</Function>
+        <Function Name="I_leak">(2.0 * J_leak * _F_nmol_)</Function>
+        <Function Name="I_leakER">(2.0 * J_leakER * _F_nmol_)</Function>
+        <Function Name="I_SERCA_pump">(2.0 * J_SERCA_pump * _F_nmol_)</Function>
+        <Function Name="IP3R_inhCa">(K_inf / (1.0 + pow((K_IP3 / IP3_Cytoplasm),H_IP3)))</Function>
+        <Function Name="J_IP3_degrad">(I_deg * (IP3_Cytoplasm - IP3min))</Function>
+        <Function Name="J_IP3R">(V_IP3R / ((1.0 + pow((IP3R_actCa / Ca_Cyt),H_act)) * (1.0 + pow((Ca_Cyt / IP3R_inhCa),H_inh))))</Function>
+        <Function Name="J_IP3R_Ch">- ((Ca_ER - Ca_Cyt) * IP3R_ER_membran * J_IP3R)</Function>
+        <Function Name="J_leak">(leak_PM * leak_dist_PM * (Ca_EC - Ca_Cyt))</Function>
+        <Function Name="J_leakER">(v_learER * IP3R_ER_membran * (Ca_Cyt - Ca_ER))</Function>
+        <Function Name="J_PMCA">(Y * pow(Ca_Cyt,n_PMCA) / (pow(Ca_Cyt,n_PMCA) + pow(K051,n_PMCA)))</Function>
+        <Function Name="J_PMCA_pump">- (VmaxPMCA * J_PMCA)</Function>
+        <Function Name="J_SERCA">(X * Vmax * pow(Ca_Cyt,n_SERCA) / (pow(Ca_Cyt,n_SERCA) + pow(K05,n_SERCA)))</Function>
+        <Function Name="J_SERCA_pump">((t &lt; t_CPA) * SERCA_ER_membra * J_SERCA)</Function>
+        <Function Name="J_SOC">(V_SOC * (Ca_EC - Ca_Cyt) * SOC_PM)</Function>
+        <Function Name="J_SOC_deg">(k_SOC_deg * SOC_PM)</Function>
+        <Function Name="J_SOC_release">(V_Zrelease * (CaZ_max - CaZ_ER))</Function>
+        <Function Name="J_SOC_transition">(CaZ_Cytoplasm * k_SOC_prod)</Function>
+        <Function Name="J_ZCh">- ((CaZ_ER &gt; Zlimit) * (CaZ_ER - CaZ_Cytoplasm) * (Ca_ER &lt; SOClimit) * vZ)</Function>
+        <Function Name="K_Ca_Cyt_total">(((1.0 - VolFract_Cytoplasm) * Ca_EC_init) + (Ca_Cyt_init * (1.0 - VolFract_ER) * VolFract_Cytoplasm) + (Ca_ER_init * VolFract_ER * VolFract_Cytoplasm))</Function>
+        <Function Name="KFlux_ER_membrane_Cytoplasm">(SurfToVol_ER_membrane * VolFract_ER / (1.0 - VolFract_ER))</Function>
+        <Function Name="KFlux_ER_membrane_ER">SurfToVol_ER_membrane</Function>
+        <Function Name="KFlux_PM_Cytoplasm">(SurfToVol_PM / (1.0 - VolFract_ER))</Function>
+        <Function Name="KFlux_PM_ExtraCellular">(SurfToVol_PM * VolFract_Cytoplasm / (1.0 - VolFract_Cytoplasm))</Function>
+        <Function Name="V_ER">0.0</Function>
+        <Function Name="V_PM">0.0</Function>
+        <CompartmentSubDomain Name="Compartment">
+          <BoundaryType Boundary="Xm" Type="Value" />
+          <BoundaryType Boundary="Xp" Type="Value" />
+          <BoundaryType Boundary="Ym" Type="Value" />
+          <BoundaryType Boundary="Yp" Type="Value" />
+          <BoundaryType Boundary="Zm" Type="Value" />
+          <BoundaryType Boundary="Zp" Type="Value" />
+          <OdeEquation Name="IP3_Cytoplasm" SolutionType="Unknown">
+            <Rate>((KFlux_PM_Cytoplasm * KMOLE * G_signal) - J_IP3_degrad)</Rate>
+            <Initial>IP3_Cytoplasm_init</Initial>
+          </OdeEquation>
+          <OdeEquation Name="CaZ_Cytoplasm" SolutionType="Unknown">
+            <Rate>( - (KFlux_ER_membrane_Cytoplasm * J_ZCh) - (KFlux_PM_Cytoplasm * KMOLE * J_SOC_transition))</Rate>
+            <Initial>CaZ_Cytoplasm_init</Initial>
+          </OdeEquation>
+          <OdeEquation Name="Ca_ER" SolutionType="Unknown">
+            <Rate>((KFlux_ER_membrane_ER * J_IP3R_Ch) + (KFlux_ER_membrane_ER * J_leakER) + (KFlux_ER_membrane_ER * J_SERCA_pump))</Rate>
+            <Initial>Ca_ER_init</Initial>
+          </OdeEquation>
+          <OdeEquation Name="CaZ_ER" SolutionType="Unknown">
+            <Rate>((KFlux_ER_membrane_ER * J_ZCh) + J_SOC_release)</Rate>
+            <Initial>CaZ_ER_init</Initial>
+          </OdeEquation>
+          <OdeEquation Name="Ca_EC" SolutionType="Unknown">
+            <Rate>( - (KFlux_PM_ExtraCellular * J_leak) - (KFlux_PM_ExtraCellular * J_PMCA_pump) - (KFlux_PM_ExtraCellular * J_SOC))</Rate>
+            <Initial>Ca_EC_init</Initial>
+          </OdeEquation>
+          <OdeEquation Name="SOC_PM" SolutionType="Unknown">
+            <Rate>( - J_SOC_deg + J_SOC_transition)</Rate>
+            <Initial>SOC_PM_init</Initial>
+          </OdeEquation>
+          <OdeEquation Name="G_protein_PM" SolutionType="Unknown">
+            <Rate>J_reaction0</Rate>
+            <Initial>G_protein_PM_init</Initial>
+          </OdeEquation>
+        </CompartmentSubDomain>
+        <Version Name="ODE1_generated" KeyValue="11778275" BranchId="6915762" Archived="0" Date="28-Feb-2005 12:06:44" FromVersionable="false">
+          <Owner Name="jacobkow" Identifier="2900169" />
+          <GroupAccess Type="1" />
+        </Version>
+      </MathDescription>
+      <Simulation Name="CPA1">
+        <SolverTaskDescription TaskType="Unsteady" UseSymbolicJacobian="false" Solver="CVODE (Variable Order, Variable Time Step)">
+          <TimeBound StartTime="0.0" EndTime="2000.0" />
+          <TimeStep DefaultTime="0.1" MinTime="1.0E-8" MaxTime="1.0" />
+          <ErrorTolerance Absolut="1.0E-9" Relative="1.0E-9" />
+          <OutputOptions KeepEvery="2" KeepAtMost="5000" />
+          <NumberProcessors>1</NumberProcessors>
+        </SolverTaskDescription>
+        <MathOverrides>
+          <Constant Name="V_SOC">1.2E-5</Constant>
+          <Constant Name="VmaxPMCA">0.12</Constant>
+          <Constant Name="leak_PM">1.5E-5</Constant>
+          <Constant Name="Vmax">2.3</Constant>
+          <Constant Name="t_IP3">150000.0</Constant>
+          <Constant Name="v_learER">0.0015</Constant>
+        </MathOverrides>
+        <Version Name="CPA1" KeyValue="11778378" BranchId="6922689" Archived="0" Date="28-Feb-2005 12:06:45" FromVersionable="false">
+          <Owner Name="jacobkow" Identifier="2900169" />
+          <GroupAccess Type="1" />
+        </Version>
+      </Simulation>
+      <Simulation Name="control1">
+        <SolverTaskDescription TaskType="Unsteady" UseSymbolicJacobian="false" Solver="CVODE (Variable Order, Variable Time Step)">
+          <TimeBound StartTime="0.0" EndTime="2000.0" />
+          <TimeStep DefaultTime="0.1" MinTime="1.0E-8" MaxTime="1.0" />
+          <ErrorTolerance Absolut="1.0E-9" Relative="1.0E-9" />
+          <OutputOptions KeepEvery="2" KeepAtMost="5000" />
+          <NumberProcessors>1</NumberProcessors>
+        </SolverTaskDescription>
+        <MathOverrides>
+          <Constant Name="VmaxPMCA">0.12</Constant>
+          <Constant Name="leak_PM">1.5E-5</Constant>
+          <Constant Name="t_CPA">100000.0</Constant>
+          <Constant Name="Vmax">2.3</Constant>
+          <Constant Name="t_IP3">150000.0</Constant>
+          <Constant Name="v_learER">0.0015</Constant>
+        </MathOverrides>
+        <Version Name="control1" KeyValue="11778379" BranchId="6933232" Archived="0" Date="28-Feb-2005 12:06:45" FromVersionable="false">
+          <Owner Name="jacobkow" Identifier="2900169" />
+          <GroupAccess Type="1" />
+        </Version>
+      </Simulation>
+      <Simulation Name="CPA2">
+        <SolverTaskDescription TaskType="Unsteady" UseSymbolicJacobian="false" Solver="CVODE (Variable Order, Variable Time Step)">
+          <TimeBound StartTime="0.0" EndTime="2000.0" />
+          <TimeStep DefaultTime="0.1" MinTime="1.0E-8" MaxTime="1.0" />
+          <ErrorTolerance Absolut="1.0E-9" Relative="1.0E-9" />
+          <OutputOptions KeepEvery="2" KeepAtMost="5000" />
+          <NumberProcessors>1</NumberProcessors>
+        </SolverTaskDescription>
+        <MathOverrides>
+          <Constant Name="SurfToVol_ER_membrane">16.2</Constant>
+          <Constant Name="Vmax">2.3</Constant>
+          <Constant Name="V_SOC">6.5E-5</Constant>
+          <Constant Name="v_learER">0.0015</Constant>
+          <Constant Name="leak_PM">1.5E-5</Constant>
+          <Constant Name="VmaxPMCA">0.12</Constant>
+          <Constant Name="t_IP3">150000.0</Constant>
+          <Constant Name="k_SOC_prod">5.1</Constant>
+          <Constant Name="k_SOC_deg">0.006</Constant>
+        </MathOverrides>
+        <Version Name="CPA2" KeyValue="11778380" BranchId="6933238" Archived="0" Date="28-Feb-2005 12:06:45" FromVersionable="false">
+          <Owner Name="jacobkow" Identifier="2900169" />
+          <GroupAccess Type="1" />
+        </Version>
+      </Simulation>
+      <Simulation Name="control2">
+        <SolverTaskDescription TaskType="Unsteady" UseSymbolicJacobian="false" Solver="CVODE (Variable Order, Variable Time Step)">
+          <TimeBound StartTime="0.0" EndTime="2000.0" />
+          <TimeStep DefaultTime="0.1" MinTime="1.0E-8" MaxTime="1.0" />
+          <ErrorTolerance Absolut="1.0E-9" Relative="1.0E-9" />
+          <OutputOptions KeepEvery="2" KeepAtMost="5000" />
+          <NumberProcessors>1</NumberProcessors>
+        </SolverTaskDescription>
+        <MathOverrides>
+          <Constant Name="t_CPA">100000.0</Constant>
+          <Constant Name="Vmax">2.3</Constant>
+          <Constant Name="SurfToVol_ER_membrane">16.2</Constant>
+          <Constant Name="V_SOC">6.5E-5</Constant>
+          <Constant Name="v_learER">0.0015</Constant>
+          <Constant Name="leak_PM">1.5E-5</Constant>
+          <Constant Name="VmaxPMCA">0.12</Constant>
+          <Constant Name="t_IP3">150000.0</Constant>
+          <Constant Name="k_SOC_prod">5.1</Constant>
+          <Constant Name="k_SOC_deg">0.006</Constant>
+        </MathOverrides>
+        <Version Name="control2" KeyValue="11778381" BranchId="6933278" Archived="0" Date="28-Feb-2005 12:06:45" FromVersionable="false">
+          <Owner Name="jacobkow" Identifier="2900169" />
+          <GroupAccess Type="1" />
+        </Version>
+      </Simulation>
+      <Simulation Name="IP3 sustained 0">
+        <SolverTaskDescription TaskType="Unsteady" UseSymbolicJacobian="false" Solver="Runge-Kutta-Fehlberg (Fifth Order, Variable Time Step)">
+          <TimeBound StartTime="0.0" EndTime="5000.0" />
+          <TimeStep DefaultTime="0.1" MinTime="1.0E-8" MaxTime="1.0" />
+          <ErrorTolerance Absolut="1.0E-6" Relative="1.0E-6" />
+          <OutputOptions KeepEvery="5" KeepAtMost="5000" />
+          <NumberProcessors>1</NumberProcessors>
+        </SolverTaskDescription>
+        <MathOverrides>
+          <Constant Name="t_CPA">100000.0</Constant>
+          <Constant Name="SurfToVol_PM">1.0</Constant>
+          <Constant Name="SurfToVol_ER_membrane">54.054054054054056</Constant>
+          <Constant Name="Vmax">2.3</Constant>
+          <Constant Name="V_SOC">6.5E-5</Constant>
+          <Constant Name="T_IP3prod">500000.0</Constant>
+          <Constant Name="v_learER">0.0015</Constant>
+          <Constant Name="SOClimit">0.0</Constant>
+          <Constant Name="VmaxPMCA">0.12</Constant>
+          <Constant Name="leak_PM">1.5E-5</Constant>
+          <Constant Name="t_IP3">150000.0</Constant>
+          <Constant Name="k_SOC_prod">5.1</Constant>
+          <Constant Name="k_SOC_deg">0.006</Constant>
+        </MathOverrides>
+        <Version Name="IP3 sustained 0" KeyValue="11778382" BranchId="6933905" Archived="0" Date="28-Feb-2005 12:06:45" FromVersionable="false">
+          <Owner Name="jacobkow" Identifier="2900169" />
+          <GroupAccess Type="1" />
+        </Version>
+      </Simulation>
+      <Simulation Name="IP3 17.9 sustained">
+        <SolverTaskDescription TaskType="Unsteady" UseSymbolicJacobian="false" Solver="CVODE (Variable Order, Variable Time Step)">
+          <TimeBound StartTime="0.0" EndTime="10000.0" />
+          <TimeStep DefaultTime="0.05" MinTime="1.0E-8" MaxTime="0.1" />
+          <ErrorTolerance Absolut="1.0E-9" Relative="1.0E-9" />
+          <OutputOptions KeepEvery="20" KeepAtMost="5000" />
+          <NumberProcessors>1</NumberProcessors>
+        </SolverTaskDescription>
+        <MathOverrides>
+          <Constant Name="t_CPA">100000.0</Constant>
+          <Constant Name="SurfToVol_PM">1.0</Constant>
+          <Constant Name="G_protein_PM_init">0.5</Constant>
+          <Constant Name="V_IP3R">0.09</Constant>
+          <Constant Name="Vmax">3.75</Constant>
+          <Constant Name="SurfToVol_ER_membrane">40.0</Constant>
+          <Constant Name="V_SOC">6.5E-5</Constant>
+          <Constant Name="T_IP3prod">500000.0</Constant>
+          <Constant Name="v_learER">0.0022</Constant>
+          <Constant Name="SOClimit">10.0</Constant>
+          <Constant Name="leak_PM">2.5E-5</Constant>
+          <Constant Name="VmaxPMCA">0.245</Constant>
+          <Constant Name="k_SOC_prod">5.1</Constant>
+          <Constant Name="k_SOC_deg">0.006</Constant>
+        </MathOverrides>
+        <Version Name="IP3 17.9 sustained" KeyValue="11778383" BranchId="6936883" Archived="0" Date="28-Feb-2005 12:06:45" FromVersionable="false">
+          <Owner Name="jacobkow" Identifier="2900169" />
+          <GroupAccess Type="1" />
+        </Version>
+      </Simulation>
+      <Simulation Name="IP3 9 sustained">
+        <SolverTaskDescription TaskType="Unsteady" UseSymbolicJacobian="false" Solver="CVODE (Variable Order, Variable Time Step)">
+          <TimeBound StartTime="0.0" EndTime="10000.0" />
+          <TimeStep DefaultTime="0.05" MinTime="1.0E-8" MaxTime="0.1" />
+          <ErrorTolerance Absolut="1.0E-9" Relative="1.0E-9" />
+          <OutputOptions KeepEvery="20" KeepAtMost="5000" />
+          <NumberProcessors>1</NumberProcessors>
+        </SolverTaskDescription>
+        <MathOverrides>
+          <Constant Name="t_CPA">100000.0</Constant>
+          <Constant Name="SurfToVol_PM">1.0</Constant>
+          <Constant Name="G_protein_PM_init">0.25</Constant>
+          <Constant Name="V_IP3R">0.09</Constant>
+          <Constant Name="Vmax">3.75</Constant>
+          <Constant Name="SurfToVol_ER_membrane">40.0</Constant>
+          <Constant Name="V_SOC">6.5E-5</Constant>
+          <Constant Name="T_IP3prod">500000.0</Constant>
+          <Constant Name="v_learER">0.0022</Constant>
+          <Constant Name="SOClimit">10.0</Constant>
+          <Constant Name="leak_PM">2.5E-5</Constant>
+          <Constant Name="VmaxPMCA">0.245</Constant>
+          <Constant Name="k_SOC_prod">5.1</Constant>
+          <Constant Name="k_SOC_deg">0.006</Constant>
+        </MathOverrides>
+        <Version Name="IP3 9 sustained" KeyValue="11778384" BranchId="6936930" Archived="0" Date="28-Feb-2005 12:06:45" FromVersionable="false">
+          <Owner Name="jacobkow" Identifier="2900169" />
+          <GroupAccess Type="1" />
+        </Version>
+      </Simulation>
+      <Simulation Name="copy of IP3 9 SOC 50">
+        <SolverTaskDescription TaskType="Unsteady" UseSymbolicJacobian="false" Solver="CVODE (Variable Order, Variable Time Step)">
+          <TimeBound StartTime="0.0" EndTime="10000.0" />
+          <TimeStep DefaultTime="0.05" MinTime="1.0E-8" MaxTime="0.1" />
+          <ErrorTolerance Absolut="1.0E-9" Relative="1.0E-9" />
+          <OutputOptions KeepEvery="20" KeepAtMost="5000" />
+          <NumberProcessors>1</NumberProcessors>
+        </SolverTaskDescription>
+        <MathOverrides>
+          <Constant Name="t_CPA">100000.0</Constant>
+          <Constant Name="SurfToVol_PM">1.0</Constant>
+          <Constant Name="G_protein_PM_init">0.25</Constant>
+          <Constant Name="V_IP3R">0.09</Constant>
+          <Constant Name="SurfToVol_ER_membrane">40.0</Constant>
+          <Constant Name="Vmax">3.75</Constant>
+          <Constant Name="V_SOC">6.5E-5</Constant>
+          <Constant Name="T_IP3prod">500000.0</Constant>
+          <Constant Name="v_learER">0.0022</Constant>
+          <Constant Name="VmaxPMCA">0.245</Constant>
+          <Constant Name="leak_PM">2.5E-5</Constant>
+          <Constant Name="k_SOC_prod">5.1</Constant>
+          <Constant Name="k_SOC_deg">0.006</Constant>
+        </MathOverrides>
+        <Version Name="copy of IP3 9 SOC 50" KeyValue="11778385" BranchId="6936979" Archived="0" Date="28-Feb-2005 12:06:45" FromVersionable="false">
+          <Owner Name="jacobkow" Identifier="2900169" />
+          <GroupAccess Type="1" />
+        </Version>
+      </Simulation>
+      <Simulation Name="IP3 12 SOC 50">
+        <SolverTaskDescription TaskType="Unsteady" UseSymbolicJacobian="false" Solver="CVODE (Variable Order, Variable Time Step)">
+          <TimeBound StartTime="0.0" EndTime="10000.0" />
+          <TimeStep DefaultTime="0.05" MinTime="1.0E-8" MaxTime="0.1" />
+          <ErrorTolerance Absolut="1.0E-9" Relative="1.0E-9" />
+          <OutputOptions KeepEvery="20" KeepAtMost="5000" />
+          <NumberProcessors>1</NumberProcessors>
+        </SolverTaskDescription>
+        <MathOverrides>
+          <Constant Name="t_CPA">100000.0</Constant>
+          <Constant Name="SurfToVol_PM">1.0</Constant>
+          <Constant Name="G_protein_PM_init">0.3333333333333333</Constant>
+          <Constant Name="V_IP3R">0.09</Constant>
+          <Constant Name="SurfToVol_ER_membrane">40.0</Constant>
+          <Constant Name="Vmax">3.75</Constant>
+          <Constant Name="V_SOC">6.5E-5</Constant>
+          <Constant Name="T_IP3prod">500000.0</Constant>
+          <Constant Name="v_learER">0.0022</Constant>
+          <Constant Name="VmaxPMCA">0.245</Constant>
+          <Constant Name="leak_PM">2.5E-5</Constant>
+          <Constant Name="k_SOC_prod">5.1</Constant>
+          <Constant Name="k_SOC_deg">0.006</Constant>
+        </MathOverrides>
+        <Version Name="IP3 12 SOC 50" KeyValue="11778386" BranchId="6937030" Archived="0" Date="28-Feb-2005 12:06:45" FromVersionable="false">
+          <Owner Name="jacobkow" Identifier="2900169" />
+          <GroupAccess Type="1" />
+        </Version>
+      </Simulation>
+      <Simulation Name="IP3 12 SOC 10">
+        <SolverTaskDescription TaskType="Unsteady" UseSymbolicJacobian="false" Solver="CVODE (Variable Order, Variable Time Step)">
+          <TimeBound StartTime="0.0" EndTime="10000.0" />
+          <TimeStep DefaultTime="0.05" MinTime="1.0E-8" MaxTime="0.1" />
+          <ErrorTolerance Absolut="1.0E-9" Relative="1.0E-9" />
+          <OutputOptions KeepEvery="20" KeepAtMost="5000" />
+          <NumberProcessors>1</NumberProcessors>
+        </SolverTaskDescription>
+        <MathOverrides>
+          <Constant Name="t_CPA">100000.0</Constant>
+          <Constant Name="SurfToVol_PM">1.0</Constant>
+          <Constant Name="G_protein_PM_init">0.3333333333333333</Constant>
+          <Constant Name="V_IP3R">0.09</Constant>
+          <Constant Name="Vmax">3.75</Constant>
+          <Constant Name="SurfToVol_ER_membrane">40.0</Constant>
+          <Constant Name="V_SOC">6.5E-5</Constant>
+          <Constant Name="T_IP3prod">500000.0</Constant>
+          <Constant Name="v_learER">0.0022</Constant>
+          <Constant Name="SOClimit">10.0</Constant>
+          <Constant Name="leak_PM">2.5E-5</Constant>
+          <Constant Name="VmaxPMCA">0.245</Constant>
+          <Constant Name="k_SOC_prod">5.1</Constant>
+          <Constant Name="k_SOC_deg">0.006</Constant>
+        </MathOverrides>
+        <Version Name="IP3 12 SOC 10" KeyValue="11778387" BranchId="6937593" Archived="0" Date="28-Feb-2005 12:06:45" FromVersionable="false">
+          <Owner Name="jacobkow" Identifier="2900169" />
+          <GroupAccess Type="1" />
+        </Version>
+      </Simulation>
+      <Simulation Name="IP3 36 sustained">
+        <SolverTaskDescription TaskType="Unsteady" UseSymbolicJacobian="false" Solver="Runge-Kutta-Fehlberg (Fifth Order, Variable Time Step)">
+          <TimeBound StartTime="0.0" EndTime="10000.0" />
+          <TimeStep DefaultTime="0.001" MinTime="1.0E-8" MaxTime="0.1" />
+          <ErrorTolerance Absolut="1.0E-9" Relative="1.0E-9" />
+          <OutputOptions KeepEvery="20" KeepAtMost="5000" />
+          <NumberProcessors>1</NumberProcessors>
+        </SolverTaskDescription>
+        <MathOverrides>
+          <Constant Name="t_CPA">100000.0</Constant>
+          <Constant Name="SurfToVol_PM">1.0</Constant>
+          <Constant Name="V_IP3R">0.09</Constant>
+          <Constant Name="SurfToVol_ER_membrane">40.0</Constant>
+          <Constant Name="Vmax">3.75</Constant>
+          <Constant Name="V_SOC">6.5E-5</Constant>
+          <Constant Name="T_IP3prod">500000.0</Constant>
+          <Constant Name="v_learER">0.0022</Constant>
+          <Constant Name="SOClimit">10.0</Constant>
+          <Constant Name="VmaxPMCA">0.245</Constant>
+          <Constant Name="leak_PM">2.5E-5</Constant>
+          <Constant Name="k_SOC_prod">5.1</Constant>
+          <Constant Name="k_SOC_deg">0.006</Constant>
+        </MathOverrides>
+        <Version Name="IP3 36 sustained" KeyValue="12070116" BranchId="6937702" Archived="0" Date="13-Apr-2005 07:37:56" FromVersionable="false">
+          <Owner Name="jacobkow" Identifier="2900169" />
+          <GroupAccess Type="1" />
+        </Version>
+      </Simulation>
+      <Version Name="ODE1" KeyValue="11778308" BranchId="6915760" Archived="0" Date="28-Feb-2005 12:06:45" FromVersionable="false">
+        <Owner Name="jacobkow" Identifier="2900169" />
+        <GroupAccess Type="1" />
+        <Annotation>(copied from ODE)</Annotation>
+      </Version>
+      <MicroscopeMeasurement Name="fluor">
+        <ConvolutionKernel Type="ProjectionZKernel" />
+      </MicroscopeMeasurement>
+    </SimulationSpec>
+    <SimulationSpec Name="COS7" Stochastic="false" UseConcentration="true" RuleBased="false" MassConservationModelReduction="true" InsufficientIterations="false" InsufficientMaxMolecules="false" CharacteristicSize="0.025312499999999998">
+      <NetworkConstraints RbmMaxIteration="1" RbmMaxMoleculesPerSpecies="10" RbmSpeciesLimit="800" RbmReactionsLimit="2500" />
+      <Annotation>(copied from ODE1) (copied from ODE)</Annotation>
+      <Geometry Name="COS7" Dimension="2">
+        <Extent X="29.7" Y="41.85" Z="1.0" />
+        <Origin X="0.0" Y="0.0" Z="0.0" />
+        <Image Name="COS7a">
+          <Annotation>COS7 cell</Annotation>
+          <ImageData X="66" Y="93" Z="1" CompressedSize="313">789CEDD8E10AC2300C04E0BD79DFBC28086E6BEE92BB5687E0F24B24F94C3A5AEAB6ED8E3BFE2ADA33566ADFB15A3F21B418ABF59600EB1D8201B24001D9C8048948018928849A3826F7577806008231018C88BA06BD53630E38121200845E092550128290130AB01333EB6836C180BC094F408426644D8842BF4A10C6985FCAEBC6B84400842B044205F849A33E4D7ADCB555A14D098D02D2DE3A090150F6F7898802271A24D6856BC7907BF8098111639A2B842CB707909608E90560564059D618F07792CD955EA554A2094021284672CA1C0476BF1D083AC86E5502DC1EA76EA684BE7FAA1E063B69701913EAFF17DF21B66562147C22083611059700824920C123A0E0101830040218041554230144625948018528800FBC4BA80801280C4DC80851480855A0860E60C3AA8F865D1E9CE1EB07A0B1B5EB</ImageData>
+          <PixelClass Name="EC" ImagePixelValue="0" KeyValue="6798473" />
+          <PixelClass Name="cyt" ImagePixelValue="127" KeyValue="6798474" />
+          <PixelClass Name="ER" ImagePixelValue="254" KeyValue="6798475" />
+          <Version Name="COS7a" KeyValue="6798469" BranchId="6798459" Archived="0" Date="11-Feb-2004 05:40:54" FromVersionable="false">
+            <Owner Name="jacobkow" Identifier="2900169" />
+            <GroupAccess Type="1" />
+            <Annotation>COS7 cell</Annotation>
+          </Version>
+        </Image>
+        <SubVolume Name="EC" Handle="0" Type="Image" ImagePixelValue="0" KeyValue="6798477" />
+        <SubVolume Name="cyt" Handle="1" Type="Image" ImagePixelValue="127" KeyValue="6798478" />
+        <SubVolume Name="ER" Handle="2" Type="Image" ImagePixelValue="254" KeyValue="6798479" />
+        <SurfaceClass Name="EC_cyt_membrane" SubVolume1Ref="EC" SubVolume2Ref="cyt" />
+        <SurfaceClass Name="ER_cyt_membrane" SubVolume1Ref="ER" SubVolume2Ref="cyt" />
+        <SurfaceDescription NumSamplesX="66" NumSamplesY="93" NumSamplesZ="1" CutoffFrequency="0.3">
+          <VolumeRegion Name="EC0" RegionID="0" SubVolume="EC" Size="514.013877090301" Unit="um2" />
+          <VolumeRegion Name="cyt1" RegionID="1" SubVolume="cyt" Size="524.6142441471573" Unit="um2" />
+          <VolumeRegion Name="ER2" RegionID="2" SubVolume="ER" Size="203.27762709030102" Unit="um2" />
+          <VolumeRegion Name="ER3" RegionID="3" SubVolume="ER" Size="1.0392516722408027" Unit="um2" />
+          <MembraneRegion Name="membrane_EC0_cyt1" VolumeRegion1="cyt1" VolumeRegion2="EC0" Size="98.38500820159705" Unit="um" />
+          <MembraneRegion Name="membrane_cyt1_ER2" VolumeRegion1="ER2" VolumeRegion2="cyt1" Size="56.33052531914462" Unit="um" />
+          <MembraneRegion Name="membrane_cyt1_ER3" VolumeRegion1="ER3" VolumeRegion2="cyt1" Size="2.751633647998366" Unit="um" />
+        </SurfaceDescription>
+        <Version Name="COS7" KeyValue="6798467" BranchId="6798468" Archived="0" Date="11-Feb-2004 05:40:54" FromVersionable="false">
+          <Owner Name="jacobkow" Identifier="2900169" />
+          <GroupAccess Type="18019386" Hash="2952796028">
+            <User Name="padideh" KeyValue="17368603" IsHidden="false" />
+            <User Name="cellfys" KeyValue="6660706" IsHidden="false" />
+          </GroupAccess>
+        </Version>
+      </Geometry>
+      <GeometryContext>
+        <FeatureMapping Feature="Cytoplasm" GeometryClass="cyt" SubVolume="cyt">
+          <BoundariesTypes Xm="Flux" Xp="Flux" Ym="Flux" Yp="Flux" Zm="Flux" Zp="Flux" />
+        </FeatureMapping>
+        <FeatureMapping Feature="ER" GeometryClass="ER" SubVolume="ER">
+          <BoundariesTypes Xm="Flux" Xp="Flux" Ym="Flux" Yp="Flux" Zm="Flux" Zp="Flux" />
+        </FeatureMapping>
+        <FeatureMapping Feature="ExtraCellular" GeometryClass="EC" SubVolume="EC">
+          <BoundariesTypes Xm="Flux" Xp="Flux" Ym="Flux" Yp="Flux" Zm="Flux" Zp="Flux" />
+        </FeatureMapping>
+        <MembraneMapping Membrane="ER_membrane" SurfaceToVolumeRatio="1.0" VolumeFraction="0.2" CalculateVoltage="false" SpecificCapacitance="0.01" InitialVoltage="0.0" GeometryClass="ER_cyt_membrane">
+          <BoundariesTypes Xm="Flux" Xp="Flux" Ym="Flux" Yp="Flux" Zm="Flux" Zp="Flux" />
+        </MembraneMapping>
+        <MembraneMapping Membrane="PM" SurfaceToVolumeRatio="1.0" VolumeFraction="0.2" CalculateVoltage="false" SpecificCapacitance="0.01" InitialVoltage="0.0" GeometryClass="EC_cyt_membrane">
+          <BoundariesTypes Xm="Flux" Xp="Flux" Ym="Flux" Yp="Flux" Zm="Flux" Zp="Flux" />
+        </MembraneMapping>
+      </GeometryContext>
+      <ReactionContext>
+        <LocalizedCompoundSpec LocalizedCompoundRef="IP3_Cytoplasm" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>0.001</InitialConcentration>
+          <Diffusion>5.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="CaZ_Cytoplasm" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>0.0</InitialConcentration>
+          <Diffusion>1.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="Ca_Cyt" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>0.095</InitialConcentration>
+          <Diffusion>10.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="Ca_ER" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>100.0</InitialConcentration>
+          <Diffusion>10.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="CaZ_ER" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>0.1</InitialConcentration>
+          <Diffusion>1.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="Ca_EC" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>950.0</InitialConcentration>
+          <Diffusion>10.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="IP3R_ER_membran" ForceConstant="true" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>1.0</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="SERCA_ER_membra" ForceConstant="true" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>1.0</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="SOC_PM" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>0.0</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="G_protein_PM" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>1.0</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="leak_dist_PM" ForceConstant="true" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>1.0</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="PMCapump_PM" ForceConstant="true" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>1.0</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <ReactionSpec ReactionStepRef="PMCA_pump" ReactionMapping="included" />
+        <ReactionSpec ReactionStepRef="leakER" ReactionMapping="included" />
+        <ReactionSpec ReactionStepRef="IP3prod" ReactionMapping="included" />
+        <ReactionSpec ReactionStepRef="SOC" ReactionMapping="included" />
+        <ReactionSpec ReactionStepRef="SOC_degrad" ReactionMapping="included" />
+        <ReactionSpec ReactionStepRef="IP3_degrad" ReactionMapping="included" />
+        <ReactionSpec ReactionStepRef="ZCh" ReactionMapping="included" />
+        <ReactionSpec ReactionStepRef="SERCA_pump" ReactionMapping="included" />
+        <ReactionSpec ReactionStepRef="leak" ReactionMapping="included" />
+        <ReactionSpec ReactionStepRef="IP3R_Ch" ReactionMapping="included" />
+        <ReactionSpec ReactionStepRef="Ca-feedback" ReactionMapping="included" />
+        <ReactionSpec ReactionStepRef="SOC_transition" ReactionMapping="included" />
+        <ReactionSpec ReactionStepRef="SOC release" ReactionMapping="included" />
+      </ReactionContext>
+      <MathDescription Name="Segment1_generated">
+        <Constant Name="_F_">96480.0</Constant>
+        <Constant Name="_F_nmol_">9.648E-5</Constant>
+        <Constant Name="_K_GHK_">1.0E-9</Constant>
+        <Constant Name="_N_pmol_">6.02E11</Constant>
+        <Constant Name="_R_">8314.0</Constant>
+        <Constant Name="_T_">300.0</Constant>
+        <Constant Name="Ca_Cyt_diffusionRate">10.0</Constant>
+        <Constant Name="Ca_Cyt_init">0.095</Constant>
+        <Constant Name="Ca_EC_diffusionRate">10.0</Constant>
+        <Constant Name="Ca_EC_init">950.0</Constant>
+        <Constant Name="Ca_ER_diffusionRate">10.0</Constant>
+        <Constant Name="Ca_ER_init">100.0</Constant>
+        <Constant Name="CaZ_Cytoplasm_diffusionRate">1.0</Constant>
+        <Constant Name="CaZ_Cytoplasm_init">0.0</Constant>
+        <Constant Name="CaZ_ER_diffusionRate">1.0</Constant>
+        <Constant Name="CaZ_ER_init">0.1</Constant>
+        <Constant Name="CaZ_max">0.1</Constant>
+        <Constant Name="G_protein_PM_init">1.0</Constant>
+        <Constant Name="H_act">2.0</Constant>
+        <Constant Name="H_inh">4.0</Constant>
+        <Constant Name="H_IP3">4.0</Constant>
+        <Constant Name="I_deg">0.1</Constant>
+        <Constant Name="IP3_Cytoplasm_diffusionRate">5.0</Constant>
+        <Constant Name="IP3_Cytoplasm_init">0.001</Constant>
+        <Constant Name="IP3min">0.001</Constant>
+        <Constant Name="IP3R_actCa">0.21</Constant>
+        <Constant Name="IP3R_ER_membran">1.0</Constant>
+        <Constant Name="IP3R_ER_membran_init">1.0</Constant>
+        <Constant Name="J_reaction0">0.0</Constant>
+        <Constant Name="K05">0.5</Constant>
+        <Constant Name="K051">0.2</Constant>
+        <Constant Name="K_inf">52.0</Constant>
+        <Constant Name="K_IP3">0.05</Constant>
+        <Constant Name="K_millivolts_per_volt">1000.0</Constant>
+        <Constant Name="k_SOC_deg">0.002</Constant>
+        <Constant Name="k_SOC_prod">1.7</Constant>
+        <Constant Name="KMOLE">0.0016611295681063123</Constant>
+        <Constant Name="leak_dist_PM">1.0</Constant>
+        <Constant Name="leak_dist_PM_init">1.0</Constant>
+        <Constant Name="leak_PM">1.2E-5</Constant>
+        <Constant Name="n_PMCA">2.0</Constant>
+        <Constant Name="n_SERCA">1.0</Constant>
+        <Constant Name="pi">3.141592653589793</Constant>
+        <Constant Name="PMCapump_PM">1.0</Constant>
+        <Constant Name="PMCapump_PM_init">1.0</Constant>
+        <Constant Name="SERCA_ER_membra">1.0</Constant>
+        <Constant Name="SERCA_ER_membra_init">1.0</Constant>
+        <Constant Name="SOC_PM_init">0.0</Constant>
+        <Constant Name="SOClimit">50.0</Constant>
+        <Constant Name="t_CPA">100.0</Constant>
+        <Constant Name="t_IP3">150.0</Constant>
+        <Constant Name="T_IP3prod">500.0</Constant>
+        <Constant Name="V_IP3R">0.07</Constant>
+        <Constant Name="v_learER">0.002</Constant>
+        <Constant Name="V_SOC">1.2E-4</Constant>
+        <Constant Name="V_Zrelease">2.0E-4</Constant>
+        <Constant Name="Vmax">1.9</Constant>
+        <Constant Name="VmaxPMCA">0.147</Constant>
+        <Constant Name="vZ">1.0</Constant>
+        <Constant Name="X">0.4</Constant>
+        <Constant Name="Y">0.6</Constant>
+        <Constant Name="Zlimit">0.0</Constant>
+        <VolumeVariable Name="Ca" />
+        <VolumeVariable Name="CaZ" />
+        <MembraneVariable Name="G_protein_PM" />
+        <VolumeVariable Name="IP3" />
+        <MembraneVariable Name="SOC_PM" />
+        <Function Name="G_signal">(G_protein_PM * ((t - t_IP3) &gt; 0.0) * (1.0 + cos((2.0 * pi * (t - t_IP3) / T_IP3prod))))</Function>
+        <Function Name="I_IP3R_Ch">(2.0 * J_IP3R_Ch * _F_nmol_)</Function>
+        <Function Name="I_leak">(2.0 * J_leak * _F_nmol_)</Function>
+        <Function Name="I_leakER">(2.0 * J_leakER * _F_nmol_)</Function>
+        <Function Name="I_SERCA_pump">(2.0 * J_SERCA_pump * _F_nmol_)</Function>
+        <Function Name="IP3R_inhCa">(K_inf / (1.0 + pow((K_IP3 / IP3_OUTSIDE),H_IP3)))</Function>
+        <Function Name="J_IP3_degrad">(I_deg * (IP3 - IP3min))</Function>
+        <Function Name="J_IP3R">(V_IP3R / ((1.0 + pow((IP3R_actCa / Ca_OUTSIDE),H_act)) * (1.0 + pow((Ca_OUTSIDE / IP3R_inhCa),H_inh))))</Function>
+        <Function Name="J_IP3R_Ch">- ((Ca_INSIDE - Ca_OUTSIDE) * IP3R_ER_membran * J_IP3R)</Function>
+        <Function Name="J_leak">(leak_PM * leak_dist_PM * (Ca_OUTSIDE - Ca_INSIDE))</Function>
+        <Function Name="J_leakER">(v_learER * IP3R_ER_membran * (Ca_OUTSIDE - Ca_INSIDE))</Function>
+        <Function Name="J_PMCA">(Y * pow(Ca_INSIDE,n_PMCA) / (pow(Ca_INSIDE,n_PMCA) + pow(K051,n_PMCA)))</Function>
+        <Function Name="J_PMCA_pump">- (VmaxPMCA * J_PMCA)</Function>
+        <Function Name="J_SERCA">(X * Vmax * pow(Ca_OUTSIDE,n_SERCA) / (pow(Ca_OUTSIDE,n_SERCA) + pow(K05,n_SERCA)))</Function>
+        <Function Name="J_SERCA_pump">((t &lt; t_CPA) * SERCA_ER_membra * J_SERCA)</Function>
+        <Function Name="J_SOC">(V_SOC * (Ca_OUTSIDE - Ca_INSIDE) * SOC_PM)</Function>
+        <Function Name="J_SOC_deg">(k_SOC_deg * SOC_PM)</Function>
+        <Function Name="J_SOC_release">(V_Zrelease * (CaZ_max - CaZ))</Function>
+        <Function Name="J_SOC_transition">(CaZ_INSIDE * k_SOC_prod)</Function>
+        <Function Name="J_ZCh">- ((CaZ_INSIDE &gt; Zlimit) * (CaZ_INSIDE - CaZ_OUTSIDE) * (Ca_INSIDE &lt; SOClimit) * vZ)</Function>
+        <Function Name="V_ER">0.0</Function>
+        <Function Name="V_PM">0.0</Function>
+        <CompartmentSubDomain Name="EC">
+          <BoundaryType Boundary="Xm" Type="Flux" />
+          <BoundaryType Boundary="Xp" Type="Flux" />
+          <BoundaryType Boundary="Ym" Type="Flux" />
+          <BoundaryType Boundary="Yp" Type="Flux" />
+          <BoundaryType Boundary="Zm" Type="Value" />
+          <BoundaryType Boundary="Zp" Type="Value" />
+          <PdeEquation Name="IP3" SolutionType="Unknown">
+            <Rate>0.0</Rate>
+            <Diffusion>IP3_Cytoplasm_diffusionRate</Diffusion>
+            <Initial>0.0</Initial>
+          </PdeEquation>
+          <PdeEquation Name="CaZ" SolutionType="Unknown">
+            <Rate>0.0</Rate>
+            <Diffusion>CaZ_Cytoplasm_diffusionRate</Diffusion>
+            <Initial>0.0</Initial>
+          </PdeEquation>
+          <PdeEquation Name="Ca" SolutionType="Unknown">
+            <Rate>0.0</Rate>
+            <Diffusion>Ca_EC_diffusionRate</Diffusion>
+            <Initial>Ca_EC_init</Initial>
+          </PdeEquation>
+        </CompartmentSubDomain>
+        <CompartmentSubDomain Name="cyt">
+          <BoundaryType Boundary="Xm" Type="Flux" />
+          <BoundaryType Boundary="Xp" Type="Flux" />
+          <BoundaryType Boundary="Ym" Type="Flux" />
+          <BoundaryType Boundary="Yp" Type="Flux" />
+          <BoundaryType Boundary="Zm" Type="Value" />
+          <BoundaryType Boundary="Zp" Type="Value" />
+          <PdeEquation Name="IP3" SolutionType="Unknown">
+            <Rate>- J_IP3_degrad</Rate>
+            <Diffusion>IP3_Cytoplasm_diffusionRate</Diffusion>
+            <Initial>IP3_Cytoplasm_init</Initial>
+          </PdeEquation>
+          <PdeEquation Name="CaZ" SolutionType="Unknown">
+            <Rate>0.0</Rate>
+            <Diffusion>CaZ_Cytoplasm_diffusionRate</Diffusion>
+            <Initial>CaZ_Cytoplasm_init</Initial>
+          </PdeEquation>
+          <PdeEquation Name="Ca" SolutionType="Unknown">
+            <Rate>0.0</Rate>
+            <Diffusion>Ca_Cyt_diffusionRate</Diffusion>
+            <Initial>Ca_Cyt_init</Initial>
+          </PdeEquation>
+        </CompartmentSubDomain>
+        <CompartmentSubDomain Name="ER">
+          <BoundaryType Boundary="Xm" Type="Flux" />
+          <BoundaryType Boundary="Xp" Type="Flux" />
+          <BoundaryType Boundary="Ym" Type="Flux" />
+          <BoundaryType Boundary="Yp" Type="Flux" />
+          <BoundaryType Boundary="Zm" Type="Value" />
+          <BoundaryType Boundary="Zp" Type="Value" />
+          <PdeEquation Name="IP3" SolutionType="Unknown">
+            <Rate>0.0</Rate>
+            <Diffusion>IP3_Cytoplasm_diffusionRate</Diffusion>
+            <Initial>0.0</Initial>
+          </PdeEquation>
+          <PdeEquation Name="Ca" SolutionType="Unknown">
+            <Rate>0.0</Rate>
+            <Diffusion>Ca_ER_diffusionRate</Diffusion>
+            <Initial>Ca_ER_init</Initial>
+          </PdeEquation>
+          <PdeEquation Name="CaZ" SolutionType="Unknown">
+            <Rate>J_SOC_release</Rate>
+            <Diffusion>CaZ_ER_diffusionRate</Diffusion>
+            <Initial>CaZ_ER_init</Initial>
+          </PdeEquation>
+        </CompartmentSubDomain>
+        <MembraneSubDomain Name="EC_cyt_membrane" InsideCompartment="cyt" OutsideCompartment="EC">
+          <BoundaryType Boundary="Xm" Type="Value" />
+          <BoundaryType Boundary="Xp" Type="Value" />
+          <BoundaryType Boundary="Ym" Type="Value" />
+          <BoundaryType Boundary="Yp" Type="Value" />
+          <BoundaryType Boundary="Zm" Type="Value" />
+          <BoundaryType Boundary="Zp" Type="Value" />
+          <OdeEquation Name="SOC_PM" SolutionType="Unknown">
+            <Rate>( - J_SOC_deg + J_SOC_transition)</Rate>
+            <Initial>SOC_PM_init</Initial>
+          </OdeEquation>
+          <OdeEquation Name="G_protein_PM" SolutionType="Unknown">
+            <Rate>J_reaction0</Rate>
+            <Initial>G_protein_PM_init</Initial>
+          </OdeEquation>
+          <JumpCondition Name="IP3">
+            <InFlux>(KMOLE * G_signal)</InFlux>
+            <OutFlux>0.0</OutFlux>
+          </JumpCondition>
+          <JumpCondition Name="CaZ">
+            <InFlux>- (KMOLE * J_SOC_transition)</InFlux>
+            <OutFlux>0.0</OutFlux>
+          </JumpCondition>
+          <JumpCondition Name="Ca">
+            <InFlux>(J_leak + J_PMCA_pump + J_SOC)</InFlux>
+            <OutFlux>( - J_leak - J_PMCA_pump - J_SOC)</OutFlux>
+          </JumpCondition>
+        </MembraneSubDomain>
+        <MembraneSubDomain Name="ER_cyt_membrane" InsideCompartment="ER" OutsideCompartment="cyt">
+          <BoundaryType Boundary="Xm" Type="Value" />
+          <BoundaryType Boundary="Xp" Type="Value" />
+          <BoundaryType Boundary="Ym" Type="Value" />
+          <BoundaryType Boundary="Yp" Type="Value" />
+          <BoundaryType Boundary="Zm" Type="Value" />
+          <BoundaryType Boundary="Zp" Type="Value" />
+          <OdeEquation Name="SOC_PM" SolutionType="Unknown">
+            <Rate>0.0</Rate>
+            <Initial>0.0</Initial>
+          </OdeEquation>
+          <OdeEquation Name="G_protein_PM" SolutionType="Unknown">
+            <Rate>0.0</Rate>
+            <Initial>0.0</Initial>
+          </OdeEquation>
+          <JumpCondition Name="IP3">
+            <InFlux>0.0</InFlux>
+            <OutFlux>0.0</OutFlux>
+          </JumpCondition>
+          <JumpCondition Name="CaZ">
+            <InFlux>J_ZCh</InFlux>
+            <OutFlux>- J_ZCh</OutFlux>
+          </JumpCondition>
+          <JumpCondition Name="Ca">
+            <InFlux>(J_IP3R_Ch + J_leakER + J_SERCA_pump)</InFlux>
+            <OutFlux>( - J_IP3R_Ch - J_leakER - J_SERCA_pump)</OutFlux>
+          </JumpCondition>
+        </MembraneSubDomain>
+        <Version Name="Segment1_generated" KeyValue="11778276" BranchId="6938180" Archived="0" Date="28-Feb-2005 12:06:44" FromVersionable="false">
+          <Owner Name="jacobkow" Identifier="2900169" />
+          <GroupAccess Type="1" />
+        </Version>
+      </MathDescription>
+      <Simulation Name="IP3 sustained low">
+        <SolverTaskDescription TaskType="Unsteady" UseSymbolicJacobian="false" Solver="Finite Volume, Regular Grid">
+          <TimeBound StartTime="0.0" EndTime="1500.0" />
+          <TimeStep DefaultTime="0.01" MinTime="1.0E-8" MaxTime="0.1" />
+          <ErrorTolerance Absolut="1.0E-9" Relative="1.0E-9" />
+          <OutputOptions KeepEvery="200" KeepAtMost="1000" />
+          <NumberProcessors>1</NumberProcessors>
+        </SolverTaskDescription>
+        <MathOverrides>
+          <Constant Name="t_CPA">100000.0</Constant>
+          <Constant Name="G_protein_PM_init">0.5</Constant>
+          <Constant Name="V_IP3R">0.09</Constant>
+          <Constant Name="Vmax">3.75</Constant>
+          <Constant Name="T_IP3prod">500000.0</Constant>
+          <Constant Name="v_learER">0.0022</Constant>
+          <Constant Name="SOClimit">0.0</Constant>
+          <Constant Name="leak_PM">2.5E-5</Constant>
+          <Constant Name="VmaxPMCA">0.245</Constant>
+          <Constant Name="k_SOC_prod">5.1</Constant>
+          <Constant Name="k_SOC_deg">0.006</Constant>
+        </MathOverrides>
+        <MeshSpecification>
+          <Size X="101" Y="101" Z="1" />
+        </MeshSpecification>
+        <Version Name="IP3 sustained low" KeyValue="11778389" BranchId="6938356" Archived="0" Date="28-Feb-2005 12:06:45" FromVersionable="false">
+          <Owner Name="jacobkow" Identifier="2900169" />
+          <GroupAccess Type="1" />
+        </Version>
+      </Simulation>
+      <Simulation Name="CPA">
+        <SolverTaskDescription TaskType="Unsteady" UseSymbolicJacobian="false" Solver="Finite Volume, Regular Grid">
+          <TimeBound StartTime="0.0" EndTime="1500.0" />
+          <TimeStep DefaultTime="0.01" MinTime="1.0E-8" MaxTime="0.1" />
+          <ErrorTolerance Absolut="1.0E-9" Relative="1.0E-9" />
+          <OutputOptions KeepEvery="200" KeepAtMost="1000" />
+          <NumberProcessors>1</NumberProcessors>
+        </SolverTaskDescription>
+        <MathOverrides>
+          <Constant Name="G_protein_PM_init">0.5</Constant>
+          <Constant Name="V_IP3R">0.09</Constant>
+          <Constant Name="Vmax">3.75</Constant>
+          <Constant Name="T_IP3prod">500000.0</Constant>
+          <Constant Name="v_learER">0.0022</Constant>
+          <Constant Name="SOClimit">0.0</Constant>
+          <Constant Name="leak_PM">2.5E-5</Constant>
+          <Constant Name="VmaxPMCA">0.245</Constant>
+          <Constant Name="t_IP3">150000.0</Constant>
+          <Constant Name="k_SOC_prod">5.1</Constant>
+          <Constant Name="k_SOC_deg">0.006</Constant>
+        </MathOverrides>
+        <MeshSpecification>
+          <Size X="101" Y="101" Z="1" />
+        </MeshSpecification>
+        <Version Name="CPA" KeyValue="11778390" BranchId="6944629" Archived="0" Date="28-Feb-2005 12:06:46" FromVersionable="false">
+          <Owner Name="jacobkow" Identifier="2900169" />
+          <GroupAccess Type="1" />
+        </Version>
+      </Simulation>
+      <Simulation Name="CPA SOC 30">
+        <SolverTaskDescription TaskType="Unsteady" UseSymbolicJacobian="false" Solver="Finite Volume, Regular Grid">
+          <TimeBound StartTime="0.0" EndTime="1500.0" />
+          <TimeStep DefaultTime="0.01" MinTime="1.0E-8" MaxTime="0.1" />
+          <ErrorTolerance Absolut="1.0E-9" Relative="1.0E-9" />
+          <OutputOptions KeepEvery="200" KeepAtMost="1000" />
+          <NumberProcessors>1</NumberProcessors>
+        </SolverTaskDescription>
+        <MathOverrides>
+          <Constant Name="G_protein_PM_init">0.5</Constant>
+          <Constant Name="V_IP3R">0.09</Constant>
+          <Constant Name="Vmax">3.75</Constant>
+          <Constant Name="V_SOC">6.5E-6</Constant>
+          <Constant Name="T_IP3prod">500000.0</Constant>
+          <Constant Name="v_learER">0.0022</Constant>
+          <Constant Name="SOClimit">30.0</Constant>
+          <Constant Name="VmaxPMCA">0.245</Constant>
+          <Constant Name="leak_PM">2.5E-5</Constant>
+          <Constant Name="t_IP3">150000.0</Constant>
+          <Constant Name="k_SOC_prod">5.1</Constant>
+          <Constant Name="k_SOC_deg">0.006</Constant>
+        </MathOverrides>
+        <MeshSpecification>
+          <Size X="101" Y="101" Z="1" />
+        </MeshSpecification>
+        <Version Name="CPA SOC 30" KeyValue="11778391" BranchId="6948246" Archived="0" Date="28-Feb-2005 12:06:46" FromVersionable="false">
+          <Owner Name="jacobkow" Identifier="2900169" />
+          <GroupAccess Type="1" />
+        </Version>
+      </Simulation>
+      <Simulation Name="IP3 sustained low 1">
+        <SolverTaskDescription TaskType="Unsteady" UseSymbolicJacobian="false" Solver="Finite Volume, Regular Grid">
+          <TimeBound StartTime="0.0" EndTime="1500.0" />
+          <TimeStep DefaultTime="0.01" MinTime="1.0E-8" MaxTime="0.1" />
+          <ErrorTolerance Absolut="1.0E-9" Relative="1.0E-9" />
+          <OutputOptions KeepEvery="200" KeepAtMost="1000" />
+          <NumberProcessors>1</NumberProcessors>
+        </SolverTaskDescription>
+        <MathOverrides>
+          <Constant Name="t_CPA">100000.0</Constant>
+          <Constant Name="G_protein_PM_init">0.5</Constant>
+          <Constant Name="V_IP3R">0.09</Constant>
+          <Constant Name="Vmax">3.75</Constant>
+          <Constant Name="V_SOC">8.0E-6</Constant>
+          <Constant Name="T_IP3prod">500000.0</Constant>
+          <Constant Name="v_learER">0.0022</Constant>
+          <Constant Name="SOClimit">30.0</Constant>
+          <Constant Name="VmaxPMCA">0.245</Constant>
+          <Constant Name="leak_PM">2.5E-5</Constant>
+          <Constant Name="k_SOC_prod">5.1</Constant>
+          <Constant Name="k_SOC_deg">0.006</Constant>
+        </MathOverrides>
+        <MeshSpecification>
+          <Size X="101" Y="101" Z="1" />
+        </MeshSpecification>
+        <Version Name="IP3 sustained low 1" KeyValue="11778392" BranchId="6970670" Archived="0" Date="28-Feb-2005 12:06:46" FromVersionable="false">
+          <Owner Name="jacobkow" Identifier="2900169" />
+          <GroupAccess Type="1" />
+        </Version>
+      </Simulation>
+      <Simulation Name="IP3 sustained">
+        <SolverTaskDescription TaskType="Unsteady" UseSymbolicJacobian="false" Solver="Finite Volume, Regular Grid">
+          <TimeBound StartTime="0.0" EndTime="5000.0" />
+          <TimeStep DefaultTime="0.05" MinTime="1.0E-8" MaxTime="0.1" />
+          <ErrorTolerance Absolut="1.0E-9" Relative="1.0E-9" />
+          <OutputOptions KeepEvery="200" KeepAtMost="1000" />
+          <NumberProcessors>1</NumberProcessors>
+        </SolverTaskDescription>
+        <MathOverrides>
+          <Constant Name="t_CPA">100000.0</Constant>
+          <Constant Name="G_protein_PM_init">3.0</Constant>
+          <Constant Name="V_IP3R">0.09</Constant>
+          <Constant Name="Vmax">3.75</Constant>
+          <Constant Name="T_IP3prod">500000.0</Constant>
+          <Constant Name="v_learER">0.0022</Constant>
+          <Constant Name="SOClimit">0.0</Constant>
+          <Constant Name="leak_PM">2.5E-5</Constant>
+          <Constant Name="VmaxPMCA">0.245</Constant>
+          <Constant Name="k_SOC_prod">5.1</Constant>
+          <Constant Name="k_SOC_deg">0.006</Constant>
+        </MathOverrides>
+        <MeshSpecification>
+          <Size X="101" Y="101" Z="1" />
+        </MeshSpecification>
+        <Version Name="IP3 sustained" KeyValue="11778393" BranchId="6938270" Archived="0" Date="28-Feb-2005 12:06:46" FromVersionable="false">
+          <Owner Name="jacobkow" Identifier="2900169" />
+          <GroupAccess Type="1" />
+          <ParentSimRef KeyValue="9595797" />
+        </Version>
+      </Simulation>
+      <Simulation Name="copy of IP3 sustained">
+        <SolverTaskDescription TaskType="Unsteady" UseSymbolicJacobian="false" Solver="Finite Volume, Regular Grid">
+          <TimeBound StartTime="0.0" EndTime="20000.0" />
+          <TimeStep DefaultTime="0.1" MinTime="1.0E-8" MaxTime="0.1" />
+          <ErrorTolerance Absolut="1.0E-9" Relative="1.0E-9" />
+          <OutputOptions KeepEvery="200" KeepAtMost="1000" />
+          <NumberProcessors>1</NumberProcessors>
+        </SolverTaskDescription>
+        <MathOverrides>
+          <Constant Name="t_CPA">100000.0</Constant>
+          <Constant Name="G_protein_PM_init">5.0</Constant>
+          <Constant Name="V_IP3R">0.09</Constant>
+          <Constant Name="Vmax">3.75</Constant>
+          <Constant Name="T_IP3prod">500000.0</Constant>
+          <Constant Name="v_learER">0.0022</Constant>
+          <Constant Name="SOClimit">0.0</Constant>
+          <Constant Name="leak_PM">2.5E-5</Constant>
+          <Constant Name="VmaxPMCA">0.245</Constant>
+          <Constant Name="k_SOC_prod">5.1</Constant>
+          <Constant Name="k_SOC_deg">0.006</Constant>
+        </MathOverrides>
+        <MeshSpecification>
+          <Size X="85" Y="120" Z="1" />
+        </MeshSpecification>
+        <Version Name="copy of IP3 sustained" KeyValue="11778394" BranchId="9593774" Archived="0" Date="28-Feb-2005 12:06:46" FromVersionable="false">
+          <Owner Name="jacobkow" Identifier="2900169" />
+          <GroupAccess Type="1" />
+          <ParentSimRef KeyValue="9595611" />
+        </Version>
+      </Simulation>
+      <Simulation Name="Copy of IP3 sustained">
+        <SolverTaskDescription TaskType="Unsteady" UseSymbolicJacobian="false" Solver="Finite Volume, Regular Grid">
+          <TimeBound StartTime="0.0" EndTime="5000.0" />
+          <TimeStep DefaultTime="0.05" MinTime="1.0E-8" MaxTime="0.1" />
+          <ErrorTolerance Absolut="1.0E-9" Relative="1.0E-9" />
+          <OutputOptions KeepEvery="200" KeepAtMost="1000" />
+          <NumberProcessors>1</NumberProcessors>
+        </SolverTaskDescription>
+        <MathOverrides>
+          <Constant Name="t_CPA">100000.0</Constant>
+          <Constant Name="G_protein_PM_init">3.0</Constant>
+          <Constant Name="V_IP3R">0.09</Constant>
+          <Constant Name="Vmax">3.75</Constant>
+          <Constant Name="T_IP3prod">500000.0</Constant>
+          <Constant Name="v_learER">0.0022</Constant>
+          <Constant Name="SOClimit">0.0</Constant>
+          <Constant Name="leak_PM">2.5E-5</Constant>
+          <Constant Name="VmaxPMCA">0.245</Constant>
+          <Constant Name="k_SOC_prod">5.1</Constant>
+          <Constant Name="k_SOC_deg">0.006</Constant>
+        </MathOverrides>
+        <MeshSpecification>
+          <Size X="85" Y="120" Z="1" />
+        </MeshSpecification>
+        <Version Name="Copy of IP3 sustained" KeyValue="11778395" BranchId="11778396" Archived="0" Date="28-Feb-2005 12:06:46" FromVersionable="false">
+          <Owner Name="jacobkow" Identifier="2900169" />
+          <GroupAccess Type="1" />
+        </Version>
+      </Simulation>
+      <SpatialObjects>
+        <SpatialObject Name="vobj_EC0" Type="Volume" subVolume="EC" regionId="0">
+          <QuantityCategoryList>
+            <QuantityCategory Name="VolumeCentroid" Enabled="false" />
+            <QuantityCategory Name="InteriorVelocity" Enabled="false" />
+            <QuantityCategory Name="VolumeRegionSize" Enabled="true" />
+          </QuantityCategoryList>
+        </SpatialObject>
+        <SpatialObject Name="vobj_cyt1" Type="Volume" subVolume="cyt" regionId="1">
+          <QuantityCategoryList>
+            <QuantityCategory Name="VolumeCentroid" Enabled="false" />
+            <QuantityCategory Name="InteriorVelocity" Enabled="false" />
+            <QuantityCategory Name="VolumeRegionSize" Enabled="true" />
+          </QuantityCategoryList>
+        </SpatialObject>
+        <SpatialObject Name="vobj_ER2" Type="Volume" subVolume="ER" regionId="2">
+          <QuantityCategoryList>
+            <QuantityCategory Name="VolumeCentroid" Enabled="false" />
+            <QuantityCategory Name="InteriorVelocity" Enabled="false" />
+            <QuantityCategory Name="VolumeRegionSize" Enabled="true" />
+          </QuantityCategoryList>
+        </SpatialObject>
+        <SpatialObject Name="vobj_ER3" Type="Volume" subVolume="ER" regionId="3">
+          <QuantityCategoryList>
+            <QuantityCategory Name="VolumeCentroid" Enabled="false" />
+            <QuantityCategory Name="InteriorVelocity" Enabled="false" />
+            <QuantityCategory Name="VolumeRegionSize" Enabled="true" />
+          </QuantityCategoryList>
+        </SpatialObject>
+        <SpatialObject Name="sobj_cyt1_EC0" Type="Surface" subVolumeInside="cyt" regionIdInside="1" subVolumeOutside="EC" regionIdOutside="0">
+          <QuantityCategoryList>
+            <QuantityCategory Name="SurfaceNormal" Enabled="false" />
+            <QuantityCategory Name="SurfaceVelocity" Enabled="false" />
+            <QuantityCategory Name="DistanceToSurface" Enabled="false" />
+            <QuantityCategory Name="DirectionToSurface" Enabled="false" />
+            <QuantityCategory Name="SurfaceSize" Enabled="true" />
+          </QuantityCategoryList>
+        </SpatialObject>
+        <SpatialObject Name="sobj_ER2_cyt1" Type="Surface" subVolumeInside="ER" regionIdInside="2" subVolumeOutside="cyt" regionIdOutside="1">
+          <QuantityCategoryList>
+            <QuantityCategory Name="SurfaceNormal" Enabled="false" />
+            <QuantityCategory Name="SurfaceVelocity" Enabled="false" />
+            <QuantityCategory Name="DistanceToSurface" Enabled="false" />
+            <QuantityCategory Name="DirectionToSurface" Enabled="false" />
+            <QuantityCategory Name="SurfaceSize" Enabled="true" />
+          </QuantityCategoryList>
+        </SpatialObject>
+        <SpatialObject Name="sobj_ER3_cyt1" Type="Surface" subVolumeInside="ER" regionIdInside="3" subVolumeOutside="cyt" regionIdOutside="1">
+          <QuantityCategoryList>
+            <QuantityCategory Name="SurfaceNormal" Enabled="false" />
+            <QuantityCategory Name="SurfaceVelocity" Enabled="false" />
+            <QuantityCategory Name="DistanceToSurface" Enabled="false" />
+            <QuantityCategory Name="DirectionToSurface" Enabled="false" />
+            <QuantityCategory Name="SurfaceSize" Enabled="true" />
+          </QuantityCategoryList>
+        </SpatialObject>
+      </SpatialObjects>
+      <Version Name="COS7" KeyValue="11778339" BranchId="9592715" Archived="0" Date="28-Feb-2005 12:06:45" FromVersionable="false">
+        <Owner Name="jacobkow" Identifier="2900169" />
+        <GroupAccess Type="1" />
+        <Annotation>(copied from ODE1) (copied from ODE)</Annotation>
+      </Version>
+      <MicroscopeMeasurement Name="fluor">
+        <ConvolutionKernel Type="ProjectionZKernel" />
+      </MicroscopeMeasurement>
+    </SimulationSpec>
+    <Version Name="Intracellular Ca-signaling_SOC_Z_COS7" KeyValue="12070117" BranchId="9592634" Archived="0" Date="13-Apr-2005 07:37:56" FromVersionable="false">
+      <Owner Name="jacobkow" Identifier="2900169" />
+      <GroupAccess Type="0" />
+    </Version>
+    <pathwayModel>
+      <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:bp="http://www.biopax.org/release/biopax-level3.owl#" version="3.0" />
+    </pathwayModel>
+    <relationshipModel>
+      <RMNS version="3.0" />
+    </relationshipModel>
+    <vcmetadata>
+      <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
+        <rdf:Description rdf:about="http://sourceforge.net/projects/vcell/vcml/cbit.vcell.model.Species/metaid_1353673431">
+          <bqbiol:isVersionOf xmlns:bqbiol="http://biomodels.net/biology-qualifiers/">
+            <rdf:Bag rdf:nodeID="node0">
+              <rdf:li>
+                <rdf:Description rdf:about="urn:miriam:kegg.compound:C02815" />
+              </rdf:li>
+            </rdf:Bag>
+          </bqbiol:isVersionOf>
+        </rdf:Description>
+      </rdf:RDF>
+      <nonrdfAnnotationList>
+        <nonrdfAnnotation vcid="Species(SOC)">
+          <freetext>Store-op channel</freetext>
+        </nonrdfAnnotation>
+        <nonrdfAnnotation vcid="Species(CaZ)">
+          <freetext>CaSignalZ</freetext>
+        </nonrdfAnnotation>
+        <nonrdfAnnotation vcid="Species(SERCA)">
+          <freetext>SERCA_pump</freetext>
+        </nonrdfAnnotation>
+        <nonrdfAnnotation vcid="Species(IP3)">
+          <freetext>IP3</freetext>
+        </nonrdfAnnotation>
+        <nonrdfAnnotation vcid="Species(IP3R)">
+          <freetext>IP3R</freetext>
+        </nonrdfAnnotation>
+        <nonrdfAnnotation vcid="Species(PMCapump)">
+          <freetext>PMCA</freetext>
+        </nonrdfAnnotation>
+        <nonrdfAnnotation vcid="Species(Ca)">
+          <freetext>Calcium</freetext>
+        </nonrdfAnnotation>
+      </nonrdfAnnotationList>
+      <uriBindingList>
+        <uriBinding uri="http://sourceforge.net/projects/vcell/vcml/cbit.vcell.model.Species/metaid_1353673431" vcid="Species(G_protein)" />
+      </uriBindingList>
+    </vcmetadata>
+  </BioModel>
+</vcml>
+

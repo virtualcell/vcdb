@@ -1,0 +1,2476 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--This biomodel was generated in VCML Version Alpha_Version_7.4.0_build_87-->
+<vcml xmlns="http://sourceforge.net/projects/vcell/vcml" Version="Alpha_Version_7.4.0_build_87">
+  <BioModel Name="Gndph_wBuffer">
+    <Model Name="unnamed">
+      <Compound Name="n">
+        <Annotation>n_gate</Annotation>
+      </Compound>
+      <Compound Name="I">
+        <Annotation>IP3</Annotation>
+      </Compound>
+      <Compound Name="h_er">
+        <Annotation>H_gate</Annotation>
+      </Compound>
+      <Compound Name="m_L">
+        <Annotation>L_gate</Annotation>
+      </Compound>
+      <Compound Name="Ca">
+        <Annotation>calcium</Annotation>
+      </Compound>
+      <Compound Name="i">
+        <Annotation>carrier</Annotation>
+      </Compound>
+      <Compound Name="m_T">
+        <Annotation>T_gate</Annotation>
+      </Compound>
+      <Compound Name="h">
+        <Annotation>h_gate</Annotation>
+      </Compound>
+      <Compound Name="K">
+        <Annotation>potassium</Annotation>
+      </Compound>
+      <Compound Name="B">
+        <Annotation>buffer</Annotation>
+      </Compound>
+      <Compound Name="CaB">
+        <Annotation>bound_buffer</Annotation>
+      </Compound>
+      <Feature Name="extr" KeyValue="99631966" />
+      <Feature Name="cyt" KeyValue="99631968" />
+      <Feature Name="ER" KeyValue="99631970" />
+      <Membrane InsideFeature="cyt" OutsideFeature="extr" PositiveFeature="cyt" NegativeFeature="extr" MembraneVoltage="V" Name="membr" KeyValue="99631972" />
+      <Membrane InsideFeature="ER" OutsideFeature="cyt" PositiveFeature="ER" NegativeFeature="cyt" MembraneVoltage="Voltage_ERM" Name="ERM" KeyValue="99631974" />
+      <LocalizedCompound Name="n" CompoundRef="n" Structure="membr" OverrideName="true" KeyValue="99631976" />
+      <LocalizedCompound Name="I_cyt" CompoundRef="I" Structure="cyt" OverrideName="true" KeyValue="99631977" />
+      <LocalizedCompound Name="h_er" CompoundRef="h_er" Structure="ERM" OverrideName="true" KeyValue="99631978" />
+      <LocalizedCompound Name="m_L" CompoundRef="m_L" Structure="membr" OverrideName="true" KeyValue="99631979" />
+      <LocalizedCompound Name="Ca_extr" CompoundRef="Ca" Structure="extr" OverrideName="true" KeyValue="99631980" />
+      <LocalizedCompound Name="i_cyt" CompoundRef="i" Structure="cyt" OverrideName="true" KeyValue="99631981" />
+      <LocalizedCompound Name="m_T" CompoundRef="m_T" Structure="membr" OverrideName="true" KeyValue="99631982" />
+      <LocalizedCompound Name="h" CompoundRef="h" Structure="membr" OverrideName="true" KeyValue="99631983" />
+      <LocalizedCompound Name="K_extr" CompoundRef="K" Structure="extr" OverrideName="true" KeyValue="99631984" />
+      <LocalizedCompound Name="i_extr" CompoundRef="i" Structure="extr" OverrideName="true" KeyValue="99631985" />
+      <LocalizedCompound Name="Ca_cyt" CompoundRef="Ca" Structure="cyt" OverrideName="true" KeyValue="99631986" />
+      <LocalizedCompound Name="Ca_ER" CompoundRef="Ca" Structure="ER" OverrideName="true" KeyValue="99631987" />
+      <LocalizedCompound Name="K_cyt" CompoundRef="K" Structure="cyt" OverrideName="true" KeyValue="99631988" />
+      <LocalizedCompound Name="B" CompoundRef="B" Structure="cyt" OverrideName="true" KeyValue="99631989" />
+      <LocalizedCompound Name="CaB" CompoundRef="CaB" Structure="cyt" OverrideName="true" KeyValue="99631990" />
+      <LocalizedCompound Name="B_ER" CompoundRef="B" Structure="ER" OverrideName="true" KeyValue="99631991" />
+      <LocalizedCompound Name="CaB_ER" CompoundRef="CaB" Structure="ER" OverrideName="true" KeyValue="99631992" />
+      <SimpleReaction Structure="cyt" Name="buffering" Reversible="true" FluxOption="MolecularOnly" KeyValue="99631993">
+        <Reactant LocalizedCompoundRef="B" Stoichiometry="1" KeyValue="99631994" />
+        <Reactant LocalizedCompoundRef="Ca_cyt" Stoichiometry="1" KeyValue="99631995" />
+        <Product LocalizedCompoundRef="CaB" Stoichiometry="1" KeyValue="99631996" />
+        <Kinetics KineticsType="MassAction">
+          <Parameter Name="J" Role="reaction rate" Unit="uM.s-1">(((kon * B) * Ca_cyt) - (Kr * CaB))</Parameter>
+          <Parameter Name="kon" Role="forward rate constant" Unit="s-1.uM-1">1.0</Parameter>
+          <Parameter Name="Kr" Role="reverse rate constant" Unit="s-1">(Kd * kon)</Parameter>
+          <Parameter Name="Kd" Role="user defined" Unit="1">10.0</Parameter>
+        </Kinetics>
+      </SimpleReaction>
+      <SimpleReaction Structure="ER" Name="er_buffering" Reversible="true" FluxOption="MolecularOnly" KeyValue="99631997">
+        <Reactant LocalizedCompoundRef="Ca_ER" Stoichiometry="1" KeyValue="99631998" />
+        <Reactant LocalizedCompoundRef="B_ER" Stoichiometry="1" KeyValue="99631999" />
+        <Product LocalizedCompoundRef="CaB_ER" Stoichiometry="1" KeyValue="99632000" />
+        <Kinetics KineticsType="MassAction">
+          <Parameter Name="J" Role="reaction rate" Unit="uM.s-1">(((kon_er * Ca_ER) * B_ER) - (Kr * CaB_ER))</Parameter>
+          <Parameter Name="kon_er" Role="forward rate constant" Unit="s-1.uM-1">1.0</Parameter>
+          <Parameter Name="Kr" Role="reverse rate constant" Unit="s-1">(kon_er * Kd_er)</Parameter>
+          <Parameter Name="Kd_er" Role="user defined" Unit="1">50.0</Parameter>
+        </Kinetics>
+      </SimpleReaction>
+      <SimpleReaction Structure="membr" Name="m_L_gating" Reversible="true" FluxOption="MolecularOnly" KeyValue="99632001">
+        <Product LocalizedCompoundRef="m_L" Stoichiometry="1" KeyValue="99632002" />
+        <Kinetics KineticsType="GeneralKinetics">
+          <Parameter Name="J" Role="reaction rate" Unit="molecules.um-2.s-1">(1000.0 * (m_L0 - m_L) / tau_ml)</Parameter>
+          <Parameter Name="I" Role="inward current density" Unit="pA.um-2">0.0</Parameter>
+          <Parameter Name="netValence" Role="net charge valence" Unit="1">1.0</Parameter>
+          <Parameter Name="m_L0" Role="user defined" Unit="molecules.um-2">(1.0 / (1.0 + exp((0.08333333333333333 * ( - 12.0 - V)))))</Parameter>
+          <Parameter Name="tau_ml" Role="user defined" Unit="s">(30.0 / (exp((0.045454545454545456 * (60.0 + V))) + (2.0 * exp((0.09090909090909091 * ( - 60.0 - V))))))</Parameter>
+        </Kinetics>
+      </SimpleReaction>
+      <SimpleReaction Structure="membr" Name="h_gating" Reversible="true" FluxOption="MolecularOnly" KeyValue="99632003">
+        <Product LocalizedCompoundRef="h" Stoichiometry="1" KeyValue="99632004" />
+        <Kinetics KineticsType="GeneralKinetics">
+          <Parameter Name="J" Role="reaction rate" Unit="molecules.um-2.s-1">(1000.0 * (h0 - h) / tau_h)</Parameter>
+          <Parameter Name="I" Role="inward current density" Unit="pA.um-2">0.0</Parameter>
+          <Parameter Name="netValence" Role="net charge valence" Unit="1">1.0</Parameter>
+          <Parameter Name="tau_h" Role="user defined" Unit="s">15.0</Parameter>
+          <Parameter Name="h0" Role="user defined" Unit="molecules.um-2">(1.0 / (1.0 + exp((0.25 * (50.0 + V)))))</Parameter>
+        </Kinetics>
+      </SimpleReaction>
+      <SimpleReaction Structure="membr" Name="n_gating" Reversible="true" FluxOption="MolecularOnly" KeyValue="99632005">
+        <Product LocalizedCompoundRef="n" Stoichiometry="1" KeyValue="99632006" />
+        <Kinetics KineticsType="GeneralKinetics">
+          <Parameter Name="J" Role="reaction rate" Unit="molecules.um-2.s-1">(1000.0 * (n0 - n) / tau_n)</Parameter>
+          <Parameter Name="I" Role="inward current density" Unit="pA.um-2">0.0</Parameter>
+          <Parameter Name="netValence" Role="net charge valence" Unit="1">1.0</Parameter>
+          <Parameter Name="n0" Role="user defined" Unit="molecules.um-2">(1.0 / (1.0 + exp((0.08 * ( - 5.1 - V)))))</Parameter>
+          <Parameter Name="tau_n" Role="user defined" Unit="s">22.5</Parameter>
+        </Kinetics>
+      </SimpleReaction>
+      <SimpleReaction Structure="membr" Name="m_T_gating" Reversible="true" FluxOption="MolecularOnly" KeyValue="99632007">
+        <Product LocalizedCompoundRef="m_T" Stoichiometry="1" KeyValue="99632008" />
+        <Kinetics KineticsType="GeneralKinetics">
+          <Parameter Name="J" Role="reaction rate" Unit="molecules.um-2.s-1">(1000.0 * (m_T0 - m_T) / tau_mt)</Parameter>
+          <Parameter Name="I" Role="inward current density" Unit="pA.um-2">0.0</Parameter>
+          <Parameter Name="netValence" Role="net charge valence" Unit="1">1.0</Parameter>
+          <Parameter Name="tau_mt" Role="user defined" Unit="s">(10.0 / (exp((0.045454545454545456 * (60.0 + V))) + (2.0 * exp((0.09090909090909091 * ( - 60.0 - V))))))</Parameter>
+          <Parameter Name="m_T0" Role="user defined" Unit="molecules.um-2">(1.0 / (1.0 + exp((0.1111111111111111 * ( - 30.0 - V)))))</Parameter>
+        </Kinetics>
+      </SimpleReaction>
+      <SimpleReaction Structure="ERM" Name="H_gating" Reversible="true" FluxOption="MolecularOnly" KeyValue="99632009">
+        <Product LocalizedCompoundRef="h_er" Stoichiometry="1" KeyValue="99632010" />
+        <Modifier LocalizedCompoundRef="Ca_cyt" />
+        <Modifier LocalizedCompoundRef="I_cyt" />
+        <Modifier LocalizedCompoundRef="Ca_ER" />
+        <Kinetics KineticsType="GeneralKinetics">
+          <Parameter Name="J" Role="reaction rate" Unit="molecules.um-2.s-1">((ho - h_er) / tau)</Parameter>
+          <Parameter Name="I" Role="inward current density" Unit="pA.um-2">0.0</Parameter>
+          <Parameter Name="netValence" Role="net charge valence" Unit="1">1.0</Parameter>
+          <Parameter Name="ho" Role="user defined" Unit="molecules.um-2">(1.0 / (1.0 + exp((( - 0.36 + Ca_cyt) / k2))))</Parameter>
+          <Parameter Name="tau" Role="user defined" Unit="s">(2.4 / b_h / d_h / (k3 + (1.0 / k3)))</Parameter>
+          <Parameter Name="k3" Role="user defined" Unit="tbd">exp(((Ca_cyt - C1) / k4))</Parameter>
+          <Parameter Name="b_h" Role="user defined" Unit="tbd">(1.0 / (1.0 + exp((5.0 * (0.6 - I_cyt)))))</Parameter>
+          <Parameter Name="d_h" Role="user defined" Unit="tbd">(0.2 + (0.8 / (1.0 + exp((0.1 * ( - 20.0 + Ca_ER))))))</Parameter>
+          <Parameter Name="k4" Role="user defined" Unit="uM">0.18</Parameter>
+          <Parameter Name="C1" Role="user defined" Unit="uM">0.36</Parameter>
+          <Parameter Name="k2" Role="user defined" Unit="uM">(0.46 * (0.05 + (Ca_ER * I_cyt * I_cyt / (180.0 + (Ca_ER * (1.0 + (I_cyt * I_cyt)))))))</Parameter>
+        </Kinetics>
+      </SimpleReaction>
+      <FluxStep Name="CaT_flux" Structure="membr" Reversible="true" FluxOption="MolecularAndElectrical" KeyValue="99632014">
+        <Reactant LocalizedCompoundRef="Ca_extr" Stoichiometry="1" KeyValue="99632015" />
+        <Product LocalizedCompoundRef="Ca_cyt" Stoichiometry="1" KeyValue="99632016" />
+        <Modifier LocalizedCompoundRef="m_T" />
+        <Modifier LocalizedCompoundRef="h" />
+        <Kinetics KineticsType="GHKKinetics">
+          <Parameter Name="I" Role="inward current density" Unit="pA.um-2">( - (P * _K_GHK_ * pow(carrierValence,2.0) * V * pow(_F_,2.0) * (Ca_cyt - (Ca_extr * exp((( - carrierValence * _F_ * V) / (_R_ * _T_)))))) / (_R_ * _T_ * (1.0 - exp((( - carrierValence * _F_ * V) / (_R_ * _T_))))))</Parameter>
+          <Parameter Name="J" Role="reaction rate" Unit="uM.um.s-1">((I / (carrierValence * _F_)) * unitFactor)</Parameter>
+          <Parameter Name="carrierValence" Role="flux carrier valence" Unit="1">2.0</Parameter>
+          <Parameter Name="P" Role="permeability" Unit="um.s-1">(Pcat * m_T * m_T * h / Scat)</Parameter>
+          <Parameter Name="unitFactor" Role="electrical unit factor" Unit="uM.um3.C.s-1.pA-1.mol-1">(1.0E9 / 1.0)</Parameter>
+          <Parameter Name="Pcat" Role="user defined" Unit="tbd">455.5180667970266</Parameter>
+          <Parameter Name="Scat" Role="user defined" Unit="tbd">1250.0</Parameter>
+        </Kinetics>
+      </FluxStep>
+      <FluxStep Name="K_Ca_flux" Structure="membr" Reversible="true" FluxOption="MolecularAndElectrical" KeyValue="99632019">
+        <Reactant LocalizedCompoundRef="K_extr" Stoichiometry="1" KeyValue="99632020" />
+        <Product LocalizedCompoundRef="K_cyt" Stoichiometry="1" KeyValue="99632021" />
+        <Modifier LocalizedCompoundRef="Ca_cyt" />
+        <Kinetics KineticsType="GHKKinetics">
+          <Parameter Name="I" Role="inward current density" Unit="pA.um-2">( - (P * _K_GHK_ * pow(carrierValence,2.0) * V * pow(_F_,2.0) * (K_cyt - (K_extr * exp((( - carrierValence * _F_ * V) / (_R_ * _T_)))))) / (_R_ * _T_ * (1.0 - exp((( - carrierValence * _F_ * V) / (_R_ * _T_))))))</Parameter>
+          <Parameter Name="J" Role="reaction rate" Unit="uM.um.s-1">((I / (carrierValence * _F_)) * unitFactor)</Parameter>
+          <Parameter Name="carrierValence" Role="flux carrier valence" Unit="1">1.0</Parameter>
+          <Parameter Name="P" Role="permeability" Unit="um.s-1">(Pkca * pow(Ca_cyt,4.0) / Skca / (pow(Ca_cyt,4.0) + pow(Kca,4.0)))</Parameter>
+          <Parameter Name="unitFactor" Role="electrical unit factor" Unit="uM.um3.C.s-1.pA-1.mol-1">(1.0E9 / 1.0)</Parameter>
+          <Parameter Name="Skca" Role="user defined" Unit="tbd">1250.0</Parameter>
+          <Parameter Name="Kca" Role="user defined" Unit="uM">0.6</Parameter>
+          <Parameter Name="Pkca" Role="user defined" Unit="tbd">2.679518039982509</Parameter>
+        </Kinetics>
+      </FluxStep>
+      <FluxStep Name="CaL_flux" Structure="membr" Reversible="true" FluxOption="MolecularAndElectrical" KeyValue="99632023">
+        <Reactant LocalizedCompoundRef="Ca_extr" Stoichiometry="1" KeyValue="99632024" />
+        <Product LocalizedCompoundRef="Ca_cyt" Stoichiometry="1" KeyValue="99632025" />
+        <Modifier LocalizedCompoundRef="m_L" />
+        <Kinetics KineticsType="GHKKinetics">
+          <Parameter Name="I" Role="inward current density" Unit="pA.um-2">( - (P * _K_GHK_ * pow(carrierValence,2.0) * V * pow(_F_,2.0) * (Ca_cyt - (Ca_extr * exp((( - carrierValence * _F_ * V) / (_R_ * _T_)))))) / (_R_ * _T_ * (1.0 - exp((( - carrierValence * _F_ * V) / (_R_ * _T_))))))</Parameter>
+          <Parameter Name="J" Role="reaction rate" Unit="uM.um.s-1">((I / (carrierValence * _F_)) * unitFactor)</Parameter>
+          <Parameter Name="carrierValence" Role="flux carrier valence" Unit="1">2.0</Parameter>
+          <Parameter Name="P" Role="permeability" Unit="um.s-1">(Pcal * m_L * m_L / Scal)</Parameter>
+          <Parameter Name="unitFactor" Role="electrical unit factor" Unit="uM.um3.C.s-1.pA-1.mol-1">(1.0E9 / 1.0)</Parameter>
+          <Parameter Name="Pcal" Role="user defined" Unit="tbd">415.32529619728894</Parameter>
+          <Parameter Name="Scal" Role="user defined" Unit="tbd">1250.0</Parameter>
+        </Kinetics>
+      </FluxStep>
+      <FluxStep Name="K_flux" Structure="membr" Reversible="true" FluxOption="MolecularAndElectrical" KeyValue="99632027">
+        <Reactant LocalizedCompoundRef="K_extr" Stoichiometry="1" KeyValue="99632028" />
+        <Product LocalizedCompoundRef="K_cyt" Stoichiometry="1" KeyValue="99632029" />
+        <Modifier LocalizedCompoundRef="n" />
+        <Kinetics KineticsType="GHKKinetics">
+          <Parameter Name="I" Role="inward current density" Unit="pA.um-2">( - (P * _K_GHK_ * pow(carrierValence,2.0) * V * pow(_F_,2.0) * (K_cyt - (K_extr * exp((( - carrierValence * _F_ * V) / (_R_ * _T_)))))) / (_R_ * _T_ * (1.0 - exp((( - carrierValence * _F_ * V) / (_R_ * _T_))))))</Parameter>
+          <Parameter Name="J" Role="reaction rate" Unit="uM.um.s-1">((I / (carrierValence * _F_)) * unitFactor)</Parameter>
+          <Parameter Name="carrierValence" Role="flux carrier valence" Unit="1">1.0</Parameter>
+          <Parameter Name="P" Role="permeability" Unit="um.s-1">(Pk * n / Sk)</Parameter>
+          <Parameter Name="unitFactor" Role="electrical unit factor" Unit="uM.um3.C.s-1.pA-1.mol-1">(1.0E9 / 1.0)</Parameter>
+          <Parameter Name="Sk" Role="user defined" Unit="tbd">1250.0</Parameter>
+          <Parameter Name="Pk" Role="user defined" Unit="tbd">26.795180399825096</Parameter>
+        </Kinetics>
+      </FluxStep>
+      <FluxStep Name="inFlux" Structure="ERM" Reversible="true" FluxOption="MolecularOnly" KeyValue="99632031">
+        <Reactant LocalizedCompoundRef="Ca_cyt" Stoichiometry="1" KeyValue="99632032" />
+        <Product LocalizedCompoundRef="Ca_ER" Stoichiometry="1" KeyValue="99632033" />
+        <Kinetics KineticsType="GeneralKinetics">
+          <Parameter Name="J" Role="reaction rate" Unit="uM.um.s-1">(v * Ca_cyt * Ca_cyt / ((Ca_cyt * Ca_cyt) + (Kp * Kp)))</Parameter>
+          <Parameter Name="I" Role="inward current density" Unit="pA.um-2">0.0</Parameter>
+          <Parameter Name="netValence" Role="net charge valence" Unit="1">1.0</Parameter>
+          <Parameter Name="Kp" Role="user defined" Unit="tbd">0.2</Parameter>
+          <Parameter Name="v" Role="user defined" Unit="uM.um.s-1">89.28571428571429</Parameter>
+        </Kinetics>
+      </FluxStep>
+      <FluxStep Name="leak" Structure="membr" Reversible="true" FluxOption="MolecularAndElectrical" KeyValue="99632034">
+        <Reactant LocalizedCompoundRef="i_extr" Stoichiometry="1" KeyValue="99632035" />
+        <Product LocalizedCompoundRef="i_cyt" Stoichiometry="1" KeyValue="99632036" />
+        <Kinetics KineticsType="GeneralKinetics">
+          <Parameter Name="J" Role="reaction rate" Unit="uM.um.s-1">- (1.0E9 * g_L * (V - V_L) / _F_ / S_L)</Parameter>
+          <Parameter Name="I" Role="inward current density" Unit="pA.um-2">((netValence * _F_ * J) * unitFactor)</Parameter>
+          <Parameter Name="netValence" Role="net charge valence" Unit="1">1.0</Parameter>
+          <Parameter Name="unitFactor" Role="electrical unit factor" Unit="pA.s.mol.um-3.uM-1.C-1">(1.0 / 1.0E9)</Parameter>
+          <Parameter Name="S_L" Role="user defined" Unit="tbd">1250.0</Parameter>
+          <Parameter Name="V_L" Role="user defined" Unit="mV">-55.0</Parameter>
+          <Parameter Name="g_L" Role="user defined" Unit="tbd">0.008</Parameter>
+        </Kinetics>
+      </FluxStep>
+      <FluxStep Name="Ca_outFlux" Structure="membr" Reversible="true" FluxOption="MolecularOnly" KeyValue="99632037">
+        <Reactant LocalizedCompoundRef="Ca_extr" Stoichiometry="1" KeyValue="99632038" />
+        <Product LocalizedCompoundRef="Ca_cyt" Stoichiometry="1" KeyValue="99632039" />
+        <Kinetics KineticsType="GeneralKinetics">
+          <Parameter Name="J" Role="reaction rate" Unit="uM.um.s-1">( - (pow(Ca_cyt,2.0) * v_pp / (pow(Ca_cyt,2.0) + (K_pp * K_pp))) - (v_ex * pow(Ca_cyt,4.0) / (pow(Ca_cyt,4.0) + pow(K_ex,4.0))))</Parameter>
+          <Parameter Name="I" Role="inward current density" Unit="pA.um-2">0.0</Parameter>
+          <Parameter Name="netValence" Role="net charge valence" Unit="1">1.0</Parameter>
+          <Parameter Name="K_ex" Role="user defined" Unit="uM">0.9</Parameter>
+          <Parameter Name="K_pp" Role="user defined" Unit="tbd">0.1</Parameter>
+          <Parameter Name="v_ex" Role="user defined" Unit="uM.um.s-1">200.0</Parameter>
+          <Parameter Name="v_pp" Role="user defined" Unit="uM.um.s-1">20.0</Parameter>
+        </Kinetics>
+      </FluxStep>
+      <FluxStep Name="outFlux" Structure="ERM" Reversible="true" FluxOption="MolecularOnly" KeyValue="99632040">
+        <Reactant LocalizedCompoundRef="Ca_cyt" Stoichiometry="1" KeyValue="99632041" />
+        <Product LocalizedCompoundRef="Ca_ER" Stoichiometry="1" KeyValue="99632042" />
+        <Modifier LocalizedCompoundRef="h_er" />
+        <Modifier LocalizedCompoundRef="I_cyt" />
+        <Kinetics KineticsType="GeneralKinetics">
+          <Parameter Name="J" Role="reaction rate" Unit="uM.um.s-1">- ((Ca_ER - Ca_cyt) * (p + (p0 * a * b_c * d_c * h_er)))</Parameter>
+          <Parameter Name="I" Role="inward current density" Unit="pA.um-2">0.0</Parameter>
+          <Parameter Name="netValence" Role="net charge valence" Unit="1">1.0</Parameter>
+          <Parameter Name="p" Role="user defined" Unit="uM.um.s-1">0.7142857142857143</Parameter>
+          <Parameter Name="p0" Role="user defined" Unit="tbd">89.28571428571429</Parameter>
+          <Parameter Name="a" Role="user defined" Unit="tbd">(1.0 / (1.0 + exp(((0.4 - Ca_cyt) / k1))))</Parameter>
+          <Parameter Name="b_c" Role="user defined" Unit="tbd">(1.0 / (1.0 + exp((5.0 * (0.6 - I_cyt)))))</Parameter>
+          <Parameter Name="d_c" Role="user defined" Unit="tbd">(0.2 + (0.8 / (1.0 + exp((0.1 * ( - 20.0 + Ca_ER))))))</Parameter>
+          <Parameter Name="k1" Role="user defined" Unit="1">(8.4 * (0.8 + (0.0225 * I_cyt / (0.2 + I_cyt) / (0.0225 + (( - 0.4 + I_cyt) * ( - 0.4 + I_cyt))))) / (60.0 + Ca_ER))</Parameter>
+        </Kinetics>
+      </FluxStep>
+      <Diagram Name="unnamed" Structure="extr">
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="Ca_extr" LocationX="127" LocationY="73" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="K_extr" LocationX="400" LocationY="350" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="i_extr" LocationX="80" LocationY="367" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="Ca_extr" LocationX="127" LocationY="73" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="K_extr" LocationX="400" LocationY="350" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="i_extr" LocationX="80" LocationY="367" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="Ca_extr" LocationX="127" LocationY="73" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="K_extr" LocationX="400" LocationY="350" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="i_extr" LocationX="80" LocationY="367" />
+      </Diagram>
+      <Diagram Name="Membrane0" Structure="membr">
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="n" LocationX="132" LocationY="43" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="m_L" LocationX="138" LocationY="289" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="m_T" LocationX="166" LocationY="184" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="h" LocationX="136" LocationY="145" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="I_cyt" LocationX="38" LocationY="75" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="i_cyt" LocationX="16" LocationY="381" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="Ca_cyt" LocationX="23" LocationY="250" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="K_cyt" LocationX="26" LocationY="92" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="i_extr" LocationX="29" LocationY="379" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="Ca_extr" LocationX="28" LocationY="243" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="K_extr" LocationX="26" LocationY="89" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="full" SimpleReactionRef="m_T_gating" LocationX="36" LocationY="179" />
+        <FluxReactionShape NodeReferenceModeAttrTag="full" FluxReactionRef="K_Ca_flux" LocationX="110" LocationY="106" />
+        <FluxReactionShape NodeReferenceModeAttrTag="full" FluxReactionRef="Ca_outFlux" LocationX="114" LocationY="329" />
+        <FluxReactionShape NodeReferenceModeAttrTag="full" FluxReactionRef="K_flux" LocationX="107" LocationY="68" />
+        <FluxReactionShape NodeReferenceModeAttrTag="full" FluxReactionRef="leak" LocationX="119" LocationY="375" />
+        <FluxReactionShape NodeReferenceModeAttrTag="full" FluxReactionRef="CaL_flux" LocationX="28" LocationY="249" />
+        <FluxReactionShape NodeReferenceModeAttrTag="full" FluxReactionRef="CaT_flux" LocationX="111" LocationY="219" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="full" SimpleReactionRef="h_gating" LocationX="37" LocationY="144" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="full" SimpleReactionRef="n_gating" LocationX="40" LocationY="40" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="full" SimpleReactionRef="m_L_gating" LocationX="60" LocationY="285" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="n" LocationX="132" LocationY="43" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="m_L" LocationX="138" LocationY="289" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="m_T" LocationX="166" LocationY="184" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="h" LocationX="136" LocationY="145" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="I_cyt" LocationX="38" LocationY="75" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="i_cyt" LocationX="16" LocationY="381" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="Ca_cyt" LocationX="23" LocationY="250" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="K_cyt" LocationX="26" LocationY="92" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="i_extr" LocationX="29" LocationY="379" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="Ca_extr" LocationX="28" LocationY="243" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="K_extr" LocationX="26" LocationY="89" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="molecule" SimpleReactionRef="m_T_gating" LocationX="36" LocationY="179" />
+        <FluxReactionShape NodeReferenceModeAttrTag="molecule" FluxReactionRef="K_Ca_flux" LocationX="110" LocationY="106" />
+        <FluxReactionShape NodeReferenceModeAttrTag="molecule" FluxReactionRef="Ca_outFlux" LocationX="114" LocationY="329" />
+        <FluxReactionShape NodeReferenceModeAttrTag="molecule" FluxReactionRef="K_flux" LocationX="107" LocationY="68" />
+        <FluxReactionShape NodeReferenceModeAttrTag="molecule" FluxReactionRef="leak" LocationX="119" LocationY="375" />
+        <FluxReactionShape NodeReferenceModeAttrTag="molecule" FluxReactionRef="CaL_flux" LocationX="28" LocationY="249" />
+        <FluxReactionShape NodeReferenceModeAttrTag="molecule" FluxReactionRef="CaT_flux" LocationX="111" LocationY="219" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="molecule" SimpleReactionRef="h_gating" LocationX="37" LocationY="144" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="molecule" SimpleReactionRef="n_gating" LocationX="40" LocationY="40" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="molecule" SimpleReactionRef="m_L_gating" LocationX="60" LocationY="285" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="n" LocationX="132" LocationY="43" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="m_L" LocationX="138" LocationY="289" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="m_T" LocationX="166" LocationY="184" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="h" LocationX="136" LocationY="145" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="I_cyt" LocationX="38" LocationY="75" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="i_cyt" LocationX="16" LocationY="381" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="Ca_cyt" LocationX="23" LocationY="250" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="K_cyt" LocationX="26" LocationY="92" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="i_extr" LocationX="29" LocationY="379" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="Ca_extr" LocationX="28" LocationY="243" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="K_extr" LocationX="26" LocationY="89" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="rule" SimpleReactionRef="m_T_gating" LocationX="36" LocationY="179" />
+        <FluxReactionShape NodeReferenceModeAttrTag="rule" FluxReactionRef="K_Ca_flux" LocationX="110" LocationY="106" />
+        <FluxReactionShape NodeReferenceModeAttrTag="rule" FluxReactionRef="Ca_outFlux" LocationX="114" LocationY="329" />
+        <FluxReactionShape NodeReferenceModeAttrTag="rule" FluxReactionRef="K_flux" LocationX="107" LocationY="68" />
+        <FluxReactionShape NodeReferenceModeAttrTag="rule" FluxReactionRef="leak" LocationX="119" LocationY="375" />
+        <FluxReactionShape NodeReferenceModeAttrTag="rule" FluxReactionRef="CaL_flux" LocationX="28" LocationY="249" />
+        <FluxReactionShape NodeReferenceModeAttrTag="rule" FluxReactionRef="CaT_flux" LocationX="111" LocationY="219" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="rule" SimpleReactionRef="h_gating" LocationX="37" LocationY="144" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="rule" SimpleReactionRef="n_gating" LocationX="40" LocationY="40" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="rule" SimpleReactionRef="m_L_gating" LocationX="60" LocationY="285" />
+      </Diagram>
+      <Diagram Name="Feature0" Structure="cyt">
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="I_cyt" LocationX="222" LocationY="393" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="i_cyt" LocationX="220" LocationY="315" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="Ca_cyt" LocationX="208" LocationY="203" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="K_cyt" LocationX="224" LocationY="470" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="B" LocationX="204" LocationY="91" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="CaB" LocationX="441" LocationY="143" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="full" SimpleReactionRef="buffering" LocationX="304" LocationY="155" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="I_cyt" LocationX="222" LocationY="393" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="i_cyt" LocationX="220" LocationY="315" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="Ca_cyt" LocationX="208" LocationY="203" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="K_cyt" LocationX="224" LocationY="470" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="B" LocationX="204" LocationY="91" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="CaB" LocationX="441" LocationY="143" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="molecule" SimpleReactionRef="buffering" LocationX="304" LocationY="155" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="I_cyt" LocationX="222" LocationY="393" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="i_cyt" LocationX="220" LocationY="315" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="Ca_cyt" LocationX="208" LocationY="203" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="K_cyt" LocationX="224" LocationY="470" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="B" LocationX="204" LocationY="91" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="CaB" LocationX="441" LocationY="143" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="rule" SimpleReactionRef="buffering" LocationX="304" LocationY="155" />
+      </Diagram>
+      <Diagram Name="Membrane0" Structure="ERM">
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="h_er" LocationX="207" LocationY="55" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="Ca_ER" LocationX="51" LocationY="335" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="I_cyt" LocationX="51" LocationY="253" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="i_cyt" LocationX="45" LocationY="131" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="Ca_cyt" LocationX="48" LocationY="328" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="K_cyt" LocationX="45" LocationY="183" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="B" LocationX="37" LocationY="48" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="CaB" LocationX="35" LocationY="80" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="full" SimpleReactionRef="H_gating" LocationX="57" LocationY="50" />
+        <FluxReactionShape NodeReferenceModeAttrTag="full" FluxReactionRef="outFlux" LocationX="125" LocationY="361" />
+        <FluxReactionShape NodeReferenceModeAttrTag="full" FluxReactionRef="inFlux" LocationX="137" LocationY="213" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="h_er" LocationX="207" LocationY="55" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="Ca_ER" LocationX="51" LocationY="335" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="I_cyt" LocationX="51" LocationY="253" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="i_cyt" LocationX="45" LocationY="131" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="Ca_cyt" LocationX="48" LocationY="328" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="K_cyt" LocationX="45" LocationY="183" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="B" LocationX="37" LocationY="48" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="CaB" LocationX="35" LocationY="80" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="molecule" SimpleReactionRef="H_gating" LocationX="57" LocationY="50" />
+        <FluxReactionShape NodeReferenceModeAttrTag="molecule" FluxReactionRef="outFlux" LocationX="125" LocationY="361" />
+        <FluxReactionShape NodeReferenceModeAttrTag="molecule" FluxReactionRef="inFlux" LocationX="137" LocationY="213" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="h_er" LocationX="207" LocationY="55" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="Ca_ER" LocationX="51" LocationY="335" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="I_cyt" LocationX="51" LocationY="253" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="i_cyt" LocationX="45" LocationY="131" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="Ca_cyt" LocationX="48" LocationY="328" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="K_cyt" LocationX="45" LocationY="183" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="B" LocationX="37" LocationY="48" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="CaB" LocationX="35" LocationY="80" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="rule" SimpleReactionRef="H_gating" LocationX="57" LocationY="50" />
+        <FluxReactionShape NodeReferenceModeAttrTag="rule" FluxReactionRef="outFlux" LocationX="125" LocationY="361" />
+        <FluxReactionShape NodeReferenceModeAttrTag="rule" FluxReactionRef="inFlux" LocationX="137" LocationY="213" />
+      </Diagram>
+      <Diagram Name="Feature0" Structure="ER">
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="Ca_ER" LocationX="155" LocationY="220" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="B_ER" LocationX="147" LocationY="126" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="CaB_ER" LocationX="349" LocationY="162" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="full" SimpleReactionRef="er_buffering" LocationX="222" LocationY="155" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="Ca_ER" LocationX="155" LocationY="220" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="B_ER" LocationX="147" LocationY="126" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="CaB_ER" LocationX="349" LocationY="162" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="molecule" SimpleReactionRef="er_buffering" LocationX="222" LocationY="155" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="Ca_ER" LocationX="155" LocationY="220" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="B_ER" LocationX="147" LocationY="126" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="CaB_ER" LocationX="349" LocationY="162" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="rule" SimpleReactionRef="er_buffering" LocationX="222" LocationY="155" />
+      </Diagram>
+      <Version Name="unnamed" KeyValue="99631953" BranchId="5062133" Archived="0" Date="26-Apr-2016 17:07:22" FromVersionable="false">
+        <Owner Name="boris" Identifier="21" />
+        <GroupAccess Type="1" />
+      </Version>
+      <ModelUnitSystem VolumeSubstanceUnit="uM.um3" MembraneSubstanceUnit="molecules" LumpedReactionSubstanceUnit="molecules" VolumeUnit="um3" AreaUnit="um2" LengthUnit="um" TimeUnit="s" />
+    </Model>
+    <SimulationSpec Name="voltage_steady_state" Stochastic="false" UseConcentration="true" RuleBased="false" MassConservationModelReduction="true" InsufficientIterations="false" InsufficientMaxMolecules="false">
+      <NetworkConstraints RbmMaxIteration="1" RbmMaxMoleculesPerSpecies="10" RbmSpeciesLimit="800" RbmReactionsLimit="2500" />
+      <Annotation />
+      <Geometry Name="voltage_only3" Dimension="0">
+        <Extent X="10.0" Y="10.0" Z="10.0" />
+        <Origin X="0.0" Y="0.0" Z="0.0" />
+        <SubVolume Name="Compartment" Handle="0" Type="Compartmental" KeyValue="2531870" />
+        <Version Name="voltage_only3" KeyValue="2531867" BranchId="5059613" Archived="0" Date="07-Jun-2002 14:18:51" FromVersionable="false">
+          <Owner Name="boris" Identifier="21" />
+          <GroupAccess Type="1" />
+        </Version>
+      </Geometry>
+      <GeometryContext>
+        <FeatureMapping Feature="extr" GeometryClass="Compartment" SubVolume="Compartment" Size="4.0">
+          <BoundariesTypes Xm="Value" Xp="Value" Ym="Value" Yp="Value" Zm="Value" Zp="Value" />
+        </FeatureMapping>
+        <FeatureMapping Feature="cyt" GeometryClass="Compartment" SubVolume="Compartment" Size="0.8">
+          <BoundariesTypes Xm="Value" Xp="Value" Ym="Value" Yp="Value" Zm="Value" Zp="Value" />
+        </FeatureMapping>
+        <FeatureMapping Feature="ER" GeometryClass="Compartment" SubVolume="Compartment" Size="0.20000000000000004">
+          <BoundariesTypes Xm="Value" Xp="Value" Ym="Value" Yp="Value" Zm="Value" Zp="Value" />
+        </FeatureMapping>
+        <MembraneMapping Membrane="membr" SurfaceToVolumeRatio="1.0" VolumeFraction="0.2" Size="1.0" CalculateVoltage="true" SpecificCapacitance="0.01" InitialVoltage="-38.36494346132662" GeometryClass="Compartment">
+          <BoundariesTypes Xm="Value" Xp="Value" Ym="Value" Yp="Value" Zm="Value" Zp="Value" />
+        </MembraneMapping>
+        <MembraneMapping Membrane="ERM" SurfaceToVolumeRatio="1.0" VolumeFraction="0.2" Size="0.20000000000000004" CalculateVoltage="false" SpecificCapacitance="0.01" InitialVoltage="0.0" GeometryClass="Compartment">
+          <BoundariesTypes Xm="Value" Xp="Value" Ym="Value" Yp="Value" Zm="Value" Zp="Value" />
+        </MembraneMapping>
+      </GeometryContext>
+      <ReactionContext>
+        <LocalizedCompoundSpec LocalizedCompoundRef="Ca_extr" ForceConstant="true" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>2500.0</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="K_extr" ForceConstant="true" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>5000.0</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="i_extr" ForceConstant="true" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>0.0</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="I_cyt" ForceConstant="true" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>0.0</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="i_cyt" ForceConstant="true" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>0.0</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="Ca_cyt" ForceConstant="true" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>0.23944215197216787</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="K_cyt" ForceConstant="true" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>140000.0</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="B" ForceConstant="true" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>0.0</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="CaB" ForceConstant="true" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>0.0</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="Ca_ER" ForceConstant="true" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>0.0</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="B_ER" ForceConstant="true" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>0.0</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="CaB_ER" ForceConstant="true" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>0.0</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="n" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>0.0653023260560287</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="m_L" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>0.10001313676724</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="m_T" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>0.28303871308222</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="h" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>0.051722017197123</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="h_er" ForceConstant="true" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>0.0</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <ReactionSpec ReactionStepRef="buffering" ReactionMapping="excluded" />
+        <ReactionSpec ReactionStepRef="er_buffering" ReactionMapping="excluded" />
+        <ReactionSpec ReactionStepRef="m_L_gating" ReactionMapping="included" />
+        <ReactionSpec ReactionStepRef="h_gating" ReactionMapping="included" />
+        <ReactionSpec ReactionStepRef="n_gating" ReactionMapping="included" />
+        <ReactionSpec ReactionStepRef="m_T_gating" ReactionMapping="included" />
+        <ReactionSpec ReactionStepRef="H_gating" ReactionMapping="excluded" />
+        <ReactionSpec ReactionStepRef="CaT_flux" ReactionMapping="included" />
+        <ReactionSpec ReactionStepRef="K_Ca_flux" ReactionMapping="included" />
+        <ReactionSpec ReactionStepRef="CaL_flux" ReactionMapping="included" />
+        <ReactionSpec ReactionStepRef="K_flux" ReactionMapping="included" />
+        <ReactionSpec ReactionStepRef="inFlux" ReactionMapping="excluded" />
+        <ReactionSpec ReactionStepRef="leak" ReactionMapping="included" />
+        <ReactionSpec ReactionStepRef="Ca_outFlux" ReactionMapping="excluded" />
+        <ReactionSpec ReactionStepRef="outFlux" ReactionMapping="excluded" />
+      </ReactionContext>
+      <MathDescription Name="voltage_only2">
+        <Constant Name="_F_">96480.0</Constant>
+        <Constant Name="_F_nmol_">9.648E-5</Constant>
+        <Constant Name="_K_GHK_">1.0E-9</Constant>
+        <Constant Name="_N_pmol_">6.02E11</Constant>
+        <Constant Name="_PI_">3.141592653589793</Constant>
+        <Constant Name="_R_">8314.0</Constant>
+        <Constant Name="_T_">300.0</Constant>
+        <Constant Name="B_ER_init_uM">0.0</Constant>
+        <Constant Name="B_init_uM">0.0</Constant>
+        <Constant Name="C_ERM">0.01</Constant>
+        <Constant Name="C_membr">0.01</Constant>
+        <Constant Name="Ca_cyt_init_uM">0.23944215197216787</Constant>
+        <Constant Name="Ca_ER_init_uM">0.0</Constant>
+        <Constant Name="Ca_extr_init_uM">2500.0</Constant>
+        <Constant Name="CaB_ER_init_uM">0.0</Constant>
+        <Constant Name="CaB_init_uM">0.0</Constant>
+        <Constant Name="carrierValence_CaL_flux">2.0</Constant>
+        <Constant Name="carrierValence_CaT_flux">2.0</Constant>
+        <Constant Name="carrierValence_K_Ca_flux">1.0</Constant>
+        <Constant Name="carrierValence_K_flux">1.0</Constant>
+        <Constant Name="g_L">0.008</Constant>
+        <Constant Name="h_er_init_molecules_um_2">0.0</Constant>
+        <Constant Name="h_init_molecules_um_2">0.051722017197123</Constant>
+        <Constant Name="I_cyt_init_uM">0.0</Constant>
+        <Constant Name="i_cyt_init_uM">0.0</Constant>
+        <Constant Name="i_extr_init_uM">0.0</Constant>
+        <Constant Name="I_membr">0.0</Constant>
+        <Constant Name="K_cyt_init_uM">140000.0</Constant>
+        <Constant Name="K_extr_init_uM">5000.0</Constant>
+        <Constant Name="K_millivolts_per_volt">1000.0</Constant>
+        <Constant Name="Kca">0.6</Constant>
+        <Constant Name="KMOLE">(1.0 / 602.0)</Constant>
+        <Constant Name="m_L_init_molecules_um_2">0.10001313676724</Constant>
+        <Constant Name="m_T_init_molecules_um_2">0.28303871308222</Constant>
+        <Constant Name="n_init_molecules_um_2">0.0653023260560287</Constant>
+        <Constant Name="netValence_h_gating">1.0</Constant>
+        <Constant Name="netValence_leak">1.0</Constant>
+        <Constant Name="netValence_m_L_gating">1.0</Constant>
+        <Constant Name="netValence_m_T_gating">1.0</Constant>
+        <Constant Name="netValence_n_gating">1.0</Constant>
+        <Constant Name="Pcal">415.32529619728894</Constant>
+        <Constant Name="Pcat">455.5180667970266</Constant>
+        <Constant Name="Pk">26.795180399825096</Constant>
+        <Constant Name="Pkca">2.679518039982509</Constant>
+        <Constant Name="S_L">1250.0</Constant>
+        <Constant Name="Scal">1250.0</Constant>
+        <Constant Name="Scat">1250.0</Constant>
+        <Constant Name="Size_cyt">0.8</Constant>
+        <Constant Name="Size_ER">0.20000000000000004</Constant>
+        <Constant Name="Size_ERM">0.20000000000000004</Constant>
+        <Constant Name="Size_extr">4.0</Constant>
+        <Constant Name="Size_membr">1.0</Constant>
+        <Constant Name="Sk">1250.0</Constant>
+        <Constant Name="Skca">1250.0</Constant>
+        <Constant Name="tau_h">15.0</Constant>
+        <Constant Name="tau_n">22.5</Constant>
+        <Constant Name="V_init">-38.36494346132662</Constant>
+        <Constant Name="V_L">-55.0</Constant>
+        <Constant Name="Voltage_ERM">0.0</Constant>
+        <Constant Name="Voltage_ERM_init">0.0</Constant>
+        <VolumeVariable Name="h" Domain="Compartment" />
+        <VolumeVariable Name="m_L" Domain="Compartment" />
+        <VolumeVariable Name="m_T" Domain="Compartment" />
+        <VolumeVariable Name="n" Domain="Compartment" />
+        <VolumeVariable Name="V" Domain="Compartment" />
+        <Function Name="B" Domain="Compartment">B_init_uM</Function>
+        <Function Name="B_ER" Domain="Compartment">B_ER_init_uM</Function>
+        <Function Name="Ca_cyt" Domain="Compartment">Ca_cyt_init_uM</Function>
+        <Function Name="Ca_ER" Domain="Compartment">Ca_ER_init_uM</Function>
+        <Function Name="Ca_extr" Domain="Compartment">Ca_extr_init_uM</Function>
+        <Function Name="CaB" Domain="Compartment">CaB_init_uM</Function>
+        <Function Name="CaB_ER" Domain="Compartment">CaB_ER_init_uM</Function>
+        <Function Name="device_membr.Capacitance" Domain="Compartment">(C_membr * Size_membr)</Function>
+        <Function Name="F_membr" Domain="Compartment">( - (I_leak * Size_membr) - (I_K_flux * Size_membr) - (I_CaL_flux * Size_membr) - (I_CaT_flux * Size_membr) - (I_K_Ca_flux * Size_membr))</Function>
+        <Function Name="h0" Domain="Compartment">(1.0 / (1.0 + exp((0.25 * (50.0 + V)))))</Function>
+        <Function Name="h_er" Domain="Compartment">h_er_init_molecules_um_2</Function>
+        <Function Name="I_CaL_flux" Domain="Compartment">( - (P_CaL_flux * _K_GHK_ * pow(carrierValence_CaL_flux,2.0) * V * pow(_F_,2.0) * (Ca_cyt - (Ca_extr * exp((( - carrierValence_CaL_flux * _F_ * V) / (_R_ * _T_)))))) / (_R_ * _T_ * (1.0 - exp((( - carrierValence_CaL_flux * _F_ * V) / (_R_ * _T_))))))</Function>
+        <Function Name="I_CaT_flux" Domain="Compartment">( - (P_CaT_flux * _K_GHK_ * pow(carrierValence_CaT_flux,2.0) * V * pow(_F_,2.0) * (Ca_cyt - (Ca_extr * exp((( - carrierValence_CaT_flux * _F_ * V) / (_R_ * _T_)))))) / (_R_ * _T_ * (1.0 - exp((( - carrierValence_CaT_flux * _F_ * V) / (_R_ * _T_))))))</Function>
+        <Function Name="I_cyt" Domain="Compartment">I_cyt_init_uM</Function>
+        <Function Name="i_cyt" Domain="Compartment">i_cyt_init_uM</Function>
+        <Function Name="i_extr" Domain="Compartment">i_extr_init_uM</Function>
+        <Function Name="I_K_Ca_flux" Domain="Compartment">( - (P_K_Ca_flux * _K_GHK_ * pow(carrierValence_K_Ca_flux,2.0) * V * pow(_F_,2.0) * (K_cyt - (K_extr * exp((( - carrierValence_K_Ca_flux * _F_ * V) / (_R_ * _T_)))))) / (_R_ * _T_ * (1.0 - exp((( - carrierValence_K_Ca_flux * _F_ * V) / (_R_ * _T_))))))</Function>
+        <Function Name="I_K_flux" Domain="Compartment">( - (P_K_flux * _K_GHK_ * pow(carrierValence_K_flux,2.0) * V * pow(_F_,2.0) * (K_cyt - (K_extr * exp((( - carrierValence_K_flux * _F_ * V) / (_R_ * _T_)))))) / (_R_ * _T_ * (1.0 - exp((( - carrierValence_K_flux * _F_ * V) / (_R_ * _T_))))))</Function>
+        <Function Name="I_leak" Domain="Compartment">((netValence_leak * _F_ * J_leak) * unitFactor_leak)</Function>
+        <Function Name="J_CaL_flux" Domain="Compartment">((I_CaL_flux / (carrierValence_CaL_flux * _F_)) * unitFactor_CaL_flux)</Function>
+        <Function Name="J_CaT_flux" Domain="Compartment">((I_CaT_flux / (carrierValence_CaT_flux * _F_)) * unitFactor_CaT_flux)</Function>
+        <Function Name="J_h_gating" Domain="Compartment">(1000.0 * (h0 - h) / tau_h)</Function>
+        <Function Name="J_K_Ca_flux" Domain="Compartment">((I_K_Ca_flux / (carrierValence_K_Ca_flux * _F_)) * unitFactor_K_Ca_flux)</Function>
+        <Function Name="J_K_flux" Domain="Compartment">((I_K_flux / (carrierValence_K_flux * _F_)) * unitFactor_K_flux)</Function>
+        <Function Name="J_leak" Domain="Compartment">- (1.0E9 * g_L * (V - V_L) / _F_ / S_L)</Function>
+        <Function Name="J_m_L_gating" Domain="Compartment">(1000.0 * (m_L0 - m_L) / tau_ml)</Function>
+        <Function Name="J_m_T_gating" Domain="Compartment">(1000.0 * (m_T0 - m_T) / tau_mt)</Function>
+        <Function Name="J_n_gating" Domain="Compartment">(1000.0 * (n0 - n) / tau_n)</Function>
+        <Function Name="K_cyt" Domain="Compartment">K_cyt_init_uM</Function>
+        <Function Name="K_extr" Domain="Compartment">K_extr_init_uM</Function>
+        <Function Name="m_L0" Domain="Compartment">(1.0 / (1.0 + exp((0.08333333333333333 * ( - 12.0 - V)))))</Function>
+        <Function Name="m_T0" Domain="Compartment">(1.0 / (1.0 + exp((0.1111111111111111 * ( - 30.0 - V)))))</Function>
+        <Function Name="n0" Domain="Compartment">(1.0 / (1.0 + exp((0.08 * ( - 5.1 - V)))))</Function>
+        <Function Name="P_CaL_flux" Domain="Compartment">(Pcal * m_L * m_L / Scal)</Function>
+        <Function Name="P_CaT_flux" Domain="Compartment">(Pcat * m_T * m_T * h / Scat)</Function>
+        <Function Name="P_K_Ca_flux" Domain="Compartment">(Pkca * pow(Ca_cyt,4.0) / Skca / (pow(Ca_cyt,4.0) + pow(Kca,4.0)))</Function>
+        <Function Name="P_K_flux" Domain="Compartment">(Pk * n / Sk)</Function>
+        <Function Name="tau_ml" Domain="Compartment">(30.0 / (exp((0.045454545454545456 * (60.0 + V))) + (2.0 * exp((0.09090909090909091 * ( - 60.0 - V))))))</Function>
+        <Function Name="tau_mt" Domain="Compartment">(10.0 / (exp((0.045454545454545456 * (60.0 + V))) + (2.0 * exp((0.09090909090909091 * ( - 60.0 - V))))))</Function>
+        <Function Name="unitFactor_CaL_flux" Domain="Compartment">(1.0E9 / 1.0)</Function>
+        <Function Name="unitFactor_CaT_flux" Domain="Compartment">(1.0E9 / 1.0)</Function>
+        <Function Name="unitFactor_K_Ca_flux" Domain="Compartment">(1.0E9 / 1.0)</Function>
+        <Function Name="unitFactor_K_flux" Domain="Compartment">(1.0E9 / 1.0)</Function>
+        <Function Name="unitFactor_leak" Domain="Compartment">(1.0 / 9.99999999E8)</Function>
+        <Function Name="UnitFactor_mV_pF_s_neg_1_pA_neg_1">(1000.0 / 1.0)</Function>
+        <CompartmentSubDomain Name="Compartment">
+          <BoundaryType Boundary="Xm" Type="Value" />
+          <BoundaryType Boundary="Xp" Type="Value" />
+          <BoundaryType Boundary="Ym" Type="Value" />
+          <BoundaryType Boundary="Yp" Type="Value" />
+          <BoundaryType Boundary="Zm" Type="Value" />
+          <BoundaryType Boundary="Zp" Type="Value" />
+          <OdeEquation Name="n" SolutionType="Unknown">
+            <Rate>J_n_gating</Rate>
+            <Initial>n_init_molecules_um_2</Initial>
+          </OdeEquation>
+          <OdeEquation Name="m_L" SolutionType="Unknown">
+            <Rate>J_m_L_gating</Rate>
+            <Initial>m_L_init_molecules_um_2</Initial>
+          </OdeEquation>
+          <OdeEquation Name="m_T" SolutionType="Unknown">
+            <Rate>J_m_T_gating</Rate>
+            <Initial>m_T_init_molecules_um_2</Initial>
+          </OdeEquation>
+          <OdeEquation Name="h" SolutionType="Unknown">
+            <Rate>J_h_gating</Rate>
+            <Initial>h_init_molecules_um_2</Initial>
+          </OdeEquation>
+          <OdeEquation Name="V" SolutionType="Unknown">
+            <Rate>((UnitFactor_mV_pF_s_neg_1_pA_neg_1 / device_membr.Capacitance) * (I_membr - ( - (I_leak * Size_membr) - (I_K_flux * Size_membr) - (I_CaL_flux * Size_membr) - (I_CaT_flux * Size_membr) - (I_K_Ca_flux * Size_membr))))</Rate>
+            <Initial>V_init</Initial>
+          </OdeEquation>
+        </CompartmentSubDomain>
+        <Version Name="voltage_only2" KeyValue="99709020" BranchId="5061387" Archived="0" Date="29-Apr-2016 19:16:33" FromVersionable="false">
+          <Owner Name="boris" Identifier="21" />
+          <GroupAccess Type="1" />
+        </Version>
+      </MathDescription>
+      <Simulation Name="Simulation 1">
+        <SolverTaskDescription TaskType="Unsteady" UseSymbolicJacobian="false" Solver="Runge-Kutta-Fehlberg (Fifth Order, Variable Time Step)">
+          <TimeBound StartTime="0.0" EndTime="200.0" />
+          <TimeStep DefaultTime="0.1" MinTime="1.0E-8" MaxTime="1.0" />
+          <ErrorTolerance Absolut="1.0E-9" Relative="1.0E-9" />
+          <OutputOptions KeepEvery="50" KeepAtMost="1000" />
+          <NumberProcessors>1</NumberProcessors>
+        </SolverTaskDescription>
+        <MathOverrides />
+        <Version Name="Simulation 1" KeyValue="99709228" BranchId="5064951" Archived="0" Date="29-Apr-2016 19:16:41" FromVersionable="false">
+          <Owner Name="boris" Identifier="21" />
+          <GroupAccess Type="1" />
+        </Version>
+      </Simulation>
+      <Version Name="voltage_steady_state" KeyValue="99709030" BranchId="5062939" Archived="0" Date="29-Apr-2016 19:16:36" FromVersionable="false">
+        <Owner Name="boris" Identifier="21" />
+        <GroupAccess Type="1" />
+      </Version>
+      <MicroscopeMeasurement Name="fluor">
+        <ConvolutionKernel Type="ProjectionZKernel" />
+      </MicroscopeMeasurement>
+    </SimulationSpec>
+    <SimulationSpec Name="calcium_only" Stochastic="false" UseConcentration="true" RuleBased="false" MassConservationModelReduction="true" InsufficientIterations="false" InsufficientMaxMolecules="false">
+      <NetworkConstraints RbmMaxIteration="1" RbmMaxMoleculesPerSpecies="10" RbmSpeciesLimit="800" RbmReactionsLimit="2500" />
+      <Annotation />
+      <Geometry Name="calcium_only1" Dimension="0">
+        <Extent X="10.0" Y="10.0" Z="10.0" />
+        <Origin X="0.0" Y="0.0" Z="0.0" />
+        <SubVolume Name="Compartment" Handle="0" Type="Compartmental" KeyValue="2531916" />
+        <Version Name="calcium_only1" KeyValue="2531913" BranchId="5059614" Archived="0" Date="07-Jun-2002 14:18:52" FromVersionable="false">
+          <Owner Name="boris" Identifier="21" />
+          <GroupAccess Type="1" />
+        </Version>
+      </Geometry>
+      <GeometryContext>
+        <FeatureMapping Feature="extr" GeometryClass="Compartment" SubVolume="Compartment" Size="4.0">
+          <BoundariesTypes Xm="Flux" Xp="Flux" Ym="Flux" Yp="Flux" Zm="Flux" Zp="Flux" />
+        </FeatureMapping>
+        <FeatureMapping Feature="cyt" GeometryClass="Compartment" SubVolume="Compartment" Size="0.8">
+          <BoundariesTypes Xm="Flux" Xp="Flux" Ym="Flux" Yp="Flux" Zm="Flux" Zp="Flux" />
+        </FeatureMapping>
+        <FeatureMapping Feature="ER" GeometryClass="Compartment" SubVolume="Compartment" Size="0.20000000000000004">
+          <BoundariesTypes Xm="Flux" Xp="Flux" Ym="Flux" Yp="Flux" Zm="Flux" Zp="Flux" />
+        </FeatureMapping>
+        <MembraneMapping Membrane="membr" SurfaceToVolumeRatio="1.0" VolumeFraction="0.2" Size="1.0" CalculateVoltage="false" SpecificCapacitance="1.0" InitialVoltage="0.0" GeometryClass="Compartment">
+          <BoundariesTypes Xm="Flux" Xp="Flux" Ym="Flux" Yp="Flux" Zm="Flux" Zp="Flux" />
+        </MembraneMapping>
+        <MembraneMapping Membrane="ERM" SurfaceToVolumeRatio="1.0" VolumeFraction="0.2" Size="0.20000000000000004" CalculateVoltage="false" SpecificCapacitance="1.0" InitialVoltage="0.0" GeometryClass="Compartment">
+          <BoundariesTypes Xm="Flux" Xp="Flux" Ym="Flux" Yp="Flux" Zm="Flux" Zp="Flux" />
+        </MembraneMapping>
+      </GeometryContext>
+      <ReactionContext>
+        <LocalizedCompoundSpec LocalizedCompoundRef="Ca_extr" ForceConstant="true" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>2500.0</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="K_extr" ForceConstant="true" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>0.0</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="i_extr" ForceConstant="true" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>0.0</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="I_cyt" ForceConstant="true" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>((0.01 * (t &lt; 15.0)) + (0.3 * (t &gt; 15.0)))</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="i_cyt" ForceConstant="true" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>0.0</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="Ca_cyt" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>0.238339</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="K_cyt" ForceConstant="true" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>0.0</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="B" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>478.59325619126304</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="CaB" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>11.406743808736945</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="Ca_ER" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>70.0</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="B_ER" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>2479.1666666666665</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="CaB_ER" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>3470.8333333333335</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="n" ForceConstant="true" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>0.0</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="m_L" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>0.088</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="m_T" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>0.248</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="h" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>0.076</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="h_er" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>0.9995</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <ReactionSpec ReactionStepRef="buffering" ReactionMapping="fast" />
+        <ReactionSpec ReactionStepRef="er_buffering" ReactionMapping="fast" />
+        <ReactionSpec ReactionStepRef="m_L_gating" ReactionMapping="excluded" />
+        <ReactionSpec ReactionStepRef="h_gating" ReactionMapping="excluded" />
+        <ReactionSpec ReactionStepRef="n_gating" ReactionMapping="excluded" />
+        <ReactionSpec ReactionStepRef="m_T_gating" ReactionMapping="excluded" />
+        <ReactionSpec ReactionStepRef="H_gating" ReactionMapping="included" />
+        <ReactionSpec ReactionStepRef="CaT_flux" ReactionMapping="excluded" />
+        <ReactionSpec ReactionStepRef="K_Ca_flux" ReactionMapping="excluded" />
+        <ReactionSpec ReactionStepRef="CaL_flux" ReactionMapping="excluded" />
+        <ReactionSpec ReactionStepRef="K_flux" ReactionMapping="excluded" />
+        <ReactionSpec ReactionStepRef="inFlux" ReactionMapping="included" />
+        <ReactionSpec ReactionStepRef="leak" ReactionMapping="excluded" />
+        <ReactionSpec ReactionStepRef="Ca_outFlux" ReactionMapping="excluded" />
+        <ReactionSpec ReactionStepRef="outFlux" ReactionMapping="included" />
+      </ReactionContext>
+      <MathDescription Name="calcium_only1">
+        <Constant Name="_F_">96480.0</Constant>
+        <Constant Name="_F_nmol_">9.648E-5</Constant>
+        <Constant Name="_K_GHK_">1.0E-9</Constant>
+        <Constant Name="_N_pmol_">6.02E11</Constant>
+        <Constant Name="_PI_">3.141592653589793</Constant>
+        <Constant Name="_R_">8314.0</Constant>
+        <Constant Name="_T_">300.0</Constant>
+        <Constant Name="B_ER_init_uM">2479.1666666666665</Constant>
+        <Constant Name="B_init_uM">478.59325619126304</Constant>
+        <Constant Name="C1">0.36</Constant>
+        <Constant Name="Ca_cyt_init_uM">0.238339</Constant>
+        <Constant Name="Ca_ER_init_uM">70.0</Constant>
+        <Constant Name="Ca_extr_init_uM">2500.0</Constant>
+        <Constant Name="CaB_ER_init_uM">3470.8333333333335</Constant>
+        <Constant Name="CaB_init_uM">11.406743808736945</Constant>
+        <Constant Name="h_er_init_molecules_um_2">0.9995</Constant>
+        <Constant Name="h_init_molecules_um_2">0.076</Constant>
+        <Constant Name="i_cyt_init_uM">0.0</Constant>
+        <Constant Name="i_extr_init_uM">0.0</Constant>
+        <Constant Name="k4">0.18</Constant>
+        <Constant Name="K_cyt_init_uM">0.0</Constant>
+        <Constant Name="K_extr_init_uM">0.0</Constant>
+        <Constant Name="K_millivolts_per_volt">1000.0</Constant>
+        <Constant Name="Kd">10.0</Constant>
+        <Constant Name="Kd_er">50.0</Constant>
+        <Constant Name="KMOLE">(1.0 / 602.0)</Constant>
+        <Constant Name="kon">1.0</Constant>
+        <Constant Name="kon_er">1.0</Constant>
+        <Constant Name="Kp">0.2</Constant>
+        <Constant Name="m_L_init_molecules_um_2">0.088</Constant>
+        <Constant Name="m_T_init_molecules_um_2">0.248</Constant>
+        <Constant Name="n_init_molecules_um_2">0.0</Constant>
+        <Constant Name="netValence_H_gating">1.0</Constant>
+        <Constant Name="netValence_inFlux">1.0</Constant>
+        <Constant Name="netValence_outFlux">1.0</Constant>
+        <Constant Name="p">0.7142857142857143</Constant>
+        <Constant Name="p0">89.28571428571429</Constant>
+        <Constant Name="Size_cyt">0.8</Constant>
+        <Constant Name="Size_ER">0.20000000000000004</Constant>
+        <Constant Name="Size_ERM">0.20000000000000004</Constant>
+        <Constant Name="Size_extr">4.0</Constant>
+        <Constant Name="Size_membr">1.0</Constant>
+        <Constant Name="V">0.0</Constant>
+        <Constant Name="v">89.28571428571429</Constant>
+        <Constant Name="Voltage_ERM">0.0</Constant>
+        <VolumeVariable Name="Ca_ER" Domain="Compartment" />
+        <VolumeVariable Name="CaB" Domain="Compartment" />
+        <VolumeVariable Name="CaB_ER" Domain="Compartment" />
+        <VolumeVariable Name="h_er" Domain="Compartment" />
+        <Function Name="a" Domain="Compartment">(1.0 / (1.0 + exp(((0.4 - Ca_cyt) / k1))))</Function>
+        <Function Name="B" Domain="Compartment">((K_B_total - (Size_cyt * CaB)) / Size_cyt)</Function>
+        <Function Name="b_c" Domain="Compartment">(1.0 / (1.0 + exp((5.0 * (0.6 - I_cyt)))))</Function>
+        <Function Name="B_ER" Domain="Compartment">((K_B_ER_total - (Size_ER * CaB_ER)) / Size_ER)</Function>
+        <Function Name="b_h" Domain="Compartment">(1.0 / (1.0 + exp((5.0 * (0.6 - I_cyt)))))</Function>
+        <Function Name="Ca_cyt" Domain="Compartment">(( - (Size_ER * CaB_ER) - (Size_ER * Ca_ER) + K_Ca_cyt_total - (Size_cyt * CaB)) / Size_cyt)</Function>
+        <Function Name="Ca_extr" Domain="Compartment">Ca_extr_init_uM</Function>
+        <Function Name="d_c" Domain="Compartment">(0.2 + (0.8 / (1.0 + exp((0.1 * ( - 20.0 + Ca_ER))))))</Function>
+        <Function Name="d_h" Domain="Compartment">(0.2 + (0.8 / (1.0 + exp((0.1 * ( - 20.0 + Ca_ER))))))</Function>
+        <Function Name="h" Domain="Compartment">(K_h_total / (Size_membr * UnitFactor_uM_um3_molecules_neg_1))</Function>
+        <Function Name="ho" Domain="Compartment">(1.0 / (1.0 + exp((( - 0.36 + Ca_cyt) / k2))))</Function>
+        <Function Name="I_cyt" Domain="Compartment">I_cyt_init_uM</Function>
+        <Function Name="i_cyt" Domain="Compartment">i_cyt_init_uM</Function>
+        <Function Name="I_cyt_init_uM" Domain="Compartment">((0.01 * (t &lt; 15.0)) + (0.3 * (t &gt; 15.0)))</Function>
+        <Function Name="i_extr" Domain="Compartment">i_extr_init_uM</Function>
+        <Function Name="J_buffering" Domain="Compartment">(((kon * B) * Ca_cyt) - (Kr_buffering * CaB))</Function>
+        <Function Name="J_er_buffering" Domain="Compartment">(((kon_er * Ca_ER) * B_ER) - (Kr_er_buffering * CaB_ER))</Function>
+        <Function Name="J_H_gating" Domain="Compartment">((ho - h_er) / tau)</Function>
+        <Function Name="J_inFlux" Domain="Compartment">(v * Ca_cyt * Ca_cyt / ((Ca_cyt * Ca_cyt) + (Kp * Kp)))</Function>
+        <Function Name="J_outFlux" Domain="Compartment">- ((Ca_ER - Ca_cyt) * (p + (p0 * a * b_c * d_c * h_er)))</Function>
+        <Function Name="k1" Domain="Compartment">(8.4 * (0.8 + (0.0225 * I_cyt / (0.2 + I_cyt) / (0.0225 + (( - 0.4 + I_cyt) * ( - 0.4 + I_cyt))))) / (60.0 + Ca_ER))</Function>
+        <Function Name="k2" Domain="Compartment">(0.46 * (0.05 + (Ca_ER * I_cyt * I_cyt / (180.0 + (Ca_ER * (1.0 + (I_cyt * I_cyt)))))))</Function>
+        <Function Name="k3" Domain="Compartment">exp(((Ca_cyt - C1) / k4))</Function>
+        <Function Name="K_B_ER_total" Domain="Compartment">((Size_ER * B_ER_init_uM) + (Size_ER * CaB_ER_init_uM))</Function>
+        <Function Name="K_B_total" Domain="Compartment">((Size_cyt * B_init_uM) + (Size_cyt * CaB_init_uM))</Function>
+        <Function Name="K_Ca_cyt_total" Domain="Compartment">((Size_ER * CaB_ER_init_uM) + (Size_ER * Ca_ER_init_uM) + (Size_cyt * Ca_cyt_init_uM) + (Size_cyt * CaB_init_uM))</Function>
+        <Function Name="K_cyt" Domain="Compartment">K_cyt_init_uM</Function>
+        <Function Name="K_extr" Domain="Compartment">K_extr_init_uM</Function>
+        <Function Name="K_h_total" Domain="Compartment">(Size_membr * UnitFactor_uM_um3_molecules_neg_1 * h_init_molecules_um_2)</Function>
+        <Function Name="K_m_L_total" Domain="Compartment">(Size_membr * UnitFactor_uM_um3_molecules_neg_1 * m_L_init_molecules_um_2)</Function>
+        <Function Name="K_m_T_total" Domain="Compartment">(Size_membr * UnitFactor_uM_um3_molecules_neg_1 * m_T_init_molecules_um_2)</Function>
+        <Function Name="KFlux_ERM_cyt" Domain="Compartment">(Size_ERM / Size_cyt)</Function>
+        <Function Name="KFlux_ERM_ER" Domain="Compartment">(Size_ERM / Size_ER)</Function>
+        <Function Name="Kr_buffering" Domain="Compartment">(Kd * kon)</Function>
+        <Function Name="Kr_er_buffering" Domain="Compartment">(kon_er * Kd_er)</Function>
+        <Function Name="m_L" Domain="Compartment">(K_m_L_total / (Size_membr * UnitFactor_uM_um3_molecules_neg_1))</Function>
+        <Function Name="m_T" Domain="Compartment">(K_m_T_total / (Size_membr * UnitFactor_uM_um3_molecules_neg_1))</Function>
+        <Function Name="n" Domain="Compartment">n_init_molecules_um_2</Function>
+        <Function Name="tau" Domain="Compartment">(2.4 / b_h / d_h / (k3 + (1.0 / k3)))</Function>
+        <Function Name="UnitFactor_uM_um3_molecules_neg_1">(1.0 / 602.0)</Function>
+        <CompartmentSubDomain Name="Compartment">
+          <BoundaryType Boundary="Xm" Type="Value" />
+          <BoundaryType Boundary="Xp" Type="Value" />
+          <BoundaryType Boundary="Ym" Type="Value" />
+          <BoundaryType Boundary="Yp" Type="Value" />
+          <BoundaryType Boundary="Zm" Type="Value" />
+          <BoundaryType Boundary="Zp" Type="Value" />
+          <OdeEquation Name="CaB" SolutionType="Unknown">
+            <Rate>0.0</Rate>
+            <Initial>CaB_init_uM</Initial>
+          </OdeEquation>
+          <OdeEquation Name="Ca_ER" SolutionType="Unknown">
+            <Rate>((KFlux_ERM_ER * J_inFlux) + (KFlux_ERM_ER * J_outFlux))</Rate>
+            <Initial>Ca_ER_init_uM</Initial>
+          </OdeEquation>
+          <OdeEquation Name="CaB_ER" SolutionType="Unknown">
+            <Rate>0.0</Rate>
+            <Initial>CaB_ER_init_uM</Initial>
+          </OdeEquation>
+          <OdeEquation Name="h_er" SolutionType="Unknown">
+            <Rate>J_H_gating</Rate>
+            <Initial>h_er_init_molecules_um_2</Initial>
+          </OdeEquation>
+          <FastSystem>
+            <FastInvariant>((Size_ER * Ca_ER) + (Size_ER * CaB_ER))</FastInvariant>
+            <FastInvariant>(Size_ERM * UnitFactor_uM_um3_molecules_neg_1 * h_er)</FastInvariant>
+            <FastRate>J_buffering</FastRate>
+            <FastRate>J_er_buffering</FastRate>
+          </FastSystem>
+        </CompartmentSubDomain>
+        <Version Name="calcium_only1" KeyValue="99632377" BranchId="5061382" Archived="0" Date="26-Apr-2016 17:11:01" FromVersionable="false">
+          <Owner Name="boris" Identifier="21" />
+          <GroupAccess Type="1" />
+        </Version>
+      </MathDescription>
+      <Simulation Name="Simulation 2">
+        <SolverTaskDescription TaskType="Unsteady" UseSymbolicJacobian="false" Solver="IDA (Variable Order, Variable Time Step, ODE/DAE)">
+          <TimeBound StartTime="0.0" EndTime="100.0" />
+          <TimeStep DefaultTime="0.1" MinTime="1.0E-8" MaxTime="1.0" />
+          <ErrorTolerance Absolut="1.0E-9" Relative="1.0E-9" />
+          <OutputOptions KeepEvery="1" KeepAtMost="1000" />
+          <NumberProcessors>1</NumberProcessors>
+        </SolverTaskDescription>
+        <MathOverrides />
+        <Version Name="Simulation 2" KeyValue="99632626" BranchId="5064948" Archived="0" Date="26-Apr-2016 17:11:06" FromVersionable="false">
+          <Owner Name="boris" Identifier="21" />
+          <GroupAccess Type="1" />
+        </Version>
+      </Simulation>
+      <Simulation Name="Copy of Simulation 2">
+        <SolverTaskDescription TaskType="Unsteady" UseSymbolicJacobian="false" Solver="Forward Euler (First Order, Fixed Time Step)">
+          <TimeBound StartTime="0.0" EndTime="100.0" />
+          <TimeStep DefaultTime="0.001" MinTime="0.1" MaxTime="0.1" />
+          <ErrorTolerance Absolut="1.0E-9" Relative="1.0E-9" />
+          <OutputOptions KeepEvery="50" KeepAtMost="1000" />
+          <NumberProcessors>1</NumberProcessors>
+        </SolverTaskDescription>
+        <MathOverrides />
+        <Version Name="Copy of Simulation 2" KeyValue="99632628" BranchId="39082020" Archived="0" Date="26-Apr-2016 17:11:06" FromVersionable="false">
+          <Owner Name="boris" Identifier="21" />
+          <GroupAccess Type="1" />
+        </Version>
+      </Simulation>
+      <Version Name="calcium_only" KeyValue="99632426" BranchId="5062938" Archived="0" Date="26-Apr-2016 17:11:03" FromVersionable="false">
+        <Owner Name="boris" Identifier="21" />
+        <GroupAccess Type="1" />
+      </Version>
+      <MicroscopeMeasurement Name="fluor">
+        <ConvolutionKernel Type="ProjectionZKernel" />
+      </MicroscopeMeasurement>
+    </SimulationSpec>
+    <SimulationSpec Name="spatial_analyt" Stochastic="false" UseConcentration="true" RuleBased="false" MassConservationModelReduction="true" InsufficientIterations="false" InsufficientMaxMolecules="false" CharacteristicSize="0.028476562499999997">
+      <NetworkConstraints RbmMaxIteration="1" RbmMaxMoleculesPerSpecies="10" RbmSpeciesLimit="800" RbmReactionsLimit="2500" />
+      <Annotation>(copied from combined) (copied from voltage_only)</Annotation>
+      <Geometry Name="spatial_analyt1" Dimension="2">
+        <Extent X="14.0" Y="14.0" Z="10.0" />
+        <Origin X="-7.0" Y="-7.0" Z="0.0" />
+        <SubVolume Name="subVolume0" Handle="1" Type="Analytical" KeyValue="99631934">
+          <AnalyticExpression>(((x * x) + (y * y)) &lt; 42.25)</AnalyticExpression>
+        </SubVolume>
+        <SubVolume Name="subVolume1" Handle="0" Type="Analytical" KeyValue="99631935">
+          <AnalyticExpression>1.0</AnalyticExpression>
+        </SubVolume>
+        <SurfaceClass Name="subVolume0_subVolume1_membrane" SubVolume1Ref="subVolume0" SubVolume2Ref="subVolume1" KeyValue="99631936" />
+        <SurfaceDescription NumSamplesX="101" NumSamplesY="101" NumSamplesZ="1" CutoffFrequency="0.3">
+          <VolumeRegion Name="subVolume10" RegionID="0" SubVolume="subVolume1" Size="63.170800000000014" Unit="um2" />
+          <VolumeRegion Name="subVolume01" RegionID="1" SubVolume="subVolume0" Size="132.82920000000001" Unit="um2" />
+          <MembraneRegion Name="membrane_subVolume10_subVolume01" VolumeRegion1="subVolume01" VolumeRegion2="subVolume10" Size="405.3023156738313" Unit="um" />
+        </SurfaceDescription>
+        <Version Name="spatial_analyt1" KeyValue="99631931" BranchId="5059615" Archived="0" Date="26-Apr-2016 17:07:20" FromVersionable="false">
+          <Owner Name="boris" Identifier="21" />
+          <GroupAccess Type="1" />
+        </Version>
+      </Geometry>
+      <GeometryContext>
+        <FeatureMapping Feature="extr" GeometryClass="subVolume1" SubVolume="subVolume1" VolumePerUnitVolume="1.0">
+          <BoundariesTypes Xm="Value" Xp="Value" Ym="Value" Yp="Value" Zm="Value" Zp="Value" />
+        </FeatureMapping>
+        <FeatureMapping Feature="cyt" GeometryClass="subVolume0" SubVolume="subVolume0" VolumePerUnitVolume="0.8">
+          <BoundariesTypes Xm="Value" Xp="Value" Ym="Value" Yp="Value" Zm="Value" Zp="Value" />
+        </FeatureMapping>
+        <FeatureMapping Feature="ER" GeometryClass="subVolume0" SubVolume="subVolume0" VolumePerUnitVolume="0.2">
+          <BoundariesTypes Xm="Value" Xp="Value" Ym="Value" Yp="Value" Zm="Value" Zp="Value" />
+        </FeatureMapping>
+        <MembraneMapping Membrane="membr" SurfaceToVolumeRatio="1.0" VolumeFraction="0.2" AreaPerUnitArea="1.0" CalculateVoltage="true" SpecificCapacitance="0.01" InitialVoltage="-50.0" GeometryClass="subVolume0_subVolume1_membrane">
+          <BoundariesTypes Xm="Value" Xp="Value" Ym="Value" Yp="Value" Zm="Value" Zp="Value" />
+        </MembraneMapping>
+        <MembraneMapping Membrane="ERM" SurfaceToVolumeRatio="4.0" VolumeFraction="0.2" AreaPerUnitVolume="0.8" CalculateVoltage="false" SpecificCapacitance="0.01" InitialVoltage="0.0" GeometryClass="subVolume0">
+          <BoundariesTypes Xm="Value" Xp="Value" Ym="Value" Yp="Value" Zm="Value" Zp="Value" />
+        </MembraneMapping>
+      </GeometryContext>
+      <ReactionContext>
+        <LocalizedCompoundSpec LocalizedCompoundRef="Ca_extr" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>2500.0</InitialConcentration>
+          <Diffusion>300.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="K_extr" ForceConstant="true" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>5000.0</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="i_extr" ForceConstant="true" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>0.0</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="I_cyt" ForceConstant="true" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>((0.01 * (t &lt; 15.0)) + (0.3 * (t &gt; 15.0)))</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="i_cyt" ForceConstant="true" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>0.0</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="Ca_cyt" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>0.239525</InitialConcentration>
+          <Diffusion>1000.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="K_cyt" ForceConstant="true" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>140000.0</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="B" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>478.59325619126304</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="CaB" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>11.406743808736945</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="Ca_ER" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>70.0</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="B_ER" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>2479.1666666666665</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="CaB_ER" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>3470.8333333333335</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="n" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>0.058</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="m_L" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>0.088</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="m_T" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>0.248</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="h" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>0.076</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="h_er" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>0.9995</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <ReactionSpec ReactionStepRef="buffering" ReactionMapping="fast" />
+        <ReactionSpec ReactionStepRef="er_buffering" ReactionMapping="fast" />
+        <ReactionSpec ReactionStepRef="m_L_gating" ReactionMapping="included" />
+        <ReactionSpec ReactionStepRef="h_gating" ReactionMapping="included" />
+        <ReactionSpec ReactionStepRef="n_gating" ReactionMapping="included" />
+        <ReactionSpec ReactionStepRef="m_T_gating" ReactionMapping="included" />
+        <ReactionSpec ReactionStepRef="H_gating" ReactionMapping="included" />
+        <ReactionSpec ReactionStepRef="CaT_flux" ReactionMapping="included" />
+        <ReactionSpec ReactionStepRef="K_Ca_flux" ReactionMapping="included" />
+        <ReactionSpec ReactionStepRef="CaL_flux" ReactionMapping="included" />
+        <ReactionSpec ReactionStepRef="K_flux" ReactionMapping="included" />
+        <ReactionSpec ReactionStepRef="inFlux" ReactionMapping="included" />
+        <ReactionSpec ReactionStepRef="leak" ReactionMapping="included" />
+        <ReactionSpec ReactionStepRef="Ca_outFlux" ReactionMapping="included" />
+        <ReactionSpec ReactionStepRef="outFlux" ReactionMapping="included" />
+      </ReactionContext>
+      <MathDescription Name="spatial_analyt1">
+        <Constant Name="_F_">96480.0</Constant>
+        <Constant Name="_F_nmol_">9.648E-5</Constant>
+        <Constant Name="_K_GHK_">1.0E-9</Constant>
+        <Constant Name="_N_pmol_">6.02E11</Constant>
+        <Constant Name="_PI_">3.141592653589793</Constant>
+        <Constant Name="_R_">8314.0</Constant>
+        <Constant Name="_T_">300.0</Constant>
+        <Constant Name="AreaPerUnitArea_membr">1.0</Constant>
+        <Constant Name="AreaPerUnitVolume_ERM">0.8</Constant>
+        <Constant Name="B_ER_init_uM">2479.1666666666665</Constant>
+        <Constant Name="B_init_uM">478.59325619126304</Constant>
+        <Constant Name="C1">0.36</Constant>
+        <Constant Name="C_ERM">0.01</Constant>
+        <Constant Name="C_membr">0.01</Constant>
+        <Constant Name="Ca_cyt_diffusionRate">1000.0</Constant>
+        <Constant Name="Ca_cyt_init_uM">0.239525</Constant>
+        <Constant Name="Ca_ER_init_uM">70.0</Constant>
+        <Constant Name="Ca_extr_diffusionRate">300.0</Constant>
+        <Constant Name="Ca_extr_init_uM">2500.0</Constant>
+        <Constant Name="CaB_ER_init_uM">3470.8333333333335</Constant>
+        <Constant Name="CaB_init_uM">11.406743808736945</Constant>
+        <Constant Name="carrierValence_CaL_flux">2.0</Constant>
+        <Constant Name="carrierValence_CaT_flux">2.0</Constant>
+        <Constant Name="carrierValence_K_Ca_flux">1.0</Constant>
+        <Constant Name="carrierValence_K_flux">1.0</Constant>
+        <Constant Name="g_L">0.008</Constant>
+        <Constant Name="h_er_init_molecules_um_2">0.9995</Constant>
+        <Constant Name="h_init_molecules_um_2">0.076</Constant>
+        <Constant Name="i_cyt_init_uM">0.0</Constant>
+        <Constant Name="i_extr_init_uM">0.0</Constant>
+        <Constant Name="I_membr">0.0</Constant>
+        <Constant Name="k4">0.18</Constant>
+        <Constant Name="K_cyt_init_uM">140000.0</Constant>
+        <Constant Name="K_ex">0.9</Constant>
+        <Constant Name="K_extr_init_uM">5000.0</Constant>
+        <Constant Name="K_millivolts_per_volt">1000.0</Constant>
+        <Constant Name="K_pp">0.1</Constant>
+        <Constant Name="Kca">0.6</Constant>
+        <Constant Name="Kd">10.0</Constant>
+        <Constant Name="Kd_er">50.0</Constant>
+        <Constant Name="KMOLE">(1.0 / 602.0)</Constant>
+        <Constant Name="kon">1.0</Constant>
+        <Constant Name="kon_er">1.0</Constant>
+        <Constant Name="Kp">0.2</Constant>
+        <Constant Name="m_L_init_molecules_um_2">0.088</Constant>
+        <Constant Name="m_T_init_molecules_um_2">0.248</Constant>
+        <Constant Name="n_init_molecules_um_2">0.058</Constant>
+        <Constant Name="netValence_Ca_outFlux">1.0</Constant>
+        <Constant Name="netValence_h_gating">1.0</Constant>
+        <Constant Name="netValence_H_gating">1.0</Constant>
+        <Constant Name="netValence_inFlux">1.0</Constant>
+        <Constant Name="netValence_leak">1.0</Constant>
+        <Constant Name="netValence_m_L_gating">1.0</Constant>
+        <Constant Name="netValence_m_T_gating">1.0</Constant>
+        <Constant Name="netValence_n_gating">1.0</Constant>
+        <Constant Name="netValence_outFlux">1.0</Constant>
+        <Constant Name="p">0.7142857142857143</Constant>
+        <Constant Name="p0">89.28571428571429</Constant>
+        <Constant Name="Pcal">415.32529619728894</Constant>
+        <Constant Name="Pcat">455.5180667970266</Constant>
+        <Constant Name="Pk">26.795180399825096</Constant>
+        <Constant Name="Pkca">2.679518039982509</Constant>
+        <Constant Name="S_L">1250.0</Constant>
+        <Constant Name="Scal">1250.0</Constant>
+        <Constant Name="Scat">1250.0</Constant>
+        <Constant Name="Sk">1250.0</Constant>
+        <Constant Name="Skca">1250.0</Constant>
+        <Constant Name="tau_h">15.0</Constant>
+        <Constant Name="tau_n">22.5</Constant>
+        <Constant Name="v">89.28571428571429</Constant>
+        <Constant Name="v_ex">200.0</Constant>
+        <Constant Name="V_init">-50.0</Constant>
+        <Constant Name="V_L">-55.0</Constant>
+        <Constant Name="v_pp">20.0</Constant>
+        <Constant Name="Voltage_ERM">0.0</Constant>
+        <Constant Name="Voltage_ERM_init">0.0</Constant>
+        <Constant Name="VolumePerUnitVolume_cyt">0.8</Constant>
+        <Constant Name="VolumePerUnitVolume_ER">0.2</Constant>
+        <Constant Name="VolumePerUnitVolume_extr">1.0</Constant>
+        <VolumeVariable Name="Ca_cyt" Domain="subVolume0" />
+        <VolumeVariable Name="Ca_ER" Domain="subVolume0" />
+        <VolumeVariable Name="Ca_extr" Domain="subVolume1" />
+        <VolumeVariable Name="CaB" Domain="subVolume0" />
+        <VolumeVariable Name="CaB_ER" Domain="subVolume0" />
+        <MembraneVariable Name="h" Domain="subVolume0_subVolume1_membrane" />
+        <VolumeVariable Name="h_er" Domain="subVolume0" />
+        <MembraneVariable Name="m_L" Domain="subVolume0_subVolume1_membrane" />
+        <MembraneVariable Name="m_T" Domain="subVolume0_subVolume1_membrane" />
+        <MembraneVariable Name="n" Domain="subVolume0_subVolume1_membrane" />
+        <MembraneRegionVariable Name="V" Domain="subVolume0_subVolume1_membrane" />
+        <Function Name="a" Domain="subVolume0">(1.0 / (1.0 + exp(((0.4 - Ca_cyt) / k1))))</Function>
+        <Function Name="B" Domain="subVolume0">((K_B_total - (VolumePerUnitVolume_cyt * CaB)) / VolumePerUnitVolume_cyt)</Function>
+        <Function Name="b_c" Domain="subVolume0">(1.0 / (1.0 + exp((5.0 * (0.6 - I_cyt)))))</Function>
+        <Function Name="B_ER" Domain="subVolume0">((K_B_ER_total - (VolumePerUnitVolume_ER * CaB_ER)) / VolumePerUnitVolume_ER)</Function>
+        <Function Name="b_h" Domain="subVolume0">(1.0 / (1.0 + exp((5.0 * (0.6 - I_cyt)))))</Function>
+        <Function Name="d_c" Domain="subVolume0">(0.2 + (0.8 / (1.0 + exp((0.1 * ( - 20.0 + Ca_ER))))))</Function>
+        <Function Name="d_h" Domain="subVolume0">(0.2 + (0.8 / (1.0 + exp((0.1 * ( - 20.0 + Ca_ER))))))</Function>
+        <Function Name="device_membr.Capacitance" Domain="subVolume0_subVolume1_membrane">(C_membr * Size_membr)</Function>
+        <Function Name="F_membr" Domain="subVolume0_subVolume1_membrane">( - (I_leak * Size_membr) - (I_K_flux * Size_membr) - (I_CaL_flux * Size_membr) - (I_CaT_flux * Size_membr) - (I_K_Ca_flux * Size_membr))</Function>
+        <Function Name="h0" Domain="subVolume0_subVolume1_membrane">(1.0 / (1.0 + exp((0.25 * (50.0 + V)))))</Function>
+        <Function Name="ho" Domain="subVolume0">(1.0 / (1.0 + exp((( - 0.36 + Ca_cyt) / k2))))</Function>
+        <Function Name="I_CaL_flux" Domain="subVolume0_subVolume1_membrane">( - (P_CaL_flux * _K_GHK_ * pow(carrierValence_CaL_flux,2.0) * V * pow(_F_,2.0) * (Ca_cyt - (Ca_extr * exp((( - carrierValence_CaL_flux * _F_ * V) / (_R_ * _T_)))))) / (_R_ * _T_ * (1.0 - exp((( - carrierValence_CaL_flux * _F_ * V) / (_R_ * _T_))))))</Function>
+        <Function Name="I_CaT_flux" Domain="subVolume0_subVolume1_membrane">( - (P_CaT_flux * _K_GHK_ * pow(carrierValence_CaT_flux,2.0) * V * pow(_F_,2.0) * (Ca_cyt - (Ca_extr * exp((( - carrierValence_CaT_flux * _F_ * V) / (_R_ * _T_)))))) / (_R_ * _T_ * (1.0 - exp((( - carrierValence_CaT_flux * _F_ * V) / (_R_ * _T_))))))</Function>
+        <Function Name="I_cyt" Domain="subVolume0">I_cyt_init_uM</Function>
+        <Function Name="i_cyt" Domain="subVolume0">i_cyt_init_uM</Function>
+        <Function Name="I_cyt_init_uM" Domain="subVolume0">((0.01 * (t &lt; 15.0)) + (0.3 * (t &gt; 15.0)))</Function>
+        <Function Name="i_extr" Domain="subVolume1">i_extr_init_uM</Function>
+        <Function Name="I_K_Ca_flux" Domain="subVolume0_subVolume1_membrane">( - (P_K_Ca_flux * _K_GHK_ * pow(carrierValence_K_Ca_flux,2.0) * V * pow(_F_,2.0) * (K_cyt - (K_extr * exp((( - carrierValence_K_Ca_flux * _F_ * V) / (_R_ * _T_)))))) / (_R_ * _T_ * (1.0 - exp((( - carrierValence_K_Ca_flux * _F_ * V) / (_R_ * _T_))))))</Function>
+        <Function Name="I_K_flux" Domain="subVolume0_subVolume1_membrane">( - (P_K_flux * _K_GHK_ * pow(carrierValence_K_flux,2.0) * V * pow(_F_,2.0) * (K_cyt - (K_extr * exp((( - carrierValence_K_flux * _F_ * V) / (_R_ * _T_)))))) / (_R_ * _T_ * (1.0 - exp((( - carrierValence_K_flux * _F_ * V) / (_R_ * _T_))))))</Function>
+        <Function Name="I_leak" Domain="subVolume0_subVolume1_membrane">((netValence_leak * _F_ * J_leak) * unitFactor_leak)</Function>
+        <Function Name="J_buffering" Domain="subVolume0">(((kon * B) * Ca_cyt) - (Kr_buffering * CaB))</Function>
+        <Function Name="J_Ca_outFlux" Domain="subVolume0_subVolume1_membrane">( - (pow(Ca_cyt,2.0) * v_pp / (pow(Ca_cyt,2.0) + (K_pp * K_pp))) - (v_ex * pow(Ca_cyt,4.0) / (pow(Ca_cyt,4.0) + pow(K_ex,4.0))))</Function>
+        <Function Name="J_CaL_flux" Domain="subVolume0_subVolume1_membrane">((I_CaL_flux / (carrierValence_CaL_flux * _F_)) * unitFactor_CaL_flux)</Function>
+        <Function Name="J_CaT_flux" Domain="subVolume0_subVolume1_membrane">((I_CaT_flux / (carrierValence_CaT_flux * _F_)) * unitFactor_CaT_flux)</Function>
+        <Function Name="J_er_buffering" Domain="subVolume0">(((kon_er * Ca_ER) * B_ER) - (Kr_er_buffering * CaB_ER))</Function>
+        <Function Name="J_h_gating" Domain="subVolume0_subVolume1_membrane">(1000.0 * (h0 - h) / tau_h)</Function>
+        <Function Name="J_H_gating" Domain="subVolume0">((ho - h_er) / tau)</Function>
+        <Function Name="J_inFlux" Domain="subVolume0">(v * Ca_cyt * Ca_cyt / ((Ca_cyt * Ca_cyt) + (Kp * Kp)))</Function>
+        <Function Name="J_K_Ca_flux" Domain="subVolume0_subVolume1_membrane">((I_K_Ca_flux / (carrierValence_K_Ca_flux * _F_)) * unitFactor_K_Ca_flux)</Function>
+        <Function Name="J_K_flux" Domain="subVolume0_subVolume1_membrane">((I_K_flux / (carrierValence_K_flux * _F_)) * unitFactor_K_flux)</Function>
+        <Function Name="J_leak" Domain="subVolume0_subVolume1_membrane">- (1.0E9 * g_L * (V - V_L) / _F_ / S_L)</Function>
+        <Function Name="J_m_L_gating" Domain="subVolume0_subVolume1_membrane">(1000.0 * (m_L0 - m_L) / tau_ml)</Function>
+        <Function Name="J_m_T_gating" Domain="subVolume0_subVolume1_membrane">(1000.0 * (m_T0 - m_T) / tau_mt)</Function>
+        <Function Name="J_n_gating" Domain="subVolume0_subVolume1_membrane">(1000.0 * (n0 - n) / tau_n)</Function>
+        <Function Name="J_outFlux" Domain="subVolume0">- ((Ca_ER - Ca_cyt) * (p + (p0 * a * b_c * d_c * h_er)))</Function>
+        <Function Name="k1" Domain="subVolume0">(8.4 * (0.8 + (0.0225 * I_cyt / (0.2 + I_cyt) / (0.0225 + (( - 0.4 + I_cyt) * ( - 0.4 + I_cyt))))) / (60.0 + Ca_ER))</Function>
+        <Function Name="k2" Domain="subVolume0">(0.46 * (0.05 + (Ca_ER * I_cyt * I_cyt / (180.0 + (Ca_ER * (1.0 + (I_cyt * I_cyt)))))))</Function>
+        <Function Name="k3" Domain="subVolume0">exp(((Ca_cyt - C1) / k4))</Function>
+        <Function Name="K_B_ER_total" Domain="subVolume0">((VolumePerUnitVolume_ER * B_ER_init_uM) + (VolumePerUnitVolume_ER * CaB_ER_init_uM))</Function>
+        <Function Name="K_B_total" Domain="subVolume0">((VolumePerUnitVolume_cyt * B_init_uM) + (VolumePerUnitVolume_cyt * CaB_init_uM))</Function>
+        <Function Name="K_cyt" Domain="subVolume0">K_cyt_init_uM</Function>
+        <Function Name="K_extr" Domain="subVolume1">K_extr_init_uM</Function>
+        <Function Name="KFlux_ERM_cyt" Domain="subVolume0">(AreaPerUnitVolume_ERM / VolumePerUnitVolume_cyt)</Function>
+        <Function Name="KFlux_ERM_ER" Domain="subVolume0">(AreaPerUnitVolume_ERM / VolumePerUnitVolume_ER)</Function>
+        <Function Name="Kr_buffering" Domain="subVolume0">(Kd * kon)</Function>
+        <Function Name="Kr_er_buffering" Domain="subVolume0">(kon_er * Kd_er)</Function>
+        <Function Name="m_L0" Domain="subVolume0_subVolume1_membrane">(1.0 / (1.0 + exp((0.08333333333333333 * ( - 12.0 - V)))))</Function>
+        <Function Name="m_T0" Domain="subVolume0_subVolume1_membrane">(1.0 / (1.0 + exp((0.1111111111111111 * ( - 30.0 - V)))))</Function>
+        <Function Name="n0" Domain="subVolume0_subVolume1_membrane">(1.0 / (1.0 + exp((0.08 * ( - 5.1 - V)))))</Function>
+        <Function Name="P_CaL_flux" Domain="subVolume0_subVolume1_membrane">(Pcal * m_L * m_L / Scal)</Function>
+        <Function Name="P_CaT_flux" Domain="subVolume0_subVolume1_membrane">(Pcat * m_T * m_T * h / Scat)</Function>
+        <Function Name="P_K_Ca_flux" Domain="subVolume0_subVolume1_membrane">(Pkca * pow(Ca_cyt,4.0) / Skca / (pow(Ca_cyt,4.0) + pow(Kca,4.0)))</Function>
+        <Function Name="P_K_flux" Domain="subVolume0_subVolume1_membrane">(Pk * n / Sk)</Function>
+        <Function Name="Size_cyt" Domain="subVolume0">(VolumePerUnitVolume_cyt * vcRegionVolume('subVolume0'))</Function>
+        <Function Name="Size_ER" Domain="subVolume0">(VolumePerUnitVolume_ER * vcRegionVolume('subVolume0'))</Function>
+        <Function Name="Size_ERM" Domain="subVolume0">(AreaPerUnitVolume_ERM * vcRegionVolume('subVolume0'))</Function>
+        <Function Name="Size_extr" Domain="subVolume1">(VolumePerUnitVolume_extr * vcRegionVolume('subVolume1'))</Function>
+        <Function Name="Size_membr" Domain="subVolume0_subVolume1_membrane">(AreaPerUnitArea_membr * vcRegionArea('subVolume0_subVolume1_membrane'))</Function>
+        <Function Name="tau" Domain="subVolume0">(2.4 / b_h / d_h / (k3 + (1.0 / k3)))</Function>
+        <Function Name="tau_ml" Domain="subVolume0_subVolume1_membrane">(30.0 / (exp((0.045454545454545456 * (60.0 + V))) + (2.0 * exp((0.09090909090909091 * ( - 60.0 - V))))))</Function>
+        <Function Name="tau_mt" Domain="subVolume0_subVolume1_membrane">(10.0 / (exp((0.045454545454545456 * (60.0 + V))) + (2.0 * exp((0.09090909090909091 * ( - 60.0 - V))))))</Function>
+        <Function Name="unitFactor_CaL_flux" Domain="subVolume0_subVolume1_membrane">(1.0E9 / 1.0)</Function>
+        <Function Name="unitFactor_CaT_flux" Domain="subVolume0_subVolume1_membrane">(1.0E9 / 1.0)</Function>
+        <Function Name="unitFactor_K_Ca_flux" Domain="subVolume0_subVolume1_membrane">(1.0E9 / 1.0)</Function>
+        <Function Name="unitFactor_K_flux" Domain="subVolume0_subVolume1_membrane">(1.0E9 / 1.0)</Function>
+        <Function Name="unitFactor_leak" Domain="subVolume0_subVolume1_membrane">(1.0 / 9.99999999E8)</Function>
+        <Function Name="UnitFactor_mV_pF_s_neg_1_pA_neg_1">(1000.0 / 1.0)</Function>
+        <Function Name="UnitFactor_uM_um3_molecules_neg_1">(1.0 / 602.0)</Function>
+        <CompartmentSubDomain Name="subVolume0">
+          <BoundaryType Boundary="Xm" Type="Value" />
+          <BoundaryType Boundary="Xp" Type="Value" />
+          <BoundaryType Boundary="Ym" Type="Value" />
+          <BoundaryType Boundary="Yp" Type="Value" />
+          <BoundaryType Boundary="Zm" Type="Value" />
+          <BoundaryType Boundary="Zp" Type="Value" />
+          <OdeEquation Name="CaB" SolutionType="Unknown">
+            <Rate>0.0</Rate>
+            <Initial>CaB_init_uM</Initial>
+          </OdeEquation>
+          <OdeEquation Name="Ca_ER" SolutionType="Unknown">
+            <Rate>((KFlux_ERM_ER * J_inFlux) + (KFlux_ERM_ER * J_outFlux))</Rate>
+            <Initial>Ca_ER_init_uM</Initial>
+          </OdeEquation>
+          <OdeEquation Name="CaB_ER" SolutionType="Unknown">
+            <Rate>0.0</Rate>
+            <Initial>CaB_ER_init_uM</Initial>
+          </OdeEquation>
+          <OdeEquation Name="h_er" SolutionType="Unknown">
+            <Rate>J_H_gating</Rate>
+            <Initial>h_er_init_molecules_um_2</Initial>
+          </OdeEquation>
+          <PdeEquation Name="Ca_cyt" SolutionType="Unknown">
+            <Rate>( - (KFlux_ERM_cyt * J_inFlux) - (KFlux_ERM_cyt * J_outFlux))</Rate>
+            <Diffusion>Ca_cyt_diffusionRate</Diffusion>
+            <Initial>Ca_cyt_init_uM</Initial>
+          </PdeEquation>
+          <FastSystem>
+            <FastInvariant>((VolumePerUnitVolume_cyt * Ca_cyt) + (VolumePerUnitVolume_cyt * CaB))</FastInvariant>
+            <FastInvariant>((VolumePerUnitVolume_ER * Ca_ER) + (VolumePerUnitVolume_ER * CaB_ER))</FastInvariant>
+            <FastInvariant>(AreaPerUnitVolume_ERM * UnitFactor_uM_um3_molecules_neg_1 * h_er)</FastInvariant>
+            <FastRate>J_buffering</FastRate>
+            <FastRate>J_er_buffering</FastRate>
+          </FastSystem>
+        </CompartmentSubDomain>
+        <CompartmentSubDomain Name="subVolume1">
+          <BoundaryType Boundary="Xm" Type="Value" />
+          <BoundaryType Boundary="Xp" Type="Value" />
+          <BoundaryType Boundary="Ym" Type="Value" />
+          <BoundaryType Boundary="Yp" Type="Value" />
+          <BoundaryType Boundary="Zm" Type="Value" />
+          <BoundaryType Boundary="Zp" Type="Value" />
+          <PdeEquation Name="Ca_extr" SolutionType="Unknown">
+            <Rate>0.0</Rate>
+            <Diffusion>Ca_extr_diffusionRate</Diffusion>
+            <Initial>Ca_extr_init_uM</Initial>
+          </PdeEquation>
+        </CompartmentSubDomain>
+        <MembraneSubDomain Name="subVolume0_subVolume1_membrane" InsideCompartment="subVolume0" OutsideCompartment="subVolume1">
+          <BoundaryType Boundary="Xm" Type="Value" />
+          <BoundaryType Boundary="Xp" Type="Value" />
+          <BoundaryType Boundary="Ym" Type="Value" />
+          <BoundaryType Boundary="Yp" Type="Value" />
+          <BoundaryType Boundary="Zm" Type="Value" />
+          <BoundaryType Boundary="Zp" Type="Value" />
+          <OdeEquation Name="n" SolutionType="Unknown">
+            <Rate>J_n_gating</Rate>
+            <Initial>n_init_molecules_um_2</Initial>
+          </OdeEquation>
+          <OdeEquation Name="m_L" SolutionType="Unknown">
+            <Rate>J_m_L_gating</Rate>
+            <Initial>m_L_init_molecules_um_2</Initial>
+          </OdeEquation>
+          <OdeEquation Name="m_T" SolutionType="Unknown">
+            <Rate>J_m_T_gating</Rate>
+            <Initial>m_T_init_molecules_um_2</Initial>
+          </OdeEquation>
+          <OdeEquation Name="h" SolutionType="Unknown">
+            <Rate>J_h_gating</Rate>
+            <Initial>h_init_molecules_um_2</Initial>
+          </OdeEquation>
+          <MembraneRegionEquation Name="V">
+            <UniformRate>0.0</UniformRate>
+            <MembraneRate>((UnitFactor_mV_pF_s_neg_1_pA_neg_1 / device_membr.Capacitance) * (I_membr - ( - (I_leak * Size_membr) - (I_K_flux * Size_membr) - (I_CaL_flux * Size_membr) - (I_CaT_flux * Size_membr) - (I_K_Ca_flux * Size_membr))))</MembraneRate>
+            <Initial>-50.0</Initial>
+            <SolutionType Type="unknown" />
+          </MembraneRegionEquation>
+          <JumpCondition Name="Ca_extr">
+            <InFlux>0.0</InFlux>
+            <OutFlux>(( - (J_CaT_flux / VolumePerUnitVolume_extr) - (J_CaL_flux / VolumePerUnitVolume_extr)) - (J_Ca_outFlux / VolumePerUnitVolume_extr))</OutFlux>
+          </JumpCondition>
+          <JumpCondition Name="Ca_cyt">
+            <InFlux>(((J_CaT_flux / VolumePerUnitVolume_cyt) + (J_CaL_flux / VolumePerUnitVolume_cyt)) + (J_Ca_outFlux / VolumePerUnitVolume_cyt))</InFlux>
+            <OutFlux>0.0</OutFlux>
+          </JumpCondition>
+        </MembraneSubDomain>
+        <Version Name="spatial_analyt1" KeyValue="99709022" BranchId="5061381" Archived="0" Date="29-Apr-2016 19:16:34" FromVersionable="false">
+          <Owner Name="boris" Identifier="21" />
+          <GroupAccess Type="1" />
+        </Version>
+      </MathDescription>
+      <Simulation Name="Simulation 3">
+        <SolverTaskDescription TaskType="Unsteady" UseSymbolicJacobian="false" Solver="Finite Volume Standalone, Regular Grid">
+          <TimeBound StartTime="0.0" EndTime="115.0" />
+          <TimeStep DefaultTime="1.0E-4" MinTime="1.0E-4" MaxTime="1.0E-4" />
+          <ErrorTolerance Absolut="1.0E-9" Relative="1.0E-8" />
+          <OutputOptions OutputTimeStep="0.005" />
+          <SmoldynSimulationOptions>
+            <Accuracy>10.0</Accuracy>
+            <HighResolutionSample>true</HighResolutionSample>
+            <saveParticleFiles>false</saveParticleFiles>
+            <gaussianTableSize>4096</gaussianTableSize>
+            <SmoldynStepMultiplier>1</SmoldynStepMultiplier>
+          </SmoldynSimulationOptions>
+          <NumberProcessors>1</NumberProcessors>
+        </SolverTaskDescription>
+        <MathOverrides />
+        <MeshSpecification>
+          <Size X="29" Y="29" Z="1" />
+        </MeshSpecification>
+        <Version Name="Simulation 3" KeyValue="99732524" BranchId="5064928" Archived="0" Date="30-Apr-2016 19:13:36" FromVersionable="false">
+          <Owner Name="boris" Identifier="21" />
+          <GroupAccess Type="1" />
+        </Version>
+      </Simulation>
+      <Simulation Name="Copy of Simulation 3">
+        <SolverTaskDescription TaskType="Unsteady" UseSymbolicJacobian="false" Solver="Finite Volume Standalone, Regular Grid">
+          <TimeBound StartTime="0.0" EndTime="100.0" />
+          <TimeStep DefaultTime="1.0E-4" MinTime="1.0E-4" MaxTime="1.0E-4" />
+          <ErrorTolerance Absolut="1.0E-9" Relative="1.0E-8" />
+          <OutputOptions OutputTimeStep="0.001" />
+          <SmoldynSimulationOptions>
+            <Accuracy>10.0</Accuracy>
+            <HighResolutionSample>true</HighResolutionSample>
+            <saveParticleFiles>false</saveParticleFiles>
+            <gaussianTableSize>4096</gaussianTableSize>
+            <SmoldynStepMultiplier>1</SmoldynStepMultiplier>
+          </SmoldynSimulationOptions>
+          <NumberProcessors>1</NumberProcessors>
+        </SolverTaskDescription>
+        <MathOverrides />
+        <MeshSpecification>
+          <Size X="29" Y="29" Z="1" />
+        </MeshSpecification>
+        <Version Name="Copy of Simulation 3" KeyValue="99732584" BranchId="99732527" Archived="0" Date="30-Apr-2016 19:15:12" FromVersionable="false">
+          <Owner Name="boris" Identifier="21" />
+          <GroupAccess Type="1" />
+        </Version>
+      </Simulation>
+      <SpatialObjects>
+        <SpatialObject Name="vobj_subVolume10" Type="Volume" subVolume="subVolume1" regionId="0">
+          <QuantityCategoryList>
+            <QuantityCategory Name="VolumeCentroid" Enabled="false" />
+            <QuantityCategory Name="InteriorVelocity" Enabled="false" />
+            <QuantityCategory Name="VolumeRegionSize" Enabled="true" />
+          </QuantityCategoryList>
+        </SpatialObject>
+        <SpatialObject Name="vobj_subVolume01" Type="Volume" subVolume="subVolume0" regionId="1">
+          <QuantityCategoryList>
+            <QuantityCategory Name="VolumeCentroid" Enabled="false" />
+            <QuantityCategory Name="InteriorVelocity" Enabled="false" />
+            <QuantityCategory Name="VolumeRegionSize" Enabled="true" />
+          </QuantityCategoryList>
+        </SpatialObject>
+        <SpatialObject Name="sobj_subVolume01_subVolume10" Type="Surface" subVolumeInside="subVolume0" regionIdInside="1" subVolumeOutside="subVolume1" regionIdOutside="0">
+          <QuantityCategoryList>
+            <QuantityCategory Name="SurfaceNormal" Enabled="false" />
+            <QuantityCategory Name="SurfaceVelocity" Enabled="false" />
+            <QuantityCategory Name="DistanceToSurface" Enabled="false" />
+            <QuantityCategory Name="DirectionToSurface" Enabled="false" />
+            <QuantityCategory Name="SurfaceSize" Enabled="true" />
+          </QuantityCategoryList>
+        </SpatialObject>
+      </SpatialObjects>
+      <Version Name="spatial_analyt" KeyValue="99709069" BranchId="5062940" Archived="0" Date="29-Apr-2016 19:16:38" FromVersionable="false">
+        <Owner Name="boris" Identifier="21" />
+        <GroupAccess Type="1" />
+        <Annotation>(copied from combined) (copied from voltage_only)</Annotation>
+      </Version>
+      <MicroscopeMeasurement Name="fluor">
+        <ConvolutionKernel Type="ProjectionZKernel" />
+      </MicroscopeMeasurement>
+    </SimulationSpec>
+    <SimulationSpec Name="voltage_only" Stochastic="false" UseConcentration="true" RuleBased="false" MassConservationModelReduction="true" InsufficientIterations="false" InsufficientMaxMolecules="false">
+      <NetworkConstraints RbmMaxIteration="1" RbmMaxMoleculesPerSpecies="10" RbmSpeciesLimit="800" RbmReactionsLimit="2500" />
+      <Annotation>(copied from voltage_steady_state)</Annotation>
+      <Geometry Name="voltage_only3" Dimension="0">
+        <Extent X="10.0" Y="10.0" Z="10.0" />
+        <Origin X="0.0" Y="0.0" Z="0.0" />
+        <SubVolume Name="Compartment" Handle="0" Type="Compartmental" KeyValue="2531870" />
+        <Version Name="voltage_only3" KeyValue="2531867" BranchId="5059613" Archived="0" Date="07-Jun-2002 14:18:51" FromVersionable="false">
+          <Owner Name="boris" Identifier="21" />
+          <GroupAccess Type="1" />
+        </Version>
+      </Geometry>
+      <GeometryContext>
+        <FeatureMapping Feature="extr" GeometryClass="Compartment" SubVolume="Compartment" Size="4.0">
+          <BoundariesTypes Xm="Value" Xp="Value" Ym="Value" Yp="Value" Zm="Value" Zp="Value" />
+        </FeatureMapping>
+        <FeatureMapping Feature="cyt" GeometryClass="Compartment" SubVolume="Compartment" Size="0.8">
+          <BoundariesTypes Xm="Value" Xp="Value" Ym="Value" Yp="Value" Zm="Value" Zp="Value" />
+        </FeatureMapping>
+        <FeatureMapping Feature="ER" GeometryClass="Compartment" SubVolume="Compartment" Size="0.20000000000000004">
+          <BoundariesTypes Xm="Value" Xp="Value" Ym="Value" Yp="Value" Zm="Value" Zp="Value" />
+        </FeatureMapping>
+        <MembraneMapping Membrane="membr" SurfaceToVolumeRatio="1.0" VolumeFraction="0.2" Size="1.0" CalculateVoltage="true" SpecificCapacitance="0.01" InitialVoltage="-38.36494346132662" GeometryClass="Compartment">
+          <BoundariesTypes Xm="Value" Xp="Value" Ym="Value" Yp="Value" Zm="Value" Zp="Value" />
+        </MembraneMapping>
+        <MembraneMapping Membrane="ERM" SurfaceToVolumeRatio="1.0" VolumeFraction="0.2" Size="0.20000000000000004" CalculateVoltage="false" SpecificCapacitance="0.01" InitialVoltage="0.0" GeometryClass="Compartment">
+          <BoundariesTypes Xm="Value" Xp="Value" Ym="Value" Yp="Value" Zm="Value" Zp="Value" />
+        </MembraneMapping>
+      </GeometryContext>
+      <ReactionContext>
+        <LocalizedCompoundSpec LocalizedCompoundRef="Ca_extr" ForceConstant="true" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>2500.0</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="K_extr" ForceConstant="true" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>5000.0</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="i_extr" ForceConstant="true" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>0.0</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="I_cyt" ForceConstant="true" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>0.0</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="i_cyt" ForceConstant="true" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>0.0</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="Ca_cyt" ForceConstant="true" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>(0.23833901513958342 + exp(( - 10.0 + (10.0 * cos((1.256636 * t))))))</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="K_cyt" ForceConstant="true" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>140000.0</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="B" ForceConstant="true" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>0.0</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="CaB" ForceConstant="true" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>0.0</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="Ca_ER" ForceConstant="true" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>0.0</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="B_ER" ForceConstant="true" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>0.0</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="CaB_ER" ForceConstant="true" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>0.0</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="n" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>0.0653023260560287</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="m_L" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>0.10001313676724</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="m_T" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>0.28303871308222</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="h" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>0.051722017197123</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="h_er" ForceConstant="true" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>0.0</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <ReactionSpec ReactionStepRef="buffering" ReactionMapping="excluded" />
+        <ReactionSpec ReactionStepRef="er_buffering" ReactionMapping="excluded" />
+        <ReactionSpec ReactionStepRef="m_L_gating" ReactionMapping="included" />
+        <ReactionSpec ReactionStepRef="h_gating" ReactionMapping="included" />
+        <ReactionSpec ReactionStepRef="n_gating" ReactionMapping="included" />
+        <ReactionSpec ReactionStepRef="m_T_gating" ReactionMapping="included" />
+        <ReactionSpec ReactionStepRef="H_gating" ReactionMapping="excluded" />
+        <ReactionSpec ReactionStepRef="CaT_flux" ReactionMapping="included" />
+        <ReactionSpec ReactionStepRef="K_Ca_flux" ReactionMapping="included" />
+        <ReactionSpec ReactionStepRef="CaL_flux" ReactionMapping="included" />
+        <ReactionSpec ReactionStepRef="K_flux" ReactionMapping="included" />
+        <ReactionSpec ReactionStepRef="inFlux" ReactionMapping="excluded" />
+        <ReactionSpec ReactionStepRef="leak" ReactionMapping="included" />
+        <ReactionSpec ReactionStepRef="Ca_outFlux" ReactionMapping="excluded" />
+        <ReactionSpec ReactionStepRef="outFlux" ReactionMapping="excluded" />
+      </ReactionContext>
+      <MathDescription Name="voltage_only5">
+        <Constant Name="_F_">96480.0</Constant>
+        <Constant Name="_F_nmol_">9.648E-5</Constant>
+        <Constant Name="_K_GHK_">1.0E-9</Constant>
+        <Constant Name="_N_pmol_">6.02E11</Constant>
+        <Constant Name="_PI_">3.141592653589793</Constant>
+        <Constant Name="_R_">8314.0</Constant>
+        <Constant Name="_T_">300.0</Constant>
+        <Constant Name="B_ER_init_uM">0.0</Constant>
+        <Constant Name="B_init_uM">0.0</Constant>
+        <Constant Name="C_ERM">0.01</Constant>
+        <Constant Name="C_membr">0.01</Constant>
+        <Constant Name="Ca_ER_init_uM">0.0</Constant>
+        <Constant Name="Ca_extr_init_uM">2500.0</Constant>
+        <Constant Name="CaB_ER_init_uM">0.0</Constant>
+        <Constant Name="CaB_init_uM">0.0</Constant>
+        <Constant Name="carrierValence_CaL_flux">2.0</Constant>
+        <Constant Name="carrierValence_CaT_flux">2.0</Constant>
+        <Constant Name="carrierValence_K_Ca_flux">1.0</Constant>
+        <Constant Name="carrierValence_K_flux">1.0</Constant>
+        <Constant Name="g_L">0.008</Constant>
+        <Constant Name="h_er_init_molecules_um_2">0.0</Constant>
+        <Constant Name="h_init_molecules_um_2">0.051722017197123</Constant>
+        <Constant Name="I_cyt_init_uM">0.0</Constant>
+        <Constant Name="i_cyt_init_uM">0.0</Constant>
+        <Constant Name="i_extr_init_uM">0.0</Constant>
+        <Constant Name="I_membr">0.0</Constant>
+        <Constant Name="K_cyt_init_uM">140000.0</Constant>
+        <Constant Name="K_extr_init_uM">5000.0</Constant>
+        <Constant Name="K_millivolts_per_volt">1000.0</Constant>
+        <Constant Name="Kca">0.6</Constant>
+        <Constant Name="KMOLE">(1.0 / 602.0)</Constant>
+        <Constant Name="m_L_init_molecules_um_2">0.10001313676724</Constant>
+        <Constant Name="m_T_init_molecules_um_2">0.28303871308222</Constant>
+        <Constant Name="n_init_molecules_um_2">0.0653023260560287</Constant>
+        <Constant Name="netValence_h_gating">1.0</Constant>
+        <Constant Name="netValence_leak">1.0</Constant>
+        <Constant Name="netValence_m_L_gating">1.0</Constant>
+        <Constant Name="netValence_m_T_gating">1.0</Constant>
+        <Constant Name="netValence_n_gating">1.0</Constant>
+        <Constant Name="Pcal">415.32529619728894</Constant>
+        <Constant Name="Pcat">455.5180667970266</Constant>
+        <Constant Name="Pk">26.795180399825096</Constant>
+        <Constant Name="Pkca">2.679518039982509</Constant>
+        <Constant Name="S_L">1250.0</Constant>
+        <Constant Name="Scal">1250.0</Constant>
+        <Constant Name="Scat">1250.0</Constant>
+        <Constant Name="Size_cyt">0.8</Constant>
+        <Constant Name="Size_ER">0.20000000000000004</Constant>
+        <Constant Name="Size_ERM">0.20000000000000004</Constant>
+        <Constant Name="Size_extr">4.0</Constant>
+        <Constant Name="Size_membr">1.0</Constant>
+        <Constant Name="Sk">1250.0</Constant>
+        <Constant Name="Skca">1250.0</Constant>
+        <Constant Name="tau_h">15.0</Constant>
+        <Constant Name="tau_n">22.5</Constant>
+        <Constant Name="V_init">-38.36494346132662</Constant>
+        <Constant Name="V_L">-55.0</Constant>
+        <Constant Name="Voltage_ERM">0.0</Constant>
+        <Constant Name="Voltage_ERM_init">0.0</Constant>
+        <VolumeVariable Name="h" Domain="Compartment" />
+        <VolumeVariable Name="m_L" Domain="Compartment" />
+        <VolumeVariable Name="m_T" Domain="Compartment" />
+        <VolumeVariable Name="n" Domain="Compartment" />
+        <VolumeVariable Name="V" Domain="Compartment" />
+        <Function Name="B" Domain="Compartment">B_init_uM</Function>
+        <Function Name="B_ER" Domain="Compartment">B_ER_init_uM</Function>
+        <Function Name="Ca_cyt" Domain="Compartment">Ca_cyt_init_uM</Function>
+        <Function Name="Ca_cyt_init_uM" Domain="Compartment">(0.23833901513958342 + exp(( - 10.0 + (10.0 * cos((1.256636 * t))))))</Function>
+        <Function Name="Ca_ER" Domain="Compartment">Ca_ER_init_uM</Function>
+        <Function Name="Ca_extr" Domain="Compartment">Ca_extr_init_uM</Function>
+        <Function Name="CaB" Domain="Compartment">CaB_init_uM</Function>
+        <Function Name="CaB_ER" Domain="Compartment">CaB_ER_init_uM</Function>
+        <Function Name="device_membr.Capacitance" Domain="Compartment">(C_membr * Size_membr)</Function>
+        <Function Name="F_membr" Domain="Compartment">( - (I_leak * Size_membr) - (I_K_flux * Size_membr) - (I_CaL_flux * Size_membr) - (I_CaT_flux * Size_membr) - (I_K_Ca_flux * Size_membr))</Function>
+        <Function Name="h0" Domain="Compartment">(1.0 / (1.0 + exp((0.25 * (50.0 + V)))))</Function>
+        <Function Name="h_er" Domain="Compartment">h_er_init_molecules_um_2</Function>
+        <Function Name="I_CaL_flux" Domain="Compartment">( - (P_CaL_flux * _K_GHK_ * pow(carrierValence_CaL_flux,2.0) * V * pow(_F_,2.0) * (Ca_cyt - (Ca_extr * exp((( - carrierValence_CaL_flux * _F_ * V) / (_R_ * _T_)))))) / (_R_ * _T_ * (1.0 - exp((( - carrierValence_CaL_flux * _F_ * V) / (_R_ * _T_))))))</Function>
+        <Function Name="I_CaT_flux" Domain="Compartment">( - (P_CaT_flux * _K_GHK_ * pow(carrierValence_CaT_flux,2.0) * V * pow(_F_,2.0) * (Ca_cyt - (Ca_extr * exp((( - carrierValence_CaT_flux * _F_ * V) / (_R_ * _T_)))))) / (_R_ * _T_ * (1.0 - exp((( - carrierValence_CaT_flux * _F_ * V) / (_R_ * _T_))))))</Function>
+        <Function Name="I_cyt" Domain="Compartment">I_cyt_init_uM</Function>
+        <Function Name="i_cyt" Domain="Compartment">i_cyt_init_uM</Function>
+        <Function Name="i_extr" Domain="Compartment">i_extr_init_uM</Function>
+        <Function Name="I_K_Ca_flux" Domain="Compartment">( - (P_K_Ca_flux * _K_GHK_ * pow(carrierValence_K_Ca_flux,2.0) * V * pow(_F_,2.0) * (K_cyt - (K_extr * exp((( - carrierValence_K_Ca_flux * _F_ * V) / (_R_ * _T_)))))) / (_R_ * _T_ * (1.0 - exp((( - carrierValence_K_Ca_flux * _F_ * V) / (_R_ * _T_))))))</Function>
+        <Function Name="I_K_flux" Domain="Compartment">( - (P_K_flux * _K_GHK_ * pow(carrierValence_K_flux,2.0) * V * pow(_F_,2.0) * (K_cyt - (K_extr * exp((( - carrierValence_K_flux * _F_ * V) / (_R_ * _T_)))))) / (_R_ * _T_ * (1.0 - exp((( - carrierValence_K_flux * _F_ * V) / (_R_ * _T_))))))</Function>
+        <Function Name="I_leak" Domain="Compartment">((netValence_leak * _F_ * J_leak) * unitFactor_leak)</Function>
+        <Function Name="J_CaL_flux" Domain="Compartment">((I_CaL_flux / (carrierValence_CaL_flux * _F_)) * unitFactor_CaL_flux)</Function>
+        <Function Name="J_CaT_flux" Domain="Compartment">((I_CaT_flux / (carrierValence_CaT_flux * _F_)) * unitFactor_CaT_flux)</Function>
+        <Function Name="J_h_gating" Domain="Compartment">(1000.0 * (h0 - h) / tau_h)</Function>
+        <Function Name="J_K_Ca_flux" Domain="Compartment">((I_K_Ca_flux / (carrierValence_K_Ca_flux * _F_)) * unitFactor_K_Ca_flux)</Function>
+        <Function Name="J_K_flux" Domain="Compartment">((I_K_flux / (carrierValence_K_flux * _F_)) * unitFactor_K_flux)</Function>
+        <Function Name="J_leak" Domain="Compartment">- (1.0E9 * g_L * (V - V_L) / _F_ / S_L)</Function>
+        <Function Name="J_m_L_gating" Domain="Compartment">(1000.0 * (m_L0 - m_L) / tau_ml)</Function>
+        <Function Name="J_m_T_gating" Domain="Compartment">(1000.0 * (m_T0 - m_T) / tau_mt)</Function>
+        <Function Name="J_n_gating" Domain="Compartment">(1000.0 * (n0 - n) / tau_n)</Function>
+        <Function Name="K_cyt" Domain="Compartment">K_cyt_init_uM</Function>
+        <Function Name="K_extr" Domain="Compartment">K_extr_init_uM</Function>
+        <Function Name="m_L0" Domain="Compartment">(1.0 / (1.0 + exp((0.08333333333333333 * ( - 12.0 - V)))))</Function>
+        <Function Name="m_T0" Domain="Compartment">(1.0 / (1.0 + exp((0.1111111111111111 * ( - 30.0 - V)))))</Function>
+        <Function Name="n0" Domain="Compartment">(1.0 / (1.0 + exp((0.08 * ( - 5.1 - V)))))</Function>
+        <Function Name="P_CaL_flux" Domain="Compartment">(Pcal * m_L * m_L / Scal)</Function>
+        <Function Name="P_CaT_flux" Domain="Compartment">(Pcat * m_T * m_T * h / Scat)</Function>
+        <Function Name="P_K_Ca_flux" Domain="Compartment">(Pkca * pow(Ca_cyt,4.0) / Skca / (pow(Ca_cyt,4.0) + pow(Kca,4.0)))</Function>
+        <Function Name="P_K_flux" Domain="Compartment">(Pk * n / Sk)</Function>
+        <Function Name="tau_ml" Domain="Compartment">(30.0 / (exp((0.045454545454545456 * (60.0 + V))) + (2.0 * exp((0.09090909090909091 * ( - 60.0 - V))))))</Function>
+        <Function Name="tau_mt" Domain="Compartment">(10.0 / (exp((0.045454545454545456 * (60.0 + V))) + (2.0 * exp((0.09090909090909091 * ( - 60.0 - V))))))</Function>
+        <Function Name="unitFactor_CaL_flux" Domain="Compartment">(1.0E9 / 1.0)</Function>
+        <Function Name="unitFactor_CaT_flux" Domain="Compartment">(1.0E9 / 1.0)</Function>
+        <Function Name="unitFactor_K_Ca_flux" Domain="Compartment">(1.0E9 / 1.0)</Function>
+        <Function Name="unitFactor_K_flux" Domain="Compartment">(1.0E9 / 1.0)</Function>
+        <Function Name="unitFactor_leak" Domain="Compartment">(1.0 / 9.99999999E8)</Function>
+        <Function Name="UnitFactor_mV_pF_s_neg_1_pA_neg_1">(1000.0 / 1.0)</Function>
+        <CompartmentSubDomain Name="Compartment">
+          <BoundaryType Boundary="Xm" Type="Value" />
+          <BoundaryType Boundary="Xp" Type="Value" />
+          <BoundaryType Boundary="Ym" Type="Value" />
+          <BoundaryType Boundary="Yp" Type="Value" />
+          <BoundaryType Boundary="Zm" Type="Value" />
+          <BoundaryType Boundary="Zp" Type="Value" />
+          <OdeEquation Name="n" SolutionType="Unknown">
+            <Rate>J_n_gating</Rate>
+            <Initial>n_init_molecules_um_2</Initial>
+          </OdeEquation>
+          <OdeEquation Name="m_L" SolutionType="Unknown">
+            <Rate>J_m_L_gating</Rate>
+            <Initial>m_L_init_molecules_um_2</Initial>
+          </OdeEquation>
+          <OdeEquation Name="m_T" SolutionType="Unknown">
+            <Rate>J_m_T_gating</Rate>
+            <Initial>m_T_init_molecules_um_2</Initial>
+          </OdeEquation>
+          <OdeEquation Name="h" SolutionType="Unknown">
+            <Rate>J_h_gating</Rate>
+            <Initial>h_init_molecules_um_2</Initial>
+          </OdeEquation>
+          <OdeEquation Name="V" SolutionType="Unknown">
+            <Rate>((UnitFactor_mV_pF_s_neg_1_pA_neg_1 / device_membr.Capacitance) * (I_membr - ( - (I_leak * Size_membr) - (I_K_flux * Size_membr) - (I_CaL_flux * Size_membr) - (I_CaT_flux * Size_membr) - (I_K_Ca_flux * Size_membr))))</Rate>
+            <Initial>V_init</Initial>
+          </OdeEquation>
+        </CompartmentSubDomain>
+        <Version Name="voltage_only5" KeyValue="99709024" BranchId="5061365" Archived="0" Date="29-Apr-2016 19:16:34" FromVersionable="false">
+          <Owner Name="boris" Identifier="21" />
+          <GroupAccess Type="1" />
+        </Version>
+      </MathDescription>
+      <Simulation Name="Simulation 4">
+        <SolverTaskDescription TaskType="Unsteady" UseSymbolicJacobian="false" Solver="Runge-Kutta-Fehlberg (Fifth Order, Variable Time Step)">
+          <TimeBound StartTime="0.0" EndTime="25.0" />
+          <TimeStep DefaultTime="0.1" MinTime="1.0E-8" MaxTime="1.0" />
+          <ErrorTolerance Absolut="1.0E-9" Relative="1.0E-9" />
+          <OutputOptions KeepEvery="1" KeepAtMost="1000" />
+          <NumberProcessors>1</NumberProcessors>
+        </SolverTaskDescription>
+        <MathOverrides />
+        <Version Name="Simulation 4" KeyValue="99709234" BranchId="5064958" Archived="0" Date="29-Apr-2016 19:16:41" FromVersionable="false">
+          <Owner Name="boris" Identifier="21" />
+          <GroupAccess Type="1" />
+        </Version>
+      </Simulation>
+      <Version Name="voltage_only" KeyValue="99709108" BranchId="5062941" Archived="0" Date="29-Apr-2016 19:16:39" FromVersionable="false">
+        <Owner Name="boris" Identifier="21" />
+        <GroupAccess Type="1" />
+        <Annotation>(copied from voltage_steady_state)</Annotation>
+      </Version>
+      <MicroscopeMeasurement Name="fluor">
+        <ConvolutionKernel Type="ProjectionZKernel" />
+      </MicroscopeMeasurement>
+    </SimulationSpec>
+    <SimulationSpec Name="volt&amp;calcium" Stochastic="false" UseConcentration="true" RuleBased="false" MassConservationModelReduction="true" InsufficientIterations="false" InsufficientMaxMolecules="false">
+      <NetworkConstraints RbmMaxIteration="1" RbmMaxMoleculesPerSpecies="10" RbmSpeciesLimit="800" RbmReactionsLimit="2500" />
+      <Annotation>(copied from voltage_only) (copied from voltage_steady_state)</Annotation>
+      <Geometry Name="voltage_only3" Dimension="0">
+        <Extent X="10.0" Y="10.0" Z="10.0" />
+        <Origin X="0.0" Y="0.0" Z="0.0" />
+        <SubVolume Name="Compartment" Handle="0" Type="Compartmental" KeyValue="2531870" />
+        <Version Name="voltage_only3" KeyValue="2531867" BranchId="5059613" Archived="0" Date="07-Jun-2002 14:18:51" FromVersionable="false">
+          <Owner Name="boris" Identifier="21" />
+          <GroupAccess Type="1" />
+        </Version>
+      </Geometry>
+      <GeometryContext>
+        <FeatureMapping Feature="extr" GeometryClass="Compartment" SubVolume="Compartment" Size="4.0">
+          <BoundariesTypes Xm="Value" Xp="Value" Ym="Value" Yp="Value" Zm="Value" Zp="Value" />
+        </FeatureMapping>
+        <FeatureMapping Feature="cyt" GeometryClass="Compartment" SubVolume="Compartment" Size="0.8">
+          <BoundariesTypes Xm="Value" Xp="Value" Ym="Value" Yp="Value" Zm="Value" Zp="Value" />
+        </FeatureMapping>
+        <FeatureMapping Feature="ER" GeometryClass="Compartment" SubVolume="Compartment" Size="0.20000000000000004">
+          <BoundariesTypes Xm="Value" Xp="Value" Ym="Value" Yp="Value" Zm="Value" Zp="Value" />
+        </FeatureMapping>
+        <MembraneMapping Membrane="membr" SurfaceToVolumeRatio="0.3" VolumeFraction="0.2" Size="0.3" CalculateVoltage="true" SpecificCapacitance="0.01" InitialVoltage="-50.0" GeometryClass="Compartment">
+          <BoundariesTypes Xm="Value" Xp="Value" Ym="Value" Yp="Value" Zm="Value" Zp="Value" />
+        </MembraneMapping>
+        <MembraneMapping Membrane="ERM" SurfaceToVolumeRatio="4.0" VolumeFraction="0.2" Size="0.8000000000000002" CalculateVoltage="false" SpecificCapacitance="0.01" InitialVoltage="0.0" GeometryClass="Compartment">
+          <BoundariesTypes Xm="Value" Xp="Value" Ym="Value" Yp="Value" Zm="Value" Zp="Value" />
+        </MembraneMapping>
+      </GeometryContext>
+      <ReactionContext>
+        <LocalizedCompoundSpec LocalizedCompoundRef="Ca_extr" ForceConstant="true" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>2500.0</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="K_extr" ForceConstant="true" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>5000.0</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="i_extr" ForceConstant="true" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>0.0</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="I_cyt" ForceConstant="true" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>((0.01 * (t &lt; 15.0)) + (0.3 * (t &gt; 15.0)))</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="i_cyt" ForceConstant="true" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>0.0</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="Ca_cyt" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>0.239442151972167</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="K_cyt" ForceConstant="true" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>140000.0</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="B" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>478.5416946817006</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="CaB" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>11.4583053182994</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="Ca_ER" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>70.0</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="B_ER" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>2479.1666666666665</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="CaB_ER" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>3470.8333333333335</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="n" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>0.0652336965032125</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="m_L" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>0.0999077119155955</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="m_T" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>0.239442151972167</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="h" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>0.0518947081785439</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="h_er" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>0.9963918957329119</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <ReactionSpec ReactionStepRef="buffering" ReactionMapping="fast" />
+        <ReactionSpec ReactionStepRef="er_buffering" ReactionMapping="fast" />
+        <ReactionSpec ReactionStepRef="m_L_gating" ReactionMapping="included" />
+        <ReactionSpec ReactionStepRef="h_gating" ReactionMapping="included" />
+        <ReactionSpec ReactionStepRef="n_gating" ReactionMapping="included" />
+        <ReactionSpec ReactionStepRef="m_T_gating" ReactionMapping="included" />
+        <ReactionSpec ReactionStepRef="H_gating" ReactionMapping="included" />
+        <ReactionSpec ReactionStepRef="CaT_flux" ReactionMapping="included" />
+        <ReactionSpec ReactionStepRef="K_Ca_flux" ReactionMapping="included" />
+        <ReactionSpec ReactionStepRef="CaL_flux" ReactionMapping="included" />
+        <ReactionSpec ReactionStepRef="K_flux" ReactionMapping="included" />
+        <ReactionSpec ReactionStepRef="inFlux" ReactionMapping="included" />
+        <ReactionSpec ReactionStepRef="leak" ReactionMapping="included" />
+        <ReactionSpec ReactionStepRef="Ca_outFlux" ReactionMapping="included" />
+        <ReactionSpec ReactionStepRef="outFlux" ReactionMapping="included" />
+      </ReactionContext>
+      <ElectricalContext>
+        <Electrode Feature="extr">
+          <Coordinate X="0.0" Y="0.0" Z="0.0" />
+        </Electrode>
+      </ElectricalContext>
+      <MathDescription Name="volt&amp;calcium">
+        <Constant Name="_F_">96480.0</Constant>
+        <Constant Name="_F_nmol_">9.648E-5</Constant>
+        <Constant Name="_K_GHK_">1.0E-9</Constant>
+        <Constant Name="_N_pmol_">6.02E11</Constant>
+        <Constant Name="_PI_">3.141592653589793</Constant>
+        <Constant Name="_R_">8314.0</Constant>
+        <Constant Name="_T_">300.0</Constant>
+        <Constant Name="B_ER_init_uM">2479.1666666666665</Constant>
+        <Constant Name="B_init_uM">478.5416946817006</Constant>
+        <Constant Name="C1">0.36</Constant>
+        <Constant Name="C_ERM">0.01</Constant>
+        <Constant Name="C_membr">0.01</Constant>
+        <Constant Name="Ca_cyt_init_uM">0.239442151972167</Constant>
+        <Constant Name="Ca_ER_init_uM">70.0</Constant>
+        <Constant Name="Ca_extr_init_uM">2500.0</Constant>
+        <Constant Name="CaB_ER_init_uM">3470.8333333333335</Constant>
+        <Constant Name="CaB_init_uM">11.4583053182994</Constant>
+        <Constant Name="carrierValence_CaL_flux">2.0</Constant>
+        <Constant Name="carrierValence_CaT_flux">2.0</Constant>
+        <Constant Name="carrierValence_K_Ca_flux">1.0</Constant>
+        <Constant Name="carrierValence_K_flux">1.0</Constant>
+        <Constant Name="g_L">0.008</Constant>
+        <Constant Name="h_er_init_molecules_um_2">0.9963918957329119</Constant>
+        <Constant Name="h_init_molecules_um_2">0.0518947081785439</Constant>
+        <Constant Name="i_cyt_init_uM">0.0</Constant>
+        <Constant Name="i_extr_init_uM">0.0</Constant>
+        <Constant Name="I_membr">0.0</Constant>
+        <Constant Name="k4">0.18</Constant>
+        <Constant Name="K_cyt_init_uM">140000.0</Constant>
+        <Constant Name="K_ex">0.9</Constant>
+        <Constant Name="K_extr_init_uM">5000.0</Constant>
+        <Constant Name="K_millivolts_per_volt">1000.0</Constant>
+        <Constant Name="K_pp">0.1</Constant>
+        <Constant Name="Kca">0.6</Constant>
+        <Constant Name="Kd">10.0</Constant>
+        <Constant Name="Kd_er">50.0</Constant>
+        <Constant Name="KMOLE">(1.0 / 602.0)</Constant>
+        <Constant Name="kon">1.0</Constant>
+        <Constant Name="kon_er">1.0</Constant>
+        <Constant Name="Kp">0.2</Constant>
+        <Constant Name="m_L_init_molecules_um_2">0.0999077119155955</Constant>
+        <Constant Name="m_T_init_molecules_um_2">0.239442151972167</Constant>
+        <Constant Name="n_init_molecules_um_2">0.0652336965032125</Constant>
+        <Constant Name="netValence_Ca_outFlux">1.0</Constant>
+        <Constant Name="netValence_h_gating">1.0</Constant>
+        <Constant Name="netValence_H_gating">1.0</Constant>
+        <Constant Name="netValence_inFlux">1.0</Constant>
+        <Constant Name="netValence_leak">1.0</Constant>
+        <Constant Name="netValence_m_L_gating">1.0</Constant>
+        <Constant Name="netValence_m_T_gating">1.0</Constant>
+        <Constant Name="netValence_n_gating">1.0</Constant>
+        <Constant Name="netValence_outFlux">1.0</Constant>
+        <Constant Name="p">0.7142857142857143</Constant>
+        <Constant Name="p0">89.28571428571429</Constant>
+        <Constant Name="Pcal">415.32529619728894</Constant>
+        <Constant Name="Pcat">455.5180667970266</Constant>
+        <Constant Name="Pk">26.795180399825096</Constant>
+        <Constant Name="Pkca">2.679518039982509</Constant>
+        <Constant Name="S_L">1250.0</Constant>
+        <Constant Name="Scal">1250.0</Constant>
+        <Constant Name="Scat">1250.0</Constant>
+        <Constant Name="Size_cyt">0.8</Constant>
+        <Constant Name="Size_ER">0.20000000000000004</Constant>
+        <Constant Name="Size_ERM">0.8000000000000002</Constant>
+        <Constant Name="Size_extr">4.0</Constant>
+        <Constant Name="Size_membr">0.3</Constant>
+        <Constant Name="Sk">1250.0</Constant>
+        <Constant Name="Skca">1250.0</Constant>
+        <Constant Name="tau_h">15.0</Constant>
+        <Constant Name="tau_n">22.5</Constant>
+        <Constant Name="v">89.28571428571429</Constant>
+        <Constant Name="v_ex">200.0</Constant>
+        <Constant Name="V_init">-50.0</Constant>
+        <Constant Name="V_L">-55.0</Constant>
+        <Constant Name="v_pp">20.0</Constant>
+        <Constant Name="Voltage_ERM">0.0</Constant>
+        <Constant Name="Voltage_ERM_init">0.0</Constant>
+        <VolumeVariable Name="Ca_cyt" Domain="Compartment" />
+        <VolumeVariable Name="Ca_ER" Domain="Compartment" />
+        <VolumeVariable Name="CaB" Domain="Compartment" />
+        <VolumeVariable Name="CaB_ER" Domain="Compartment" />
+        <VolumeVariable Name="h" Domain="Compartment" />
+        <VolumeVariable Name="h_er" Domain="Compartment" />
+        <VolumeVariable Name="m_L" Domain="Compartment" />
+        <VolumeVariable Name="m_T" Domain="Compartment" />
+        <VolumeVariable Name="n" Domain="Compartment" />
+        <VolumeVariable Name="V" Domain="Compartment" />
+        <Function Name="a" Domain="Compartment">(1.0 / (1.0 + exp(((0.4 - Ca_cyt) / k1))))</Function>
+        <Function Name="B" Domain="Compartment">((K_B_total - (Size_cyt * CaB)) / Size_cyt)</Function>
+        <Function Name="b_c" Domain="Compartment">(1.0 / (1.0 + exp((5.0 * (0.6 - I_cyt)))))</Function>
+        <Function Name="B_ER" Domain="Compartment">((K_B_ER_total - (Size_ER * CaB_ER)) / Size_ER)</Function>
+        <Function Name="b_h" Domain="Compartment">(1.0 / (1.0 + exp((5.0 * (0.6 - I_cyt)))))</Function>
+        <Function Name="Ca_extr" Domain="Compartment">Ca_extr_init_uM</Function>
+        <Function Name="d_c" Domain="Compartment">(0.2 + (0.8 / (1.0 + exp((0.1 * ( - 20.0 + Ca_ER))))))</Function>
+        <Function Name="d_h" Domain="Compartment">(0.2 + (0.8 / (1.0 + exp((0.1 * ( - 20.0 + Ca_ER))))))</Function>
+        <Function Name="device_membr.Capacitance" Domain="Compartment">(C_membr * Size_membr)</Function>
+        <Function Name="F_membr" Domain="Compartment">( - (I_leak * Size_membr) - (I_K_flux * Size_membr) - (I_CaL_flux * Size_membr) - (I_CaT_flux * Size_membr) - (I_K_Ca_flux * Size_membr))</Function>
+        <Function Name="h0" Domain="Compartment">(1.0 / (1.0 + exp((0.25 * (50.0 + V)))))</Function>
+        <Function Name="ho" Domain="Compartment">(1.0 / (1.0 + exp((( - 0.36 + Ca_cyt) / k2))))</Function>
+        <Function Name="I_CaL_flux" Domain="Compartment">( - (P_CaL_flux * _K_GHK_ * pow(carrierValence_CaL_flux,2.0) * V * pow(_F_,2.0) * (Ca_cyt - (Ca_extr * exp((( - carrierValence_CaL_flux * _F_ * V) / (_R_ * _T_)))))) / (_R_ * _T_ * (1.0 - exp((( - carrierValence_CaL_flux * _F_ * V) / (_R_ * _T_))))))</Function>
+        <Function Name="I_CaT_flux" Domain="Compartment">( - (P_CaT_flux * _K_GHK_ * pow(carrierValence_CaT_flux,2.0) * V * pow(_F_,2.0) * (Ca_cyt - (Ca_extr * exp((( - carrierValence_CaT_flux * _F_ * V) / (_R_ * _T_)))))) / (_R_ * _T_ * (1.0 - exp((( - carrierValence_CaT_flux * _F_ * V) / (_R_ * _T_))))))</Function>
+        <Function Name="I_cyt" Domain="Compartment">I_cyt_init_uM</Function>
+        <Function Name="i_cyt" Domain="Compartment">i_cyt_init_uM</Function>
+        <Function Name="I_cyt_init_uM" Domain="Compartment">((0.01 * (t &lt; 15.0)) + (0.3 * (t &gt; 15.0)))</Function>
+        <Function Name="i_extr" Domain="Compartment">i_extr_init_uM</Function>
+        <Function Name="I_K_Ca_flux" Domain="Compartment">( - (P_K_Ca_flux * _K_GHK_ * pow(carrierValence_K_Ca_flux,2.0) * V * pow(_F_,2.0) * (K_cyt - (K_extr * exp((( - carrierValence_K_Ca_flux * _F_ * V) / (_R_ * _T_)))))) / (_R_ * _T_ * (1.0 - exp((( - carrierValence_K_Ca_flux * _F_ * V) / (_R_ * _T_))))))</Function>
+        <Function Name="I_K_flux" Domain="Compartment">( - (P_K_flux * _K_GHK_ * pow(carrierValence_K_flux,2.0) * V * pow(_F_,2.0) * (K_cyt - (K_extr * exp((( - carrierValence_K_flux * _F_ * V) / (_R_ * _T_)))))) / (_R_ * _T_ * (1.0 - exp((( - carrierValence_K_flux * _F_ * V) / (_R_ * _T_))))))</Function>
+        <Function Name="I_leak" Domain="Compartment">((netValence_leak * _F_ * J_leak) * unitFactor_leak)</Function>
+        <Function Name="J_buffering" Domain="Compartment">(((kon * B) * Ca_cyt) - (Kr_buffering * CaB))</Function>
+        <Function Name="J_Ca_outFlux" Domain="Compartment">( - (pow(Ca_cyt,2.0) * v_pp / (pow(Ca_cyt,2.0) + (K_pp * K_pp))) - (v_ex * pow(Ca_cyt,4.0) / (pow(Ca_cyt,4.0) + pow(K_ex,4.0))))</Function>
+        <Function Name="J_CaL_flux" Domain="Compartment">((I_CaL_flux / (carrierValence_CaL_flux * _F_)) * unitFactor_CaL_flux)</Function>
+        <Function Name="J_CaT_flux" Domain="Compartment">((I_CaT_flux / (carrierValence_CaT_flux * _F_)) * unitFactor_CaT_flux)</Function>
+        <Function Name="J_er_buffering" Domain="Compartment">(((kon_er * Ca_ER) * B_ER) - (Kr_er_buffering * CaB_ER))</Function>
+        <Function Name="J_h_gating" Domain="Compartment">(1000.0 * (h0 - h) / tau_h)</Function>
+        <Function Name="J_H_gating" Domain="Compartment">((ho - h_er) / tau)</Function>
+        <Function Name="J_inFlux" Domain="Compartment">(v * Ca_cyt * Ca_cyt / ((Ca_cyt * Ca_cyt) + (Kp * Kp)))</Function>
+        <Function Name="J_K_Ca_flux" Domain="Compartment">((I_K_Ca_flux / (carrierValence_K_Ca_flux * _F_)) * unitFactor_K_Ca_flux)</Function>
+        <Function Name="J_K_flux" Domain="Compartment">((I_K_flux / (carrierValence_K_flux * _F_)) * unitFactor_K_flux)</Function>
+        <Function Name="J_leak" Domain="Compartment">- (1.0E9 * g_L * (V - V_L) / _F_ / S_L)</Function>
+        <Function Name="J_m_L_gating" Domain="Compartment">(1000.0 * (m_L0 - m_L) / tau_ml)</Function>
+        <Function Name="J_m_T_gating" Domain="Compartment">(1000.0 * (m_T0 - m_T) / tau_mt)</Function>
+        <Function Name="J_n_gating" Domain="Compartment">(1000.0 * (n0 - n) / tau_n)</Function>
+        <Function Name="J_outFlux" Domain="Compartment">- ((Ca_ER - Ca_cyt) * (p + (p0 * a * b_c * d_c * h_er)))</Function>
+        <Function Name="k1" Domain="Compartment">(8.4 * (0.8 + (0.0225 * I_cyt / (0.2 + I_cyt) / (0.0225 + (( - 0.4 + I_cyt) * ( - 0.4 + I_cyt))))) / (60.0 + Ca_ER))</Function>
+        <Function Name="k2" Domain="Compartment">(0.46 * (0.05 + (Ca_ER * I_cyt * I_cyt / (180.0 + (Ca_ER * (1.0 + (I_cyt * I_cyt)))))))</Function>
+        <Function Name="k3" Domain="Compartment">exp(((Ca_cyt - C1) / k4))</Function>
+        <Function Name="K_B_ER_total" Domain="Compartment">((Size_ER * B_ER_init_uM) + (Size_ER * CaB_ER_init_uM))</Function>
+        <Function Name="K_B_total" Domain="Compartment">((Size_cyt * B_init_uM) + (Size_cyt * CaB_init_uM))</Function>
+        <Function Name="K_cyt" Domain="Compartment">K_cyt_init_uM</Function>
+        <Function Name="K_extr" Domain="Compartment">K_extr_init_uM</Function>
+        <Function Name="KFlux_ERM_cyt" Domain="Compartment">(Size_ERM / Size_cyt)</Function>
+        <Function Name="KFlux_ERM_ER" Domain="Compartment">(Size_ERM / Size_ER)</Function>
+        <Function Name="KFlux_membr_cyt" Domain="Compartment">(Size_membr / Size_cyt)</Function>
+        <Function Name="Kr_buffering" Domain="Compartment">(Kd * kon)</Function>
+        <Function Name="Kr_er_buffering" Domain="Compartment">(kon_er * Kd_er)</Function>
+        <Function Name="m_L0" Domain="Compartment">(1.0 / (1.0 + exp((0.08333333333333333 * ( - 12.0 - V)))))</Function>
+        <Function Name="m_T0" Domain="Compartment">(1.0 / (1.0 + exp((0.1111111111111111 * ( - 30.0 - V)))))</Function>
+        <Function Name="n0" Domain="Compartment">(1.0 / (1.0 + exp((0.08 * ( - 5.1 - V)))))</Function>
+        <Function Name="P_CaL_flux" Domain="Compartment">(Pcal * m_L * m_L / Scal)</Function>
+        <Function Name="P_CaT_flux" Domain="Compartment">(Pcat * m_T * m_T * h / Scat)</Function>
+        <Function Name="P_K_Ca_flux" Domain="Compartment">(Pkca * pow(Ca_cyt,4.0) / Skca / (pow(Ca_cyt,4.0) + pow(Kca,4.0)))</Function>
+        <Function Name="P_K_flux" Domain="Compartment">(Pk * n / Sk)</Function>
+        <Function Name="tau" Domain="Compartment">(2.4 / b_h / d_h / (k3 + (1.0 / k3)))</Function>
+        <Function Name="tau_ml" Domain="Compartment">(30.0 / (exp((0.045454545454545456 * (60.0 + V))) + (2.0 * exp((0.09090909090909091 * ( - 60.0 - V))))))</Function>
+        <Function Name="tau_mt" Domain="Compartment">(10.0 / (exp((0.045454545454545456 * (60.0 + V))) + (2.0 * exp((0.09090909090909091 * ( - 60.0 - V))))))</Function>
+        <Function Name="unitFactor_CaL_flux" Domain="Compartment">(1.0E9 / 1.0)</Function>
+        <Function Name="unitFactor_CaT_flux" Domain="Compartment">(1.0E9 / 1.0)</Function>
+        <Function Name="unitFactor_K_Ca_flux" Domain="Compartment">(1.0E9 / 1.0)</Function>
+        <Function Name="unitFactor_K_flux" Domain="Compartment">(1.0E9 / 1.0)</Function>
+        <Function Name="unitFactor_leak" Domain="Compartment">(1.0 / 9.99999999E8)</Function>
+        <Function Name="UnitFactor_mV_pF_s_neg_1_pA_neg_1">(1000.0 / 1.0)</Function>
+        <Function Name="UnitFactor_uM_um3_molecules_neg_1">(1.0 / 602.0)</Function>
+        <CompartmentSubDomain Name="Compartment">
+          <BoundaryType Boundary="Xm" Type="Value" />
+          <BoundaryType Boundary="Xp" Type="Value" />
+          <BoundaryType Boundary="Ym" Type="Value" />
+          <BoundaryType Boundary="Yp" Type="Value" />
+          <BoundaryType Boundary="Zm" Type="Value" />
+          <BoundaryType Boundary="Zp" Type="Value" />
+          <OdeEquation Name="Ca_cyt" SolutionType="Unknown">
+            <Rate>( - (KFlux_ERM_cyt * J_outFlux) + (KFlux_membr_cyt * J_Ca_outFlux) - (KFlux_ERM_cyt * J_inFlux) + (KFlux_membr_cyt * J_CaT_flux) + (KFlux_membr_cyt * J_CaL_flux))</Rate>
+            <Initial>Ca_cyt_init_uM</Initial>
+          </OdeEquation>
+          <OdeEquation Name="CaB" SolutionType="Unknown">
+            <Rate>0.0</Rate>
+            <Initial>CaB_init_uM</Initial>
+          </OdeEquation>
+          <OdeEquation Name="Ca_ER" SolutionType="Unknown">
+            <Rate>((KFlux_ERM_ER * J_inFlux) + (KFlux_ERM_ER * J_outFlux))</Rate>
+            <Initial>Ca_ER_init_uM</Initial>
+          </OdeEquation>
+          <OdeEquation Name="CaB_ER" SolutionType="Unknown">
+            <Rate>0.0</Rate>
+            <Initial>CaB_ER_init_uM</Initial>
+          </OdeEquation>
+          <OdeEquation Name="n" SolutionType="Unknown">
+            <Rate>J_n_gating</Rate>
+            <Initial>n_init_molecules_um_2</Initial>
+          </OdeEquation>
+          <OdeEquation Name="m_L" SolutionType="Unknown">
+            <Rate>J_m_L_gating</Rate>
+            <Initial>m_L_init_molecules_um_2</Initial>
+          </OdeEquation>
+          <OdeEquation Name="m_T" SolutionType="Unknown">
+            <Rate>J_m_T_gating</Rate>
+            <Initial>m_T_init_molecules_um_2</Initial>
+          </OdeEquation>
+          <OdeEquation Name="h" SolutionType="Unknown">
+            <Rate>J_h_gating</Rate>
+            <Initial>h_init_molecules_um_2</Initial>
+          </OdeEquation>
+          <OdeEquation Name="h_er" SolutionType="Unknown">
+            <Rate>J_H_gating</Rate>
+            <Initial>h_er_init_molecules_um_2</Initial>
+          </OdeEquation>
+          <OdeEquation Name="V" SolutionType="Unknown">
+            <Rate>((UnitFactor_mV_pF_s_neg_1_pA_neg_1 / device_membr.Capacitance) * (I_membr - ( - (I_leak * Size_membr) - (I_K_flux * Size_membr) - (I_CaL_flux * Size_membr) - (I_CaT_flux * Size_membr) - (I_K_Ca_flux * Size_membr))))</Rate>
+            <Initial>V_init</Initial>
+          </OdeEquation>
+          <FastSystem>
+            <FastInvariant>((Size_cyt * Ca_cyt) + (Size_cyt * CaB))</FastInvariant>
+            <FastInvariant>((Size_ER * Ca_ER) + (Size_ER * CaB_ER))</FastInvariant>
+            <FastInvariant>(Size_membr * UnitFactor_uM_um3_molecules_neg_1 * n)</FastInvariant>
+            <FastInvariant>(Size_membr * UnitFactor_uM_um3_molecules_neg_1 * m_L)</FastInvariant>
+            <FastInvariant>(Size_membr * UnitFactor_uM_um3_molecules_neg_1 * m_T)</FastInvariant>
+            <FastInvariant>(Size_membr * UnitFactor_uM_um3_molecules_neg_1 * h)</FastInvariant>
+            <FastInvariant>(Size_ERM * UnitFactor_uM_um3_molecules_neg_1 * h_er)</FastInvariant>
+            <FastRate>J_buffering</FastRate>
+            <FastRate>J_er_buffering</FastRate>
+          </FastSystem>
+        </CompartmentSubDomain>
+        <Version Name="volt&amp;calcium" KeyValue="99709026" BranchId="5061349" Archived="0" Date="29-Apr-2016 19:16:35" FromVersionable="false">
+          <Owner Name="boris" Identifier="21" />
+          <GroupAccess Type="1" />
+        </Version>
+      </MathDescription>
+      <Simulation Name="Simulation 5">
+        <SolverTaskDescription TaskType="Unsteady" UseSymbolicJacobian="false" Solver="IDA (Variable Order, Variable Time Step, ODE/DAE)">
+          <TimeBound StartTime="0.0" EndTime="115.0" />
+          <TimeStep DefaultTime="0.1" MinTime="1.0E-8" MaxTime="1.0" />
+          <ErrorTolerance Absolut="1.0E-9" Relative="1.0E-9" />
+          <OutputOptions KeepEvery="1" KeepAtMost="10000" />
+          <NumberProcessors>1</NumberProcessors>
+        </SolverTaskDescription>
+        <MathOverrides />
+        <Version Name="Simulation 5" KeyValue="99709480" BranchId="2695129" Archived="0" Date="29-Apr-2016 19:29:56" FromVersionable="false">
+          <Owner Name="boris" Identifier="21" />
+          <GroupAccess Type="1" />
+        </Version>
+      </Simulation>
+      <Version Name="volt&amp;calcium" KeyValue="99709147" BranchId="5062942" Archived="0" Date="29-Apr-2016 19:16:39" FromVersionable="false">
+        <Owner Name="boris" Identifier="21" />
+        <GroupAccess Type="1" />
+        <Annotation>(copied from voltage_only) (copied from voltage_steady_state)</Annotation>
+      </Version>
+      <MicroscopeMeasurement Name="fluor">
+        <ConvolutionKernel Type="ProjectionZKernel" />
+      </MicroscopeMeasurement>
+    </SimulationSpec>
+    <SimulationSpec Name="voltage_clamp" Stochastic="false" UseConcentration="true" RuleBased="false" MassConservationModelReduction="true" InsufficientIterations="false" InsufficientMaxMolecules="false">
+      <NetworkConstraints RbmMaxIteration="1" RbmMaxMoleculesPerSpecies="10" RbmSpeciesLimit="800" RbmReactionsLimit="2500" />
+      <Annotation>(copied from volt&amp;calcium) (copied from voltage_only) (copied from voltage_steady_state)</Annotation>
+      <Geometry Name="voltage_only3" Dimension="0">
+        <Extent X="10.0" Y="10.0" Z="10.0" />
+        <Origin X="0.0" Y="0.0" Z="0.0" />
+        <SubVolume Name="Compartment" Handle="0" Type="Compartmental" KeyValue="2531870" />
+        <Version Name="voltage_only3" KeyValue="2531867" BranchId="5059613" Archived="0" Date="07-Jun-2002 14:18:51" FromVersionable="false">
+          <Owner Name="boris" Identifier="21" />
+          <GroupAccess Type="1" />
+        </Version>
+      </Geometry>
+      <GeometryContext>
+        <FeatureMapping Feature="extr" GeometryClass="Compartment" SubVolume="Compartment" Size="4.0">
+          <BoundariesTypes Xm="Value" Xp="Value" Ym="Value" Yp="Value" Zm="Value" Zp="Value" />
+        </FeatureMapping>
+        <FeatureMapping Feature="cyt" GeometryClass="Compartment" SubVolume="Compartment" Size="0.8">
+          <BoundariesTypes Xm="Value" Xp="Value" Ym="Value" Yp="Value" Zm="Value" Zp="Value" />
+        </FeatureMapping>
+        <FeatureMapping Feature="ER" GeometryClass="Compartment" SubVolume="Compartment" Size="0.2">
+          <BoundariesTypes Xm="Value" Xp="Value" Ym="Value" Yp="Value" Zm="Value" Zp="Value" />
+        </FeatureMapping>
+        <MembraneMapping Membrane="membr" SurfaceToVolumeRatio="0.3" VolumeFraction="0.2" Size="0.3" CalculateVoltage="true" SpecificCapacitance="0.01" InitialVoltage="-50.0" GeometryClass="Compartment">
+          <BoundariesTypes Xm="Value" Xp="Value" Ym="Value" Yp="Value" Zm="Value" Zp="Value" />
+        </MembraneMapping>
+        <MembraneMapping Membrane="ERM" SurfaceToVolumeRatio="4.0" VolumeFraction="0.2" Size="0.8" CalculateVoltage="false" SpecificCapacitance="0.01" InitialVoltage="0.0" GeometryClass="Compartment">
+          <BoundariesTypes Xm="Value" Xp="Value" Ym="Value" Yp="Value" Zm="Value" Zp="Value" />
+        </MembraneMapping>
+      </GeometryContext>
+      <ReactionContext>
+        <LocalizedCompoundSpec LocalizedCompoundRef="Ca_extr" ForceConstant="true" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>2500.0</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="K_extr" ForceConstant="true" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>5000.0</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="i_extr" ForceConstant="true" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>0.0</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="I_cyt" ForceConstant="true" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>((0.01 * (t &lt; 15.0)) + (0.3 * (t &gt; 15.0)))</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="i_cyt" ForceConstant="true" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>0.0</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="Ca_cyt" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>0.239442151972167</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="K_cyt" ForceConstant="true" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>140000.0</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="B" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>478.5416946817006</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="CaB" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>11.4583053182994</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="Ca_ER" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>70.0</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="B_ER" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>2479.1666666666665</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="CaB_ER" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>3470.8333333333335</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="n" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>0.0652336965032125</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="m_L" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>0.0999077119155955</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="m_T" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>0.239442151972167</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="h" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>0.0518947081785439</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="h_er" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>0.9963918957329119</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <ReactionSpec ReactionStepRef="buffering" ReactionMapping="fast" />
+        <ReactionSpec ReactionStepRef="er_buffering" ReactionMapping="fast" />
+        <ReactionSpec ReactionStepRef="m_L_gating" ReactionMapping="included" />
+        <ReactionSpec ReactionStepRef="h_gating" ReactionMapping="included" />
+        <ReactionSpec ReactionStepRef="n_gating" ReactionMapping="included" />
+        <ReactionSpec ReactionStepRef="m_T_gating" ReactionMapping="included" />
+        <ReactionSpec ReactionStepRef="H_gating" ReactionMapping="included" />
+        <ReactionSpec ReactionStepRef="CaT_flux" ReactionMapping="included" />
+        <ReactionSpec ReactionStepRef="K_Ca_flux" ReactionMapping="included" />
+        <ReactionSpec ReactionStepRef="CaL_flux" ReactionMapping="included" />
+        <ReactionSpec ReactionStepRef="K_flux" ReactionMapping="included" />
+        <ReactionSpec ReactionStepRef="inFlux" ReactionMapping="included" />
+        <ReactionSpec ReactionStepRef="leak" ReactionMapping="included" />
+        <ReactionSpec ReactionStepRef="Ca_outFlux" ReactionMapping="included" />
+        <ReactionSpec ReactionStepRef="outFlux" ReactionMapping="included" />
+      </ReactionContext>
+      <ElectricalContext>
+        <Clamp Type="Voltage">
+          <Electrode Feature="cyt">
+            <Coordinate X="0.0" Y="0.0" Z="0.0" />
+          </Electrode>
+          <Parameter Name="V" Role="potential difference" Unit="mV">-50.0</Parameter>
+        </Clamp>
+        <Electrode Feature="extr">
+          <Coordinate X="0.0" Y="0.0" Z="0.0" />
+        </Electrode>
+      </ElectricalContext>
+      <MathDescription Name="voltage_clamp3">
+        <Constant Name="_F_">96480.0</Constant>
+        <Constant Name="_F_nmol_">9.648E-5</Constant>
+        <Constant Name="_K_GHK_">1.0E-9</Constant>
+        <Constant Name="_N_pmol_">6.02E11</Constant>
+        <Constant Name="_PI_">3.141592653589793</Constant>
+        <Constant Name="_R_">8314.0</Constant>
+        <Constant Name="_T_">300.0</Constant>
+        <Constant Name="B_ER_init_uM">2479.1666666666665</Constant>
+        <Constant Name="B_init_uM">478.5416946817006</Constant>
+        <Constant Name="C1">0.36</Constant>
+        <Constant Name="C_ERM">0.01</Constant>
+        <Constant Name="C_membr">0.01</Constant>
+        <Constant Name="Ca_cyt_init_uM">0.239442151972167</Constant>
+        <Constant Name="Ca_ER_init_uM">70.0</Constant>
+        <Constant Name="Ca_extr_init_uM">2500.0</Constant>
+        <Constant Name="CaB_ER_init_uM">3470.8333333333335</Constant>
+        <Constant Name="CaB_init_uM">11.4583053182994</Constant>
+        <Constant Name="carrierValence_CaL_flux">2.0</Constant>
+        <Constant Name="carrierValence_CaT_flux">2.0</Constant>
+        <Constant Name="carrierValence_K_Ca_flux">1.0</Constant>
+        <Constant Name="carrierValence_K_flux">1.0</Constant>
+        <Constant Name="device_voltClampElectrode.V">-50.0</Constant>
+        <Constant Name="g_L">0.008</Constant>
+        <Constant Name="h_er_init_molecules_um_2">0.9963918957329119</Constant>
+        <Constant Name="h_init_molecules_um_2">0.0518947081785439</Constant>
+        <Constant Name="i_cyt_init_uM">0.0</Constant>
+        <Constant Name="i_extr_init_uM">0.0</Constant>
+        <Constant Name="k4">0.18</Constant>
+        <Constant Name="K_cyt_init_uM">140000.0</Constant>
+        <Constant Name="K_ex">0.9</Constant>
+        <Constant Name="K_extr_init_uM">5000.0</Constant>
+        <Constant Name="K_millivolts_per_volt">1000.0</Constant>
+        <Constant Name="K_pp">0.1</Constant>
+        <Constant Name="Kca">0.6</Constant>
+        <Constant Name="Kd">10.0</Constant>
+        <Constant Name="Kd_er">50.0</Constant>
+        <Constant Name="KMOLE">(1.0 / 602.0)</Constant>
+        <Constant Name="kon">1.0</Constant>
+        <Constant Name="kon_er">1.0</Constant>
+        <Constant Name="Kp">0.2</Constant>
+        <Constant Name="m_L_init_molecules_um_2">0.0999077119155955</Constant>
+        <Constant Name="m_T_init_molecules_um_2">0.239442151972167</Constant>
+        <Constant Name="n_init_molecules_um_2">0.0652336965032125</Constant>
+        <Constant Name="netValence_Ca_outFlux">1.0</Constant>
+        <Constant Name="netValence_h_gating">1.0</Constant>
+        <Constant Name="netValence_H_gating">1.0</Constant>
+        <Constant Name="netValence_inFlux">1.0</Constant>
+        <Constant Name="netValence_leak">1.0</Constant>
+        <Constant Name="netValence_m_L_gating">1.0</Constant>
+        <Constant Name="netValence_m_T_gating">1.0</Constant>
+        <Constant Name="netValence_n_gating">1.0</Constant>
+        <Constant Name="netValence_outFlux">1.0</Constant>
+        <Constant Name="p">0.7142857142857143</Constant>
+        <Constant Name="p0">89.28571428571429</Constant>
+        <Constant Name="Pcal">415.32529619728894</Constant>
+        <Constant Name="Pcat">455.5180667970266</Constant>
+        <Constant Name="Pk">26.795180399825096</Constant>
+        <Constant Name="Pkca">2.679518039982509</Constant>
+        <Constant Name="S_L">1250.0</Constant>
+        <Constant Name="Scal">1250.0</Constant>
+        <Constant Name="Scat">1250.0</Constant>
+        <Constant Name="Size_cyt">0.8</Constant>
+        <Constant Name="Size_ER">0.2</Constant>
+        <Constant Name="Size_ERM">0.8</Constant>
+        <Constant Name="Size_extr">4.0</Constant>
+        <Constant Name="Size_membr">0.3</Constant>
+        <Constant Name="Sk">1250.0</Constant>
+        <Constant Name="Skca">1250.0</Constant>
+        <Constant Name="tau_h">15.0</Constant>
+        <Constant Name="tau_n">22.5</Constant>
+        <Constant Name="v">89.28571428571429</Constant>
+        <Constant Name="v_ex">200.0</Constant>
+        <Constant Name="V_L">-55.0</Constant>
+        <Constant Name="v_pp">20.0</Constant>
+        <Constant Name="Voltage_ERM">0.0</Constant>
+        <Constant Name="Voltage_ERM_init">0.0</Constant>
+        <VolumeVariable Name="Ca_cyt" Domain="Compartment" />
+        <VolumeVariable Name="Ca_ER" Domain="Compartment" />
+        <VolumeVariable Name="CaB" Domain="Compartment" />
+        <VolumeVariable Name="CaB_ER" Domain="Compartment" />
+        <VolumeVariable Name="h" Domain="Compartment" />
+        <VolumeVariable Name="h_er" Domain="Compartment" />
+        <VolumeVariable Name="m_L" Domain="Compartment" />
+        <VolumeVariable Name="m_T" Domain="Compartment" />
+        <VolumeVariable Name="n" Domain="Compartment" />
+        <Function Name="a" Domain="Compartment">(1.0 / (1.0 + exp(((0.4 - Ca_cyt) / k1))))</Function>
+        <Function Name="B" Domain="Compartment">((K_B_total - (Size_cyt * CaB)) / Size_cyt)</Function>
+        <Function Name="b_c" Domain="Compartment">(1.0 / (1.0 + exp((5.0 * (0.6 - I_cyt)))))</Function>
+        <Function Name="B_ER" Domain="Compartment">((K_B_ER_total - (Size_ER * CaB_ER)) / Size_ER)</Function>
+        <Function Name="b_h" Domain="Compartment">(1.0 / (1.0 + exp((5.0 * (0.6 - I_cyt)))))</Function>
+        <Function Name="Ca_extr" Domain="Compartment">Ca_extr_init_uM</Function>
+        <Function Name="d_c" Domain="Compartment">(0.2 + (0.8 / (1.0 + exp((0.1 * ( - 20.0 + Ca_ER))))))</Function>
+        <Function Name="d_h" Domain="Compartment">(0.2 + (0.8 / (1.0 + exp((0.1 * ( - 20.0 + Ca_ER))))))</Function>
+        <Function Name="device_membr.Capacitance" Domain="Compartment">(C_membr * Size_membr)</Function>
+        <Function Name="device_voltClampElectrode.I" Domain="Compartment">- F_membr</Function>
+        <Function Name="F_membr" Domain="Compartment">( - (I_leak * Size_membr) - (I_K_flux * Size_membr) - (I_CaL_flux * Size_membr) - (I_CaT_flux * Size_membr) - (I_K_Ca_flux * Size_membr))</Function>
+        <Function Name="h0" Domain="Compartment">(1.0 / (1.0 + exp((0.25 * (50.0 + V)))))</Function>
+        <Function Name="ho" Domain="Compartment">(1.0 / (1.0 + exp((( - 0.36 + Ca_cyt) / k2))))</Function>
+        <Function Name="I_CaL_flux" Domain="Compartment">( - (P_CaL_flux * _K_GHK_ * pow(carrierValence_CaL_flux,2.0) * V * pow(_F_,2.0) * (Ca_cyt - (Ca_extr * exp((( - carrierValence_CaL_flux * _F_ * V) / (_R_ * _T_)))))) / (_R_ * _T_ * (1.0 - exp((( - carrierValence_CaL_flux * _F_ * V) / (_R_ * _T_))))))</Function>
+        <Function Name="I_CaT_flux" Domain="Compartment">( - (P_CaT_flux * _K_GHK_ * pow(carrierValence_CaT_flux,2.0) * V * pow(_F_,2.0) * (Ca_cyt - (Ca_extr * exp((( - carrierValence_CaT_flux * _F_ * V) / (_R_ * _T_)))))) / (_R_ * _T_ * (1.0 - exp((( - carrierValence_CaT_flux * _F_ * V) / (_R_ * _T_))))))</Function>
+        <Function Name="I_cyt" Domain="Compartment">I_cyt_init_uM</Function>
+        <Function Name="i_cyt" Domain="Compartment">i_cyt_init_uM</Function>
+        <Function Name="I_cyt_init_uM" Domain="Compartment">((0.01 * (t &lt; 15.0)) + (0.3 * (t &gt; 15.0)))</Function>
+        <Function Name="i_extr" Domain="Compartment">i_extr_init_uM</Function>
+        <Function Name="I_K_Ca_flux" Domain="Compartment">( - (P_K_Ca_flux * _K_GHK_ * pow(carrierValence_K_Ca_flux,2.0) * V * pow(_F_,2.0) * (K_cyt - (K_extr * exp((( - carrierValence_K_Ca_flux * _F_ * V) / (_R_ * _T_)))))) / (_R_ * _T_ * (1.0 - exp((( - carrierValence_K_Ca_flux * _F_ * V) / (_R_ * _T_))))))</Function>
+        <Function Name="I_K_flux" Domain="Compartment">( - (P_K_flux * _K_GHK_ * pow(carrierValence_K_flux,2.0) * V * pow(_F_,2.0) * (K_cyt - (K_extr * exp((( - carrierValence_K_flux * _F_ * V) / (_R_ * _T_)))))) / (_R_ * _T_ * (1.0 - exp((( - carrierValence_K_flux * _F_ * V) / (_R_ * _T_))))))</Function>
+        <Function Name="I_leak" Domain="Compartment">((netValence_leak * _F_ * J_leak) * unitFactor_leak)</Function>
+        <Function Name="I_membr" Domain="Compartment">F_membr</Function>
+        <Function Name="J_buffering" Domain="Compartment">(((kon * B) * Ca_cyt) - (Kr_buffering * CaB))</Function>
+        <Function Name="J_Ca_outFlux" Domain="Compartment">( - (pow(Ca_cyt,2.0) * v_pp / (pow(Ca_cyt,2.0) + (K_pp * K_pp))) - (v_ex * pow(Ca_cyt,4.0) / (pow(Ca_cyt,4.0) + pow(K_ex,4.0))))</Function>
+        <Function Name="J_CaL_flux" Domain="Compartment">((I_CaL_flux / (carrierValence_CaL_flux * _F_)) * unitFactor_CaL_flux)</Function>
+        <Function Name="J_CaT_flux" Domain="Compartment">((I_CaT_flux / (carrierValence_CaT_flux * _F_)) * unitFactor_CaT_flux)</Function>
+        <Function Name="J_er_buffering" Domain="Compartment">(((kon_er * Ca_ER) * B_ER) - (Kr_er_buffering * CaB_ER))</Function>
+        <Function Name="J_h_gating" Domain="Compartment">(1000.0 * (h0 - h) / tau_h)</Function>
+        <Function Name="J_H_gating" Domain="Compartment">((ho - h_er) / tau)</Function>
+        <Function Name="J_inFlux" Domain="Compartment">(v * Ca_cyt * Ca_cyt / ((Ca_cyt * Ca_cyt) + (Kp * Kp)))</Function>
+        <Function Name="J_K_Ca_flux" Domain="Compartment">((I_K_Ca_flux / (carrierValence_K_Ca_flux * _F_)) * unitFactor_K_Ca_flux)</Function>
+        <Function Name="J_K_flux" Domain="Compartment">((I_K_flux / (carrierValence_K_flux * _F_)) * unitFactor_K_flux)</Function>
+        <Function Name="J_leak" Domain="Compartment">- (1.0E9 * g_L * (V - V_L) / _F_ / S_L)</Function>
+        <Function Name="J_m_L_gating" Domain="Compartment">(1000.0 * (m_L0 - m_L) / tau_ml)</Function>
+        <Function Name="J_m_T_gating" Domain="Compartment">(1000.0 * (m_T0 - m_T) / tau_mt)</Function>
+        <Function Name="J_n_gating" Domain="Compartment">(1000.0 * (n0 - n) / tau_n)</Function>
+        <Function Name="J_outFlux" Domain="Compartment">- ((Ca_ER - Ca_cyt) * (p + (p0 * a * b_c * d_c * h_er)))</Function>
+        <Function Name="k1" Domain="Compartment">(8.4 * (0.8 + (0.0225 * I_cyt / (0.2 + I_cyt) / (0.0225 + (( - 0.4 + I_cyt) * ( - 0.4 + I_cyt))))) / (60.0 + Ca_ER))</Function>
+        <Function Name="k2" Domain="Compartment">(0.46 * (0.05 + (Ca_ER * I_cyt * I_cyt / (180.0 + (Ca_ER * (1.0 + (I_cyt * I_cyt)))))))</Function>
+        <Function Name="k3" Domain="Compartment">exp(((Ca_cyt - C1) / k4))</Function>
+        <Function Name="K_B_ER_total" Domain="Compartment">((Size_ER * B_ER_init_uM) + (Size_ER * CaB_ER_init_uM))</Function>
+        <Function Name="K_B_total" Domain="Compartment">((Size_cyt * B_init_uM) + (Size_cyt * CaB_init_uM))</Function>
+        <Function Name="K_cyt" Domain="Compartment">K_cyt_init_uM</Function>
+        <Function Name="K_extr" Domain="Compartment">K_extr_init_uM</Function>
+        <Function Name="KFlux_ERM_cyt" Domain="Compartment">(Size_ERM / Size_cyt)</Function>
+        <Function Name="KFlux_ERM_ER" Domain="Compartment">(Size_ERM / Size_ER)</Function>
+        <Function Name="KFlux_membr_cyt" Domain="Compartment">(Size_membr / Size_cyt)</Function>
+        <Function Name="Kr_buffering" Domain="Compartment">(Kd * kon)</Function>
+        <Function Name="Kr_er_buffering" Domain="Compartment">(kon_er * Kd_er)</Function>
+        <Function Name="m_L0" Domain="Compartment">(1.0 / (1.0 + exp((0.08333333333333333 * ( - 12.0 - V)))))</Function>
+        <Function Name="m_T0" Domain="Compartment">(1.0 / (1.0 + exp((0.1111111111111111 * ( - 30.0 - V)))))</Function>
+        <Function Name="n0" Domain="Compartment">(1.0 / (1.0 + exp((0.08 * ( - 5.1 - V)))))</Function>
+        <Function Name="P_CaL_flux" Domain="Compartment">(Pcal * m_L * m_L / Scal)</Function>
+        <Function Name="P_CaT_flux" Domain="Compartment">(Pcat * m_T * m_T * h / Scat)</Function>
+        <Function Name="P_K_Ca_flux" Domain="Compartment">(Pkca * pow(Ca_cyt,4.0) / Skca / (pow(Ca_cyt,4.0) + pow(Kca,4.0)))</Function>
+        <Function Name="P_K_flux" Domain="Compartment">(Pk * n / Sk)</Function>
+        <Function Name="tau" Domain="Compartment">(2.4 / b_h / d_h / (k3 + (1.0 / k3)))</Function>
+        <Function Name="tau_ml" Domain="Compartment">(30.0 / (exp((0.045454545454545456 * (60.0 + V))) + (2.0 * exp((0.09090909090909091 * ( - 60.0 - V))))))</Function>
+        <Function Name="tau_mt" Domain="Compartment">(10.0 / (exp((0.045454545454545456 * (60.0 + V))) + (2.0 * exp((0.09090909090909091 * ( - 60.0 - V))))))</Function>
+        <Function Name="unitFactor_CaL_flux" Domain="Compartment">(1.0E9 / 1.0)</Function>
+        <Function Name="unitFactor_CaT_flux" Domain="Compartment">(1.0E9 / 1.0)</Function>
+        <Function Name="unitFactor_K_Ca_flux" Domain="Compartment">(1.0E9 / 1.0)</Function>
+        <Function Name="unitFactor_K_flux" Domain="Compartment">(1.0E9 / 1.0)</Function>
+        <Function Name="unitFactor_leak" Domain="Compartment">(1.0 / 9.99999999E8)</Function>
+        <Function Name="UnitFactor_mV_pF_s_neg_1_pA_neg_1">(1000.0 / 1.0)</Function>
+        <Function Name="UnitFactor_uM_um3_molecules_neg_1">(1.0 / 602.0)</Function>
+        <Function Name="V" Domain="Compartment">device_voltClampElectrode.V</Function>
+        <CompartmentSubDomain Name="Compartment">
+          <BoundaryType Boundary="Xm" Type="Value" />
+          <BoundaryType Boundary="Xp" Type="Value" />
+          <BoundaryType Boundary="Ym" Type="Value" />
+          <BoundaryType Boundary="Yp" Type="Value" />
+          <BoundaryType Boundary="Zm" Type="Value" />
+          <BoundaryType Boundary="Zp" Type="Value" />
+          <OdeEquation Name="Ca_cyt" SolutionType="Unknown">
+            <Rate>( - (KFlux_ERM_cyt * J_outFlux) + (KFlux_membr_cyt * J_Ca_outFlux) - (KFlux_ERM_cyt * J_inFlux) + (KFlux_membr_cyt * J_CaT_flux) + (KFlux_membr_cyt * J_CaL_flux))</Rate>
+            <Initial>Ca_cyt_init_uM</Initial>
+          </OdeEquation>
+          <OdeEquation Name="CaB" SolutionType="Unknown">
+            <Rate>0.0</Rate>
+            <Initial>CaB_init_uM</Initial>
+          </OdeEquation>
+          <OdeEquation Name="Ca_ER" SolutionType="Unknown">
+            <Rate>((KFlux_ERM_ER * J_inFlux) + (KFlux_ERM_ER * J_outFlux))</Rate>
+            <Initial>Ca_ER_init_uM</Initial>
+          </OdeEquation>
+          <OdeEquation Name="CaB_ER" SolutionType="Unknown">
+            <Rate>0.0</Rate>
+            <Initial>CaB_ER_init_uM</Initial>
+          </OdeEquation>
+          <OdeEquation Name="n" SolutionType="Unknown">
+            <Rate>J_n_gating</Rate>
+            <Initial>n_init_molecules_um_2</Initial>
+          </OdeEquation>
+          <OdeEquation Name="m_L" SolutionType="Unknown">
+            <Rate>J_m_L_gating</Rate>
+            <Initial>m_L_init_molecules_um_2</Initial>
+          </OdeEquation>
+          <OdeEquation Name="m_T" SolutionType="Unknown">
+            <Rate>J_m_T_gating</Rate>
+            <Initial>m_T_init_molecules_um_2</Initial>
+          </OdeEquation>
+          <OdeEquation Name="h" SolutionType="Unknown">
+            <Rate>J_h_gating</Rate>
+            <Initial>h_init_molecules_um_2</Initial>
+          </OdeEquation>
+          <OdeEquation Name="h_er" SolutionType="Unknown">
+            <Rate>J_H_gating</Rate>
+            <Initial>h_er_init_molecules_um_2</Initial>
+          </OdeEquation>
+          <FastSystem>
+            <FastInvariant>((Size_cyt * Ca_cyt) + (Size_cyt * CaB))</FastInvariant>
+            <FastInvariant>((Size_ER * Ca_ER) + (Size_ER * CaB_ER))</FastInvariant>
+            <FastInvariant>(Size_membr * UnitFactor_uM_um3_molecules_neg_1 * n)</FastInvariant>
+            <FastInvariant>(Size_membr * UnitFactor_uM_um3_molecules_neg_1 * m_L)</FastInvariant>
+            <FastInvariant>(Size_membr * UnitFactor_uM_um3_molecules_neg_1 * m_T)</FastInvariant>
+            <FastInvariant>(Size_membr * UnitFactor_uM_um3_molecules_neg_1 * h)</FastInvariant>
+            <FastInvariant>(Size_ERM * UnitFactor_uM_um3_molecules_neg_1 * h_er)</FastInvariant>
+            <FastRate>J_buffering</FastRate>
+            <FastRate>J_er_buffering</FastRate>
+          </FastSystem>
+        </CompartmentSubDomain>
+        <Version Name="voltage_clamp3" KeyValue="99709028" BranchId="2726690" Archived="0" Date="29-Apr-2016 19:16:36" FromVersionable="false">
+          <Owner Name="boris" Identifier="21" />
+          <GroupAccess Type="1" />
+        </Version>
+      </MathDescription>
+      <Simulation Name="Simulation 6">
+        <SolverTaskDescription TaskType="Unsteady" UseSymbolicJacobian="false" Solver="IDA (Variable Order, Variable Time Step, ODE/DAE)">
+          <TimeBound StartTime="0.0" EndTime="115.0" />
+          <TimeStep DefaultTime="0.1" MinTime="1.0E-8" MaxTime="1.0" />
+          <ErrorTolerance Absolut="1.0E-9" Relative="1.0E-9" />
+          <OutputOptions KeepEvery="1" KeepAtMost="1000" />
+          <NumberProcessors>1</NumberProcessors>
+        </SolverTaskDescription>
+        <MathOverrides />
+        <Version Name="Simulation 6" KeyValue="99709238" BranchId="2726737" Archived="0" Date="29-Apr-2016 19:16:41" FromVersionable="false">
+          <Owner Name="boris" Identifier="21" />
+          <GroupAccess Type="1" />
+        </Version>
+      </Simulation>
+      <Version Name="voltage_clamp" KeyValue="99709187" BranchId="2726688" Archived="0" Date="29-Apr-2016 19:16:40" FromVersionable="false">
+        <Owner Name="boris" Identifier="21" />
+        <GroupAccess Type="1" />
+        <Annotation>(copied from volt&amp;calcium) (copied from voltage_only) (copied from voltage_steady_state)</Annotation>
+      </Version>
+      <MicroscopeMeasurement Name="fluor">
+        <ConvolutionKernel Type="ProjectionZKernel" />
+      </MicroscopeMeasurement>
+    </SimulationSpec>
+    <Version Name="Gndph_wBuffer" KeyValue="99732586" BranchId="2688820" Archived="0" Date="30-Apr-2016 19:15:12" FromVersionable="false">
+      <Owner Name="boris" Identifier="21" />
+      <GroupAccess Type="94599156" Hash="3284749036">
+        <User Name="mnickaee" KeyValue="90952974" IsHidden="false" />
+      </GroupAccess>
+    </Version>
+    <pathwayModel>
+      <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:bp="http://www.biopax.org/release/biopax-level3.owl#" version="3.0" />
+    </pathwayModel>
+    <relationshipModel>
+      <RMNS version="3.0" />
+    </relationshipModel>
+    <vcmetadata>
+      <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" />
+      <nonrdfAnnotationList>
+        <nonrdfAnnotation vcid="Species(n)">
+          <freetext>n_gate</freetext>
+        </nonrdfAnnotation>
+        <nonrdfAnnotation vcid="Species(CaB)">
+          <freetext>bound_buffer</freetext>
+        </nonrdfAnnotation>
+        <nonrdfAnnotation vcid="Species(K)">
+          <freetext>potassium</freetext>
+        </nonrdfAnnotation>
+        <nonrdfAnnotation vcid="Species(h_er)">
+          <freetext>H_gate</freetext>
+        </nonrdfAnnotation>
+        <nonrdfAnnotation vcid="Species(m_L)">
+          <freetext>L_gate</freetext>
+        </nonrdfAnnotation>
+        <nonrdfAnnotation vcid="Species(I)">
+          <freetext>IP3</freetext>
+        </nonrdfAnnotation>
+        <nonrdfAnnotation vcid="Species(Ca)">
+          <freetext>calcium</freetext>
+        </nonrdfAnnotation>
+        <nonrdfAnnotation vcid="Species(m_T)">
+          <freetext>T_gate</freetext>
+        </nonrdfAnnotation>
+        <nonrdfAnnotation vcid="Species(B)">
+          <freetext>buffer</freetext>
+        </nonrdfAnnotation>
+        <nonrdfAnnotation vcid="Species(i)">
+          <freetext>carrier</freetext>
+        </nonrdfAnnotation>
+        <nonrdfAnnotation vcid="Species(h)">
+          <freetext>h_gate</freetext>
+        </nonrdfAnnotation>
+      </nonrdfAnnotationList>
+      <uriBindingList />
+    </vcmetadata>
+  </BioModel>
+</vcml>
+

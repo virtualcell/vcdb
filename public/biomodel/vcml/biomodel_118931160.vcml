@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--This biomodel was generated in VCML Version Alpha_Version_7.4.0_build_87-->
+<vcml xmlns="http://sourceforge.net/projects/vcell/vcml" Version="Alpha_Version_7.4.0_build_87">
+  <BioModel Name="Synthesis_&amp;_degradation">
+    <Model Name="model">
+      <Compound Name="s0" />
+      <Compound Name="s2" />
+      <Compound Name="s1" />
+      <Feature Name="c0" KeyValue="118931137" />
+      <LocalizedCompound Name="A" CompoundRef="s0" Structure="c0" OverrideName="true" KeyValue="118931139" />
+      <LocalizedCompound Name="B" CompoundRef="s2" Structure="c0" OverrideName="true" KeyValue="118931140" />
+      <LocalizedCompound Name="RNA" CompoundRef="s1" Structure="c0" OverrideName="true" KeyValue="118931141" />
+      <SimpleReaction Structure="c0" Name="r0" Reversible="true" FluxOption="MolecularOnly" KeyValue="118931142">
+        <Product LocalizedCompoundRef="A" Stoichiometry="1" KeyValue="118931143" />
+        <Modifier LocalizedCompoundRef="RNA" />
+        <Kinetics KineticsType="GeneralLumpedKinetics">
+          <Parameter Name="LumpedJ" Role="lumped reaction rate" Unit="molecules.h-1">(k * RNA)</Parameter>
+          <Parameter Name="k" Role="user defined" Unit="h-1">1.0</Parameter>
+        </Kinetics>
+      </SimpleReaction>
+      <SimpleReaction Structure="c0" Name="r1" Reversible="false" FluxOption="MolecularOnly" KeyValue="118931145">
+        <Reactant LocalizedCompoundRef="B" Stoichiometry="1" KeyValue="118931146" />
+        <Kinetics KineticsType="GeneralLumpedKinetics">
+          <Parameter Name="LumpedJ" Role="lumped reaction rate" Unit="molecules.h-1">(c0 * Kf * B)</Parameter>
+          <Parameter Name="Kf" Role="user defined" Unit="h-1">10.0</Parameter>
+        </Kinetics>
+      </SimpleReaction>
+      <Diagram Name="c0" Structure="c0">
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="RNA" LocationX="72" LocationY="178" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="B" LocationX="218" LocationY="63" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="full" SimpleReactionRef="r1" LocationX="337" LocationY="117" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="full" SimpleReactionRef="r0" LocationX="25" LocationY="158" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="A" LocationX="59" LocationY="94" />
+      </Diagram>
+      <Version Name="model" KeyValue="118931131" BranchId="118931132" Archived="0" Date="10-Oct-2017 12:30:54" FromVersionable="false">
+        <Owner Name="mblinov" Identifier="12487253" />
+        <GroupAccess Type="1" />
+      </Version>
+      <ModelUnitSystem VolumeSubstanceUnit="molecules" MembraneSubstanceUnit="molecules" LumpedReactionSubstanceUnit="molecules" VolumeUnit="um3" AreaUnit="um2" LengthUnit="um" TimeUnit="h" />
+    </Model>
+    <SimulationSpec Name="Application0" Stochastic="false" UseConcentration="true" RuleBased="false" MassConservationModelReduction="true" InsufficientIterations="false" InsufficientMaxMolecules="false">
+      <NetworkConstraints RbmMaxIteration="3" RbmMaxMoleculesPerSpecies="10" RbmSpeciesLimit="800" RbmReactionsLimit="2500" />
+      <Annotation />
+      <Geometry Name="non-spatial32092956" Dimension="0">
+        <Extent X="10.0" Y="10.0" Z="10.0" />
+        <Origin X="0.0" Y="0.0" Z="0.0" />
+        <SubVolume Name="Compartment" Handle="0" Type="Compartmental" KeyValue="118931127" />
+        <Version Name="non-spatial32092956" KeyValue="118931123" BranchId="118931124" Archived="0" Date="10-Oct-2017 12:30:54" FromVersionable="false">
+          <Owner Name="mblinov" Identifier="12487253" />
+          <GroupAccess Type="1" />
+        </Version>
+      </Geometry>
+      <GeometryContext>
+        <FeatureMapping Feature="c0" GeometryClass="Compartment" SubVolume="Compartment" Size="50000.0">
+          <BoundariesTypes Xm="Flux" Xp="Flux" Ym="Flux" Yp="Flux" Zm="Flux" Zp="Flux" />
+        </FeatureMapping>
+      </GeometryContext>
+      <ReactionContext>
+        <LocalizedCompoundSpec LocalizedCompoundRef="A" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>0.0</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="B" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>10.0</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="RNA" ForceConstant="true" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>10.0</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <ReactionSpec ReactionStepRef="r0" ReactionMapping="included" />
+        <ReactionSpec ReactionStepRef="r1" ReactionMapping="included" />
+      </ReactionContext>
+      <MathDescription Name="Application0_generated">
+        <Constant Name="_F_">96480.0</Constant>
+        <Constant Name="_F_nmol_">9.648E-5</Constant>
+        <Constant Name="_K_GHK_">1.0E-9</Constant>
+        <Constant Name="_N_pmol_">6.02E11</Constant>
+        <Constant Name="_PI_">3.141592653589793</Constant>
+        <Constant Name="_R_">8314.0</Constant>
+        <Constant Name="_T_">300.0</Constant>
+        <Constant Name="A_init_molecules_um_3">0.0</Constant>
+        <Constant Name="B_init_molecules_um_3">10.0</Constant>
+        <Constant Name="k">1.0</Constant>
+        <Constant Name="K_millivolts_per_volt">1000.0</Constant>
+        <Constant Name="Kf">10.0</Constant>
+        <Constant Name="KMOLE">(1.0 / 602.0)</Constant>
+        <Constant Name="RNA_init_molecules_um_3">10.0</Constant>
+        <Constant Name="Size_c0">50000.0</Constant>
+        <VolumeVariable Name="A" Domain="Compartment" />
+        <VolumeVariable Name="B" Domain="Compartment" />
+        <Function Name="LumpedJ_r0" Domain="Compartment">(k * RNA)</Function>
+        <Function Name="LumpedJ_r1" Domain="Compartment">(Size_c0 * Kf * B)</Function>
+        <Function Name="RNA" Domain="Compartment">RNA_init_molecules_um_3</Function>
+        <CompartmentSubDomain Name="Compartment">
+          <BoundaryType Boundary="Xm" Type="Value" />
+          <BoundaryType Boundary="Xp" Type="Value" />
+          <BoundaryType Boundary="Ym" Type="Value" />
+          <BoundaryType Boundary="Yp" Type="Value" />
+          <BoundaryType Boundary="Zm" Type="Value" />
+          <BoundaryType Boundary="Zp" Type="Value" />
+          <OdeEquation Name="A" SolutionType="Unknown">
+            <Rate>(LumpedJ_r0 / Size_c0)</Rate>
+            <Initial>A_init_molecules_um_3</Initial>
+          </OdeEquation>
+          <OdeEquation Name="B" SolutionType="Unknown">
+            <Rate>- (LumpedJ_r1 / Size_c0)</Rate>
+            <Initial>B_init_molecules_um_3</Initial>
+          </OdeEquation>
+        </CompartmentSubDomain>
+        <Version Name="Application0_generated" KeyValue="118931128" BranchId="118931129" Archived="0" Date="10-Oct-2017 12:30:54" FromVersionable="false">
+          <Owner Name="mblinov" Identifier="12487253" />
+          <GroupAccess Type="1" />
+        </Version>
+      </MathDescription>
+      <Simulation Name="Simulation0">
+        <SolverTaskDescription TaskType="Unsteady" UseSymbolicJacobian="false" Solver="Combined Stiff Solver (IDA/CVODE)">
+          <TimeBound StartTime="0.0" EndTime="1.0" />
+          <TimeStep DefaultTime="0.1" MinTime="1.0E-8" MaxTime="1.0" />
+          <ErrorTolerance Absolut="1.0E-9" Relative="1.0E-9" />
+          <OutputOptions KeepEvery="1" KeepAtMost="1000" />
+          <NumberProcessors>1</NumberProcessors>
+        </SolverTaskDescription>
+        <MathOverrides />
+        <Version Name="Simulation0" KeyValue="118931157" BranchId="118931158" Archived="0" Date="10-Oct-2017 12:30:54" FromVersionable="false">
+          <Owner Name="mblinov" Identifier="12487253" />
+          <GroupAccess Type="1" />
+        </Version>
+      </Simulation>
+      <Version Name="Application0" KeyValue="118931148" BranchId="118931149" Archived="0" Date="10-Oct-2017 12:30:54" FromVersionable="false">
+        <Owner Name="mblinov" Identifier="12487253" />
+        <GroupAccess Type="1" />
+      </Version>
+      <MicroscopeMeasurement Name="fluor">
+        <ConvolutionKernel Type="ProjectionZKernel" />
+      </MicroscopeMeasurement>
+    </SimulationSpec>
+    <Version Name="Synthesis_&amp;_degradation" KeyValue="118931160" BranchId="118931161" Archived="0" Date="10-Oct-2017 12:30:54" FromVersionable="false">
+      <Owner Name="mblinov" Identifier="12487253" />
+      <GroupAccess Type="1" />
+    </Version>
+    <pathwayModel>
+      <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:bp="http://www.biopax.org/release/biopax-level3.owl#" version="3.0" />
+    </pathwayModel>
+    <relationshipModel>
+      <RMNS version="3.0" />
+    </relationshipModel>
+    <vcmetadata>
+      <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" />
+      <nonrdfAnnotationList />
+      <uriBindingList />
+    </vcmetadata>
+  </BioModel>
+</vcml>
+

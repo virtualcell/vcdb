@@ -1,0 +1,333 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--This biomodel was generated in VCML Version Alpha_Version_7.4.0_build_87-->
+<vcml xmlns="http://sourceforge.net/projects/vcell/vcml" Version="Alpha_Version_7.4.0_build_87">
+  <BioModel Name="iGEM-2009-Paris-BactoBubbleProject-V2">
+    <Annotation>My first model</Annotation>
+    <Model Name="unnamed">
+      <Compound Name="geneA" />
+      <Compound Name="proteinA" />
+      <Compound Name="genesTat" />
+      <Compound Name="TAT">
+        <SpeciesBinding KeyValue="34647998" Type="Protein">
+          <DBFormalSpecies KeyValue="3689572" Type="Protein">
+            <SpeciesInfo FormalID="TATA_ECOLI" Organism="Escherichia coli" Accession="P69428; O65938; P27856;" Keywords="Complete proteome; Direct protein sequencing; Inner membrane; Membrane; Protein transport; Translocation; Transmembrane; Transport" Type="Protein">
+              <Name>Sec-independent protein translocase protein tatA</Name>
+            </SpeciesInfo>
+          </DBFormalSpecies>
+        </SpeciesBinding>
+      </Compound>
+      <Feature Name="periplasme" KeyValue="34648304" />
+      <Feature Name="cytoplasme" KeyValue="34648307" />
+      <Feature Name="external medium" KeyValue="34648302" />
+      <Membrane InsideFeature="cytoplasme" OutsideFeature="periplasme" PositiveFeature="cytoplasme" NegativeFeature="periplasme" MembraneVoltage="Voltage_innermenbrane" Name="innermenbrane" KeyValue="34648306" />
+      <Membrane InsideFeature="periplasme" OutsideFeature="external medium" PositiveFeature="periplasme" NegativeFeature="external medium" MembraneVoltage="Voltage_Outermembrane" Name="Outermembrane" KeyValue="34648303" />
+      <LocalizedCompound Name="geneA_cytoplasme" CompoundRef="geneA" Structure="cytoplasme" OverrideName="true" KeyValue="34648313" />
+      <LocalizedCompound Name="proteinA_cytoplasme" CompoundRef="proteinA" Structure="cytoplasme" OverrideName="true" KeyValue="34648314" />
+      <LocalizedCompound Name="proteinA_periplasme" CompoundRef="proteinA" Structure="periplasme" OverrideName="true" KeyValue="34648315" />
+      <LocalizedCompound Name="proteinA_external_medium" CompoundRef="proteinA" Structure="external medium" OverrideName="true" KeyValue="34648316" />
+      <LocalizedCompound Name="genesTat_cytoplasme" CompoundRef="genesTat" Structure="cytoplasme" OverrideName="true" KeyValue="34648317" />
+      <LocalizedCompound Name="TAT_innermenbrane" CompoundRef="TAT" Structure="innermenbrane" OverrideName="true" KeyValue="34648312" />
+      <SimpleReaction Structure="innermenbrane" Name="transportFromCyto2Peri" Reversible="true" FluxOption="MolecularOnly" KeyValue="34648318">
+        <Reactant LocalizedCompoundRef="proteinA_cytoplasme" Stoichiometry="1" KeyValue="34648319" />
+        <Product LocalizedCompoundRef="proteinA_periplasme" Stoichiometry="1" KeyValue="34648320" />
+        <Kinetics KineticsType="HMMIrreversible">
+          <Parameter Name="J" Role="reaction rate" Unit="molecules.um-2.s-1">((Vmax * proteinA_cytoplasme) / (Km + proteinA_cytoplasme))</Parameter>
+          <Parameter Name="I" Role="inward current density" Unit="pA.um-2">0.0</Parameter>
+          <Parameter Name="netValence" Role="net charge valence" Unit="1">0.0</Parameter>
+          <Parameter Name="Km" Role="Km (1/2 max)" Unit="uM">0.0</Parameter>
+          <Parameter Name="Vmax" Role="max reaction rate" Unit="molecules.um-2.s-1">0.0</Parameter>
+        </Kinetics>
+      </SimpleReaction>
+      <SimpleReaction Structure="cytoplasme" Name="ProteinASynthesis" Reversible="true" FluxOption="MolecularOnly" KeyValue="34648322">
+        <Reactant LocalizedCompoundRef="geneA_cytoplasme" Stoichiometry="1" KeyValue="34648323" />
+        <Product LocalizedCompoundRef="proteinA_cytoplasme" Stoichiometry="1" KeyValue="34648324" />
+        <Kinetics KineticsType="HMMIrreversible">
+          <Parameter Name="J" Role="reaction rate" Unit="uM.s-1">((Vmax * geneA_cytoplasme) / (Km + geneA_cytoplasme))</Parameter>
+          <Parameter Name="Km" Role="Km (1/2 max)" Unit="uM">0.0</Parameter>
+          <Parameter Name="Vmax" Role="max reaction rate" Unit="uM.s-1">0.5</Parameter>
+        </Kinetics>
+      </SimpleReaction>
+      <SimpleReaction Structure="Outermembrane" Name="Transport2ExternalProteinA" Reversible="true" FluxOption="MolecularOnly" KeyValue="34648325">
+        <Reactant LocalizedCompoundRef="proteinA_periplasme" Stoichiometry="1" KeyValue="34648326" />
+        <Product LocalizedCompoundRef="proteinA_external_medium" Stoichiometry="1" KeyValue="34648327" />
+        <Kinetics KineticsType="GeneralKinetics">
+          <Parameter Name="J" Role="reaction rate" Unit="molecules.um-2.s-1">0.0</Parameter>
+          <Parameter Name="I" Role="inward current density" Unit="pA.um-2">0.0</Parameter>
+          <Parameter Name="netValence" Role="net charge valence" Unit="1">0.0</Parameter>
+        </Kinetics>
+      </SimpleReaction>
+      <SimpleReaction Structure="innermenbrane" Name="tatGenes2TatSystem" Reversible="true" FluxOption="MolecularOnly" KeyValue="34648328">
+        <Reactant LocalizedCompoundRef="genesTat_cytoplasme" Stoichiometry="1" KeyValue="34648329" />
+        <Product LocalizedCompoundRef="TAT_innermenbrane" Stoichiometry="1" KeyValue="34648330" />
+        <Kinetics KineticsType="HMMIrreversible">
+          <Parameter Name="J" Role="reaction rate" Unit="molecules.um-2.s-1">((Vmax * genesTat_cytoplasme) / (Km + genesTat_cytoplasme))</Parameter>
+          <Parameter Name="I" Role="inward current density" Unit="pA.um-2">0.0</Parameter>
+          <Parameter Name="netValence" Role="net charge valence" Unit="1">0.0</Parameter>
+          <Parameter Name="Km" Role="Km (1/2 max)" Unit="uM">0.0</Parameter>
+          <Parameter Name="Vmax" Role="max reaction rate" Unit="molecules.um-2.s-1">0.0</Parameter>
+        </Kinetics>
+      </SimpleReaction>
+      <Diagram Name="O" Structure="external medium" />
+      <Diagram Name="Outermembrane" Structure="Outermembrane">
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="proteinA_periplasme" LocationX="46" LocationY="48" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="proteinA_external_medium" LocationX="48" LocationY="36" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="full" SimpleReactionRef="Transport2ExternalProteinA" LocationX="165" LocationY="84" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="proteinA_periplasme" LocationX="46" LocationY="48" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="proteinA_external_medium" LocationX="48" LocationY="36" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="molecule" SimpleReactionRef="Transport2ExternalProteinA" LocationX="165" LocationY="84" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="proteinA_periplasme" LocationX="46" LocationY="48" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="proteinA_external_medium" LocationX="48" LocationY="36" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="rule" SimpleReactionRef="Transport2ExternalProteinA" LocationX="165" LocationY="84" />
+      </Diagram>
+      <Diagram Name="Unnamed compartment" Structure="periplasme" />
+      <Diagram Name="innermenbrane" Structure="innermenbrane">
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="TAT_innermenbrane" LocationX="139" LocationY="241" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="geneA_cytoplasme" LocationX="58" LocationY="85" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="proteinA_cytoplasme" LocationX="18" LocationY="270" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="proteinA_periplasme" LocationX="32" LocationY="267" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="full" SimpleReactionRef="transportFromCyto2Peri" LocationX="141" LocationY="276" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="genesTat_cytoplasme" LocationX="20" LocationY="169" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="full" SimpleReactionRef="tatGenes2TatSystem" LocationX="221" LocationY="168" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="TAT_innermenbrane" LocationX="139" LocationY="241" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="geneA_cytoplasme" LocationX="58" LocationY="85" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="proteinA_cytoplasme" LocationX="18" LocationY="270" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="proteinA_periplasme" LocationX="32" LocationY="267" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="molecule" SimpleReactionRef="transportFromCyto2Peri" LocationX="141" LocationY="276" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="genesTat_cytoplasme" LocationX="20" LocationY="169" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="molecule" SimpleReactionRef="tatGenes2TatSystem" LocationX="221" LocationY="168" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="TAT_innermenbrane" LocationX="139" LocationY="241" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="geneA_cytoplasme" LocationX="58" LocationY="85" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="proteinA_cytoplasme" LocationX="18" LocationY="270" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="proteinA_periplasme" LocationX="32" LocationY="267" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="rule" SimpleReactionRef="transportFromCyto2Peri" LocationX="141" LocationY="276" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="genesTat_cytoplasme" LocationX="20" LocationY="169" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="rule" SimpleReactionRef="tatGenes2TatSystem" LocationX="221" LocationY="168" />
+      </Diagram>
+      <Diagram Name="test" Structure="cytoplasme">
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="geneA_cytoplasme" LocationX="79" LocationY="51" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="proteinA_cytoplasme" LocationX="257" LocationY="87" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="full" SimpleReactionRef="ProteinASynthesis" LocationX="160" LocationY="82" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="genesTat_cytoplasme" LocationX="272" LocationY="165" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="geneA_cytoplasme" LocationX="79" LocationY="51" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="proteinA_cytoplasme" LocationX="257" LocationY="87" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="molecule" SimpleReactionRef="ProteinASynthesis" LocationX="160" LocationY="82" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="genesTat_cytoplasme" LocationX="272" LocationY="165" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="geneA_cytoplasme" LocationX="79" LocationY="51" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="proteinA_cytoplasme" LocationX="257" LocationY="87" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="rule" SimpleReactionRef="ProteinASynthesis" LocationX="160" LocationY="82" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="genesTat_cytoplasme" LocationX="272" LocationY="165" />
+      </Diagram>
+      <Version Name="unnamed" KeyValue="34648296" BranchId="34646880" Archived="0" Date="04-Aug-2009 09:53:26" FromVersionable="false">
+        <Owner Name="flefevre" Identifier="6787029" />
+        <GroupAccess Type="1" />
+      </Version>
+      <ModelUnitSystem VolumeSubstanceUnit="uM.um3" MembraneSubstanceUnit="molecules" LumpedReactionSubstanceUnit="molecules" VolumeUnit="um3" AreaUnit="um2" LengthUnit="um" TimeUnit="s" />
+    </Model>
+    <SimulationSpec Name="Application1" Stochastic="false" UseConcentration="true" RuleBased="false" MassConservationModelReduction="true" InsufficientIterations="false" InsufficientMaxMolecules="false">
+      <NetworkConstraints RbmMaxIteration="1" RbmMaxMoleculesPerSpecies="10" RbmSpeciesLimit="800" RbmReactionsLimit="2500" />
+      <Annotation>note blabla</Annotation>
+      <Geometry Name="non-spatial1324325623" Dimension="0">
+        <Extent X="10.0" Y="10.0" Z="10.0" />
+        <Origin X="0.0" Y="0.0" Z="0.0" />
+        <SubVolume Name="Compartment" Handle="0" Type="Compartmental" KeyValue="34648223" />
+        <Version Name="non-spatial1324325623" KeyValue="34648219" BranchId="34648220" Archived="0" Date="04-Aug-2009 09:50:51" FromVersionable="false">
+          <Owner Name="flefevre" Identifier="6787029" />
+          <GroupAccess Type="1" />
+        </Version>
+      </Geometry>
+      <GeometryContext>
+        <FeatureMapping Feature="periplasme" GeometryClass="Compartment" SubVolume="Compartment" Size="10.0">
+          <BoundariesTypes Xm="Flux" Xp="Flux" Ym="Flux" Yp="Flux" Zm="Flux" Zp="Flux" />
+        </FeatureMapping>
+        <FeatureMapping Feature="cytoplasme" GeometryClass="Compartment" SubVolume="Compartment" Size="10.0">
+          <BoundariesTypes Xm="Flux" Xp="Flux" Ym="Flux" Yp="Flux" Zm="Flux" Zp="Flux" />
+        </FeatureMapping>
+        <FeatureMapping Feature="external medium" GeometryClass="Compartment" SubVolume="Compartment" Size="100.0">
+          <BoundariesTypes Xm="Flux" Xp="Flux" Ym="Flux" Yp="Flux" Zm="Flux" Zp="Flux" />
+        </FeatureMapping>
+        <MembraneMapping Membrane="innermenbrane" SurfaceToVolumeRatio="0.1" VolumeFraction="0.5" Size="1.0" CalculateVoltage="false" SpecificCapacitance="1.0" InitialVoltage="0.0" GeometryClass="Compartment">
+          <BoundariesTypes Xm="Flux" Xp="Flux" Ym="Flux" Yp="Flux" Zm="Flux" Zp="Flux" />
+        </MembraneMapping>
+        <MembraneMapping Membrane="Outermembrane" SurfaceToVolumeRatio="0.05" VolumeFraction="0.16666666666666666" Size="1.0" CalculateVoltage="false" SpecificCapacitance="1.0" InitialVoltage="0.0" GeometryClass="Compartment">
+          <BoundariesTypes Xm="Flux" Xp="Flux" Ym="Flux" Yp="Flux" Zm="Flux" Zp="Flux" />
+        </MembraneMapping>
+      </GeometryContext>
+      <ReactionContext>
+        <LocalizedCompoundSpec LocalizedCompoundRef="proteinA_periplasme" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>0.0</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="geneA_cytoplasme" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>10.0</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="proteinA_cytoplasme" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>0.0</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="genesTat_cytoplasme" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>0.0</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="proteinA_external_medium" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>0.0</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="TAT_innermenbrane" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>0.0</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <ReactionSpec ReactionStepRef="transportFromCyto2Peri" ReactionMapping="included" />
+        <ReactionSpec ReactionStepRef="ProteinASynthesis" ReactionMapping="included" />
+        <ReactionSpec ReactionStepRef="Transport2ExternalProteinA" ReactionMapping="included" />
+        <ReactionSpec ReactionStepRef="tatGenes2TatSystem" ReactionMapping="included" />
+      </ReactionContext>
+      <MathDescription Name="Application1_generated">
+        <Constant Name="_F_">96480.0</Constant>
+        <Constant Name="_F_nmol_">9.648E-5</Constant>
+        <Constant Name="_K_GHK_">1.0E-9</Constant>
+        <Constant Name="_N_pmol_">6.02E11</Constant>
+        <Constant Name="_R_">8314.0</Constant>
+        <Constant Name="_T_">300.0</Constant>
+        <Constant Name="geneA_cytoplasme_init">10.0</Constant>
+        <Constant Name="genesTat_cytoplasme_init">0.0</Constant>
+        <Constant Name="J_Transport2ExternalProteinA">0.0</Constant>
+        <Constant Name="K_millivolts_per_volt">1000.0</Constant>
+        <Constant Name="Km_ProteinASynthesis">0.0</Constant>
+        <Constant Name="Km_tatGenes2TatSystem">0.0</Constant>
+        <Constant Name="Km_transportFromCyto2Peri">0.0</Constant>
+        <Constant Name="KMOLE">0.0016611295681063123</Constant>
+        <Constant Name="proteinA_cytoplasme_init">0.0</Constant>
+        <Constant Name="proteinA_external_medium_init">0.0</Constant>
+        <Constant Name="proteinA_periplasme_init">0.0</Constant>
+        <Constant Name="Size_cytoplasme">10.0</Constant>
+        <Constant Name="Size_external_medium">100.0</Constant>
+        <Constant Name="Size_innermenbrane">1.0</Constant>
+        <Constant Name="Size_Outermembrane">1.0</Constant>
+        <Constant Name="Size_periplasme">10.0</Constant>
+        <Constant Name="SurfToVol_innermenbrane">0.1</Constant>
+        <Constant Name="SurfToVol_Outermembrane">0.05</Constant>
+        <Constant Name="TAT_innermenbrane_init">0.0</Constant>
+        <Constant Name="Vmax_ProteinASynthesis">0.5</Constant>
+        <Constant Name="Vmax_tatGenes2TatSystem">0.0</Constant>
+        <Constant Name="Vmax_transportFromCyto2Peri">0.0</Constant>
+        <Constant Name="VolFract_cytoplasme">0.5</Constant>
+        <Constant Name="VolFract_periplasme">0.16666666666666666</Constant>
+        <Constant Name="Voltage_innermenbrane">0.0</Constant>
+        <Constant Name="Voltage_Outermembrane">0.0</Constant>
+        <VolumeVariable Name="geneA_cytoplasme" />
+        <VolumeVariable Name="proteinA_cytoplasme" />
+        <VolumeVariable Name="proteinA_external_medium" />
+        <VolumeVariable Name="TAT_innermenbrane" />
+        <Function Name="genesTat_cytoplasme">((K_genesTat_cytoplasme_total - (TAT_innermenbrane * VolFract_periplasme * SurfToVol_innermenbrane * VolFract_cytoplasme * KMOLE)) / (VolFract_cytoplasme * VolFract_periplasme))</Function>
+        <Function Name="J_ProteinASynthesis">(Vmax_ProteinASynthesis * geneA_cytoplasme / (Km_ProteinASynthesis + geneA_cytoplasme))</Function>
+        <Function Name="J_tatGenes2TatSystem">(Vmax_tatGenes2TatSystem * genesTat_cytoplasme / (Km_tatGenes2TatSystem + genesTat_cytoplasme))</Function>
+        <Function Name="J_transportFromCyto2Peri">(Vmax_transportFromCyto2Peri * proteinA_cytoplasme / (Km_transportFromCyto2Peri + proteinA_cytoplasme))</Function>
+        <Function Name="K_genesTat_cytoplasme_total">((genesTat_cytoplasme_init * VolFract_cytoplasme * VolFract_periplasme) + (TAT_innermenbrane_init * VolFract_periplasme * SurfToVol_innermenbrane * VolFract_cytoplasme * KMOLE))</Function>
+        <Function Name="K_proteinA_periplasme_total">(((1.0 - VolFract_periplasme) * proteinA_external_medium_init) + (proteinA_cytoplasme_init * VolFract_cytoplasme * VolFract_periplasme) + (proteinA_periplasme_init * (1.0 - VolFract_cytoplasme) * VolFract_periplasme) + (geneA_cytoplasme_init * VolFract_cytoplasme * VolFract_periplasme))</Function>
+        <Function Name="KFlux_innermenbrane_mapping_cytoplasme">SurfToVol_innermenbrane</Function>
+        <Function Name="KFlux_innermenbrane_mapping_periplasme">(SurfToVol_innermenbrane * VolFract_cytoplasme / (1.0 - VolFract_cytoplasme))</Function>
+        <Function Name="KFlux_Outermembrane_mapping_external_medium">(SurfToVol_Outermembrane * VolFract_periplasme / (1.0 - VolFract_periplasme))</Function>
+        <Function Name="KFlux_Outermembrane_mapping_periplasme">(SurfToVol_Outermembrane / (1.0 - VolFract_cytoplasme))</Function>
+        <Function Name="proteinA_periplasme">(( - ((1.0 - VolFract_periplasme) * proteinA_external_medium) - (proteinA_cytoplasme * VolFract_cytoplasme * VolFract_periplasme) + K_proteinA_periplasme_total - (geneA_cytoplasme * VolFract_cytoplasme * VolFract_periplasme)) / ((1.0 - VolFract_cytoplasme) * VolFract_periplasme))</Function>
+        <CompartmentSubDomain Name="Compartment">
+          <BoundaryType Boundary="Xm" Type="Value" />
+          <BoundaryType Boundary="Xp" Type="Value" />
+          <BoundaryType Boundary="Ym" Type="Value" />
+          <BoundaryType Boundary="Yp" Type="Value" />
+          <BoundaryType Boundary="Zm" Type="Value" />
+          <BoundaryType Boundary="Zp" Type="Value" />
+          <OdeEquation Name="geneA_cytoplasme" SolutionType="Unknown">
+            <Rate>- J_ProteinASynthesis</Rate>
+            <Initial>geneA_cytoplasme_init</Initial>
+          </OdeEquation>
+          <OdeEquation Name="proteinA_cytoplasme" SolutionType="Unknown">
+            <Rate>( - (KFlux_innermenbrane_mapping_cytoplasme * KMOLE * J_transportFromCyto2Peri) + J_ProteinASynthesis)</Rate>
+            <Initial>proteinA_cytoplasme_init</Initial>
+          </OdeEquation>
+          <OdeEquation Name="proteinA_external_medium" SolutionType="Unknown">
+            <Rate>(KFlux_Outermembrane_mapping_external_medium * KMOLE * J_Transport2ExternalProteinA)</Rate>
+            <Initial>proteinA_external_medium_init</Initial>
+          </OdeEquation>
+          <OdeEquation Name="TAT_innermenbrane" SolutionType="Unknown">
+            <Rate>J_tatGenes2TatSystem</Rate>
+            <Initial>TAT_innermenbrane_init</Initial>
+          </OdeEquation>
+        </CompartmentSubDomain>
+        <Version Name="Application1_generated" KeyValue="34648294" BranchId="34648225" Archived="0" Date="04-Aug-2009 09:53:26" FromVersionable="false">
+          <Owner Name="flefevre" Identifier="6787029" />
+          <GroupAccess Type="1" />
+        </Version>
+      </MathDescription>
+      <Simulation Name="Simulation0">
+        <SolverTaskDescription TaskType="Unsteady" UseSymbolicJacobian="false" Solver="Combined Stiff Solver (IDA/CVODE)">
+          <TimeBound StartTime="0.0" EndTime="1.0" />
+          <TimeStep DefaultTime="0.1" MinTime="1.0E-8" MaxTime="1.0" />
+          <ErrorTolerance Absolut="1.0E-9" Relative="1.0E-9" />
+          <OutputOptions KeepEvery="1" KeepAtMost="1000" />
+          <NumberProcessors>1</NumberProcessors>
+        </SolverTaskDescription>
+        <MathOverrides />
+        <Version Name="Simulation0" KeyValue="34648353" BranchId="34648286" Archived="0" Date="04-Aug-2009 09:53:26" FromVersionable="false">
+          <Owner Name="flefevre" Identifier="6787029" />
+          <GroupAccess Type="1" />
+        </Version>
+      </Simulation>
+      <Simulation Name="Simulation1">
+        <SolverTaskDescription TaskType="Unsteady" UseSymbolicJacobian="false" Solver="Combined Stiff Solver (IDA/CVODE)">
+          <TimeBound StartTime="0.0" EndTime="100.0" />
+          <TimeStep DefaultTime="0.1" MinTime="1.0E-8" MaxTime="1.0" />
+          <ErrorTolerance Absolut="1.0E-9" Relative="1.0E-9" />
+          <OutputOptions KeepEvery="1" KeepAtMost="1000" />
+          <NumberProcessors>1</NumberProcessors>
+        </SolverTaskDescription>
+        <MathOverrides />
+        <Version Name="Simulation1" KeyValue="34648355" BranchId="34648356" Archived="0" Date="04-Aug-2009 09:53:26" FromVersionable="false">
+          <Owner Name="flefevre" Identifier="6787029" />
+          <GroupAccess Type="1" />
+        </Version>
+      </Simulation>
+      <Version Name="Application1" KeyValue="34648336" BranchId="34648268" Archived="0" Date="04-Aug-2009 09:53:26" FromVersionable="false">
+        <Owner Name="flefevre" Identifier="6787029" />
+        <GroupAccess Type="1" />
+        <Annotation>note blabla</Annotation>
+      </Version>
+      <MicroscopeMeasurement Name="fluor">
+        <ConvolutionKernel Type="ProjectionZKernel" />
+      </MicroscopeMeasurement>
+    </SimulationSpec>
+    <Version Name="iGEM-2009-Paris-BactoBubbleProject-V2" KeyValue="34648979" BranchId="34648980" Archived="0" Date="04-Aug-2009 09:56:58" FromVersionable="false">
+      <Owner Name="flefevre" Identifier="6787029" />
+      <GroupAccess Type="1" />
+      <Annotation>My first model</Annotation>
+    </Version>
+    <pathwayModel>
+      <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:bp="http://www.biopax.org/release/biopax-level3.owl#" version="3.0" />
+    </pathwayModel>
+    <relationshipModel>
+      <RMNS version="3.0" />
+    </relationshipModel>
+    <vcmetadata>
+      <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
+        <rdf:Description rdf:about="http://sourceforge.net/projects/vcell/vcml/cbit.vcell.model.Species/metaid_1281776810">
+          <bqbiol:isVersionOf xmlns:bqbiol="http://biomodels.net/biology-qualifiers/">
+            <rdf:Bag rdf:nodeID="node0">
+              <rdf:li>
+                <rdf:Description rdf:about="urn:miriam:uniprot:TATA_ECOLI" />
+              </rdf:li>
+            </rdf:Bag>
+          </bqbiol:isVersionOf>
+        </rdf:Description>
+      </rdf:RDF>
+      <nonrdfAnnotationList>
+        <nonrdfAnnotation vcid="BioModel(iGEM-2009-Paris-BactoBubbleProject-V2)">
+          <freetext>My first model</freetext>
+        </nonrdfAnnotation>
+      </nonrdfAnnotationList>
+      <uriBindingList>
+        <uriBinding uri="http://sourceforge.net/projects/vcell/vcml/cbit.vcell.model.Species/metaid_1281776810" vcid="Species(TAT)" />
+      </uriBindingList>
+    </vcmetadata>
+  </BioModel>
+</vcml>
+

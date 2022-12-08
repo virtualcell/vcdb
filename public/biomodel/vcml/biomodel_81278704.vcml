@@ -1,0 +1,367 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--This biomodel was generated in VCML Version Alpha_Version_7.4.0_build_87-->
+<vcml xmlns="http://sourceforge.net/projects/vcell/vcml" Version="Alpha_Version_7.4.0_build_87">
+  <BioModel Name="Pharmacokinetics">
+    <Annotation>cloned from 'Pharmacokinetics' owned by user supersonka</Annotation>
+    <Model Name="unnamed">
+      <Annotation>cloned from 'unnamed' owned by user supersonka</Annotation>
+      <ModelParameters>
+        <Parameter Name="Release" Role="user defined" Unit="uM.s-1">0.0</Parameter>
+        <Parameter Name="ta" Role="user defined" Unit="s">0.0</Parameter>
+      </ModelParameters>
+      <Compound Name="s2" />
+      <Compound Name="s3" />
+      <Compound Name="s0" />
+      <Compound Name="s1" />
+      <Feature Name="Human" KeyValue="81278650" />
+      <LocalizedCompound Name="blood" CompoundRef="s2" Structure="Human" OverrideName="true" KeyValue="81278652" />
+      <LocalizedCompound Name="metabolized" CompoundRef="s3" Structure="Human" OverrideName="true" KeyValue="81278653" />
+      <LocalizedCompound Name="gut" CompoundRef="s0" Structure="Human" OverrideName="true" KeyValue="81278654" />
+      <LocalizedCompound Name="pill" CompoundRef="s1" Structure="Human" OverrideName="true" KeyValue="81278655" />
+      <SimpleReaction Structure="Human" Name="Elimination" Reversible="true" FluxOption="MolecularOnly" KeyValue="81278656">
+        <Reactant LocalizedCompoundRef="blood" Stoichiometry="1" KeyValue="81278657" />
+        <Product LocalizedCompoundRef="metabolized" Stoichiometry="1" KeyValue="81278658" />
+        <Kinetics KineticsType="MassAction">
+          <Parameter Name="J" Role="reaction rate" Unit="uM.s-1">((Kelim * blood) - (Kr * metabolized))</Parameter>
+          <Parameter Name="Kelim" Role="forward rate constant" Unit="s-1">0.0</Parameter>
+          <Parameter Name="Kr" Role="reverse rate constant" Unit="s-1">0.0</Parameter>
+        </Kinetics>
+      </SimpleReaction>
+      <SimpleReaction Structure="Human" Name="DrugRelease" Reversible="true" FluxOption="MolecularOnly" KeyValue="81278659">
+        <Reactant LocalizedCompoundRef="pill" Stoichiometry="1" KeyValue="81278660" />
+        <Product LocalizedCompoundRef="gut" Stoichiometry="1" KeyValue="81278661" />
+        <Kinetics KineticsType="GeneralKinetics">
+          <Parameter Name="J" Role="reaction rate" Unit="uM.s-1">(Release * (t &lt;= ta))</Parameter>
+        </Kinetics>
+      </SimpleReaction>
+      <SimpleReaction Structure="Human" Name="Absorption" Reversible="true" FluxOption="MolecularOnly" KeyValue="81278662">
+        <Reactant LocalizedCompoundRef="gut" Stoichiometry="1" KeyValue="81278663" />
+        <Product LocalizedCompoundRef="blood" Stoichiometry="1" KeyValue="81278664" />
+        <Kinetics KineticsType="MassAction">
+          <Parameter Name="J" Role="reaction rate" Unit="uM.s-1">((Kabs * gut) - (Kr * blood))</Parameter>
+          <Parameter Name="Kabs" Role="forward rate constant" Unit="s-1">0.0</Parameter>
+          <Parameter Name="Kr" Role="reverse rate constant" Unit="s-1">0.0</Parameter>
+        </Kinetics>
+      </SimpleReaction>
+      <Diagram Name="c0" Structure="Human">
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="blood" LocationX="311" LocationY="39" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="pill" LocationX="58" LocationY="39" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="full" SimpleReactionRef="Absorption" LocationX="252" LocationY="41" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="gut" LocationX="187" LocationY="38" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="full" SimpleReactionRef="Elimination" LocationX="385" LocationY="43" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="metabolized" LocationX="445" LocationY="40" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="full" SimpleReactionRef="DrugRelease" LocationX="123" LocationY="40" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="blood" LocationX="311" LocationY="39" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="pill" LocationX="58" LocationY="39" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="molecule" SimpleReactionRef="Absorption" LocationX="252" LocationY="41" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="gut" LocationX="187" LocationY="38" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="molecule" SimpleReactionRef="Elimination" LocationX="385" LocationY="43" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="metabolized" LocationX="445" LocationY="40" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="molecule" SimpleReactionRef="DrugRelease" LocationX="123" LocationY="40" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="blood" LocationX="311" LocationY="39" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="pill" LocationX="58" LocationY="39" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="rule" SimpleReactionRef="Absorption" LocationX="252" LocationY="41" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="gut" LocationX="187" LocationY="38" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="rule" SimpleReactionRef="Elimination" LocationX="385" LocationY="43" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="metabolized" LocationX="445" LocationY="40" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="rule" SimpleReactionRef="DrugRelease" LocationX="123" LocationY="40" />
+      </Diagram>
+      <Version Name="unnamed" KeyValue="81278643" BranchId="81278644" Archived="0" Date="05-Apr-2013 16:33:25" FromVersionable="false">
+        <Owner Name="Education" Identifier="30625624" />
+        <GroupAccess Type="1" />
+        <Annotation>cloned from 'unnamed' owned by user supersonka</Annotation>
+      </Version>
+      <ModelUnitSystem VolumeSubstanceUnit="uM.um3" MembraneSubstanceUnit="molecules" LumpedReactionSubstanceUnit="molecules" VolumeUnit="um3" AreaUnit="um2" LengthUnit="um" TimeUnit="s" />
+    </Model>
+    <SimulationSpec Name="Application0" Stochastic="false" UseConcentration="true" RuleBased="false" MassConservationModelReduction="true" InsufficientIterations="false" InsufficientMaxMolecules="false">
+      <NetworkConstraints RbmMaxIteration="1" RbmMaxMoleculesPerSpecies="10" RbmSpeciesLimit="800" RbmReactionsLimit="2500" />
+      <Annotation>cloned from 'Application0' owned by user supersonka</Annotation>
+      <Geometry Name="non-spatial1971701017" Dimension="0">
+        <Annotation>cloned from 'non-spatial1971701017' owned by user supersonka</Annotation>
+        <Extent X="10.0" Y="10.0" Z="10.0" />
+        <Origin X="0.0" Y="0.0" Z="0.0" />
+        <SubVolume Name="Compartment" Handle="0" Type="Compartmental" KeyValue="81278639" />
+        <Version Name="non-spatial1971701017" KeyValue="81278635" BranchId="81278636" Archived="0" Date="05-Apr-2013 16:33:24" FromVersionable="false">
+          <Owner Name="Education" Identifier="30625624" />
+          <GroupAccess Type="1" />
+          <Annotation>cloned from 'non-spatial1971701017' owned by user supersonka</Annotation>
+        </Version>
+      </Geometry>
+      <GeometryContext>
+        <FeatureMapping Feature="Human" GeometryClass="Compartment" SubVolume="Compartment" Size="50000.0">
+          <BoundariesTypes Xm="Flux" Xp="Flux" Ym="Flux" Yp="Flux" Zm="Flux" Zp="Flux" />
+        </FeatureMapping>
+      </GeometryContext>
+      <ReactionContext>
+        <LocalizedCompoundSpec LocalizedCompoundRef="blood" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>0.0</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="metabolized" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>0.0</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="gut" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>0.0</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="pill" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>800.0</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <ReactionSpec ReactionStepRef="Elimination" ReactionMapping="included" />
+        <ReactionSpec ReactionStepRef="DrugRelease" ReactionMapping="included" />
+        <ReactionSpec ReactionStepRef="Absorption" ReactionMapping="included" />
+      </ReactionContext>
+      <MathDescription Name="Application0_generated">
+        <Annotation>cloned from 'Application0_generated' owned by user supersonka</Annotation>
+        <Constant Name="_F_">96480.0</Constant>
+        <Constant Name="_F_nmol_">9.648E-5</Constant>
+        <Constant Name="_K_GHK_">1.0E-9</Constant>
+        <Constant Name="_N_pmol_">6.02E11</Constant>
+        <Constant Name="_PI_">3.141592653589793</Constant>
+        <Constant Name="_R_">8314.0</Constant>
+        <Constant Name="_T_">300.0</Constant>
+        <Constant Name="blood_init_uM">0.0</Constant>
+        <Constant Name="gut_init_uM">0.0</Constant>
+        <Constant Name="K_millivolts_per_volt">1000.0</Constant>
+        <Constant Name="Kabs">0.0</Constant>
+        <Constant Name="Kelim">0.0</Constant>
+        <Constant Name="KMOLE">0.0016611295681063123</Constant>
+        <Constant Name="Kr_Absorption">0.0</Constant>
+        <Constant Name="Kr_Elimination">0.0</Constant>
+        <Constant Name="metabolized_init_uM">0.0</Constant>
+        <Constant Name="pill_init_uM">800.0</Constant>
+        <Constant Name="Release">0.0</Constant>
+        <Constant Name="Size_Human">50000.0</Constant>
+        <Constant Name="ta">0.0</Constant>
+        <VolumeVariable Name="gut" Domain="Compartment" />
+        <VolumeVariable Name="metabolized" Domain="Compartment" />
+        <VolumeVariable Name="pill" Domain="Compartment" />
+        <Function Name="blood" Domain="Compartment">(( - (Size_Human * pill) - (Size_Human * gut) + K_blood_total - (Size_Human * metabolized)) / Size_Human)</Function>
+        <Function Name="J_Absorption" Domain="Compartment">((Kabs * gut) - (Kr_Absorption * blood))</Function>
+        <Function Name="J_DrugRelease" Domain="Compartment">(Release * (t &lt;= ta))</Function>
+        <Function Name="J_Elimination" Domain="Compartment">((Kelim * blood) - (Kr_Elimination * metabolized))</Function>
+        <Function Name="K_blood_total" Domain="Compartment">((Size_Human * pill_init_uM) + (Size_Human * gut_init_uM) + (Size_Human * blood_init_uM) + (Size_Human * metabolized_init_uM))</Function>
+        <CompartmentSubDomain Name="Compartment">
+          <BoundaryType Boundary="Xm" Type="Value" />
+          <BoundaryType Boundary="Xp" Type="Value" />
+          <BoundaryType Boundary="Ym" Type="Value" />
+          <BoundaryType Boundary="Yp" Type="Value" />
+          <BoundaryType Boundary="Zm" Type="Value" />
+          <BoundaryType Boundary="Zp" Type="Value" />
+          <OdeEquation Name="metabolized" SolutionType="Unknown">
+            <Rate>J_Elimination</Rate>
+            <Initial>metabolized_init_uM</Initial>
+          </OdeEquation>
+          <OdeEquation Name="gut" SolutionType="Unknown">
+            <Rate>(J_DrugRelease - J_Absorption)</Rate>
+            <Initial>gut_init_uM</Initial>
+          </OdeEquation>
+          <OdeEquation Name="pill" SolutionType="Unknown">
+            <Rate>- J_DrugRelease</Rate>
+            <Initial>pill_init_uM</Initial>
+          </OdeEquation>
+        </CompartmentSubDomain>
+        <Version Name="Application0_generated" KeyValue="81278640" BranchId="81278641" Archived="0" Date="05-Apr-2013 16:33:25" FromVersionable="false">
+          <Owner Name="Education" Identifier="30625624" />
+          <GroupAccess Type="1" />
+          <Annotation>cloned from 'Application0_generated' owned by user supersonka</Annotation>
+        </Version>
+      </MathDescription>
+      <OutputFunctions>
+        <AnnotatedFunction Name="TotalDrug" ErrorString="" FunctionType="Nonspatial">(pill + gut + blood + metabolized)</AnnotatedFunction>
+      </OutputFunctions>
+      <Simulation Name="SlowRelease ta=4,000">
+        <Annotation>cloned from 'SlowRelease ta=4,000' owned by user supersonka</Annotation>
+        <SolverTaskDescription TaskType="Unsteady" UseSymbolicJacobian="false" Solver="Combined Stiff Solver (IDA/CVODE)">
+          <TimeBound StartTime="0.0" EndTime="10000.0" />
+          <TimeStep DefaultTime="0.1" MinTime="1.0E-8" MaxTime="1.0" />
+          <ErrorTolerance Absolut="1.0E-9" Relative="1.0E-9" />
+          <OutputOptions KeepEvery="100" KeepAtMost="1000" />
+          <NumberProcessors>1</NumberProcessors>
+        </SolverTaskDescription>
+        <MathOverrides>
+          <Constant Name="ta">4000.0</Constant>
+          <Constant Name="Release">0.2</Constant>
+        </MathOverrides>
+        <Version Name="SlowRelease ta=4,000" KeyValue="81278680" BranchId="81278681" Archived="0" Date="05-Apr-2013 16:33:25" FromVersionable="false">
+          <Owner Name="Education" Identifier="30625624" />
+          <GroupAccess Type="1" />
+          <Annotation>cloned from 'SlowRelease ta=4,000' owned by user supersonka</Annotation>
+        </Version>
+      </Simulation>
+      <Simulation Name="InstantRelease ta=1&amp;J=800">
+        <Annotation>cloned from 'InstantRelease ta=1&amp;J=800' owned by user supersonka</Annotation>
+        <SolverTaskDescription TaskType="Unsteady" UseSymbolicJacobian="false" Solver="Combined Stiff Solver (IDA/CVODE)">
+          <TimeBound StartTime="0.0" EndTime="10000.0" />
+          <TimeStep DefaultTime="0.1" MinTime="1.0E-8" MaxTime="1.0" />
+          <ErrorTolerance Absolut="1.0E-9" Relative="1.0E-9" />
+          <OutputOptions KeepEvery="100" KeepAtMost="1000" />
+          <NumberProcessors>1</NumberProcessors>
+        </SolverTaskDescription>
+        <MathOverrides>
+          <Constant Name="ta">1.0</Constant>
+          <Constant Name="Release">800.0</Constant>
+        </MathOverrides>
+        <Version Name="InstantRelease ta=1&amp;J=800" KeyValue="81278683" BranchId="81278684" Archived="0" Date="05-Apr-2013 16:33:25" FromVersionable="false">
+          <Owner Name="Education" Identifier="30625624" />
+          <GroupAccess Type="1" />
+          <Annotation>cloned from 'InstantRelease ta=1&amp;J=800' owned by user supersonka</Annotation>
+        </Version>
+      </Simulation>
+      <Simulation Name="InstantRelease ta=1&amp;J=800, Kabs=var">
+        <Annotation>cloned from 'InstantRelease ta=1&amp;J=800, Kabs=var' owned by user supersonka</Annotation>
+        <SolverTaskDescription TaskType="Unsteady" UseSymbolicJacobian="false" Solver="Combined Stiff Solver (IDA/CVODE)">
+          <TimeBound StartTime="0.0" EndTime="10000.0" />
+          <TimeStep DefaultTime="0.1" MinTime="1.0E-8" MaxTime="1.0" />
+          <ErrorTolerance Absolut="1.0E-9" Relative="1.0E-9" />
+          <OutputOptions KeepEvery="100" KeepAtMost="1000" />
+          <NumberProcessors>1</NumberProcessors>
+        </SolverTaskDescription>
+        <MathOverrides>
+          <Constant Name="ta">1.0</Constant>
+          <Constant Name="Kabs" ConstantArraySpec="1001">0.001 to 1000.0, log, 6 values</Constant>
+          <Constant Name="Release">800.0</Constant>
+        </MathOverrides>
+        <Version Name="InstantRelease ta=1&amp;J=800, Kabs=var" KeyValue="81278686" BranchId="81278687" Archived="0" Date="05-Apr-2013 16:33:25" FromVersionable="false">
+          <Owner Name="Education" Identifier="30625624" />
+          <GroupAccess Type="1" />
+          <Annotation>cloned from 'InstantRelease ta=1&amp;J=800, Kabs=var' owned by user supersonka</Annotation>
+        </Version>
+      </Simulation>
+      <Simulation Name="SlowRelease ta=4,000&amp;J=0.2, Kabs=var">
+        <Annotation>cloned from 'SlowRelease ta=4,000&amp;J=0.2, Kabs=var' owned by user supersonka</Annotation>
+        <SolverTaskDescription TaskType="Unsteady" UseSymbolicJacobian="false" Solver="Combined Stiff Solver (IDA/CVODE)">
+          <TimeBound StartTime="0.0" EndTime="10000.0" />
+          <TimeStep DefaultTime="0.1" MinTime="1.0E-8" MaxTime="1.0" />
+          <ErrorTolerance Absolut="1.0E-9" Relative="1.0E-9" />
+          <OutputOptions KeepEvery="100" KeepAtMost="1000" />
+          <NumberProcessors>1</NumberProcessors>
+        </SolverTaskDescription>
+        <MathOverrides>
+          <Constant Name="ta">4000.0</Constant>
+          <Constant Name="Kabs" ConstantArraySpec="1001">0.001 to 1000.0, log, 7 values</Constant>
+          <Constant Name="Release">0.2</Constant>
+        </MathOverrides>
+        <Version Name="SlowRelease ta=4,000&amp;J=0.2, Kabs=var" KeyValue="81278689" BranchId="81278690" Archived="0" Date="05-Apr-2013 16:33:25" FromVersionable="false">
+          <Owner Name="Education" Identifier="30625624" />
+          <GroupAccess Type="1" />
+          <Annotation>cloned from 'SlowRelease ta=4,000&amp;J=0.2, Kabs=var' owned by user supersonka</Annotation>
+        </Version>
+      </Simulation>
+      <Simulation Name="Slow vs Instant, Kabs=0.001">
+        <Annotation>cloned from 'Slow vs Instant, Kabs=0.001' owned by user supersonka</Annotation>
+        <SolverTaskDescription TaskType="Unsteady" UseSymbolicJacobian="false" Solver="Combined Stiff Solver (IDA/CVODE)">
+          <TimeBound StartTime="0.0" EndTime="10000.0" />
+          <TimeStep DefaultTime="0.1" MinTime="1.0E-8" MaxTime="1.0" />
+          <ErrorTolerance Absolut="1.0E-9" Relative="1.0E-9" />
+          <OutputOptions KeepEvery="100" KeepAtMost="1000" />
+          <NumberProcessors>1</NumberProcessors>
+        </SolverTaskDescription>
+        <MathOverrides>
+          <Constant Name="ta" ConstantArraySpec="1000">"1.0", "4000.0"</Constant>
+          <Constant Name="Kabs">0.001</Constant>
+          <Constant Name="Release" ConstantArraySpec="1000">"0.2", "800.0"</Constant>
+        </MathOverrides>
+        <Version Name="Slow vs Instant, Kabs=0.001" KeyValue="81278692" BranchId="81278693" Archived="0" Date="05-Apr-2013 16:33:25" FromVersionable="false">
+          <Owner Name="Education" Identifier="30625624" />
+          <GroupAccess Type="1" />
+          <Annotation>cloned from 'Slow vs Instant, Kabs=0.001' owned by user supersonka</Annotation>
+        </Version>
+      </Simulation>
+      <Simulation Name="Slow vs Instant, Kabs=0.001, Kelim=0.001">
+        <Annotation>cloned from 'Slow vs Instant, Kabs=0.001, Kelim=0.001' owned by user supersonka</Annotation>
+        <SolverTaskDescription TaskType="Unsteady" UseSymbolicJacobian="false" Solver="Combined Stiff Solver (IDA/CVODE)">
+          <TimeBound StartTime="0.0" EndTime="10000.0" />
+          <TimeStep DefaultTime="0.1" MinTime="1.0E-8" MaxTime="1.0" />
+          <ErrorTolerance Absolut="1.0E-9" Relative="1.0E-9" />
+          <OutputOptions KeepEvery="100" KeepAtMost="1000" />
+          <NumberProcessors>1</NumberProcessors>
+        </SolverTaskDescription>
+        <MathOverrides>
+          <Constant Name="ta" ConstantArraySpec="1000">"1.0", "4000.0"</Constant>
+          <Constant Name="Kelim">0.001</Constant>
+          <Constant Name="Kabs">0.001</Constant>
+          <Constant Name="Release" ConstantArraySpec="1000">"0.2", "800.0"</Constant>
+        </MathOverrides>
+        <Version Name="Slow vs Instant, Kabs=0.001, Kelim=0.001" KeyValue="81278695" BranchId="81278696" Archived="0" Date="05-Apr-2013 16:33:25" FromVersionable="false">
+          <Owner Name="Education" Identifier="30625624" />
+          <GroupAccess Type="1" />
+          <Annotation>cloned from 'Slow vs Instant, Kabs=0.001, Kelim=0.001' owned by user supersonka</Annotation>
+        </Version>
+      </Simulation>
+      <Simulation Name="InstantRelease ta=1&amp;J=800, Kabs=0.001, Kelim var">
+        <Annotation>cloned from 'InstantRelease ta=1&amp;J=800, Kabs=0.001, Kelim var' owned by user supersonka</Annotation>
+        <SolverTaskDescription TaskType="Unsteady" UseSymbolicJacobian="false" Solver="Combined Stiff Solver (IDA/CVODE)">
+          <TimeBound StartTime="0.0" EndTime="10000.0" />
+          <TimeStep DefaultTime="0.1" MinTime="1.0E-8" MaxTime="1.0" />
+          <ErrorTolerance Absolut="1.0E-9" Relative="1.0E-9" />
+          <OutputOptions KeepEvery="100" KeepAtMost="1000" />
+          <NumberProcessors>1</NumberProcessors>
+        </SolverTaskDescription>
+        <MathOverrides>
+          <Constant Name="Kelim" ConstantArraySpec="1001">0.001 to 1000.0, log, 6 values</Constant>
+          <Constant Name="ta">1.0</Constant>
+          <Constant Name="Kabs">0.001</Constant>
+          <Constant Name="Release">800.0</Constant>
+        </MathOverrides>
+        <Version Name="InstantRelease ta=1&amp;J=800, Kabs=0.001, Kelim var" KeyValue="81278698" BranchId="81278699" Archived="0" Date="05-Apr-2013 16:33:25" FromVersionable="false">
+          <Owner Name="Education" Identifier="30625624" />
+          <GroupAccess Type="1" />
+          <Annotation>cloned from 'InstantRelease ta=1&amp;J=800, Kabs=0.001, Kelim var' owned by user supersonka</Annotation>
+        </Version>
+      </Simulation>
+      <Simulation Name="SlowRelease ta=4,000&amp;J=0.2, Kabs=0.001, Kelim var">
+        <Annotation>cloned from 'SlowRelease ta=4,000&amp;J=0.2, Kabs=0.001, Kelim var' owned by user supersonka</Annotation>
+        <SolverTaskDescription TaskType="Unsteady" UseSymbolicJacobian="false" Solver="Combined Stiff Solver (IDA/CVODE)">
+          <TimeBound StartTime="0.0" EndTime="10000.0" />
+          <TimeStep DefaultTime="0.1" MinTime="1.0E-8" MaxTime="1.0" />
+          <ErrorTolerance Absolut="1.0E-9" Relative="1.0E-9" />
+          <OutputOptions KeepEvery="100" KeepAtMost="1000" />
+          <NumberProcessors>1</NumberProcessors>
+        </SolverTaskDescription>
+        <MathOverrides>
+          <Constant Name="Kelim" ConstantArraySpec="1001">0.001 to 1000.0, log, 6 values</Constant>
+          <Constant Name="ta">4000.0</Constant>
+          <Constant Name="Kabs">0.001</Constant>
+          <Constant Name="Release">0.2</Constant>
+        </MathOverrides>
+        <Version Name="SlowRelease ta=4,000&amp;J=0.2, Kabs=0.001, Kelim var" KeyValue="81278701" BranchId="81278702" Archived="0" Date="05-Apr-2013 16:33:25" FromVersionable="false">
+          <Owner Name="Education" Identifier="30625624" />
+          <GroupAccess Type="1" />
+          <Annotation>cloned from 'SlowRelease ta=4,000&amp;J=0.2, Kabs=0.001, Kelim var' owned by user supersonka</Annotation>
+        </Version>
+      </Simulation>
+      <Version Name="Application0" KeyValue="81278667" BranchId="81278668" Archived="0" Date="05-Apr-2013 16:33:25" FromVersionable="false">
+        <Owner Name="Education" Identifier="30625624" />
+        <GroupAccess Type="1" />
+        <Annotation>cloned from 'Application0' owned by user supersonka</Annotation>
+      </Version>
+      <MicroscopeMeasurement Name="fluor">
+        <ConvolutionKernel Type="ProjectionZKernel" />
+      </MicroscopeMeasurement>
+    </SimulationSpec>
+    <Version Name="Pharmacokinetics" KeyValue="81278704" BranchId="81278705" Archived="0" Date="05-Apr-2013 16:33:25" FromVersionable="false">
+      <Owner Name="Education" Identifier="30625624" />
+      <GroupAccess Type="1" />
+      <Annotation>cloned from 'Pharmacokinetics' owned by user supersonka</Annotation>
+    </Version>
+    <pathwayModel>
+      <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:bp="http://www.biopax.org/release/biopax-level3.owl#" version="3.0" />
+    </pathwayModel>
+    <relationshipModel>
+      <RMNS version="3.0" />
+    </relationshipModel>
+    <vcmetadata>
+      <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" />
+      <nonrdfAnnotationList>
+        <nonrdfAnnotation vcid="BioModel(Pharmacokinetics)">
+          <freetext>Pill Release and Absorption though gut lining into blood</freetext>
+        </nonrdfAnnotation>
+      </nonrdfAnnotationList>
+      <uriBindingList />
+    </vcmetadata>
+  </BioModel>
+</vcml>
+

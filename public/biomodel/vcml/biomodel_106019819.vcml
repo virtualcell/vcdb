@@ -1,0 +1,2511 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--This biomodel was generated in VCML Version Alpha_Version_7.4.0_build_87-->
+<vcml xmlns="http://sourceforge.net/projects/vcell/vcml" Version="Alpha_Version_7.4.0_build_87">
+  <BioModel Name="Supercoiling_2015SAD">
+    <Annotation>cloned from 'Supercoiling_2015' owned by user mblinov
+cloned from 'Supercoiling_ver2' owned by user feliu
+cloned from 'Supercoiling' owned by user mblinov</Annotation>
+    <Model Name="unnamed">
+      <Annotation>cloned from 'unnamed' owned by user mblinov
+cloned from 'unnamed' owned by user feliu
+cloned from 'unnamed' owned by user mblinov</Annotation>
+      <ModelParameters>
+        <Parameter Name="NA" Role="user defined" Unit="molecules.s-1">6.022E23</Parameter>
+        <Parameter Name="k1" Role="user defined" Unit="molecules.s-1">0.0</Parameter>
+        <Parameter Name="Kel" Role="user defined" Unit="molecules.s-1">(0.0016611295681063123 * 1.0)</Parameter>
+        <Parameter Name="Tgyr" Role="user defined" Unit="molecules.s-1">-0.1</Parameter>
+        <Parameter Name="TtopI" Role="user defined" Unit="molecules.s-1">0.0</Parameter>
+        <Parameter Name="TtopIV" Role="user defined" Unit="molecules.s-1">0.0</Parameter>
+        <Parameter Name="Kgyr" Role="user defined" Unit="molecules.s-1">1.2</Parameter>
+        <Parameter Name="KtopI" Role="user defined" Unit="molecules.s-1">1.0</Parameter>
+        <Parameter Name="KtopIV" Role="user defined" Unit="molecules.s-1">2.5</Parameter>
+        <Parameter Name="gyrDeltaLK" Role="user defined" Unit="molecules.s-1">-2.0</Parameter>
+        <Parameter Name="topIDeltaLK" Role="user defined" Unit="molecules.s-1">1.0</Parameter>
+        <Parameter Name="topIVDeltaLK" Role="user defined" Unit="molecules.s-1">-2.0</Parameter>
+        <Parameter Name="sigma" Role="user defined" Unit="molecules.s-1">0.0</Parameter>
+        <Parameter Name="BooleanGyrActivity" Role="user defined" Unit="1">(0.0016611295681063123 * Kgyr)</Parameter>
+        <Parameter Name="BooleanTopIActivity" Role="user defined" Unit="1">(0.0016611295681063123 * KtopI)</Parameter>
+        <Parameter Name="BooleanTopIVActivity" Role="user defined" Unit="1">(0.0016611295681063123 * KtopIV)</Parameter>
+        <Parameter Name="GyrRelease" Role="user defined" Unit="1">1.0</Parameter>
+        <Parameter Name="TopIVRelease" Role="user defined" Unit="1">1.0</Parameter>
+        <Parameter Name="TopIRelease" Role="user defined" Unit="1">1.0</Parameter>
+        <Parameter Name="threshold" Role="user defined" Unit="1">0.01</Parameter>
+      </ModelParameters>
+      <Compound Name="s0" />
+      <Compound Name="s2" />
+      <Compound Name="s1" />
+      <Compound Name="s3" />
+      <Feature Name="c0" KeyValue="106019364" />
+      <Membrane MembraneVoltage="Voltage_m0" Name="m0" KeyValue="106019366" />
+      <LocalizedCompound Name="DNA" CompoundRef="s0" Structure="c0" OverrideName="true" KeyValue="106019368">
+        <SpeciesPattern>
+          <MolecularTypePattern Index="1">
+            <MolecularType Name="DNA" />
+            <ComponentPattern MolecularComponent="coil" ComponentStatePattern="zero" BondType="-" />
+            <ComponentPattern MolecularComponent="gyr" BondType="-" />
+            <ComponentPattern MolecularComponent="topI" BondType="-" />
+            <ComponentPattern MolecularComponent="topIV" BondType="-" />
+          </MolecularTypePattern>
+        </SpeciesPattern>
+      </LocalizedCompound>
+      <LocalizedCompound Name="TopI" CompoundRef="s2" Structure="c0" OverrideName="true" KeyValue="106019369">
+        <SpeciesPattern>
+          <MolecularTypePattern Index="1">
+            <MolecularType Name="topI" />
+            <ComponentPattern MolecularComponent="dna" BondType="-" />
+          </MolecularTypePattern>
+        </SpeciesPattern>
+      </LocalizedCompound>
+      <LocalizedCompound Name="Gyr" CompoundRef="s1" Structure="c0" OverrideName="true" KeyValue="106019370">
+        <SpeciesPattern>
+          <MolecularTypePattern Index="1">
+            <MolecularType Name="gyr" />
+            <ComponentPattern MolecularComponent="dna" BondType="-" />
+          </MolecularTypePattern>
+        </SpeciesPattern>
+      </LocalizedCompound>
+      <LocalizedCompound Name="TopIV" CompoundRef="s3" Structure="c0" OverrideName="true" KeyValue="106019371">
+        <SpeciesPattern>
+          <MolecularTypePattern Index="1">
+            <MolecularType Name="topIV" />
+            <ComponentPattern MolecularComponent="dna" BondType="-" />
+          </MolecularTypePattern>
+        </SpeciesPattern>
+      </LocalizedCompound>
+      <RbmModelContainer>
+        <MolecularTypeList>
+          <MolecularType Name="DNA" AnchorAll="true">
+            <MolecularComponent Name="coil" Index="1">
+              <AllowableState Name="neg" />
+              <AllowableState Name="zero" />
+              <AllowableState Name="pos" />
+            </MolecularComponent>
+            <MolecularComponent Name="gyr" Index="2" />
+            <MolecularComponent Name="topI" Index="3" />
+            <MolecularComponent Name="topIV" Index="4" />
+          </MolecularType>
+          <MolecularType Name="gyr" AnchorAll="true">
+            <MolecularComponent Name="dna" Index="1" />
+          </MolecularType>
+          <MolecularType Name="topI" AnchorAll="true">
+            <MolecularComponent Name="dna" Index="1" />
+          </MolecularType>
+          <MolecularType Name="topIV" AnchorAll="true">
+            <MolecularComponent Name="dna" Index="1" />
+          </MolecularType>
+        </MolecularTypeList>
+        <RbmObservableList>
+          <Observable Name="DNA_pos" ObservableType="Molecules" Sequence="Multimolecular" LengthEqual="2" LengthGreater="1" Structure="c0">
+            <SpeciesPattern>
+              <MolecularTypePattern Index="1">
+                <MolecularType Name="DNA" />
+                <ComponentPattern MolecularComponent="coil" ComponentStatePattern="pos" BondType="-" />
+                <ComponentPattern MolecularComponent="gyr" BondType="?" />
+                <ComponentPattern MolecularComponent="topI" BondType="?" />
+                <ComponentPattern MolecularComponent="topIV" BondType="?" />
+              </MolecularTypePattern>
+            </SpeciesPattern>
+          </Observable>
+          <Observable Name="DNA_neg" ObservableType="Molecules" Sequence="Multimolecular" LengthEqual="2" LengthGreater="1" Structure="c0">
+            <SpeciesPattern>
+              <MolecularTypePattern Index="1">
+                <MolecularType Name="DNA" />
+                <ComponentPattern MolecularComponent="coil" ComponentStatePattern="neg" BondType="-" />
+                <ComponentPattern MolecularComponent="gyr" BondType="?" />
+                <ComponentPattern MolecularComponent="topI" BondType="?" />
+                <ComponentPattern MolecularComponent="topIV" BondType="?" />
+              </MolecularTypePattern>
+            </SpeciesPattern>
+          </Observable>
+          <Observable Name="Gyr_free" ObservableType="Molecules" Sequence="Multimolecular" LengthEqual="2" LengthGreater="1" Structure="c0">
+            <SpeciesPattern>
+              <MolecularTypePattern Index="1">
+                <MolecularType Name="gyr" />
+                <ComponentPattern MolecularComponent="dna" BondType="-" />
+              </MolecularTypePattern>
+            </SpeciesPattern>
+          </Observable>
+          <Observable Name="TopI_free" ObservableType="Molecules" Sequence="Multimolecular" LengthEqual="2" LengthGreater="1" Structure="c0">
+            <SpeciesPattern>
+              <MolecularTypePattern Index="1">
+                <MolecularType Name="topI" />
+                <ComponentPattern MolecularComponent="dna" BondType="-" />
+              </MolecularTypePattern>
+            </SpeciesPattern>
+          </Observable>
+          <Observable Name="TopIV_free" ObservableType="Molecules" Sequence="Multimolecular" LengthEqual="2" LengthGreater="1" Structure="c0">
+            <SpeciesPattern>
+              <MolecularTypePattern Index="1">
+                <MolecularType Name="topIV" />
+                <ComponentPattern MolecularComponent="dna" BondType="-" />
+              </MolecularTypePattern>
+            </SpeciesPattern>
+          </Observable>
+          <Observable Name="DNA_zero" ObservableType="Molecules" Sequence="Multimolecular" LengthEqual="2" LengthGreater="1" Structure="c0">
+            <SpeciesPattern>
+              <MolecularTypePattern Index="1">
+                <MolecularType Name="DNA" />
+                <ComponentPattern MolecularComponent="coil" ComponentStatePattern="zero" BondType="-" />
+                <ComponentPattern MolecularComponent="gyr" BondType="?" />
+                <ComponentPattern MolecularComponent="topI" BondType="?" />
+                <ComponentPattern MolecularComponent="topIV" BondType="?" />
+              </MolecularTypePattern>
+            </SpeciesPattern>
+          </Observable>
+          <Observable Name="DNA_total" ObservableType="Molecules" Sequence="Multimolecular" LengthEqual="2" LengthGreater="1" Structure="c0">
+            <SpeciesPattern>
+              <MolecularTypePattern Index="1">
+                <MolecularType Name="DNA" />
+                <ComponentPattern MolecularComponent="coil" Any="true" BondType="?" />
+                <ComponentPattern MolecularComponent="gyr" BondType="?" />
+                <ComponentPattern MolecularComponent="topI" BondType="?" />
+                <ComponentPattern MolecularComponent="topIV" BondType="?" />
+              </MolecularTypePattern>
+            </SpeciesPattern>
+          </Observable>
+        </RbmObservableList>
+        <ReactionRuleList>
+          <ReactionRule Name="r0" Structure="c0" ReactionRuleLabel="r0" ReactionRuleReversible="false">
+            <ReactantPatternsList>
+              <ReactantPattern Structure="c0">
+                <SpeciesPattern>
+                  <MolecularTypePattern Index="1">
+                    <MolecularType Name="DNA" />
+                    <ComponentPattern MolecularComponent="coil" ComponentStatePattern="zero" BondType="-" />
+                    <ComponentPattern MolecularComponent="gyr" BondType="?" />
+                    <ComponentPattern MolecularComponent="topI" BondType="?" />
+                    <ComponentPattern MolecularComponent="topIV" BondType="?" />
+                  </MolecularTypePattern>
+                </SpeciesPattern>
+              </ReactantPattern>
+            </ReactantPatternsList>
+            <ProductPatternsList>
+              <ProductPattern Structure="c0">
+                <SpeciesPattern>
+                  <MolecularTypePattern Index="1">
+                    <MolecularType Name="DNA" />
+                    <ComponentPattern MolecularComponent="coil" ComponentStatePattern="pos" BondType="-" />
+                    <ComponentPattern MolecularComponent="gyr" BondType="?" />
+                    <ComponentPattern MolecularComponent="topI" BondType="?" />
+                    <ComponentPattern MolecularComponent="topIV" BondType="?" />
+                  </MolecularTypePattern>
+                </SpeciesPattern>
+              </ProductPattern>
+            </ProductPatternsList>
+            <Kinetics KineticsType="MassAction">
+              <Parameter Name="ruleRate" Role="RuleRate" Unit="molecules.um-3.s-1" />
+              <Parameter Name="Kf" Role="MassActionKf" Unit="s-1">Kel</Parameter>
+              <Parameter Name="Kr" Role="MassActionKr" Unit="s-1">0.0</Parameter>
+            </Kinetics>
+          </ReactionRule>
+          <ReactionRule Name="r4" Structure="c0" ReactionRuleLabel="r4" ReactionRuleReversible="false">
+            <ReactantPatternsList>
+              <ReactantPattern Structure="c0">
+                <SpeciesPattern>
+                  <MolecularTypePattern Index="1">
+                    <MolecularType Name="DNA" />
+                    <ComponentPattern MolecularComponent="coil" Any="true" BondType="?" />
+                    <ComponentPattern MolecularComponent="gyr" BondType="1">
+                      <Bond MolecularTypePattern="gyr" ComponentPattern="dna" />
+                    </ComponentPattern>
+                    <ComponentPattern MolecularComponent="topI" BondType="?" />
+                    <ComponentPattern MolecularComponent="topIV" BondType="?" />
+                  </MolecularTypePattern>
+                  <MolecularTypePattern Index="2">
+                    <MolecularType Name="gyr" />
+                    <ComponentPattern MolecularComponent="dna" BondType="1">
+                      <Bond MolecularTypePattern="DNA" ComponentPattern="gyr" />
+                    </ComponentPattern>
+                  </MolecularTypePattern>
+                </SpeciesPattern>
+              </ReactantPattern>
+            </ReactantPatternsList>
+            <ProductPatternsList>
+              <ProductPattern Structure="c0">
+                <SpeciesPattern>
+                  <MolecularTypePattern Index="1">
+                    <MolecularType Name="DNA" />
+                    <ComponentPattern MolecularComponent="coil" Any="true" BondType="?" />
+                    <ComponentPattern MolecularComponent="gyr" BondType="-" />
+                    <ComponentPattern MolecularComponent="topI" BondType="?" />
+                    <ComponentPattern MolecularComponent="topIV" BondType="?" />
+                  </MolecularTypePattern>
+                </SpeciesPattern>
+              </ProductPattern>
+              <ProductPattern Structure="c0">
+                <SpeciesPattern>
+                  <MolecularTypePattern Index="1">
+                    <MolecularType Name="gyr" />
+                    <ComponentPattern MolecularComponent="dna" BondType="-" />
+                  </MolecularTypePattern>
+                </SpeciesPattern>
+              </ProductPattern>
+            </ProductPatternsList>
+            <Kinetics KineticsType="MassAction">
+              <Parameter Name="ruleRate" Role="RuleRate" Unit="molecules.um-3.s-1" />
+              <Parameter Name="Kf" Role="MassActionKf" Unit="s-1">GyrRelease</Parameter>
+              <Parameter Name="Kr" Role="MassActionKr" Unit="um3.s-1.molecules-1">0.0</Parameter>
+            </Kinetics>
+          </ReactionRule>
+          <ReactionRule Name="r5" Structure="c0" ReactionRuleLabel="r5" ReactionRuleReversible="false">
+            <ReactantPatternsList>
+              <ReactantPattern Structure="c0">
+                <SpeciesPattern>
+                  <MolecularTypePattern Index="1">
+                    <MolecularType Name="DNA" />
+                    <ComponentPattern MolecularComponent="coil" Any="true" BondType="?" />
+                    <ComponentPattern MolecularComponent="gyr" BondType="?" />
+                    <ComponentPattern MolecularComponent="topI" BondType="?" />
+                    <ComponentPattern MolecularComponent="topIV" BondType="1">
+                      <Bond MolecularTypePattern="topIV" ComponentPattern="dna" />
+                    </ComponentPattern>
+                  </MolecularTypePattern>
+                  <MolecularTypePattern Index="2">
+                    <MolecularType Name="topIV" />
+                    <ComponentPattern MolecularComponent="dna" BondType="1">
+                      <Bond MolecularTypePattern="DNA" ComponentPattern="topIV" />
+                    </ComponentPattern>
+                  </MolecularTypePattern>
+                </SpeciesPattern>
+              </ReactantPattern>
+            </ReactantPatternsList>
+            <ProductPatternsList>
+              <ProductPattern Structure="c0">
+                <SpeciesPattern>
+                  <MolecularTypePattern Index="1">
+                    <MolecularType Name="DNA" />
+                    <ComponentPattern MolecularComponent="coil" Any="true" BondType="?" />
+                    <ComponentPattern MolecularComponent="gyr" BondType="?" />
+                    <ComponentPattern MolecularComponent="topI" BondType="?" />
+                    <ComponentPattern MolecularComponent="topIV" BondType="-" />
+                  </MolecularTypePattern>
+                </SpeciesPattern>
+              </ProductPattern>
+              <ProductPattern Structure="c0">
+                <SpeciesPattern>
+                  <MolecularTypePattern Index="1">
+                    <MolecularType Name="topIV" />
+                    <ComponentPattern MolecularComponent="dna" BondType="-" />
+                  </MolecularTypePattern>
+                </SpeciesPattern>
+              </ProductPattern>
+            </ProductPatternsList>
+            <Kinetics KineticsType="MassAction">
+              <Parameter Name="ruleRate" Role="RuleRate" Unit="molecules.um-3.s-1" />
+              <Parameter Name="Kf" Role="MassActionKf" Unit="s-1">TopIVRelease</Parameter>
+              <Parameter Name="Kr" Role="MassActionKr" Unit="um3.s-1.molecules-1">0.0</Parameter>
+            </Kinetics>
+          </ReactionRule>
+          <ReactionRule Name="r6" Structure="c0" ReactionRuleLabel="r6" ReactionRuleReversible="false">
+            <ReactantPatternsList>
+              <ReactantPattern Structure="c0">
+                <SpeciesPattern>
+                  <MolecularTypePattern Index="1">
+                    <MolecularType Name="DNA" />
+                    <ComponentPattern MolecularComponent="coil" Any="true" BondType="?" />
+                    <ComponentPattern MolecularComponent="gyr" BondType="?" />
+                    <ComponentPattern MolecularComponent="topI" BondType="1">
+                      <Bond MolecularTypePattern="topI" ComponentPattern="dna" />
+                    </ComponentPattern>
+                    <ComponentPattern MolecularComponent="topIV" BondType="?" />
+                  </MolecularTypePattern>
+                  <MolecularTypePattern Index="2">
+                    <MolecularType Name="topI" />
+                    <ComponentPattern MolecularComponent="dna" BondType="1">
+                      <Bond MolecularTypePattern="DNA" ComponentPattern="topI" />
+                    </ComponentPattern>
+                  </MolecularTypePattern>
+                </SpeciesPattern>
+              </ReactantPattern>
+            </ReactantPatternsList>
+            <ProductPatternsList>
+              <ProductPattern Structure="c0">
+                <SpeciesPattern>
+                  <MolecularTypePattern Index="1">
+                    <MolecularType Name="DNA" />
+                    <ComponentPattern MolecularComponent="coil" Any="true" BondType="?" />
+                    <ComponentPattern MolecularComponent="gyr" BondType="?" />
+                    <ComponentPattern MolecularComponent="topI" BondType="-" />
+                    <ComponentPattern MolecularComponent="topIV" BondType="?" />
+                  </MolecularTypePattern>
+                </SpeciesPattern>
+              </ProductPattern>
+              <ProductPattern Structure="c0">
+                <SpeciesPattern>
+                  <MolecularTypePattern Index="1">
+                    <MolecularType Name="topI" />
+                    <ComponentPattern MolecularComponent="dna" BondType="-" />
+                  </MolecularTypePattern>
+                </SpeciesPattern>
+              </ProductPattern>
+            </ProductPatternsList>
+            <Kinetics KineticsType="MassAction">
+              <Parameter Name="ruleRate" Role="RuleRate" Unit="molecules.um-3.s-1" />
+              <Parameter Name="Kf" Role="MassActionKf" Unit="s-1">TopIRelease</Parameter>
+              <Parameter Name="Kr" Role="MassActionKr" Unit="um3.s-1.molecules-1">0.0</Parameter>
+            </Kinetics>
+          </ReactionRule>
+          <ReactionRule Name="r1" Structure="c0" ReactionRuleLabel="r1" ReactionRuleReversible="false">
+            <ReactantPatternsList>
+              <ReactantPattern Structure="c0">
+                <SpeciesPattern>
+                  <MolecularTypePattern Index="1">
+                    <MolecularType Name="DNA" />
+                    <ComponentPattern MolecularComponent="coil" ComponentStatePattern="pos" BondType="-" />
+                    <ComponentPattern MolecularComponent="gyr" BondType="-" />
+                    <ComponentPattern MolecularComponent="topI" BondType="?" />
+                    <ComponentPattern MolecularComponent="topIV" BondType="?" />
+                  </MolecularTypePattern>
+                </SpeciesPattern>
+              </ReactantPattern>
+              <ReactantPattern Structure="c0">
+                <SpeciesPattern>
+                  <MolecularTypePattern Index="1">
+                    <MolecularType Name="gyr" />
+                    <ComponentPattern MolecularComponent="dna" BondType="-" />
+                  </MolecularTypePattern>
+                </SpeciesPattern>
+              </ReactantPattern>
+            </ReactantPatternsList>
+            <ProductPatternsList>
+              <ProductPattern Structure="c0">
+                <SpeciesPattern>
+                  <MolecularTypePattern Index="1">
+                    <MolecularType Name="DNA" />
+                    <ComponentPattern MolecularComponent="coil" ComponentStatePattern="zero" BondType="-" />
+                    <ComponentPattern MolecularComponent="gyr" BondType="1">
+                      <Bond MolecularTypePattern="gyr" ComponentPattern="dna" />
+                    </ComponentPattern>
+                    <ComponentPattern MolecularComponent="topI" BondType="?" />
+                    <ComponentPattern MolecularComponent="topIV" BondType="?" />
+                  </MolecularTypePattern>
+                  <MolecularTypePattern Index="2">
+                    <MolecularType Name="gyr" />
+                    <ComponentPattern MolecularComponent="dna" BondType="1">
+                      <Bond MolecularTypePattern="DNA" ComponentPattern="gyr" />
+                    </ComponentPattern>
+                  </MolecularTypePattern>
+                </SpeciesPattern>
+              </ProductPattern>
+            </ProductPatternsList>
+            <Kinetics KineticsType="MassAction">
+              <Parameter Name="ruleRate" Role="RuleRate" Unit="molecules.um-3.s-1" />
+              <Parameter Name="Kf" Role="MassActionKf" Unit="um3.s-1.molecules-1">BooleanGyrActivity</Parameter>
+              <Parameter Name="Kr" Role="MassActionKr" Unit="s-1">0.0</Parameter>
+            </Kinetics>
+          </ReactionRule>
+          <ReactionRule Name="r3" Structure="c0" ReactionRuleLabel="r3" ReactionRuleReversible="false">
+            <ReactantPatternsList>
+              <ReactantPattern Structure="c0">
+                <SpeciesPattern>
+                  <MolecularTypePattern Index="1">
+                    <MolecularType Name="DNA" />
+                    <ComponentPattern MolecularComponent="coil" ComponentStatePattern="neg" BondType="-" />
+                    <ComponentPattern MolecularComponent="gyr" BondType="?" />
+                    <ComponentPattern MolecularComponent="topI" BondType="-" />
+                    <ComponentPattern MolecularComponent="topIV" BondType="?" />
+                  </MolecularTypePattern>
+                </SpeciesPattern>
+              </ReactantPattern>
+              <ReactantPattern Structure="c0">
+                <SpeciesPattern>
+                  <MolecularTypePattern Index="1">
+                    <MolecularType Name="topI" />
+                    <ComponentPattern MolecularComponent="dna" BondType="-" />
+                  </MolecularTypePattern>
+                </SpeciesPattern>
+              </ReactantPattern>
+            </ReactantPatternsList>
+            <ProductPatternsList>
+              <ProductPattern Structure="c0">
+                <SpeciesPattern>
+                  <MolecularTypePattern Index="1">
+                    <MolecularType Name="DNA" />
+                    <ComponentPattern MolecularComponent="coil" ComponentStatePattern="zero" BondType="-" />
+                    <ComponentPattern MolecularComponent="gyr" BondType="?" />
+                    <ComponentPattern MolecularComponent="topI" BondType="1">
+                      <Bond MolecularTypePattern="topI" ComponentPattern="dna" />
+                    </ComponentPattern>
+                    <ComponentPattern MolecularComponent="topIV" BondType="?" />
+                  </MolecularTypePattern>
+                  <MolecularTypePattern Index="2">
+                    <MolecularType Name="topI" />
+                    <ComponentPattern MolecularComponent="dna" BondType="1">
+                      <Bond MolecularTypePattern="DNA" ComponentPattern="topI" />
+                    </ComponentPattern>
+                  </MolecularTypePattern>
+                </SpeciesPattern>
+              </ProductPattern>
+            </ProductPatternsList>
+            <Kinetics KineticsType="MassAction">
+              <Parameter Name="ruleRate" Role="RuleRate" Unit="molecules.um-3.s-1" />
+              <Parameter Name="Kf" Role="MassActionKf" Unit="um3.s-1.molecules-1">BooleanTopIActivity</Parameter>
+              <Parameter Name="Kr" Role="MassActionKr" Unit="s-1">0.0</Parameter>
+            </Kinetics>
+          </ReactionRule>
+          <ReactionRule Name="r2" Structure="c0" ReactionRuleLabel="r2" ReactionRuleReversible="false">
+            <ReactantPatternsList>
+              <ReactantPattern Structure="c0">
+                <SpeciesPattern>
+                  <MolecularTypePattern Index="1">
+                    <MolecularType Name="DNA" />
+                    <ComponentPattern MolecularComponent="coil" ComponentStatePattern="pos" BondType="-" />
+                    <ComponentPattern MolecularComponent="gyr" BondType="?" />
+                    <ComponentPattern MolecularComponent="topI" BondType="?" />
+                    <ComponentPattern MolecularComponent="topIV" BondType="-" />
+                  </MolecularTypePattern>
+                </SpeciesPattern>
+              </ReactantPattern>
+              <ReactantPattern Structure="c0">
+                <SpeciesPattern>
+                  <MolecularTypePattern Index="1">
+                    <MolecularType Name="topIV" />
+                    <ComponentPattern MolecularComponent="dna" BondType="-" />
+                  </MolecularTypePattern>
+                </SpeciesPattern>
+              </ReactantPattern>
+            </ReactantPatternsList>
+            <ProductPatternsList>
+              <ProductPattern Structure="c0">
+                <SpeciesPattern>
+                  <MolecularTypePattern Index="1">
+                    <MolecularType Name="DNA" />
+                    <ComponentPattern MolecularComponent="coil" ComponentStatePattern="zero" BondType="-" />
+                    <ComponentPattern MolecularComponent="gyr" BondType="?" />
+                    <ComponentPattern MolecularComponent="topI" BondType="?" />
+                    <ComponentPattern MolecularComponent="topIV" BondType="1">
+                      <Bond MolecularTypePattern="topIV" ComponentPattern="dna" />
+                    </ComponentPattern>
+                  </MolecularTypePattern>
+                  <MolecularTypePattern Index="2">
+                    <MolecularType Name="topIV" />
+                    <ComponentPattern MolecularComponent="dna" BondType="1">
+                      <Bond MolecularTypePattern="DNA" ComponentPattern="topIV" />
+                    </ComponentPattern>
+                  </MolecularTypePattern>
+                </SpeciesPattern>
+              </ProductPattern>
+            </ProductPatternsList>
+            <Kinetics KineticsType="MassAction">
+              <Parameter Name="ruleRate" Role="RuleRate" Unit="molecules.um-3.s-1" />
+              <Parameter Name="Kf" Role="MassActionKf" Unit="um3.s-1.molecules-1">BooleanTopIVActivity</Parameter>
+              <Parameter Name="Kr" Role="MassActionKr" Unit="s-1">0.0</Parameter>
+            </Kinetics>
+          </ReactionRule>
+          <ReactionRule Name="r2_0" Structure="c0" ReactionRuleLabel="r2_0" ReactionRuleReversible="false">
+            <ReactantPatternsList>
+              <ReactantPattern Structure="c0">
+                <SpeciesPattern>
+                  <MolecularTypePattern Index="1">
+                    <MolecularType Name="DNA" />
+                    <ComponentPattern MolecularComponent="coil" ComponentStatePattern="pos" BondType="-" />
+                    <ComponentPattern MolecularComponent="gyr" BondType="?" />
+                    <ComponentPattern MolecularComponent="topI" BondType="?" />
+                    <ComponentPattern MolecularComponent="topIV" BondType="-" />
+                  </MolecularTypePattern>
+                </SpeciesPattern>
+              </ReactantPattern>
+              <ReactantPattern Structure="c0">
+                <SpeciesPattern>
+                  <MolecularTypePattern Index="1">
+                    <MolecularType Name="topIV" />
+                    <ComponentPattern MolecularComponent="dna" BondType="-" />
+                  </MolecularTypePattern>
+                </SpeciesPattern>
+              </ReactantPattern>
+            </ReactantPatternsList>
+            <ProductPatternsList>
+              <ProductPattern Structure="c0">
+                <SpeciesPattern>
+                  <MolecularTypePattern Index="1">
+                    <MolecularType Name="DNA" />
+                    <ComponentPattern MolecularComponent="coil" ComponentStatePattern="neg" BondType="-" />
+                    <ComponentPattern MolecularComponent="gyr" BondType="?" />
+                    <ComponentPattern MolecularComponent="topI" BondType="?" />
+                    <ComponentPattern MolecularComponent="topIV" BondType="2">
+                      <Bond MolecularTypePattern="topIV" ComponentPattern="dna" />
+                    </ComponentPattern>
+                  </MolecularTypePattern>
+                  <MolecularTypePattern Index="2">
+                    <MolecularType Name="topIV" />
+                    <ComponentPattern MolecularComponent="dna" BondType="2">
+                      <Bond MolecularTypePattern="DNA" ComponentPattern="topIV" />
+                    </ComponentPattern>
+                  </MolecularTypePattern>
+                </SpeciesPattern>
+              </ProductPattern>
+            </ProductPatternsList>
+            <Kinetics KineticsType="MassAction">
+              <Parameter Name="ruleRate" Role="RuleRate" Unit="molecules.um-3.s-1" />
+              <Parameter Name="Kf" Role="MassActionKf" Unit="um3.s-1.molecules-1">BooleanTopIVActivity</Parameter>
+              <Parameter Name="Kr" Role="MassActionKr" Unit="s-1">0.0</Parameter>
+            </Kinetics>
+          </ReactionRule>
+        </ReactionRuleList>
+      </RbmModelContainer>
+      <Diagram Name="c0" Structure="c0">
+        <RuleParticipantFullShapeTag NodeReferenceModeAttrTag="full" RuleParticipantRefAttrTag="DNA(topIV)" LocationX="362" LocationY="121" />
+        <RuleParticipantFullShapeTag NodeReferenceModeAttrTag="full" RuleParticipantRefAttrTag="DNA(coil~zero,topIV!1).topIV(dna!1)" LocationX="216" LocationY="62" />
+        <RuleParticipantFullShapeTag NodeReferenceModeAttrTag="full" RuleParticipantRefAttrTag="topI(dna)" LocationX="64" LocationY="240" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="DNA" LocationX="233" LocationY="231" />
+        <ReactionRuleShapeTag NodeReferenceModeAttrTag="full" ReactionRuleRef2AttrTag="r4" LocationX="130" LocationY="139" />
+        <ReactionRuleShapeTag NodeReferenceModeAttrTag="full" ReactionRuleRef2AttrTag="r2_0" LocationX="112" LocationY="150" />
+        <RuleParticipantFullShapeTag NodeReferenceModeAttrTag="full" RuleParticipantRefAttrTag="DNA(coil~zero,gyr!1).gyr(dna!1)" LocationX="503" LocationY="184" />
+        <RuleParticipantFullShapeTag NodeReferenceModeAttrTag="full" RuleParticipantRefAttrTag="DNA(coil~pos)" LocationX="464" LocationY="113" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="TopIV" LocationX="24" LocationY="238" />
+        <ReactionRuleShapeTag NodeReferenceModeAttrTag="full" ReactionRuleRef2AttrTag="r6" LocationX="285" LocationY="95" />
+        <RuleParticipantFullShapeTag NodeReferenceModeAttrTag="full" RuleParticipantRefAttrTag="DNA(coil~zero)" LocationX="252" LocationY="240" />
+        <RuleParticipantFullShapeTag NodeReferenceModeAttrTag="full" RuleParticipantRefAttrTag="DNA(gyr!1).gyr(dna!1)" LocationX="201" LocationY="158" />
+        <RuleParticipantFullShapeTag NodeReferenceModeAttrTag="full" RuleParticipantRefAttrTag="DNA(topIV!1).topIV(dna!1)" LocationX="264" LocationY="182" />
+        <ReactionRuleShapeTag NodeReferenceModeAttrTag="full" ReactionRuleRef2AttrTag="r0" LocationX="434" LocationY="240" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="TopI" LocationX="39" LocationY="192" />
+        <RuleParticipantFullShapeTag NodeReferenceModeAttrTag="full" RuleParticipantRefAttrTag="DNA(gyr)" LocationX="489" LocationY="34" />
+        <ReactionRuleShapeTag NodeReferenceModeAttrTag="full" ReactionRuleRef2AttrTag="r1" LocationX="14" LocationY="84" />
+        <RuleParticipantFullShapeTag NodeReferenceModeAttrTag="full" RuleParticipantRefAttrTag="gyr(dna)" LocationX="485" LocationY="98" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="Gyr" LocationX="402" LocationY="208" />
+        <RuleParticipantFullShapeTag NodeReferenceModeAttrTag="full" RuleParticipantRefAttrTag="DNA(coil~pos,gyr)" LocationX="153" LocationY="155" />
+        <RuleParticipantFullShapeTag NodeReferenceModeAttrTag="full" RuleParticipantRefAttrTag="DNA(coil~pos,topIV)" LocationX="325" LocationY="140" />
+        <RuleParticipantFullShapeTag NodeReferenceModeAttrTag="full" RuleParticipantRefAttrTag="DNA(topI)" LocationX="467" LocationY="71" />
+        <ReactionRuleShapeTag NodeReferenceModeAttrTag="full" ReactionRuleRef2AttrTag="r2" LocationX="161" LocationY="195" />
+        <RuleParticipantFullShapeTag NodeReferenceModeAttrTag="full" RuleParticipantRefAttrTag="DNA(coil~neg,topIV!2).topIV(dna!2)" LocationX="471" LocationY="198" />
+        <RuleParticipantFullShapeTag NodeReferenceModeAttrTag="full" RuleParticipantRefAttrTag="DNA(topI!1).topI(dna!1)" LocationX="15" LocationY="68" />
+        <RuleParticipantFullShapeTag NodeReferenceModeAttrTag="full" RuleParticipantRefAttrTag="topIV(dna)" LocationX="20" LocationY="87" />
+        <ReactionRuleShapeTag NodeReferenceModeAttrTag="full" ReactionRuleRef2AttrTag="r3" LocationX="462" LocationY="180" />
+        <RuleParticipantFullShapeTag NodeReferenceModeAttrTag="full" RuleParticipantRefAttrTag="DNA(coil~neg,topI)" LocationX="35" LocationY="106" />
+        <RuleParticipantFullShapeTag NodeReferenceModeAttrTag="full" RuleParticipantRefAttrTag="DNA(coil~zero,topI!1).topI(dna!1)" LocationX="45" LocationY="226" />
+        <ReactionRuleShapeTag NodeReferenceModeAttrTag="full" ReactionRuleRef2AttrTag="r5" LocationX="308" LocationY="110" />
+        <RuleParticipantFullShapeTag NodeReferenceModeAttrTag="molecule" RuleParticipantRefAttrTag="DNA(topIV)" LocationX="362" LocationY="121" />
+        <RuleParticipantFullShapeTag NodeReferenceModeAttrTag="molecule" RuleParticipantRefAttrTag="DNA(coil~zero,topIV!1).topIV(dna!1)" LocationX="216" LocationY="62" />
+        <RuleParticipantFullShapeTag NodeReferenceModeAttrTag="molecule" RuleParticipantRefAttrTag="topI(dna)" LocationX="64" LocationY="240" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="DNA" LocationX="233" LocationY="231" />
+        <ReactionRuleShapeTag NodeReferenceModeAttrTag="molecule" ReactionRuleRef2AttrTag="r4" LocationX="130" LocationY="139" />
+        <ReactionRuleShapeTag NodeReferenceModeAttrTag="molecule" ReactionRuleRef2AttrTag="r2_0" LocationX="112" LocationY="150" />
+        <RuleParticipantFullShapeTag NodeReferenceModeAttrTag="molecule" RuleParticipantRefAttrTag="DNA(coil~zero,gyr!1).gyr(dna!1)" LocationX="503" LocationY="184" />
+        <RuleParticipantFullShapeTag NodeReferenceModeAttrTag="molecule" RuleParticipantRefAttrTag="DNA(coil~pos)" LocationX="464" LocationY="113" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="TopIV" LocationX="24" LocationY="238" />
+        <ReactionRuleShapeTag NodeReferenceModeAttrTag="molecule" ReactionRuleRef2AttrTag="r6" LocationX="285" LocationY="95" />
+        <RuleParticipantFullShapeTag NodeReferenceModeAttrTag="molecule" RuleParticipantRefAttrTag="DNA(coil~zero)" LocationX="252" LocationY="240" />
+        <RuleParticipantFullShapeTag NodeReferenceModeAttrTag="molecule" RuleParticipantRefAttrTag="DNA(gyr!1).gyr(dna!1)" LocationX="201" LocationY="158" />
+        <RuleParticipantFullShapeTag NodeReferenceModeAttrTag="molecule" RuleParticipantRefAttrTag="DNA(topIV!1).topIV(dna!1)" LocationX="264" LocationY="182" />
+        <ReactionRuleShapeTag NodeReferenceModeAttrTag="molecule" ReactionRuleRef2AttrTag="r0" LocationX="434" LocationY="240" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="TopI" LocationX="39" LocationY="192" />
+        <RuleParticipantFullShapeTag NodeReferenceModeAttrTag="molecule" RuleParticipantRefAttrTag="DNA(gyr)" LocationX="489" LocationY="34" />
+        <ReactionRuleShapeTag NodeReferenceModeAttrTag="molecule" ReactionRuleRef2AttrTag="r1" LocationX="14" LocationY="84" />
+        <RuleParticipantFullShapeTag NodeReferenceModeAttrTag="molecule" RuleParticipantRefAttrTag="gyr(dna)" LocationX="485" LocationY="98" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="Gyr" LocationX="402" LocationY="208" />
+        <RuleParticipantFullShapeTag NodeReferenceModeAttrTag="molecule" RuleParticipantRefAttrTag="DNA(coil~pos,gyr)" LocationX="153" LocationY="155" />
+        <RuleParticipantFullShapeTag NodeReferenceModeAttrTag="molecule" RuleParticipantRefAttrTag="DNA(coil~pos,topIV)" LocationX="325" LocationY="140" />
+        <RuleParticipantFullShapeTag NodeReferenceModeAttrTag="molecule" RuleParticipantRefAttrTag="DNA(topI)" LocationX="467" LocationY="71" />
+        <ReactionRuleShapeTag NodeReferenceModeAttrTag="molecule" ReactionRuleRef2AttrTag="r2" LocationX="161" LocationY="195" />
+        <RuleParticipantFullShapeTag NodeReferenceModeAttrTag="molecule" RuleParticipantRefAttrTag="DNA(coil~neg,topIV!2).topIV(dna!2)" LocationX="471" LocationY="198" />
+        <RuleParticipantFullShapeTag NodeReferenceModeAttrTag="molecule" RuleParticipantRefAttrTag="DNA(topI!1).topI(dna!1)" LocationX="15" LocationY="68" />
+        <RuleParticipantFullShapeTag NodeReferenceModeAttrTag="molecule" RuleParticipantRefAttrTag="topIV(dna)" LocationX="20" LocationY="87" />
+        <ReactionRuleShapeTag NodeReferenceModeAttrTag="molecule" ReactionRuleRef2AttrTag="r3" LocationX="462" LocationY="180" />
+        <RuleParticipantFullShapeTag NodeReferenceModeAttrTag="molecule" RuleParticipantRefAttrTag="DNA(coil~neg,topI)" LocationX="35" LocationY="106" />
+        <RuleParticipantFullShapeTag NodeReferenceModeAttrTag="molecule" RuleParticipantRefAttrTag="DNA(coil~zero,topI!1).topI(dna!1)" LocationX="45" LocationY="226" />
+        <ReactionRuleShapeTag NodeReferenceModeAttrTag="molecule" ReactionRuleRef2AttrTag="r5" LocationX="308" LocationY="110" />
+        <RuleParticipantFullShapeTag NodeReferenceModeAttrTag="rule" RuleParticipantRefAttrTag="DNA(topIV)" LocationX="362" LocationY="121" />
+        <RuleParticipantFullShapeTag NodeReferenceModeAttrTag="rule" RuleParticipantRefAttrTag="DNA(coil~zero,topIV!1).topIV(dna!1)" LocationX="216" LocationY="62" />
+        <RuleParticipantFullShapeTag NodeReferenceModeAttrTag="rule" RuleParticipantRefAttrTag="topI(dna)" LocationX="64" LocationY="240" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="DNA" LocationX="233" LocationY="231" />
+        <ReactionRuleShapeTag NodeReferenceModeAttrTag="rule" ReactionRuleRef2AttrTag="r4" LocationX="130" LocationY="139" />
+        <ReactionRuleShapeTag NodeReferenceModeAttrTag="rule" ReactionRuleRef2AttrTag="r2_0" LocationX="112" LocationY="150" />
+        <RuleParticipantFullShapeTag NodeReferenceModeAttrTag="rule" RuleParticipantRefAttrTag="DNA(coil~zero,gyr!1).gyr(dna!1)" LocationX="503" LocationY="184" />
+        <RuleParticipantFullShapeTag NodeReferenceModeAttrTag="rule" RuleParticipantRefAttrTag="DNA(coil~pos)" LocationX="464" LocationY="113" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="TopIV" LocationX="24" LocationY="238" />
+        <ReactionRuleShapeTag NodeReferenceModeAttrTag="rule" ReactionRuleRef2AttrTag="r6" LocationX="285" LocationY="95" />
+        <RuleParticipantFullShapeTag NodeReferenceModeAttrTag="rule" RuleParticipantRefAttrTag="DNA(coil~zero)" LocationX="252" LocationY="240" />
+        <RuleParticipantFullShapeTag NodeReferenceModeAttrTag="rule" RuleParticipantRefAttrTag="DNA(gyr!1).gyr(dna!1)" LocationX="201" LocationY="158" />
+        <RuleParticipantFullShapeTag NodeReferenceModeAttrTag="rule" RuleParticipantRefAttrTag="DNA(topIV!1).topIV(dna!1)" LocationX="264" LocationY="182" />
+        <ReactionRuleShapeTag NodeReferenceModeAttrTag="rule" ReactionRuleRef2AttrTag="r0" LocationX="434" LocationY="240" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="TopI" LocationX="39" LocationY="192" />
+        <RuleParticipantFullShapeTag NodeReferenceModeAttrTag="rule" RuleParticipantRefAttrTag="DNA(gyr)" LocationX="489" LocationY="34" />
+        <ReactionRuleShapeTag NodeReferenceModeAttrTag="rule" ReactionRuleRef2AttrTag="r1" LocationX="14" LocationY="84" />
+        <RuleParticipantFullShapeTag NodeReferenceModeAttrTag="rule" RuleParticipantRefAttrTag="gyr(dna)" LocationX="485" LocationY="98" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="Gyr" LocationX="402" LocationY="208" />
+        <RuleParticipantFullShapeTag NodeReferenceModeAttrTag="rule" RuleParticipantRefAttrTag="DNA(coil~pos,gyr)" LocationX="153" LocationY="155" />
+        <RuleParticipantFullShapeTag NodeReferenceModeAttrTag="rule" RuleParticipantRefAttrTag="DNA(coil~pos,topIV)" LocationX="325" LocationY="140" />
+        <RuleParticipantFullShapeTag NodeReferenceModeAttrTag="rule" RuleParticipantRefAttrTag="DNA(topI)" LocationX="467" LocationY="71" />
+        <ReactionRuleShapeTag NodeReferenceModeAttrTag="rule" ReactionRuleRef2AttrTag="r2" LocationX="161" LocationY="195" />
+        <RuleParticipantFullShapeTag NodeReferenceModeAttrTag="rule" RuleParticipantRefAttrTag="DNA(coil~neg,topIV!2).topIV(dna!2)" LocationX="471" LocationY="198" />
+        <RuleParticipantFullShapeTag NodeReferenceModeAttrTag="rule" RuleParticipantRefAttrTag="DNA(topI!1).topI(dna!1)" LocationX="15" LocationY="68" />
+        <RuleParticipantFullShapeTag NodeReferenceModeAttrTag="rule" RuleParticipantRefAttrTag="topIV(dna)" LocationX="20" LocationY="87" />
+        <ReactionRuleShapeTag NodeReferenceModeAttrTag="rule" ReactionRuleRef2AttrTag="r3" LocationX="462" LocationY="180" />
+        <RuleParticipantFullShapeTag NodeReferenceModeAttrTag="rule" RuleParticipantRefAttrTag="DNA(coil~neg,topI)" LocationX="35" LocationY="106" />
+        <RuleParticipantFullShapeTag NodeReferenceModeAttrTag="rule" RuleParticipantRefAttrTag="DNA(coil~zero,topI!1).topI(dna!1)" LocationX="45" LocationY="226" />
+        <ReactionRuleShapeTag NodeReferenceModeAttrTag="rule" ReactionRuleRef2AttrTag="r5" LocationX="308" LocationY="110" />
+      </Diagram>
+      <Diagram Name="m0" Structure="m0" />
+      <Version Name="unnamed" KeyValue="106019357" BranchId="106019358" Archived="0" Date="10-Dec-2016 03:26:47" FromVersionable="false">
+        <Owner Name="gregfar" Identifier="106017115" />
+        <GroupAccess Type="1" />
+        <Annotation>cloned from 'unnamed' owned by user mblinov
+cloned from 'unnamed' owned by user feliu
+cloned from 'unnamed' owned by user mblinov</Annotation>
+      </Version>
+      <ModelUnitSystem VolumeSubstanceUnit="molecules" MembraneSubstanceUnit="molecules" LumpedReactionSubstanceUnit="molecules" VolumeUnit="um3" AreaUnit="um2" LengthUnit="um" TimeUnit="s" />
+    </Model>
+    <SimulationSpec Name="Determ" Stochastic="false" UseConcentration="true" RuleBased="false" MassConservationModelReduction="true" InsufficientIterations="false" InsufficientMaxMolecules="false">
+      <NetworkConstraints RbmMaxIteration="10" RbmMaxMoleculesPerSpecies="10" RbmSpeciesLimit="800" RbmReactionsLimit="2500">
+        <MaxStoichiometry MolecularType="DNA" Integer="100" />
+        <MaxStoichiometry MolecularType="gyr" Integer="100" />
+        <MaxStoichiometry MolecularType="topI" Integer="100" />
+        <MaxStoichiometry MolecularType="topIV" Integer="100" />
+      </NetworkConstraints>
+      <Annotation>cloned from 'Determ' owned by user mblinov
+(copied from NFSim application) cloned from 'NFSim application' owned by user mblinov</Annotation>
+      <Geometry Name="non-spatial1061216677" Dimension="0">
+        <Annotation>cloned from 'non-spatial1061216677' owned by user mblinov
+cloned from 'non-spatial1061216677' owned by user feliu
+cloned from 'non-spatial1046810141' owned by user mblinov</Annotation>
+        <Extent X="10.0" Y="10.0" Z="10.0" />
+        <Origin X="0.0" Y="0.0" Z="0.0" />
+        <SubVolume Name="Compartment" Handle="0" Type="Compartmental" KeyValue="106019345" />
+        <Version Name="non-spatial1061216677" KeyValue="106019341" BranchId="106019342" Archived="0" Date="10-Dec-2016 03:26:46" FromVersionable="false">
+          <Owner Name="gregfar" Identifier="106017115" />
+          <GroupAccess Type="1" />
+          <Annotation>cloned from 'non-spatial1061216677' owned by user mblinov
+cloned from 'non-spatial1061216677' owned by user feliu
+cloned from 'non-spatial1046810141' owned by user mblinov</Annotation>
+        </Version>
+      </Geometry>
+      <GeometryContext>
+        <FeatureMapping Feature="c0" GeometryClass="Compartment" SubVolume="Compartment" Size="1.0">
+          <BoundariesTypes Xm="Flux" Xp="Flux" Ym="Flux" Yp="Flux" Zm="Flux" Zp="Flux" />
+        </FeatureMapping>
+        <MembraneMapping Membrane="m0" Size="6563.0" CalculateVoltage="false" SpecificCapacitance="1.0" InitialVoltage="0.0" GeometryClass="Compartment">
+          <BoundariesTypes Xm="Flux" Xp="Flux" Ym="Flux" Yp="Flux" Zm="Flux" Zp="Flux" />
+        </MembraneMapping>
+      </GeometryContext>
+      <ReactionContext>
+        <LocalizedCompoundSpec LocalizedCompoundRef="DNA" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>100.0</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="TopI" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>10.0</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="Gyr" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>10.0</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="TopIV" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>10.0</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <ReactionRuleSpecs>
+          <ReactionRuleSpec ReactionRuleRef="r0" ReactionRuleMapping="included" />
+          <ReactionRuleSpec ReactionRuleRef="r4" ReactionRuleMapping="included" />
+          <ReactionRuleSpec ReactionRuleRef="r5" ReactionRuleMapping="included" />
+          <ReactionRuleSpec ReactionRuleRef="r6" ReactionRuleMapping="included" />
+          <ReactionRuleSpec ReactionRuleRef="r1" ReactionRuleMapping="included" />
+          <ReactionRuleSpec ReactionRuleRef="r3" ReactionRuleMapping="included" />
+          <ReactionRuleSpec ReactionRuleRef="r2" ReactionRuleMapping="included" />
+          <ReactionRuleSpec ReactionRuleRef="r2_0" ReactionRuleMapping="included" />
+        </ReactionRuleSpecs>
+      </ReactionContext>
+      <MathDescription Name="Determ_generated">
+        <Annotation>cloned from 'Determ_generated' owned by user mblinov</Annotation>
+        <Constant Name="_F_">96480.0</Constant>
+        <Constant Name="_F_nmol_">9.648E-5</Constant>
+        <Constant Name="_K_GHK_">1.0E-9</Constant>
+        <Constant Name="_N_pmol_">6.02E11</Constant>
+        <Constant Name="_PI_">3.141592653589793</Constant>
+        <Constant Name="_R_">8314.0</Constant>
+        <Constant Name="_T_">300.0</Constant>
+        <Constant Name="DNA_init_molecules_um_3">100.0</Constant>
+        <Constant Name="Gyr_init_molecules_um_3">10.0</Constant>
+        <Constant Name="gyrDeltaLK">-2.0</Constant>
+        <Constant Name="GyrRelease">1.0</Constant>
+        <Constant Name="k1">0.0</Constant>
+        <Constant Name="K_millivolts_per_volt">1000.0</Constant>
+        <Constant Name="Kgyr">1.2</Constant>
+        <Constant Name="KMOLE">(1.0 / 602.0)</Constant>
+        <Constant Name="Kr_r0_0">0.0</Constant>
+        <Constant Name="Kr_r0_1">0.0</Constant>
+        <Constant Name="Kr_r0_2">0.0</Constant>
+        <Constant Name="Kr_r0_3">0.0</Constant>
+        <Constant Name="Kr_r0_4">0.0</Constant>
+        <Constant Name="Kr_r0_5">0.0</Constant>
+        <Constant Name="Kr_r0_6">0.0</Constant>
+        <Constant Name="Kr_r0_7">0.0</Constant>
+        <Constant Name="Kr_r1_0">0.0</Constant>
+        <Constant Name="Kr_r1_1">0.0</Constant>
+        <Constant Name="Kr_r1_2">0.0</Constant>
+        <Constant Name="Kr_r1_3">0.0</Constant>
+        <Constant Name="Kr_r2_0">0.0</Constant>
+        <Constant Name="Kr_r2_0_0">0.0</Constant>
+        <Constant Name="Kr_r2_0_1">0.0</Constant>
+        <Constant Name="Kr_r2_0_2">0.0</Constant>
+        <Constant Name="Kr_r2_0_3">0.0</Constant>
+        <Constant Name="Kr_r2_1">0.0</Constant>
+        <Constant Name="Kr_r2_2">0.0</Constant>
+        <Constant Name="Kr_r2_3">0.0</Constant>
+        <Constant Name="Kr_r3_0">0.0</Constant>
+        <Constant Name="Kr_r3_1">0.0</Constant>
+        <Constant Name="Kr_r3_2">0.0</Constant>
+        <Constant Name="Kr_r3_3">0.0</Constant>
+        <Constant Name="Kr_r4_0">0.0</Constant>
+        <Constant Name="Kr_r4_1">0.0</Constant>
+        <Constant Name="Kr_r4_10">0.0</Constant>
+        <Constant Name="Kr_r4_11">0.0</Constant>
+        <Constant Name="Kr_r4_2">0.0</Constant>
+        <Constant Name="Kr_r4_3">0.0</Constant>
+        <Constant Name="Kr_r4_4">0.0</Constant>
+        <Constant Name="Kr_r4_5">0.0</Constant>
+        <Constant Name="Kr_r4_6">0.0</Constant>
+        <Constant Name="Kr_r4_7">0.0</Constant>
+        <Constant Name="Kr_r4_8">0.0</Constant>
+        <Constant Name="Kr_r4_9">0.0</Constant>
+        <Constant Name="Kr_r5_0">0.0</Constant>
+        <Constant Name="Kr_r5_1">0.0</Constant>
+        <Constant Name="Kr_r5_10">0.0</Constant>
+        <Constant Name="Kr_r5_11">0.0</Constant>
+        <Constant Name="Kr_r5_2">0.0</Constant>
+        <Constant Name="Kr_r5_3">0.0</Constant>
+        <Constant Name="Kr_r5_4">0.0</Constant>
+        <Constant Name="Kr_r5_5">0.0</Constant>
+        <Constant Name="Kr_r5_6">0.0</Constant>
+        <Constant Name="Kr_r5_7">0.0</Constant>
+        <Constant Name="Kr_r5_8">0.0</Constant>
+        <Constant Name="Kr_r5_9">0.0</Constant>
+        <Constant Name="Kr_r6_0">0.0</Constant>
+        <Constant Name="Kr_r6_1">0.0</Constant>
+        <Constant Name="Kr_r6_10">0.0</Constant>
+        <Constant Name="Kr_r6_11">0.0</Constant>
+        <Constant Name="Kr_r6_2">0.0</Constant>
+        <Constant Name="Kr_r6_3">0.0</Constant>
+        <Constant Name="Kr_r6_4">0.0</Constant>
+        <Constant Name="Kr_r6_5">0.0</Constant>
+        <Constant Name="Kr_r6_6">0.0</Constant>
+        <Constant Name="Kr_r6_7">0.0</Constant>
+        <Constant Name="Kr_r6_8">0.0</Constant>
+        <Constant Name="Kr_r6_9">0.0</Constant>
+        <Constant Name="KtopI">1.0</Constant>
+        <Constant Name="KtopIV">2.5</Constant>
+        <Constant Name="NA">6.022E23</Constant>
+        <Constant Name="s10_init_molecules_um_3">0.0</Constant>
+        <Constant Name="s11_init_molecules_um_3">0.0</Constant>
+        <Constant Name="s12_init_molecules_um_3">0.0</Constant>
+        <Constant Name="s13_init_molecules_um_3">0.0</Constant>
+        <Constant Name="s14_init_molecules_um_3">0.0</Constant>
+        <Constant Name="s15_init_molecules_um_3">0.0</Constant>
+        <Constant Name="s16_init_molecules_um_3">0.0</Constant>
+        <Constant Name="s17_init_molecules_um_3">0.0</Constant>
+        <Constant Name="s18_init_molecules_um_3">0.0</Constant>
+        <Constant Name="s19_init_molecules_um_3">0.0</Constant>
+        <Constant Name="s20_init_molecules_um_3">0.0</Constant>
+        <Constant Name="s21_init_molecules_um_3">0.0</Constant>
+        <Constant Name="s22_init_molecules_um_3">0.0</Constant>
+        <Constant Name="s23_init_molecules_um_3">0.0</Constant>
+        <Constant Name="s24_init_molecules_um_3">0.0</Constant>
+        <Constant Name="s25_init_molecules_um_3">0.0</Constant>
+        <Constant Name="s26_init_molecules_um_3">0.0</Constant>
+        <Constant Name="s4_init_molecules_um_3">0.0</Constant>
+        <Constant Name="s5_init_molecules_um_3">0.0</Constant>
+        <Constant Name="s6_init_molecules_um_3">0.0</Constant>
+        <Constant Name="s7_init_molecules_um_3">0.0</Constant>
+        <Constant Name="s8_init_molecules_um_3">0.0</Constant>
+        <Constant Name="s9_init_molecules_um_3">0.0</Constant>
+        <Constant Name="sigma">0.0</Constant>
+        <Constant Name="Size_c0">1.0</Constant>
+        <Constant Name="Size_m0">6563.0</Constant>
+        <Constant Name="Tgyr">-0.1</Constant>
+        <Constant Name="threshold">0.01</Constant>
+        <Constant Name="TopI_init_molecules_um_3">10.0</Constant>
+        <Constant Name="topIDeltaLK">1.0</Constant>
+        <Constant Name="TopIRelease">1.0</Constant>
+        <Constant Name="TopIV_init_molecules_um_3">10.0</Constant>
+        <Constant Name="topIVDeltaLK">-2.0</Constant>
+        <Constant Name="TopIVRelease">1.0</Constant>
+        <Constant Name="TtopI">0.0</Constant>
+        <Constant Name="TtopIV">0.0</Constant>
+        <Constant Name="Voltage_m0">0.0</Constant>
+        <VolumeVariable Name="s10" Domain="Compartment" />
+        <VolumeVariable Name="s11" Domain="Compartment" />
+        <VolumeVariable Name="s12" Domain="Compartment" />
+        <VolumeVariable Name="s13" Domain="Compartment" />
+        <VolumeVariable Name="s14" Domain="Compartment" />
+        <VolumeVariable Name="s15" Domain="Compartment" />
+        <VolumeVariable Name="s16" Domain="Compartment" />
+        <VolumeVariable Name="s17" Domain="Compartment" />
+        <VolumeVariable Name="s18" Domain="Compartment" />
+        <VolumeVariable Name="s19" Domain="Compartment" />
+        <VolumeVariable Name="s20" Domain="Compartment" />
+        <VolumeVariable Name="s21" Domain="Compartment" />
+        <VolumeVariable Name="s22" Domain="Compartment" />
+        <VolumeVariable Name="s23" Domain="Compartment" />
+        <VolumeVariable Name="s24" Domain="Compartment" />
+        <VolumeVariable Name="s25" Domain="Compartment" />
+        <VolumeVariable Name="s26" Domain="Compartment" />
+        <VolumeVariable Name="s4" Domain="Compartment" />
+        <VolumeVariable Name="s5" Domain="Compartment" />
+        <VolumeVariable Name="s6" Domain="Compartment" />
+        <VolumeVariable Name="s7" Domain="Compartment" />
+        <VolumeVariable Name="s8" Domain="Compartment" />
+        <VolumeVariable Name="s9" Domain="Compartment" />
+        <Function Name="BooleanGyrActivity">(0.0016611295681063123 * Kgyr)</Function>
+        <Function Name="BooleanTopIActivity">(0.0016611295681063123 * KtopI)</Function>
+        <Function Name="BooleanTopIVActivity">(0.0016611295681063123 * KtopIV)</Function>
+        <Function Name="DNA" Domain="Compartment">((K_DNA_total - (Size_c0 * s4) - (Size_c0 * s5) - (Size_c0 * s6) - (Size_c0 * s7) - (Size_c0 * s8) - (Size_c0 * s9) - (Size_c0 * s10) - (Size_c0 * s11) - (Size_c0 * s12) - (Size_c0 * s13) - (Size_c0 * s14) - (Size_c0 * s15) - (Size_c0 * s16) - (Size_c0 * s17) - (Size_c0 * s18) - (Size_c0 * s19) - (Size_c0 * s20) - (Size_c0 * s21) - (Size_c0 * s22) - (Size_c0 * s23) - (Size_c0 * s24) - (Size_c0 * s25) - (Size_c0 * s26)) / Size_c0)</Function>
+        <Function Name="DNA_neg">((1.0 * s7) + (1.0 * s10) + (1.0 * s15) + (1.0 * s18) + (1.0 * s22) + (1.0 * s24) + (1.0 * s25) + (1.0 * s26))</Function>
+        <Function Name="DNA_pos">((1.0 * s4) + (1.0 * s8) + (1.0 * s9) + (1.0 * s12) + (1.0 * s16) + (1.0 * s17) + (1.0 * s20) + (1.0 * s23))</Function>
+        <Function Name="DNA_total">((1.0 * DNA) + (1.0 * s4) + (1.0 * s5) + (1.0 * s6) + (1.0 * s7) + (1.0 * s8) + (1.0 * s9) + (1.0 * s10) + (1.0 * s11) + (1.0 * s12) + (1.0 * s13) + (1.0 * s14) + (1.0 * s15) + (1.0 * s16) + (1.0 * s17) + (1.0 * s18) + (1.0 * s19) + (1.0 * s20) + (1.0 * s21) + (1.0 * s22) + (1.0 * s23) + (1.0 * s24) + (1.0 * s25) + (1.0 * s26))</Function>
+        <Function Name="DNA_zero">((1.0 * DNA) + (1.0 * s5) + (1.0 * s6) + (1.0 * s11) + (1.0 * s13) + (1.0 * s14) + (1.0 * s19) + (1.0 * s21))</Function>
+        <Function Name="Gyr" Domain="Compartment">((K_Gyr_total - (Size_c0 * s5) - (Size_c0 * s8) - (Size_c0 * s14) - (Size_c0 * s15) - (Size_c0 * s17) - (Size_c0 * s18) - (Size_c0 * s19) - (Size_c0 * s20) - (Size_c0 * s21) - (Size_c0 * s23) - (Size_c0 * s25) - (Size_c0 * s26)) / Size_c0)</Function>
+        <Function Name="Gyr_free">(1.0 * Gyr)</Function>
+        <Function Name="J_r0_0" Domain="Compartment">((Kf_r0_0 * DNA) - (Kr_r0_0 * s4))</Function>
+        <Function Name="J_r0_1" Domain="Compartment">((Kf_r0_1 * s5) - (Kr_r0_1 * s8))</Function>
+        <Function Name="J_r0_2" Domain="Compartment">((Kf_r0_2 * s6) - (Kr_r0_2 * s9))</Function>
+        <Function Name="J_r0_3" Domain="Compartment">((Kf_r0_3 * s11) - (Kr_r0_3 * s12))</Function>
+        <Function Name="J_r0_4" Domain="Compartment">((Kf_r0_4 * s13) - (Kr_r0_4 * s16))</Function>
+        <Function Name="J_r0_5" Domain="Compartment">((Kf_r0_5 * s14) - (Kr_r0_5 * s17))</Function>
+        <Function Name="J_r0_6" Domain="Compartment">((Kf_r0_6 * s19) - (Kr_r0_6 * s20))</Function>
+        <Function Name="J_r0_7" Domain="Compartment">((Kf_r0_7 * s21) - (Kr_r0_7 * s23))</Function>
+        <Function Name="J_r1_0" Domain="Compartment">(((Kf_r1_0 * Gyr) * s4) - (Kr_r1_0 * s5))</Function>
+        <Function Name="J_r1_1" Domain="Compartment">(((Kf_r1_1 * Gyr) * s9) - (Kr_r1_1 * s14))</Function>
+        <Function Name="J_r1_2" Domain="Compartment">(((Kf_r1_2 * Gyr) * s12) - (Kr_r1_2 * s19))</Function>
+        <Function Name="J_r1_3" Domain="Compartment">(((Kf_r1_3 * Gyr) * s16) - (Kr_r1_3 * s21))</Function>
+        <Function Name="J_r2_0" Domain="Compartment">(((Kf_r2_0 * TopIV) * s4) - (Kr_r2_0 * s6))</Function>
+        <Function Name="J_r2_0_0" Domain="Compartment">(((Kf_r2_0_0 * TopIV) * s4) - (Kr_r2_0_0 * s7))</Function>
+        <Function Name="J_r2_0_1" Domain="Compartment">(((Kf_r2_0_1 * TopIV) * s8) - (Kr_r2_0_1 * s15))</Function>
+        <Function Name="J_r2_0_2" Domain="Compartment">(((Kf_r2_0_2 * TopIV) * s16) - (Kr_r2_0_2 * s22))</Function>
+        <Function Name="J_r2_0_3" Domain="Compartment">(((Kf_r2_0_3 * TopIV) * s23) - (Kr_r2_0_3 * s25))</Function>
+        <Function Name="J_r2_1" Domain="Compartment">(((Kf_r2_1 * TopIV) * s8) - (Kr_r2_1 * s14))</Function>
+        <Function Name="J_r2_2" Domain="Compartment">(((Kf_r2_2 * TopIV) * s16) - (Kr_r2_2 * s11))</Function>
+        <Function Name="J_r2_3" Domain="Compartment">(((Kf_r2_3 * TopIV) * s23) - (Kr_r2_3 * s19))</Function>
+        <Function Name="J_r3_0" Domain="Compartment">(((Kf_r3_0 * TopI) * s7) - (Kr_r3_0 * s11))</Function>
+        <Function Name="J_r3_1" Domain="Compartment">(((Kf_r3_1 * TopI) * s10) - (Kr_r3_1 * s13))</Function>
+        <Function Name="J_r3_2" Domain="Compartment">(((Kf_r3_2 * TopI) * s15) - (Kr_r3_2 * s19))</Function>
+        <Function Name="J_r3_3" Domain="Compartment">(((Kf_r3_3 * TopI) * s18) - (Kr_r3_3 * s21))</Function>
+        <Function Name="J_r4_0" Domain="Compartment">((Kf_r4_0 * s5) - ((Kr_r4_0 * DNA) * Gyr))</Function>
+        <Function Name="J_r4_1" Domain="Compartment">((Kf_r4_1 * s8) - ((Kr_r4_1 * s4) * Gyr))</Function>
+        <Function Name="J_r4_10" Domain="Compartment">((Kf_r4_10 * s25) - ((Kr_r4_10 * Gyr) * s22))</Function>
+        <Function Name="J_r4_11" Domain="Compartment">((Kf_r4_11 * s26) - ((Kr_r4_11 * Gyr) * s24))</Function>
+        <Function Name="J_r4_2" Domain="Compartment">((Kf_r4_2 * s14) - ((Kr_r4_2 * Gyr) * s6))</Function>
+        <Function Name="J_r4_3" Domain="Compartment">((Kf_r4_3 * s15) - ((Kr_r4_3 * Gyr) * s7))</Function>
+        <Function Name="J_r4_4" Domain="Compartment">((Kf_r4_4 * s17) - ((Kr_r4_4 * s9) * Gyr))</Function>
+        <Function Name="J_r4_5" Domain="Compartment">((Kf_r4_5 * s18) - ((Kr_r4_5 * Gyr) * s10))</Function>
+        <Function Name="J_r4_6" Domain="Compartment">((Kf_r4_6 * s19) - ((Kr_r4_6 * Gyr) * s11))</Function>
+        <Function Name="J_r4_7" Domain="Compartment">((Kf_r4_7 * s20) - ((Kr_r4_7 * s12) * Gyr))</Function>
+        <Function Name="J_r4_8" Domain="Compartment">((Kf_r4_8 * s21) - ((Kr_r4_8 * Gyr) * s13))</Function>
+        <Function Name="J_r4_9" Domain="Compartment">((Kf_r4_9 * s23) - ((Kr_r4_9 * s16) * Gyr))</Function>
+        <Function Name="J_r5_0" Domain="Compartment">((Kf_r5_0 * s6) - ((Kr_r5_0 * DNA) * TopIV))</Function>
+        <Function Name="J_r5_1" Domain="Compartment">((Kf_r5_1 * s7) - ((Kr_r5_1 * s10) * TopIV))</Function>
+        <Function Name="J_r5_10" Domain="Compartment">((Kf_r5_10 * s22) - ((Kr_r5_10 * s24) * TopIV))</Function>
+        <Function Name="J_r5_11" Domain="Compartment">((Kf_r5_11 * s25) - ((Kr_r5_11 * TopIV) * s26))</Function>
+        <Function Name="J_r5_2" Domain="Compartment">((Kf_r5_2 * s9) - ((Kr_r5_2 * s4) * TopIV))</Function>
+        <Function Name="J_r5_3" Domain="Compartment">((Kf_r5_3 * s11) - ((Kr_r5_3 * s13) * TopIV))</Function>
+        <Function Name="J_r5_4" Domain="Compartment">((Kf_r5_4 * s12) - ((Kr_r5_4 * s16) * TopIV))</Function>
+        <Function Name="J_r5_5" Domain="Compartment">((Kf_r5_5 * s14) - ((Kr_r5_5 * TopIV) * s5))</Function>
+        <Function Name="J_r5_6" Domain="Compartment">((Kf_r5_6 * s15) - ((Kr_r5_6 * TopIV) * s18))</Function>
+        <Function Name="J_r5_7" Domain="Compartment">((Kf_r5_7 * s17) - ((Kr_r5_7 * s8) * TopIV))</Function>
+        <Function Name="J_r5_8" Domain="Compartment">((Kf_r5_8 * s19) - ((Kr_r5_8 * TopIV) * s21))</Function>
+        <Function Name="J_r5_9" Domain="Compartment">((Kf_r5_9 * s20) - ((Kr_r5_9 * s23) * TopIV))</Function>
+        <Function Name="J_r6_0" Domain="Compartment">((Kf_r6_0 * s11) - ((Kr_r6_0 * s6) * TopI))</Function>
+        <Function Name="J_r6_1" Domain="Compartment">((Kf_r6_1 * s12) - ((Kr_r6_1 * s9) * TopI))</Function>
+        <Function Name="J_r6_10" Domain="Compartment">((Kf_r6_10 * s25) - ((Kr_r6_10 * TopI) * s15))</Function>
+        <Function Name="J_r6_11" Domain="Compartment">((Kf_r6_11 * s26) - ((Kr_r6_11 * s18) * TopI))</Function>
+        <Function Name="J_r6_2" Domain="Compartment">((Kf_r6_2 * s13) - ((Kr_r6_2 * DNA) * TopI))</Function>
+        <Function Name="J_r6_3" Domain="Compartment">((Kf_r6_3 * s16) - ((Kr_r6_3 * s4) * TopI))</Function>
+        <Function Name="J_r6_4" Domain="Compartment">((Kf_r6_4 * s19) - ((Kr_r6_4 * TopI) * s14))</Function>
+        <Function Name="J_r6_5" Domain="Compartment">((Kf_r6_5 * s20) - ((Kr_r6_5 * s17) * TopI))</Function>
+        <Function Name="J_r6_6" Domain="Compartment">((Kf_r6_6 * s21) - ((Kr_r6_6 * s5) * TopI))</Function>
+        <Function Name="J_r6_7" Domain="Compartment">((Kf_r6_7 * s22) - ((Kr_r6_7 * s7) * TopI))</Function>
+        <Function Name="J_r6_8" Domain="Compartment">((Kf_r6_8 * s23) - ((Kr_r6_8 * s8) * TopI))</Function>
+        <Function Name="J_r6_9" Domain="Compartment">((Kf_r6_9 * s24) - ((Kr_r6_9 * s10) * TopI))</Function>
+        <Function Name="K_DNA_total" Domain="Compartment">((Size_c0 * DNA_init_molecules_um_3) + (Size_c0 * s4_init_molecules_um_3) + (Size_c0 * s5_init_molecules_um_3) + (Size_c0 * s6_init_molecules_um_3) + (Size_c0 * s7_init_molecules_um_3) + (Size_c0 * s8_init_molecules_um_3) + (Size_c0 * s9_init_molecules_um_3) + (Size_c0 * s10_init_molecules_um_3) + (Size_c0 * s11_init_molecules_um_3) + (Size_c0 * s12_init_molecules_um_3) + (Size_c0 * s13_init_molecules_um_3) + (Size_c0 * s14_init_molecules_um_3) + (Size_c0 * s15_init_molecules_um_3) + (Size_c0 * s16_init_molecules_um_3) + (Size_c0 * s17_init_molecules_um_3) + (Size_c0 * s18_init_molecules_um_3) + (Size_c0 * s19_init_molecules_um_3) + (Size_c0 * s20_init_molecules_um_3) + (Size_c0 * s21_init_molecules_um_3) + (Size_c0 * s22_init_molecules_um_3) + (Size_c0 * s23_init_molecules_um_3) + (Size_c0 * s24_init_molecules_um_3) + (Size_c0 * s25_init_molecules_um_3) + (Size_c0 * s26_init_molecules_um_3))</Function>
+        <Function Name="K_Gyr_total" Domain="Compartment">((Size_c0 * Gyr_init_molecules_um_3) + (Size_c0 * s5_init_molecules_um_3) + (Size_c0 * s8_init_molecules_um_3) + (Size_c0 * s14_init_molecules_um_3) + (Size_c0 * s15_init_molecules_um_3) + (Size_c0 * s17_init_molecules_um_3) + (Size_c0 * s18_init_molecules_um_3) + (Size_c0 * s19_init_molecules_um_3) + (Size_c0 * s20_init_molecules_um_3) + (Size_c0 * s21_init_molecules_um_3) + (Size_c0 * s23_init_molecules_um_3) + (Size_c0 * s25_init_molecules_um_3) + (Size_c0 * s26_init_molecules_um_3))</Function>
+        <Function Name="K_TopI_total" Domain="Compartment">((Size_c0 * TopI_init_molecules_um_3) + (Size_c0 * s11_init_molecules_um_3) + (Size_c0 * s12_init_molecules_um_3) + (Size_c0 * s13_init_molecules_um_3) + (Size_c0 * s16_init_molecules_um_3) + (Size_c0 * s19_init_molecules_um_3) + (Size_c0 * s20_init_molecules_um_3) + (Size_c0 * s21_init_molecules_um_3) + (Size_c0 * s22_init_molecules_um_3) + (Size_c0 * s23_init_molecules_um_3) + (Size_c0 * s24_init_molecules_um_3) + (Size_c0 * s25_init_molecules_um_3) + (Size_c0 * s26_init_molecules_um_3))</Function>
+        <Function Name="K_TopIV_total" Domain="Compartment">((Size_c0 * TopIV_init_molecules_um_3) + (Size_c0 * s6_init_molecules_um_3) + (Size_c0 * s7_init_molecules_um_3) + (Size_c0 * s9_init_molecules_um_3) + (Size_c0 * s11_init_molecules_um_3) + (Size_c0 * s12_init_molecules_um_3) + (Size_c0 * s14_init_molecules_um_3) + (Size_c0 * s15_init_molecules_um_3) + (Size_c0 * s17_init_molecules_um_3) + (Size_c0 * s19_init_molecules_um_3) + (Size_c0 * s20_init_molecules_um_3) + (Size_c0 * s22_init_molecules_um_3) + (Size_c0 * s25_init_molecules_um_3))</Function>
+        <Function Name="Kel">(0.0016611295681063123 * 1.0)</Function>
+        <Function Name="Kf_r0_0" Domain="Compartment">Kel</Function>
+        <Function Name="Kf_r0_1" Domain="Compartment">Kel</Function>
+        <Function Name="Kf_r0_2" Domain="Compartment">Kel</Function>
+        <Function Name="Kf_r0_3" Domain="Compartment">Kel</Function>
+        <Function Name="Kf_r0_4" Domain="Compartment">Kel</Function>
+        <Function Name="Kf_r0_5" Domain="Compartment">Kel</Function>
+        <Function Name="Kf_r0_6" Domain="Compartment">Kel</Function>
+        <Function Name="Kf_r0_7" Domain="Compartment">Kel</Function>
+        <Function Name="Kf_r1_0" Domain="Compartment">BooleanGyrActivity</Function>
+        <Function Name="Kf_r1_1" Domain="Compartment">BooleanGyrActivity</Function>
+        <Function Name="Kf_r1_2" Domain="Compartment">BooleanGyrActivity</Function>
+        <Function Name="Kf_r1_3" Domain="Compartment">BooleanGyrActivity</Function>
+        <Function Name="Kf_r2_0" Domain="Compartment">BooleanTopIVActivity</Function>
+        <Function Name="Kf_r2_0_0" Domain="Compartment">BooleanTopIVActivity</Function>
+        <Function Name="Kf_r2_0_1" Domain="Compartment">BooleanTopIVActivity</Function>
+        <Function Name="Kf_r2_0_2" Domain="Compartment">BooleanTopIVActivity</Function>
+        <Function Name="Kf_r2_0_3" Domain="Compartment">BooleanTopIVActivity</Function>
+        <Function Name="Kf_r2_1" Domain="Compartment">BooleanTopIVActivity</Function>
+        <Function Name="Kf_r2_2" Domain="Compartment">BooleanTopIVActivity</Function>
+        <Function Name="Kf_r2_3" Domain="Compartment">BooleanTopIVActivity</Function>
+        <Function Name="Kf_r3_0" Domain="Compartment">BooleanTopIActivity</Function>
+        <Function Name="Kf_r3_1" Domain="Compartment">BooleanTopIActivity</Function>
+        <Function Name="Kf_r3_2" Domain="Compartment">BooleanTopIActivity</Function>
+        <Function Name="Kf_r3_3" Domain="Compartment">BooleanTopIActivity</Function>
+        <Function Name="Kf_r4_0" Domain="Compartment">GyrRelease</Function>
+        <Function Name="Kf_r4_1" Domain="Compartment">GyrRelease</Function>
+        <Function Name="Kf_r4_10" Domain="Compartment">GyrRelease</Function>
+        <Function Name="Kf_r4_11" Domain="Compartment">GyrRelease</Function>
+        <Function Name="Kf_r4_2" Domain="Compartment">GyrRelease</Function>
+        <Function Name="Kf_r4_3" Domain="Compartment">GyrRelease</Function>
+        <Function Name="Kf_r4_4" Domain="Compartment">GyrRelease</Function>
+        <Function Name="Kf_r4_5" Domain="Compartment">GyrRelease</Function>
+        <Function Name="Kf_r4_6" Domain="Compartment">GyrRelease</Function>
+        <Function Name="Kf_r4_7" Domain="Compartment">GyrRelease</Function>
+        <Function Name="Kf_r4_8" Domain="Compartment">GyrRelease</Function>
+        <Function Name="Kf_r4_9" Domain="Compartment">GyrRelease</Function>
+        <Function Name="Kf_r5_0" Domain="Compartment">TopIVRelease</Function>
+        <Function Name="Kf_r5_1" Domain="Compartment">TopIVRelease</Function>
+        <Function Name="Kf_r5_10" Domain="Compartment">TopIVRelease</Function>
+        <Function Name="Kf_r5_11" Domain="Compartment">TopIVRelease</Function>
+        <Function Name="Kf_r5_2" Domain="Compartment">TopIVRelease</Function>
+        <Function Name="Kf_r5_3" Domain="Compartment">TopIVRelease</Function>
+        <Function Name="Kf_r5_4" Domain="Compartment">TopIVRelease</Function>
+        <Function Name="Kf_r5_5" Domain="Compartment">TopIVRelease</Function>
+        <Function Name="Kf_r5_6" Domain="Compartment">TopIVRelease</Function>
+        <Function Name="Kf_r5_7" Domain="Compartment">TopIVRelease</Function>
+        <Function Name="Kf_r5_8" Domain="Compartment">TopIVRelease</Function>
+        <Function Name="Kf_r5_9" Domain="Compartment">TopIVRelease</Function>
+        <Function Name="Kf_r6_0" Domain="Compartment">TopIRelease</Function>
+        <Function Name="Kf_r6_1" Domain="Compartment">TopIRelease</Function>
+        <Function Name="Kf_r6_10" Domain="Compartment">TopIRelease</Function>
+        <Function Name="Kf_r6_11" Domain="Compartment">TopIRelease</Function>
+        <Function Name="Kf_r6_2" Domain="Compartment">TopIRelease</Function>
+        <Function Name="Kf_r6_3" Domain="Compartment">TopIRelease</Function>
+        <Function Name="Kf_r6_4" Domain="Compartment">TopIRelease</Function>
+        <Function Name="Kf_r6_5" Domain="Compartment">TopIRelease</Function>
+        <Function Name="Kf_r6_6" Domain="Compartment">TopIRelease</Function>
+        <Function Name="Kf_r6_7" Domain="Compartment">TopIRelease</Function>
+        <Function Name="Kf_r6_8" Domain="Compartment">TopIRelease</Function>
+        <Function Name="Kf_r6_9" Domain="Compartment">TopIRelease</Function>
+        <Function Name="TopI" Domain="Compartment">((K_TopI_total - (Size_c0 * s11) - (Size_c0 * s12) - (Size_c0 * s13) - (Size_c0 * s16) - (Size_c0 * s19) - (Size_c0 * s20) - (Size_c0 * s21) - (Size_c0 * s22) - (Size_c0 * s23) - (Size_c0 * s24) - (Size_c0 * s25) - (Size_c0 * s26)) / Size_c0)</Function>
+        <Function Name="TopI_free">(1.0 * TopI)</Function>
+        <Function Name="TopIV" Domain="Compartment">((K_TopIV_total - (Size_c0 * s6) - (Size_c0 * s7) - (Size_c0 * s9) - (Size_c0 * s11) - (Size_c0 * s12) - (Size_c0 * s14) - (Size_c0 * s15) - (Size_c0 * s17) - (Size_c0 * s19) - (Size_c0 * s20) - (Size_c0 * s22) - (Size_c0 * s25)) / Size_c0)</Function>
+        <Function Name="TopIV_free">(1.0 * TopIV)</Function>
+        <CompartmentSubDomain Name="Compartment">
+          <BoundaryType Boundary="Xm" Type="Value" />
+          <BoundaryType Boundary="Xp" Type="Value" />
+          <BoundaryType Boundary="Ym" Type="Value" />
+          <BoundaryType Boundary="Yp" Type="Value" />
+          <BoundaryType Boundary="Zm" Type="Value" />
+          <BoundaryType Boundary="Zp" Type="Value" />
+          <OdeEquation Name="s4" SolutionType="Unknown">
+            <Rate>(J_r4_1 - J_r2_0 + J_r6_3 + J_r0_0 + J_r5_2 - J_r1_0 - J_r2_0_0)</Rate>
+            <Initial>s4_init_molecules_um_3</Initial>
+          </OdeEquation>
+          <OdeEquation Name="s5" SolutionType="Unknown">
+            <Rate>( - J_r0_1 - J_r4_0 + J_r6_6 + J_r1_0 + J_r5_5)</Rate>
+            <Initial>s5_init_molecules_um_3</Initial>
+          </OdeEquation>
+          <OdeEquation Name="s6" SolutionType="Unknown">
+            <Rate>(J_r4_2 + J_r6_0 - J_r0_2 + J_r2_0 - J_r5_0)</Rate>
+            <Initial>s6_init_molecules_um_3</Initial>
+          </OdeEquation>
+          <OdeEquation Name="s7" SolutionType="Unknown">
+            <Rate>(J_r4_3 + J_r6_7 - J_r5_1 - J_r3_0 + J_r2_0_0)</Rate>
+            <Initial>s7_init_molecules_um_3</Initial>
+          </OdeEquation>
+          <OdeEquation Name="s8" SolutionType="Unknown">
+            <Rate>( - J_r4_1 + J_r0_1 - J_r2_1 + J_r6_8 + J_r5_7 - J_r2_0_1)</Rate>
+            <Initial>s8_init_molecules_um_3</Initial>
+          </OdeEquation>
+          <OdeEquation Name="s9" SolutionType="Unknown">
+            <Rate>(J_r6_1 + J_r4_4 + J_r0_2 - J_r5_2 - J_r1_1)</Rate>
+            <Initial>s9_init_molecules_um_3</Initial>
+          </OdeEquation>
+          <OdeEquation Name="s10" SolutionType="Unknown">
+            <Rate>(J_r6_9 + J_r4_5 + J_r5_1 - J_r3_1)</Rate>
+            <Initial>s10_init_molecules_um_3</Initial>
+          </OdeEquation>
+          <OdeEquation Name="s11" SolutionType="Unknown">
+            <Rate>( - J_r6_0 - J_r0_3 + J_r2_2 + J_r4_6 - J_r5_3 + J_r3_0)</Rate>
+            <Initial>s11_init_molecules_um_3</Initial>
+          </OdeEquation>
+          <OdeEquation Name="s12" SolutionType="Unknown">
+            <Rate>( - J_r6_1 + J_r0_3 + J_r4_7 - J_r1_2 - J_r5_4)</Rate>
+            <Initial>s12_init_molecules_um_3</Initial>
+          </OdeEquation>
+          <OdeEquation Name="s13" SolutionType="Unknown">
+            <Rate>( - J_r6_2 - J_r0_4 + J_r4_8 + J_r5_3 + J_r3_1)</Rate>
+            <Initial>s13_init_molecules_um_3</Initial>
+          </OdeEquation>
+          <OdeEquation Name="s14" SolutionType="Unknown">
+            <Rate>( - J_r0_5 - J_r4_2 + J_r2_1 + J_r6_4 + J_r1_1 - J_r5_5)</Rate>
+            <Initial>s14_init_molecules_um_3</Initial>
+          </OdeEquation>
+          <OdeEquation Name="s15" SolutionType="Unknown">
+            <Rate>( - J_r4_3 - J_r3_2 - J_r5_6 + J_r2_0_1 + J_r6_10)</Rate>
+            <Initial>s15_init_molecules_um_3</Initial>
+          </OdeEquation>
+          <OdeEquation Name="s16" SolutionType="Unknown">
+            <Rate>(J_r0_4 - J_r2_2 + J_r4_9 - J_r6_3 - J_r1_3 + J_r5_4 - J_r2_0_2)</Rate>
+            <Initial>s16_init_molecules_um_3</Initial>
+          </OdeEquation>
+          <OdeEquation Name="s17" SolutionType="Unknown">
+            <Rate>(J_r0_5 - J_r4_4 + J_r6_5 - J_r5_7)</Rate>
+            <Initial>s17_init_molecules_um_3</Initial>
+          </OdeEquation>
+          <OdeEquation Name="s18" SolutionType="Unknown">
+            <Rate>( - J_r4_5 - J_r3_3 + J_r5_6 + J_r6_11)</Rate>
+            <Initial>s18_init_molecules_um_3</Initial>
+          </OdeEquation>
+          <OdeEquation Name="s19" SolutionType="Unknown">
+            <Rate>(J_r2_3 - J_r0_6 - J_r4_6 - J_r6_4 + J_r3_2 + J_r1_2 - J_r5_8)</Rate>
+            <Initial>s19_init_molecules_um_3</Initial>
+          </OdeEquation>
+          <OdeEquation Name="s20" SolutionType="Unknown">
+            <Rate>(J_r0_6 - J_r4_7 - J_r6_5 - J_r5_9)</Rate>
+            <Initial>s20_init_molecules_um_3</Initial>
+          </OdeEquation>
+          <OdeEquation Name="s21" SolutionType="Unknown">
+            <Rate>( - J_r0_7 - J_r4_8 - J_r6_6 + J_r3_3 + J_r1_3 + J_r5_8)</Rate>
+            <Initial>s21_init_molecules_um_3</Initial>
+          </OdeEquation>
+          <OdeEquation Name="s22" SolutionType="Unknown">
+            <Rate>( - J_r5_10 - J_r6_7 + J_r4_10 + J_r2_0_2)</Rate>
+            <Initial>s22_init_molecules_um_3</Initial>
+          </OdeEquation>
+          <OdeEquation Name="s23" SolutionType="Unknown">
+            <Rate>( - J_r2_3 + J_r0_7 - J_r4_9 - J_r6_8 + J_r5_9 - J_r2_0_3)</Rate>
+            <Initial>s23_init_molecules_um_3</Initial>
+          </OdeEquation>
+          <OdeEquation Name="s24" SolutionType="Unknown">
+            <Rate>(J_r5_10 - J_r6_9 + J_r4_11)</Rate>
+            <Initial>s24_init_molecules_um_3</Initial>
+          </OdeEquation>
+          <OdeEquation Name="s25" SolutionType="Unknown">
+            <Rate>( - J_r5_11 - J_r4_10 + J_r2_0_3 - J_r6_10)</Rate>
+            <Initial>s25_init_molecules_um_3</Initial>
+          </OdeEquation>
+          <OdeEquation Name="s26" SolutionType="Unknown">
+            <Rate>(J_r5_11 - J_r4_11 - J_r6_11)</Rate>
+            <Initial>s26_init_molecules_um_3</Initial>
+          </OdeEquation>
+        </CompartmentSubDomain>
+        <Version Name="Determ_generated" KeyValue="106019351" BranchId="106019352" Archived="0" Date="10-Dec-2016 03:26:46" FromVersionable="false">
+          <Owner Name="gregfar" Identifier="106017115" />
+          <GroupAccess Type="1" />
+          <Annotation>cloned from 'Determ_generated' owned by user mblinov</Annotation>
+        </Version>
+      </MathDescription>
+      <Simulation Name="Simulation3">
+        <Annotation>cloned from 'Simulation3' owned by user mblinov</Annotation>
+        <SolverTaskDescription TaskType="Unsteady" UseSymbolicJacobian="false" Solver="Combined Stiff Solver (IDA/CVODE)">
+          <TimeBound StartTime="0.0" EndTime="500.0" />
+          <TimeStep DefaultTime="0.1" MinTime="1.0E-8" MaxTime="1.0" />
+          <ErrorTolerance Absolut="1.0E-9" Relative="1.0E-9" />
+          <OutputOptions KeepEvery="1" KeepAtMost="1000" />
+          <NumberProcessors>1</NumberProcessors>
+        </SolverTaskDescription>
+        <MathOverrides />
+        <Version Name="Simulation3" KeyValue="106019393" BranchId="106019394" Archived="0" Date="10-Dec-2016 03:26:48" FromVersionable="false">
+          <Owner Name="gregfar" Identifier="106017115" />
+          <GroupAccess Type="1" />
+          <Annotation>cloned from 'Simulation3' owned by user mblinov</Annotation>
+        </Version>
+      </Simulation>
+      <AnalysisTaskList>
+        <ParameterEstimationTask Name="DefaultTask">
+          <parameterMappingSpecList>
+            <parameterMappingSpec parameterReferenceAttribute="unnamed.NA" lowLimit="6.022000000000001E22" highLimit="6.022E24" currentValue="6.022E23" selected="true" />
+            <parameterMappingSpec parameterReferenceAttribute="unnamed.k1" lowLimit="0.0" highLimit="0.0" currentValue="0.0" selected="true" />
+            <parameterMappingSpec parameterReferenceAttribute="unnamed.Tgyr" lowLimit="-0.010000000000000002" highLimit="-1.0" currentValue="-0.1" selected="true" />
+            <parameterMappingSpec parameterReferenceAttribute="unnamed.TtopI" lowLimit="0.0" highLimit="0.0" currentValue="0.0" selected="true" />
+            <parameterMappingSpec parameterReferenceAttribute="unnamed.TtopIV" lowLimit="0.0" highLimit="0.0" currentValue="0.0" selected="true" />
+            <parameterMappingSpec parameterReferenceAttribute="unnamed.Kgyr" lowLimit="0.12" highLimit="12.0" currentValue="1.2" selected="true" />
+            <parameterMappingSpec parameterReferenceAttribute="unnamed.KtopI" lowLimit="0.1" highLimit="10.0" currentValue="1.0" selected="true" />
+            <parameterMappingSpec parameterReferenceAttribute="unnamed.KtopIV" lowLimit="0.25" highLimit="25.0" currentValue="2.5" selected="true" />
+            <parameterMappingSpec parameterReferenceAttribute="unnamed.gyrDeltaLK" lowLimit="-0.2" highLimit="-20.0" currentValue="-2.0" selected="true" />
+            <parameterMappingSpec parameterReferenceAttribute="unnamed.topIDeltaLK" lowLimit="0.1" highLimit="10.0" currentValue="1.0" selected="true" />
+            <parameterMappingSpec parameterReferenceAttribute="unnamed.topIVDeltaLK" lowLimit="-0.2" highLimit="-20.0" currentValue="-2.0" selected="true" />
+            <parameterMappingSpec parameterReferenceAttribute="unnamed.sigma" lowLimit="0.0" highLimit="0.0" currentValue="0.0" selected="true" />
+            <parameterMappingSpec parameterReferenceAttribute="unnamed.GyrRelease" lowLimit="0.1" highLimit="10.0" currentValue="1.0" selected="true" />
+            <parameterMappingSpec parameterReferenceAttribute="unnamed.TopIVRelease" lowLimit="0.1" highLimit="10.0" currentValue="1.0" selected="true" />
+            <parameterMappingSpec parameterReferenceAttribute="unnamed.TopIRelease" lowLimit="0.1" highLimit="10.0" currentValue="1.0" selected="true" />
+            <parameterMappingSpec parameterReferenceAttribute="unnamed.threshold" lowLimit="0.001" highLimit="0.1" currentValue="0.01" selected="true" />
+            <parameterMappingSpec parameterReferenceAttribute="Determ.DNA_scs.initConc" lowLimit="10.0" highLimit="1000.0" currentValue="100.0" selected="true" />
+            <parameterMappingSpec parameterReferenceAttribute="Determ.TopI_scs.initConc" lowLimit="1.0" highLimit="100.0" currentValue="10.0" selected="true" />
+            <parameterMappingSpec parameterReferenceAttribute="Determ.Gyr_scs.initConc" lowLimit="1.0" highLimit="100.0" currentValue="10.0" selected="true" />
+            <parameterMappingSpec parameterReferenceAttribute="Determ.TopIV_scs.initConc" lowLimit="1.0" highLimit="100.0" currentValue="10.0" selected="true" />
+            <parameterMappingSpec parameterReferenceAttribute="Determ.c0_mapping.Size" lowLimit="0.1" highLimit="10.0" currentValue="1.0" selected="true" />
+            <parameterMappingSpec parameterReferenceAttribute="Determ.m0_mapping.Voltage_m0_init" lowLimit="0.0" highLimit="0.0" currentValue="0.0" selected="true" />
+            <parameterMappingSpec parameterReferenceAttribute="Determ.m0_mapping.Size" lowLimit="656.3000000000001" highLimit="65630.0" currentValue="6563.0" selected="true" />
+          </parameterMappingSpecList>
+          <optimizationSolverSpec optimizationSolverType="Evolutionary Programming" NumOfRuns="1">
+            <ListOfParameters>
+              <Parameter Name="Number of Generations" Value="200.0" />
+              <Parameter Name="Population Size" Value="20.0" />
+              <Parameter Name="Random Number Generator" Value="1.0" />
+              <Parameter Name="Seed" Value="0.0" />
+            </ListOfParameters>
+          </optimizationSolverSpec>
+        </ParameterEstimationTask>
+        <ParameterEstimationTask Name="DefaultTask Copy1">
+          <parameterMappingSpecList>
+            <parameterMappingSpec parameterReferenceAttribute="unnamed.NA" lowLimit="6.022000000000001E22" highLimit="6.022E24" currentValue="6.022E23" selected="true" />
+            <parameterMappingSpec parameterReferenceAttribute="unnamed.k1" lowLimit="0.0" highLimit="0.0" currentValue="0.0" selected="true" />
+            <parameterMappingSpec parameterReferenceAttribute="unnamed.Tgyr" lowLimit="-0.010000000000000002" highLimit="-1.0" currentValue="-0.1" selected="true" />
+            <parameterMappingSpec parameterReferenceAttribute="unnamed.TtopI" lowLimit="0.0" highLimit="0.0" currentValue="0.0" selected="true" />
+            <parameterMappingSpec parameterReferenceAttribute="unnamed.TtopIV" lowLimit="0.0" highLimit="0.0" currentValue="0.0" selected="true" />
+            <parameterMappingSpec parameterReferenceAttribute="unnamed.Kgyr" lowLimit="0.12" highLimit="12.0" currentValue="1.2" selected="true" />
+            <parameterMappingSpec parameterReferenceAttribute="unnamed.KtopI" lowLimit="0.1" highLimit="10.0" currentValue="1.0" selected="true" />
+            <parameterMappingSpec parameterReferenceAttribute="unnamed.KtopIV" lowLimit="0.25" highLimit="25.0" currentValue="2.5" selected="true" />
+            <parameterMappingSpec parameterReferenceAttribute="unnamed.gyrDeltaLK" lowLimit="-0.2" highLimit="-20.0" currentValue="-2.0" selected="true" />
+            <parameterMappingSpec parameterReferenceAttribute="unnamed.topIDeltaLK" lowLimit="0.1" highLimit="10.0" currentValue="1.0" selected="true" />
+            <parameterMappingSpec parameterReferenceAttribute="unnamed.topIVDeltaLK" lowLimit="-0.2" highLimit="-20.0" currentValue="-2.0" selected="true" />
+            <parameterMappingSpec parameterReferenceAttribute="unnamed.sigma" lowLimit="0.0" highLimit="0.0" currentValue="0.0" selected="true" />
+            <parameterMappingSpec parameterReferenceAttribute="unnamed.GyrRelease" lowLimit="0.1" highLimit="10.0" currentValue="1.0" selected="true" />
+            <parameterMappingSpec parameterReferenceAttribute="unnamed.TopIVRelease" lowLimit="0.1" highLimit="10.0" currentValue="1.0" selected="true" />
+            <parameterMappingSpec parameterReferenceAttribute="unnamed.TopIRelease" lowLimit="0.1" highLimit="10.0" currentValue="1.0" selected="true" />
+            <parameterMappingSpec parameterReferenceAttribute="unnamed.threshold" lowLimit="0.001" highLimit="0.1" currentValue="0.01" selected="true" />
+            <parameterMappingSpec parameterReferenceAttribute="Determ.DNA_scs.initConc" lowLimit="10.0" highLimit="1000.0" currentValue="100.0" selected="true" />
+            <parameterMappingSpec parameterReferenceAttribute="Determ.TopI_scs.initConc" lowLimit="1.0" highLimit="100.0" currentValue="10.0" selected="true" />
+            <parameterMappingSpec parameterReferenceAttribute="Determ.Gyr_scs.initConc" lowLimit="1.0" highLimit="100.0" currentValue="10.0" selected="true" />
+            <parameterMappingSpec parameterReferenceAttribute="Determ.TopIV_scs.initConc" lowLimit="1.0" highLimit="100.0" currentValue="10.0" selected="true" />
+            <parameterMappingSpec parameterReferenceAttribute="Determ.c0_mapping.Size" lowLimit="0.1" highLimit="10.0" currentValue="1.0" selected="true" />
+            <parameterMappingSpec parameterReferenceAttribute="Determ.m0_mapping.Voltage_m0_init" lowLimit="0.0" highLimit="0.0" currentValue="0.0" selected="true" />
+            <parameterMappingSpec parameterReferenceAttribute="Determ.m0_mapping.Size" lowLimit="656.3000000000001" highLimit="65630.0" currentValue="6563.0" selected="true" />
+          </parameterMappingSpecList>
+          <optimizationSolverSpec optimizationSolverType="Random Search" NumOfRuns="2">
+            <ListOfParameters>
+              <Parameter Name="Number of Iterations" Value="100000.0" />
+              <Parameter Name="Random Number Generator" Value="1.0" />
+              <Parameter Name="Seed" Value="0.0" />
+            </ListOfParameters>
+          </optimizationSolverSpec>
+        </ParameterEstimationTask>
+      </AnalysisTaskList>
+      <Version Name="Determ" KeyValue="106019809" BranchId="106019376" Archived="0" Date="10-Dec-2016 03:44:28" FromVersionable="false">
+        <Owner Name="gregfar" Identifier="106017115" />
+        <GroupAccess Type="1" />
+        <Annotation>cloned from 'Determ' owned by user mblinov
+(copied from NFSim application) cloned from 'NFSim application' owned by user mblinov</Annotation>
+      </Version>
+      <MicroscopeMeasurement Name="fluor">
+        <ConvolutionKernel Type="ProjectionZKernel" />
+      </MicroscopeMeasurement>
+    </SimulationSpec>
+    <SimulationSpec Name="Copy of Determ" Stochastic="true" UseConcentration="true" RandomizeInitCondition="false" RuleBased="false" MassConservationModelReduction="true" InsufficientIterations="false" InsufficientMaxMolecules="false">
+      <NetworkConstraints RbmMaxIteration="10" RbmMaxMoleculesPerSpecies="10" RbmSpeciesLimit="800" RbmReactionsLimit="2500">
+        <MaxStoichiometry MolecularType="DNA" Integer="100" />
+        <MaxStoichiometry MolecularType="gyr" Integer="100" />
+        <MaxStoichiometry MolecularType="topI" Integer="100" />
+        <MaxStoichiometry MolecularType="topIV" Integer="100" />
+      </NetworkConstraints>
+      <Annotation>cloned from 'Copy of Determ' owned by user mblinov
+(copied from Determ) (copied from NFSim application) cloned from 'NFSim application' owned by user mblinov</Annotation>
+      <Geometry Name="non-spatial354226707" Dimension="0">
+        <Annotation>cloned from 'non-spatial354226707' owned by user mblinov
+cloned from 'non-spatial1061216677' owned by user feliu
+cloned from 'non-spatial1046810141' owned by user mblinov</Annotation>
+        <Extent X="10.0" Y="10.0" Z="10.0" />
+        <Origin X="0.0" Y="0.0" Z="0.0" />
+        <SubVolume Name="Compartment" Handle="0" Type="Compartmental" KeyValue="106019350" />
+        <Version Name="non-spatial354226707" KeyValue="106019346" BranchId="106019347" Archived="0" Date="10-Dec-2016 03:26:46" FromVersionable="false">
+          <Owner Name="gregfar" Identifier="106017115" />
+          <GroupAccess Type="1" />
+          <Annotation>cloned from 'non-spatial354226707' owned by user mblinov
+cloned from 'non-spatial1061216677' owned by user feliu
+cloned from 'non-spatial1046810141' owned by user mblinov</Annotation>
+        </Version>
+      </Geometry>
+      <GeometryContext>
+        <FeatureMapping Feature="c0" GeometryClass="Compartment" SubVolume="Compartment" Size="1.0">
+          <BoundariesTypes Xm="Flux" Xp="Flux" Ym="Flux" Yp="Flux" Zm="Flux" Zp="Flux" />
+        </FeatureMapping>
+        <MembraneMapping Membrane="m0" Size="6563.0" CalculateVoltage="false" SpecificCapacitance="1.0" InitialVoltage="0.0" GeometryClass="Compartment">
+          <BoundariesTypes Xm="Flux" Xp="Flux" Ym="Flux" Yp="Flux" Zm="Flux" Zp="Flux" />
+        </MembraneMapping>
+      </GeometryContext>
+      <ReactionContext>
+        <LocalizedCompoundSpec LocalizedCompoundRef="DNA" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>100.0</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="TopI" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>10.0</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="Gyr" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>10.0</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="TopIV" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>10.0</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <ReactionRuleSpecs>
+          <ReactionRuleSpec ReactionRuleRef="r0" ReactionRuleMapping="included" />
+          <ReactionRuleSpec ReactionRuleRef="r4" ReactionRuleMapping="included" />
+          <ReactionRuleSpec ReactionRuleRef="r5" ReactionRuleMapping="included" />
+          <ReactionRuleSpec ReactionRuleRef="r6" ReactionRuleMapping="included" />
+          <ReactionRuleSpec ReactionRuleRef="r1" ReactionRuleMapping="included" />
+          <ReactionRuleSpec ReactionRuleRef="r3" ReactionRuleMapping="included" />
+          <ReactionRuleSpec ReactionRuleRef="r2" ReactionRuleMapping="included" />
+          <ReactionRuleSpec ReactionRuleRef="r2_0" ReactionRuleMapping="included" />
+        </ReactionRuleSpecs>
+      </ReactionContext>
+      <MathDescription Name="Copy of Determ_generated">
+        <Annotation>cloned from 'Copy of Determ_generated' owned by user mblinov</Annotation>
+        <Constant Name="_F_">96480.0</Constant>
+        <Constant Name="_F_nmol_">9.648E-5</Constant>
+        <Constant Name="_N_pmol_">6.02E11</Constant>
+        <Constant Name="_PI_">3.141592653589793</Constant>
+        <Constant Name="_R_">8314.0</Constant>
+        <Constant Name="_T_">300.0</Constant>
+        <Constant Name="DNA_Count_init_molecules_um_3">100.0</Constant>
+        <Constant Name="Gyr_Count_init_molecules_um_3">10.0</Constant>
+        <Constant Name="gyrDeltaLK">-2.0</Constant>
+        <Constant Name="GyrRelease">1.0</Constant>
+        <Constant Name="k1">0.0</Constant>
+        <Constant Name="Kgyr">1.2</Constant>
+        <Constant Name="KMOLE">(1.0 / 602.0)</Constant>
+        <Constant Name="Kr_r0_0">0.0</Constant>
+        <Constant Name="Kr_r0_1">0.0</Constant>
+        <Constant Name="Kr_r0_2">0.0</Constant>
+        <Constant Name="Kr_r0_3">0.0</Constant>
+        <Constant Name="Kr_r0_4">0.0</Constant>
+        <Constant Name="Kr_r0_5">0.0</Constant>
+        <Constant Name="Kr_r0_6">0.0</Constant>
+        <Constant Name="Kr_r0_7">0.0</Constant>
+        <Constant Name="Kr_r1_0">0.0</Constant>
+        <Constant Name="Kr_r1_1">0.0</Constant>
+        <Constant Name="Kr_r1_2">0.0</Constant>
+        <Constant Name="Kr_r1_3">0.0</Constant>
+        <Constant Name="Kr_r2_0">0.0</Constant>
+        <Constant Name="Kr_r2_0_0">0.0</Constant>
+        <Constant Name="Kr_r2_0_1">0.0</Constant>
+        <Constant Name="Kr_r2_0_2">0.0</Constant>
+        <Constant Name="Kr_r2_0_3">0.0</Constant>
+        <Constant Name="Kr_r2_1">0.0</Constant>
+        <Constant Name="Kr_r2_2">0.0</Constant>
+        <Constant Name="Kr_r2_3">0.0</Constant>
+        <Constant Name="Kr_r3_0">0.0</Constant>
+        <Constant Name="Kr_r3_1">0.0</Constant>
+        <Constant Name="Kr_r3_2">0.0</Constant>
+        <Constant Name="Kr_r3_3">0.0</Constant>
+        <Constant Name="Kr_r4_0">0.0</Constant>
+        <Constant Name="Kr_r4_1">0.0</Constant>
+        <Constant Name="Kr_r4_10">0.0</Constant>
+        <Constant Name="Kr_r4_11">0.0</Constant>
+        <Constant Name="Kr_r4_2">0.0</Constant>
+        <Constant Name="Kr_r4_3">0.0</Constant>
+        <Constant Name="Kr_r4_4">0.0</Constant>
+        <Constant Name="Kr_r4_5">0.0</Constant>
+        <Constant Name="Kr_r4_6">0.0</Constant>
+        <Constant Name="Kr_r4_7">0.0</Constant>
+        <Constant Name="Kr_r4_8">0.0</Constant>
+        <Constant Name="Kr_r4_9">0.0</Constant>
+        <Constant Name="Kr_r5_0">0.0</Constant>
+        <Constant Name="Kr_r5_1">0.0</Constant>
+        <Constant Name="Kr_r5_10">0.0</Constant>
+        <Constant Name="Kr_r5_11">0.0</Constant>
+        <Constant Name="Kr_r5_2">0.0</Constant>
+        <Constant Name="Kr_r5_3">0.0</Constant>
+        <Constant Name="Kr_r5_4">0.0</Constant>
+        <Constant Name="Kr_r5_5">0.0</Constant>
+        <Constant Name="Kr_r5_6">0.0</Constant>
+        <Constant Name="Kr_r5_7">0.0</Constant>
+        <Constant Name="Kr_r5_8">0.0</Constant>
+        <Constant Name="Kr_r5_9">0.0</Constant>
+        <Constant Name="Kr_r6_0">0.0</Constant>
+        <Constant Name="Kr_r6_1">0.0</Constant>
+        <Constant Name="Kr_r6_10">0.0</Constant>
+        <Constant Name="Kr_r6_11">0.0</Constant>
+        <Constant Name="Kr_r6_2">0.0</Constant>
+        <Constant Name="Kr_r6_3">0.0</Constant>
+        <Constant Name="Kr_r6_4">0.0</Constant>
+        <Constant Name="Kr_r6_5">0.0</Constant>
+        <Constant Name="Kr_r6_6">0.0</Constant>
+        <Constant Name="Kr_r6_7">0.0</Constant>
+        <Constant Name="Kr_r6_8">0.0</Constant>
+        <Constant Name="Kr_r6_9">0.0</Constant>
+        <Constant Name="KtopI">1.0</Constant>
+        <Constant Name="KtopIV">2.5</Constant>
+        <Constant Name="NA">6.022E23</Constant>
+        <Constant Name="s10_Count_init_molecules_um_3">0.0</Constant>
+        <Constant Name="s11_Count_init_molecules_um_3">0.0</Constant>
+        <Constant Name="s12_Count_init_molecules_um_3">0.0</Constant>
+        <Constant Name="s13_Count_init_molecules_um_3">0.0</Constant>
+        <Constant Name="s14_Count_init_molecules_um_3">0.0</Constant>
+        <Constant Name="s15_Count_init_molecules_um_3">0.0</Constant>
+        <Constant Name="s16_Count_init_molecules_um_3">0.0</Constant>
+        <Constant Name="s17_Count_init_molecules_um_3">0.0</Constant>
+        <Constant Name="s18_Count_init_molecules_um_3">0.0</Constant>
+        <Constant Name="s19_Count_init_molecules_um_3">0.0</Constant>
+        <Constant Name="s20_Count_init_molecules_um_3">0.0</Constant>
+        <Constant Name="s21_Count_init_molecules_um_3">0.0</Constant>
+        <Constant Name="s22_Count_init_molecules_um_3">0.0</Constant>
+        <Constant Name="s23_Count_init_molecules_um_3">0.0</Constant>
+        <Constant Name="s24_Count_init_molecules_um_3">0.0</Constant>
+        <Constant Name="s25_Count_init_molecules_um_3">0.0</Constant>
+        <Constant Name="s26_Count_init_molecules_um_3">0.0</Constant>
+        <Constant Name="s4_Count_init_molecules_um_3">0.0</Constant>
+        <Constant Name="s5_Count_init_molecules_um_3">0.0</Constant>
+        <Constant Name="s6_Count_init_molecules_um_3">0.0</Constant>
+        <Constant Name="s7_Count_init_molecules_um_3">0.0</Constant>
+        <Constant Name="s8_Count_init_molecules_um_3">0.0</Constant>
+        <Constant Name="s9_Count_init_molecules_um_3">0.0</Constant>
+        <Constant Name="sigma">0.0</Constant>
+        <Constant Name="Size_c0">1.0</Constant>
+        <Constant Name="Size_m0">6563.0</Constant>
+        <Constant Name="Tgyr">-0.1</Constant>
+        <Constant Name="threshold">0.01</Constant>
+        <Constant Name="TopI_Count_init_molecules_um_3">10.0</Constant>
+        <Constant Name="topIDeltaLK">1.0</Constant>
+        <Constant Name="TopIRelease">1.0</Constant>
+        <Constant Name="TopIV_Count_init_molecules_um_3">10.0</Constant>
+        <Constant Name="topIVDeltaLK">-2.0</Constant>
+        <Constant Name="TopIVRelease">1.0</Constant>
+        <Constant Name="TtopI">0.0</Constant>
+        <Constant Name="TtopIV">0.0</Constant>
+        <Constant Name="Voltage_m0">0.0</Constant>
+        <StochasticVolumeVariable Name="DNA_Count" />
+        <StochasticVolumeVariable Name="Gyr_Count" />
+        <StochasticVolumeVariable Name="s10_Count" />
+        <StochasticVolumeVariable Name="s11_Count" />
+        <StochasticVolumeVariable Name="s12_Count" />
+        <StochasticVolumeVariable Name="s13_Count" />
+        <StochasticVolumeVariable Name="s14_Count" />
+        <StochasticVolumeVariable Name="s15_Count" />
+        <StochasticVolumeVariable Name="s16_Count" />
+        <StochasticVolumeVariable Name="s17_Count" />
+        <StochasticVolumeVariable Name="s18_Count" />
+        <StochasticVolumeVariable Name="s19_Count" />
+        <StochasticVolumeVariable Name="s20_Count" />
+        <StochasticVolumeVariable Name="s21_Count" />
+        <StochasticVolumeVariable Name="s22_Count" />
+        <StochasticVolumeVariable Name="s23_Count" />
+        <StochasticVolumeVariable Name="s24_Count" />
+        <StochasticVolumeVariable Name="s25_Count" />
+        <StochasticVolumeVariable Name="s26_Count" />
+        <StochasticVolumeVariable Name="s4_Count" />
+        <StochasticVolumeVariable Name="s5_Count" />
+        <StochasticVolumeVariable Name="s6_Count" />
+        <StochasticVolumeVariable Name="s7_Count" />
+        <StochasticVolumeVariable Name="s8_Count" />
+        <StochasticVolumeVariable Name="s9_Count" />
+        <StochasticVolumeVariable Name="TopI_Count" />
+        <StochasticVolumeVariable Name="TopIV_Count" />
+        <Function Name="BooleanGyrActivity" Domain="Compartment">(0.0016611295681063123 * Kgyr)</Function>
+        <Function Name="BooleanTopIActivity" Domain="Compartment">(0.0016611295681063123 * KtopI)</Function>
+        <Function Name="BooleanTopIVActivity" Domain="Compartment">(0.0016611295681063123 * KtopIV)</Function>
+        <Function Name="DNA" Domain="Compartment">(DNA_Count * (1.0 / Size_c0))</Function>
+        <Function Name="DNA_Count_initCount" Domain="Compartment">((DNA_Count_init_molecules_um_3 * Size_c0) * 1.0)</Function>
+        <Function Name="DNA_neg" Domain="Compartment">((1.0 * s7) + (1.0 * s10) + (1.0 * s15) + (1.0 * s18) + (1.0 * s22) + (1.0 * s24) + (1.0 * s25) + (1.0 * s26))</Function>
+        <Function Name="DNA_neg_Count" Domain="Compartment">((DNA_neg * Size_c0) * 1.0)</Function>
+        <Function Name="DNA_pos" Domain="Compartment">((1.0 * s4) + (1.0 * s8) + (1.0 * s9) + (1.0 * s12) + (1.0 * s16) + (1.0 * s17) + (1.0 * s20) + (1.0 * s23))</Function>
+        <Function Name="DNA_pos_Count" Domain="Compartment">((DNA_pos * Size_c0) * 1.0)</Function>
+        <Function Name="DNA_total" Domain="Compartment">((1.0 * DNA) + (1.0 * s4) + (1.0 * s5) + (1.0 * s6) + (1.0 * s7) + (1.0 * s8) + (1.0 * s9) + (1.0 * s10) + (1.0 * s11) + (1.0 * s12) + (1.0 * s13) + (1.0 * s14) + (1.0 * s15) + (1.0 * s16) + (1.0 * s17) + (1.0 * s18) + (1.0 * s19) + (1.0 * s20) + (1.0 * s21) + (1.0 * s22) + (1.0 * s23) + (1.0 * s24) + (1.0 * s25) + (1.0 * s26))</Function>
+        <Function Name="DNA_total_Count" Domain="Compartment">((DNA_total * Size_c0) * 1.0)</Function>
+        <Function Name="DNA_zero" Domain="Compartment">((1.0 * DNA) + (1.0 * s5) + (1.0 * s6) + (1.0 * s11) + (1.0 * s13) + (1.0 * s14) + (1.0 * s19) + (1.0 * s21))</Function>
+        <Function Name="DNA_zero_Count" Domain="Compartment">((DNA_zero * Size_c0) * 1.0)</Function>
+        <Function Name="Gyr" Domain="Compartment">(Gyr_Count * (1.0 / Size_c0))</Function>
+        <Function Name="Gyr_Count_initCount" Domain="Compartment">((Gyr_Count_init_molecules_um_3 * Size_c0) * 1.0)</Function>
+        <Function Name="Gyr_free" Domain="Compartment">(1.0 * Gyr)</Function>
+        <Function Name="Gyr_free_Count" Domain="Compartment">((Gyr_free * Size_c0) * 1.0)</Function>
+        <Function Name="J_r0_0" Domain="Compartment">((Kf_r0_0 * DNA) - (Kr_r0_0 * s4))</Function>
+        <Function Name="J_r0_1" Domain="Compartment">((Kf_r0_1 * s5) - (Kr_r0_1 * s8))</Function>
+        <Function Name="J_r0_2" Domain="Compartment">((Kf_r0_2 * s6) - (Kr_r0_2 * s9))</Function>
+        <Function Name="J_r0_3" Domain="Compartment">((Kf_r0_3 * s11) - (Kr_r0_3 * s12))</Function>
+        <Function Name="J_r0_4" Domain="Compartment">((Kf_r0_4 * s13) - (Kr_r0_4 * s16))</Function>
+        <Function Name="J_r0_5" Domain="Compartment">((Kf_r0_5 * s14) - (Kr_r0_5 * s17))</Function>
+        <Function Name="J_r0_6" Domain="Compartment">((Kf_r0_6 * s19) - (Kr_r0_6 * s20))</Function>
+        <Function Name="J_r0_7" Domain="Compartment">((Kf_r0_7 * s21) - (Kr_r0_7 * s23))</Function>
+        <Function Name="J_r1_0" Domain="Compartment">(((Kf_r1_0 * Gyr) * s4) - (Kr_r1_0 * s5))</Function>
+        <Function Name="J_r1_1" Domain="Compartment">(((Kf_r1_1 * Gyr) * s9) - (Kr_r1_1 * s14))</Function>
+        <Function Name="J_r1_2" Domain="Compartment">(((Kf_r1_2 * Gyr) * s12) - (Kr_r1_2 * s19))</Function>
+        <Function Name="J_r1_3" Domain="Compartment">(((Kf_r1_3 * Gyr) * s16) - (Kr_r1_3 * s21))</Function>
+        <Function Name="J_r2_0" Domain="Compartment">(((Kf_r2_0 * TopIV) * s4) - (Kr_r2_0 * s6))</Function>
+        <Function Name="J_r2_0_0" Domain="Compartment">(((Kf_r2_0_0 * TopIV) * s4) - (Kr_r2_0_0 * s7))</Function>
+        <Function Name="J_r2_0_1" Domain="Compartment">(((Kf_r2_0_1 * TopIV) * s8) - (Kr_r2_0_1 * s15))</Function>
+        <Function Name="J_r2_0_2" Domain="Compartment">(((Kf_r2_0_2 * TopIV) * s16) - (Kr_r2_0_2 * s22))</Function>
+        <Function Name="J_r2_0_3" Domain="Compartment">(((Kf_r2_0_3 * TopIV) * s23) - (Kr_r2_0_3 * s25))</Function>
+        <Function Name="J_r2_1" Domain="Compartment">(((Kf_r2_1 * TopIV) * s8) - (Kr_r2_1 * s14))</Function>
+        <Function Name="J_r2_2" Domain="Compartment">(((Kf_r2_2 * TopIV) * s16) - (Kr_r2_2 * s11))</Function>
+        <Function Name="J_r2_3" Domain="Compartment">(((Kf_r2_3 * TopIV) * s23) - (Kr_r2_3 * s19))</Function>
+        <Function Name="J_r3_0" Domain="Compartment">(((Kf_r3_0 * TopI) * s7) - (Kr_r3_0 * s11))</Function>
+        <Function Name="J_r3_1" Domain="Compartment">(((Kf_r3_1 * TopI) * s10) - (Kr_r3_1 * s13))</Function>
+        <Function Name="J_r3_2" Domain="Compartment">(((Kf_r3_2 * TopI) * s15) - (Kr_r3_2 * s19))</Function>
+        <Function Name="J_r3_3" Domain="Compartment">(((Kf_r3_3 * TopI) * s18) - (Kr_r3_3 * s21))</Function>
+        <Function Name="J_r4_0" Domain="Compartment">((Kf_r4_0 * s5) - ((Kr_r4_0 * DNA) * Gyr))</Function>
+        <Function Name="J_r4_1" Domain="Compartment">((Kf_r4_1 * s8) - ((Kr_r4_1 * s4) * Gyr))</Function>
+        <Function Name="J_r4_10" Domain="Compartment">((Kf_r4_10 * s25) - ((Kr_r4_10 * Gyr) * s22))</Function>
+        <Function Name="J_r4_11" Domain="Compartment">((Kf_r4_11 * s26) - ((Kr_r4_11 * Gyr) * s24))</Function>
+        <Function Name="J_r4_2" Domain="Compartment">((Kf_r4_2 * s14) - ((Kr_r4_2 * Gyr) * s6))</Function>
+        <Function Name="J_r4_3" Domain="Compartment">((Kf_r4_3 * s15) - ((Kr_r4_3 * Gyr) * s7))</Function>
+        <Function Name="J_r4_4" Domain="Compartment">((Kf_r4_4 * s17) - ((Kr_r4_4 * s9) * Gyr))</Function>
+        <Function Name="J_r4_5" Domain="Compartment">((Kf_r4_5 * s18) - ((Kr_r4_5 * Gyr) * s10))</Function>
+        <Function Name="J_r4_6" Domain="Compartment">((Kf_r4_6 * s19) - ((Kr_r4_6 * Gyr) * s11))</Function>
+        <Function Name="J_r4_7" Domain="Compartment">((Kf_r4_7 * s20) - ((Kr_r4_7 * s12) * Gyr))</Function>
+        <Function Name="J_r4_8" Domain="Compartment">((Kf_r4_8 * s21) - ((Kr_r4_8 * Gyr) * s13))</Function>
+        <Function Name="J_r4_9" Domain="Compartment">((Kf_r4_9 * s23) - ((Kr_r4_9 * s16) * Gyr))</Function>
+        <Function Name="J_r5_0" Domain="Compartment">((Kf_r5_0 * s6) - ((Kr_r5_0 * DNA) * TopIV))</Function>
+        <Function Name="J_r5_1" Domain="Compartment">((Kf_r5_1 * s7) - ((Kr_r5_1 * s10) * TopIV))</Function>
+        <Function Name="J_r5_10" Domain="Compartment">((Kf_r5_10 * s22) - ((Kr_r5_10 * s24) * TopIV))</Function>
+        <Function Name="J_r5_11" Domain="Compartment">((Kf_r5_11 * s25) - ((Kr_r5_11 * TopIV) * s26))</Function>
+        <Function Name="J_r5_2" Domain="Compartment">((Kf_r5_2 * s9) - ((Kr_r5_2 * s4) * TopIV))</Function>
+        <Function Name="J_r5_3" Domain="Compartment">((Kf_r5_3 * s11) - ((Kr_r5_3 * s13) * TopIV))</Function>
+        <Function Name="J_r5_4" Domain="Compartment">((Kf_r5_4 * s12) - ((Kr_r5_4 * s16) * TopIV))</Function>
+        <Function Name="J_r5_5" Domain="Compartment">((Kf_r5_5 * s14) - ((Kr_r5_5 * TopIV) * s5))</Function>
+        <Function Name="J_r5_6" Domain="Compartment">((Kf_r5_6 * s15) - ((Kr_r5_6 * TopIV) * s18))</Function>
+        <Function Name="J_r5_7" Domain="Compartment">((Kf_r5_7 * s17) - ((Kr_r5_7 * s8) * TopIV))</Function>
+        <Function Name="J_r5_8" Domain="Compartment">((Kf_r5_8 * s19) - ((Kr_r5_8 * TopIV) * s21))</Function>
+        <Function Name="J_r5_9" Domain="Compartment">((Kf_r5_9 * s20) - ((Kr_r5_9 * s23) * TopIV))</Function>
+        <Function Name="J_r6_0" Domain="Compartment">((Kf_r6_0 * s11) - ((Kr_r6_0 * s6) * TopI))</Function>
+        <Function Name="J_r6_1" Domain="Compartment">((Kf_r6_1 * s12) - ((Kr_r6_1 * s9) * TopI))</Function>
+        <Function Name="J_r6_10" Domain="Compartment">((Kf_r6_10 * s25) - ((Kr_r6_10 * TopI) * s15))</Function>
+        <Function Name="J_r6_11" Domain="Compartment">((Kf_r6_11 * s26) - ((Kr_r6_11 * s18) * TopI))</Function>
+        <Function Name="J_r6_2" Domain="Compartment">((Kf_r6_2 * s13) - ((Kr_r6_2 * DNA) * TopI))</Function>
+        <Function Name="J_r6_3" Domain="Compartment">((Kf_r6_3 * s16) - ((Kr_r6_3 * s4) * TopI))</Function>
+        <Function Name="J_r6_4" Domain="Compartment">((Kf_r6_4 * s19) - ((Kr_r6_4 * TopI) * s14))</Function>
+        <Function Name="J_r6_5" Domain="Compartment">((Kf_r6_5 * s20) - ((Kr_r6_5 * s17) * TopI))</Function>
+        <Function Name="J_r6_6" Domain="Compartment">((Kf_r6_6 * s21) - ((Kr_r6_6 * s5) * TopI))</Function>
+        <Function Name="J_r6_7" Domain="Compartment">((Kf_r6_7 * s22) - ((Kr_r6_7 * s7) * TopI))</Function>
+        <Function Name="J_r6_8" Domain="Compartment">((Kf_r6_8 * s23) - ((Kr_r6_8 * s8) * TopI))</Function>
+        <Function Name="J_r6_9" Domain="Compartment">((Kf_r6_9 * s24) - ((Kr_r6_9 * s10) * TopI))</Function>
+        <Function Name="Kel" Domain="Compartment">(0.0016611295681063123 * 1.0)</Function>
+        <Function Name="Kf_r0_0" Domain="Compartment">Kel</Function>
+        <Function Name="Kf_r0_1" Domain="Compartment">Kel</Function>
+        <Function Name="Kf_r0_2" Domain="Compartment">Kel</Function>
+        <Function Name="Kf_r0_3" Domain="Compartment">Kel</Function>
+        <Function Name="Kf_r0_4" Domain="Compartment">Kel</Function>
+        <Function Name="Kf_r0_5" Domain="Compartment">Kel</Function>
+        <Function Name="Kf_r0_6" Domain="Compartment">Kel</Function>
+        <Function Name="Kf_r0_7" Domain="Compartment">Kel</Function>
+        <Function Name="Kf_r1_0" Domain="Compartment">BooleanGyrActivity</Function>
+        <Function Name="Kf_r1_1" Domain="Compartment">BooleanGyrActivity</Function>
+        <Function Name="Kf_r1_2" Domain="Compartment">BooleanGyrActivity</Function>
+        <Function Name="Kf_r1_3" Domain="Compartment">BooleanGyrActivity</Function>
+        <Function Name="Kf_r2_0" Domain="Compartment">BooleanTopIVActivity</Function>
+        <Function Name="Kf_r2_0_0" Domain="Compartment">BooleanTopIVActivity</Function>
+        <Function Name="Kf_r2_0_1" Domain="Compartment">BooleanTopIVActivity</Function>
+        <Function Name="Kf_r2_0_2" Domain="Compartment">BooleanTopIVActivity</Function>
+        <Function Name="Kf_r2_0_3" Domain="Compartment">BooleanTopIVActivity</Function>
+        <Function Name="Kf_r2_1" Domain="Compartment">BooleanTopIVActivity</Function>
+        <Function Name="Kf_r2_2" Domain="Compartment">BooleanTopIVActivity</Function>
+        <Function Name="Kf_r2_3" Domain="Compartment">BooleanTopIVActivity</Function>
+        <Function Name="Kf_r3_0" Domain="Compartment">BooleanTopIActivity</Function>
+        <Function Name="Kf_r3_1" Domain="Compartment">BooleanTopIActivity</Function>
+        <Function Name="Kf_r3_2" Domain="Compartment">BooleanTopIActivity</Function>
+        <Function Name="Kf_r3_3" Domain="Compartment">BooleanTopIActivity</Function>
+        <Function Name="Kf_r4_0" Domain="Compartment">GyrRelease</Function>
+        <Function Name="Kf_r4_1" Domain="Compartment">GyrRelease</Function>
+        <Function Name="Kf_r4_10" Domain="Compartment">GyrRelease</Function>
+        <Function Name="Kf_r4_11" Domain="Compartment">GyrRelease</Function>
+        <Function Name="Kf_r4_2" Domain="Compartment">GyrRelease</Function>
+        <Function Name="Kf_r4_3" Domain="Compartment">GyrRelease</Function>
+        <Function Name="Kf_r4_4" Domain="Compartment">GyrRelease</Function>
+        <Function Name="Kf_r4_5" Domain="Compartment">GyrRelease</Function>
+        <Function Name="Kf_r4_6" Domain="Compartment">GyrRelease</Function>
+        <Function Name="Kf_r4_7" Domain="Compartment">GyrRelease</Function>
+        <Function Name="Kf_r4_8" Domain="Compartment">GyrRelease</Function>
+        <Function Name="Kf_r4_9" Domain="Compartment">GyrRelease</Function>
+        <Function Name="Kf_r5_0" Domain="Compartment">TopIVRelease</Function>
+        <Function Name="Kf_r5_1" Domain="Compartment">TopIVRelease</Function>
+        <Function Name="Kf_r5_10" Domain="Compartment">TopIVRelease</Function>
+        <Function Name="Kf_r5_11" Domain="Compartment">TopIVRelease</Function>
+        <Function Name="Kf_r5_2" Domain="Compartment">TopIVRelease</Function>
+        <Function Name="Kf_r5_3" Domain="Compartment">TopIVRelease</Function>
+        <Function Name="Kf_r5_4" Domain="Compartment">TopIVRelease</Function>
+        <Function Name="Kf_r5_5" Domain="Compartment">TopIVRelease</Function>
+        <Function Name="Kf_r5_6" Domain="Compartment">TopIVRelease</Function>
+        <Function Name="Kf_r5_7" Domain="Compartment">TopIVRelease</Function>
+        <Function Name="Kf_r5_8" Domain="Compartment">TopIVRelease</Function>
+        <Function Name="Kf_r5_9" Domain="Compartment">TopIVRelease</Function>
+        <Function Name="Kf_r6_0" Domain="Compartment">TopIRelease</Function>
+        <Function Name="Kf_r6_1" Domain="Compartment">TopIRelease</Function>
+        <Function Name="Kf_r6_10" Domain="Compartment">TopIRelease</Function>
+        <Function Name="Kf_r6_11" Domain="Compartment">TopIRelease</Function>
+        <Function Name="Kf_r6_2" Domain="Compartment">TopIRelease</Function>
+        <Function Name="Kf_r6_3" Domain="Compartment">TopIRelease</Function>
+        <Function Name="Kf_r6_4" Domain="Compartment">TopIRelease</Function>
+        <Function Name="Kf_r6_5" Domain="Compartment">TopIRelease</Function>
+        <Function Name="Kf_r6_6" Domain="Compartment">TopIRelease</Function>
+        <Function Name="Kf_r6_7" Domain="Compartment">TopIRelease</Function>
+        <Function Name="Kf_r6_8" Domain="Compartment">TopIRelease</Function>
+        <Function Name="Kf_r6_9" Domain="Compartment">TopIRelease</Function>
+        <Function Name="P_r0_0" Domain="Compartment">(Kel * DNA_Count)</Function>
+        <Function Name="P_r0_0_reverse" Domain="Compartment">(Kr_r0_0 * s4_Count)</Function>
+        <Function Name="P_r0_1" Domain="Compartment">(Kel * s5_Count)</Function>
+        <Function Name="P_r0_1_reverse" Domain="Compartment">(Kr_r0_1 * s8_Count)</Function>
+        <Function Name="P_r0_2" Domain="Compartment">(Kel * s6_Count)</Function>
+        <Function Name="P_r0_2_reverse" Domain="Compartment">(Kr_r0_2 * s9_Count)</Function>
+        <Function Name="P_r0_3" Domain="Compartment">(Kel * s11_Count)</Function>
+        <Function Name="P_r0_3_reverse" Domain="Compartment">(Kr_r0_3 * s12_Count)</Function>
+        <Function Name="P_r0_4" Domain="Compartment">(Kel * s13_Count)</Function>
+        <Function Name="P_r0_4_reverse" Domain="Compartment">(Kr_r0_4 * s16_Count)</Function>
+        <Function Name="P_r0_5" Domain="Compartment">(Kel * s14_Count)</Function>
+        <Function Name="P_r0_5_reverse" Domain="Compartment">(Kr_r0_5 * s17_Count)</Function>
+        <Function Name="P_r0_6" Domain="Compartment">(Kel * s19_Count)</Function>
+        <Function Name="P_r0_6_reverse" Domain="Compartment">(Kr_r0_6 * s20_Count)</Function>
+        <Function Name="P_r0_7" Domain="Compartment">(Kel * s21_Count)</Function>
+        <Function Name="P_r0_7_reverse" Domain="Compartment">(Kr_r0_7 * s23_Count)</Function>
+        <Function Name="P_r1_0" Domain="Compartment">(0.0016611295681063123 * Kgyr * Gyr_Count * s4_Count / Size_c0)</Function>
+        <Function Name="P_r1_0_reverse" Domain="Compartment">(Kr_r1_0 * s5_Count)</Function>
+        <Function Name="P_r1_1" Domain="Compartment">(0.0016611295681063123 * Kgyr * Gyr_Count * s9_Count / Size_c0)</Function>
+        <Function Name="P_r1_1_reverse" Domain="Compartment">(Kr_r1_1 * s14_Count)</Function>
+        <Function Name="P_r1_2" Domain="Compartment">(0.0016611295681063123 * Kgyr * Gyr_Count * s12_Count / Size_c0)</Function>
+        <Function Name="P_r1_2_reverse" Domain="Compartment">(Kr_r1_2 * s19_Count)</Function>
+        <Function Name="P_r1_3" Domain="Compartment">(0.0016611295681063123 * Kgyr * Gyr_Count * s16_Count / Size_c0)</Function>
+        <Function Name="P_r1_3_reverse" Domain="Compartment">(Kr_r1_3 * s21_Count)</Function>
+        <Function Name="P_r2_0" Domain="Compartment">(0.0016611295681063123 * KtopIV * TopIV_Count * s4_Count / Size_c0)</Function>
+        <Function Name="P_r2_0_0" Domain="Compartment">(0.0016611295681063123 * KtopIV * TopIV_Count * s4_Count / Size_c0)</Function>
+        <Function Name="P_r2_0_0_reverse" Domain="Compartment">(Kr_r2_0_0 * s7_Count)</Function>
+        <Function Name="P_r2_0_1" Domain="Compartment">(0.0016611295681063123 * KtopIV * TopIV_Count * s8_Count / Size_c0)</Function>
+        <Function Name="P_r2_0_1_reverse" Domain="Compartment">(Kr_r2_0_1 * s15_Count)</Function>
+        <Function Name="P_r2_0_2" Domain="Compartment">(0.0016611295681063123 * KtopIV * TopIV_Count * s16_Count / Size_c0)</Function>
+        <Function Name="P_r2_0_2_reverse" Domain="Compartment">(Kr_r2_0_2 * s22_Count)</Function>
+        <Function Name="P_r2_0_3" Domain="Compartment">(0.0016611295681063123 * KtopIV * TopIV_Count * s23_Count / Size_c0)</Function>
+        <Function Name="P_r2_0_3_reverse" Domain="Compartment">(Kr_r2_0_3 * s25_Count)</Function>
+        <Function Name="P_r2_0_reverse" Domain="Compartment">(Kr_r2_0 * s6_Count)</Function>
+        <Function Name="P_r2_1" Domain="Compartment">(0.0016611295681063123 * KtopIV * TopIV_Count * s8_Count / Size_c0)</Function>
+        <Function Name="P_r2_1_reverse" Domain="Compartment">(Kr_r2_1 * s14_Count)</Function>
+        <Function Name="P_r2_2" Domain="Compartment">(0.0016611295681063123 * KtopIV * TopIV_Count * s16_Count / Size_c0)</Function>
+        <Function Name="P_r2_2_reverse" Domain="Compartment">(Kr_r2_2 * s11_Count)</Function>
+        <Function Name="P_r2_3" Domain="Compartment">(0.0016611295681063123 * KtopIV * TopIV_Count * s23_Count / Size_c0)</Function>
+        <Function Name="P_r2_3_reverse" Domain="Compartment">(Kr_r2_3 * s19_Count)</Function>
+        <Function Name="P_r3_0" Domain="Compartment">(0.0016611295681063123 * KtopI * TopI_Count * s7_Count / Size_c0)</Function>
+        <Function Name="P_r3_0_reverse" Domain="Compartment">(Kr_r3_0 * s11_Count)</Function>
+        <Function Name="P_r3_1" Domain="Compartment">(0.0016611295681063123 * KtopI * TopI_Count * s10_Count / Size_c0)</Function>
+        <Function Name="P_r3_1_reverse" Domain="Compartment">(Kr_r3_1 * s13_Count)</Function>
+        <Function Name="P_r3_2" Domain="Compartment">(0.0016611295681063123 * KtopI * TopI_Count * s15_Count / Size_c0)</Function>
+        <Function Name="P_r3_2_reverse" Domain="Compartment">(Kr_r3_2 * s19_Count)</Function>
+        <Function Name="P_r3_3" Domain="Compartment">(0.0016611295681063123 * KtopI * TopI_Count * s18_Count / Size_c0)</Function>
+        <Function Name="P_r3_3_reverse" Domain="Compartment">(Kr_r3_3 * s21_Count)</Function>
+        <Function Name="P_r4_0" Domain="Compartment">(GyrRelease * s5_Count)</Function>
+        <Function Name="P_r4_0_reverse" Domain="Compartment">(Kr_r4_0 * DNA_Count * Gyr_Count / Size_c0)</Function>
+        <Function Name="P_r4_1" Domain="Compartment">(GyrRelease * s8_Count)</Function>
+        <Function Name="P_r4_10" Domain="Compartment">(GyrRelease * s25_Count)</Function>
+        <Function Name="P_r4_10_reverse" Domain="Compartment">(Kr_r4_10 * Gyr_Count * s22_Count / Size_c0)</Function>
+        <Function Name="P_r4_11" Domain="Compartment">(GyrRelease * s26_Count)</Function>
+        <Function Name="P_r4_11_reverse" Domain="Compartment">(Kr_r4_11 * Gyr_Count * s24_Count / Size_c0)</Function>
+        <Function Name="P_r4_1_reverse" Domain="Compartment">(Kr_r4_1 * s4_Count * Gyr_Count / Size_c0)</Function>
+        <Function Name="P_r4_2" Domain="Compartment">(GyrRelease * s14_Count)</Function>
+        <Function Name="P_r4_2_reverse" Domain="Compartment">(Kr_r4_2 * Gyr_Count * s6_Count / Size_c0)</Function>
+        <Function Name="P_r4_3" Domain="Compartment">(GyrRelease * s15_Count)</Function>
+        <Function Name="P_r4_3_reverse" Domain="Compartment">(Kr_r4_3 * Gyr_Count * s7_Count / Size_c0)</Function>
+        <Function Name="P_r4_4" Domain="Compartment">(GyrRelease * s17_Count)</Function>
+        <Function Name="P_r4_4_reverse" Domain="Compartment">(Kr_r4_4 * s9_Count * Gyr_Count / Size_c0)</Function>
+        <Function Name="P_r4_5" Domain="Compartment">(GyrRelease * s18_Count)</Function>
+        <Function Name="P_r4_5_reverse" Domain="Compartment">(Kr_r4_5 * Gyr_Count * s10_Count / Size_c0)</Function>
+        <Function Name="P_r4_6" Domain="Compartment">(GyrRelease * s19_Count)</Function>
+        <Function Name="P_r4_6_reverse" Domain="Compartment">(Kr_r4_6 * Gyr_Count * s11_Count / Size_c0)</Function>
+        <Function Name="P_r4_7" Domain="Compartment">(GyrRelease * s20_Count)</Function>
+        <Function Name="P_r4_7_reverse" Domain="Compartment">(Kr_r4_7 * s12_Count * Gyr_Count / Size_c0)</Function>
+        <Function Name="P_r4_8" Domain="Compartment">(GyrRelease * s21_Count)</Function>
+        <Function Name="P_r4_8_reverse" Domain="Compartment">(Kr_r4_8 * Gyr_Count * s13_Count / Size_c0)</Function>
+        <Function Name="P_r4_9" Domain="Compartment">(GyrRelease * s23_Count)</Function>
+        <Function Name="P_r4_9_reverse" Domain="Compartment">(Kr_r4_9 * s16_Count * Gyr_Count / Size_c0)</Function>
+        <Function Name="P_r5_0" Domain="Compartment">(TopIVRelease * s6_Count)</Function>
+        <Function Name="P_r5_0_reverse" Domain="Compartment">(Kr_r5_0 * DNA_Count * TopIV_Count / Size_c0)</Function>
+        <Function Name="P_r5_1" Domain="Compartment">(TopIVRelease * s7_Count)</Function>
+        <Function Name="P_r5_10" Domain="Compartment">(TopIVRelease * s22_Count)</Function>
+        <Function Name="P_r5_10_reverse" Domain="Compartment">(Kr_r5_10 * s24_Count * TopIV_Count / Size_c0)</Function>
+        <Function Name="P_r5_11" Domain="Compartment">(TopIVRelease * s25_Count)</Function>
+        <Function Name="P_r5_11_reverse" Domain="Compartment">(Kr_r5_11 * TopIV_Count * s26_Count / Size_c0)</Function>
+        <Function Name="P_r5_1_reverse" Domain="Compartment">(Kr_r5_1 * s10_Count * TopIV_Count / Size_c0)</Function>
+        <Function Name="P_r5_2" Domain="Compartment">(TopIVRelease * s9_Count)</Function>
+        <Function Name="P_r5_2_reverse" Domain="Compartment">(Kr_r5_2 * s4_Count * TopIV_Count / Size_c0)</Function>
+        <Function Name="P_r5_3" Domain="Compartment">(TopIVRelease * s11_Count)</Function>
+        <Function Name="P_r5_3_reverse" Domain="Compartment">(Kr_r5_3 * s13_Count * TopIV_Count / Size_c0)</Function>
+        <Function Name="P_r5_4" Domain="Compartment">(TopIVRelease * s12_Count)</Function>
+        <Function Name="P_r5_4_reverse" Domain="Compartment">(Kr_r5_4 * s16_Count * TopIV_Count / Size_c0)</Function>
+        <Function Name="P_r5_5" Domain="Compartment">(TopIVRelease * s14_Count)</Function>
+        <Function Name="P_r5_5_reverse" Domain="Compartment">(Kr_r5_5 * TopIV_Count * s5_Count / Size_c0)</Function>
+        <Function Name="P_r5_6" Domain="Compartment">(TopIVRelease * s15_Count)</Function>
+        <Function Name="P_r5_6_reverse" Domain="Compartment">(Kr_r5_6 * TopIV_Count * s18_Count / Size_c0)</Function>
+        <Function Name="P_r5_7" Domain="Compartment">(TopIVRelease * s17_Count)</Function>
+        <Function Name="P_r5_7_reverse" Domain="Compartment">(Kr_r5_7 * s8_Count * TopIV_Count / Size_c0)</Function>
+        <Function Name="P_r5_8" Domain="Compartment">(TopIVRelease * s19_Count)</Function>
+        <Function Name="P_r5_8_reverse" Domain="Compartment">(Kr_r5_8 * TopIV_Count * s21_Count / Size_c0)</Function>
+        <Function Name="P_r5_9" Domain="Compartment">(TopIVRelease * s20_Count)</Function>
+        <Function Name="P_r5_9_reverse" Domain="Compartment">(Kr_r5_9 * s23_Count * TopIV_Count / Size_c0)</Function>
+        <Function Name="P_r6_0" Domain="Compartment">(TopIRelease * s11_Count)</Function>
+        <Function Name="P_r6_0_reverse" Domain="Compartment">(Kr_r6_0 * s6_Count * TopI_Count / Size_c0)</Function>
+        <Function Name="P_r6_1" Domain="Compartment">(TopIRelease * s12_Count)</Function>
+        <Function Name="P_r6_10" Domain="Compartment">(TopIRelease * s25_Count)</Function>
+        <Function Name="P_r6_10_reverse" Domain="Compartment">(Kr_r6_10 * TopI_Count * s15_Count / Size_c0)</Function>
+        <Function Name="P_r6_11" Domain="Compartment">(TopIRelease * s26_Count)</Function>
+        <Function Name="P_r6_11_reverse" Domain="Compartment">(Kr_r6_11 * s18_Count * TopI_Count / Size_c0)</Function>
+        <Function Name="P_r6_1_reverse" Domain="Compartment">(Kr_r6_1 * s9_Count * TopI_Count / Size_c0)</Function>
+        <Function Name="P_r6_2" Domain="Compartment">(TopIRelease * s13_Count)</Function>
+        <Function Name="P_r6_2_reverse" Domain="Compartment">(Kr_r6_2 * DNA_Count * TopI_Count / Size_c0)</Function>
+        <Function Name="P_r6_3" Domain="Compartment">(TopIRelease * s16_Count)</Function>
+        <Function Name="P_r6_3_reverse" Domain="Compartment">(Kr_r6_3 * s4_Count * TopI_Count / Size_c0)</Function>
+        <Function Name="P_r6_4" Domain="Compartment">(TopIRelease * s19_Count)</Function>
+        <Function Name="P_r6_4_reverse" Domain="Compartment">(Kr_r6_4 * TopI_Count * s14_Count / Size_c0)</Function>
+        <Function Name="P_r6_5" Domain="Compartment">(TopIRelease * s20_Count)</Function>
+        <Function Name="P_r6_5_reverse" Domain="Compartment">(Kr_r6_5 * s17_Count * TopI_Count / Size_c0)</Function>
+        <Function Name="P_r6_6" Domain="Compartment">(TopIRelease * s21_Count)</Function>
+        <Function Name="P_r6_6_reverse" Domain="Compartment">(Kr_r6_6 * s5_Count * TopI_Count / Size_c0)</Function>
+        <Function Name="P_r6_7" Domain="Compartment">(TopIRelease * s22_Count)</Function>
+        <Function Name="P_r6_7_reverse" Domain="Compartment">(Kr_r6_7 * s7_Count * TopI_Count / Size_c0)</Function>
+        <Function Name="P_r6_8" Domain="Compartment">(TopIRelease * s23_Count)</Function>
+        <Function Name="P_r6_8_reverse" Domain="Compartment">(Kr_r6_8 * s8_Count * TopI_Count / Size_c0)</Function>
+        <Function Name="P_r6_9" Domain="Compartment">(TopIRelease * s24_Count)</Function>
+        <Function Name="P_r6_9_reverse" Domain="Compartment">(Kr_r6_9 * s10_Count * TopI_Count / Size_c0)</Function>
+        <Function Name="s10" Domain="Compartment">(s10_Count * (1.0 / Size_c0))</Function>
+        <Function Name="s10_Count_initCount" Domain="Compartment">((s10_Count_init_molecules_um_3 * Size_c0) * 1.0)</Function>
+        <Function Name="s11" Domain="Compartment">(s11_Count * (1.0 / Size_c0))</Function>
+        <Function Name="s11_Count_initCount" Domain="Compartment">((s11_Count_init_molecules_um_3 * Size_c0) * 1.0)</Function>
+        <Function Name="s12" Domain="Compartment">(s12_Count * (1.0 / Size_c0))</Function>
+        <Function Name="s12_Count_initCount" Domain="Compartment">((s12_Count_init_molecules_um_3 * Size_c0) * 1.0)</Function>
+        <Function Name="s13" Domain="Compartment">(s13_Count * (1.0 / Size_c0))</Function>
+        <Function Name="s13_Count_initCount" Domain="Compartment">((s13_Count_init_molecules_um_3 * Size_c0) * 1.0)</Function>
+        <Function Name="s14" Domain="Compartment">(s14_Count * (1.0 / Size_c0))</Function>
+        <Function Name="s14_Count_initCount" Domain="Compartment">((s14_Count_init_molecules_um_3 * Size_c0) * 1.0)</Function>
+        <Function Name="s15" Domain="Compartment">(s15_Count * (1.0 / Size_c0))</Function>
+        <Function Name="s15_Count_initCount" Domain="Compartment">((s15_Count_init_molecules_um_3 * Size_c0) * 1.0)</Function>
+        <Function Name="s16" Domain="Compartment">(s16_Count * (1.0 / Size_c0))</Function>
+        <Function Name="s16_Count_initCount" Domain="Compartment">((s16_Count_init_molecules_um_3 * Size_c0) * 1.0)</Function>
+        <Function Name="s17" Domain="Compartment">(s17_Count * (1.0 / Size_c0))</Function>
+        <Function Name="s17_Count_initCount" Domain="Compartment">((s17_Count_init_molecules_um_3 * Size_c0) * 1.0)</Function>
+        <Function Name="s18" Domain="Compartment">(s18_Count * (1.0 / Size_c0))</Function>
+        <Function Name="s18_Count_initCount" Domain="Compartment">((s18_Count_init_molecules_um_3 * Size_c0) * 1.0)</Function>
+        <Function Name="s19" Domain="Compartment">(s19_Count * (1.0 / Size_c0))</Function>
+        <Function Name="s19_Count_initCount" Domain="Compartment">((s19_Count_init_molecules_um_3 * Size_c0) * 1.0)</Function>
+        <Function Name="s20" Domain="Compartment">(s20_Count * (1.0 / Size_c0))</Function>
+        <Function Name="s20_Count_initCount" Domain="Compartment">((s20_Count_init_molecules_um_3 * Size_c0) * 1.0)</Function>
+        <Function Name="s21" Domain="Compartment">(s21_Count * (1.0 / Size_c0))</Function>
+        <Function Name="s21_Count_initCount" Domain="Compartment">((s21_Count_init_molecules_um_3 * Size_c0) * 1.0)</Function>
+        <Function Name="s22" Domain="Compartment">(s22_Count * (1.0 / Size_c0))</Function>
+        <Function Name="s22_Count_initCount" Domain="Compartment">((s22_Count_init_molecules_um_3 * Size_c0) * 1.0)</Function>
+        <Function Name="s23" Domain="Compartment">(s23_Count * (1.0 / Size_c0))</Function>
+        <Function Name="s23_Count_initCount" Domain="Compartment">((s23_Count_init_molecules_um_3 * Size_c0) * 1.0)</Function>
+        <Function Name="s24" Domain="Compartment">(s24_Count * (1.0 / Size_c0))</Function>
+        <Function Name="s24_Count_initCount" Domain="Compartment">((s24_Count_init_molecules_um_3 * Size_c0) * 1.0)</Function>
+        <Function Name="s25" Domain="Compartment">(s25_Count * (1.0 / Size_c0))</Function>
+        <Function Name="s25_Count_initCount" Domain="Compartment">((s25_Count_init_molecules_um_3 * Size_c0) * 1.0)</Function>
+        <Function Name="s26" Domain="Compartment">(s26_Count * (1.0 / Size_c0))</Function>
+        <Function Name="s26_Count_initCount" Domain="Compartment">((s26_Count_init_molecules_um_3 * Size_c0) * 1.0)</Function>
+        <Function Name="s4" Domain="Compartment">(s4_Count * (1.0 / Size_c0))</Function>
+        <Function Name="s4_Count_initCount" Domain="Compartment">((s4_Count_init_molecules_um_3 * Size_c0) * 1.0)</Function>
+        <Function Name="s5" Domain="Compartment">(s5_Count * (1.0 / Size_c0))</Function>
+        <Function Name="s5_Count_initCount" Domain="Compartment">((s5_Count_init_molecules_um_3 * Size_c0) * 1.0)</Function>
+        <Function Name="s6" Domain="Compartment">(s6_Count * (1.0 / Size_c0))</Function>
+        <Function Name="s6_Count_initCount" Domain="Compartment">((s6_Count_init_molecules_um_3 * Size_c0) * 1.0)</Function>
+        <Function Name="s7" Domain="Compartment">(s7_Count * (1.0 / Size_c0))</Function>
+        <Function Name="s7_Count_initCount" Domain="Compartment">((s7_Count_init_molecules_um_3 * Size_c0) * 1.0)</Function>
+        <Function Name="s8" Domain="Compartment">(s8_Count * (1.0 / Size_c0))</Function>
+        <Function Name="s8_Count_initCount" Domain="Compartment">((s8_Count_init_molecules_um_3 * Size_c0) * 1.0)</Function>
+        <Function Name="s9" Domain="Compartment">(s9_Count * (1.0 / Size_c0))</Function>
+        <Function Name="s9_Count_initCount" Domain="Compartment">((s9_Count_init_molecules_um_3 * Size_c0) * 1.0)</Function>
+        <Function Name="TopI" Domain="Compartment">(TopI_Count * (1.0 / Size_c0))</Function>
+        <Function Name="TopI_Count_initCount" Domain="Compartment">((TopI_Count_init_molecules_um_3 * Size_c0) * 1.0)</Function>
+        <Function Name="TopI_free" Domain="Compartment">(1.0 * TopI)</Function>
+        <Function Name="TopI_free_Count" Domain="Compartment">((TopI_free * Size_c0) * 1.0)</Function>
+        <Function Name="TopIV" Domain="Compartment">(TopIV_Count * (1.0 / Size_c0))</Function>
+        <Function Name="TopIV_Count_initCount" Domain="Compartment">((TopIV_Count_init_molecules_um_3 * Size_c0) * 1.0)</Function>
+        <Function Name="TopIV_free" Domain="Compartment">(1.0 * TopIV)</Function>
+        <Function Name="TopIV_free_Count" Domain="Compartment">((TopIV_free * Size_c0) * 1.0)</Function>
+        <CompartmentSubDomain Name="Compartment">
+          <BoundaryType Boundary="Xm" Type="Value" />
+          <BoundaryType Boundary="Xp" Type="Value" />
+          <BoundaryType Boundary="Ym" Type="Value" />
+          <BoundaryType Boundary="Yp" Type="Value" />
+          <BoundaryType Boundary="Zm" Type="Value" />
+          <BoundaryType Boundary="Zp" Type="Value" />
+          <VariableInitialCount Name="DNA_Count">DNA_Count_initCount</VariableInitialCount>
+          <VariableInitialCount Name="TopI_Count">TopI_Count_initCount</VariableInitialCount>
+          <VariableInitialCount Name="Gyr_Count">Gyr_Count_initCount</VariableInitialCount>
+          <VariableInitialCount Name="TopIV_Count">TopIV_Count_initCount</VariableInitialCount>
+          <VariableInitialCount Name="s4_Count">s4_Count_initCount</VariableInitialCount>
+          <VariableInitialCount Name="s5_Count">s5_Count_initCount</VariableInitialCount>
+          <VariableInitialCount Name="s6_Count">s6_Count_initCount</VariableInitialCount>
+          <VariableInitialCount Name="s7_Count">s7_Count_initCount</VariableInitialCount>
+          <VariableInitialCount Name="s8_Count">s8_Count_initCount</VariableInitialCount>
+          <VariableInitialCount Name="s9_Count">s9_Count_initCount</VariableInitialCount>
+          <VariableInitialCount Name="s10_Count">s10_Count_initCount</VariableInitialCount>
+          <VariableInitialCount Name="s11_Count">s11_Count_initCount</VariableInitialCount>
+          <VariableInitialCount Name="s12_Count">s12_Count_initCount</VariableInitialCount>
+          <VariableInitialCount Name="s13_Count">s13_Count_initCount</VariableInitialCount>
+          <VariableInitialCount Name="s14_Count">s14_Count_initCount</VariableInitialCount>
+          <VariableInitialCount Name="s15_Count">s15_Count_initCount</VariableInitialCount>
+          <VariableInitialCount Name="s16_Count">s16_Count_initCount</VariableInitialCount>
+          <VariableInitialCount Name="s17_Count">s17_Count_initCount</VariableInitialCount>
+          <VariableInitialCount Name="s18_Count">s18_Count_initCount</VariableInitialCount>
+          <VariableInitialCount Name="s19_Count">s19_Count_initCount</VariableInitialCount>
+          <VariableInitialCount Name="s20_Count">s20_Count_initCount</VariableInitialCount>
+          <VariableInitialCount Name="s21_Count">s21_Count_initCount</VariableInitialCount>
+          <VariableInitialCount Name="s22_Count">s22_Count_initCount</VariableInitialCount>
+          <VariableInitialCount Name="s23_Count">s23_Count_initCount</VariableInitialCount>
+          <VariableInitialCount Name="s24_Count">s24_Count_initCount</VariableInitialCount>
+          <VariableInitialCount Name="s25_Count">s25_Count_initCount</VariableInitialCount>
+          <VariableInitialCount Name="s26_Count">s26_Count_initCount</VariableInitialCount>
+          <JumpProcess Name="r0_5">
+            <ProbabilityRate>P_r0_5</ProbabilityRate>
+            <Effect VarName="s14_Count" Operation="inc">-1.0</Effect>
+            <Effect VarName="s17_Count" Operation="inc">1.0</Effect>
+          </JumpProcess>
+          <JumpProcess Name="r0_5_reverse">
+            <ProbabilityRate>P_r0_5_reverse</ProbabilityRate>
+            <Effect VarName="s14_Count" Operation="inc">1.0</Effect>
+            <Effect VarName="s17_Count" Operation="inc">-1.0</Effect>
+          </JumpProcess>
+          <JumpProcess Name="r4_1">
+            <ProbabilityRate>P_r4_1</ProbabilityRate>
+            <Effect VarName="s8_Count" Operation="inc">-1.0</Effect>
+            <Effect VarName="s4_Count" Operation="inc">1.0</Effect>
+            <Effect VarName="Gyr_Count" Operation="inc">1.0</Effect>
+          </JumpProcess>
+          <JumpProcess Name="r4_1_reverse">
+            <ProbabilityRate>P_r4_1_reverse</ProbabilityRate>
+            <Effect VarName="s8_Count" Operation="inc">1.0</Effect>
+            <Effect VarName="s4_Count" Operation="inc">-1.0</Effect>
+            <Effect VarName="Gyr_Count" Operation="inc">-1.0</Effect>
+          </JumpProcess>
+          <JumpProcess Name="r2_3">
+            <ProbabilityRate>P_r2_3</ProbabilityRate>
+            <Effect VarName="TopIV_Count" Operation="inc">-1.0</Effect>
+            <Effect VarName="s23_Count" Operation="inc">-1.0</Effect>
+            <Effect VarName="s19_Count" Operation="inc">1.0</Effect>
+          </JumpProcess>
+          <JumpProcess Name="r2_3_reverse">
+            <ProbabilityRate>P_r2_3_reverse</ProbabilityRate>
+            <Effect VarName="TopIV_Count" Operation="inc">1.0</Effect>
+            <Effect VarName="s23_Count" Operation="inc">1.0</Effect>
+            <Effect VarName="s19_Count" Operation="inc">-1.0</Effect>
+          </JumpProcess>
+          <JumpProcess Name="r0_6">
+            <ProbabilityRate>P_r0_6</ProbabilityRate>
+            <Effect VarName="s19_Count" Operation="inc">-1.0</Effect>
+            <Effect VarName="s20_Count" Operation="inc">1.0</Effect>
+          </JumpProcess>
+          <JumpProcess Name="r0_6_reverse">
+            <ProbabilityRate>P_r0_6_reverse</ProbabilityRate>
+            <Effect VarName="s19_Count" Operation="inc">1.0</Effect>
+            <Effect VarName="s20_Count" Operation="inc">-1.0</Effect>
+          </JumpProcess>
+          <JumpProcess Name="r4_2">
+            <ProbabilityRate>P_r4_2</ProbabilityRate>
+            <Effect VarName="s14_Count" Operation="inc">-1.0</Effect>
+            <Effect VarName="Gyr_Count" Operation="inc">1.0</Effect>
+            <Effect VarName="s6_Count" Operation="inc">1.0</Effect>
+          </JumpProcess>
+          <JumpProcess Name="r4_2_reverse">
+            <ProbabilityRate>P_r4_2_reverse</ProbabilityRate>
+            <Effect VarName="s14_Count" Operation="inc">1.0</Effect>
+            <Effect VarName="Gyr_Count" Operation="inc">-1.0</Effect>
+            <Effect VarName="s6_Count" Operation="inc">-1.0</Effect>
+          </JumpProcess>
+          <JumpProcess Name="r6_0">
+            <ProbabilityRate>P_r6_0</ProbabilityRate>
+            <Effect VarName="s11_Count" Operation="inc">-1.0</Effect>
+            <Effect VarName="s6_Count" Operation="inc">1.0</Effect>
+            <Effect VarName="TopI_Count" Operation="inc">1.0</Effect>
+          </JumpProcess>
+          <JumpProcess Name="r6_0_reverse">
+            <ProbabilityRate>P_r6_0_reverse</ProbabilityRate>
+            <Effect VarName="s11_Count" Operation="inc">1.0</Effect>
+            <Effect VarName="s6_Count" Operation="inc">-1.0</Effect>
+            <Effect VarName="TopI_Count" Operation="inc">-1.0</Effect>
+          </JumpProcess>
+          <JumpProcess Name="r0_7">
+            <ProbabilityRate>P_r0_7</ProbabilityRate>
+            <Effect VarName="s21_Count" Operation="inc">-1.0</Effect>
+            <Effect VarName="s23_Count" Operation="inc">1.0</Effect>
+          </JumpProcess>
+          <JumpProcess Name="r0_7_reverse">
+            <ProbabilityRate>P_r0_7_reverse</ProbabilityRate>
+            <Effect VarName="s21_Count" Operation="inc">1.0</Effect>
+            <Effect VarName="s23_Count" Operation="inc">-1.0</Effect>
+          </JumpProcess>
+          <JumpProcess Name="r4_3">
+            <ProbabilityRate>P_r4_3</ProbabilityRate>
+            <Effect VarName="s15_Count" Operation="inc">-1.0</Effect>
+            <Effect VarName="Gyr_Count" Operation="inc">1.0</Effect>
+            <Effect VarName="s7_Count" Operation="inc">1.0</Effect>
+          </JumpProcess>
+          <JumpProcess Name="r4_3_reverse">
+            <ProbabilityRate>P_r4_3_reverse</ProbabilityRate>
+            <Effect VarName="s15_Count" Operation="inc">1.0</Effect>
+            <Effect VarName="Gyr_Count" Operation="inc">-1.0</Effect>
+            <Effect VarName="s7_Count" Operation="inc">-1.0</Effect>
+          </JumpProcess>
+          <JumpProcess Name="r6_1">
+            <ProbabilityRate>P_r6_1</ProbabilityRate>
+            <Effect VarName="s12_Count" Operation="inc">-1.0</Effect>
+            <Effect VarName="s9_Count" Operation="inc">1.0</Effect>
+            <Effect VarName="TopI_Count" Operation="inc">1.0</Effect>
+          </JumpProcess>
+          <JumpProcess Name="r6_1_reverse">
+            <ProbabilityRate>P_r6_1_reverse</ProbabilityRate>
+            <Effect VarName="s12_Count" Operation="inc">1.0</Effect>
+            <Effect VarName="s9_Count" Operation="inc">-1.0</Effect>
+            <Effect VarName="TopI_Count" Operation="inc">-1.0</Effect>
+          </JumpProcess>
+          <JumpProcess Name="r4_4">
+            <ProbabilityRate>P_r4_4</ProbabilityRate>
+            <Effect VarName="s17_Count" Operation="inc">-1.0</Effect>
+            <Effect VarName="s9_Count" Operation="inc">1.0</Effect>
+            <Effect VarName="Gyr_Count" Operation="inc">1.0</Effect>
+          </JumpProcess>
+          <JumpProcess Name="r4_4_reverse">
+            <ProbabilityRate>P_r4_4_reverse</ProbabilityRate>
+            <Effect VarName="s17_Count" Operation="inc">1.0</Effect>
+            <Effect VarName="s9_Count" Operation="inc">-1.0</Effect>
+            <Effect VarName="Gyr_Count" Operation="inc">-1.0</Effect>
+          </JumpProcess>
+          <JumpProcess Name="r5_11">
+            <ProbabilityRate>P_r5_11</ProbabilityRate>
+            <Effect VarName="s25_Count" Operation="inc">-1.0</Effect>
+            <Effect VarName="TopIV_Count" Operation="inc">1.0</Effect>
+            <Effect VarName="s26_Count" Operation="inc">1.0</Effect>
+          </JumpProcess>
+          <JumpProcess Name="r5_11_reverse">
+            <ProbabilityRate>P_r5_11_reverse</ProbabilityRate>
+            <Effect VarName="s25_Count" Operation="inc">1.0</Effect>
+            <Effect VarName="TopIV_Count" Operation="inc">-1.0</Effect>
+            <Effect VarName="s26_Count" Operation="inc">-1.0</Effect>
+          </JumpProcess>
+          <JumpProcess Name="r6_2">
+            <ProbabilityRate>P_r6_2</ProbabilityRate>
+            <Effect VarName="s13_Count" Operation="inc">-1.0</Effect>
+            <Effect VarName="DNA_Count" Operation="inc">1.0</Effect>
+            <Effect VarName="TopI_Count" Operation="inc">1.0</Effect>
+          </JumpProcess>
+          <JumpProcess Name="r6_2_reverse">
+            <ProbabilityRate>P_r6_2_reverse</ProbabilityRate>
+            <Effect VarName="s13_Count" Operation="inc">1.0</Effect>
+            <Effect VarName="DNA_Count" Operation="inc">-1.0</Effect>
+            <Effect VarName="TopI_Count" Operation="inc">-1.0</Effect>
+          </JumpProcess>
+          <JumpProcess Name="r0_1">
+            <ProbabilityRate>P_r0_1</ProbabilityRate>
+            <Effect VarName="s5_Count" Operation="inc">-1.0</Effect>
+            <Effect VarName="s8_Count" Operation="inc">1.0</Effect>
+          </JumpProcess>
+          <JumpProcess Name="r0_1_reverse">
+            <ProbabilityRate>P_r0_1_reverse</ProbabilityRate>
+            <Effect VarName="s5_Count" Operation="inc">1.0</Effect>
+            <Effect VarName="s8_Count" Operation="inc">-1.0</Effect>
+          </JumpProcess>
+          <JumpProcess Name="r5_10">
+            <ProbabilityRate>P_r5_10</ProbabilityRate>
+            <Effect VarName="s22_Count" Operation="inc">-1.0</Effect>
+            <Effect VarName="s24_Count" Operation="inc">1.0</Effect>
+            <Effect VarName="TopIV_Count" Operation="inc">1.0</Effect>
+          </JumpProcess>
+          <JumpProcess Name="r5_10_reverse">
+            <ProbabilityRate>P_r5_10_reverse</ProbabilityRate>
+            <Effect VarName="s22_Count" Operation="inc">1.0</Effect>
+            <Effect VarName="s24_Count" Operation="inc">-1.0</Effect>
+            <Effect VarName="TopIV_Count" Operation="inc">-1.0</Effect>
+          </JumpProcess>
+          <JumpProcess Name="r0_2">
+            <ProbabilityRate>P_r0_2</ProbabilityRate>
+            <Effect VarName="s6_Count" Operation="inc">-1.0</Effect>
+            <Effect VarName="s9_Count" Operation="inc">1.0</Effect>
+          </JumpProcess>
+          <JumpProcess Name="r0_2_reverse">
+            <ProbabilityRate>P_r0_2_reverse</ProbabilityRate>
+            <Effect VarName="s6_Count" Operation="inc">1.0</Effect>
+            <Effect VarName="s9_Count" Operation="inc">-1.0</Effect>
+          </JumpProcess>
+          <JumpProcess Name="r2_0">
+            <ProbabilityRate>P_r2_0</ProbabilityRate>
+            <Effect VarName="TopIV_Count" Operation="inc">-1.0</Effect>
+            <Effect VarName="s4_Count" Operation="inc">-1.0</Effect>
+            <Effect VarName="s6_Count" Operation="inc">1.0</Effect>
+          </JumpProcess>
+          <JumpProcess Name="r2_0_reverse">
+            <ProbabilityRate>P_r2_0_reverse</ProbabilityRate>
+            <Effect VarName="TopIV_Count" Operation="inc">1.0</Effect>
+            <Effect VarName="s4_Count" Operation="inc">1.0</Effect>
+            <Effect VarName="s6_Count" Operation="inc">-1.0</Effect>
+          </JumpProcess>
+          <JumpProcess Name="r0_3">
+            <ProbabilityRate>P_r0_3</ProbabilityRate>
+            <Effect VarName="s11_Count" Operation="inc">-1.0</Effect>
+            <Effect VarName="s12_Count" Operation="inc">1.0</Effect>
+          </JumpProcess>
+          <JumpProcess Name="r0_3_reverse">
+            <ProbabilityRate>P_r0_3_reverse</ProbabilityRate>
+            <Effect VarName="s11_Count" Operation="inc">1.0</Effect>
+            <Effect VarName="s12_Count" Operation="inc">-1.0</Effect>
+          </JumpProcess>
+          <JumpProcess Name="r2_1">
+            <ProbabilityRate>P_r2_1</ProbabilityRate>
+            <Effect VarName="TopIV_Count" Operation="inc">-1.0</Effect>
+            <Effect VarName="s8_Count" Operation="inc">-1.0</Effect>
+            <Effect VarName="s14_Count" Operation="inc">1.0</Effect>
+          </JumpProcess>
+          <JumpProcess Name="r2_1_reverse">
+            <ProbabilityRate>P_r2_1_reverse</ProbabilityRate>
+            <Effect VarName="TopIV_Count" Operation="inc">1.0</Effect>
+            <Effect VarName="s8_Count" Operation="inc">1.0</Effect>
+            <Effect VarName="s14_Count" Operation="inc">-1.0</Effect>
+          </JumpProcess>
+          <JumpProcess Name="r0_4">
+            <ProbabilityRate>P_r0_4</ProbabilityRate>
+            <Effect VarName="s13_Count" Operation="inc">-1.0</Effect>
+            <Effect VarName="s16_Count" Operation="inc">1.0</Effect>
+          </JumpProcess>
+          <JumpProcess Name="r0_4_reverse">
+            <ProbabilityRate>P_r0_4_reverse</ProbabilityRate>
+            <Effect VarName="s13_Count" Operation="inc">1.0</Effect>
+            <Effect VarName="s16_Count" Operation="inc">-1.0</Effect>
+          </JumpProcess>
+          <JumpProcess Name="r4_0">
+            <ProbabilityRate>P_r4_0</ProbabilityRate>
+            <Effect VarName="s5_Count" Operation="inc">-1.0</Effect>
+            <Effect VarName="DNA_Count" Operation="inc">1.0</Effect>
+            <Effect VarName="Gyr_Count" Operation="inc">1.0</Effect>
+          </JumpProcess>
+          <JumpProcess Name="r4_0_reverse">
+            <ProbabilityRate>P_r4_0_reverse</ProbabilityRate>
+            <Effect VarName="s5_Count" Operation="inc">1.0</Effect>
+            <Effect VarName="DNA_Count" Operation="inc">-1.0</Effect>
+            <Effect VarName="Gyr_Count" Operation="inc">-1.0</Effect>
+          </JumpProcess>
+          <JumpProcess Name="r2_2">
+            <ProbabilityRate>P_r2_2</ProbabilityRate>
+            <Effect VarName="TopIV_Count" Operation="inc">-1.0</Effect>
+            <Effect VarName="s16_Count" Operation="inc">-1.0</Effect>
+            <Effect VarName="s11_Count" Operation="inc">1.0</Effect>
+          </JumpProcess>
+          <JumpProcess Name="r2_2_reverse">
+            <ProbabilityRate>P_r2_2_reverse</ProbabilityRate>
+            <Effect VarName="TopIV_Count" Operation="inc">1.0</Effect>
+            <Effect VarName="s16_Count" Operation="inc">1.0</Effect>
+            <Effect VarName="s11_Count" Operation="inc">-1.0</Effect>
+          </JumpProcess>
+          <JumpProcess Name="r4_9">
+            <ProbabilityRate>P_r4_9</ProbabilityRate>
+            <Effect VarName="s23_Count" Operation="inc">-1.0</Effect>
+            <Effect VarName="s16_Count" Operation="inc">1.0</Effect>
+            <Effect VarName="Gyr_Count" Operation="inc">1.0</Effect>
+          </JumpProcess>
+          <JumpProcess Name="r4_9_reverse">
+            <ProbabilityRate>P_r4_9_reverse</ProbabilityRate>
+            <Effect VarName="s23_Count" Operation="inc">1.0</Effect>
+            <Effect VarName="s16_Count" Operation="inc">-1.0</Effect>
+            <Effect VarName="Gyr_Count" Operation="inc">-1.0</Effect>
+          </JumpProcess>
+          <JumpProcess Name="r6_7">
+            <ProbabilityRate>P_r6_7</ProbabilityRate>
+            <Effect VarName="s22_Count" Operation="inc">-1.0</Effect>
+            <Effect VarName="s7_Count" Operation="inc">1.0</Effect>
+            <Effect VarName="TopI_Count" Operation="inc">1.0</Effect>
+          </JumpProcess>
+          <JumpProcess Name="r6_7_reverse">
+            <ProbabilityRate>P_r6_7_reverse</ProbabilityRate>
+            <Effect VarName="s22_Count" Operation="inc">1.0</Effect>
+            <Effect VarName="s7_Count" Operation="inc">-1.0</Effect>
+            <Effect VarName="TopI_Count" Operation="inc">-1.0</Effect>
+          </JumpProcess>
+          <JumpProcess Name="r6_8">
+            <ProbabilityRate>P_r6_8</ProbabilityRate>
+            <Effect VarName="s23_Count" Operation="inc">-1.0</Effect>
+            <Effect VarName="s8_Count" Operation="inc">1.0</Effect>
+            <Effect VarName="TopI_Count" Operation="inc">1.0</Effect>
+          </JumpProcess>
+          <JumpProcess Name="r6_8_reverse">
+            <ProbabilityRate>P_r6_8_reverse</ProbabilityRate>
+            <Effect VarName="s23_Count" Operation="inc">1.0</Effect>
+            <Effect VarName="s8_Count" Operation="inc">-1.0</Effect>
+            <Effect VarName="TopI_Count" Operation="inc">-1.0</Effect>
+          </JumpProcess>
+          <JumpProcess Name="r6_9">
+            <ProbabilityRate>P_r6_9</ProbabilityRate>
+            <Effect VarName="s24_Count" Operation="inc">-1.0</Effect>
+            <Effect VarName="s10_Count" Operation="inc">1.0</Effect>
+            <Effect VarName="TopI_Count" Operation="inc">1.0</Effect>
+          </JumpProcess>
+          <JumpProcess Name="r6_9_reverse">
+            <ProbabilityRate>P_r6_9_reverse</ProbabilityRate>
+            <Effect VarName="s24_Count" Operation="inc">1.0</Effect>
+            <Effect VarName="s10_Count" Operation="inc">-1.0</Effect>
+            <Effect VarName="TopI_Count" Operation="inc">-1.0</Effect>
+          </JumpProcess>
+          <JumpProcess Name="r4_5">
+            <ProbabilityRate>P_r4_5</ProbabilityRate>
+            <Effect VarName="s18_Count" Operation="inc">-1.0</Effect>
+            <Effect VarName="Gyr_Count" Operation="inc">1.0</Effect>
+            <Effect VarName="s10_Count" Operation="inc">1.0</Effect>
+          </JumpProcess>
+          <JumpProcess Name="r4_5_reverse">
+            <ProbabilityRate>P_r4_5_reverse</ProbabilityRate>
+            <Effect VarName="s18_Count" Operation="inc">1.0</Effect>
+            <Effect VarName="Gyr_Count" Operation="inc">-1.0</Effect>
+            <Effect VarName="s10_Count" Operation="inc">-1.0</Effect>
+          </JumpProcess>
+          <JumpProcess Name="r6_3">
+            <ProbabilityRate>P_r6_3</ProbabilityRate>
+            <Effect VarName="s16_Count" Operation="inc">-1.0</Effect>
+            <Effect VarName="s4_Count" Operation="inc">1.0</Effect>
+            <Effect VarName="TopI_Count" Operation="inc">1.0</Effect>
+          </JumpProcess>
+          <JumpProcess Name="r6_3_reverse">
+            <ProbabilityRate>P_r6_3_reverse</ProbabilityRate>
+            <Effect VarName="s16_Count" Operation="inc">1.0</Effect>
+            <Effect VarName="s4_Count" Operation="inc">-1.0</Effect>
+            <Effect VarName="TopI_Count" Operation="inc">-1.0</Effect>
+          </JumpProcess>
+          <JumpProcess Name="r4_6">
+            <ProbabilityRate>P_r4_6</ProbabilityRate>
+            <Effect VarName="s19_Count" Operation="inc">-1.0</Effect>
+            <Effect VarName="Gyr_Count" Operation="inc">1.0</Effect>
+            <Effect VarName="s11_Count" Operation="inc">1.0</Effect>
+          </JumpProcess>
+          <JumpProcess Name="r4_6_reverse">
+            <ProbabilityRate>P_r4_6_reverse</ProbabilityRate>
+            <Effect VarName="s19_Count" Operation="inc">1.0</Effect>
+            <Effect VarName="Gyr_Count" Operation="inc">-1.0</Effect>
+            <Effect VarName="s11_Count" Operation="inc">-1.0</Effect>
+          </JumpProcess>
+          <JumpProcess Name="r6_4">
+            <ProbabilityRate>P_r6_4</ProbabilityRate>
+            <Effect VarName="s19_Count" Operation="inc">-1.0</Effect>
+            <Effect VarName="TopI_Count" Operation="inc">1.0</Effect>
+            <Effect VarName="s14_Count" Operation="inc">1.0</Effect>
+          </JumpProcess>
+          <JumpProcess Name="r6_4_reverse">
+            <ProbabilityRate>P_r6_4_reverse</ProbabilityRate>
+            <Effect VarName="s19_Count" Operation="inc">1.0</Effect>
+            <Effect VarName="TopI_Count" Operation="inc">-1.0</Effect>
+            <Effect VarName="s14_Count" Operation="inc">-1.0</Effect>
+          </JumpProcess>
+          <JumpProcess Name="r4_7">
+            <ProbabilityRate>P_r4_7</ProbabilityRate>
+            <Effect VarName="s20_Count" Operation="inc">-1.0</Effect>
+            <Effect VarName="s12_Count" Operation="inc">1.0</Effect>
+            <Effect VarName="Gyr_Count" Operation="inc">1.0</Effect>
+          </JumpProcess>
+          <JumpProcess Name="r4_7_reverse">
+            <ProbabilityRate>P_r4_7_reverse</ProbabilityRate>
+            <Effect VarName="s20_Count" Operation="inc">1.0</Effect>
+            <Effect VarName="s12_Count" Operation="inc">-1.0</Effect>
+            <Effect VarName="Gyr_Count" Operation="inc">-1.0</Effect>
+          </JumpProcess>
+          <JumpProcess Name="r6_5">
+            <ProbabilityRate>P_r6_5</ProbabilityRate>
+            <Effect VarName="s20_Count" Operation="inc">-1.0</Effect>
+            <Effect VarName="s17_Count" Operation="inc">1.0</Effect>
+            <Effect VarName="TopI_Count" Operation="inc">1.0</Effect>
+          </JumpProcess>
+          <JumpProcess Name="r6_5_reverse">
+            <ProbabilityRate>P_r6_5_reverse</ProbabilityRate>
+            <Effect VarName="s20_Count" Operation="inc">1.0</Effect>
+            <Effect VarName="s17_Count" Operation="inc">-1.0</Effect>
+            <Effect VarName="TopI_Count" Operation="inc">-1.0</Effect>
+          </JumpProcess>
+          <JumpProcess Name="r4_8">
+            <ProbabilityRate>P_r4_8</ProbabilityRate>
+            <Effect VarName="s21_Count" Operation="inc">-1.0</Effect>
+            <Effect VarName="Gyr_Count" Operation="inc">1.0</Effect>
+            <Effect VarName="s13_Count" Operation="inc">1.0</Effect>
+          </JumpProcess>
+          <JumpProcess Name="r4_8_reverse">
+            <ProbabilityRate>P_r4_8_reverse</ProbabilityRate>
+            <Effect VarName="s21_Count" Operation="inc">1.0</Effect>
+            <Effect VarName="Gyr_Count" Operation="inc">-1.0</Effect>
+            <Effect VarName="s13_Count" Operation="inc">-1.0</Effect>
+          </JumpProcess>
+          <JumpProcess Name="r6_6">
+            <ProbabilityRate>P_r6_6</ProbabilityRate>
+            <Effect VarName="s21_Count" Operation="inc">-1.0</Effect>
+            <Effect VarName="s5_Count" Operation="inc">1.0</Effect>
+            <Effect VarName="TopI_Count" Operation="inc">1.0</Effect>
+          </JumpProcess>
+          <JumpProcess Name="r6_6_reverse">
+            <ProbabilityRate>P_r6_6_reverse</ProbabilityRate>
+            <Effect VarName="s21_Count" Operation="inc">1.0</Effect>
+            <Effect VarName="s5_Count" Operation="inc">-1.0</Effect>
+            <Effect VarName="TopI_Count" Operation="inc">-1.0</Effect>
+          </JumpProcess>
+          <JumpProcess Name="r0_0">
+            <ProbabilityRate>P_r0_0</ProbabilityRate>
+            <Effect VarName="DNA_Count" Operation="inc">-1.0</Effect>
+            <Effect VarName="s4_Count" Operation="inc">1.0</Effect>
+          </JumpProcess>
+          <JumpProcess Name="r0_0_reverse">
+            <ProbabilityRate>P_r0_0_reverse</ProbabilityRate>
+            <Effect VarName="DNA_Count" Operation="inc">1.0</Effect>
+            <Effect VarName="s4_Count" Operation="inc">-1.0</Effect>
+          </JumpProcess>
+          <JumpProcess Name="r4_11">
+            <ProbabilityRate>P_r4_11</ProbabilityRate>
+            <Effect VarName="s26_Count" Operation="inc">-1.0</Effect>
+            <Effect VarName="Gyr_Count" Operation="inc">1.0</Effect>
+            <Effect VarName="s24_Count" Operation="inc">1.0</Effect>
+          </JumpProcess>
+          <JumpProcess Name="r4_11_reverse">
+            <ProbabilityRate>P_r4_11_reverse</ProbabilityRate>
+            <Effect VarName="s26_Count" Operation="inc">1.0</Effect>
+            <Effect VarName="Gyr_Count" Operation="inc">-1.0</Effect>
+            <Effect VarName="s24_Count" Operation="inc">-1.0</Effect>
+          </JumpProcess>
+          <JumpProcess Name="r4_10">
+            <ProbabilityRate>P_r4_10</ProbabilityRate>
+            <Effect VarName="s25_Count" Operation="inc">-1.0</Effect>
+            <Effect VarName="Gyr_Count" Operation="inc">1.0</Effect>
+            <Effect VarName="s22_Count" Operation="inc">1.0</Effect>
+          </JumpProcess>
+          <JumpProcess Name="r4_10_reverse">
+            <ProbabilityRate>P_r4_10_reverse</ProbabilityRate>
+            <Effect VarName="s25_Count" Operation="inc">1.0</Effect>
+            <Effect VarName="Gyr_Count" Operation="inc">-1.0</Effect>
+            <Effect VarName="s22_Count" Operation="inc">-1.0</Effect>
+          </JumpProcess>
+          <JumpProcess Name="r5_0">
+            <ProbabilityRate>P_r5_0</ProbabilityRate>
+            <Effect VarName="s6_Count" Operation="inc">-1.0</Effect>
+            <Effect VarName="DNA_Count" Operation="inc">1.0</Effect>
+            <Effect VarName="TopIV_Count" Operation="inc">1.0</Effect>
+          </JumpProcess>
+          <JumpProcess Name="r5_0_reverse">
+            <ProbabilityRate>P_r5_0_reverse</ProbabilityRate>
+            <Effect VarName="s6_Count" Operation="inc">1.0</Effect>
+            <Effect VarName="DNA_Count" Operation="inc">-1.0</Effect>
+            <Effect VarName="TopIV_Count" Operation="inc">-1.0</Effect>
+          </JumpProcess>
+          <JumpProcess Name="r3_2">
+            <ProbabilityRate>P_r3_2</ProbabilityRate>
+            <Effect VarName="TopI_Count" Operation="inc">-1.0</Effect>
+            <Effect VarName="s15_Count" Operation="inc">-1.0</Effect>
+            <Effect VarName="s19_Count" Operation="inc">1.0</Effect>
+          </JumpProcess>
+          <JumpProcess Name="r3_2_reverse">
+            <ProbabilityRate>P_r3_2_reverse</ProbabilityRate>
+            <Effect VarName="TopI_Count" Operation="inc">1.0</Effect>
+            <Effect VarName="s15_Count" Operation="inc">1.0</Effect>
+            <Effect VarName="s19_Count" Operation="inc">-1.0</Effect>
+          </JumpProcess>
+          <JumpProcess Name="r5_1">
+            <ProbabilityRate>P_r5_1</ProbabilityRate>
+            <Effect VarName="s7_Count" Operation="inc">-1.0</Effect>
+            <Effect VarName="s10_Count" Operation="inc">1.0</Effect>
+            <Effect VarName="TopIV_Count" Operation="inc">1.0</Effect>
+          </JumpProcess>
+          <JumpProcess Name="r5_1_reverse">
+            <ProbabilityRate>P_r5_1_reverse</ProbabilityRate>
+            <Effect VarName="s7_Count" Operation="inc">1.0</Effect>
+            <Effect VarName="s10_Count" Operation="inc">-1.0</Effect>
+            <Effect VarName="TopIV_Count" Operation="inc">-1.0</Effect>
+          </JumpProcess>
+          <JumpProcess Name="r3_3">
+            <ProbabilityRate>P_r3_3</ProbabilityRate>
+            <Effect VarName="TopI_Count" Operation="inc">-1.0</Effect>
+            <Effect VarName="s18_Count" Operation="inc">-1.0</Effect>
+            <Effect VarName="s21_Count" Operation="inc">1.0</Effect>
+          </JumpProcess>
+          <JumpProcess Name="r3_3_reverse">
+            <ProbabilityRate>P_r3_3_reverse</ProbabilityRate>
+            <Effect VarName="TopI_Count" Operation="inc">1.0</Effect>
+            <Effect VarName="s18_Count" Operation="inc">1.0</Effect>
+            <Effect VarName="s21_Count" Operation="inc">-1.0</Effect>
+          </JumpProcess>
+          <JumpProcess Name="r5_2">
+            <ProbabilityRate>P_r5_2</ProbabilityRate>
+            <Effect VarName="s9_Count" Operation="inc">-1.0</Effect>
+            <Effect VarName="s4_Count" Operation="inc">1.0</Effect>
+            <Effect VarName="TopIV_Count" Operation="inc">1.0</Effect>
+          </JumpProcess>
+          <JumpProcess Name="r5_2_reverse">
+            <ProbabilityRate>P_r5_2_reverse</ProbabilityRate>
+            <Effect VarName="s9_Count" Operation="inc">1.0</Effect>
+            <Effect VarName="s4_Count" Operation="inc">-1.0</Effect>
+            <Effect VarName="TopIV_Count" Operation="inc">-1.0</Effect>
+          </JumpProcess>
+          <JumpProcess Name="r5_3">
+            <ProbabilityRate>P_r5_3</ProbabilityRate>
+            <Effect VarName="s11_Count" Operation="inc">-1.0</Effect>
+            <Effect VarName="s13_Count" Operation="inc">1.0</Effect>
+            <Effect VarName="TopIV_Count" Operation="inc">1.0</Effect>
+          </JumpProcess>
+          <JumpProcess Name="r5_3_reverse">
+            <ProbabilityRate>P_r5_3_reverse</ProbabilityRate>
+            <Effect VarName="s11_Count" Operation="inc">1.0</Effect>
+            <Effect VarName="s13_Count" Operation="inc">-1.0</Effect>
+            <Effect VarName="TopIV_Count" Operation="inc">-1.0</Effect>
+          </JumpProcess>
+          <JumpProcess Name="r1_0">
+            <ProbabilityRate>P_r1_0</ProbabilityRate>
+            <Effect VarName="Gyr_Count" Operation="inc">-1.0</Effect>
+            <Effect VarName="s4_Count" Operation="inc">-1.0</Effect>
+            <Effect VarName="s5_Count" Operation="inc">1.0</Effect>
+          </JumpProcess>
+          <JumpProcess Name="r1_0_reverse">
+            <ProbabilityRate>P_r1_0_reverse</ProbabilityRate>
+            <Effect VarName="Gyr_Count" Operation="inc">1.0</Effect>
+            <Effect VarName="s4_Count" Operation="inc">1.0</Effect>
+            <Effect VarName="s5_Count" Operation="inc">-1.0</Effect>
+          </JumpProcess>
+          <JumpProcess Name="r1_1">
+            <ProbabilityRate>P_r1_1</ProbabilityRate>
+            <Effect VarName="Gyr_Count" Operation="inc">-1.0</Effect>
+            <Effect VarName="s9_Count" Operation="inc">-1.0</Effect>
+            <Effect VarName="s14_Count" Operation="inc">1.0</Effect>
+          </JumpProcess>
+          <JumpProcess Name="r1_1_reverse">
+            <ProbabilityRate>P_r1_1_reverse</ProbabilityRate>
+            <Effect VarName="Gyr_Count" Operation="inc">1.0</Effect>
+            <Effect VarName="s9_Count" Operation="inc">1.0</Effect>
+            <Effect VarName="s14_Count" Operation="inc">-1.0</Effect>
+          </JumpProcess>
+          <JumpProcess Name="r1_2">
+            <ProbabilityRate>P_r1_2</ProbabilityRate>
+            <Effect VarName="Gyr_Count" Operation="inc">-1.0</Effect>
+            <Effect VarName="s12_Count" Operation="inc">-1.0</Effect>
+            <Effect VarName="s19_Count" Operation="inc">1.0</Effect>
+          </JumpProcess>
+          <JumpProcess Name="r1_2_reverse">
+            <ProbabilityRate>P_r1_2_reverse</ProbabilityRate>
+            <Effect VarName="Gyr_Count" Operation="inc">1.0</Effect>
+            <Effect VarName="s12_Count" Operation="inc">1.0</Effect>
+            <Effect VarName="s19_Count" Operation="inc">-1.0</Effect>
+          </JumpProcess>
+          <JumpProcess Name="r3_0">
+            <ProbabilityRate>P_r3_0</ProbabilityRate>
+            <Effect VarName="TopI_Count" Operation="inc">-1.0</Effect>
+            <Effect VarName="s7_Count" Operation="inc">-1.0</Effect>
+            <Effect VarName="s11_Count" Operation="inc">1.0</Effect>
+          </JumpProcess>
+          <JumpProcess Name="r3_0_reverse">
+            <ProbabilityRate>P_r3_0_reverse</ProbabilityRate>
+            <Effect VarName="TopI_Count" Operation="inc">1.0</Effect>
+            <Effect VarName="s7_Count" Operation="inc">1.0</Effect>
+            <Effect VarName="s11_Count" Operation="inc">-1.0</Effect>
+          </JumpProcess>
+          <JumpProcess Name="r1_3">
+            <ProbabilityRate>P_r1_3</ProbabilityRate>
+            <Effect VarName="Gyr_Count" Operation="inc">-1.0</Effect>
+            <Effect VarName="s16_Count" Operation="inc">-1.0</Effect>
+            <Effect VarName="s21_Count" Operation="inc">1.0</Effect>
+          </JumpProcess>
+          <JumpProcess Name="r1_3_reverse">
+            <ProbabilityRate>P_r1_3_reverse</ProbabilityRate>
+            <Effect VarName="Gyr_Count" Operation="inc">1.0</Effect>
+            <Effect VarName="s16_Count" Operation="inc">1.0</Effect>
+            <Effect VarName="s21_Count" Operation="inc">-1.0</Effect>
+          </JumpProcess>
+          <JumpProcess Name="r3_1">
+            <ProbabilityRate>P_r3_1</ProbabilityRate>
+            <Effect VarName="TopI_Count" Operation="inc">-1.0</Effect>
+            <Effect VarName="s10_Count" Operation="inc">-1.0</Effect>
+            <Effect VarName="s13_Count" Operation="inc">1.0</Effect>
+          </JumpProcess>
+          <JumpProcess Name="r3_1_reverse">
+            <ProbabilityRate>P_r3_1_reverse</ProbabilityRate>
+            <Effect VarName="TopI_Count" Operation="inc">1.0</Effect>
+            <Effect VarName="s10_Count" Operation="inc">1.0</Effect>
+            <Effect VarName="s13_Count" Operation="inc">-1.0</Effect>
+          </JumpProcess>
+          <JumpProcess Name="r5_8">
+            <ProbabilityRate>P_r5_8</ProbabilityRate>
+            <Effect VarName="s19_Count" Operation="inc">-1.0</Effect>
+            <Effect VarName="TopIV_Count" Operation="inc">1.0</Effect>
+            <Effect VarName="s21_Count" Operation="inc">1.0</Effect>
+          </JumpProcess>
+          <JumpProcess Name="r5_8_reverse">
+            <ProbabilityRate>P_r5_8_reverse</ProbabilityRate>
+            <Effect VarName="s19_Count" Operation="inc">1.0</Effect>
+            <Effect VarName="TopIV_Count" Operation="inc">-1.0</Effect>
+            <Effect VarName="s21_Count" Operation="inc">-1.0</Effect>
+          </JumpProcess>
+          <JumpProcess Name="r5_9">
+            <ProbabilityRate>P_r5_9</ProbabilityRate>
+            <Effect VarName="s20_Count" Operation="inc">-1.0</Effect>
+            <Effect VarName="s23_Count" Operation="inc">1.0</Effect>
+            <Effect VarName="TopIV_Count" Operation="inc">1.0</Effect>
+          </JumpProcess>
+          <JumpProcess Name="r5_9_reverse">
+            <ProbabilityRate>P_r5_9_reverse</ProbabilityRate>
+            <Effect VarName="s20_Count" Operation="inc">1.0</Effect>
+            <Effect VarName="s23_Count" Operation="inc">-1.0</Effect>
+            <Effect VarName="TopIV_Count" Operation="inc">-1.0</Effect>
+          </JumpProcess>
+          <JumpProcess Name="r5_4">
+            <ProbabilityRate>P_r5_4</ProbabilityRate>
+            <Effect VarName="s12_Count" Operation="inc">-1.0</Effect>
+            <Effect VarName="s16_Count" Operation="inc">1.0</Effect>
+            <Effect VarName="TopIV_Count" Operation="inc">1.0</Effect>
+          </JumpProcess>
+          <JumpProcess Name="r5_4_reverse">
+            <ProbabilityRate>P_r5_4_reverse</ProbabilityRate>
+            <Effect VarName="s12_Count" Operation="inc">1.0</Effect>
+            <Effect VarName="s16_Count" Operation="inc">-1.0</Effect>
+            <Effect VarName="TopIV_Count" Operation="inc">-1.0</Effect>
+          </JumpProcess>
+          <JumpProcess Name="r5_5">
+            <ProbabilityRate>P_r5_5</ProbabilityRate>
+            <Effect VarName="s14_Count" Operation="inc">-1.0</Effect>
+            <Effect VarName="TopIV_Count" Operation="inc">1.0</Effect>
+            <Effect VarName="s5_Count" Operation="inc">1.0</Effect>
+          </JumpProcess>
+          <JumpProcess Name="r5_5_reverse">
+            <ProbabilityRate>P_r5_5_reverse</ProbabilityRate>
+            <Effect VarName="s14_Count" Operation="inc">1.0</Effect>
+            <Effect VarName="TopIV_Count" Operation="inc">-1.0</Effect>
+            <Effect VarName="s5_Count" Operation="inc">-1.0</Effect>
+          </JumpProcess>
+          <JumpProcess Name="r5_6">
+            <ProbabilityRate>P_r5_6</ProbabilityRate>
+            <Effect VarName="s15_Count" Operation="inc">-1.0</Effect>
+            <Effect VarName="TopIV_Count" Operation="inc">1.0</Effect>
+            <Effect VarName="s18_Count" Operation="inc">1.0</Effect>
+          </JumpProcess>
+          <JumpProcess Name="r5_6_reverse">
+            <ProbabilityRate>P_r5_6_reverse</ProbabilityRate>
+            <Effect VarName="s15_Count" Operation="inc">1.0</Effect>
+            <Effect VarName="TopIV_Count" Operation="inc">-1.0</Effect>
+            <Effect VarName="s18_Count" Operation="inc">-1.0</Effect>
+          </JumpProcess>
+          <JumpProcess Name="r5_7">
+            <ProbabilityRate>P_r5_7</ProbabilityRate>
+            <Effect VarName="s17_Count" Operation="inc">-1.0</Effect>
+            <Effect VarName="s8_Count" Operation="inc">1.0</Effect>
+            <Effect VarName="TopIV_Count" Operation="inc">1.0</Effect>
+          </JumpProcess>
+          <JumpProcess Name="r5_7_reverse">
+            <ProbabilityRate>P_r5_7_reverse</ProbabilityRate>
+            <Effect VarName="s17_Count" Operation="inc">1.0</Effect>
+            <Effect VarName="s8_Count" Operation="inc">-1.0</Effect>
+            <Effect VarName="TopIV_Count" Operation="inc">-1.0</Effect>
+          </JumpProcess>
+          <JumpProcess Name="r2_0_2">
+            <ProbabilityRate>P_r2_0_2</ProbabilityRate>
+            <Effect VarName="TopIV_Count" Operation="inc">-1.0</Effect>
+            <Effect VarName="s16_Count" Operation="inc">-1.0</Effect>
+            <Effect VarName="s22_Count" Operation="inc">1.0</Effect>
+          </JumpProcess>
+          <JumpProcess Name="r2_0_2_reverse">
+            <ProbabilityRate>P_r2_0_2_reverse</ProbabilityRate>
+            <Effect VarName="TopIV_Count" Operation="inc">1.0</Effect>
+            <Effect VarName="s16_Count" Operation="inc">1.0</Effect>
+            <Effect VarName="s22_Count" Operation="inc">-1.0</Effect>
+          </JumpProcess>
+          <JumpProcess Name="r2_0_3">
+            <ProbabilityRate>P_r2_0_3</ProbabilityRate>
+            <Effect VarName="TopIV_Count" Operation="inc">-1.0</Effect>
+            <Effect VarName="s23_Count" Operation="inc">-1.0</Effect>
+            <Effect VarName="s25_Count" Operation="inc">1.0</Effect>
+          </JumpProcess>
+          <JumpProcess Name="r2_0_3_reverse">
+            <ProbabilityRate>P_r2_0_3_reverse</ProbabilityRate>
+            <Effect VarName="TopIV_Count" Operation="inc">1.0</Effect>
+            <Effect VarName="s23_Count" Operation="inc">1.0</Effect>
+            <Effect VarName="s25_Count" Operation="inc">-1.0</Effect>
+          </JumpProcess>
+          <JumpProcess Name="r2_0_0">
+            <ProbabilityRate>P_r2_0_0</ProbabilityRate>
+            <Effect VarName="TopIV_Count" Operation="inc">-1.0</Effect>
+            <Effect VarName="s4_Count" Operation="inc">-1.0</Effect>
+            <Effect VarName="s7_Count" Operation="inc">1.0</Effect>
+          </JumpProcess>
+          <JumpProcess Name="r2_0_0_reverse">
+            <ProbabilityRate>P_r2_0_0_reverse</ProbabilityRate>
+            <Effect VarName="TopIV_Count" Operation="inc">1.0</Effect>
+            <Effect VarName="s4_Count" Operation="inc">1.0</Effect>
+            <Effect VarName="s7_Count" Operation="inc">-1.0</Effect>
+          </JumpProcess>
+          <JumpProcess Name="r2_0_1">
+            <ProbabilityRate>P_r2_0_1</ProbabilityRate>
+            <Effect VarName="TopIV_Count" Operation="inc">-1.0</Effect>
+            <Effect VarName="s8_Count" Operation="inc">-1.0</Effect>
+            <Effect VarName="s15_Count" Operation="inc">1.0</Effect>
+          </JumpProcess>
+          <JumpProcess Name="r2_0_1_reverse">
+            <ProbabilityRate>P_r2_0_1_reverse</ProbabilityRate>
+            <Effect VarName="TopIV_Count" Operation="inc">1.0</Effect>
+            <Effect VarName="s8_Count" Operation="inc">1.0</Effect>
+            <Effect VarName="s15_Count" Operation="inc">-1.0</Effect>
+          </JumpProcess>
+          <JumpProcess Name="r6_10">
+            <ProbabilityRate>P_r6_10</ProbabilityRate>
+            <Effect VarName="s25_Count" Operation="inc">-1.0</Effect>
+            <Effect VarName="TopI_Count" Operation="inc">1.0</Effect>
+            <Effect VarName="s15_Count" Operation="inc">1.0</Effect>
+          </JumpProcess>
+          <JumpProcess Name="r6_10_reverse">
+            <ProbabilityRate>P_r6_10_reverse</ProbabilityRate>
+            <Effect VarName="s25_Count" Operation="inc">1.0</Effect>
+            <Effect VarName="TopI_Count" Operation="inc">-1.0</Effect>
+            <Effect VarName="s15_Count" Operation="inc">-1.0</Effect>
+          </JumpProcess>
+          <JumpProcess Name="r6_11">
+            <ProbabilityRate>P_r6_11</ProbabilityRate>
+            <Effect VarName="s26_Count" Operation="inc">-1.0</Effect>
+            <Effect VarName="s18_Count" Operation="inc">1.0</Effect>
+            <Effect VarName="TopI_Count" Operation="inc">1.0</Effect>
+          </JumpProcess>
+          <JumpProcess Name="r6_11_reverse">
+            <ProbabilityRate>P_r6_11_reverse</ProbabilityRate>
+            <Effect VarName="s26_Count" Operation="inc">1.0</Effect>
+            <Effect VarName="s18_Count" Operation="inc">-1.0</Effect>
+            <Effect VarName="TopI_Count" Operation="inc">-1.0</Effect>
+          </JumpProcess>
+        </CompartmentSubDomain>
+        <Version Name="Copy of Determ_generated" KeyValue="106019354" BranchId="106019355" Archived="0" Date="10-Dec-2016 03:26:47" FromVersionable="false">
+          <Owner Name="gregfar" Identifier="106017115" />
+          <GroupAccess Type="1" />
+          <Annotation>cloned from 'Copy of Determ_generated' owned by user mblinov</Annotation>
+        </Version>
+      </MathDescription>
+      <Simulation Name="Simulation0">
+        <Annotation>cloned from 'Simulation0' owned by user mblinov</Annotation>
+        <SolverTaskDescription TaskType="Unsteady" UseSymbolicJacobian="false" Solver="Gibson (Next Reaction Stochastic Method)">
+          <TimeBound StartTime="0.0" EndTime="500.0" />
+          <TimeStep DefaultTime="0.1" MinTime="1.0E-8" MaxTime="1.0" />
+          <ErrorTolerance Absolut="1.0E-9" Relative="1.0E-8" />
+          <StochSimOptions UseCustomSeed="false" NumberOfTrial="1" Histogram="false" />
+          <OutputOptions OutputTimeStep="0.05" />
+          <NumberProcessors>1</NumberProcessors>
+        </SolverTaskDescription>
+        <MathOverrides />
+        <Version Name="Simulation0" KeyValue="106019396" BranchId="106019397" Archived="0" Date="10-Dec-2016 03:26:48" FromVersionable="false">
+          <Owner Name="gregfar" Identifier="106017115" />
+          <GroupAccess Type="1" />
+          <Annotation>cloned from 'Simulation0' owned by user mblinov</Annotation>
+        </Version>
+      </Simulation>
+      <Simulation Name="Simulation1">
+        <SolverTaskDescription TaskType="Unsteady" UseSymbolicJacobian="false" Solver="Gibson (Next Reaction Stochastic Method)">
+          <TimeBound StartTime="0.0" EndTime="1.0" />
+          <TimeStep DefaultTime="0.1" MinTime="1.0E-8" MaxTime="1.0" />
+          <ErrorTolerance Absolut="1.0E-9" Relative="1.0E-8" />
+          <StochSimOptions UseCustomSeed="false" NumberOfTrial="1" Histogram="false" />
+          <OutputOptions OutputTimeStep="0.05" />
+          <NumberProcessors>1</NumberProcessors>
+        </SolverTaskDescription>
+        <MathOverrides />
+        <Version Name="Simulation1" KeyValue="106019399" BranchId="106019400" Archived="0" Date="10-Dec-2016 03:26:48" FromVersionable="false">
+          <Owner Name="gregfar" Identifier="106017115" />
+          <GroupAccess Type="1" />
+        </Version>
+      </Simulation>
+      <Version Name="Copy of Determ" KeyValue="106019384" BranchId="106019385" Archived="0" Date="10-Dec-2016 03:26:47" FromVersionable="false">
+        <Owner Name="gregfar" Identifier="106017115" />
+        <GroupAccess Type="1" />
+        <Annotation>cloned from 'Copy of Determ' owned by user mblinov
+(copied from Determ) (copied from NFSim application) cloned from 'NFSim application' owned by user mblinov</Annotation>
+      </Version>
+      <MicroscopeMeasurement Name="fluor">
+        <ConvolutionKernel Type="ProjectionZKernel" />
+      </MicroscopeMeasurement>
+    </SimulationSpec>
+    <Version Name="Supercoiling_2015SAD" KeyValue="106019819" BranchId="106019403" Archived="0" Date="10-Dec-2016 03:44:28" FromVersionable="false">
+      <Owner Name="gregfar" Identifier="106017115" />
+      <GroupAccess Type="0" />
+      <Annotation>cloned from 'Supercoiling_2015' owned by user mblinov
+cloned from 'Supercoiling_ver2' owned by user feliu
+cloned from 'Supercoiling' owned by user mblinov</Annotation>
+    </Version>
+    <pathwayModel>
+      <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:bp="http://www.biopax.org/release/biopax-level3.owl#" version="3.0" />
+    </pathwayModel>
+    <relationshipModel>
+      <RMNS version="3.0" />
+    </relationshipModel>
+    <vcmetadata>
+      <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" />
+      <nonrdfAnnotationList />
+      <uriBindingList />
+    </vcmetadata>
+  </BioModel>
+</vcml>
+

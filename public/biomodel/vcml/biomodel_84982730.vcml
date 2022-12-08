@@ -1,0 +1,1090 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--This biomodel was generated in VCML Version Alpha_Version_7.4.0_build_87-->
+<vcml xmlns="http://sourceforge.net/projects/vcell/vcml" Version="Alpha_Version_7.4.0_build_87">
+  <BioModel Name="CSH_09_circadian_clock">
+    <Annotation>cloned from 'CSH_09_circadian_clock' owned by user boris
+Minimal model of circadian clock, Vilar et al., PNAS (2002)</Annotation>
+    <Model Name="unnamed">
+      <Annotation>cloned from 'unnamed' owned by user boris</Annotation>
+      <ModelParameters>
+        <Parameter Name="common_delta_A" Role="user defined" Unit="s-1">1.0</Parameter>
+      </ModelParameters>
+      <Compound Name="A" />
+      <Compound Name="R" />
+      <Compound Name="PrmA" />
+      <Compound Name="PrmR" />
+      <Compound Name="C" />
+      <Compound Name="PrmA_bound" />
+      <Compound Name="PrmR_bound" />
+      <Compound Name="mRNA_A" />
+      <Compound Name="mRNA_R" />
+      <Feature Name="cell" KeyValue="35924594" />
+      <LocalizedCompound Name="A" CompoundRef="A" Structure="cell" OverrideName="true" KeyValue="35924596" />
+      <LocalizedCompound Name="R" CompoundRef="R" Structure="cell" OverrideName="true" KeyValue="35924597" />
+      <LocalizedCompound Name="PrmA" CompoundRef="PrmA" Structure="cell" OverrideName="true" KeyValue="35924598" />
+      <LocalizedCompound Name="PrmR" CompoundRef="PrmR" Structure="cell" OverrideName="true" KeyValue="35924599" />
+      <LocalizedCompound Name="C" CompoundRef="C" Structure="cell" OverrideName="true" KeyValue="35924600" />
+      <LocalizedCompound Name="PrmA_bound" CompoundRef="PrmA_bound" Structure="cell" OverrideName="true" KeyValue="35924601" />
+      <LocalizedCompound Name="PrmR_bound" CompoundRef="PrmR_bound" Structure="cell" OverrideName="true" KeyValue="35924602" />
+      <LocalizedCompound Name="mRNA_A_" CompoundRef="mRNA_A" Structure="cell" OverrideName="true" KeyValue="35924603" />
+      <LocalizedCompound Name="mRNA_R" CompoundRef="mRNA_R" Structure="cell" OverrideName="true" KeyValue="35924604" />
+      <SimpleReaction Structure="cell" Name="PrmA_activation" Reversible="true" FluxOption="MolecularOnly" KeyValue="35924605">
+        <Reactant LocalizedCompoundRef="PrmA" Stoichiometry="1" KeyValue="35924606" />
+        <Reactant LocalizedCompoundRef="A" Stoichiometry="1" KeyValue="35924607" />
+        <Product LocalizedCompoundRef="PrmA_bound" Stoichiometry="1" KeyValue="35924608" />
+        <Kinetics KineticsType="MassAction">
+          <Parameter Name="J" Role="reaction rate" Unit="uM.s-1">(((gamma_A * PrmA) * A) - (theta_A * PrmA_bound))</Parameter>
+          <Parameter Name="gamma_A" Role="forward rate constant" Unit="s-1.uM-1">(1.0 / KMOLE)</Parameter>
+          <Parameter Name="theta_A" Role="reverse rate constant" Unit="s-1">50.0</Parameter>
+        </Kinetics>
+      </SimpleReaction>
+      <SimpleReaction Structure="cell" Name="PrmR_activation" Reversible="true" FluxOption="MolecularOnly" KeyValue="35924609">
+        <Reactant LocalizedCompoundRef="PrmR" Stoichiometry="1" KeyValue="35924610" />
+        <Reactant LocalizedCompoundRef="A" Stoichiometry="1" KeyValue="35924611" />
+        <Product LocalizedCompoundRef="PrmR_bound" Stoichiometry="1" KeyValue="35924612" />
+        <Kinetics KineticsType="MassAction">
+          <Parameter Name="J" Role="reaction rate" Unit="uM.s-1">(((gamma_R * PrmR) * A) - (theta_R * PrmR_bound))</Parameter>
+          <Parameter Name="gamma_R" Role="forward rate constant" Unit="s-1.uM-1">(1.0 / KMOLE)</Parameter>
+          <Parameter Name="theta_R" Role="reverse rate constant" Unit="s-1">100.0</Parameter>
+        </Kinetics>
+      </SimpleReaction>
+      <SimpleReaction Structure="cell" Name="A_trnscr" Reversible="true" FluxOption="MolecularOnly" KeyValue="35924613">
+        <Reactant LocalizedCompoundRef="PrmA" Stoichiometry="1" KeyValue="35924614" />
+        <Product LocalizedCompoundRef="PrmA" Stoichiometry="1" KeyValue="35924615" />
+        <Product LocalizedCompoundRef="mRNA_A_" Stoichiometry="1" KeyValue="35924616" />
+        <Kinetics KineticsType="MassAction">
+          <Parameter Name="J" Role="reaction rate" Unit="uM.s-1">((alpha_A * PrmA) - ((Kr * PrmA) * mRNA_A_))</Parameter>
+          <Parameter Name="alpha_A" Role="forward rate constant" Unit="s-1">50.0</Parameter>
+          <Parameter Name="Kr" Role="reverse rate constant" Unit="s-1.uM-1">0.0</Parameter>
+        </Kinetics>
+      </SimpleReaction>
+      <SimpleReaction Structure="cell" Name="active_A_trnscr" Reversible="true" FluxOption="MolecularOnly" KeyValue="35924617">
+        <Reactant LocalizedCompoundRef="PrmA_bound" Stoichiometry="1" KeyValue="35924618" />
+        <Product LocalizedCompoundRef="PrmA_bound" Stoichiometry="1" KeyValue="35924619" />
+        <Product LocalizedCompoundRef="mRNA_A_" Stoichiometry="1" KeyValue="35924620" />
+        <Kinetics KineticsType="MassAction">
+          <Parameter Name="J" Role="reaction rate" Unit="uM.s-1">((alpha_A_prm * PrmA_bound) - ((Kr * PrmA_bound) * mRNA_A_))</Parameter>
+          <Parameter Name="alpha_A_prm" Role="forward rate constant" Unit="s-1">500.0</Parameter>
+          <Parameter Name="Kr" Role="reverse rate constant" Unit="s-1.uM-1">0.0</Parameter>
+        </Kinetics>
+      </SimpleReaction>
+      <SimpleReaction Structure="cell" Name="R_trnsc" Reversible="true" FluxOption="MolecularOnly" KeyValue="35924621">
+        <Reactant LocalizedCompoundRef="PrmR" Stoichiometry="1" KeyValue="35924622" />
+        <Product LocalizedCompoundRef="PrmR" Stoichiometry="1" KeyValue="35924623" />
+        <Product LocalizedCompoundRef="mRNA_R" Stoichiometry="1" KeyValue="35924624" />
+        <Kinetics KineticsType="MassAction">
+          <Parameter Name="J" Role="reaction rate" Unit="uM.s-1">((alpha_R * PrmR) - ((Kr * PrmR) * mRNA_R))</Parameter>
+          <Parameter Name="alpha_R" Role="forward rate constant" Unit="s-1">0.01</Parameter>
+          <Parameter Name="Kr" Role="reverse rate constant" Unit="s-1.uM-1">0.0</Parameter>
+        </Kinetics>
+      </SimpleReaction>
+      <SimpleReaction Structure="cell" Name="active_R_trnsc" Reversible="true" FluxOption="MolecularOnly" KeyValue="35924625">
+        <Reactant LocalizedCompoundRef="PrmR_bound" Stoichiometry="1" KeyValue="35924626" />
+        <Product LocalizedCompoundRef="PrmR_bound" Stoichiometry="1" KeyValue="35924627" />
+        <Product LocalizedCompoundRef="mRNA_R" Stoichiometry="1" KeyValue="35924628" />
+        <Kinetics KineticsType="MassAction">
+          <Parameter Name="J" Role="reaction rate" Unit="uM.s-1">((alpha_R_prm * PrmR_bound) - ((Kr * PrmR_bound) * mRNA_R))</Parameter>
+          <Parameter Name="alpha_R_prm" Role="forward rate constant" Unit="s-1">50.0</Parameter>
+          <Parameter Name="Kr" Role="reverse rate constant" Unit="s-1.uM-1">0.0</Parameter>
+        </Kinetics>
+      </SimpleReaction>
+      <SimpleReaction Structure="cell" Name="R_trnsl" Reversible="true" FluxOption="MolecularOnly" KeyValue="35924629">
+        <Reactant LocalizedCompoundRef="mRNA_R" Stoichiometry="1" KeyValue="35924630" />
+        <Product LocalizedCompoundRef="mRNA_R" Stoichiometry="1" KeyValue="35924631" />
+        <Product LocalizedCompoundRef="R" Stoichiometry="1" KeyValue="35924632" />
+        <Kinetics KineticsType="MassAction">
+          <Parameter Name="J" Role="reaction rate" Unit="uM.s-1">((beta_R * mRNA_R) - ((Kr * mRNA_R) * R))</Parameter>
+          <Parameter Name="beta_R" Role="forward rate constant" Unit="s-1">5.0</Parameter>
+          <Parameter Name="Kr" Role="reverse rate constant" Unit="s-1.uM-1">0.0</Parameter>
+        </Kinetics>
+      </SimpleReaction>
+      <SimpleReaction Structure="cell" Name="AR_binding" Reversible="true" FluxOption="MolecularOnly" KeyValue="35924637">
+        <Reactant LocalizedCompoundRef="A" Stoichiometry="1" KeyValue="35924638" />
+        <Reactant LocalizedCompoundRef="R" Stoichiometry="1" KeyValue="35924639" />
+        <Product LocalizedCompoundRef="C" Stoichiometry="1" KeyValue="35924640" />
+        <Kinetics KineticsType="MassAction">
+          <Parameter Name="J" Role="reaction rate" Unit="uM.s-1">(((gamma_C * A) * R) - (Kr * C))</Parameter>
+          <Parameter Name="gamma_C" Role="forward rate constant" Unit="s-1.uM-1">(2.0 / KMOLE)</Parameter>
+          <Parameter Name="Kr" Role="reverse rate constant" Unit="s-1">0.0</Parameter>
+        </Kinetics>
+      </SimpleReaction>
+      <SimpleReaction Structure="cell" Name="C_decay" Reversible="true" FluxOption="MolecularOnly" KeyValue="35924641">
+        <Reactant LocalizedCompoundRef="C" Stoichiometry="1" KeyValue="35924642" />
+        <Product LocalizedCompoundRef="R" Stoichiometry="1" KeyValue="35924643" />
+        <Kinetics KineticsType="MassAction">
+          <Parameter Name="J" Role="reaction rate" Unit="uM.s-1">((delta_A * C) - (Kr * R))</Parameter>
+          <Parameter Name="delta_A" Role="forward rate constant" Unit="s-1">common_delta_A</Parameter>
+          <Parameter Name="Kr" Role="reverse rate constant" Unit="s-1">0.0</Parameter>
+        </Kinetics>
+      </SimpleReaction>
+      <SimpleReaction Structure="cell" Name="A_decay" Reversible="true" FluxOption="MolecularOnly" KeyValue="35924644">
+        <Reactant LocalizedCompoundRef="A" Stoichiometry="1" KeyValue="35924645" />
+        <Kinetics KineticsType="MassAction">
+          <Parameter Name="J" Role="reaction rate" Unit="uM.s-1">(delta_A * A)</Parameter>
+          <Parameter Name="delta_A" Role="forward rate constant" Unit="s-1">common_delta_A</Parameter>
+          <Parameter Name="Kr" Role="reverse rate constant" Unit="uM.s-1">0.0</Parameter>
+        </Kinetics>
+      </SimpleReaction>
+      <SimpleReaction Structure="cell" Name="mRNA_A_decay" Reversible="true" FluxOption="MolecularOnly" KeyValue="35924646">
+        <Reactant LocalizedCompoundRef="mRNA_A_" Stoichiometry="1" KeyValue="35924647" />
+        <Kinetics KineticsType="MassAction">
+          <Parameter Name="J" Role="reaction rate" Unit="uM.s-1">(delta_MA * mRNA_A_)</Parameter>
+          <Parameter Name="delta_MA" Role="forward rate constant" Unit="s-1">10.0</Parameter>
+          <Parameter Name="Kr" Role="reverse rate constant" Unit="uM.s-1">0.0</Parameter>
+        </Kinetics>
+      </SimpleReaction>
+      <SimpleReaction Structure="cell" Name="mRNA_R_decay" Reversible="true" FluxOption="MolecularOnly" KeyValue="35924648">
+        <Reactant LocalizedCompoundRef="mRNA_R" Stoichiometry="1" KeyValue="35924649" />
+        <Kinetics KineticsType="MassAction">
+          <Parameter Name="J" Role="reaction rate" Unit="uM.s-1">(delta_MR * mRNA_R)</Parameter>
+          <Parameter Name="delta_MR" Role="forward rate constant" Unit="s-1">0.5</Parameter>
+          <Parameter Name="Kr" Role="reverse rate constant" Unit="uM.s-1">0.0</Parameter>
+        </Kinetics>
+      </SimpleReaction>
+      <SimpleReaction Structure="cell" Name="R_decay" Reversible="true" FluxOption="MolecularOnly" KeyValue="35924650">
+        <Reactant LocalizedCompoundRef="R" Stoichiometry="1" KeyValue="35924651" />
+        <Kinetics KineticsType="MassAction">
+          <Parameter Name="J" Role="reaction rate" Unit="uM.s-1">(delta_R * R)</Parameter>
+          <Parameter Name="delta_R" Role="forward rate constant" Unit="s-1">0.2</Parameter>
+          <Parameter Name="Kr" Role="reverse rate constant" Unit="uM.s-1">0.0</Parameter>
+        </Kinetics>
+      </SimpleReaction>
+      <SimpleReaction Structure="cell" Name="A_trnsl" Reversible="true" FluxOption="MolecularOnly" KeyValue="35924633">
+        <Reactant LocalizedCompoundRef="mRNA_A_" Stoichiometry="1" KeyValue="35924634" />
+        <Product LocalizedCompoundRef="mRNA_A_" Stoichiometry="1" KeyValue="35924635" />
+        <Product LocalizedCompoundRef="A" Stoichiometry="1" KeyValue="35924636" />
+        <Kinetics KineticsType="MassAction">
+          <Parameter Name="J" Role="reaction rate" Unit="uM.s-1">((beta_A * mRNA_A_) - ((Kr * mRNA_A_) * A))</Parameter>
+          <Parameter Name="beta_A" Role="forward rate constant" Unit="s-1">50.0</Parameter>
+          <Parameter Name="Kr" Role="reverse rate constant" Unit="s-1.uM-1">0.0</Parameter>
+        </Kinetics>
+      </SimpleReaction>
+      <Diagram Name="Unnamed compartment" Structure="cell">
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="A" LocationX="121" LocationY="214" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="R" LocationX="329" LocationY="254" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="PrmA" LocationX="78" LocationY="91" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="PrmR" LocationX="108" LocationY="317" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="C" LocationX="362" LocationY="163" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="PrmA_bound" LocationX="203" LocationY="151" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="PrmR_bound" LocationX="224" LocationY="263" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="mRNA_A_" LocationX="273" LocationY="57" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="mRNA_R" LocationX="232" LocationY="360" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="full" SimpleReactionRef="PrmA_activation" LocationX="139" LocationY="154" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="full" SimpleReactionRef="PrmR_activation" LocationX="162" LocationY="261" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="full" SimpleReactionRef="A_trnscr" LocationX="155" LocationY="43" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="full" SimpleReactionRef="active_A_trnscr" LocationX="171" LocationY="101" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="full" SimpleReactionRef="R_trnsc" LocationX="159" LocationY="365" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="full" SimpleReactionRef="active_R_trnsc" LocationX="255" LocationY="303" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="full" SimpleReactionRef="R_trnsl" LocationX="305" LocationY="328" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="full" SimpleReactionRef="A_trnsl" LocationX="271" LocationY="150" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="full" SimpleReactionRef="AR_binding" LocationX="287" LocationY="204" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="full" SimpleReactionRef="C_decay" LocationX="366" LocationY="212" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="full" SimpleReactionRef="A_decay" LocationX="27" LocationY="241" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="full" SimpleReactionRef="mRNA_A_decay" LocationX="329" LocationY="51" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="full" SimpleReactionRef="mRNA_R_decay" LocationX="279" LocationY="405" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="full" SimpleReactionRef="R_decay" LocationX="391" LocationY="274" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="A" LocationX="121" LocationY="214" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="R" LocationX="329" LocationY="254" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="PrmA" LocationX="78" LocationY="91" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="PrmR" LocationX="108" LocationY="317" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="C" LocationX="362" LocationY="163" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="PrmA_bound" LocationX="203" LocationY="151" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="PrmR_bound" LocationX="224" LocationY="263" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="mRNA_A_" LocationX="273" LocationY="57" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="mRNA_R" LocationX="232" LocationY="360" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="molecule" SimpleReactionRef="PrmA_activation" LocationX="139" LocationY="154" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="molecule" SimpleReactionRef="PrmR_activation" LocationX="162" LocationY="261" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="molecule" SimpleReactionRef="A_trnscr" LocationX="155" LocationY="43" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="molecule" SimpleReactionRef="active_A_trnscr" LocationX="171" LocationY="101" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="molecule" SimpleReactionRef="R_trnsc" LocationX="159" LocationY="365" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="molecule" SimpleReactionRef="active_R_trnsc" LocationX="255" LocationY="303" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="molecule" SimpleReactionRef="R_trnsl" LocationX="305" LocationY="328" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="molecule" SimpleReactionRef="A_trnsl" LocationX="271" LocationY="150" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="molecule" SimpleReactionRef="AR_binding" LocationX="287" LocationY="204" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="molecule" SimpleReactionRef="C_decay" LocationX="366" LocationY="212" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="molecule" SimpleReactionRef="A_decay" LocationX="27" LocationY="241" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="molecule" SimpleReactionRef="mRNA_A_decay" LocationX="329" LocationY="51" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="molecule" SimpleReactionRef="mRNA_R_decay" LocationX="279" LocationY="405" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="molecule" SimpleReactionRef="R_decay" LocationX="391" LocationY="274" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="A" LocationX="121" LocationY="214" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="R" LocationX="329" LocationY="254" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="PrmA" LocationX="78" LocationY="91" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="PrmR" LocationX="108" LocationY="317" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="C" LocationX="362" LocationY="163" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="PrmA_bound" LocationX="203" LocationY="151" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="PrmR_bound" LocationX="224" LocationY="263" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="mRNA_A_" LocationX="273" LocationY="57" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="mRNA_R" LocationX="232" LocationY="360" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="rule" SimpleReactionRef="PrmA_activation" LocationX="139" LocationY="154" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="rule" SimpleReactionRef="PrmR_activation" LocationX="162" LocationY="261" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="rule" SimpleReactionRef="A_trnscr" LocationX="155" LocationY="43" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="rule" SimpleReactionRef="active_A_trnscr" LocationX="171" LocationY="101" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="rule" SimpleReactionRef="R_trnsc" LocationX="159" LocationY="365" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="rule" SimpleReactionRef="active_R_trnsc" LocationX="255" LocationY="303" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="rule" SimpleReactionRef="R_trnsl" LocationX="305" LocationY="328" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="rule" SimpleReactionRef="A_trnsl" LocationX="271" LocationY="150" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="rule" SimpleReactionRef="AR_binding" LocationX="287" LocationY="204" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="rule" SimpleReactionRef="C_decay" LocationX="366" LocationY="212" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="rule" SimpleReactionRef="A_decay" LocationX="27" LocationY="241" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="rule" SimpleReactionRef="mRNA_A_decay" LocationX="329" LocationY="51" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="rule" SimpleReactionRef="mRNA_R_decay" LocationX="279" LocationY="405" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="rule" SimpleReactionRef="R_decay" LocationX="391" LocationY="274" />
+      </Diagram>
+      <Version Name="unnamed" KeyValue="35924582" BranchId="35924583" Archived="0" Date="25-Sep-2009 05:47:27" FromVersionable="false">
+        <Owner Name="Education" Identifier="30625624" />
+        <GroupAccess Type="1" />
+        <Annotation>cloned from 'unnamed' owned by user boris</Annotation>
+      </Version>
+      <ModelUnitSystem VolumeSubstanceUnit="uM.um3" MembraneSubstanceUnit="molecules" LumpedReactionSubstanceUnit="molecules" VolumeUnit="um3" AreaUnit="um2" LengthUnit="um" TimeUnit="s" />
+    </Model>
+    <SimulationSpec Name="repressor_activator_oscillations" Stochastic="false" UseConcentration="true" RuleBased="false" MassConservationModelReduction="true" InsufficientIterations="false" InsufficientMaxMolecules="false">
+      <NetworkConstraints RbmMaxIteration="1" RbmMaxMoleculesPerSpecies="10" RbmSpeciesLimit="800" RbmReactionsLimit="2500" />
+      <Annotation>cloned from 'repressor_activator_oscillations' owned by user boris</Annotation>
+      <Geometry Name="non-spatial694733285" Dimension="0">
+        <Annotation>cloned from 'non-spatial694733285' owned by user boris</Annotation>
+        <Extent X="10.0" Y="10.0" Z="10.0" />
+        <Origin X="0.0" Y="0.0" Z="0.0" />
+        <SubVolume Name="Compartment" Handle="0" Type="Compartmental" KeyValue="35924562" />
+        <Version Name="non-spatial694733285" KeyValue="35924558" BranchId="35924559" Archived="0" Date="25-Sep-2009 05:47:27" FromVersionable="false">
+          <Owner Name="Education" Identifier="30625624" />
+          <GroupAccess Type="1" />
+          <Annotation>cloned from 'non-spatial694733285' owned by user boris</Annotation>
+        </Version>
+      </Geometry>
+      <GeometryContext>
+        <FeatureMapping Feature="cell" GeometryClass="Compartment" SubVolume="Compartment" Size="1.0">
+          <BoundariesTypes Xm="Flux" Xp="Flux" Ym="Flux" Yp="Flux" Zm="Flux" Zp="Flux" />
+        </FeatureMapping>
+      </GeometryContext>
+      <ReactionContext>
+        <LocalizedCompoundSpec LocalizedCompoundRef="A" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>0.0</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="R" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>0.0</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="PrmA" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>KMOLE</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="PrmR" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>KMOLE</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="C" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>0.0</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="PrmA_bound" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>0.0</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="PrmR_bound" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>0.0</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="mRNA_A_" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>0.0</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="mRNA_R" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>0.0</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <ReactionSpec ReactionStepRef="AR_binding" ReactionMapping="included" />
+        <ReactionSpec ReactionStepRef="C_decay" ReactionMapping="included" />
+        <ReactionSpec ReactionStepRef="A_decay" ReactionMapping="included" />
+        <ReactionSpec ReactionStepRef="mRNA_A_decay" ReactionMapping="included" />
+        <ReactionSpec ReactionStepRef="mRNA_R_decay" ReactionMapping="included" />
+        <ReactionSpec ReactionStepRef="R_decay" ReactionMapping="included" />
+        <ReactionSpec ReactionStepRef="PrmA_activation" ReactionMapping="included" />
+        <ReactionSpec ReactionStepRef="PrmR_activation" ReactionMapping="included" />
+        <ReactionSpec ReactionStepRef="A_trnscr" ReactionMapping="included" />
+        <ReactionSpec ReactionStepRef="active_A_trnscr" ReactionMapping="included" />
+        <ReactionSpec ReactionStepRef="R_trnsc" ReactionMapping="included" />
+        <ReactionSpec ReactionStepRef="active_R_trnsc" ReactionMapping="included" />
+        <ReactionSpec ReactionStepRef="R_trnsl" ReactionMapping="included" />
+        <ReactionSpec ReactionStepRef="A_trnsl" ReactionMapping="included" />
+      </ReactionContext>
+      <MathDescription Name="compartmental_deterministic_generated">
+        <Annotation>cloned from 'compartmental_deterministic_generated' owned by user boris</Annotation>
+        <Constant Name="_F_">96480.0</Constant>
+        <Constant Name="_F_nmol_">9.648E-5</Constant>
+        <Constant Name="_K_GHK_">1.0E-9</Constant>
+        <Constant Name="_N_pmol_">6.02E11</Constant>
+        <Constant Name="_PI_">3.141592653589793</Constant>
+        <Constant Name="_R_">8314.0</Constant>
+        <Constant Name="_T_">300.0</Constant>
+        <Constant Name="A_init_uM">0.0</Constant>
+        <Constant Name="alpha_A">50.0</Constant>
+        <Constant Name="alpha_A_prm">500.0</Constant>
+        <Constant Name="alpha_R">0.01</Constant>
+        <Constant Name="alpha_R_prm">50.0</Constant>
+        <Constant Name="beta_A">50.0</Constant>
+        <Constant Name="beta_R">5.0</Constant>
+        <Constant Name="C_init_uM">0.0</Constant>
+        <Constant Name="common_delta_A">1.0</Constant>
+        <Constant Name="delta_MA">10.0</Constant>
+        <Constant Name="delta_MR">0.5</Constant>
+        <Constant Name="delta_R">0.2</Constant>
+        <Constant Name="K_millivolts_per_volt">1000.0</Constant>
+        <Constant Name="KMOLE">0.0016611295681063123</Constant>
+        <Constant Name="Kr_A_decay">0.0</Constant>
+        <Constant Name="Kr_A_trnscr">0.0</Constant>
+        <Constant Name="Kr_A_trnsl">0.0</Constant>
+        <Constant Name="Kr_active_A_trnscr">0.0</Constant>
+        <Constant Name="Kr_active_R_trnsc">0.0</Constant>
+        <Constant Name="Kr_AR_binding">0.0</Constant>
+        <Constant Name="Kr_C_decay">0.0</Constant>
+        <Constant Name="Kr_mRNA_A_decay">0.0</Constant>
+        <Constant Name="Kr_mRNA_R_decay">0.0</Constant>
+        <Constant Name="Kr_R_decay">0.0</Constant>
+        <Constant Name="Kr_R_trnsc">0.0</Constant>
+        <Constant Name="Kr_R_trnsl">0.0</Constant>
+        <Constant Name="mRNA_A__init_uM">0.0</Constant>
+        <Constant Name="mRNA_R_init_uM">0.0</Constant>
+        <Constant Name="PrmA_bound_init_uM">0.0</Constant>
+        <Constant Name="PrmR_bound_init_uM">0.0</Constant>
+        <Constant Name="R_init_uM">0.0</Constant>
+        <Constant Name="Size_cell">1.0</Constant>
+        <Constant Name="theta_A">50.0</Constant>
+        <Constant Name="theta_R">100.0</Constant>
+        <VolumeVariable Name="A" Domain="Compartment" />
+        <VolumeVariable Name="C" Domain="Compartment" />
+        <VolumeVariable Name="mRNA_A_" Domain="Compartment" />
+        <VolumeVariable Name="mRNA_R" Domain="Compartment" />
+        <VolumeVariable Name="PrmA_bound" Domain="Compartment" />
+        <VolumeVariable Name="PrmR_bound" Domain="Compartment" />
+        <VolumeVariable Name="R" Domain="Compartment" />
+        <Function Name="delta_A_A_decay" Domain="Compartment">common_delta_A</Function>
+        <Function Name="delta_A_C_decay" Domain="Compartment">common_delta_A</Function>
+        <Function Name="gamma_A" Domain="Compartment">(1.0 / KMOLE)</Function>
+        <Function Name="gamma_C" Domain="Compartment">(2.0 / KMOLE)</Function>
+        <Function Name="gamma_R" Domain="Compartment">(1.0 / KMOLE)</Function>
+        <Function Name="J_A_decay" Domain="Compartment">(delta_A_A_decay * A)</Function>
+        <Function Name="J_A_trnscr" Domain="Compartment">((alpha_A * PrmA) - (mRNA_A_ * Kr_A_trnscr * PrmA))</Function>
+        <Function Name="J_A_trnsl" Domain="Compartment">((beta_A * mRNA_A_) - (A * Kr_A_trnsl * mRNA_A_))</Function>
+        <Function Name="J_active_A_trnscr" Domain="Compartment">((alpha_A_prm * PrmA_bound) - (mRNA_A_ * Kr_active_A_trnscr * PrmA_bound))</Function>
+        <Function Name="J_active_R_trnsc" Domain="Compartment">((alpha_R_prm * PrmR_bound) - (mRNA_R * Kr_active_R_trnsc * PrmR_bound))</Function>
+        <Function Name="J_AR_binding" Domain="Compartment">((R * gamma_C * A) - (Kr_AR_binding * C))</Function>
+        <Function Name="J_C_decay" Domain="Compartment">((delta_A_C_decay * C) - (Kr_C_decay * R))</Function>
+        <Function Name="J_mRNA_A_decay" Domain="Compartment">(delta_MA * mRNA_A_)</Function>
+        <Function Name="J_mRNA_R_decay" Domain="Compartment">(delta_MR * mRNA_R)</Function>
+        <Function Name="J_PrmA_activation" Domain="Compartment">((A * gamma_A * PrmA) - (theta_A * PrmA_bound))</Function>
+        <Function Name="J_PrmR_activation" Domain="Compartment">((A * gamma_R * PrmR) - (theta_R * PrmR_bound))</Function>
+        <Function Name="J_R_decay" Domain="Compartment">(delta_R * R)</Function>
+        <Function Name="J_R_trnsc" Domain="Compartment">((alpha_R * PrmR) - (mRNA_R * Kr_R_trnsc * PrmR))</Function>
+        <Function Name="J_R_trnsl" Domain="Compartment">((beta_R * mRNA_R) - (R * Kr_R_trnsl * mRNA_R))</Function>
+        <Function Name="K_PrmA_total" Domain="Compartment">((Size_cell * PrmA_init_uM) + (Size_cell * PrmA_bound_init_uM))</Function>
+        <Function Name="K_PrmR_total" Domain="Compartment">((Size_cell * PrmR_init_uM) + (Size_cell * PrmR_bound_init_uM))</Function>
+        <Function Name="PrmA" Domain="Compartment">((K_PrmA_total - (Size_cell * PrmA_bound)) / Size_cell)</Function>
+        <Function Name="PrmA_init_uM" Domain="Compartment">KMOLE</Function>
+        <Function Name="PrmR" Domain="Compartment">((K_PrmR_total - (Size_cell * PrmR_bound)) / Size_cell)</Function>
+        <Function Name="PrmR_init_uM" Domain="Compartment">KMOLE</Function>
+        <CompartmentSubDomain Name="Compartment">
+          <BoundaryType Boundary="Xm" Type="Value" />
+          <BoundaryType Boundary="Xp" Type="Value" />
+          <BoundaryType Boundary="Ym" Type="Value" />
+          <BoundaryType Boundary="Yp" Type="Value" />
+          <BoundaryType Boundary="Zm" Type="Value" />
+          <BoundaryType Boundary="Zp" Type="Value" />
+          <OdeEquation Name="A" SolutionType="Unknown">
+            <Rate>(J_A_trnsl - J_PrmR_activation - J_PrmA_activation - J_AR_binding - J_A_decay)</Rate>
+            <Initial>A_init_uM</Initial>
+          </OdeEquation>
+          <OdeEquation Name="R" SolutionType="Unknown">
+            <Rate>(J_R_trnsl - J_R_decay - J_AR_binding + J_C_decay)</Rate>
+            <Initial>R_init_uM</Initial>
+          </OdeEquation>
+          <OdeEquation Name="C" SolutionType="Unknown">
+            <Rate>(J_AR_binding - J_C_decay)</Rate>
+            <Initial>C_init_uM</Initial>
+          </OdeEquation>
+          <OdeEquation Name="PrmA_bound" SolutionType="Unknown">
+            <Rate>J_PrmA_activation</Rate>
+            <Initial>PrmA_bound_init_uM</Initial>
+          </OdeEquation>
+          <OdeEquation Name="PrmR_bound" SolutionType="Unknown">
+            <Rate>J_PrmR_activation</Rate>
+            <Initial>PrmR_bound_init_uM</Initial>
+          </OdeEquation>
+          <OdeEquation Name="mRNA_A_" SolutionType="Unknown">
+            <Rate>(J_active_A_trnscr - J_mRNA_A_decay + J_A_trnscr)</Rate>
+            <Initial>mRNA_A__init_uM</Initial>
+          </OdeEquation>
+          <OdeEquation Name="mRNA_R" SolutionType="Unknown">
+            <Rate>(J_active_R_trnsc - J_mRNA_R_decay + J_R_trnsc)</Rate>
+            <Initial>mRNA_R_init_uM</Initial>
+          </OdeEquation>
+        </CompartmentSubDomain>
+        <Version Name="compartmental_deterministic_generated" KeyValue="84982666" BranchId="35924574" Archived="0" Date="02-Nov-2013 13:17:40" FromVersionable="false">
+          <Owner Name="Education" Identifier="30625624" />
+          <GroupAccess Type="1" />
+          <Annotation>cloned from 'compartmental_deterministic_generated' owned by user boris</Annotation>
+        </Version>
+      </MathDescription>
+      <Simulation Name="Simulation0">
+        <Annotation>cloned from 'Simulation0' owned by user boris</Annotation>
+        <SolverTaskDescription TaskType="Unsteady" UseSymbolicJacobian="false" Solver="Combined Stiff Solver (IDA/CVODE)">
+          <TimeBound StartTime="0.0" EndTime="400.0" />
+          <TimeStep DefaultTime="0.1" MinTime="1.0E-8" MaxTime="1.0" />
+          <ErrorTolerance Absolut="1.0E-9" Relative="1.0E-9" />
+          <OutputOptions KeepEvery="1" KeepAtMost="1000" />
+          <NumberProcessors>1</NumberProcessors>
+        </SolverTaskDescription>
+        <MathOverrides />
+        <Version Name="Simulation0" KeyValue="84982722" BranchId="35924736" Archived="0" Date="02-Nov-2013 13:17:40" FromVersionable="false">
+          <Owner Name="Education" Identifier="30625624" />
+          <GroupAccess Type="1" />
+          <Annotation>cloned from 'Simulation0' owned by user boris</Annotation>
+          <ParentSimRef KeyValue="57205702" />
+        </Version>
+      </Simulation>
+      <Simulation Name="Copy of Simulation0">
+        <Annotation>cloned from 'Copy of Simulation0' owned by user boris</Annotation>
+        <SolverTaskDescription TaskType="Unsteady" UseSymbolicJacobian="false" Solver="Combined Stiff Solver (IDA/CVODE)">
+          <TimeBound StartTime="0.0" EndTime="400.0" />
+          <TimeStep DefaultTime="0.1" MinTime="1.0E-8" MaxTime="1.0" />
+          <ErrorTolerance Absolut="1.0E-9" Relative="1.0E-9" />
+          <OutputOptions KeepEvery="1" KeepAtMost="1000" />
+          <NumberProcessors>1</NumberProcessors>
+        </SolverTaskDescription>
+        <MathOverrides>
+          <Constant Name="delta_R">0.05</Constant>
+        </MathOverrides>
+        <Version Name="Copy of Simulation0" KeyValue="84982724" BranchId="35924739" Archived="0" Date="02-Nov-2013 13:17:40" FromVersionable="false">
+          <Owner Name="Education" Identifier="30625624" />
+          <GroupAccess Type="1" />
+          <Annotation>cloned from 'Copy of Simulation0' owned by user boris</Annotation>
+        </Version>
+      </Simulation>
+      <Version Name="repressor_activator_oscillations" KeyValue="84982670" BranchId="35924655" Archived="0" Date="02-Nov-2013 13:17:40" FromVersionable="false">
+        <Owner Name="Education" Identifier="30625624" />
+        <GroupAccess Type="1" />
+        <Annotation>cloned from 'repressor_activator_oscillations' owned by user boris</Annotation>
+      </Version>
+      <MicroscopeMeasurement Name="fluor">
+        <ConvolutionKernel Type="ProjectionZKernel" />
+      </MicroscopeMeasurement>
+    </SimulationSpec>
+    <SimulationSpec Name="stochastic_oscillations" Stochastic="true" UseConcentration="false" RandomizeInitCondition="false" RuleBased="false" MassConservationModelReduction="true" InsufficientIterations="false" InsufficientMaxMolecules="false">
+      <NetworkConstraints RbmMaxIteration="1" RbmMaxMoleculesPerSpecies="10" RbmSpeciesLimit="800" RbmReactionsLimit="2500" />
+      <Annotation>cloned from 'stochastic_oscillations' owned by user boris
+(copied from compartmental_deterministic)</Annotation>
+      <Geometry Name="non-spatial1325265715" Dimension="0">
+        <Annotation>cloned from 'non-spatial694733285' owned by user boris</Annotation>
+        <Extent X="10.0" Y="10.0" Z="10.0" />
+        <Origin X="0.0" Y="0.0" Z="0.0" />
+        <SubVolume Name="Compartment" Handle="0" Type="Compartmental" KeyValue="35924567" />
+        <Version Name="non-spatial1325265715" KeyValue="35924563" BranchId="35924564" Archived="0" Date="25-Sep-2009 05:47:27" FromVersionable="false">
+          <Owner Name="Education" Identifier="30625624" />
+          <GroupAccess Type="1" />
+          <Annotation>cloned from 'non-spatial694733285' owned by user boris</Annotation>
+        </Version>
+      </Geometry>
+      <GeometryContext>
+        <FeatureMapping Feature="cell" GeometryClass="Compartment" SubVolume="Compartment" Size="1.0">
+          <BoundariesTypes Xm="Flux" Xp="Flux" Ym="Flux" Yp="Flux" Zm="Flux" Zp="Flux" />
+        </FeatureMapping>
+      </GeometryContext>
+      <ReactionContext>
+        <LocalizedCompoundSpec LocalizedCompoundRef="A" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialCount>0.0</InitialCount>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="R" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialCount>0.0</InitialCount>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="PrmA" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialCount>(602.0 * KMOLE)</InitialCount>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="PrmR" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialCount>(602.0 * KMOLE)</InitialCount>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="C" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialCount>0.0</InitialCount>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="PrmA_bound" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialCount>0.0</InitialCount>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="PrmR_bound" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialCount>0.0</InitialCount>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="mRNA_A_" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialCount>0.0</InitialCount>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="mRNA_R" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialCount>0.0</InitialCount>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <ReactionSpec ReactionStepRef="AR_binding" ReactionMapping="included" />
+        <ReactionSpec ReactionStepRef="C_decay" ReactionMapping="included" />
+        <ReactionSpec ReactionStepRef="A_decay" ReactionMapping="included" />
+        <ReactionSpec ReactionStepRef="mRNA_A_decay" ReactionMapping="included" />
+        <ReactionSpec ReactionStepRef="mRNA_R_decay" ReactionMapping="included" />
+        <ReactionSpec ReactionStepRef="R_decay" ReactionMapping="included" />
+        <ReactionSpec ReactionStepRef="PrmA_activation" ReactionMapping="included" />
+        <ReactionSpec ReactionStepRef="PrmR_activation" ReactionMapping="included" />
+        <ReactionSpec ReactionStepRef="A_trnscr" ReactionMapping="included" />
+        <ReactionSpec ReactionStepRef="active_A_trnscr" ReactionMapping="included" />
+        <ReactionSpec ReactionStepRef="R_trnsc" ReactionMapping="included" />
+        <ReactionSpec ReactionStepRef="active_R_trnsc" ReactionMapping="included" />
+        <ReactionSpec ReactionStepRef="R_trnsl" ReactionMapping="included" />
+        <ReactionSpec ReactionStepRef="A_trnsl" ReactionMapping="included" />
+      </ReactionContext>
+      <MathDescription Name="compartmental_stochastic_generated">
+        <Annotation>cloned from 'compartmental_stochastic_generated' owned by user boris</Annotation>
+        <Constant Name="_F_">96480.0</Constant>
+        <Constant Name="_F_nmol_">9.648E-5</Constant>
+        <Constant Name="_N_pmol_">6.02E11</Constant>
+        <Constant Name="_PI_">3.141592653589793</Constant>
+        <Constant Name="_R_">8314.0</Constant>
+        <Constant Name="_T_">300.0</Constant>
+        <Constant Name="A_initCount">0.0</Constant>
+        <Constant Name="alpha_A">50.0</Constant>
+        <Constant Name="alpha_A_prm">500.0</Constant>
+        <Constant Name="alpha_R">0.01</Constant>
+        <Constant Name="alpha_R_prm">50.0</Constant>
+        <Constant Name="beta_A">50.0</Constant>
+        <Constant Name="beta_R">5.0</Constant>
+        <Constant Name="C_initCount">0.0</Constant>
+        <Constant Name="common_delta_A">1.0</Constant>
+        <Constant Name="delta_MA">10.0</Constant>
+        <Constant Name="delta_MR">0.5</Constant>
+        <Constant Name="delta_R">0.2</Constant>
+        <Constant Name="KMOLE">0.0016611295681063123</Constant>
+        <Constant Name="Kr_A_decay">0.0</Constant>
+        <Constant Name="Kr_A_trnscr">0.0</Constant>
+        <Constant Name="Kr_A_trnsl">0.0</Constant>
+        <Constant Name="Kr_active_A_trnscr">0.0</Constant>
+        <Constant Name="Kr_active_R_trnsc">0.0</Constant>
+        <Constant Name="Kr_AR_binding">0.0</Constant>
+        <Constant Name="Kr_C_decay">0.0</Constant>
+        <Constant Name="Kr_mRNA_A_decay">0.0</Constant>
+        <Constant Name="Kr_mRNA_R_decay">0.0</Constant>
+        <Constant Name="Kr_R_decay">0.0</Constant>
+        <Constant Name="Kr_R_trnsc">0.0</Constant>
+        <Constant Name="Kr_R_trnsl">0.0</Constant>
+        <Constant Name="mRNA_A__initCount">0.0</Constant>
+        <Constant Name="mRNA_R_initCount">0.0</Constant>
+        <Constant Name="PrmA_bound_initCount">0.0</Constant>
+        <Constant Name="PrmR_bound_initCount">0.0</Constant>
+        <Constant Name="R_initCount">0.0</Constant>
+        <Constant Name="Size_cell">1.0</Constant>
+        <Constant Name="theta_A">50.0</Constant>
+        <Constant Name="theta_R">100.0</Constant>
+        <StochasticVolumeVariable Name="A" />
+        <StochasticVolumeVariable Name="C" />
+        <StochasticVolumeVariable Name="mRNA_A_" />
+        <StochasticVolumeVariable Name="mRNA_R" />
+        <StochasticVolumeVariable Name="PrmA" />
+        <StochasticVolumeVariable Name="PrmA_bound" />
+        <StochasticVolumeVariable Name="PrmR" />
+        <StochasticVolumeVariable Name="PrmR_bound" />
+        <StochasticVolumeVariable Name="R" />
+        <Function Name="A_Conc" Domain="Compartment">(A * KMOLE / Size_cell)</Function>
+        <Function Name="C_Conc" Domain="Compartment">(C * KMOLE / Size_cell)</Function>
+        <Function Name="delta_A_A_decay" Domain="Compartment">common_delta_A</Function>
+        <Function Name="delta_A_C_decay" Domain="Compartment">common_delta_A</Function>
+        <Function Name="gamma_A" Domain="Compartment">(1.0 / KMOLE)</Function>
+        <Function Name="gamma_C" Domain="Compartment">(2.0 / KMOLE)</Function>
+        <Function Name="gamma_R" Domain="Compartment">(1.0 / KMOLE)</Function>
+        <Function Name="mRNA_A__Conc" Domain="Compartment">(mRNA_A_ * KMOLE / Size_cell)</Function>
+        <Function Name="mRNA_R_Conc" Domain="Compartment">(mRNA_R * KMOLE / Size_cell)</Function>
+        <Function Name="P_A_decay" Domain="Compartment">(common_delta_A * A)</Function>
+        <Function Name="P_A_trnscr" Domain="Compartment">(alpha_A * PrmA)</Function>
+        <Function Name="P_A_trnscr_reverse" Domain="Compartment">(Kr_A_trnscr * PrmA * mRNA_A_ * KMOLE / Size_cell)</Function>
+        <Function Name="P_A_trnsl" Domain="Compartment">(beta_A * mRNA_A_)</Function>
+        <Function Name="P_A_trnsl_reverse" Domain="Compartment">(Kr_A_trnsl * mRNA_A_ * A * KMOLE / Size_cell)</Function>
+        <Function Name="P_active_A_trnscr" Domain="Compartment">(alpha_A_prm * PrmA_bound)</Function>
+        <Function Name="P_active_A_trnscr_reverse" Domain="Compartment">(Kr_active_A_trnscr * PrmA_bound * mRNA_A_ * KMOLE / Size_cell)</Function>
+        <Function Name="P_active_R_trnsc" Domain="Compartment">(alpha_R_prm * PrmR_bound)</Function>
+        <Function Name="P_active_R_trnsc_reverse" Domain="Compartment">(Kr_active_R_trnsc * PrmR_bound * mRNA_R * KMOLE / Size_cell)</Function>
+        <Function Name="P_AR_binding" Domain="Compartment">(2.0 * A * R * KMOLE / KMOLE / Size_cell)</Function>
+        <Function Name="P_AR_binding_reverse" Domain="Compartment">(Kr_AR_binding * C)</Function>
+        <Function Name="P_C_decay" Domain="Compartment">(common_delta_A * C)</Function>
+        <Function Name="P_C_decay_reverse" Domain="Compartment">(Kr_C_decay * R)</Function>
+        <Function Name="P_mRNA_A_decay" Domain="Compartment">(delta_MA * mRNA_A_)</Function>
+        <Function Name="P_mRNA_R_decay" Domain="Compartment">(delta_MR * mRNA_R)</Function>
+        <Function Name="P_PrmA_activation" Domain="Compartment">(PrmA * A * KMOLE / KMOLE / Size_cell)</Function>
+        <Function Name="P_PrmA_activation_reverse" Domain="Compartment">(theta_A * PrmA_bound)</Function>
+        <Function Name="P_PrmR_activation" Domain="Compartment">(PrmR * A * KMOLE / KMOLE / Size_cell)</Function>
+        <Function Name="P_PrmR_activation_reverse" Domain="Compartment">(theta_R * PrmR_bound)</Function>
+        <Function Name="P_R_decay" Domain="Compartment">(delta_R * R)</Function>
+        <Function Name="P_R_trnsc" Domain="Compartment">(alpha_R * PrmR)</Function>
+        <Function Name="P_R_trnsc_reverse" Domain="Compartment">(Kr_R_trnsc * PrmR * mRNA_R * KMOLE / Size_cell)</Function>
+        <Function Name="P_R_trnsl" Domain="Compartment">(beta_R * mRNA_R)</Function>
+        <Function Name="P_R_trnsl_reverse" Domain="Compartment">(Kr_R_trnsl * mRNA_R * R * KMOLE / Size_cell)</Function>
+        <Function Name="PrmA_bound_Conc" Domain="Compartment">(PrmA_bound * KMOLE / Size_cell)</Function>
+        <Function Name="PrmA_Conc" Domain="Compartment">(PrmA * KMOLE / Size_cell)</Function>
+        <Function Name="PrmA_initCount" Domain="Compartment">(602.0 * KMOLE)</Function>
+        <Function Name="PrmR_bound_Conc" Domain="Compartment">(PrmR_bound * KMOLE / Size_cell)</Function>
+        <Function Name="PrmR_Conc" Domain="Compartment">(PrmR * KMOLE / Size_cell)</Function>
+        <Function Name="PrmR_initCount" Domain="Compartment">(602.0 * KMOLE)</Function>
+        <Function Name="R_Conc" Domain="Compartment">(R * KMOLE / Size_cell)</Function>
+        <CompartmentSubDomain Name="Compartment">
+          <BoundaryType Boundary="Xm" Type="Value" />
+          <BoundaryType Boundary="Xp" Type="Value" />
+          <BoundaryType Boundary="Ym" Type="Value" />
+          <BoundaryType Boundary="Yp" Type="Value" />
+          <BoundaryType Boundary="Zm" Type="Value" />
+          <BoundaryType Boundary="Zp" Type="Value" />
+          <VariableInitialCount Name="A">A_initCount</VariableInitialCount>
+          <VariableInitialCount Name="R">R_initCount</VariableInitialCount>
+          <VariableInitialCount Name="PrmA">PrmA_initCount</VariableInitialCount>
+          <VariableInitialCount Name="PrmR">PrmR_initCount</VariableInitialCount>
+          <VariableInitialCount Name="C">C_initCount</VariableInitialCount>
+          <VariableInitialCount Name="PrmA_bound">PrmA_bound_initCount</VariableInitialCount>
+          <VariableInitialCount Name="PrmR_bound">PrmR_bound_initCount</VariableInitialCount>
+          <VariableInitialCount Name="mRNA_A_">mRNA_A__initCount</VariableInitialCount>
+          <VariableInitialCount Name="mRNA_R">mRNA_R_initCount</VariableInitialCount>
+          <JumpProcess Name="AR_binding">
+            <ProbabilityRate>P_AR_binding</ProbabilityRate>
+            <Effect VarName="A" Operation="inc">-1.0</Effect>
+            <Effect VarName="R" Operation="inc">-1.0</Effect>
+            <Effect VarName="C" Operation="inc">1.0</Effect>
+          </JumpProcess>
+          <JumpProcess Name="AR_binding_reverse">
+            <ProbabilityRate>P_AR_binding_reverse</ProbabilityRate>
+            <Effect VarName="A" Operation="inc">1.0</Effect>
+            <Effect VarName="R" Operation="inc">1.0</Effect>
+            <Effect VarName="C" Operation="inc">-1.0</Effect>
+          </JumpProcess>
+          <JumpProcess Name="C_decay">
+            <ProbabilityRate>P_C_decay</ProbabilityRate>
+            <Effect VarName="C" Operation="inc">-1.0</Effect>
+            <Effect VarName="R" Operation="inc">1.0</Effect>
+          </JumpProcess>
+          <JumpProcess Name="C_decay_reverse">
+            <ProbabilityRate>P_C_decay_reverse</ProbabilityRate>
+            <Effect VarName="C" Operation="inc">1.0</Effect>
+            <Effect VarName="R" Operation="inc">-1.0</Effect>
+          </JumpProcess>
+          <JumpProcess Name="A_decay">
+            <ProbabilityRate>P_A_decay</ProbabilityRate>
+            <Effect VarName="A" Operation="inc">-1.0</Effect>
+          </JumpProcess>
+          <JumpProcess Name="mRNA_A_decay">
+            <ProbabilityRate>P_mRNA_A_decay</ProbabilityRate>
+            <Effect VarName="mRNA_A_" Operation="inc">-1.0</Effect>
+          </JumpProcess>
+          <JumpProcess Name="mRNA_R_decay">
+            <ProbabilityRate>P_mRNA_R_decay</ProbabilityRate>
+            <Effect VarName="mRNA_R" Operation="inc">-1.0</Effect>
+          </JumpProcess>
+          <JumpProcess Name="R_decay">
+            <ProbabilityRate>P_R_decay</ProbabilityRate>
+            <Effect VarName="R" Operation="inc">-1.0</Effect>
+          </JumpProcess>
+          <JumpProcess Name="PrmA_activation">
+            <ProbabilityRate>P_PrmA_activation</ProbabilityRate>
+            <Effect VarName="PrmA" Operation="inc">-1.0</Effect>
+            <Effect VarName="A" Operation="inc">-1.0</Effect>
+            <Effect VarName="PrmA_bound" Operation="inc">1.0</Effect>
+          </JumpProcess>
+          <JumpProcess Name="PrmA_activation_reverse">
+            <ProbabilityRate>P_PrmA_activation_reverse</ProbabilityRate>
+            <Effect VarName="PrmA" Operation="inc">1.0</Effect>
+            <Effect VarName="A" Operation="inc">1.0</Effect>
+            <Effect VarName="PrmA_bound" Operation="inc">-1.0</Effect>
+          </JumpProcess>
+          <JumpProcess Name="PrmR_activation">
+            <ProbabilityRate>P_PrmR_activation</ProbabilityRate>
+            <Effect VarName="PrmR" Operation="inc">-1.0</Effect>
+            <Effect VarName="A" Operation="inc">-1.0</Effect>
+            <Effect VarName="PrmR_bound" Operation="inc">1.0</Effect>
+          </JumpProcess>
+          <JumpProcess Name="PrmR_activation_reverse">
+            <ProbabilityRate>P_PrmR_activation_reverse</ProbabilityRate>
+            <Effect VarName="PrmR" Operation="inc">1.0</Effect>
+            <Effect VarName="A" Operation="inc">1.0</Effect>
+            <Effect VarName="PrmR_bound" Operation="inc">-1.0</Effect>
+          </JumpProcess>
+          <JumpProcess Name="A_trnscr">
+            <ProbabilityRate>P_A_trnscr</ProbabilityRate>
+            <Effect VarName="PrmA" Operation="inc">0.0</Effect>
+            <Effect VarName="mRNA_A_" Operation="inc">1.0</Effect>
+          </JumpProcess>
+          <JumpProcess Name="A_trnscr_reverse">
+            <ProbabilityRate>P_A_trnscr_reverse</ProbabilityRate>
+            <Effect VarName="PrmA" Operation="inc">0.0</Effect>
+            <Effect VarName="mRNA_A_" Operation="inc">-1.0</Effect>
+          </JumpProcess>
+          <JumpProcess Name="active_A_trnscr">
+            <ProbabilityRate>P_active_A_trnscr</ProbabilityRate>
+            <Effect VarName="PrmA_bound" Operation="inc">0.0</Effect>
+            <Effect VarName="mRNA_A_" Operation="inc">1.0</Effect>
+          </JumpProcess>
+          <JumpProcess Name="active_A_trnscr_reverse">
+            <ProbabilityRate>P_active_A_trnscr_reverse</ProbabilityRate>
+            <Effect VarName="PrmA_bound" Operation="inc">0.0</Effect>
+            <Effect VarName="mRNA_A_" Operation="inc">-1.0</Effect>
+          </JumpProcess>
+          <JumpProcess Name="R_trnsc">
+            <ProbabilityRate>P_R_trnsc</ProbabilityRate>
+            <Effect VarName="PrmR" Operation="inc">0.0</Effect>
+            <Effect VarName="mRNA_R" Operation="inc">1.0</Effect>
+          </JumpProcess>
+          <JumpProcess Name="R_trnsc_reverse">
+            <ProbabilityRate>P_R_trnsc_reverse</ProbabilityRate>
+            <Effect VarName="PrmR" Operation="inc">0.0</Effect>
+            <Effect VarName="mRNA_R" Operation="inc">-1.0</Effect>
+          </JumpProcess>
+          <JumpProcess Name="active_R_trnsc">
+            <ProbabilityRate>P_active_R_trnsc</ProbabilityRate>
+            <Effect VarName="PrmR_bound" Operation="inc">0.0</Effect>
+            <Effect VarName="mRNA_R" Operation="inc">1.0</Effect>
+          </JumpProcess>
+          <JumpProcess Name="active_R_trnsc_reverse">
+            <ProbabilityRate>P_active_R_trnsc_reverse</ProbabilityRate>
+            <Effect VarName="PrmR_bound" Operation="inc">0.0</Effect>
+            <Effect VarName="mRNA_R" Operation="inc">-1.0</Effect>
+          </JumpProcess>
+          <JumpProcess Name="R_trnsl">
+            <ProbabilityRate>P_R_trnsl</ProbabilityRate>
+            <Effect VarName="mRNA_R" Operation="inc">0.0</Effect>
+            <Effect VarName="R" Operation="inc">1.0</Effect>
+          </JumpProcess>
+          <JumpProcess Name="R_trnsl_reverse">
+            <ProbabilityRate>P_R_trnsl_reverse</ProbabilityRate>
+            <Effect VarName="mRNA_R" Operation="inc">0.0</Effect>
+            <Effect VarName="R" Operation="inc">-1.0</Effect>
+          </JumpProcess>
+          <JumpProcess Name="A_trnsl">
+            <ProbabilityRate>P_A_trnsl</ProbabilityRate>
+            <Effect VarName="mRNA_A_" Operation="inc">0.0</Effect>
+            <Effect VarName="A" Operation="inc">1.0</Effect>
+          </JumpProcess>
+          <JumpProcess Name="A_trnsl_reverse">
+            <ProbabilityRate>P_A_trnsl_reverse</ProbabilityRate>
+            <Effect VarName="mRNA_A_" Operation="inc">0.0</Effect>
+            <Effect VarName="A" Operation="inc">-1.0</Effect>
+          </JumpProcess>
+        </CompartmentSubDomain>
+        <Version Name="compartmental_stochastic_generated" KeyValue="84982558" BranchId="35924577" Archived="0" Date="02-Nov-2013 13:17:06" FromVersionable="false">
+          <Owner Name="Education" Identifier="30625624" />
+          <GroupAccess Type="1" />
+          <Annotation>cloned from 'compartmental_stochastic_generated' owned by user boris</Annotation>
+        </Version>
+      </MathDescription>
+      <Simulation Name="Simulation1">
+        <Annotation>cloned from 'Simulation1' owned by user boris</Annotation>
+        <SolverTaskDescription TaskType="Unsteady" UseSymbolicJacobian="false" Solver="Gibson (Next Reaction Stochastic Method)">
+          <TimeBound StartTime="0.0" EndTime="400.0" />
+          <TimeStep DefaultTime="0.1" MinTime="1.0E-8" MaxTime="1.0" />
+          <ErrorTolerance Absolut="1.0E-9" Relative="1.0E-9" />
+          <StochSimOptions UseCustomSeed="false" NumberOfTrial="1" Histogram="false" />
+          <OutputOptions KeepEvery="500" KeepAtMost="1000" />
+          <NumberProcessors>1</NumberProcessors>
+        </SolverTaskDescription>
+        <MathOverrides />
+        <Version Name="Simulation1" KeyValue="84982644" BranchId="35924742" Archived="0" Date="02-Nov-2013 13:17:07" FromVersionable="false">
+          <Owner Name="Education" Identifier="30625624" />
+          <GroupAccess Type="1" />
+          <Annotation>cloned from 'Simulation1' owned by user boris</Annotation>
+        </Version>
+      </Simulation>
+      <Simulation Name="Copy of Simulation1">
+        <Annotation>cloned from 'Copy of Simulation1' owned by user boris</Annotation>
+        <SolverTaskDescription TaskType="Unsteady" UseSymbolicJacobian="false" Solver="Gibson (Next Reaction Stochastic Method)">
+          <TimeBound StartTime="0.0" EndTime="500.0" />
+          <TimeStep DefaultTime="0.1" MinTime="1.0E-8" MaxTime="1.0" />
+          <ErrorTolerance Absolut="1.0E-9" Relative="1.0E-9" />
+          <StochSimOptions UseCustomSeed="false" NumberOfTrial="1" Histogram="false" />
+          <OutputOptions KeepEvery="100" KeepAtMost="1000" />
+          <NumberProcessors>1</NumberProcessors>
+        </SolverTaskDescription>
+        <MathOverrides>
+          <Constant Name="delta_R">0.05</Constant>
+        </MathOverrides>
+        <Version Name="Copy of Simulation1" KeyValue="84982646" BranchId="35924745" Archived="0" Date="02-Nov-2013 13:17:07" FromVersionable="false">
+          <Owner Name="Education" Identifier="30625624" />
+          <GroupAccess Type="1" />
+          <Annotation>cloned from 'Copy of Simulation1' owned by user boris</Annotation>
+        </Version>
+      </Simulation>
+      <Version Name="stochastic_oscillations" KeyValue="84982588" BranchId="35924682" Archived="0" Date="02-Nov-2013 13:17:07" FromVersionable="false">
+        <Owner Name="Education" Identifier="30625624" />
+        <GroupAccess Type="1" />
+        <Annotation>cloned from 'stochastic_oscillations' owned by user boris
+(copied from compartmental_deterministic)</Annotation>
+      </Version>
+      <MicroscopeMeasurement Name="fluor">
+        <ConvolutionKernel Type="ProjectionZKernel" />
+      </MicroscopeMeasurement>
+    </SimulationSpec>
+    <SimulationSpec Name="quasi-steady-state_approximations" Stochastic="false" UseConcentration="true" RuleBased="false" MassConservationModelReduction="true" InsufficientIterations="false" InsufficientMaxMolecules="false">
+      <NetworkConstraints RbmMaxIteration="1" RbmMaxMoleculesPerSpecies="10" RbmSpeciesLimit="800" RbmReactionsLimit="2500" />
+      <Annotation>cloned from 'quasi-steady-state_approximations' owned by user boris
+(copied from compartmental_deterministic)</Annotation>
+      <Geometry Name="non-spatial1020336358" Dimension="0">
+        <Annotation>cloned from 'non-spatial694733285' owned by user boris</Annotation>
+        <Extent X="10.0" Y="10.0" Z="10.0" />
+        <Origin X="0.0" Y="0.0" Z="0.0" />
+        <SubVolume Name="Compartment" Handle="0" Type="Compartmental" KeyValue="35924572" />
+        <Version Name="non-spatial1020336358" KeyValue="35924568" BranchId="35924569" Archived="0" Date="25-Sep-2009 05:47:27" FromVersionable="false">
+          <Owner Name="Education" Identifier="30625624" />
+          <GroupAccess Type="1" />
+          <Annotation>cloned from 'non-spatial694733285' owned by user boris</Annotation>
+        </Version>
+      </Geometry>
+      <GeometryContext>
+        <FeatureMapping Feature="cell" GeometryClass="Compartment" SubVolume="Compartment" Size="1.0">
+          <BoundariesTypes Xm="Flux" Xp="Flux" Ym="Flux" Yp="Flux" Zm="Flux" Zp="Flux" />
+        </FeatureMapping>
+      </GeometryContext>
+      <ReactionContext>
+        <LocalizedCompoundSpec LocalizedCompoundRef="A" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>0.0</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="R" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>0.0</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="PrmA" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>KMOLE</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="PrmR" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>KMOLE</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="C" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>0.0</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="PrmA_bound" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>0.0</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="PrmR_bound" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>0.0</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="mRNA_A_" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>0.0</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="mRNA_R" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>0.0</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <ReactionSpec ReactionStepRef="AR_binding" ReactionMapping="included" />
+        <ReactionSpec ReactionStepRef="C_decay" ReactionMapping="included" />
+        <ReactionSpec ReactionStepRef="A_decay" ReactionMapping="included" />
+        <ReactionSpec ReactionStepRef="mRNA_A_decay" ReactionMapping="fast" />
+        <ReactionSpec ReactionStepRef="mRNA_R_decay" ReactionMapping="fast" />
+        <ReactionSpec ReactionStepRef="R_decay" ReactionMapping="included" />
+        <ReactionSpec ReactionStepRef="PrmA_activation" ReactionMapping="fast" />
+        <ReactionSpec ReactionStepRef="PrmR_activation" ReactionMapping="fast" />
+        <ReactionSpec ReactionStepRef="A_trnscr" ReactionMapping="fast" />
+        <ReactionSpec ReactionStepRef="active_A_trnscr" ReactionMapping="fast" />
+        <ReactionSpec ReactionStepRef="R_trnsc" ReactionMapping="fast" />
+        <ReactionSpec ReactionStepRef="active_R_trnsc" ReactionMapping="fast" />
+        <ReactionSpec ReactionStepRef="R_trnsl" ReactionMapping="included" />
+        <ReactionSpec ReactionStepRef="A_trnsl" ReactionMapping="included" />
+      </ReactionContext>
+      <MathDescription Name="qssa_generated">
+        <Annotation>cloned from 'qssa_generated' owned by user boris</Annotation>
+        <Constant Name="_F_">96480.0</Constant>
+        <Constant Name="_F_nmol_">9.648E-5</Constant>
+        <Constant Name="_K_GHK_">1.0E-9</Constant>
+        <Constant Name="_N_pmol_">6.02E11</Constant>
+        <Constant Name="_PI_">3.141592653589793</Constant>
+        <Constant Name="_R_">8314.0</Constant>
+        <Constant Name="_T_">300.0</Constant>
+        <Constant Name="A_init_uM">0.0</Constant>
+        <Constant Name="alpha_A">50.0</Constant>
+        <Constant Name="alpha_A_prm">500.0</Constant>
+        <Constant Name="alpha_R">0.01</Constant>
+        <Constant Name="alpha_R_prm">50.0</Constant>
+        <Constant Name="beta_A">50.0</Constant>
+        <Constant Name="beta_R">5.0</Constant>
+        <Constant Name="C_init_uM">0.0</Constant>
+        <Constant Name="common_delta_A">1.0</Constant>
+        <Constant Name="delta_MA">10.0</Constant>
+        <Constant Name="delta_MR">0.5</Constant>
+        <Constant Name="delta_R">0.2</Constant>
+        <Constant Name="K_millivolts_per_volt">1000.0</Constant>
+        <Constant Name="KMOLE">0.0016611295681063123</Constant>
+        <Constant Name="Kr_A_decay">0.0</Constant>
+        <Constant Name="Kr_A_trnscr">0.0</Constant>
+        <Constant Name="Kr_A_trnsl">0.0</Constant>
+        <Constant Name="Kr_active_A_trnscr">0.0</Constant>
+        <Constant Name="Kr_active_R_trnsc">0.0</Constant>
+        <Constant Name="Kr_AR_binding">0.0</Constant>
+        <Constant Name="Kr_C_decay">0.0</Constant>
+        <Constant Name="Kr_mRNA_A_decay">0.0</Constant>
+        <Constant Name="Kr_mRNA_R_decay">0.0</Constant>
+        <Constant Name="Kr_R_decay">0.0</Constant>
+        <Constant Name="Kr_R_trnsc">0.0</Constant>
+        <Constant Name="Kr_R_trnsl">0.0</Constant>
+        <Constant Name="mRNA_A__init_uM">0.0</Constant>
+        <Constant Name="mRNA_R_init_uM">0.0</Constant>
+        <Constant Name="PrmA_bound_init_uM">0.0</Constant>
+        <Constant Name="PrmR_bound_init_uM">0.0</Constant>
+        <Constant Name="R_init_uM">0.0</Constant>
+        <Constant Name="Size_cell">1.0</Constant>
+        <Constant Name="theta_A">50.0</Constant>
+        <Constant Name="theta_R">100.0</Constant>
+        <VolumeVariable Name="A" Domain="Compartment" />
+        <VolumeVariable Name="C" Domain="Compartment" />
+        <VolumeVariable Name="mRNA_A_" Domain="Compartment" />
+        <VolumeVariable Name="mRNA_R" Domain="Compartment" />
+        <VolumeVariable Name="PrmA_bound" Domain="Compartment" />
+        <VolumeVariable Name="PrmR_bound" Domain="Compartment" />
+        <VolumeVariable Name="R" Domain="Compartment" />
+        <Function Name="delta_A_A_decay" Domain="Compartment">common_delta_A</Function>
+        <Function Name="delta_A_C_decay" Domain="Compartment">common_delta_A</Function>
+        <Function Name="gamma_A" Domain="Compartment">(1.0 / KMOLE)</Function>
+        <Function Name="gamma_C" Domain="Compartment">(2.0 / KMOLE)</Function>
+        <Function Name="gamma_R" Domain="Compartment">(1.0 / KMOLE)</Function>
+        <Function Name="J_A_decay" Domain="Compartment">(delta_A_A_decay * A)</Function>
+        <Function Name="J_A_trnscr" Domain="Compartment">((alpha_A * PrmA) - (mRNA_A_ * Kr_A_trnscr * PrmA))</Function>
+        <Function Name="J_A_trnsl" Domain="Compartment">((beta_A * mRNA_A_) - (A * Kr_A_trnsl * mRNA_A_))</Function>
+        <Function Name="J_active_A_trnscr" Domain="Compartment">((alpha_A_prm * PrmA_bound) - (mRNA_A_ * Kr_active_A_trnscr * PrmA_bound))</Function>
+        <Function Name="J_active_R_trnsc" Domain="Compartment">((alpha_R_prm * PrmR_bound) - (mRNA_R * Kr_active_R_trnsc * PrmR_bound))</Function>
+        <Function Name="J_AR_binding" Domain="Compartment">((R * gamma_C * A) - (Kr_AR_binding * C))</Function>
+        <Function Name="J_C_decay" Domain="Compartment">((delta_A_C_decay * C) - (Kr_C_decay * R))</Function>
+        <Function Name="J_mRNA_A_decay" Domain="Compartment">(delta_MA * mRNA_A_)</Function>
+        <Function Name="J_mRNA_R_decay" Domain="Compartment">(delta_MR * mRNA_R)</Function>
+        <Function Name="J_PrmA_activation" Domain="Compartment">((A * gamma_A * PrmA) - (theta_A * PrmA_bound))</Function>
+        <Function Name="J_PrmR_activation" Domain="Compartment">((A * gamma_R * PrmR) - (theta_R * PrmR_bound))</Function>
+        <Function Name="J_R_decay" Domain="Compartment">(delta_R * R)</Function>
+        <Function Name="J_R_trnsc" Domain="Compartment">((alpha_R * PrmR) - (mRNA_R * Kr_R_trnsc * PrmR))</Function>
+        <Function Name="J_R_trnsl" Domain="Compartment">((beta_R * mRNA_R) - (R * Kr_R_trnsl * mRNA_R))</Function>
+        <Function Name="K_PrmA_total" Domain="Compartment">((Size_cell * PrmA_init_uM) + (Size_cell * PrmA_bound_init_uM))</Function>
+        <Function Name="K_PrmR_total" Domain="Compartment">((Size_cell * PrmR_init_uM) + (Size_cell * PrmR_bound_init_uM))</Function>
+        <Function Name="PrmA" Domain="Compartment">((K_PrmA_total - (Size_cell * PrmA_bound)) / Size_cell)</Function>
+        <Function Name="PrmA_init_uM" Domain="Compartment">KMOLE</Function>
+        <Function Name="PrmR" Domain="Compartment">((K_PrmR_total - (Size_cell * PrmR_bound)) / Size_cell)</Function>
+        <Function Name="PrmR_init_uM" Domain="Compartment">KMOLE</Function>
+        <CompartmentSubDomain Name="Compartment">
+          <BoundaryType Boundary="Xm" Type="Value" />
+          <BoundaryType Boundary="Xp" Type="Value" />
+          <BoundaryType Boundary="Ym" Type="Value" />
+          <BoundaryType Boundary="Yp" Type="Value" />
+          <BoundaryType Boundary="Zm" Type="Value" />
+          <BoundaryType Boundary="Zp" Type="Value" />
+          <OdeEquation Name="A" SolutionType="Unknown">
+            <Rate>(J_A_trnsl - J_AR_binding - J_A_decay)</Rate>
+            <Initial>A_init_uM</Initial>
+          </OdeEquation>
+          <OdeEquation Name="R" SolutionType="Unknown">
+            <Rate>(J_R_trnsl - J_R_decay - J_AR_binding + J_C_decay)</Rate>
+            <Initial>R_init_uM</Initial>
+          </OdeEquation>
+          <OdeEquation Name="C" SolutionType="Unknown">
+            <Rate>(J_AR_binding - J_C_decay)</Rate>
+            <Initial>C_init_uM</Initial>
+          </OdeEquation>
+          <OdeEquation Name="PrmA_bound" SolutionType="Unknown">
+            <Rate>0.0</Rate>
+            <Initial>PrmA_bound_init_uM</Initial>
+          </OdeEquation>
+          <OdeEquation Name="PrmR_bound" SolutionType="Unknown">
+            <Rate>0.0</Rate>
+            <Initial>PrmR_bound_init_uM</Initial>
+          </OdeEquation>
+          <OdeEquation Name="mRNA_A_" SolutionType="Unknown">
+            <Rate>0.0</Rate>
+            <Initial>mRNA_A__init_uM</Initial>
+          </OdeEquation>
+          <OdeEquation Name="mRNA_R" SolutionType="Unknown">
+            <Rate>0.0</Rate>
+            <Initial>mRNA_R_init_uM</Initial>
+          </OdeEquation>
+          <FastSystem>
+            <FastInvariant>((Size_cell * PrmR_bound) + (Size_cell * A) + (Size_cell * PrmA_bound))</FastInvariant>
+            <FastInvariant>(Size_cell * R)</FastInvariant>
+            <FastInvariant>(Size_cell * C)</FastInvariant>
+            <FastRate>J_PrmA_activation</FastRate>
+            <FastRate>J_PrmR_activation</FastRate>
+            <FastRate>(J_active_A_trnscr - J_mRNA_A_decay + J_A_trnscr)</FastRate>
+            <FastRate>(J_active_R_trnsc - J_mRNA_R_decay + J_R_trnsc)</FastRate>
+          </FastSystem>
+        </CompartmentSubDomain>
+        <Version Name="qssa_generated" KeyValue="84982668" BranchId="35924580" Archived="0" Date="02-Nov-2013 13:17:40" FromVersionable="false">
+          <Owner Name="Education" Identifier="30625624" />
+          <GroupAccess Type="1" />
+          <Annotation>cloned from 'qssa_generated' owned by user boris</Annotation>
+        </Version>
+      </MathDescription>
+      <Simulation Name="Simulation2">
+        <Annotation>cloned from 'Simulation2' owned by user boris</Annotation>
+        <SolverTaskDescription TaskType="Unsteady" UseSymbolicJacobian="false" Solver="Combined Stiff Solver (IDA/CVODE)">
+          <TimeBound StartTime="0.0" EndTime="400.0" />
+          <TimeStep DefaultTime="1.0E-4" MinTime="1.0E-4" MaxTime="1.0E-4" />
+          <ErrorTolerance Absolut="1.0E-9" Relative="1.0E-9" />
+          <OutputOptions KeepEvery="1000" KeepAtMost="1000" />
+          <NumberProcessors>1</NumberProcessors>
+        </SolverTaskDescription>
+        <MathOverrides />
+        <Version Name="Simulation2" KeyValue="84982726" BranchId="35924748" Archived="0" Date="02-Nov-2013 13:17:40" FromVersionable="false">
+          <Owner Name="Education" Identifier="30625624" />
+          <GroupAccess Type="1" />
+          <Annotation>cloned from 'Simulation2' owned by user boris</Annotation>
+          <ParentSimRef KeyValue="57205706" />
+        </Version>
+      </Simulation>
+      <Simulation Name="Copy of Simulation2">
+        <Annotation>cloned from 'Copy of Simulation2' owned by user boris</Annotation>
+        <SolverTaskDescription TaskType="Unsteady" UseSymbolicJacobian="false" Solver="Combined Stiff Solver (IDA/CVODE)">
+          <TimeBound StartTime="0.0" EndTime="400.0" />
+          <TimeStep DefaultTime="1.0E-4" MinTime="1.0E-4" MaxTime="1.0E-4" />
+          <ErrorTolerance Absolut="1.0E-9" Relative="1.0E-9" />
+          <OutputOptions KeepEvery="1000" KeepAtMost="1000" />
+          <NumberProcessors>1</NumberProcessors>
+        </SolverTaskDescription>
+        <MathOverrides />
+        <Version Name="Copy of Simulation2" KeyValue="84982728" BranchId="35924751" Archived="0" Date="02-Nov-2013 13:17:40" FromVersionable="false">
+          <Owner Name="Education" Identifier="30625624" />
+          <GroupAccess Type="1" />
+          <Annotation>cloned from 'Copy of Simulation2' owned by user boris</Annotation>
+        </Version>
+      </Simulation>
+      <Version Name="quasi-steady-state_approximations" KeyValue="84982696" BranchId="35924709" Archived="0" Date="02-Nov-2013 13:17:40" FromVersionable="false">
+        <Owner Name="Education" Identifier="30625624" />
+        <GroupAccess Type="1" />
+        <Annotation>cloned from 'quasi-steady-state_approximations' owned by user boris
+(copied from compartmental_deterministic)</Annotation>
+      </Version>
+      <MicroscopeMeasurement Name="fluor">
+        <ConvolutionKernel Type="ProjectionZKernel" />
+      </MicroscopeMeasurement>
+    </SimulationSpec>
+    <Version Name="CSH_09_circadian_clock" KeyValue="84982730" BranchId="35924754" Archived="0" Date="02-Nov-2013 13:17:40" FromVersionable="false">
+      <Owner Name="Education" Identifier="30625624" />
+      <GroupAccess Type="0" />
+      <Annotation>cloned from 'CSH_09_circadian_clock' owned by user boris
+Minimal model of circadian clock, Vilar et al., PNAS (2002)</Annotation>
+    </Version>
+    <pathwayModel>
+      <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:bp="http://www.biopax.org/release/biopax-level3.owl#" version="3.0" />
+    </pathwayModel>
+    <relationshipModel>
+      <RMNS version="3.0" />
+    </relationshipModel>
+    <vcmetadata>
+      <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" />
+      <nonrdfAnnotationList>
+        <nonrdfAnnotation vcid="BioModel(CSH_09_circadian_clock)">
+          <freetext>cloned from 'CSH_09_circadian_clock' owned by user boris
+Minimal model of circadian clock, Vilar et al., PNAS (2002)</freetext>
+        </nonrdfAnnotation>
+      </nonrdfAnnotationList>
+      <uriBindingList />
+    </vcmetadata>
+  </BioModel>
+</vcml>
+

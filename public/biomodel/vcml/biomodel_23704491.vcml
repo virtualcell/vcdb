@@ -1,0 +1,1987 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--This biomodel was generated in VCML Version Alpha_Version_7.4.0_build_87-->
+<vcml xmlns="http://sourceforge.net/projects/vcell/vcml" Version="Alpha_Version_7.4.0_build_87">
+  <BioModel Name="FRAP_albumin">
+    <Annotation />
+    <Model Name="unnamed">
+      <Annotation>cloned from 'unnamed' owned by user vcellas</Annotation>
+      <Compound Name="albumin" />
+      <Feature Name="cell" KeyValue="20848498" />
+      <Feature Name="golgi" KeyValue="20848501" />
+      <Membrane InsideFeature="golgi" OutsideFeature="cell" PositiveFeature="golgi" NegativeFeature="cell" MembraneVoltage="Voltage_GM" Name="GM" KeyValue="20848500" />
+      <LocalizedCompound Name="albumin_golgi" CompoundRef="albumin" Structure="golgi" OverrideName="true" KeyValue="20848504" />
+      <Diagram Name="Unnamed compartment" Structure="cell" />
+      <Diagram Name="GM" Structure="GM" />
+      <Diagram Name="golgi" Structure="golgi" />
+      <Version Name="unnamed" KeyValue="20848494" BranchId="20848495" Archived="0" Date="01-Mar-2007 12:01:53" FromVersionable="false">
+        <Owner Name="spaar" Identifier="20848324" />
+        <GroupAccess Type="1" />
+        <Annotation>cloned from 'unnamed' owned by user vcellas</Annotation>
+      </Version>
+      <ModelUnitSystem VolumeSubstanceUnit="uM.um3" MembraneSubstanceUnit="molecules" LumpedReactionSubstanceUnit="molecules" VolumeUnit="um3" AreaUnit="um2" LengthUnit="um" TimeUnit="s" />
+    </Model>
+    <SimulationSpec Name="FRAP_3D" Stochastic="false" UseConcentration="true" RuleBased="false" MassConservationModelReduction="true" InsufficientIterations="false" InsufficientMaxMolecules="false" CharacteristicSize="0.01581496947855076">
+      <NetworkConstraints RbmMaxIteration="1" RbmMaxMoleculesPerSpecies="10" RbmSpeciesLimit="800" RbmReactionsLimit="2500" />
+      <Annotation>cloned from 'FRAP_3D' owned by user vcellas</Annotation>
+      <Geometry Name="FRAP_3D" Dimension="3">
+        <Annotation>cloned from 'FRAP_3D' owned by user vcellas</Annotation>
+        <Extent X="6.6" Y="1.1" Z="0.04" />
+        <Origin X="-3.3" Y="-0.55" Z="-0.02" />
+        <SubVolume Name="golgi" Handle="1" Type="Analytical" KeyValue="20848358">
+          <AnalyticExpression>(((((pow((2.75 + x),2.0) + pow(y,2.0)) &lt; 0.25) || ((pow((1.65 + x),2.0) + pow(y,2.0)) &lt; 0.25) || ((pow((0.55 + x),2.0) + pow(y,2.0)) &lt; 0.25) || ((pow((0.55 - x),2.0) + pow(y,2.0)) &lt; 0.25) || ((pow((1.65 - x),2.0) + pow(y,2.0)) &lt; 0.25) || ((pow((2.75 - x),2.0) + pow(y,2.0)) &lt; 0.25)) * (z &gt;  - 0.01) * (z &lt; 0.01)) || ((((y * y) + (z * z)) &lt; 2.25E-4) * (x &gt;  - 2.26) * (x &lt;  - 2.14)) || ((((y * y) + (z * z)) &lt; 2.25E-4) * (x &gt;  - 1.16) * (x &lt;  - 1.04)) || ((((y * y) + (z * z)) &lt; 2.25E-4) * (x &gt;  - 0.06) * (x &lt; 0.06)) || ((((y * y) + (z * z)) &lt; 2.25E-4) * (x &gt; 1.04) * (x &lt; 1.16)) || ((((y * y) + (z * z)) &lt; 2.25E-4) * (x &gt; 2.14) * (x &lt; 2.26)))</AnalyticExpression>
+        </SubVolume>
+        <SubVolume Name="cell" Handle="0" Type="Analytical" KeyValue="20848359">
+          <AnalyticExpression>1.0</AnalyticExpression>
+        </SubVolume>
+        <SurfaceClass Name="cell_golgi_membrane" SubVolume1Ref="cell" SubVolume2Ref="golgi" />
+        <SurfaceDescription NumSamplesX="100" NumSamplesY="100" NumSamplesZ="100" CutoffFrequency="0.3">
+          <VolumeRegion Name="golgi1" RegionID="1" SubVolume="golgi" Size="0.0960383090160868" Unit="um3" />
+          <VolumeRegion Name="cell0" RegionID="0" SubVolume="cell" Size="0.1943616909839132" Unit="um3" />
+          <MembraneRegion Name="membrane_cell0_golgi1" VolumeRegion1="golgi1" VolumeRegion2="cell0" Size="9.645116978996695" Unit="um2" />
+        </SurfaceDescription>
+        <Version Name="FRAP_3D" KeyValue="20848354" BranchId="20848355" Archived="0" Date="01-Mar-2007 12:01:52" FromVersionable="false">
+          <Owner Name="spaar" Identifier="20848324" />
+          <GroupAccess Type="1" />
+          <Annotation>cloned from 'FRAP_3D' owned by user vcellas</Annotation>
+        </Version>
+      </Geometry>
+      <GeometryContext>
+        <FeatureMapping Feature="cell" GeometryClass="cell" SubVolume="cell">
+          <BoundariesTypes Xm="Flux" Xp="Flux" Ym="Flux" Yp="Flux" Zm="Flux" Zp="Flux" />
+        </FeatureMapping>
+        <FeatureMapping Feature="golgi" GeometryClass="golgi" SubVolume="golgi">
+          <BoundariesTypes Xm="Flux" Xp="Flux" Ym="Flux" Yp="Flux" Zm="Flux" Zp="Flux" />
+        </FeatureMapping>
+        <MembraneMapping Membrane="GM" SurfaceToVolumeRatio="1.0" VolumeFraction="0.2" CalculateVoltage="false" SpecificCapacitance="1.0" InitialVoltage="0.0" GeometryClass="cell_golgi_membrane">
+          <BoundariesTypes Xm="Flux" Xp="Flux" Ym="Flux" Yp="Flux" Zm="Flux" Zp="Flux" />
+        </MembraneMapping>
+      </GeometryContext>
+      <ReactionContext>
+        <LocalizedCompoundSpec LocalizedCompoundRef="albumin_golgi" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>(10.0 * ((pow((2.75 + x),2.0) + pow(y,2.0)) &lt; 0.25) * (z &gt;  - 0.01) * (z &lt; 0.01))</InitialConcentration>
+          <Diffusion>10.0</Diffusion>
+        </LocalizedCompoundSpec>
+      </ReactionContext>
+      <MathDescription Name="FRAP_3D_generated">
+        <Annotation>cloned from 'FRAP_3D_generated' owned by user vcellas</Annotation>
+        <Constant Name="_F_">96480.0</Constant>
+        <Constant Name="_F_nmol_">9.648E-5</Constant>
+        <Constant Name="_K_GHK_">1.0E-9</Constant>
+        <Constant Name="_N_pmol_">6.02E11</Constant>
+        <Constant Name="_R_">8314.0</Constant>
+        <Constant Name="_T_">300.0</Constant>
+        <Constant Name="albumin_golgi_diffusionRate">10.0</Constant>
+        <Constant Name="K_millivolts_per_volt">1000.0</Constant>
+        <Constant Name="KMOLE">0.0016611295681063123</Constant>
+        <Constant Name="Voltage_GM">0.0</Constant>
+        <VolumeVariable Name="albumin" />
+        <Function Name="albumin_golgi_init">(10.0 * ((pow((2.75 + x),2.0) + pow(y,2.0)) &lt; 0.25) * (z &gt;  - 0.01) * (z &lt; 0.01))</Function>
+        <CompartmentSubDomain Name="golgi">
+          <BoundaryType Boundary="Xm" Type="Flux" />
+          <BoundaryType Boundary="Xp" Type="Flux" />
+          <BoundaryType Boundary="Ym" Type="Flux" />
+          <BoundaryType Boundary="Yp" Type="Flux" />
+          <BoundaryType Boundary="Zm" Type="Flux" />
+          <BoundaryType Boundary="Zp" Type="Flux" />
+          <PdeEquation Name="albumin" SolutionType="Unknown">
+            <Rate>0.0</Rate>
+            <Diffusion>albumin_golgi_diffusionRate</Diffusion>
+            <Initial>albumin_golgi_init</Initial>
+          </PdeEquation>
+        </CompartmentSubDomain>
+        <CompartmentSubDomain Name="cell">
+          <BoundaryType Boundary="Xm" Type="Flux" />
+          <BoundaryType Boundary="Xp" Type="Flux" />
+          <BoundaryType Boundary="Ym" Type="Flux" />
+          <BoundaryType Boundary="Yp" Type="Flux" />
+          <BoundaryType Boundary="Zm" Type="Flux" />
+          <BoundaryType Boundary="Zp" Type="Flux" />
+          <PdeEquation Name="albumin" SolutionType="Unknown">
+            <Rate>0.0</Rate>
+            <Diffusion>albumin_golgi_diffusionRate</Diffusion>
+            <Initial>0.0</Initial>
+          </PdeEquation>
+        </CompartmentSubDomain>
+        <MembraneSubDomain Name="cell_golgi_membrane" InsideCompartment="golgi" OutsideCompartment="cell">
+          <BoundaryType Boundary="Xm" Type="Value" />
+          <BoundaryType Boundary="Xp" Type="Value" />
+          <BoundaryType Boundary="Ym" Type="Value" />
+          <BoundaryType Boundary="Yp" Type="Value" />
+          <BoundaryType Boundary="Zm" Type="Value" />
+          <BoundaryType Boundary="Zp" Type="Value" />
+          <JumpCondition Name="albumin">
+            <InFlux>0.0</InFlux>
+            <OutFlux>0.0</OutFlux>
+          </JumpCondition>
+        </MembraneSubDomain>
+        <Version Name="FRAP_3D_generated" KeyValue="20848464" BranchId="20848465" Archived="0" Date="01-Mar-2007 12:01:53" FromVersionable="false">
+          <Owner Name="spaar" Identifier="20848324" />
+          <GroupAccess Type="1" />
+          <Annotation>cloned from 'FRAP_3D_generated' owned by user vcellas</Annotation>
+        </Version>
+      </MathDescription>
+      <Simulation Name="Simulation_3D">
+        <Annotation>run 20s</Annotation>
+        <SolverTaskDescription TaskType="Unsteady" UseSymbolicJacobian="false" Solver="Finite Volume, Regular Grid">
+          <TimeBound StartTime="0.0" EndTime="20.0" />
+          <TimeStep DefaultTime="0.1" MinTime="1.0E-8" MaxTime="1.0" />
+          <ErrorTolerance Absolut="1.0E-9" Relative="1.0E-9" />
+          <OutputOptions KeepEvery="10" KeepAtMost="1000" />
+          <NumberProcessors>1</NumberProcessors>
+        </SolverTaskDescription>
+        <MathOverrides />
+        <MeshSpecification>
+          <Size X="450" Y="75" Z="5" />
+        </MeshSpecification>
+        <Version Name="Simulation_3D" KeyValue="23189792" BranchId="23189793" Archived="0" Date="30-Jul-2007 10:23:41" FromVersionable="false">
+          <Owner Name="spaar" Identifier="20848324" />
+          <GroupAccess Type="1" />
+          <Annotation>run 20s</Annotation>
+        </Version>
+      </Simulation>
+      <SpatialObjects>
+        <SpatialObject Name="vobj_golgi1" Type="Volume" subVolume="golgi" regionId="1">
+          <QuantityCategoryList>
+            <QuantityCategory Name="VolumeCentroid" Enabled="false" />
+            <QuantityCategory Name="InteriorVelocity" Enabled="false" />
+            <QuantityCategory Name="VolumeRegionSize" Enabled="true" />
+          </QuantityCategoryList>
+        </SpatialObject>
+        <SpatialObject Name="vobj_cell0" Type="Volume" subVolume="cell" regionId="0">
+          <QuantityCategoryList>
+            <QuantityCategory Name="VolumeCentroid" Enabled="false" />
+            <QuantityCategory Name="InteriorVelocity" Enabled="false" />
+            <QuantityCategory Name="VolumeRegionSize" Enabled="true" />
+          </QuantityCategoryList>
+        </SpatialObject>
+        <SpatialObject Name="sobj_golgi1_cell0" Type="Surface" subVolumeInside="golgi" regionIdInside="1" subVolumeOutside="cell" regionIdOutside="0">
+          <QuantityCategoryList>
+            <QuantityCategory Name="SurfaceNormal" Enabled="false" />
+            <QuantityCategory Name="SurfaceVelocity" Enabled="false" />
+            <QuantityCategory Name="DistanceToSurface" Enabled="false" />
+            <QuantityCategory Name="DirectionToSurface" Enabled="false" />
+            <QuantityCategory Name="SurfaceSize" Enabled="true" />
+          </QuantityCategoryList>
+        </SpatialObject>
+      </SpatialObjects>
+      <Version Name="FRAP_3D" KeyValue="20848508" BranchId="20848509" Archived="0" Date="01-Mar-2007 12:01:53" FromVersionable="false">
+        <Owner Name="spaar" Identifier="20848324" />
+        <GroupAccess Type="1" />
+        <Annotation>cloned from 'FRAP_3D' owned by user vcellas</Annotation>
+      </Version>
+      <MicroscopeMeasurement Name="fluor">
+        <ConvolutionKernel Type="ProjectionZKernel" />
+      </MicroscopeMeasurement>
+    </SimulationSpec>
+    <SimulationSpec Name="FRAP_2D" Stochastic="false" UseConcentration="true" RuleBased="false" MassConservationModelReduction="true" InsufficientIterations="false" InsufficientMaxMolecules="false" CharacteristicSize="0.014483150378460328">
+      <NetworkConstraints RbmMaxIteration="1" RbmMaxMoleculesPerSpecies="10" RbmSpeciesLimit="800" RbmReactionsLimit="2500" />
+      <Annotation>cloned from 'FRAP_2D' owned by user vcellas</Annotation>
+      <Geometry Name="FRAP_2D" Dimension="2">
+        <Annotation>cloned from 'FRAP_2D' owned by user vcellas</Annotation>
+        <Extent X="6.6" Y="1.1" Z="10.0" />
+        <Origin X="-3.3" Y="-0.55" Z="0.0" />
+        <SubVolume Name="golgi" Handle="1" Type="Analytical" KeyValue="20848368">
+          <AnalyticExpression>(((pow((2.75 + x),2.0) + pow(y,2.0)) &lt; 0.25) || ((pow((1.65 + x),2.0) + pow(y,2.0)) &lt; 0.25) || ((pow((0.55 + x),2.0) + pow(y,2.0)) &lt; 0.25) || ((pow((0.55 - x),2.0) + pow(y,2.0)) &lt; 0.25) || ((pow((1.65 - x),2.0) + pow(y,2.0)) &lt; 0.25) || ((pow((2.75 - x),2.0) + pow(y,2.0)) &lt; 0.25) || ((y &gt;  - 0.01) * (y &lt; 0.02) * (x &gt;  - 2.26) * (x &lt;  - 2.14)) || ((y &gt;  - 0.01) * (y &lt; 0.02) * (x &gt;  - 1.16) * (x &lt;  - 1.04)) || ((y &gt;  - 0.01) * (y &lt; 0.02) * (x &gt;  - 0.06) * (x &lt; 0.06)) || ((y &gt;  - 0.01) * (y &lt; 0.02) * (x &gt; 1.04) * (x &lt; 1.16)) || ((y &gt;  - 0.01) * (y &lt; 0.02) * (x &gt; 2.14) * (x &lt; 2.26)))</AnalyticExpression>
+        </SubVolume>
+        <SubVolume Name="cell" Handle="0" Type="Analytical" KeyValue="20848369">
+          <AnalyticExpression>1.0</AnalyticExpression>
+        </SubVolume>
+        <SurfaceClass Name="cell_golgi_membrane" SubVolume1Ref="cell" SubVolume2Ref="golgi" />
+        <SurfaceDescription NumSamplesX="101" NumSamplesY="101" NumSamplesZ="1" CutoffFrequency="0.3">
+          <VolumeRegion Name="cell0" RegionID="0" SubVolume="cell" Size="2.538096" Unit="um2" />
+          <VolumeRegion Name="golgi1" RegionID="1" SubVolume="golgi" Size="4.721904" Unit="um2" />
+          <MembraneRegion Name="membrane_cell0_golgi1" VolumeRegion1="golgi1" VolumeRegion2="cell0" Size="19.971433220705862" Unit="um" />
+        </SurfaceDescription>
+        <Version Name="FRAP_2D" KeyValue="20848364" BranchId="20848365" Archived="0" Date="01-Mar-2007 12:01:52" FromVersionable="false">
+          <Owner Name="spaar" Identifier="20848324" />
+          <GroupAccess Type="1" />
+          <Annotation>cloned from 'FRAP_2D' owned by user vcellas</Annotation>
+        </Version>
+      </Geometry>
+      <GeometryContext>
+        <FeatureMapping Feature="cell" GeometryClass="cell" SubVolume="cell">
+          <BoundariesTypes Xm="Flux" Xp="Flux" Ym="Flux" Yp="Flux" Zm="Flux" Zp="Flux" />
+        </FeatureMapping>
+        <FeatureMapping Feature="golgi" GeometryClass="golgi" SubVolume="golgi">
+          <BoundariesTypes Xm="Flux" Xp="Flux" Ym="Flux" Yp="Flux" Zm="Flux" Zp="Flux" />
+        </FeatureMapping>
+        <MembraneMapping Membrane="GM" SurfaceToVolumeRatio="1.0" VolumeFraction="0.2" CalculateVoltage="false" SpecificCapacitance="1.0" InitialVoltage="0.0" GeometryClass="cell_golgi_membrane">
+          <BoundariesTypes Xm="Flux" Xp="Flux" Ym="Flux" Yp="Flux" Zm="Flux" Zp="Flux" />
+        </MembraneMapping>
+      </GeometryContext>
+      <ReactionContext>
+        <LocalizedCompoundSpec LocalizedCompoundRef="albumin_golgi" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>(10.0 * ((pow((2.75 + x),2.0) + pow(y,2.0)) &lt; 0.25))</InitialConcentration>
+          <Diffusion>10.0</Diffusion>
+        </LocalizedCompoundSpec>
+      </ReactionContext>
+      <MathDescription Name="FRAP_2D_generated">
+        <Annotation>cloned from 'FRAP_2D_generated' owned by user vcellas</Annotation>
+        <Constant Name="_F_">96480.0</Constant>
+        <Constant Name="_F_nmol_">9.648E-5</Constant>
+        <Constant Name="_K_GHK_">1.0E-9</Constant>
+        <Constant Name="_N_pmol_">6.02E11</Constant>
+        <Constant Name="_R_">8314.0</Constant>
+        <Constant Name="_T_">300.0</Constant>
+        <Constant Name="albumin_golgi_diffusionRate">10.0</Constant>
+        <Constant Name="K_millivolts_per_volt">1000.0</Constant>
+        <Constant Name="KMOLE">0.0016611295681063123</Constant>
+        <Constant Name="Voltage_GM">0.0</Constant>
+        <VolumeVariable Name="albumin" />
+        <Function Name="albumin_golgi_init">(10.0 * ((pow((2.75 + x),2.0) + pow(y,2.0)) &lt; 0.25))</Function>
+        <CompartmentSubDomain Name="golgi">
+          <BoundaryType Boundary="Xm" Type="Flux" />
+          <BoundaryType Boundary="Xp" Type="Flux" />
+          <BoundaryType Boundary="Ym" Type="Flux" />
+          <BoundaryType Boundary="Yp" Type="Flux" />
+          <BoundaryType Boundary="Zm" Type="Value" />
+          <BoundaryType Boundary="Zp" Type="Value" />
+          <PdeEquation Name="albumin" SolutionType="Unknown">
+            <Rate>0.0</Rate>
+            <Diffusion>albumin_golgi_diffusionRate</Diffusion>
+            <Initial>albumin_golgi_init</Initial>
+          </PdeEquation>
+        </CompartmentSubDomain>
+        <CompartmentSubDomain Name="cell">
+          <BoundaryType Boundary="Xm" Type="Flux" />
+          <BoundaryType Boundary="Xp" Type="Flux" />
+          <BoundaryType Boundary="Ym" Type="Flux" />
+          <BoundaryType Boundary="Yp" Type="Flux" />
+          <BoundaryType Boundary="Zm" Type="Value" />
+          <BoundaryType Boundary="Zp" Type="Value" />
+          <PdeEquation Name="albumin" SolutionType="Unknown">
+            <Rate>0.0</Rate>
+            <Diffusion>albumin_golgi_diffusionRate</Diffusion>
+            <Initial>0.0</Initial>
+          </PdeEquation>
+        </CompartmentSubDomain>
+        <MembraneSubDomain Name="cell_golgi_membrane" InsideCompartment="golgi" OutsideCompartment="cell">
+          <BoundaryType Boundary="Xm" Type="Value" />
+          <BoundaryType Boundary="Xp" Type="Value" />
+          <BoundaryType Boundary="Ym" Type="Value" />
+          <BoundaryType Boundary="Yp" Type="Value" />
+          <BoundaryType Boundary="Zm" Type="Value" />
+          <BoundaryType Boundary="Zp" Type="Value" />
+          <JumpCondition Name="albumin">
+            <InFlux>0.0</InFlux>
+            <OutFlux>0.0</OutFlux>
+          </JumpCondition>
+        </MembraneSubDomain>
+        <Version Name="FRAP_2D_generated" KeyValue="20848467" BranchId="20848468" Archived="0" Date="01-Mar-2007 12:01:53" FromVersionable="false">
+          <Owner Name="spaar" Identifier="20848324" />
+          <GroupAccess Type="1" />
+          <Annotation>cloned from 'FRAP_2D_generated' owned by user vcellas</Annotation>
+        </Version>
+      </MathDescription>
+      <Simulation Name="Simulation_2D">
+        <Annotation>run 20s</Annotation>
+        <SolverTaskDescription TaskType="Unsteady" UseSymbolicJacobian="false" Solver="Finite Volume, Regular Grid">
+          <TimeBound StartTime="0.0" EndTime="20.0" />
+          <TimeStep DefaultTime="0.1" MinTime="1.0E-8" MaxTime="1.0" />
+          <ErrorTolerance Absolut="1.0E-9" Relative="1.0E-9" />
+          <OutputOptions KeepEvery="10" KeepAtMost="1000" />
+          <NumberProcessors>1</NumberProcessors>
+        </SolverTaskDescription>
+        <MathOverrides />
+        <MeshSpecification>
+          <Size X="450" Y="75" Z="1" />
+        </MeshSpecification>
+        <Version Name="Simulation_2D" KeyValue="23193125" BranchId="23193126" Archived="0" Date="30-Jul-2007 10:43:44" FromVersionable="false">
+          <Owner Name="spaar" Identifier="20848324" />
+          <GroupAccess Type="1" />
+          <Annotation>run 20s</Annotation>
+          <ParentSimRef KeyValue="20848587" />
+        </Version>
+      </Simulation>
+      <SpatialObjects>
+        <SpatialObject Name="vobj_cell0" Type="Volume" subVolume="cell" regionId="0">
+          <QuantityCategoryList>
+            <QuantityCategory Name="VolumeCentroid" Enabled="false" />
+            <QuantityCategory Name="InteriorVelocity" Enabled="false" />
+            <QuantityCategory Name="VolumeRegionSize" Enabled="true" />
+          </QuantityCategoryList>
+        </SpatialObject>
+        <SpatialObject Name="vobj_golgi1" Type="Volume" subVolume="golgi" regionId="1">
+          <QuantityCategoryList>
+            <QuantityCategory Name="VolumeCentroid" Enabled="false" />
+            <QuantityCategory Name="InteriorVelocity" Enabled="false" />
+            <QuantityCategory Name="VolumeRegionSize" Enabled="true" />
+          </QuantityCategoryList>
+        </SpatialObject>
+        <SpatialObject Name="sobj_golgi1_cell0" Type="Surface" subVolumeInside="golgi" regionIdInside="1" subVolumeOutside="cell" regionIdOutside="0">
+          <QuantityCategoryList>
+            <QuantityCategory Name="SurfaceNormal" Enabled="false" />
+            <QuantityCategory Name="SurfaceVelocity" Enabled="false" />
+            <QuantityCategory Name="DistanceToSurface" Enabled="false" />
+            <QuantityCategory Name="DirectionToSurface" Enabled="false" />
+            <QuantityCategory Name="SurfaceSize" Enabled="true" />
+          </QuantityCategoryList>
+        </SpatialObject>
+      </SpatialObjects>
+      <Version Name="FRAP_2D" KeyValue="20848515" BranchId="20848516" Archived="0" Date="01-Mar-2007 12:01:53" FromVersionable="false">
+        <Owner Name="spaar" Identifier="20848324" />
+        <GroupAccess Type="1" />
+        <Annotation>cloned from 'FRAP_2D' owned by user vcellas</Annotation>
+      </Version>
+      <MicroscopeMeasurement Name="fluor">
+        <ConvolutionKernel Type="ProjectionZKernel" />
+      </MicroscopeMeasurement>
+    </SimulationSpec>
+    <SimulationSpec Name="FRAP_2D_large_cist" Stochastic="false" UseConcentration="true" RuleBased="false" MassConservationModelReduction="true" InsufficientIterations="false" InsufficientMaxMolecules="false" CharacteristicSize="0.02106640055048775">
+      <NetworkConstraints RbmMaxIteration="1" RbmMaxMoleculesPerSpecies="10" RbmSpeciesLimit="800" RbmReactionsLimit="2500" />
+      <Annotation>cloned from 'FRAP_2D_large_cist' owned by user vcellas
+(copied from FRAP_2D_large_cist)</Annotation>
+      <Geometry Name="FRAP_2D_large_cist" Dimension="2">
+        <Annotation>cloned from 'FRAP_2D_large_cist' owned by user vcellas</Annotation>
+        <Extent X="9.6" Y="1.6" Z="10.0" />
+        <Origin X="-4.8" Y="-0.8" Z="0.0" />
+        <SubVolume Name="glogi" Handle="1" Type="Analytical" KeyValue="20848378">
+          <AnalyticExpression>(((pow((4.0 + x),2.0) + pow(y,2.0)) &lt; 0.5625) || ((pow((2.4 + x),2.0) + pow(y,2.0)) &lt; 0.5625) || ((pow((0.8 + x),2.0) + pow(y,2.0)) &lt; 0.5625) || ((pow((0.8 - x),2.0) + pow(y,2.0)) &lt; 0.5625) || ((pow((2.4 - x),2.0) + pow(y,2.0)) &lt; 0.5625) || ((pow((4.0 - x),2.0) + pow(y,2.0)) &lt; 0.5625) || ((y &gt;  - 0.01) * (y &lt; 0.02) * (x &gt;  - 3.26) * (x &lt;  - 3.14)) || ((y &gt;  - 0.01) * (y &lt; 0.02) * (x &gt;  - 1.66) * (x &lt;  - 1.54)) || ((y &gt;  - 0.01) * (y &lt; 0.02) * (x &gt;  - 0.06) * (x &lt; 0.06)) || ((y &gt;  - 0.01) * (y &lt; 0.02) * (x &gt; 1.54) * (x &lt; 1.66)) || ((y &gt;  - 0.01) * (y &lt; 0.02) * (x &gt; 3.14) * (x &lt; 3.26)))</AnalyticExpression>
+        </SubVolume>
+        <SubVolume Name="cell" Handle="0" Type="Analytical" KeyValue="20848379">
+          <AnalyticExpression>1.0</AnalyticExpression>
+        </SubVolume>
+        <SurfaceClass Name="cell_glogi_membrane" SubVolume1Ref="cell" SubVolume2Ref="glogi" />
+        <SurfaceDescription NumSamplesX="101" NumSamplesY="101" NumSamplesZ="1" CutoffFrequency="0.3">
+          <VolumeRegion Name="cell0" RegionID="0" SubVolume="cell" Size="4.694016" Unit="um2" />
+          <VolumeRegion Name="glogi1" RegionID="1" SubVolume="glogi" Size="10.665984" Unit="um2" />
+          <MembraneRegion Name="membrane_cell0_glogi1" VolumeRegion1="glogi1" VolumeRegion2="cell0" Size="29.35144563784585" Unit="um" />
+        </SurfaceDescription>
+        <Version Name="FRAP_2D_large_cist" KeyValue="20848374" BranchId="20848375" Archived="0" Date="01-Mar-2007 12:01:52" FromVersionable="false">
+          <Owner Name="spaar" Identifier="20848324" />
+          <GroupAccess Type="1" />
+          <Annotation>cloned from 'FRAP_2D_large_cist' owned by user vcellas</Annotation>
+        </Version>
+      </Geometry>
+      <GeometryContext>
+        <FeatureMapping Feature="cell" GeometryClass="cell" SubVolume="cell">
+          <BoundariesTypes Xm="Flux" Xp="Flux" Ym="Flux" Yp="Flux" Zm="Flux" Zp="Flux" />
+        </FeatureMapping>
+        <FeatureMapping Feature="golgi" GeometryClass="glogi" SubVolume="glogi">
+          <BoundariesTypes Xm="Flux" Xp="Flux" Ym="Flux" Yp="Flux" Zm="Flux" Zp="Flux" />
+        </FeatureMapping>
+        <MembraneMapping Membrane="GM" SurfaceToVolumeRatio="1.0" VolumeFraction="0.2" CalculateVoltage="false" SpecificCapacitance="1.0" InitialVoltage="0.0" GeometryClass="cell_glogi_membrane">
+          <BoundariesTypes Xm="Flux" Xp="Flux" Ym="Flux" Yp="Flux" Zm="Flux" Zp="Flux" />
+        </MembraneMapping>
+      </GeometryContext>
+      <ReactionContext>
+        <LocalizedCompoundSpec LocalizedCompoundRef="albumin_golgi" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>(10.0 * ((pow((4.0 + x),2.0) + pow(y,2.0)) &lt; 0.5625))</InitialConcentration>
+          <Diffusion>10.0</Diffusion>
+        </LocalizedCompoundSpec>
+      </ReactionContext>
+      <MathDescription Name="FRAP_2D_large_cist2_generated">
+        <Annotation>cloned from 'FRAP_2D_large_cist2_generated' owned by user vcellas</Annotation>
+        <Constant Name="_F_">96480.0</Constant>
+        <Constant Name="_F_nmol_">9.648E-5</Constant>
+        <Constant Name="_K_GHK_">1.0E-9</Constant>
+        <Constant Name="_N_pmol_">6.02E11</Constant>
+        <Constant Name="_R_">8314.0</Constant>
+        <Constant Name="_T_">300.0</Constant>
+        <Constant Name="albumin_golgi_diffusionRate">10.0</Constant>
+        <Constant Name="K_millivolts_per_volt">1000.0</Constant>
+        <Constant Name="KMOLE">0.0016611295681063123</Constant>
+        <Constant Name="Voltage_GM">0.0</Constant>
+        <VolumeVariable Name="albumin" />
+        <Function Name="albumin_golgi_init">(10.0 * ((pow((4.0 + x),2.0) + pow(y,2.0)) &lt; 0.5625))</Function>
+        <CompartmentSubDomain Name="glogi">
+          <BoundaryType Boundary="Xm" Type="Flux" />
+          <BoundaryType Boundary="Xp" Type="Flux" />
+          <BoundaryType Boundary="Ym" Type="Flux" />
+          <BoundaryType Boundary="Yp" Type="Flux" />
+          <BoundaryType Boundary="Zm" Type="Value" />
+          <BoundaryType Boundary="Zp" Type="Value" />
+          <PdeEquation Name="albumin" SolutionType="Unknown">
+            <Rate>0.0</Rate>
+            <Diffusion>albumin_golgi_diffusionRate</Diffusion>
+            <Initial>albumin_golgi_init</Initial>
+          </PdeEquation>
+        </CompartmentSubDomain>
+        <CompartmentSubDomain Name="cell">
+          <BoundaryType Boundary="Xm" Type="Flux" />
+          <BoundaryType Boundary="Xp" Type="Flux" />
+          <BoundaryType Boundary="Ym" Type="Flux" />
+          <BoundaryType Boundary="Yp" Type="Flux" />
+          <BoundaryType Boundary="Zm" Type="Value" />
+          <BoundaryType Boundary="Zp" Type="Value" />
+          <PdeEquation Name="albumin" SolutionType="Unknown">
+            <Rate>0.0</Rate>
+            <Diffusion>albumin_golgi_diffusionRate</Diffusion>
+            <Initial>0.0</Initial>
+          </PdeEquation>
+        </CompartmentSubDomain>
+        <MembraneSubDomain Name="cell_glogi_membrane" InsideCompartment="glogi" OutsideCompartment="cell">
+          <BoundaryType Boundary="Xm" Type="Value" />
+          <BoundaryType Boundary="Xp" Type="Value" />
+          <BoundaryType Boundary="Ym" Type="Value" />
+          <BoundaryType Boundary="Yp" Type="Value" />
+          <BoundaryType Boundary="Zm" Type="Value" />
+          <BoundaryType Boundary="Zp" Type="Value" />
+          <JumpCondition Name="albumin">
+            <InFlux>0.0</InFlux>
+            <OutFlux>0.0</OutFlux>
+          </JumpCondition>
+        </MembraneSubDomain>
+        <Version Name="FRAP_2D_large_cist2_generated" KeyValue="20848470" BranchId="20848471" Archived="0" Date="01-Mar-2007 12:01:53" FromVersionable="false">
+          <Owner Name="spaar" Identifier="20848324" />
+          <GroupAccess Type="1" />
+          <Annotation>cloned from 'FRAP_2D_large_cist2_generated' owned by user vcellas</Annotation>
+        </Version>
+      </MathDescription>
+      <Simulation Name="Simulation_2D_large_cist">
+        <Annotation>run 20s</Annotation>
+        <SolverTaskDescription TaskType="Unsteady" UseSymbolicJacobian="false" Solver="Finite Volume, Regular Grid">
+          <TimeBound StartTime="0.0" EndTime="20.0" />
+          <TimeStep DefaultTime="0.1" MinTime="1.0E-8" MaxTime="1.0" />
+          <ErrorTolerance Absolut="1.0E-9" Relative="1.0E-9" />
+          <OutputOptions KeepEvery="10" KeepAtMost="1000" />
+          <NumberProcessors>1</NumberProcessors>
+        </SolverTaskDescription>
+        <MathOverrides />
+        <MeshSpecification>
+          <Size X="654" Y="109" Z="1" />
+        </MeshSpecification>
+        <Version Name="Simulation_2D_large_cist" KeyValue="23186216" BranchId="23186217" Archived="0" Date="30-Jul-2007 09:10:35" FromVersionable="false">
+          <Owner Name="spaar" Identifier="20848324" />
+          <GroupAccess Type="1" />
+          <Annotation>run 20s</Annotation>
+        </Version>
+      </Simulation>
+      <SpatialObjects>
+        <SpatialObject Name="vobj_cell0" Type="Volume" subVolume="cell" regionId="0">
+          <QuantityCategoryList>
+            <QuantityCategory Name="VolumeCentroid" Enabled="false" />
+            <QuantityCategory Name="InteriorVelocity" Enabled="false" />
+            <QuantityCategory Name="VolumeRegionSize" Enabled="true" />
+          </QuantityCategoryList>
+        </SpatialObject>
+        <SpatialObject Name="vobj_glogi1" Type="Volume" subVolume="glogi" regionId="1">
+          <QuantityCategoryList>
+            <QuantityCategory Name="VolumeCentroid" Enabled="false" />
+            <QuantityCategory Name="InteriorVelocity" Enabled="false" />
+            <QuantityCategory Name="VolumeRegionSize" Enabled="true" />
+          </QuantityCategoryList>
+        </SpatialObject>
+        <SpatialObject Name="sobj_glogi1_cell0" Type="Surface" subVolumeInside="glogi" regionIdInside="1" subVolumeOutside="cell" regionIdOutside="0">
+          <QuantityCategoryList>
+            <QuantityCategory Name="SurfaceNormal" Enabled="false" />
+            <QuantityCategory Name="SurfaceVelocity" Enabled="false" />
+            <QuantityCategory Name="DistanceToSurface" Enabled="false" />
+            <QuantityCategory Name="DirectionToSurface" Enabled="false" />
+            <QuantityCategory Name="SurfaceSize" Enabled="true" />
+          </QuantityCategoryList>
+        </SpatialObject>
+      </SpatialObjects>
+      <Version Name="FRAP_2D_large_cist" KeyValue="20848522" BranchId="20848523" Archived="0" Date="01-Mar-2007 12:01:53" FromVersionable="false">
+        <Owner Name="spaar" Identifier="20848324" />
+        <GroupAccess Type="1" />
+        <Annotation>cloned from 'FRAP_2D_large_cist' owned by user vcellas
+(copied from FRAP_2D_large_cist)</Annotation>
+      </Version>
+      <MicroscopeMeasurement Name="fluor">
+        <ConvolutionKernel Type="ProjectionZKernel" />
+      </MicroscopeMeasurement>
+    </SimulationSpec>
+    <SimulationSpec Name="FRAP_3D_large_cist" Stochastic="false" UseConcentration="true" RuleBased="false" MassConservationModelReduction="true" InsufficientIterations="false" InsufficientMaxMolecules="false" CharacteristicSize="0.020288901888331472">
+      <NetworkConstraints RbmMaxIteration="1" RbmMaxMoleculesPerSpecies="10" RbmSpeciesLimit="800" RbmReactionsLimit="2500" />
+      <Annotation>cloned from 'FRAP_3D_large_cist' owned by user vcellas
+(copied from FRAP_3D_large_cist)</Annotation>
+      <Geometry Name="FRAP_3D_large_cist" Dimension="3">
+        <Annotation>cloned from 'FRAP_3D_large_cist' owned by user vcellas</Annotation>
+        <Extent X="9.6" Y="1.6" Z="0.04" />
+        <Origin X="-4.8" Y="-0.8" Z="-0.02" />
+        <SubVolume Name="golgi" Handle="1" Type="Analytical" KeyValue="20848388">
+          <AnalyticExpression>(((((pow((4.0 + x),2.0) + pow(y,2.0)) &lt; 0.5625) || ((pow((2.4 + x),2.0) + pow(y,2.0)) &lt; 0.5625) || ((pow((0.8 + x),2.0) + pow(y,2.0)) &lt; 0.5625) || ((pow((0.8 - x),2.0) + pow(y,2.0)) &lt; 0.5625) || ((pow((2.4 - x),2.0) + pow(y,2.0)) &lt; 0.5625) || ((pow((4.0 - x),2.0) + pow(y,2.0)) &lt; 0.5625)) * (z &gt;  - 0.01) * (z &lt; 0.01)) || ((((y * y) + (z * z)) &lt; 2.25E-4) * (x &gt;  - 3.26) * (x &lt;  - 3.14)) || ((((y * y) + (z * z)) &lt; 2.25E-4) * (x &gt;  - 1.66) * (x &lt;  - 1.54)) || ((((y * y) + (z * z)) &lt; 2.25E-4) * (x &gt;  - 0.06) * (x &lt; 0.06)) || ((((y * y) + (z * z)) &lt; 2.25E-4) * (x &gt; 1.54) * (x &lt; 1.66)) || ((((y * y) + (z * z)) &lt; 2.25E-4) * (x &gt; 3.14) * (x &lt; 3.26)))</AnalyticExpression>
+        </SubVolume>
+        <SubVolume Name="cell" Handle="0" Type="Analytical" KeyValue="20848389">
+          <AnalyticExpression>1.0</AnalyticExpression>
+        </SubVolume>
+        <SurfaceClass Name="cell_golgi_membrane" SubVolume1Ref="cell" SubVolume2Ref="golgi" />
+        <SurfaceDescription NumSamplesX="100" NumSamplesY="100" NumSamplesZ="100" CutoffFrequency="0.3">
+          <VolumeRegion Name="cell0" RegionID="0" SubVolume="cell" Size="0.4010143479484159" Unit="um3" />
+          <VolumeRegion Name="golgi1" RegionID="1" SubVolume="golgi" Size="0.2133856520515841" Unit="um3" />
+          <MembraneRegion Name="membrane_cell0_golgi1" VolumeRegion1="golgi1" VolumeRegion2="cell0" Size="21.17177451402583" Unit="um2" />
+        </SurfaceDescription>
+        <Version Name="FRAP_3D_large_cist" KeyValue="20848384" BranchId="20848385" Archived="0" Date="01-Mar-2007 12:01:52" FromVersionable="false">
+          <Owner Name="spaar" Identifier="20848324" />
+          <GroupAccess Type="1" />
+          <Annotation>cloned from 'FRAP_3D_large_cist' owned by user vcellas</Annotation>
+        </Version>
+      </Geometry>
+      <GeometryContext>
+        <FeatureMapping Feature="cell" GeometryClass="cell" SubVolume="cell">
+          <BoundariesTypes Xm="Flux" Xp="Flux" Ym="Flux" Yp="Flux" Zm="Flux" Zp="Flux" />
+        </FeatureMapping>
+        <FeatureMapping Feature="golgi" GeometryClass="golgi" SubVolume="golgi">
+          <BoundariesTypes Xm="Flux" Xp="Flux" Ym="Flux" Yp="Flux" Zm="Flux" Zp="Flux" />
+        </FeatureMapping>
+        <MembraneMapping Membrane="GM" SurfaceToVolumeRatio="1.0" VolumeFraction="0.2" CalculateVoltage="false" SpecificCapacitance="1.0" InitialVoltage="0.0" GeometryClass="cell_golgi_membrane">
+          <BoundariesTypes Xm="Flux" Xp="Flux" Ym="Flux" Yp="Flux" Zm="Flux" Zp="Flux" />
+        </MembraneMapping>
+      </GeometryContext>
+      <ReactionContext>
+        <LocalizedCompoundSpec LocalizedCompoundRef="albumin_golgi" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>(10.0 * ((pow((4.0 + x),2.0) + pow(y,2.0)) &lt; 0.5625) * (z &gt;  - 0.01) * (z &lt; 0.01))</InitialConcentration>
+          <Diffusion>10.0</Diffusion>
+        </LocalizedCompoundSpec>
+      </ReactionContext>
+      <MathDescription Name="FRAP_3D_large_cist2_generated">
+        <Annotation>cloned from 'FRAP_3D_large_cist2_generated' owned by user vcellas</Annotation>
+        <Constant Name="_F_">96480.0</Constant>
+        <Constant Name="_F_nmol_">9.648E-5</Constant>
+        <Constant Name="_K_GHK_">1.0E-9</Constant>
+        <Constant Name="_N_pmol_">6.02E11</Constant>
+        <Constant Name="_R_">8314.0</Constant>
+        <Constant Name="_T_">300.0</Constant>
+        <Constant Name="albumin_golgi_diffusionRate">10.0</Constant>
+        <Constant Name="K_millivolts_per_volt">1000.0</Constant>
+        <Constant Name="KMOLE">0.0016611295681063123</Constant>
+        <Constant Name="Voltage_GM">0.0</Constant>
+        <VolumeVariable Name="albumin" />
+        <Function Name="albumin_golgi_init">(10.0 * ((pow((4.0 + x),2.0) + pow(y,2.0)) &lt; 0.5625) * (z &gt;  - 0.01) * (z &lt; 0.01))</Function>
+        <CompartmentSubDomain Name="golgi">
+          <BoundaryType Boundary="Xm" Type="Flux" />
+          <BoundaryType Boundary="Xp" Type="Flux" />
+          <BoundaryType Boundary="Ym" Type="Flux" />
+          <BoundaryType Boundary="Yp" Type="Flux" />
+          <BoundaryType Boundary="Zm" Type="Flux" />
+          <BoundaryType Boundary="Zp" Type="Flux" />
+          <PdeEquation Name="albumin" SolutionType="Unknown">
+            <Rate>0.0</Rate>
+            <Diffusion>albumin_golgi_diffusionRate</Diffusion>
+            <Initial>albumin_golgi_init</Initial>
+          </PdeEquation>
+        </CompartmentSubDomain>
+        <CompartmentSubDomain Name="cell">
+          <BoundaryType Boundary="Xm" Type="Flux" />
+          <BoundaryType Boundary="Xp" Type="Flux" />
+          <BoundaryType Boundary="Ym" Type="Flux" />
+          <BoundaryType Boundary="Yp" Type="Flux" />
+          <BoundaryType Boundary="Zm" Type="Flux" />
+          <BoundaryType Boundary="Zp" Type="Flux" />
+          <PdeEquation Name="albumin" SolutionType="Unknown">
+            <Rate>0.0</Rate>
+            <Diffusion>albumin_golgi_diffusionRate</Diffusion>
+            <Initial>0.0</Initial>
+          </PdeEquation>
+        </CompartmentSubDomain>
+        <MembraneSubDomain Name="cell_golgi_membrane" InsideCompartment="golgi" OutsideCompartment="cell">
+          <BoundaryType Boundary="Xm" Type="Value" />
+          <BoundaryType Boundary="Xp" Type="Value" />
+          <BoundaryType Boundary="Ym" Type="Value" />
+          <BoundaryType Boundary="Yp" Type="Value" />
+          <BoundaryType Boundary="Zm" Type="Value" />
+          <BoundaryType Boundary="Zp" Type="Value" />
+          <JumpCondition Name="albumin">
+            <InFlux>0.0</InFlux>
+            <OutFlux>0.0</OutFlux>
+          </JumpCondition>
+        </MembraneSubDomain>
+        <Version Name="FRAP_3D_large_cist2_generated" KeyValue="20848473" BranchId="20848474" Archived="0" Date="01-Mar-2007 12:01:53" FromVersionable="false">
+          <Owner Name="spaar" Identifier="20848324" />
+          <GroupAccess Type="1" />
+          <Annotation>cloned from 'FRAP_3D_large_cist2_generated' owned by user vcellas</Annotation>
+        </Version>
+      </MathDescription>
+      <Simulation Name="Simulation_3D_cist">
+        <Annotation>run 20s</Annotation>
+        <SolverTaskDescription TaskType="Unsteady" UseSymbolicJacobian="false" Solver="Finite Volume, Regular Grid">
+          <TimeBound StartTime="0.0" EndTime="20.0" />
+          <TimeStep DefaultTime="0.1" MinTime="1.0E-8" MaxTime="1.0" />
+          <ErrorTolerance Absolut="1.0E-9" Relative="1.0E-9" />
+          <OutputOptions KeepEvery="10" KeepAtMost="1000" />
+          <NumberProcessors>1</NumberProcessors>
+        </SolverTaskDescription>
+        <MathOverrides />
+        <MeshSpecification>
+          <Size X="654" Y="109" Z="5" />
+        </MeshSpecification>
+        <Version Name="Simulation_3D_cist" KeyValue="23186169" BranchId="23186170" Archived="0" Date="30-Jul-2007 08:59:06" FromVersionable="false">
+          <Owner Name="spaar" Identifier="20848324" />
+          <GroupAccess Type="1" />
+          <Annotation>run 20s</Annotation>
+        </Version>
+      </Simulation>
+      <SpatialObjects>
+        <SpatialObject Name="vobj_cell0" Type="Volume" subVolume="cell" regionId="0">
+          <QuantityCategoryList>
+            <QuantityCategory Name="VolumeCentroid" Enabled="false" />
+            <QuantityCategory Name="InteriorVelocity" Enabled="false" />
+            <QuantityCategory Name="VolumeRegionSize" Enabled="true" />
+          </QuantityCategoryList>
+        </SpatialObject>
+        <SpatialObject Name="vobj_golgi1" Type="Volume" subVolume="golgi" regionId="1">
+          <QuantityCategoryList>
+            <QuantityCategory Name="VolumeCentroid" Enabled="false" />
+            <QuantityCategory Name="InteriorVelocity" Enabled="false" />
+            <QuantityCategory Name="VolumeRegionSize" Enabled="true" />
+          </QuantityCategoryList>
+        </SpatialObject>
+        <SpatialObject Name="sobj_golgi1_cell0" Type="Surface" subVolumeInside="golgi" regionIdInside="1" subVolumeOutside="cell" regionIdOutside="0">
+          <QuantityCategoryList>
+            <QuantityCategory Name="SurfaceNormal" Enabled="false" />
+            <QuantityCategory Name="SurfaceVelocity" Enabled="false" />
+            <QuantityCategory Name="DistanceToSurface" Enabled="false" />
+            <QuantityCategory Name="DirectionToSurface" Enabled="false" />
+            <QuantityCategory Name="SurfaceSize" Enabled="true" />
+          </QuantityCategoryList>
+        </SpatialObject>
+      </SpatialObjects>
+      <Version Name="FRAP_3D_large_cist" KeyValue="20848529" BranchId="20848530" Archived="0" Date="01-Mar-2007 12:01:54" FromVersionable="false">
+        <Owner Name="spaar" Identifier="20848324" />
+        <GroupAccess Type="1" />
+        <Annotation>cloned from 'FRAP_3D_large_cist' owned by user vcellas
+(copied from FRAP_3D_large_cist)</Annotation>
+      </Version>
+      <MicroscopeMeasurement Name="fluor">
+        <ConvolutionKernel Type="ProjectionZKernel" />
+      </MicroscopeMeasurement>
+    </SimulationSpec>
+    <SimulationSpec Name="FRAP_2D_thick_tubules" Stochastic="false" UseConcentration="true" RuleBased="false" MassConservationModelReduction="true" InsufficientIterations="false" InsufficientMaxMolecules="false" CharacteristicSize="0.014483150378460328">
+      <NetworkConstraints RbmMaxIteration="1" RbmMaxMoleculesPerSpecies="10" RbmSpeciesLimit="800" RbmReactionsLimit="2500" />
+      <Annotation>cloned from 'FRAP_2D_thick_tubules' owned by user vcellas
+(copied from FRAP_2D)</Annotation>
+      <Geometry Name="FRAP_2D_thick_tubules" Dimension="2">
+        <Annotation>cloned from 'FRAP_2D_thick_tubules' owned by user vcellas</Annotation>
+        <Extent X="6.6" Y="1.1" Z="10.0" />
+        <Origin X="-3.3" Y="-0.55" Z="0.0" />
+        <SubVolume Name="golgi" Handle="1" Type="Analytical" KeyValue="20848398">
+          <AnalyticExpression>(((pow((2.75 + x),2.0) + pow(y,2.0)) &lt; 0.25) || ((pow((1.65 + x),2.0) + pow(y,2.0)) &lt; 0.25) || ((pow((0.55 + x),2.0) + pow(y,2.0)) &lt; 0.25) || ((pow((0.55 - x),2.0) + pow(y,2.0)) &lt; 0.25) || ((pow((1.65 - x),2.0) + pow(y,2.0)) &lt; 0.25) || ((pow((2.75 - x),2.0) + pow(y,2.0)) &lt; 0.25) || ((y &gt;  - 0.02) * (y &lt; 0.03) * (x &gt;  - 2.26) * (x &lt;  - 2.14)) || ((y &gt;  - 0.02) * (y &lt; 0.03) * (x &gt;  - 1.16) * (x &lt;  - 1.04)) || ((y &gt;  - 0.02) * (y &lt; 0.03) * (x &gt;  - 0.06) * (x &lt; 0.06)) || ((y &gt;  - 0.02) * (y &lt; 0.03) * (x &gt; 1.04) * (x &lt; 1.16)) || ((y &gt;  - 0.02) * (y &lt; 0.03) * (x &gt; 2.14) * (x &lt; 2.26)))</AnalyticExpression>
+        </SubVolume>
+        <SubVolume Name="cell" Handle="0" Type="Analytical" KeyValue="20848399">
+          <AnalyticExpression>1.0</AnalyticExpression>
+        </SubVolume>
+        <SurfaceClass Name="cell_golgi_membrane" SubVolume1Ref="cell" SubVolume2Ref="golgi" />
+        <SurfaceDescription NumSamplesX="101" NumSamplesY="101" NumSamplesZ="1" CutoffFrequency="0.3">
+          <VolumeRegion Name="cell0" RegionID="0" SubVolume="cell" Size="2.5250280000000003" Unit="um2" />
+          <VolumeRegion Name="golgi1" RegionID="1" SubVolume="golgi" Size="4.734972000000001" Unit="um2" />
+          <MembraneRegion Name="membrane_cell0_golgi1" VolumeRegion1="golgi1" VolumeRegion2="cell0" Size="19.75361250916765" Unit="um" />
+        </SurfaceDescription>
+        <Version Name="FRAP_2D_thick_tubules" KeyValue="20848394" BranchId="20848395" Archived="0" Date="01-Mar-2007 12:01:53" FromVersionable="false">
+          <Owner Name="spaar" Identifier="20848324" />
+          <GroupAccess Type="1" />
+          <Annotation>cloned from 'FRAP_2D_thick_tubules' owned by user vcellas</Annotation>
+        </Version>
+      </Geometry>
+      <GeometryContext>
+        <FeatureMapping Feature="cell" GeometryClass="cell" SubVolume="cell">
+          <BoundariesTypes Xm="Flux" Xp="Flux" Ym="Flux" Yp="Flux" Zm="Flux" Zp="Flux" />
+        </FeatureMapping>
+        <FeatureMapping Feature="golgi" GeometryClass="golgi" SubVolume="golgi">
+          <BoundariesTypes Xm="Flux" Xp="Flux" Ym="Flux" Yp="Flux" Zm="Flux" Zp="Flux" />
+        </FeatureMapping>
+        <MembraneMapping Membrane="GM" SurfaceToVolumeRatio="1.0" VolumeFraction="0.2" CalculateVoltage="false" SpecificCapacitance="1.0" InitialVoltage="0.0" GeometryClass="cell_golgi_membrane">
+          <BoundariesTypes Xm="Flux" Xp="Flux" Ym="Flux" Yp="Flux" Zm="Flux" Zp="Flux" />
+        </MembraneMapping>
+      </GeometryContext>
+      <ReactionContext>
+        <LocalizedCompoundSpec LocalizedCompoundRef="albumin_golgi" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>(10.0 * ((pow((2.75 + x),2.0) + pow(y,2.0)) &lt; 0.25))</InitialConcentration>
+          <Diffusion>10.0</Diffusion>
+        </LocalizedCompoundSpec>
+      </ReactionContext>
+      <MathDescription Name="FRAP_2D_thick_tubules_generated">
+        <Annotation>cloned from 'FRAP_2D_thick_tubules_generated' owned by user vcellas</Annotation>
+        <Constant Name="_F_">96480.0</Constant>
+        <Constant Name="_F_nmol_">9.648E-5</Constant>
+        <Constant Name="_K_GHK_">1.0E-9</Constant>
+        <Constant Name="_N_pmol_">6.02E11</Constant>
+        <Constant Name="_R_">8314.0</Constant>
+        <Constant Name="_T_">300.0</Constant>
+        <Constant Name="albumin_golgi_diffusionRate">10.0</Constant>
+        <Constant Name="K_millivolts_per_volt">1000.0</Constant>
+        <Constant Name="KMOLE">0.0016611295681063123</Constant>
+        <Constant Name="Voltage_GM">0.0</Constant>
+        <VolumeVariable Name="albumin" />
+        <Function Name="albumin_golgi_init">(10.0 * ((pow((2.75 + x),2.0) + pow(y,2.0)) &lt; 0.25))</Function>
+        <CompartmentSubDomain Name="golgi">
+          <BoundaryType Boundary="Xm" Type="Flux" />
+          <BoundaryType Boundary="Xp" Type="Flux" />
+          <BoundaryType Boundary="Ym" Type="Flux" />
+          <BoundaryType Boundary="Yp" Type="Flux" />
+          <BoundaryType Boundary="Zm" Type="Value" />
+          <BoundaryType Boundary="Zp" Type="Value" />
+          <PdeEquation Name="albumin" SolutionType="Unknown">
+            <Rate>0.0</Rate>
+            <Diffusion>albumin_golgi_diffusionRate</Diffusion>
+            <Initial>albumin_golgi_init</Initial>
+          </PdeEquation>
+        </CompartmentSubDomain>
+        <CompartmentSubDomain Name="cell">
+          <BoundaryType Boundary="Xm" Type="Flux" />
+          <BoundaryType Boundary="Xp" Type="Flux" />
+          <BoundaryType Boundary="Ym" Type="Flux" />
+          <BoundaryType Boundary="Yp" Type="Flux" />
+          <BoundaryType Boundary="Zm" Type="Value" />
+          <BoundaryType Boundary="Zp" Type="Value" />
+          <PdeEquation Name="albumin" SolutionType="Unknown">
+            <Rate>0.0</Rate>
+            <Diffusion>albumin_golgi_diffusionRate</Diffusion>
+            <Initial>0.0</Initial>
+          </PdeEquation>
+        </CompartmentSubDomain>
+        <MembraneSubDomain Name="cell_golgi_membrane" InsideCompartment="golgi" OutsideCompartment="cell">
+          <BoundaryType Boundary="Xm" Type="Value" />
+          <BoundaryType Boundary="Xp" Type="Value" />
+          <BoundaryType Boundary="Ym" Type="Value" />
+          <BoundaryType Boundary="Yp" Type="Value" />
+          <BoundaryType Boundary="Zm" Type="Value" />
+          <BoundaryType Boundary="Zp" Type="Value" />
+          <JumpCondition Name="albumin">
+            <InFlux>0.0</InFlux>
+            <OutFlux>0.0</OutFlux>
+          </JumpCondition>
+        </MembraneSubDomain>
+        <Version Name="FRAP_2D_thick_tubules_generated" KeyValue="20848476" BranchId="20848477" Archived="0" Date="01-Mar-2007 12:01:53" FromVersionable="false">
+          <Owner Name="spaar" Identifier="20848324" />
+          <GroupAccess Type="1" />
+          <Annotation>cloned from 'FRAP_2D_thick_tubules_generated' owned by user vcellas</Annotation>
+        </Version>
+      </MathDescription>
+      <Simulation Name="Simulation_2D_thick_tubules">
+        <Annotation>run 20s</Annotation>
+        <SolverTaskDescription TaskType="Unsteady" UseSymbolicJacobian="false" Solver="Finite Volume, Regular Grid">
+          <TimeBound StartTime="0.0" EndTime="20.0" />
+          <TimeStep DefaultTime="0.1" MinTime="1.0E-8" MaxTime="1.0" />
+          <ErrorTolerance Absolut="1.0E-9" Relative="1.0E-9" />
+          <OutputOptions KeepEvery="10" KeepAtMost="1000" />
+          <NumberProcessors>1</NumberProcessors>
+        </SolverTaskDescription>
+        <MathOverrides />
+        <MeshSpecification>
+          <Size X="450" Y="75" Z="1" />
+        </MeshSpecification>
+        <Version Name="Simulation_2D_thick_tubules" KeyValue="23186138" BranchId="23186139" Archived="0" Date="30-Jul-2007 06:29:09" FromVersionable="false">
+          <Owner Name="spaar" Identifier="20848324" />
+          <GroupAccess Type="1" />
+          <Annotation>run 20s</Annotation>
+        </Version>
+      </Simulation>
+      <SpatialObjects>
+        <SpatialObject Name="vobj_cell0" Type="Volume" subVolume="cell" regionId="0">
+          <QuantityCategoryList>
+            <QuantityCategory Name="VolumeCentroid" Enabled="false" />
+            <QuantityCategory Name="InteriorVelocity" Enabled="false" />
+            <QuantityCategory Name="VolumeRegionSize" Enabled="true" />
+          </QuantityCategoryList>
+        </SpatialObject>
+        <SpatialObject Name="vobj_golgi1" Type="Volume" subVolume="golgi" regionId="1">
+          <QuantityCategoryList>
+            <QuantityCategory Name="VolumeCentroid" Enabled="false" />
+            <QuantityCategory Name="InteriorVelocity" Enabled="false" />
+            <QuantityCategory Name="VolumeRegionSize" Enabled="true" />
+          </QuantityCategoryList>
+        </SpatialObject>
+        <SpatialObject Name="sobj_golgi1_cell0" Type="Surface" subVolumeInside="golgi" regionIdInside="1" subVolumeOutside="cell" regionIdOutside="0">
+          <QuantityCategoryList>
+            <QuantityCategory Name="SurfaceNormal" Enabled="false" />
+            <QuantityCategory Name="SurfaceVelocity" Enabled="false" />
+            <QuantityCategory Name="DistanceToSurface" Enabled="false" />
+            <QuantityCategory Name="DirectionToSurface" Enabled="false" />
+            <QuantityCategory Name="SurfaceSize" Enabled="true" />
+          </QuantityCategoryList>
+        </SpatialObject>
+      </SpatialObjects>
+      <Version Name="FRAP_2D_thick_tubules" KeyValue="20848536" BranchId="20848537" Archived="0" Date="01-Mar-2007 12:01:54" FromVersionable="false">
+        <Owner Name="spaar" Identifier="20848324" />
+        <GroupAccess Type="1" />
+        <Annotation>cloned from 'FRAP_2D_thick_tubules' owned by user vcellas
+(copied from FRAP_2D)</Annotation>
+      </Version>
+      <MicroscopeMeasurement Name="fluor">
+        <ConvolutionKernel Type="ProjectionZKernel" />
+      </MicroscopeMeasurement>
+    </SimulationSpec>
+    <SimulationSpec Name="FRAP_2D_thin_tubules" Stochastic="false" UseConcentration="true" RuleBased="false" MassConservationModelReduction="true" InsufficientIterations="false" InsufficientMaxMolecules="false" CharacteristicSize="0.014483150378460328">
+      <NetworkConstraints RbmMaxIteration="1" RbmMaxMoleculesPerSpecies="10" RbmSpeciesLimit="800" RbmReactionsLimit="2500" />
+      <Annotation>cloned from 'FRAP_2D_thin_tubules' owned by user vcellas
+(copied from FRAP_2D)</Annotation>
+      <Geometry Name="FRAP_2D_thin_tubules" Dimension="2">
+        <Annotation>cloned from 'FRAP_2D_thin_tubules' owned by user vcellas</Annotation>
+        <Extent X="6.6" Y="1.1" Z="10.0" />
+        <Origin X="-3.3" Y="-0.55" Z="0.0" />
+        <SubVolume Name="golgi" Handle="1" Type="Analytical" KeyValue="20848408">
+          <AnalyticExpression>(((pow((2.75 + x),2.0) + pow(y,2.0)) &lt; 0.25) || ((pow((1.65 + x),2.0) + pow(y,2.0)) &lt; 0.25) || ((pow((0.55 + x),2.0) + pow(y,2.0)) &lt; 0.25) || ((pow((0.55 - x),2.0) + pow(y,2.0)) &lt; 0.25) || ((pow((1.65 - x),2.0) + pow(y,2.0)) &lt; 0.25) || ((pow((2.75 - x),2.0) + pow(y,2.0)) &lt; 0.25) || ((y &gt;  - 0.01) * (y &lt; 0.01) * (x &gt;  - 2.26) * (x &lt;  - 2.14)) || ((y &gt;  - 0.01) * (y &lt; 0.01) * (x &gt;  - 1.16) * (x &lt;  - 1.04)) || ((y &gt;  - 0.01) * (y &lt; 0.01) * (x &gt;  - 0.06) * (x &lt; 0.06)) || ((y &gt;  - 0.01) * (y &lt; 0.01) * (x &gt; 1.04) * (x &lt; 1.16)) || ((y &gt;  - 0.01) * (y &lt; 0.01) * (x &gt; 2.14) * (x &lt; 2.26)))</AnalyticExpression>
+        </SubVolume>
+        <SubVolume Name="cell" Handle="0" Type="Analytical" KeyValue="20848409">
+          <AnalyticExpression>1.0</AnalyticExpression>
+        </SubVolume>
+        <SurfaceClass Name="cell_golgi_membrane" SubVolume1Ref="cell" SubVolume2Ref="golgi" />
+        <SurfaceDescription NumSamplesX="101" NumSamplesY="101" NumSamplesZ="1" CutoffFrequency="0.3">
+          <VolumeRegion Name="cell0" RegionID="0" SubVolume="cell" Size="2.54463" Unit="um2" />
+          <VolumeRegion Name="golgi1" RegionID="1" SubVolume="golgi" Size="4.715370000000001" Unit="um2" />
+          <MembraneRegion Name="membrane_cell0_golgi1" VolumeRegion1="golgi1" VolumeRegion2="cell0" Size="20.080344056324826" Unit="um" />
+        </SurfaceDescription>
+        <Version Name="FRAP_2D_thin_tubules" KeyValue="20848404" BranchId="20848405" Archived="0" Date="01-Mar-2007 12:01:53" FromVersionable="false">
+          <Owner Name="spaar" Identifier="20848324" />
+          <GroupAccess Type="1" />
+          <Annotation>cloned from 'FRAP_2D_thin_tubules' owned by user vcellas</Annotation>
+        </Version>
+      </Geometry>
+      <GeometryContext>
+        <FeatureMapping Feature="cell" GeometryClass="cell" SubVolume="cell">
+          <BoundariesTypes Xm="Flux" Xp="Flux" Ym="Flux" Yp="Flux" Zm="Flux" Zp="Flux" />
+        </FeatureMapping>
+        <FeatureMapping Feature="golgi" GeometryClass="golgi" SubVolume="golgi">
+          <BoundariesTypes Xm="Flux" Xp="Flux" Ym="Flux" Yp="Flux" Zm="Flux" Zp="Flux" />
+        </FeatureMapping>
+        <MembraneMapping Membrane="GM" SurfaceToVolumeRatio="1.0" VolumeFraction="0.2" CalculateVoltage="false" SpecificCapacitance="1.0" InitialVoltage="0.0" GeometryClass="cell_golgi_membrane">
+          <BoundariesTypes Xm="Flux" Xp="Flux" Ym="Flux" Yp="Flux" Zm="Flux" Zp="Flux" />
+        </MembraneMapping>
+      </GeometryContext>
+      <ReactionContext>
+        <LocalizedCompoundSpec LocalizedCompoundRef="albumin_golgi" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>(10.0 * ((pow((2.75 + x),2.0) + pow(y,2.0)) &lt; 0.25))</InitialConcentration>
+          <Diffusion>10.0</Diffusion>
+        </LocalizedCompoundSpec>
+      </ReactionContext>
+      <MathDescription Name="FRAP_2D_thin_tubules_generated">
+        <Annotation>cloned from 'FRAP_2D_thin_tubules_generated' owned by user vcellas</Annotation>
+        <Constant Name="_F_">96480.0</Constant>
+        <Constant Name="_F_nmol_">9.648E-5</Constant>
+        <Constant Name="_K_GHK_">1.0E-9</Constant>
+        <Constant Name="_N_pmol_">6.02E11</Constant>
+        <Constant Name="_R_">8314.0</Constant>
+        <Constant Name="_T_">300.0</Constant>
+        <Constant Name="albumin_golgi_diffusionRate">10.0</Constant>
+        <Constant Name="K_millivolts_per_volt">1000.0</Constant>
+        <Constant Name="KMOLE">0.0016611295681063123</Constant>
+        <Constant Name="Voltage_GM">0.0</Constant>
+        <VolumeVariable Name="albumin" />
+        <Function Name="albumin_golgi_init">(10.0 * ((pow((2.75 + x),2.0) + pow(y,2.0)) &lt; 0.25))</Function>
+        <CompartmentSubDomain Name="golgi">
+          <BoundaryType Boundary="Xm" Type="Flux" />
+          <BoundaryType Boundary="Xp" Type="Flux" />
+          <BoundaryType Boundary="Ym" Type="Flux" />
+          <BoundaryType Boundary="Yp" Type="Flux" />
+          <BoundaryType Boundary="Zm" Type="Value" />
+          <BoundaryType Boundary="Zp" Type="Value" />
+          <PdeEquation Name="albumin" SolutionType="Unknown">
+            <Rate>0.0</Rate>
+            <Diffusion>albumin_golgi_diffusionRate</Diffusion>
+            <Initial>albumin_golgi_init</Initial>
+          </PdeEquation>
+        </CompartmentSubDomain>
+        <CompartmentSubDomain Name="cell">
+          <BoundaryType Boundary="Xm" Type="Flux" />
+          <BoundaryType Boundary="Xp" Type="Flux" />
+          <BoundaryType Boundary="Ym" Type="Flux" />
+          <BoundaryType Boundary="Yp" Type="Flux" />
+          <BoundaryType Boundary="Zm" Type="Value" />
+          <BoundaryType Boundary="Zp" Type="Value" />
+          <PdeEquation Name="albumin" SolutionType="Unknown">
+            <Rate>0.0</Rate>
+            <Diffusion>albumin_golgi_diffusionRate</Diffusion>
+            <Initial>0.0</Initial>
+          </PdeEquation>
+        </CompartmentSubDomain>
+        <MembraneSubDomain Name="cell_golgi_membrane" InsideCompartment="golgi" OutsideCompartment="cell">
+          <BoundaryType Boundary="Xm" Type="Value" />
+          <BoundaryType Boundary="Xp" Type="Value" />
+          <BoundaryType Boundary="Ym" Type="Value" />
+          <BoundaryType Boundary="Yp" Type="Value" />
+          <BoundaryType Boundary="Zm" Type="Value" />
+          <BoundaryType Boundary="Zp" Type="Value" />
+          <JumpCondition Name="albumin">
+            <InFlux>0.0</InFlux>
+            <OutFlux>0.0</OutFlux>
+          </JumpCondition>
+        </MembraneSubDomain>
+        <Version Name="FRAP_2D_thin_tubules_generated" KeyValue="20848479" BranchId="20848480" Archived="0" Date="01-Mar-2007 12:01:53" FromVersionable="false">
+          <Owner Name="spaar" Identifier="20848324" />
+          <GroupAccess Type="1" />
+          <Annotation>cloned from 'FRAP_2D_thin_tubules_generated' owned by user vcellas</Annotation>
+        </Version>
+      </MathDescription>
+      <Simulation Name="Simulation_2D_thin_tubules">
+        <Annotation>run 20s</Annotation>
+        <SolverTaskDescription TaskType="Unsteady" UseSymbolicJacobian="false" Solver="Finite Volume, Regular Grid">
+          <TimeBound StartTime="0.0" EndTime="20.0" />
+          <TimeStep DefaultTime="0.1" MinTime="1.0E-8" MaxTime="1.0" />
+          <ErrorTolerance Absolut="1.0E-9" Relative="1.0E-9" />
+          <OutputOptions KeepEvery="10" KeepAtMost="1000" />
+          <NumberProcessors>1</NumberProcessors>
+        </SolverTaskDescription>
+        <MathOverrides />
+        <MeshSpecification>
+          <Size X="450" Y="75" Z="1" />
+        </MeshSpecification>
+        <Version Name="Simulation_2D_thin_tubules" KeyValue="23186106" BranchId="23186107" Archived="0" Date="30-Jul-2007 06:27:16" FromVersionable="false">
+          <Owner Name="spaar" Identifier="20848324" />
+          <GroupAccess Type="1" />
+          <Annotation>run 20s</Annotation>
+        </Version>
+      </Simulation>
+      <SpatialObjects>
+        <SpatialObject Name="vobj_cell0" Type="Volume" subVolume="cell" regionId="0">
+          <QuantityCategoryList>
+            <QuantityCategory Name="VolumeCentroid" Enabled="false" />
+            <QuantityCategory Name="InteriorVelocity" Enabled="false" />
+            <QuantityCategory Name="VolumeRegionSize" Enabled="true" />
+          </QuantityCategoryList>
+        </SpatialObject>
+        <SpatialObject Name="vobj_golgi1" Type="Volume" subVolume="golgi" regionId="1">
+          <QuantityCategoryList>
+            <QuantityCategory Name="VolumeCentroid" Enabled="false" />
+            <QuantityCategory Name="InteriorVelocity" Enabled="false" />
+            <QuantityCategory Name="VolumeRegionSize" Enabled="true" />
+          </QuantityCategoryList>
+        </SpatialObject>
+        <SpatialObject Name="sobj_golgi1_cell0" Type="Surface" subVolumeInside="golgi" regionIdInside="1" subVolumeOutside="cell" regionIdOutside="0">
+          <QuantityCategoryList>
+            <QuantityCategory Name="SurfaceNormal" Enabled="false" />
+            <QuantityCategory Name="SurfaceVelocity" Enabled="false" />
+            <QuantityCategory Name="DistanceToSurface" Enabled="false" />
+            <QuantityCategory Name="DirectionToSurface" Enabled="false" />
+            <QuantityCategory Name="SurfaceSize" Enabled="true" />
+          </QuantityCategoryList>
+        </SpatialObject>
+      </SpatialObjects>
+      <Version Name="FRAP_2D_thin_tubules" KeyValue="20848543" BranchId="20848544" Archived="0" Date="01-Mar-2007 12:01:54" FromVersionable="false">
+        <Owner Name="spaar" Identifier="20848324" />
+        <GroupAccess Type="1" />
+        <Annotation>cloned from 'FRAP_2D_thin_tubules' owned by user vcellas
+(copied from FRAP_2D)</Annotation>
+      </Version>
+      <MicroscopeMeasurement Name="fluor">
+        <ConvolutionKernel Type="ProjectionZKernel" />
+      </MicroscopeMeasurement>
+    </SimulationSpec>
+    <SimulationSpec Name="FRAP_2D_double_tubules" Stochastic="false" UseConcentration="true" RuleBased="false" MassConservationModelReduction="true" InsufficientIterations="false" InsufficientMaxMolecules="false" CharacteristicSize="0.014483150378460328">
+      <NetworkConstraints RbmMaxIteration="1" RbmMaxMoleculesPerSpecies="10" RbmSpeciesLimit="800" RbmReactionsLimit="2500" />
+      <Annotation>cloned from 'FRAP_2D_double_tubules' owned by user vcellas
+(copied from FRAP_2D)</Annotation>
+      <Geometry Name="FRAP_2D_double_tubules" Dimension="2">
+        <Annotation>cloned from 'FRAP_2D_double_tubules' owned by user vcellas</Annotation>
+        <Extent X="6.6" Y="1.1" Z="10.0" />
+        <Origin X="-3.3" Y="-0.55" Z="0.0" />
+        <SubVolume Name="golgi" Handle="1" Type="Analytical" KeyValue="20848418">
+          <AnalyticExpression>(((pow((2.75 + x),2.0) + pow(y,2.0)) &lt; 0.25) || ((pow((1.65 + x),2.0) + pow(y,2.0)) &lt; 0.25) || ((pow((0.55 + x),2.0) + pow(y,2.0)) &lt; 0.25) || ((pow((0.55 - x),2.0) + pow(y,2.0)) &lt; 0.25) || ((pow((1.65 - x),2.0) + pow(y,2.0)) &lt; 0.25) || ((pow((2.75 - x),2.0) + pow(y,2.0)) &lt; 0.25) || ((y &gt;  - 0.04) * (y &lt;  - 0.01) * (x &gt;  - 2.26) * (x &lt;  - 2.14)) || ((y &gt;  - 0.04) * (y &lt;  - 0.01) * (x &gt;  - 1.16) * (x &lt;  - 1.04)) || ((y &gt;  - 0.04) * (y &lt;  - 0.01) * (x &gt;  - 0.06) * (x &lt; 0.06)) || ((y &gt;  - 0.04) * (y &lt;  - 0.01) * (x &gt; 1.04) * (x &lt; 1.16)) || ((y &gt;  - 0.04) * (y &lt;  - 0.01) * (x &gt; 2.14) * (x &lt; 2.26)) || ((y &gt; 0.01) * (y &lt; 0.04) * (x &gt;  - 2.26) * (x &lt;  - 2.14)) || ((y &gt; 0.01) * (y &lt; 0.04) * (x &gt;  - 1.16) * (x &lt;  - 1.04)) || ((y &gt; 0.01) * (y &lt; 0.04) * (x &gt;  - 0.06) * (x &lt; 0.06)) || ((y &gt; 0.01) * (y &lt; 0.04) * (x &gt; 1.04) * (x &lt; 1.16)) || ((y &gt; 0.01) * (y &lt; 0.04) * (x &gt; 2.14) * (x &lt; 2.26)))</AnalyticExpression>
+        </SubVolume>
+        <SubVolume Name="cell" Handle="0" Type="Analytical" KeyValue="20848419">
+          <AnalyticExpression>1.0</AnalyticExpression>
+        </SubVolume>
+        <SurfaceClass Name="cell_golgi_membrane" SubVolume1Ref="cell" SubVolume2Ref="golgi" />
+        <SurfaceDescription NumSamplesX="101" NumSamplesY="101" NumSamplesZ="1" CutoffFrequency="0.3">
+          <VolumeRegion Name="cell0" RegionID="0" SubVolume="cell" Size="2.505426" Unit="um2" />
+          <VolumeRegion Name="golgi1" RegionID="1" SubVolume="golgi" Size="4.7480400000000005" Unit="um2" />
+          <VolumeRegion Name="cell2" RegionID="2" SubVolume="cell" Size="0.0014520000000000002" Unit="um2" />
+          <VolumeRegion Name="cell3" RegionID="3" SubVolume="cell" Size="0.0014520000000000002" Unit="um2" />
+          <VolumeRegion Name="cell4" RegionID="4" SubVolume="cell" Size="7.260000000000001E-4" Unit="um2" />
+          <VolumeRegion Name="cell5" RegionID="5" SubVolume="cell" Size="0.0014520000000000002" Unit="um2" />
+          <VolumeRegion Name="cell6" RegionID="6" SubVolume="cell" Size="0.0014520000000000002" Unit="um2" />
+          <MembraneRegion Name="membrane_cell0_golgi1" VolumeRegion1="golgi1" VolumeRegion2="cell0" Size="19.426903837853313" Unit="um" />
+          <MembraneRegion Name="membrane_golgi1_cell2" VolumeRegion1="cell2" VolumeRegion2="golgi1" Size="0.07993762851705755" Unit="um" />
+          <MembraneRegion Name="membrane_golgi1_cell3" VolumeRegion1="cell3" VolumeRegion2="golgi1" Size="0.07993762851705888" Unit="um" />
+          <MembraneRegion Name="membrane_golgi1_cell4" VolumeRegion1="cell4" VolumeRegion2="golgi1" Size="0.0092198912610296" Unit="um" />
+          <MembraneRegion Name="membrane_golgi1_cell5" VolumeRegion1="cell5" VolumeRegion2="golgi1" Size="0.07993762851705932" Unit="um" />
+          <MembraneRegion Name="membrane_golgi1_cell6" VolumeRegion1="cell6" VolumeRegion2="golgi1" Size="0.07993762851705755" Unit="um" />
+        </SurfaceDescription>
+        <Version Name="FRAP_2D_double_tubules" KeyValue="20848414" BranchId="20848415" Archived="0" Date="01-Mar-2007 12:01:53" FromVersionable="false">
+          <Owner Name="spaar" Identifier="20848324" />
+          <GroupAccess Type="1" />
+          <Annotation>cloned from 'FRAP_2D_double_tubules' owned by user vcellas</Annotation>
+        </Version>
+      </Geometry>
+      <GeometryContext>
+        <FeatureMapping Feature="cell" GeometryClass="cell" SubVolume="cell">
+          <BoundariesTypes Xm="Flux" Xp="Flux" Ym="Flux" Yp="Flux" Zm="Flux" Zp="Flux" />
+        </FeatureMapping>
+        <FeatureMapping Feature="golgi" GeometryClass="golgi" SubVolume="golgi">
+          <BoundariesTypes Xm="Flux" Xp="Flux" Ym="Flux" Yp="Flux" Zm="Flux" Zp="Flux" />
+        </FeatureMapping>
+        <MembraneMapping Membrane="GM" SurfaceToVolumeRatio="1.0" VolumeFraction="0.2" CalculateVoltage="false" SpecificCapacitance="1.0" InitialVoltage="0.0" GeometryClass="cell_golgi_membrane">
+          <BoundariesTypes Xm="Flux" Xp="Flux" Ym="Flux" Yp="Flux" Zm="Flux" Zp="Flux" />
+        </MembraneMapping>
+      </GeometryContext>
+      <ReactionContext>
+        <LocalizedCompoundSpec LocalizedCompoundRef="albumin_golgi" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>(10.0 * ((pow((2.75 + x),2.0) + pow(y,2.0)) &lt; 0.25))</InitialConcentration>
+          <Diffusion>10.0</Diffusion>
+        </LocalizedCompoundSpec>
+      </ReactionContext>
+      <MathDescription Name="FRAP_2D_double_tubules_generated">
+        <Annotation>cloned from 'FRAP_2D_double_tubules_generated' owned by user vcellas</Annotation>
+        <Constant Name="_F_">96480.0</Constant>
+        <Constant Name="_F_nmol_">9.648E-5</Constant>
+        <Constant Name="_K_GHK_">1.0E-9</Constant>
+        <Constant Name="_N_pmol_">6.02E11</Constant>
+        <Constant Name="_R_">8314.0</Constant>
+        <Constant Name="_T_">300.0</Constant>
+        <Constant Name="albumin_golgi_diffusionRate">10.0</Constant>
+        <Constant Name="K_millivolts_per_volt">1000.0</Constant>
+        <Constant Name="KMOLE">0.0016611295681063123</Constant>
+        <Constant Name="Voltage_GM">0.0</Constant>
+        <VolumeVariable Name="albumin" />
+        <Function Name="albumin_golgi_init">(10.0 * ((pow((2.75 + x),2.0) + pow(y,2.0)) &lt; 0.25))</Function>
+        <CompartmentSubDomain Name="golgi">
+          <BoundaryType Boundary="Xm" Type="Flux" />
+          <BoundaryType Boundary="Xp" Type="Flux" />
+          <BoundaryType Boundary="Ym" Type="Flux" />
+          <BoundaryType Boundary="Yp" Type="Flux" />
+          <BoundaryType Boundary="Zm" Type="Value" />
+          <BoundaryType Boundary="Zp" Type="Value" />
+          <PdeEquation Name="albumin" SolutionType="Unknown">
+            <Rate>0.0</Rate>
+            <Diffusion>albumin_golgi_diffusionRate</Diffusion>
+            <Initial>albumin_golgi_init</Initial>
+          </PdeEquation>
+        </CompartmentSubDomain>
+        <CompartmentSubDomain Name="cell">
+          <BoundaryType Boundary="Xm" Type="Flux" />
+          <BoundaryType Boundary="Xp" Type="Flux" />
+          <BoundaryType Boundary="Ym" Type="Flux" />
+          <BoundaryType Boundary="Yp" Type="Flux" />
+          <BoundaryType Boundary="Zm" Type="Value" />
+          <BoundaryType Boundary="Zp" Type="Value" />
+          <PdeEquation Name="albumin" SolutionType="Unknown">
+            <Rate>0.0</Rate>
+            <Diffusion>albumin_golgi_diffusionRate</Diffusion>
+            <Initial>0.0</Initial>
+          </PdeEquation>
+        </CompartmentSubDomain>
+        <MembraneSubDomain Name="cell_golgi_membrane" InsideCompartment="golgi" OutsideCompartment="cell">
+          <BoundaryType Boundary="Xm" Type="Value" />
+          <BoundaryType Boundary="Xp" Type="Value" />
+          <BoundaryType Boundary="Ym" Type="Value" />
+          <BoundaryType Boundary="Yp" Type="Value" />
+          <BoundaryType Boundary="Zm" Type="Value" />
+          <BoundaryType Boundary="Zp" Type="Value" />
+          <JumpCondition Name="albumin">
+            <InFlux>0.0</InFlux>
+            <OutFlux>0.0</OutFlux>
+          </JumpCondition>
+        </MembraneSubDomain>
+        <Version Name="FRAP_2D_double_tubules_generated" KeyValue="20848482" BranchId="20848483" Archived="0" Date="01-Mar-2007 12:01:53" FromVersionable="false">
+          <Owner Name="spaar" Identifier="20848324" />
+          <GroupAccess Type="1" />
+          <Annotation>cloned from 'FRAP_2D_double_tubules_generated' owned by user vcellas</Annotation>
+        </Version>
+      </MathDescription>
+      <Simulation Name="Simulation_2D_double_tubules">
+        <Annotation>run 20s</Annotation>
+        <SolverTaskDescription TaskType="Unsteady" UseSymbolicJacobian="false" Solver="Finite Volume, Regular Grid">
+          <TimeBound StartTime="0.0" EndTime="20.0" />
+          <TimeStep DefaultTime="0.1" MinTime="1.0E-8" MaxTime="1.0" />
+          <ErrorTolerance Absolut="1.0E-9" Relative="1.0E-9" />
+          <OutputOptions KeepEvery="10" KeepAtMost="1000" />
+          <NumberProcessors>1</NumberProcessors>
+        </SolverTaskDescription>
+        <MathOverrides />
+        <MeshSpecification>
+          <Size X="450" Y="75" Z="1" />
+        </MeshSpecification>
+        <Version Name="Simulation_2D_double_tubules" KeyValue="23186077" BranchId="23186078" Archived="0" Date="30-Jul-2007 06:26:24" FromVersionable="false">
+          <Owner Name="spaar" Identifier="20848324" />
+          <GroupAccess Type="1" />
+          <Annotation>run 20s</Annotation>
+        </Version>
+      </Simulation>
+      <SpatialObjects>
+        <SpatialObject Name="vobj_cell0" Type="Volume" subVolume="cell" regionId="0">
+          <QuantityCategoryList>
+            <QuantityCategory Name="VolumeCentroid" Enabled="false" />
+            <QuantityCategory Name="InteriorVelocity" Enabled="false" />
+            <QuantityCategory Name="VolumeRegionSize" Enabled="true" />
+          </QuantityCategoryList>
+        </SpatialObject>
+        <SpatialObject Name="vobj_golgi1" Type="Volume" subVolume="golgi" regionId="1">
+          <QuantityCategoryList>
+            <QuantityCategory Name="VolumeCentroid" Enabled="false" />
+            <QuantityCategory Name="InteriorVelocity" Enabled="false" />
+            <QuantityCategory Name="VolumeRegionSize" Enabled="true" />
+          </QuantityCategoryList>
+        </SpatialObject>
+        <SpatialObject Name="vobj_cell2" Type="Volume" subVolume="cell" regionId="2">
+          <QuantityCategoryList>
+            <QuantityCategory Name="VolumeCentroid" Enabled="false" />
+            <QuantityCategory Name="InteriorVelocity" Enabled="false" />
+            <QuantityCategory Name="VolumeRegionSize" Enabled="true" />
+          </QuantityCategoryList>
+        </SpatialObject>
+        <SpatialObject Name="vobj_cell3" Type="Volume" subVolume="cell" regionId="3">
+          <QuantityCategoryList>
+            <QuantityCategory Name="VolumeCentroid" Enabled="false" />
+            <QuantityCategory Name="InteriorVelocity" Enabled="false" />
+            <QuantityCategory Name="VolumeRegionSize" Enabled="true" />
+          </QuantityCategoryList>
+        </SpatialObject>
+        <SpatialObject Name="vobj_cell4" Type="Volume" subVolume="cell" regionId="4">
+          <QuantityCategoryList>
+            <QuantityCategory Name="VolumeCentroid" Enabled="false" />
+            <QuantityCategory Name="InteriorVelocity" Enabled="false" />
+            <QuantityCategory Name="VolumeRegionSize" Enabled="true" />
+          </QuantityCategoryList>
+        </SpatialObject>
+        <SpatialObject Name="vobj_cell5" Type="Volume" subVolume="cell" regionId="5">
+          <QuantityCategoryList>
+            <QuantityCategory Name="VolumeCentroid" Enabled="false" />
+            <QuantityCategory Name="InteriorVelocity" Enabled="false" />
+            <QuantityCategory Name="VolumeRegionSize" Enabled="true" />
+          </QuantityCategoryList>
+        </SpatialObject>
+        <SpatialObject Name="vobj_cell6" Type="Volume" subVolume="cell" regionId="6">
+          <QuantityCategoryList>
+            <QuantityCategory Name="VolumeCentroid" Enabled="false" />
+            <QuantityCategory Name="InteriorVelocity" Enabled="false" />
+            <QuantityCategory Name="VolumeRegionSize" Enabled="true" />
+          </QuantityCategoryList>
+        </SpatialObject>
+        <SpatialObject Name="sobj_golgi1_cell0" Type="Surface" subVolumeInside="golgi" regionIdInside="1" subVolumeOutside="cell" regionIdOutside="0">
+          <QuantityCategoryList>
+            <QuantityCategory Name="SurfaceNormal" Enabled="false" />
+            <QuantityCategory Name="SurfaceVelocity" Enabled="false" />
+            <QuantityCategory Name="DistanceToSurface" Enabled="false" />
+            <QuantityCategory Name="DirectionToSurface" Enabled="false" />
+            <QuantityCategory Name="SurfaceSize" Enabled="true" />
+          </QuantityCategoryList>
+        </SpatialObject>
+        <SpatialObject Name="sobj_cell2_golgi1" Type="Surface" subVolumeInside="cell" regionIdInside="2" subVolumeOutside="golgi" regionIdOutside="1">
+          <QuantityCategoryList>
+            <QuantityCategory Name="SurfaceNormal" Enabled="false" />
+            <QuantityCategory Name="SurfaceVelocity" Enabled="false" />
+            <QuantityCategory Name="DistanceToSurface" Enabled="false" />
+            <QuantityCategory Name="DirectionToSurface" Enabled="false" />
+            <QuantityCategory Name="SurfaceSize" Enabled="true" />
+          </QuantityCategoryList>
+        </SpatialObject>
+        <SpatialObject Name="sobj_cell3_golgi1" Type="Surface" subVolumeInside="cell" regionIdInside="3" subVolumeOutside="golgi" regionIdOutside="1">
+          <QuantityCategoryList>
+            <QuantityCategory Name="SurfaceNormal" Enabled="false" />
+            <QuantityCategory Name="SurfaceVelocity" Enabled="false" />
+            <QuantityCategory Name="DistanceToSurface" Enabled="false" />
+            <QuantityCategory Name="DirectionToSurface" Enabled="false" />
+            <QuantityCategory Name="SurfaceSize" Enabled="true" />
+          </QuantityCategoryList>
+        </SpatialObject>
+        <SpatialObject Name="sobj_cell4_golgi1" Type="Surface" subVolumeInside="cell" regionIdInside="4" subVolumeOutside="golgi" regionIdOutside="1">
+          <QuantityCategoryList>
+            <QuantityCategory Name="SurfaceNormal" Enabled="false" />
+            <QuantityCategory Name="SurfaceVelocity" Enabled="false" />
+            <QuantityCategory Name="DistanceToSurface" Enabled="false" />
+            <QuantityCategory Name="DirectionToSurface" Enabled="false" />
+            <QuantityCategory Name="SurfaceSize" Enabled="true" />
+          </QuantityCategoryList>
+        </SpatialObject>
+        <SpatialObject Name="sobj_cell5_golgi1" Type="Surface" subVolumeInside="cell" regionIdInside="5" subVolumeOutside="golgi" regionIdOutside="1">
+          <QuantityCategoryList>
+            <QuantityCategory Name="SurfaceNormal" Enabled="false" />
+            <QuantityCategory Name="SurfaceVelocity" Enabled="false" />
+            <QuantityCategory Name="DistanceToSurface" Enabled="false" />
+            <QuantityCategory Name="DirectionToSurface" Enabled="false" />
+            <QuantityCategory Name="SurfaceSize" Enabled="true" />
+          </QuantityCategoryList>
+        </SpatialObject>
+        <SpatialObject Name="sobj_cell6_golgi1" Type="Surface" subVolumeInside="cell" regionIdInside="6" subVolumeOutside="golgi" regionIdOutside="1">
+          <QuantityCategoryList>
+            <QuantityCategory Name="SurfaceNormal" Enabled="false" />
+            <QuantityCategory Name="SurfaceVelocity" Enabled="false" />
+            <QuantityCategory Name="DistanceToSurface" Enabled="false" />
+            <QuantityCategory Name="DirectionToSurface" Enabled="false" />
+            <QuantityCategory Name="SurfaceSize" Enabled="true" />
+          </QuantityCategoryList>
+        </SpatialObject>
+      </SpatialObjects>
+      <Version Name="FRAP_2D_double_tubules" KeyValue="20848550" BranchId="20848551" Archived="0" Date="01-Mar-2007 12:01:54" FromVersionable="false">
+        <Owner Name="spaar" Identifier="20848324" />
+        <GroupAccess Type="1" />
+        <Annotation>cloned from 'FRAP_2D_double_tubules' owned by user vcellas
+(copied from FRAP_2D)</Annotation>
+      </Version>
+      <MicroscopeMeasurement Name="fluor">
+        <ConvolutionKernel Type="ProjectionZKernel" />
+      </MicroscopeMeasurement>
+    </SimulationSpec>
+    <SimulationSpec Name="FRAP_2D_fast_diffusion" Stochastic="false" UseConcentration="true" RuleBased="false" MassConservationModelReduction="true" InsufficientIterations="false" InsufficientMaxMolecules="false" CharacteristicSize="0.014483150378460328">
+      <NetworkConstraints RbmMaxIteration="1" RbmMaxMoleculesPerSpecies="10" RbmSpeciesLimit="800" RbmReactionsLimit="2500" />
+      <Annotation>cloned from 'FRAP_2D_fast_diffusion' owned by user vcellas
+(copied from FRAP_2D)</Annotation>
+      <Geometry Name="FRAP_2D2132561844" Dimension="2">
+        <Annotation>cloned from 'FRAP_2D' owned by user vcellas</Annotation>
+        <Extent X="6.6" Y="1.1" Z="10.0" />
+        <Origin X="-3.3" Y="-0.55" Z="0.0" />
+        <SubVolume Name="golgi" Handle="1" Type="Analytical" KeyValue="20848438">
+          <AnalyticExpression>(((pow((2.75 + x),2.0) + pow(y,2.0)) &lt; 0.25) || ((pow((1.65 + x),2.0) + pow(y,2.0)) &lt; 0.25) || ((pow((0.55 + x),2.0) + pow(y,2.0)) &lt; 0.25) || ((pow((0.55 - x),2.0) + pow(y,2.0)) &lt; 0.25) || ((pow((1.65 - x),2.0) + pow(y,2.0)) &lt; 0.25) || ((pow((2.75 - x),2.0) + pow(y,2.0)) &lt; 0.25) || ((y &gt;  - 0.01) * (y &lt; 0.02) * (x &gt;  - 2.26) * (x &lt;  - 2.14)) || ((y &gt;  - 0.01) * (y &lt; 0.02) * (x &gt;  - 1.16) * (x &lt;  - 1.04)) || ((y &gt;  - 0.01) * (y &lt; 0.02) * (x &gt;  - 0.06) * (x &lt; 0.06)) || ((y &gt;  - 0.01) * (y &lt; 0.02) * (x &gt; 1.04) * (x &lt; 1.16)) || ((y &gt;  - 0.01) * (y &lt; 0.02) * (x &gt; 2.14) * (x &lt; 2.26)))</AnalyticExpression>
+        </SubVolume>
+        <SubVolume Name="cell" Handle="0" Type="Analytical" KeyValue="20848439">
+          <AnalyticExpression>1.0</AnalyticExpression>
+        </SubVolume>
+        <SurfaceClass Name="cell_golgi_membrane" SubVolume1Ref="cell" SubVolume2Ref="golgi" />
+        <SurfaceDescription NumSamplesX="101" NumSamplesY="101" NumSamplesZ="1" CutoffFrequency="0.3">
+          <VolumeRegion Name="cell0" RegionID="0" SubVolume="cell" Size="2.538096" Unit="um2" />
+          <VolumeRegion Name="golgi1" RegionID="1" SubVolume="golgi" Size="4.721904" Unit="um2" />
+          <MembraneRegion Name="membrane_cell0_golgi1" VolumeRegion1="golgi1" VolumeRegion2="cell0" Size="19.971433220705862" Unit="um" />
+        </SurfaceDescription>
+        <Version Name="FRAP_2D2132561844" KeyValue="20848434" BranchId="20848435" Archived="0" Date="01-Mar-2007 12:01:53" FromVersionable="false">
+          <Owner Name="spaar" Identifier="20848324" />
+          <GroupAccess Type="1" />
+          <Annotation>cloned from 'FRAP_2D' owned by user vcellas</Annotation>
+        </Version>
+      </Geometry>
+      <GeometryContext>
+        <FeatureMapping Feature="cell" GeometryClass="cell" SubVolume="cell">
+          <BoundariesTypes Xm="Flux" Xp="Flux" Ym="Flux" Yp="Flux" Zm="Flux" Zp="Flux" />
+        </FeatureMapping>
+        <FeatureMapping Feature="golgi" GeometryClass="golgi" SubVolume="golgi">
+          <BoundariesTypes Xm="Flux" Xp="Flux" Ym="Flux" Yp="Flux" Zm="Flux" Zp="Flux" />
+        </FeatureMapping>
+        <MembraneMapping Membrane="GM" SurfaceToVolumeRatio="1.0" VolumeFraction="0.2" CalculateVoltage="false" SpecificCapacitance="1.0" InitialVoltage="0.0" GeometryClass="cell_golgi_membrane">
+          <BoundariesTypes Xm="Flux" Xp="Flux" Ym="Flux" Yp="Flux" Zm="Flux" Zp="Flux" />
+        </MembraneMapping>
+      </GeometryContext>
+      <ReactionContext>
+        <LocalizedCompoundSpec LocalizedCompoundRef="albumin_golgi" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>(10.0 * ((pow((2.75 + x),2.0) + pow(y,2.0)) &lt; 0.25))</InitialConcentration>
+          <Diffusion>20.0</Diffusion>
+        </LocalizedCompoundSpec>
+      </ReactionContext>
+      <MathDescription Name="FRAP_2D_slow_diffusion_generated">
+        <Annotation>cloned from 'FRAP_2D_slow_diffusion_generated' owned by user vcellas</Annotation>
+        <Constant Name="_F_">96480.0</Constant>
+        <Constant Name="_F_nmol_">9.648E-5</Constant>
+        <Constant Name="_K_GHK_">1.0E-9</Constant>
+        <Constant Name="_N_pmol_">6.02E11</Constant>
+        <Constant Name="_R_">8314.0</Constant>
+        <Constant Name="_T_">300.0</Constant>
+        <Constant Name="albumin_golgi_diffusionRate">20.0</Constant>
+        <Constant Name="K_millivolts_per_volt">1000.0</Constant>
+        <Constant Name="KMOLE">0.0016611295681063123</Constant>
+        <Constant Name="Voltage_GM">0.0</Constant>
+        <VolumeVariable Name="albumin" />
+        <Function Name="albumin_golgi_init">(10.0 * ((pow((2.75 + x),2.0) + pow(y,2.0)) &lt; 0.25))</Function>
+        <CompartmentSubDomain Name="golgi">
+          <BoundaryType Boundary="Xm" Type="Flux" />
+          <BoundaryType Boundary="Xp" Type="Flux" />
+          <BoundaryType Boundary="Ym" Type="Flux" />
+          <BoundaryType Boundary="Yp" Type="Flux" />
+          <BoundaryType Boundary="Zm" Type="Value" />
+          <BoundaryType Boundary="Zp" Type="Value" />
+          <PdeEquation Name="albumin" SolutionType="Unknown">
+            <Rate>0.0</Rate>
+            <Diffusion>albumin_golgi_diffusionRate</Diffusion>
+            <Initial>albumin_golgi_init</Initial>
+          </PdeEquation>
+        </CompartmentSubDomain>
+        <CompartmentSubDomain Name="cell">
+          <BoundaryType Boundary="Xm" Type="Flux" />
+          <BoundaryType Boundary="Xp" Type="Flux" />
+          <BoundaryType Boundary="Ym" Type="Flux" />
+          <BoundaryType Boundary="Yp" Type="Flux" />
+          <BoundaryType Boundary="Zm" Type="Value" />
+          <BoundaryType Boundary="Zp" Type="Value" />
+          <PdeEquation Name="albumin" SolutionType="Unknown">
+            <Rate>0.0</Rate>
+            <Diffusion>albumin_golgi_diffusionRate</Diffusion>
+            <Initial>0.0</Initial>
+          </PdeEquation>
+        </CompartmentSubDomain>
+        <MembraneSubDomain Name="cell_golgi_membrane" InsideCompartment="golgi" OutsideCompartment="cell">
+          <BoundaryType Boundary="Xm" Type="Value" />
+          <BoundaryType Boundary="Xp" Type="Value" />
+          <BoundaryType Boundary="Ym" Type="Value" />
+          <BoundaryType Boundary="Yp" Type="Value" />
+          <BoundaryType Boundary="Zm" Type="Value" />
+          <BoundaryType Boundary="Zp" Type="Value" />
+          <JumpCondition Name="albumin">
+            <InFlux>0.0</InFlux>
+            <OutFlux>0.0</OutFlux>
+          </JumpCondition>
+        </MembraneSubDomain>
+        <Version Name="FRAP_2D_slow_diffusion_generated" KeyValue="20848485" BranchId="20848486" Archived="0" Date="01-Mar-2007 12:01:53" FromVersionable="false">
+          <Owner Name="spaar" Identifier="20848324" />
+          <GroupAccess Type="1" />
+          <Annotation>cloned from 'FRAP_2D_slow_diffusion_generated' owned by user vcellas</Annotation>
+        </Version>
+      </MathDescription>
+      <Simulation Name="Simulation_2D_fast_diffusion">
+        <Annotation>run 20s</Annotation>
+        <SolverTaskDescription TaskType="Unsteady" UseSymbolicJacobian="false" Solver="Finite Volume, Regular Grid">
+          <TimeBound StartTime="0.0" EndTime="20.0" />
+          <TimeStep DefaultTime="0.1" MinTime="1.0E-8" MaxTime="1.0" />
+          <ErrorTolerance Absolut="1.0E-9" Relative="1.0E-9" />
+          <OutputOptions KeepEvery="10" KeepAtMost="1000" />
+          <NumberProcessors>1</NumberProcessors>
+        </SolverTaskDescription>
+        <MathOverrides />
+        <MeshSpecification>
+          <Size X="450" Y="75" Z="1" />
+        </MeshSpecification>
+        <Version Name="Simulation_2D_fast_diffusion" KeyValue="23186019" BranchId="23186020" Archived="0" Date="30-Jul-2007 06:24:55" FromVersionable="false">
+          <Owner Name="spaar" Identifier="20848324" />
+          <GroupAccess Type="1" />
+          <Annotation>run 20s</Annotation>
+        </Version>
+      </Simulation>
+      <SpatialObjects>
+        <SpatialObject Name="vobj_cell0" Type="Volume" subVolume="cell" regionId="0">
+          <QuantityCategoryList>
+            <QuantityCategory Name="VolumeCentroid" Enabled="false" />
+            <QuantityCategory Name="InteriorVelocity" Enabled="false" />
+            <QuantityCategory Name="VolumeRegionSize" Enabled="true" />
+          </QuantityCategoryList>
+        </SpatialObject>
+        <SpatialObject Name="vobj_golgi1" Type="Volume" subVolume="golgi" regionId="1">
+          <QuantityCategoryList>
+            <QuantityCategory Name="VolumeCentroid" Enabled="false" />
+            <QuantityCategory Name="InteriorVelocity" Enabled="false" />
+            <QuantityCategory Name="VolumeRegionSize" Enabled="true" />
+          </QuantityCategoryList>
+        </SpatialObject>
+        <SpatialObject Name="sobj_golgi1_cell0" Type="Surface" subVolumeInside="golgi" regionIdInside="1" subVolumeOutside="cell" regionIdOutside="0">
+          <QuantityCategoryList>
+            <QuantityCategory Name="SurfaceNormal" Enabled="false" />
+            <QuantityCategory Name="SurfaceVelocity" Enabled="false" />
+            <QuantityCategory Name="DistanceToSurface" Enabled="false" />
+            <QuantityCategory Name="DirectionToSurface" Enabled="false" />
+            <QuantityCategory Name="SurfaceSize" Enabled="true" />
+          </QuantityCategoryList>
+        </SpatialObject>
+      </SpatialObjects>
+      <Version Name="FRAP_2D_fast_diffusion" KeyValue="20848557" BranchId="20848558" Archived="0" Date="01-Mar-2007 12:01:54" FromVersionable="false">
+        <Owner Name="spaar" Identifier="20848324" />
+        <GroupAccess Type="1" />
+        <Annotation>cloned from 'FRAP_2D_fast_diffusion' owned by user vcellas
+(copied from FRAP_2D)</Annotation>
+      </Version>
+      <MicroscopeMeasurement Name="fluor">
+        <ConvolutionKernel Type="ProjectionZKernel" />
+      </MicroscopeMeasurement>
+    </SimulationSpec>
+    <SimulationSpec Name="FRAP_2D_slow_diffusion" Stochastic="false" UseConcentration="true" RuleBased="false" MassConservationModelReduction="true" InsufficientIterations="false" InsufficientMaxMolecules="false" CharacteristicSize="0.014483150378460328">
+      <NetworkConstraints RbmMaxIteration="1" RbmMaxMoleculesPerSpecies="10" RbmSpeciesLimit="800" RbmReactionsLimit="2500" />
+      <Annotation>cloned from 'FRAP_2D_slow_diffusion' owned by user vcellas
+(copied from FRAP_2D)</Annotation>
+      <Geometry Name="FRAP_2D1840824898" Dimension="2">
+        <Annotation>cloned from 'FRAP_2D' owned by user vcellas</Annotation>
+        <Extent X="6.6" Y="1.1" Z="10.0" />
+        <Origin X="-3.3" Y="-0.55" Z="0.0" />
+        <SubVolume Name="golgi" Handle="1" Type="Analytical" KeyValue="20848448">
+          <AnalyticExpression>(((pow((2.75 + x),2.0) + pow(y,2.0)) &lt; 0.25) || ((pow((1.65 + x),2.0) + pow(y,2.0)) &lt; 0.25) || ((pow((0.55 + x),2.0) + pow(y,2.0)) &lt; 0.25) || ((pow((0.55 - x),2.0) + pow(y,2.0)) &lt; 0.25) || ((pow((1.65 - x),2.0) + pow(y,2.0)) &lt; 0.25) || ((pow((2.75 - x),2.0) + pow(y,2.0)) &lt; 0.25) || ((y &gt;  - 0.01) * (y &lt; 0.02) * (x &gt;  - 2.26) * (x &lt;  - 2.14)) || ((y &gt;  - 0.01) * (y &lt; 0.02) * (x &gt;  - 1.16) * (x &lt;  - 1.04)) || ((y &gt;  - 0.01) * (y &lt; 0.02) * (x &gt;  - 0.06) * (x &lt; 0.06)) || ((y &gt;  - 0.01) * (y &lt; 0.02) * (x &gt; 1.04) * (x &lt; 1.16)) || ((y &gt;  - 0.01) * (y &lt; 0.02) * (x &gt; 2.14) * (x &lt; 2.26)))</AnalyticExpression>
+        </SubVolume>
+        <SubVolume Name="cell" Handle="0" Type="Analytical" KeyValue="20848449">
+          <AnalyticExpression>1.0</AnalyticExpression>
+        </SubVolume>
+        <SurfaceClass Name="cell_golgi_membrane" SubVolume1Ref="cell" SubVolume2Ref="golgi" />
+        <SurfaceDescription NumSamplesX="101" NumSamplesY="101" NumSamplesZ="1" CutoffFrequency="0.3">
+          <VolumeRegion Name="cell0" RegionID="0" SubVolume="cell" Size="2.538096" Unit="um2" />
+          <VolumeRegion Name="golgi1" RegionID="1" SubVolume="golgi" Size="4.721904" Unit="um2" />
+          <MembraneRegion Name="membrane_cell0_golgi1" VolumeRegion1="golgi1" VolumeRegion2="cell0" Size="19.971433220705862" Unit="um" />
+        </SurfaceDescription>
+        <Version Name="FRAP_2D1840824898" KeyValue="20848444" BranchId="20848445" Archived="0" Date="01-Mar-2007 12:01:53" FromVersionable="false">
+          <Owner Name="spaar" Identifier="20848324" />
+          <GroupAccess Type="1" />
+          <Annotation>cloned from 'FRAP_2D' owned by user vcellas</Annotation>
+        </Version>
+      </Geometry>
+      <GeometryContext>
+        <FeatureMapping Feature="cell" GeometryClass="cell" SubVolume="cell">
+          <BoundariesTypes Xm="Flux" Xp="Flux" Ym="Flux" Yp="Flux" Zm="Flux" Zp="Flux" />
+        </FeatureMapping>
+        <FeatureMapping Feature="golgi" GeometryClass="golgi" SubVolume="golgi">
+          <BoundariesTypes Xm="Flux" Xp="Flux" Ym="Flux" Yp="Flux" Zm="Flux" Zp="Flux" />
+        </FeatureMapping>
+        <MembraneMapping Membrane="GM" SurfaceToVolumeRatio="1.0" VolumeFraction="0.2" CalculateVoltage="false" SpecificCapacitance="1.0" InitialVoltage="0.0" GeometryClass="cell_golgi_membrane">
+          <BoundariesTypes Xm="Flux" Xp="Flux" Ym="Flux" Yp="Flux" Zm="Flux" Zp="Flux" />
+        </MembraneMapping>
+      </GeometryContext>
+      <ReactionContext>
+        <LocalizedCompoundSpec LocalizedCompoundRef="albumin_golgi" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>(10.0 * ((pow((2.75 + x),2.0) + pow(y,2.0)) &lt; 0.25))</InitialConcentration>
+          <Diffusion>5.0</Diffusion>
+        </LocalizedCompoundSpec>
+      </ReactionContext>
+      <MathDescription Name="FRAP_2D_slow_diffusion_generated">
+        <Annotation>cloned from 'FRAP_2D_slow_diffusion_generated' owned by user vcellas</Annotation>
+        <Constant Name="_F_">96480.0</Constant>
+        <Constant Name="_F_nmol_">9.648E-5</Constant>
+        <Constant Name="_K_GHK_">1.0E-9</Constant>
+        <Constant Name="_N_pmol_">6.02E11</Constant>
+        <Constant Name="_R_">8314.0</Constant>
+        <Constant Name="_T_">300.0</Constant>
+        <Constant Name="albumin_golgi_diffusionRate">5.0</Constant>
+        <Constant Name="K_millivolts_per_volt">1000.0</Constant>
+        <Constant Name="KMOLE">0.0016611295681063123</Constant>
+        <Constant Name="Voltage_GM">0.0</Constant>
+        <VolumeVariable Name="albumin" />
+        <Function Name="albumin_golgi_init">(10.0 * ((pow((2.75 + x),2.0) + pow(y,2.0)) &lt; 0.25))</Function>
+        <CompartmentSubDomain Name="golgi">
+          <BoundaryType Boundary="Xm" Type="Flux" />
+          <BoundaryType Boundary="Xp" Type="Flux" />
+          <BoundaryType Boundary="Ym" Type="Flux" />
+          <BoundaryType Boundary="Yp" Type="Flux" />
+          <BoundaryType Boundary="Zm" Type="Value" />
+          <BoundaryType Boundary="Zp" Type="Value" />
+          <PdeEquation Name="albumin" SolutionType="Unknown">
+            <Rate>0.0</Rate>
+            <Diffusion>albumin_golgi_diffusionRate</Diffusion>
+            <Initial>albumin_golgi_init</Initial>
+          </PdeEquation>
+        </CompartmentSubDomain>
+        <CompartmentSubDomain Name="cell">
+          <BoundaryType Boundary="Xm" Type="Flux" />
+          <BoundaryType Boundary="Xp" Type="Flux" />
+          <BoundaryType Boundary="Ym" Type="Flux" />
+          <BoundaryType Boundary="Yp" Type="Flux" />
+          <BoundaryType Boundary="Zm" Type="Value" />
+          <BoundaryType Boundary="Zp" Type="Value" />
+          <PdeEquation Name="albumin" SolutionType="Unknown">
+            <Rate>0.0</Rate>
+            <Diffusion>albumin_golgi_diffusionRate</Diffusion>
+            <Initial>0.0</Initial>
+          </PdeEquation>
+        </CompartmentSubDomain>
+        <MembraneSubDomain Name="cell_golgi_membrane" InsideCompartment="golgi" OutsideCompartment="cell">
+          <BoundaryType Boundary="Xm" Type="Value" />
+          <BoundaryType Boundary="Xp" Type="Value" />
+          <BoundaryType Boundary="Ym" Type="Value" />
+          <BoundaryType Boundary="Yp" Type="Value" />
+          <BoundaryType Boundary="Zm" Type="Value" />
+          <BoundaryType Boundary="Zp" Type="Value" />
+          <JumpCondition Name="albumin">
+            <InFlux>0.0</InFlux>
+            <OutFlux>0.0</OutFlux>
+          </JumpCondition>
+        </MembraneSubDomain>
+        <Version Name="FRAP_2D_slow_diffusion_generated" KeyValue="20848488" BranchId="20848489" Archived="0" Date="01-Mar-2007 12:01:53" FromVersionable="false">
+          <Owner Name="spaar" Identifier="20848324" />
+          <GroupAccess Type="1" />
+          <Annotation>cloned from 'FRAP_2D_slow_diffusion_generated' owned by user vcellas</Annotation>
+        </Version>
+      </MathDescription>
+      <Simulation Name="Simulation_2D_slow_diffusion">
+        <Annotation>run 20s</Annotation>
+        <SolverTaskDescription TaskType="Unsteady" UseSymbolicJacobian="false" Solver="Finite Volume, Regular Grid">
+          <TimeBound StartTime="0.0" EndTime="20.0" />
+          <TimeStep DefaultTime="0.1" MinTime="1.0E-8" MaxTime="1.0" />
+          <ErrorTolerance Absolut="1.0E-9" Relative="1.0E-9" />
+          <OutputOptions KeepEvery="10" KeepAtMost="1000" />
+          <NumberProcessors>1</NumberProcessors>
+        </SolverTaskDescription>
+        <MathOverrides />
+        <MeshSpecification>
+          <Size X="450" Y="75" Z="1" />
+        </MeshSpecification>
+        <Version Name="Simulation_2D_slow_diffusion" KeyValue="23185963" BranchId="23185964" Archived="0" Date="30-Jul-2007 06:23:36" FromVersionable="false">
+          <Owner Name="spaar" Identifier="20848324" />
+          <GroupAccess Type="1" />
+          <Annotation>run 20s</Annotation>
+          <ParentSimRef KeyValue="23185878" />
+        </Version>
+      </Simulation>
+      <SpatialObjects>
+        <SpatialObject Name="vobj_cell0" Type="Volume" subVolume="cell" regionId="0">
+          <QuantityCategoryList>
+            <QuantityCategory Name="VolumeCentroid" Enabled="false" />
+            <QuantityCategory Name="InteriorVelocity" Enabled="false" />
+            <QuantityCategory Name="VolumeRegionSize" Enabled="true" />
+          </QuantityCategoryList>
+        </SpatialObject>
+        <SpatialObject Name="vobj_golgi1" Type="Volume" subVolume="golgi" regionId="1">
+          <QuantityCategoryList>
+            <QuantityCategory Name="VolumeCentroid" Enabled="false" />
+            <QuantityCategory Name="InteriorVelocity" Enabled="false" />
+            <QuantityCategory Name="VolumeRegionSize" Enabled="true" />
+          </QuantityCategoryList>
+        </SpatialObject>
+        <SpatialObject Name="sobj_golgi1_cell0" Type="Surface" subVolumeInside="golgi" regionIdInside="1" subVolumeOutside="cell" regionIdOutside="0">
+          <QuantityCategoryList>
+            <QuantityCategory Name="SurfaceNormal" Enabled="false" />
+            <QuantityCategory Name="SurfaceVelocity" Enabled="false" />
+            <QuantityCategory Name="DistanceToSurface" Enabled="false" />
+            <QuantityCategory Name="DirectionToSurface" Enabled="false" />
+            <QuantityCategory Name="SurfaceSize" Enabled="true" />
+          </QuantityCategoryList>
+        </SpatialObject>
+      </SpatialObjects>
+      <Version Name="FRAP_2D_slow_diffusion" KeyValue="20848564" BranchId="20848565" Archived="0" Date="01-Mar-2007 12:01:54" FromVersionable="false">
+        <Owner Name="spaar" Identifier="20848324" />
+        <GroupAccess Type="1" />
+        <Annotation>cloned from 'FRAP_2D_slow_diffusion' owned by user vcellas
+(copied from FRAP_2D)</Annotation>
+      </Version>
+      <MicroscopeMeasurement Name="fluor">
+        <ConvolutionKernel Type="ProjectionZKernel" />
+      </MicroscopeMeasurement>
+    </SimulationSpec>
+    <SimulationSpec Name="FRAP_2D_vlarge_cist" Stochastic="false" UseConcentration="true" RuleBased="false" MassConservationModelReduction="true" InsufficientIterations="false" InsufficientMaxMolecules="false" CharacteristicSize="0.02106640055048775">
+      <NetworkConstraints RbmMaxIteration="1" RbmMaxMoleculesPerSpecies="10" RbmSpeciesLimit="800" RbmReactionsLimit="2500" />
+      <Annotation>cloned from 'FRAP_2D_vlarge_cist' owned by user vcellas
+(copied from FRAP_2D_large_cist) (copied from FRAP_2D_large_cist)</Annotation>
+      <Geometry Name="FRAP_2D_vlarge_cist" Dimension="2">
+        <Annotation>cloned from 'FRAP_2D_vlarge_cist' owned by user vcellas</Annotation>
+        <Extent X="12.6" Y="2.1" Z="10.0" />
+        <Origin X="-6.3" Y="-1.05" Z="0.0" />
+        <SubVolume Name="glogi" Handle="1" Type="Analytical" KeyValue="23186202">
+          <AnalyticExpression>(((pow((5.25 + x),2.0) + pow(y,2.0)) &lt; 1.0) || ((pow((3.15 + x),2.0) + pow(y,2.0)) &lt; 1.0) || ((pow((1.05 + x),2.0) + pow(y,2.0)) &lt; 1.0) || ((pow((1.05 - x),2.0) + pow(y,2.0)) &lt; 1.0) || ((pow((3.15 - x),2.0) + pow(y,2.0)) &lt; 1.0) || ((pow((5.25 - x),2.0) + pow(y,2.0)) &lt; 1.0) || ((y &gt;  - 0.01) * (y &lt; 0.02) * (x &gt;  - 4.26) * (x &lt;  - 4.14)) || ((y &gt;  - 0.01) * (y &lt; 0.02) * (x &gt;  - 2.16) * (x &lt;  - 2.04)) || ((y &gt;  - 0.01) * (y &lt; 0.02) * (x &gt;  - 0.06) * (x &lt; 0.06)) || ((y &gt;  - 0.01) * (y &lt; 0.02) * (x &gt; 2.04) * (x &lt; 2.16)) || ((y &gt;  - 0.01) * (y &lt; 0.02) * (x &gt; 4.14) * (x &lt; 4.26)))</AnalyticExpression>
+        </SubVolume>
+        <SubVolume Name="cell" Handle="0" Type="Analytical" KeyValue="23186203">
+          <AnalyticExpression>1.0</AnalyticExpression>
+        </SubVolume>
+        <SurfaceClass Name="cell_glogi_membrane" SubVolume1Ref="cell" SubVolume2Ref="glogi" />
+        <SurfaceDescription NumSamplesX="101" NumSamplesY="101" NumSamplesZ="1" CutoffFrequency="0.3">
+          <VolumeRegion Name="cell0" RegionID="0" SubVolume="cell" Size="7.601958" Unit="um2" />
+          <VolumeRegion Name="glogi1" RegionID="1" SubVolume="glogi" Size="18.858042" Unit="um2" />
+          <MembraneRegion Name="membrane_cell0_glogi1" VolumeRegion1="glogi1" VolumeRegion2="cell0" Size="39.52292777780533" Unit="um" />
+        </SurfaceDescription>
+        <Version Name="FRAP_2D_vlarge_cist" KeyValue="23186199" BranchId="20848455" Archived="0" Date="30-Jul-2007 09:10:34" FromVersionable="false">
+          <Owner Name="spaar" Identifier="20848324" />
+          <GroupAccess Type="1" />
+          <Annotation>cloned from 'FRAP_2D_vlarge_cist' owned by user vcellas</Annotation>
+        </Version>
+      </Geometry>
+      <GeometryContext>
+        <FeatureMapping Feature="cell" GeometryClass="cell" SubVolume="cell">
+          <BoundariesTypes Xm="Flux" Xp="Flux" Ym="Flux" Yp="Flux" Zm="Flux" Zp="Flux" />
+        </FeatureMapping>
+        <FeatureMapping Feature="golgi" GeometryClass="glogi" SubVolume="glogi">
+          <BoundariesTypes Xm="Flux" Xp="Flux" Ym="Flux" Yp="Flux" Zm="Flux" Zp="Flux" />
+        </FeatureMapping>
+        <MembraneMapping Membrane="GM" SurfaceToVolumeRatio="1.0" VolumeFraction="0.2" CalculateVoltage="false" SpecificCapacitance="1.0" InitialVoltage="0.0" GeometryClass="cell_glogi_membrane">
+          <BoundariesTypes Xm="Flux" Xp="Flux" Ym="Flux" Yp="Flux" Zm="Flux" Zp="Flux" />
+        </MembraneMapping>
+      </GeometryContext>
+      <ReactionContext>
+        <LocalizedCompoundSpec LocalizedCompoundRef="albumin_golgi" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>(10.0 * ((pow((5.25 + x),2.0) + pow(y,2.0)) &lt; 1.0))</InitialConcentration>
+          <Diffusion>10.0</Diffusion>
+        </LocalizedCompoundSpec>
+      </ReactionContext>
+      <MathDescription Name="FRAP_2D_vlarge_cist_generated">
+        <Annotation>cloned from 'FRAP_2D_vlarge_cist_generated' owned by user vcellas</Annotation>
+        <Constant Name="_F_">96480.0</Constant>
+        <Constant Name="_F_nmol_">9.648E-5</Constant>
+        <Constant Name="_K_GHK_">1.0E-9</Constant>
+        <Constant Name="_N_pmol_">6.02E11</Constant>
+        <Constant Name="_R_">8314.0</Constant>
+        <Constant Name="_T_">300.0</Constant>
+        <Constant Name="albumin_golgi_diffusionRate">10.0</Constant>
+        <Constant Name="K_millivolts_per_volt">1000.0</Constant>
+        <Constant Name="KMOLE">0.0016611295681063123</Constant>
+        <Constant Name="Voltage_GM">0.0</Constant>
+        <VolumeVariable Name="albumin" />
+        <Function Name="albumin_golgi_init">(10.0 * ((pow((5.25 + x),2.0) + pow(y,2.0)) &lt; 1.0))</Function>
+        <CompartmentSubDomain Name="glogi">
+          <BoundaryType Boundary="Xm" Type="Flux" />
+          <BoundaryType Boundary="Xp" Type="Flux" />
+          <BoundaryType Boundary="Ym" Type="Flux" />
+          <BoundaryType Boundary="Yp" Type="Flux" />
+          <BoundaryType Boundary="Zm" Type="Value" />
+          <BoundaryType Boundary="Zp" Type="Value" />
+          <PdeEquation Name="albumin" SolutionType="Unknown">
+            <Rate>0.0</Rate>
+            <Diffusion>albumin_golgi_diffusionRate</Diffusion>
+            <Initial>albumin_golgi_init</Initial>
+          </PdeEquation>
+        </CompartmentSubDomain>
+        <CompartmentSubDomain Name="cell">
+          <BoundaryType Boundary="Xm" Type="Flux" />
+          <BoundaryType Boundary="Xp" Type="Flux" />
+          <BoundaryType Boundary="Ym" Type="Flux" />
+          <BoundaryType Boundary="Yp" Type="Flux" />
+          <BoundaryType Boundary="Zm" Type="Value" />
+          <BoundaryType Boundary="Zp" Type="Value" />
+          <PdeEquation Name="albumin" SolutionType="Unknown">
+            <Rate>0.0</Rate>
+            <Diffusion>albumin_golgi_diffusionRate</Diffusion>
+            <Initial>0.0</Initial>
+          </PdeEquation>
+        </CompartmentSubDomain>
+        <MembraneSubDomain Name="cell_glogi_membrane" InsideCompartment="glogi" OutsideCompartment="cell">
+          <BoundaryType Boundary="Xm" Type="Value" />
+          <BoundaryType Boundary="Xp" Type="Value" />
+          <BoundaryType Boundary="Ym" Type="Value" />
+          <BoundaryType Boundary="Yp" Type="Value" />
+          <BoundaryType Boundary="Zm" Type="Value" />
+          <BoundaryType Boundary="Zp" Type="Value" />
+          <JumpCondition Name="albumin">
+            <InFlux>0.0</InFlux>
+            <OutFlux>0.0</OutFlux>
+          </JumpCondition>
+        </MembraneSubDomain>
+        <Version Name="FRAP_2D_vlarge_cist_generated" KeyValue="23186208" BranchId="20848492" Archived="0" Date="30-Jul-2007 09:10:35" FromVersionable="false">
+          <Owner Name="spaar" Identifier="20848324" />
+          <GroupAccess Type="1" />
+          <Annotation>cloned from 'FRAP_2D_vlarge_cist_generated' owned by user vcellas</Annotation>
+        </Version>
+      </MathDescription>
+      <Simulation Name="Simulation_2D_vlarge_cist">
+        <Annotation>run 20s</Annotation>
+        <SolverTaskDescription TaskType="Unsteady" UseSymbolicJacobian="false" Solver="Finite Volume, Regular Grid">
+          <TimeBound StartTime="0.0" EndTime="20.0" />
+          <TimeStep DefaultTime="0.1" MinTime="1.0E-8" MaxTime="1.0" />
+          <ErrorTolerance Absolut="1.0E-9" Relative="1.0E-9" />
+          <OutputOptions KeepEvery="10" KeepAtMost="1000" />
+          <NumberProcessors>1</NumberProcessors>
+        </SolverTaskDescription>
+        <MathOverrides />
+        <MeshSpecification>
+          <Size X="860" Y="143" Z="1" />
+        </MeshSpecification>
+        <Version Name="Simulation_2D_vlarge_cist" KeyValue="23186219" BranchId="23185992" Archived="0" Date="30-Jul-2007 09:10:35" FromVersionable="false">
+          <Owner Name="spaar" Identifier="20848324" />
+          <GroupAccess Type="1" />
+          <Annotation>run 20s</Annotation>
+        </Version>
+      </Simulation>
+      <SpatialObjects>
+        <SpatialObject Name="vobj_cell0" Type="Volume" subVolume="cell" regionId="0">
+          <QuantityCategoryList>
+            <QuantityCategory Name="VolumeCentroid" Enabled="false" />
+            <QuantityCategory Name="InteriorVelocity" Enabled="false" />
+            <QuantityCategory Name="VolumeRegionSize" Enabled="true" />
+          </QuantityCategoryList>
+        </SpatialObject>
+        <SpatialObject Name="vobj_glogi1" Type="Volume" subVolume="glogi" regionId="1">
+          <QuantityCategoryList>
+            <QuantityCategory Name="VolumeCentroid" Enabled="false" />
+            <QuantityCategory Name="InteriorVelocity" Enabled="false" />
+            <QuantityCategory Name="VolumeRegionSize" Enabled="true" />
+          </QuantityCategoryList>
+        </SpatialObject>
+        <SpatialObject Name="sobj_glogi1_cell0" Type="Surface" subVolumeInside="glogi" regionIdInside="1" subVolumeOutside="cell" regionIdOutside="0">
+          <QuantityCategoryList>
+            <QuantityCategory Name="SurfaceNormal" Enabled="false" />
+            <QuantityCategory Name="SurfaceVelocity" Enabled="false" />
+            <QuantityCategory Name="DistanceToSurface" Enabled="false" />
+            <QuantityCategory Name="DirectionToSurface" Enabled="false" />
+            <QuantityCategory Name="SurfaceSize" Enabled="true" />
+          </QuantityCategoryList>
+        </SpatialObject>
+      </SpatialObjects>
+      <Version Name="FRAP_2D_vlarge_cist" KeyValue="23186210" BranchId="20848572" Archived="0" Date="30-Jul-2007 09:10:35" FromVersionable="false">
+        <Owner Name="spaar" Identifier="20848324" />
+        <GroupAccess Type="1" />
+        <Annotation>cloned from 'FRAP_2D_vlarge_cist' owned by user vcellas
+(copied from FRAP_2D_large_cist) (copied from FRAP_2D_large_cist)</Annotation>
+      </Version>
+      <MicroscopeMeasurement Name="fluor">
+        <ConvolutionKernel Type="ProjectionZKernel" />
+      </MicroscopeMeasurement>
+    </SimulationSpec>
+    <SimulationSpec Name="FRAP_2D_large_cist_thin_tubules" Stochastic="false" UseConcentration="true" RuleBased="false" MassConservationModelReduction="true" InsufficientIterations="false" InsufficientMaxMolecules="false" CharacteristicSize="0.02106640055048775">
+      <NetworkConstraints RbmMaxIteration="1" RbmMaxMoleculesPerSpecies="10" RbmSpeciesLimit="800" RbmReactionsLimit="2500" />
+      <Annotation>(copied from FRAP_2D_large_cist) cloned from 'FRAP_2D_large_cist' owned by user vcellas
+(copied from FRAP_2D_large_cist)</Annotation>
+      <Geometry Name="FRAP_2D_large_cist_thin_tubules" Dimension="2">
+        <Annotation>cloned from 'FRAP_2D_large_cist' owned by user vcellas</Annotation>
+        <Extent X="9.6" Y="1.6" Z="10.0" />
+        <Origin X="-4.8" Y="-0.8" Z="0.0" />
+        <SubVolume Name="glogi" Handle="1" Type="Analytical" KeyValue="23704385">
+          <AnalyticExpression>(((pow((4.0 + x),2.0) + pow(y,2.0)) &lt; 0.5625) || ((pow((2.4 + x),2.0) + pow(y,2.0)) &lt; 0.5625) || ((pow((0.8 + x),2.0) + pow(y,2.0)) &lt; 0.5625) || ((pow((0.8 - x),2.0) + pow(y,2.0)) &lt; 0.5625) || ((pow((2.4 - x),2.0) + pow(y,2.0)) &lt; 0.5625) || ((pow((4.0 - x),2.0) + pow(y,2.0)) &lt; 0.5625) || ((y &gt;  - 0.01) * (y &lt; 0.01) * (x &gt;  - 3.26) * (x &lt;  - 3.14)) || ((y &gt;  - 0.01) * (y &lt; 0.01) * (x &gt;  - 1.66) * (x &lt;  - 1.54)) || ((y &gt;  - 0.01) * (y &lt; 0.01) * (x &gt;  - 0.06) * (x &lt; 0.06)) || ((y &gt;  - 0.01) * (y &lt; 0.01) * (x &gt; 1.54) * (x &lt; 1.66)) || ((y &gt;  - 0.01) * (y &lt; 0.01) * (x &gt; 3.14) * (x &lt; 3.26)))</AnalyticExpression>
+        </SubVolume>
+        <SubVolume Name="cell" Handle="0" Type="Analytical" KeyValue="23704386">
+          <AnalyticExpression>1.0</AnalyticExpression>
+        </SubVolume>
+        <SurfaceClass Name="cell_glogi_membrane" SubVolume1Ref="cell" SubVolume2Ref="glogi" />
+        <SurfaceDescription NumSamplesX="101" NumSamplesY="101" NumSamplesZ="1" CutoffFrequency="0.3">
+          <VolumeRegion Name="cell0" RegionID="0" SubVolume="cell" Size="4.701696" Unit="um2" />
+          <VolumeRegion Name="glogi1" RegionID="1" SubVolume="glogi" Size="10.658304000000001" Unit="um2" />
+          <MembraneRegion Name="membrane_cell0_glogi1" VolumeRegion1="glogi1" VolumeRegion2="cell0" Size="29.804926324550355" Unit="um" />
+        </SurfaceDescription>
+        <Version Name="FRAP_2D_large_cist_thin_tubules" KeyValue="23704381" BranchId="23704382" Archived="0" Date="12-Sep-2007 08:09:25" FromVersionable="false">
+          <Owner Name="spaar" Identifier="20848324" />
+          <GroupAccess Type="1" />
+          <Annotation>cloned from 'FRAP_2D_large_cist' owned by user vcellas</Annotation>
+        </Version>
+      </Geometry>
+      <GeometryContext>
+        <FeatureMapping Feature="cell" GeometryClass="cell" SubVolume="cell">
+          <BoundariesTypes Xm="Flux" Xp="Flux" Ym="Flux" Yp="Flux" Zm="Flux" Zp="Flux" />
+        </FeatureMapping>
+        <FeatureMapping Feature="golgi" GeometryClass="glogi" SubVolume="glogi">
+          <BoundariesTypes Xm="Flux" Xp="Flux" Ym="Flux" Yp="Flux" Zm="Flux" Zp="Flux" />
+        </FeatureMapping>
+        <MembraneMapping Membrane="GM" SurfaceToVolumeRatio="1.0" VolumeFraction="0.2" CalculateVoltage="false" SpecificCapacitance="1.0" InitialVoltage="0.0" GeometryClass="cell_glogi_membrane">
+          <BoundariesTypes Xm="Flux" Xp="Flux" Ym="Flux" Yp="Flux" Zm="Flux" Zp="Flux" />
+        </MembraneMapping>
+      </GeometryContext>
+      <ReactionContext>
+        <LocalizedCompoundSpec LocalizedCompoundRef="albumin_golgi" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>(10.0 * ((pow((4.0 + x),2.0) + pow(y,2.0)) &lt; 0.5625))</InitialConcentration>
+          <Diffusion>10.0</Diffusion>
+        </LocalizedCompoundSpec>
+      </ReactionContext>
+      <MathDescription Name="FRAP_2D_large_cist_thin_tubules_generated">
+        <Constant Name="_F_">96480.0</Constant>
+        <Constant Name="_F_nmol_">9.648E-5</Constant>
+        <Constant Name="_K_GHK_">1.0E-9</Constant>
+        <Constant Name="_N_pmol_">6.02E11</Constant>
+        <Constant Name="_R_">8314.0</Constant>
+        <Constant Name="_T_">300.0</Constant>
+        <Constant Name="albumin_golgi_diffusionRate">10.0</Constant>
+        <Constant Name="K_millivolts_per_volt">1000.0</Constant>
+        <Constant Name="KMOLE">0.0016611295681063123</Constant>
+        <Constant Name="Voltage_GM">0.0</Constant>
+        <VolumeVariable Name="albumin" />
+        <Function Name="albumin_golgi_init">(10.0 * ((pow((4.0 + x),2.0) + pow(y,2.0)) &lt; 0.5625))</Function>
+        <CompartmentSubDomain Name="glogi">
+          <BoundaryType Boundary="Xm" Type="Flux" />
+          <BoundaryType Boundary="Xp" Type="Flux" />
+          <BoundaryType Boundary="Ym" Type="Flux" />
+          <BoundaryType Boundary="Yp" Type="Flux" />
+          <BoundaryType Boundary="Zm" Type="Value" />
+          <BoundaryType Boundary="Zp" Type="Value" />
+          <PdeEquation Name="albumin" SolutionType="Unknown">
+            <Rate>0.0</Rate>
+            <Diffusion>albumin_golgi_diffusionRate</Diffusion>
+            <Initial>albumin_golgi_init</Initial>
+          </PdeEquation>
+        </CompartmentSubDomain>
+        <CompartmentSubDomain Name="cell">
+          <BoundaryType Boundary="Xm" Type="Flux" />
+          <BoundaryType Boundary="Xp" Type="Flux" />
+          <BoundaryType Boundary="Ym" Type="Flux" />
+          <BoundaryType Boundary="Yp" Type="Flux" />
+          <BoundaryType Boundary="Zm" Type="Value" />
+          <BoundaryType Boundary="Zp" Type="Value" />
+          <PdeEquation Name="albumin" SolutionType="Unknown">
+            <Rate>0.0</Rate>
+            <Diffusion>albumin_golgi_diffusionRate</Diffusion>
+            <Initial>0.0</Initial>
+          </PdeEquation>
+        </CompartmentSubDomain>
+        <MembraneSubDomain Name="cell_glogi_membrane" InsideCompartment="glogi" OutsideCompartment="cell">
+          <BoundaryType Boundary="Xm" Type="Value" />
+          <BoundaryType Boundary="Xp" Type="Value" />
+          <BoundaryType Boundary="Ym" Type="Value" />
+          <BoundaryType Boundary="Yp" Type="Value" />
+          <BoundaryType Boundary="Zm" Type="Value" />
+          <BoundaryType Boundary="Zp" Type="Value" />
+          <JumpCondition Name="albumin">
+            <InFlux>0.0</InFlux>
+            <OutFlux>0.0</OutFlux>
+          </JumpCondition>
+        </MembraneSubDomain>
+        <Version Name="FRAP_2D_large_cist_thin_tubules_generated" KeyValue="23704438" BranchId="23704439" Archived="0" Date="12-Sep-2007 08:23:33" FromVersionable="false">
+          <Owner Name="spaar" Identifier="20848324" />
+          <GroupAccess Type="1" />
+        </Version>
+      </MathDescription>
+      <Simulation Name="Simulation_large_cist_thin_tubules">
+        <Annotation>run 20s</Annotation>
+        <SolverTaskDescription TaskType="Unsteady" UseSymbolicJacobian="false" Solver="Finite Volume, Regular Grid">
+          <TimeBound StartTime="0.0" EndTime="20.0" />
+          <TimeStep DefaultTime="0.1" MinTime="1.0E-8" MaxTime="1.0" />
+          <ErrorTolerance Absolut="1.0E-9" Relative="1.0E-9" />
+          <OutputOptions KeepEvery="10" KeepAtMost="1000" />
+          <NumberProcessors>1</NumberProcessors>
+        </SolverTaskDescription>
+        <MathOverrides />
+        <MeshSpecification>
+          <Size X="654" Y="109" Z="1" />
+        </MeshSpecification>
+        <Version Name="Simulation_large_cist_thin_tubules" KeyValue="23704448" BranchId="23704449" Archived="0" Date="12-Sep-2007 08:23:33" FromVersionable="false">
+          <Owner Name="spaar" Identifier="20848324" />
+          <GroupAccess Type="1" />
+          <Annotation>run 20s</Annotation>
+        </Version>
+      </Simulation>
+      <SpatialObjects>
+        <SpatialObject Name="vobj_cell0" Type="Volume" subVolume="cell" regionId="0">
+          <QuantityCategoryList>
+            <QuantityCategory Name="VolumeCentroid" Enabled="false" />
+            <QuantityCategory Name="InteriorVelocity" Enabled="false" />
+            <QuantityCategory Name="VolumeRegionSize" Enabled="true" />
+          </QuantityCategoryList>
+        </SpatialObject>
+        <SpatialObject Name="vobj_glogi1" Type="Volume" subVolume="glogi" regionId="1">
+          <QuantityCategoryList>
+            <QuantityCategory Name="VolumeCentroid" Enabled="false" />
+            <QuantityCategory Name="InteriorVelocity" Enabled="false" />
+            <QuantityCategory Name="VolumeRegionSize" Enabled="true" />
+          </QuantityCategoryList>
+        </SpatialObject>
+        <SpatialObject Name="sobj_glogi1_cell0" Type="Surface" subVolumeInside="glogi" regionIdInside="1" subVolumeOutside="cell" regionIdOutside="0">
+          <QuantityCategoryList>
+            <QuantityCategory Name="SurfaceNormal" Enabled="false" />
+            <QuantityCategory Name="SurfaceVelocity" Enabled="false" />
+            <QuantityCategory Name="DistanceToSurface" Enabled="false" />
+            <QuantityCategory Name="DirectionToSurface" Enabled="false" />
+            <QuantityCategory Name="SurfaceSize" Enabled="true" />
+          </QuantityCategoryList>
+        </SpatialObject>
+      </SpatialObjects>
+      <Version Name="FRAP_2D_large_cist_thin_tubules" KeyValue="23704441" BranchId="23704442" Archived="0" Date="12-Sep-2007 08:23:33" FromVersionable="false">
+        <Owner Name="spaar" Identifier="20848324" />
+        <GroupAccess Type="1" />
+        <Annotation>(copied from FRAP_2D_large_cist) cloned from 'FRAP_2D_large_cist' owned by user vcellas
+(copied from FRAP_2D_large_cist)</Annotation>
+      </Version>
+      <MicroscopeMeasurement Name="fluor">
+        <ConvolutionKernel Type="ProjectionZKernel" />
+      </MicroscopeMeasurement>
+    </SimulationSpec>
+    <SimulationSpec Name="FRAP_2D_large_cist_thick_tubules" Stochastic="false" UseConcentration="true" RuleBased="false" MassConservationModelReduction="true" InsufficientIterations="false" InsufficientMaxMolecules="false" CharacteristicSize="0.02106640055048775">
+      <NetworkConstraints RbmMaxIteration="1" RbmMaxMoleculesPerSpecies="10" RbmSpeciesLimit="800" RbmReactionsLimit="2500" />
+      <Annotation>(copied from FRAP_2D_large_cist) cloned from 'FRAP_2D_large_cist' owned by user vcellas
+(copied from FRAP_2D_large_cist)</Annotation>
+      <Geometry Name="FRAP_2D_large_cist_thick_tubules" Dimension="2">
+        <Annotation>cloned from 'FRAP_2D_large_cist' owned by user vcellas</Annotation>
+        <Extent X="9.6" Y="1.6" Z="10.0" />
+        <Origin X="-4.8" Y="-0.8" Z="0.0" />
+        <SubVolume Name="glogi" Handle="1" Type="Analytical" KeyValue="23704429">
+          <AnalyticExpression>(((pow((4.0 + x),2.0) + pow(y,2.0)) &lt; 0.5625) || ((pow((2.4 + x),2.0) + pow(y,2.0)) &lt; 0.5625) || ((pow((0.8 + x),2.0) + pow(y,2.0)) &lt; 0.5625) || ((pow((0.8 - x),2.0) + pow(y,2.0)) &lt; 0.5625) || ((pow((2.4 - x),2.0) + pow(y,2.0)) &lt; 0.5625) || ((pow((4.0 - x),2.0) + pow(y,2.0)) &lt; 0.5625) || ((y &gt;  - 0.02) * (y &lt; 0.03) * (x &gt;  - 3.26) * (x &lt;  - 3.14)) || ((y &gt;  - 0.02) * (y &lt; 0.03) * (x &gt;  - 1.66) * (x &lt;  - 1.54)) || ((y &gt;  - 0.02) * (y &lt; 0.03) * (x &gt;  - 0.06) * (x &lt; 0.06)) || ((y &gt;  - 0.02) * (y &lt; 0.03) * (x &gt; 1.54) * (x &lt; 1.66)) || ((y &gt;  - 0.02) * (y &lt; 0.03) * (x &gt; 3.14) * (x &lt; 3.26)))</AnalyticExpression>
+        </SubVolume>
+        <SubVolume Name="cell" Handle="0" Type="Analytical" KeyValue="23704430">
+          <AnalyticExpression>1.0</AnalyticExpression>
+        </SubVolume>
+        <SurfaceClass Name="cell_glogi_membrane" SubVolume1Ref="cell" SubVolume2Ref="glogi" />
+        <SurfaceDescription NumSamplesX="101" NumSamplesY="101" NumSamplesZ="1" CutoffFrequency="0.3">
+          <VolumeRegion Name="cell0" RegionID="0" SubVolume="cell" Size="4.686336000000001" Unit="um2" />
+          <VolumeRegion Name="glogi1" RegionID="1" SubVolume="glogi" Size="10.673664" Unit="um2" />
+          <MembraneRegion Name="membrane_cell0_glogi1" VolumeRegion1="glogi1" VolumeRegion2="cell0" Size="29.484993863898552" Unit="um" />
+        </SurfaceDescription>
+        <Version Name="FRAP_2D_large_cist_thick_tubules" KeyValue="23704425" BranchId="23704426" Archived="0" Date="12-Sep-2007 08:16:22" FromVersionable="false">
+          <Owner Name="spaar" Identifier="20848324" />
+          <GroupAccess Type="1" />
+          <Annotation>cloned from 'FRAP_2D_large_cist' owned by user vcellas</Annotation>
+        </Version>
+      </Geometry>
+      <GeometryContext>
+        <FeatureMapping Feature="cell" GeometryClass="cell" SubVolume="cell">
+          <BoundariesTypes Xm="Flux" Xp="Flux" Ym="Flux" Yp="Flux" Zm="Flux" Zp="Flux" />
+        </FeatureMapping>
+        <FeatureMapping Feature="golgi" GeometryClass="glogi" SubVolume="glogi">
+          <BoundariesTypes Xm="Flux" Xp="Flux" Ym="Flux" Yp="Flux" Zm="Flux" Zp="Flux" />
+        </FeatureMapping>
+        <MembraneMapping Membrane="GM" SurfaceToVolumeRatio="1.0" VolumeFraction="0.2" CalculateVoltage="false" SpecificCapacitance="1.0" InitialVoltage="0.0" GeometryClass="cell_glogi_membrane">
+          <BoundariesTypes Xm="Flux" Xp="Flux" Ym="Flux" Yp="Flux" Zm="Flux" Zp="Flux" />
+        </MembraneMapping>
+      </GeometryContext>
+      <ReactionContext>
+        <LocalizedCompoundSpec LocalizedCompoundRef="albumin_golgi" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>(10.0 * ((pow((4.0 + x),2.0) + pow(y,2.0)) &lt; 0.5625))</InitialConcentration>
+          <Diffusion>10.0</Diffusion>
+        </LocalizedCompoundSpec>
+      </ReactionContext>
+      <MathDescription Name="FRAP_2D_large_cist_thick_tubules_generated">
+        <Constant Name="_F_">96480.0</Constant>
+        <Constant Name="_F_nmol_">9.648E-5</Constant>
+        <Constant Name="_K_GHK_">1.0E-9</Constant>
+        <Constant Name="_N_pmol_">6.02E11</Constant>
+        <Constant Name="_R_">8314.0</Constant>
+        <Constant Name="_T_">300.0</Constant>
+        <Constant Name="albumin_golgi_diffusionRate">10.0</Constant>
+        <Constant Name="K_millivolts_per_volt">1000.0</Constant>
+        <Constant Name="KMOLE">0.0016611295681063123</Constant>
+        <Constant Name="Voltage_GM">0.0</Constant>
+        <VolumeVariable Name="albumin" />
+        <Function Name="albumin_golgi_init">(10.0 * ((pow((4.0 + x),2.0) + pow(y,2.0)) &lt; 0.5625))</Function>
+        <CompartmentSubDomain Name="glogi">
+          <BoundaryType Boundary="Xm" Type="Flux" />
+          <BoundaryType Boundary="Xp" Type="Flux" />
+          <BoundaryType Boundary="Ym" Type="Flux" />
+          <BoundaryType Boundary="Yp" Type="Flux" />
+          <BoundaryType Boundary="Zm" Type="Value" />
+          <BoundaryType Boundary="Zp" Type="Value" />
+          <PdeEquation Name="albumin" SolutionType="Unknown">
+            <Rate>0.0</Rate>
+            <Diffusion>albumin_golgi_diffusionRate</Diffusion>
+            <Initial>albumin_golgi_init</Initial>
+          </PdeEquation>
+        </CompartmentSubDomain>
+        <CompartmentSubDomain Name="cell">
+          <BoundaryType Boundary="Xm" Type="Flux" />
+          <BoundaryType Boundary="Xp" Type="Flux" />
+          <BoundaryType Boundary="Ym" Type="Flux" />
+          <BoundaryType Boundary="Yp" Type="Flux" />
+          <BoundaryType Boundary="Zm" Type="Value" />
+          <BoundaryType Boundary="Zp" Type="Value" />
+          <PdeEquation Name="albumin" SolutionType="Unknown">
+            <Rate>0.0</Rate>
+            <Diffusion>albumin_golgi_diffusionRate</Diffusion>
+            <Initial>0.0</Initial>
+          </PdeEquation>
+        </CompartmentSubDomain>
+        <MembraneSubDomain Name="cell_glogi_membrane" InsideCompartment="glogi" OutsideCompartment="cell">
+          <BoundaryType Boundary="Xm" Type="Value" />
+          <BoundaryType Boundary="Xp" Type="Value" />
+          <BoundaryType Boundary="Ym" Type="Value" />
+          <BoundaryType Boundary="Yp" Type="Value" />
+          <BoundaryType Boundary="Zm" Type="Value" />
+          <BoundaryType Boundary="Zp" Type="Value" />
+          <JumpCondition Name="albumin">
+            <InFlux>0.0</InFlux>
+            <OutFlux>0.0</OutFlux>
+          </JumpCondition>
+        </MembraneSubDomain>
+        <Version Name="FRAP_2D_large_cist_thick_tubules_generated" KeyValue="23704478" BranchId="23704479" Archived="0" Date="12-Sep-2007 08:32:19" FromVersionable="false">
+          <Owner Name="spaar" Identifier="20848324" />
+          <GroupAccess Type="1" />
+        </Version>
+      </MathDescription>
+      <Simulation Name="Simulation_large_cist_thick_tubules">
+        <SolverTaskDescription TaskType="Unsteady" UseSymbolicJacobian="false" Solver="Finite Volume, Regular Grid">
+          <TimeBound StartTime="0.0" EndTime="20.0" />
+          <TimeStep DefaultTime="0.1" MinTime="1.0E-8" MaxTime="1.0" />
+          <ErrorTolerance Absolut="1.0E-9" Relative="1.0E-9" />
+          <OutputOptions KeepEvery="10" KeepAtMost="1000" />
+          <NumberProcessors>1</NumberProcessors>
+        </SolverTaskDescription>
+        <MathOverrides />
+        <MeshSpecification>
+          <Size X="654" Y="109" Z="1" />
+        </MeshSpecification>
+        <Version Name="Simulation_large_cist_thick_tubules" KeyValue="23704488" BranchId="23704489" Archived="0" Date="12-Sep-2007 08:32:19" FromVersionable="false">
+          <Owner Name="spaar" Identifier="20848324" />
+          <GroupAccess Type="1" />
+        </Version>
+      </Simulation>
+      <SpatialObjects>
+        <SpatialObject Name="vobj_cell0" Type="Volume" subVolume="cell" regionId="0">
+          <QuantityCategoryList>
+            <QuantityCategory Name="VolumeCentroid" Enabled="false" />
+            <QuantityCategory Name="InteriorVelocity" Enabled="false" />
+            <QuantityCategory Name="VolumeRegionSize" Enabled="true" />
+          </QuantityCategoryList>
+        </SpatialObject>
+        <SpatialObject Name="vobj_glogi1" Type="Volume" subVolume="glogi" regionId="1">
+          <QuantityCategoryList>
+            <QuantityCategory Name="VolumeCentroid" Enabled="false" />
+            <QuantityCategory Name="InteriorVelocity" Enabled="false" />
+            <QuantityCategory Name="VolumeRegionSize" Enabled="true" />
+          </QuantityCategoryList>
+        </SpatialObject>
+        <SpatialObject Name="sobj_glogi1_cell0" Type="Surface" subVolumeInside="glogi" regionIdInside="1" subVolumeOutside="cell" regionIdOutside="0">
+          <QuantityCategoryList>
+            <QuantityCategory Name="SurfaceNormal" Enabled="false" />
+            <QuantityCategory Name="SurfaceVelocity" Enabled="false" />
+            <QuantityCategory Name="DistanceToSurface" Enabled="false" />
+            <QuantityCategory Name="DirectionToSurface" Enabled="false" />
+            <QuantityCategory Name="SurfaceSize" Enabled="true" />
+          </QuantityCategoryList>
+        </SpatialObject>
+      </SpatialObjects>
+      <Version Name="FRAP_2D_large_cist_thick_tubules" KeyValue="23704481" BranchId="23704482" Archived="0" Date="12-Sep-2007 08:32:19" FromVersionable="false">
+        <Owner Name="spaar" Identifier="20848324" />
+        <GroupAccess Type="1" />
+        <Annotation>(copied from FRAP_2D_large_cist) cloned from 'FRAP_2D_large_cist' owned by user vcellas
+(copied from FRAP_2D_large_cist)</Annotation>
+      </Version>
+      <MicroscopeMeasurement Name="fluor">
+        <ConvolutionKernel Type="ProjectionZKernel" />
+      </MicroscopeMeasurement>
+    </SimulationSpec>
+    <Version Name="FRAP_albumin" KeyValue="23704491" BranchId="20848615" Archived="0" Date="12-Sep-2007 08:32:19" FromVersionable="false">
+      <Owner Name="spaar" Identifier="20848324" />
+      <GroupAccess Type="0" />
+      <Annotation />
+    </Version>
+    <pathwayModel>
+      <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:bp="http://www.biopax.org/release/biopax-level3.owl#" version="3.0" />
+    </pathwayModel>
+    <relationshipModel>
+      <RMNS version="3.0" />
+    </relationshipModel>
+    <vcmetadata>
+      <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" />
+      <nonrdfAnnotationList>
+        <nonrdfAnnotation vcid="BioModel(FRAP_albumin)">
+          <freetext />
+        </nonrdfAnnotation>
+      </nonrdfAnnotationList>
+      <uriBindingList />
+    </vcmetadata>
+  </BioModel>
+</vcml>
+

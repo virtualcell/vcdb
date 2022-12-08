@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--This biomodel was generated in VCML Version Alpha_Version_7.4.0_build_87-->
+<vcml xmlns="http://sourceforge.net/projects/vcell/vcml" Version="Alpha_Version_7.4.0_build_87">
+  <BioModel Name="Araujo2016_cycB_only">
+    <Model Name="model">
+      <ModelParameters>
+        <Parameter Name="ec50" Role="user defined" Unit="1">0.5</Parameter>
+        <Parameter Name="b_deg" Role="user defined" Unit="s-1">0.02</Parameter>
+        <Parameter Name="a_deg" Role="user defined" Unit="s-1">0.001</Parameter>
+        <Parameter Name="k_s" Role="user defined" Unit="uM.s-1">0.1</Parameter>
+        <Parameter Name="n" Role="user defined" Unit="1">10.0</Parameter>
+      </ModelParameters>
+      <Compound Name="s0" />
+      <Compound Name="s1" />
+      <Compound Name="s2" />
+      <Feature Name="c0" KeyValue="194787423" />
+      <LocalizedCompound Name="cycB_hill" CompoundRef="s0" Structure="c0" OverrideName="true" KeyValue="194787425" />
+      <LocalizedCompound Name="cycB_repl" CompoundRef="s1" Structure="c0" OverrideName="true" KeyValue="194787426">
+        <SpeciesPattern>
+          <MolecularTypePattern Index="1">
+            <MolecularType Name="cycB" />
+            <ComponentPattern MolecularComponent="T" ComponentStatePattern="p" BondType="-" />
+            <ComponentPattern MolecularComponent="Y" ComponentStatePattern="p" BondType="-" />
+            <ComponentPattern MolecularComponent="T2" ComponentStatePattern="p" BondType="-" />
+            <ComponentPattern MolecularComponent="Y2" ComponentStatePattern="p" BondType="-" />
+            <ComponentPattern MolecularComponent="T3" ComponentStatePattern="p" BondType="-" />
+            <ComponentPattern MolecularComponent="Y3" ComponentStatePattern="p" BondType="-" />
+            <ComponentPattern MolecularComponent="T4" ComponentStatePattern="p" BondType="-" />
+            <ComponentPattern MolecularComponent="Y4" ComponentStatePattern="p" BondType="-" />
+            <ComponentPattern MolecularComponent="T5" ComponentStatePattern="p" BondType="-" />
+            <ComponentPattern MolecularComponent="Y5" ComponentStatePattern="p" BondType="-" />
+          </MolecularTypePattern>
+        </SpeciesPattern>
+      </LocalizedCompound>
+      <LocalizedCompound Name="apc" CompoundRef="s2" Structure="c0" OverrideName="true" KeyValue="194787427" />
+      <SimpleReaction Structure="c0" Name="cycB_hill_deg" Reversible="true" FluxOption="MolecularOnly" KeyValue="194787428">
+        <Product LocalizedCompoundRef="cycB_hill" Stoichiometry="1" KeyValue="194787429" />
+        <Kinetics KineticsType="GeneralKinetics">
+          <Parameter Name="J" Role="reaction rate" Unit="uM.s-1">k_s</Parameter>
+        </Kinetics>
+      </SimpleReaction>
+      <SimpleReaction Structure="c0" Name="cycB_hill_prod" Reversible="true" FluxOption="MolecularOnly" KeyValue="194787430">
+        <Reactant LocalizedCompoundRef="cycB_hill" Stoichiometry="1" KeyValue="194787431" />
+        <Modifier LocalizedCompoundRef="apc" />
+        <Kinetics KineticsType="GeneralKinetics">
+          <Parameter Name="J" Role="reaction rate" Unit="uM.s-1">- ((a_deg + (b_deg * ((apc ^ n) / ((ec50 ^ n) + (apc ^ n))))) * cycB_hill)</Parameter>
+        </Kinetics>
+      </SimpleReaction>
+      <SimpleReaction Structure="c0" Name="r0" Reversible="true" FluxOption="MolecularOnly" KeyValue="194787433">
+        <Product LocalizedCompoundRef="cycB_repl" Stoichiometry="1" KeyValue="194787434" />
+        <Kinetics KineticsType="GeneralKinetics">
+          <Parameter Name="J" Role="reaction rate" Unit="uM.s-1">k_s</Parameter>
+        </Kinetics>
+      </SimpleReaction>
+      <SimpleReaction Structure="c0" Name="r1" Reversible="true" FluxOption="MolecularOnly" KeyValue="194787435">
+        <Reactant LocalizedCompoundRef="cycB_repl" Stoichiometry="1" KeyValue="194787436" />
+        <Kinetics KineticsType="MassAction">
+          <Parameter Name="J" Role="reaction rate" Unit="uM.s-1">(Kf * cycB_repl)</Parameter>
+          <Parameter Name="Kf" Role="forward rate constant" Unit="s-1">0.0</Parameter>
+          <Parameter Name="Kr" Role="reverse rate constant" Unit="uM.s-1">0.0</Parameter>
+        </Kinetics>
+      </SimpleReaction>
+      <RbmModelContainer>
+        <MolecularTypeList>
+          <MolecularType Name="cycB" AnchorAll="true">
+            <MolecularComponent Name="T" Index="1">
+              <AllowableState Name="u" />
+              <AllowableState Name="p" />
+            </MolecularComponent>
+            <MolecularComponent Name="Y" Index="2">
+              <AllowableState Name="u" />
+              <AllowableState Name="p" />
+            </MolecularComponent>
+            <MolecularComponent Name="T2" Index="3">
+              <AllowableState Name="u" />
+              <AllowableState Name="p" />
+            </MolecularComponent>
+            <MolecularComponent Name="Y2" Index="4">
+              <AllowableState Name="u" />
+              <AllowableState Name="p" />
+            </MolecularComponent>
+            <MolecularComponent Name="T3" Index="5">
+              <AllowableState Name="u" />
+              <AllowableState Name="p" />
+            </MolecularComponent>
+            <MolecularComponent Name="Y3" Index="6">
+              <AllowableState Name="u" />
+              <AllowableState Name="p" />
+            </MolecularComponent>
+            <MolecularComponent Name="T4" Index="7">
+              <AllowableState Name="u" />
+              <AllowableState Name="p" />
+            </MolecularComponent>
+            <MolecularComponent Name="Y4" Index="8">
+              <AllowableState Name="u" />
+              <AllowableState Name="p" />
+            </MolecularComponent>
+            <MolecularComponent Name="T5" Index="9">
+              <AllowableState Name="u" />
+              <AllowableState Name="p" />
+            </MolecularComponent>
+            <MolecularComponent Name="Y5" Index="10">
+              <AllowableState Name="u" />
+              <AllowableState Name="p" />
+            </MolecularComponent>
+          </MolecularType>
+        </MolecularTypeList>
+        <RbmObservableList>
+          <Observable Name="O0_cycB_tot" ObservableType="Molecules" Sequence="Multimolecular" LengthEqual="2" LengthGreater="1" Structure="c0">
+            <SpeciesPattern>
+              <MolecularTypePattern Index="1">
+                <MolecularType Name="cycB" />
+                <ComponentPattern MolecularComponent="T" Any="true" BondType="?" />
+                <ComponentPattern MolecularComponent="Y" Any="true" BondType="?" />
+                <ComponentPattern MolecularComponent="T2" Any="true" BondType="?" />
+                <ComponentPattern MolecularComponent="Y2" Any="true" BondType="?" />
+                <ComponentPattern MolecularComponent="T3" Any="true" BondType="?" />
+                <ComponentPattern MolecularComponent="Y3" Any="true" BondType="?" />
+                <ComponentPattern MolecularComponent="T4" Any="true" BondType="?" />
+                <ComponentPattern MolecularComponent="Y4" Any="true" BondType="?" />
+                <ComponentPattern MolecularComponent="T5" Any="true" BondType="?" />
+                <ComponentPattern MolecularComponent="Y5" Any="true" BondType="?" />
+              </MolecularTypePattern>
+            </SpeciesPattern>
+          </Observable>
+        </RbmObservableList>
+      </RbmModelContainer>
+      <Diagram Name="c0" Structure="c0">
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="cycB_repl" LocationX="241" LocationY="136" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="apc" LocationX="119" LocationY="112" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="full" SimpleReactionRef="r0" LocationX="177" LocationY="139" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="full" SimpleReactionRef="cycB_hill_deg" LocationX="176" LocationY="88" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="full" SimpleReactionRef="cycB_hill_prod" LocationX="310" LocationY="87" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="cycB_hill" LocationX="241" LocationY="85" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="full" SimpleReactionRef="r1" LocationX="309" LocationY="138" />
+      </Diagram>
+      <Version Name="model" KeyValue="194787418" BranchId="194785071" Archived="0" Date="26-Nov-2020 02:35:08" FromVersionable="false">
+        <Owner Name="pariksheet" Identifier="188567844" />
+        <GroupAccess Type="1" />
+      </Version>
+      <ModelUnitSystem VolumeSubstanceUnit="uM.um3" MembraneSubstanceUnit="molecules" LumpedReactionSubstanceUnit="molecules" VolumeUnit="um3" AreaUnit="um2" LengthUnit="um" TimeUnit="s" />
+    </Model>
+    <Version Name="Araujo2016_cycB_only" KeyValue="194787439" BranchId="194785077" Archived="0" Date="26-Nov-2020 02:35:08" FromVersionable="false">
+      <Owner Name="pariksheet" Identifier="188567844" />
+      <GroupAccess Type="1" />
+    </Version>
+    <pathwayModel>
+      <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:bp="http://www.biopax.org/release/biopax-level3.owl#" version="3.0" />
+    </pathwayModel>
+    <relationshipModel>
+      <RMNS version="3.0" />
+    </relationshipModel>
+    <vcmetadata>
+      <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" />
+      <nonrdfAnnotationList />
+      <uriBindingList />
+    </vcmetadata>
+  </BioModel>
+</vcml>
+

@@ -1,0 +1,175 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--This biomodel was generated in VCML Version Alpha_Version_7.4.0_build_87-->
+<vcml xmlns="http://sourceforge.net/projects/vcell/vcml" Version="Alpha_Version_7.4.0_build_87">
+  <BioModel Name="For_Jasraj">
+    <Model Name="model">
+      <Compound Name="s0" />
+      <Compound Name="s1" />
+      <Compound Name="s2" />
+      <Feature Name="c0" KeyValue="171471733" />
+      <LocalizedCompound Name="Immobile" CompoundRef="s0" Structure="c0" OverrideName="true" KeyValue="171471735" />
+      <LocalizedCompound Name="bound" CompoundRef="s1" Structure="c0" OverrideName="true" KeyValue="171471736" />
+      <LocalizedCompound Name="Free" CompoundRef="s2" Structure="c0" OverrideName="true" KeyValue="171471737" />
+      <SimpleReaction Structure="c0" Name="r0" Reversible="true" FluxOption="MolecularOnly" KeyValue="171471738">
+        <Reactant LocalizedCompoundRef="Free" Stoichiometry="1" KeyValue="171471740" />
+        <Reactant LocalizedCompoundRef="Immobile" Stoichiometry="1" KeyValue="171471739" />
+        <Product LocalizedCompoundRef="bound" Stoichiometry="1" KeyValue="171471741" />
+        <Kinetics KineticsType="MassAction">
+          <Parameter Name="J" Role="reaction rate" Unit="uM.s-1">(((Kf * Free) * Immobile) - (Kr * bound))</Parameter>
+          <Parameter Name="Kf" Role="forward rate constant" Unit="s-1.uM-1">20.0</Parameter>
+          <Parameter Name="Kr" Role="reverse rate constant" Unit="s-1">4.0</Parameter>
+        </Kinetics>
+      </SimpleReaction>
+      <Diagram Name="c0" Structure="c0">
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="bound" LocationX="420" LocationY="111" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="Immobile" LocationX="88" LocationY="90" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="full" SimpleReactionRef="r0" LocationX="254" LocationY="100" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="Free" LocationX="104" LocationY="44" />
+      </Diagram>
+      <Version Name="model" KeyValue="171471727" BranchId="171471728" Archived="0" Date="26-Dec-2019 00:38:29" FromVersionable="false">
+        <Owner Name="les" Identifier="6" />
+        <GroupAccess Type="1" />
+      </Version>
+      <ModelUnitSystem VolumeSubstanceUnit="uM.um3" MembraneSubstanceUnit="molecules" LumpedReactionSubstanceUnit="molecules" VolumeUnit="um3" AreaUnit="um2" LengthUnit="um" TimeUnit="s" />
+    </Model>
+    <SimulationSpec Name="Rectangle" Stochastic="false" UseConcentration="true" RuleBased="false" MassConservationModelReduction="false" InsufficientIterations="false" InsufficientMaxMolecules="false" CharacteristicSize="0.040545730590820304">
+      <NetworkConstraints RbmMaxIteration="3" RbmMaxMoleculesPerSpecies="10" RbmSpeciesLimit="800" RbmReactionsLimit="2500" />
+      <Annotation />
+      <Geometry Name="Geometry1521232153" Dimension="2">
+        <Extent X="10.0" Y="20.0" Z="10.0" />
+        <Origin X="0.0" Y="0.0" Z="0.0" />
+        <SubVolume Name="subdomain0" Handle="0" Type="Analytical" KeyValue="171471721">
+          <AnalyticExpression>1.0</AnalyticExpression>
+        </SubVolume>
+        <SurfaceDescription NumSamplesX="101" NumSamplesY="101" NumSamplesZ="1" CutoffFrequency="0.3">
+          <VolumeRegion Name="subdomain00" RegionID="0" SubVolume="subdomain0" Size="200.0" Unit="um2" />
+        </SurfaceDescription>
+        <Version Name="Geometry1521232153" KeyValue="171471717" BranchId="171471718" Archived="0" Date="26-Dec-2019 00:38:29" FromVersionable="false">
+          <Owner Name="les" Identifier="6" />
+          <GroupAccess Type="1" />
+        </Version>
+      </Geometry>
+      <GeometryContext>
+        <FeatureMapping Feature="c0" GeometryClass="subdomain0" SubVolume="subdomain0" Size="50000.0" VolumePerUnitVolume="1.0">
+          <BoundariesTypes Xm="Flux" Xp="Flux" Ym="Flux" Yp="Flux" Zm="Flux" Zp="Flux" />
+        </FeatureMapping>
+      </GeometryContext>
+      <ReactionContext>
+        <LocalizedCompoundSpec LocalizedCompoundRef="Immobile" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>(0.5 * (((x &lt; 3.0) || (x &gt; 7.0)) &amp;&amp; ((y &gt; 7.0) &amp;&amp; (y &lt; 13.0))))</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="bound" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>0.0</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="Free" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>1.0</InitialConcentration>
+          <Diffusion>0.5</Diffusion>
+        </LocalizedCompoundSpec>
+        <ReactionSpec ReactionStepRef="r0" ReactionMapping="included" />
+      </ReactionContext>
+      <MathDescription Name="Rectangle_generated">
+        <Constant Name="_F_">96485.3321</Constant>
+        <Constant Name="_F_nmol_">9.64853321E-5</Constant>
+        <Constant Name="_K_GHK_">1.0E-9</Constant>
+        <Constant Name="_N_pmol_">6.02214179E11</Constant>
+        <Constant Name="_PI_">3.141592653589793</Constant>
+        <Constant Name="_R_">8314.46261815</Constant>
+        <Constant Name="_T_">300.0</Constant>
+        <Constant Name="bound_init_uM">0.0</Constant>
+        <Constant Name="Free_diffusionRate">0.5</Constant>
+        <Constant Name="Free_init_uM">1.0</Constant>
+        <Constant Name="K_millivolts_per_volt">1000.0</Constant>
+        <Constant Name="Kf">20.0</Constant>
+        <Constant Name="KMOLE">0.001660538783162726</Constant>
+        <Constant Name="Kr">4.0</Constant>
+        <Constant Name="VolumePerUnitVolume_c0">1.0</Constant>
+        <VolumeVariable Name="bound" Domain="subdomain0" />
+        <VolumeVariable Name="Free" Domain="subdomain0" />
+        <VolumeVariable Name="Immobile" Domain="subdomain0" />
+        <Function Name="Immobile_init_uM" Domain="subdomain0">(0.5 * (((x &lt; 3.0) || (x &gt; 7.0)) &amp;&amp; ((y &gt; 7.0) &amp;&amp; (y &lt; 13.0))))</Function>
+        <Function Name="J_r0" Domain="subdomain0">(((Kf * Immobile) * Free) - (Kr * bound))</Function>
+        <Function Name="Size_c0" Domain="subdomain0">(VolumePerUnitVolume_c0 * vcRegionVolume('subdomain0'))</Function>
+        <Function Name="vobj_subdomain00_size" Domain="subdomain0">vcRegionVolume('subdomain0')</Function>
+        <CompartmentSubDomain Name="subdomain0">
+          <BoundaryType Boundary="Xm" Type="Flux" />
+          <BoundaryType Boundary="Xp" Type="Flux" />
+          <BoundaryType Boundary="Ym" Type="Flux" />
+          <BoundaryType Boundary="Yp" Type="Flux" />
+          <BoundaryType Boundary="Zm" Type="Value" />
+          <BoundaryType Boundary="Zp" Type="Value" />
+          <OdeEquation Name="Immobile" SolutionType="Unknown">
+            <Rate>- J_r0</Rate>
+            <Initial>Immobile_init_uM</Initial>
+          </OdeEquation>
+          <OdeEquation Name="bound" SolutionType="Unknown">
+            <Rate>J_r0</Rate>
+            <Initial>bound_init_uM</Initial>
+          </OdeEquation>
+          <PdeEquation Name="Free" SolutionType="Unknown">
+            <Rate>- J_r0</Rate>
+            <Diffusion>Free_diffusionRate</Diffusion>
+            <Initial>Free_init_uM</Initial>
+          </PdeEquation>
+        </CompartmentSubDomain>
+        <Version Name="Rectangle_generated" KeyValue="171471724" BranchId="171471725" Archived="0" Date="26-Dec-2019 00:38:29" FromVersionable="false">
+          <Owner Name="les" Identifier="6" />
+          <GroupAccess Type="1" />
+        </Version>
+      </MathDescription>
+      <Simulation Name="Simulation0">
+        <SolverTaskDescription TaskType="Unsteady" UseSymbolicJacobian="false" Solver="Sundials Stiff PDE Solver (Variable Time Step)">
+          <TimeBound StartTime="0.0" EndTime="20.0" />
+          <TimeStep DefaultTime="0.05" MinTime="0.0" MaxTime="0.1" />
+          <ErrorTolerance Absolut="1.0E-9" Relative="1.0E-7" />
+          <OutputOptions OutputTimeStep="0.2" />
+          <SundialsSolverOptions>
+            <maxOrderAdvection>2</maxOrderAdvection>
+          </SundialsSolverOptions>
+          <NumberProcessors>1</NumberProcessors>
+        </SolverTaskDescription>
+        <MathOverrides />
+        <MeshSpecification>
+          <Size X="71" Y="143" Z="1" />
+        </MeshSpecification>
+        <Version Name="Simulation0" KeyValue="171471751" BranchId="171471752" Archived="0" Date="26-Dec-2019 00:38:29" FromVersionable="false">
+          <Owner Name="les" Identifier="6" />
+          <GroupAccess Type="1" />
+        </Version>
+      </Simulation>
+      <SpatialObjects>
+        <SpatialObject Name="vobj_subdomain00" Type="Volume" subVolume="subdomain0" regionId="0">
+          <QuantityCategoryList>
+            <QuantityCategory Name="VolumeCentroid" Enabled="false" />
+            <QuantityCategory Name="InteriorVelocity" Enabled="false" />
+            <QuantityCategory Name="VolumeRegionSize" Enabled="true" />
+          </QuantityCategoryList>
+        </SpatialObject>
+      </SpatialObjects>
+      <Version Name="Rectangle" KeyValue="171471743" BranchId="171471744" Archived="0" Date="26-Dec-2019 00:38:29" FromVersionable="false">
+        <Owner Name="les" Identifier="6" />
+        <GroupAccess Type="1" />
+      </Version>
+      <MicroscopeMeasurement Name="fluor">
+        <ConvolutionKernel Type="ProjectionZKernel" />
+      </MicroscopeMeasurement>
+    </SimulationSpec>
+    <Version Name="For_Jasraj" KeyValue="171471754" BranchId="171471755" Archived="0" Date="26-Dec-2019 00:38:29" FromVersionable="false">
+      <Owner Name="les" Identifier="6" />
+      <GroupAccess Type="1" />
+    </Version>
+    <pathwayModel>
+      <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:bp="http://www.biopax.org/release/biopax-level3.owl#" version="3.0" />
+    </pathwayModel>
+    <relationshipModel>
+      <RMNS version="3.0" />
+    </relationshipModel>
+    <vcmetadata>
+      <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" />
+      <nonrdfAnnotationList />
+      <uriBindingList />
+    </vcmetadata>
+  </BioModel>
+</vcml>
+

@@ -1,0 +1,2094 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--This biomodel was generated in VCML Version Alpha_Version_7.4.0_build_87-->
+<vcml xmlns="http://sourceforge.net/projects/vcell/vcml" Version="Alpha_Version_7.4.0_build_87">
+  <BioModel Name="JAKSTATwithSOCSfeedback">
+    <Annotation>A model of cytokine induced JAK-STAT pathway with induced negative feedback regulation by SOCS. STAT module is from my well-characterised models. Receptor and JAK activation and inactivation schemes very closely resemble the published model on the JAK-STAT pathway (FEBS letters 2003). SOCS induced, proteasome mediated degradation of JAK is also included to give near-perfect adaptation.</Annotation>
+    <Model Name="unnamed">
+      <Compound Name="stat">
+        <Annotation>stat3</Annotation>
+      </Compound>
+      <Compound Name="Pstat">
+        <Annotation>tyrosine phosphorylated stat3</Annotation>
+      </Compound>
+      <Compound Name="statPhosphatase">
+        <Annotation>stat3 phosphatase</Annotation>
+      </Compound>
+      <Compound Name="RJ" />
+      <Compound Name="RJctk" />
+      <Compound Name="RJa" />
+      <Compound Name="RJa_SOCS" />
+      <Compound Name="ctk" />
+      <Compound Name="SOCS" />
+      <Compound Name="SHP" />
+      <Compound Name="RJa_SHP" />
+      <Compound Name="SOCS_mRNA" />
+      <Compound Name="RJctk2" />
+      <Compound Name="PstatDimer">
+        <Annotation>tyrPstat3 dimer</Annotation>
+      </Compound>
+      <Feature Name="nuc" KeyValue="10486626" />
+      <Feature Name="extraCellular" KeyValue="10486622" />
+      <Feature Name="cytosol" KeyValue="10486624" />
+      <Membrane InsideFeature="cytosol" OutsideFeature="extraCellular" PositiveFeature="cytosol" NegativeFeature="extraCellular" MembraneVoltage="Voltage_pm" Name="pm" KeyValue="10486623" />
+      <Membrane InsideFeature="nuc" OutsideFeature="cytosol" PositiveFeature="nuc" NegativeFeature="cytosol" MembraneVoltage="Voltage_nm" Name="nm" KeyValue="10486625" />
+      <LocalizedCompound Name="stat_cytosol" CompoundRef="stat" Structure="cytosol" OverrideName="true" KeyValue="10486632" />
+      <LocalizedCompound Name="Pstat_cytosol" CompoundRef="Pstat" Structure="cytosol" OverrideName="true" KeyValue="10486633" />
+      <LocalizedCompound Name="Pstat_nuc" CompoundRef="Pstat" Structure="nuc" OverrideName="true" KeyValue="10486634" />
+      <LocalizedCompound Name="stat_nuc" CompoundRef="stat" Structure="nuc" OverrideName="true" KeyValue="10486635" />
+      <LocalizedCompound Name="statPhosphatase_nuc" CompoundRef="statPhosphatase" Structure="nuc" OverrideName="true" KeyValue="10486636" />
+      <LocalizedCompound Name="RJ_pm" CompoundRef="RJ" Structure="pm" OverrideName="true" KeyValue="10486637" />
+      <LocalizedCompound Name="RJctk_pm" CompoundRef="RJctk" Structure="pm" OverrideName="true" KeyValue="10486638" />
+      <LocalizedCompound Name="RJa_pm" CompoundRef="RJa" Structure="pm" OverrideName="true" KeyValue="10486639" />
+      <LocalizedCompound Name="RJa_SOCS_pm" CompoundRef="RJa_SOCS" Structure="pm" OverrideName="true" KeyValue="10486640" />
+      <LocalizedCompound Name="ctk_extraCellular" CompoundRef="ctk" Structure="extraCellular" OverrideName="true" KeyValue="10486641" />
+      <LocalizedCompound Name="SOCS_cytosol" CompoundRef="SOCS" Structure="cytosol" OverrideName="true" KeyValue="10486642" />
+      <LocalizedCompound Name="SHP_cytosol" CompoundRef="SHP" Structure="cytosol" OverrideName="true" KeyValue="10486643" />
+      <LocalizedCompound Name="RJa_SHP_pm" CompoundRef="RJa_SHP" Structure="pm" OverrideName="true" KeyValue="10486644" />
+      <LocalizedCompound Name="SOCS_mRNA_nuc" CompoundRef="SOCS_mRNA" Structure="nuc" OverrideName="true" KeyValue="10486645" />
+      <LocalizedCompound Name="SOCS_mRNA_cytosol" CompoundRef="SOCS_mRNA" Structure="cytosol" OverrideName="true" KeyValue="10486646" />
+      <LocalizedCompound Name="RJctk2_pm" CompoundRef="RJctk2" Structure="pm" OverrideName="true" KeyValue="10486647" />
+      <LocalizedCompound Name="PstatDimer_nuc" CompoundRef="PstatDimer" Structure="nuc" OverrideName="true" KeyValue="10486648" />
+      <LocalizedCompound Name="PstatDimer_cytosol" CompoundRef="PstatDimer" Structure="cytosol" OverrideName="true" KeyValue="10486649" />
+      <SimpleReaction Structure="nuc" Name="SOCStranscription" Reversible="true" FluxOption="MolecularOnly" KeyValue="10486650">
+        <Product LocalizedCompoundRef="SOCS_mRNA_nuc" Stoichiometry="1" KeyValue="10486651" />
+        <Modifier LocalizedCompoundRef="PstatDimer_nuc" />
+        <Kinetics KineticsType="GeneralKinetics">
+          <Parameter Name="J" Role="reaction rate" Unit="uM.s-1">(vTranscription * (PstatDimer_nuc ^ 2.0) / ((Ktf ^ 2.0) + (PstatDimer_nuc ^ 2.0)))</Parameter>
+          <Parameter Name="Ktf" Role="user defined" Unit="uM">2.0</Parameter>
+          <Parameter Name="vTranscription" Role="user defined" Unit="uM.s-1">2.0E-4</Parameter>
+        </Kinetics>
+      </SimpleReaction>
+      <SimpleReaction Structure="nuc" Name="statDephosphorylation" Reversible="true" FluxOption="MolecularOnly" KeyValue="10486653">
+        <Reactant LocalizedCompoundRef="Pstat_nuc" Stoichiometry="1" KeyValue="10486654" />
+        <Product LocalizedCompoundRef="stat_nuc" Stoichiometry="1" KeyValue="10486655" />
+        <Modifier LocalizedCompoundRef="statPhosphatase_nuc" />
+        <Kinetics KineticsType="GeneralKinetics">
+          <Parameter Name="J_stat3_dephosphorylatn" Role="reaction rate" Unit="uM.s-1">(Kcat_dephos * statPhosphatase_nuc * Pstat_nuc / (Km_dephos + Pstat_nuc))</Parameter>
+          <Parameter Name="Kcat_dephos" Role="user defined" Unit="s-1">1.0</Parameter>
+          <Parameter Name="Km_dephos" Role="user defined" Unit="uM">2.0</Parameter>
+        </Kinetics>
+      </SimpleReaction>
+      <SimpleReaction Structure="pm" Name="SOCSbinding" Reversible="true" FluxOption="MolecularOnly" KeyValue="10486657">
+        <Reactant LocalizedCompoundRef="RJa_pm" Stoichiometry="1" KeyValue="10486658" />
+        <Reactant LocalizedCompoundRef="SOCS_cytosol" Stoichiometry="1" KeyValue="10486659" />
+        <Product LocalizedCompoundRef="RJa_SOCS_pm" Stoichiometry="1" KeyValue="10486660" />
+        <Kinetics KineticsType="MassAction">
+          <Parameter Name="J" Role="reaction rate" Unit="molecules.um-2.s-1">(((Kf * RJa_pm) * SOCS_cytosol) - (Kr * RJa_SOCS_pm))</Parameter>
+          <Parameter Name="I" Role="inward current density" Unit="pA.um-2">0.0</Parameter>
+          <Parameter Name="netValence" Role="net charge valence" Unit="1">0.0</Parameter>
+          <Parameter Name="Kf" Role="forward rate constant" Unit="s-1.uM-1">0.6</Parameter>
+          <Parameter Name="Kr" Role="reverse rate constant" Unit="s-1">0.002</Parameter>
+        </Kinetics>
+      </SimpleReaction>
+      <SimpleReaction Structure="pm" Name="RJa_SOCSdegradation" Reversible="true" FluxOption="MolecularOnly" KeyValue="10486661">
+        <Reactant LocalizedCompoundRef="RJa_SOCS_pm" Stoichiometry="1" KeyValue="10486662" />
+        <Kinetics KineticsType="GeneralKinetics">
+          <Parameter Name="J" Role="reaction rate" Unit="molecules.um-2.s-1">(kRJSOCSdegrad * RJa_SOCS_pm)</Parameter>
+          <Parameter Name="I" Role="inward current density" Unit="pA.um-2">0.0</Parameter>
+          <Parameter Name="netValence" Role="net charge valence" Unit="1">0.0</Parameter>
+          <Parameter Name="kRJSOCSdegrad" Role="user defined" Unit="s-1">2.0E-4</Parameter>
+        </Kinetics>
+      </SimpleReaction>
+      <SimpleReaction Structure="pm" Name="STATphosphorylation" Reversible="true" FluxOption="MolecularOnly" KeyValue="10486663">
+        <Reactant LocalizedCompoundRef="stat_cytosol" Stoichiometry="1" KeyValue="10486664" />
+        <Product LocalizedCompoundRef="Pstat_cytosol" Stoichiometry="1" KeyValue="10486665" />
+        <Modifier LocalizedCompoundRef="RJa_pm" />
+        <Kinetics KineticsType="HMMIrreversible">
+          <Parameter Name="J" Role="reaction rate" Unit="molecules.um-2.s-1">((Vmax * stat_cytosol) / (Km + stat_cytosol))</Parameter>
+          <Parameter Name="I" Role="inward current density" Unit="pA.um-2">0.0</Parameter>
+          <Parameter Name="netValence" Role="net charge valence" Unit="1">0.0</Parameter>
+          <Parameter Name="Km" Role="Km (1/2 max)" Unit="uM">1.0</Parameter>
+          <Parameter Name="Vmax" Role="max reaction rate" Unit="molecules.um-2.s-1">(KcatRJa * RJa_pm)</Parameter>
+          <Parameter Name="KcatRJa" Role="user defined" Unit="s-1">1.0</Parameter>
+        </Kinetics>
+      </SimpleReaction>
+      <SimpleReaction Structure="cytosol" Name="SOCStranslation" Reversible="true" FluxOption="MolecularOnly" KeyValue="10486667">
+        <Product LocalizedCompoundRef="SOCS_cytosol" Stoichiometry="1" KeyValue="10486668" />
+        <Modifier LocalizedCompoundRef="SOCS_mRNA_cytosol" />
+        <Kinetics KineticsType="GeneralKinetics">
+          <Parameter Name="J" Role="reaction rate" Unit="uM.s-1">(kTranslation * SOCS_mRNA_cytosol)</Parameter>
+          <Parameter Name="kTranslation" Role="user defined" Unit="s-1">5.0E-4</Parameter>
+        </Kinetics>
+      </SimpleReaction>
+      <SimpleReaction Structure="cytosol" Name="SOCSdegradation" Reversible="true" FluxOption="MolecularOnly" KeyValue="10486670">
+        <Reactant LocalizedCompoundRef="SOCS_cytosol" Stoichiometry="1" KeyValue="10486671" />
+        <Kinetics KineticsType="GeneralKinetics">
+          <Parameter Name="J" Role="reaction rate" Unit="uM.s-1">(SOCS_cytosol * kSOCSdegrad)</Parameter>
+          <Parameter Name="kSOCSdegrad" Role="user defined" Unit="s-1">1.0E-4</Parameter>
+        </Kinetics>
+      </SimpleReaction>
+      <SimpleReaction Structure="pm" Name="RjakDephosphorylation" Reversible="true" FluxOption="MolecularOnly" KeyValue="10486672">
+        <Reactant LocalizedCompoundRef="RJa_SHP_pm" Stoichiometry="1" KeyValue="10486673" />
+        <Product LocalizedCompoundRef="SHP_cytosol" Stoichiometry="1" KeyValue="10486674" />
+        <Product LocalizedCompoundRef="RJctk2_pm" Stoichiometry="1" KeyValue="10486675" />
+        <Kinetics KineticsType="GeneralKinetics">
+          <Parameter Name="J" Role="reaction rate" Unit="molecules.um-2.s-1">(kcatSHP * RJa_SHP_pm)</Parameter>
+          <Parameter Name="I" Role="inward current density" Unit="pA.um-2">0.0</Parameter>
+          <Parameter Name="netValence" Role="net charge valence" Unit="1">0.0</Parameter>
+          <Parameter Name="kcatSHP" Role="user defined" Unit="s-1">0.001</Parameter>
+        </Kinetics>
+      </SimpleReaction>
+      <SimpleReaction Structure="pm" Name="RJdimerisation" Reversible="true" FluxOption="MolecularOnly" KeyValue="10486676">
+        <Reactant LocalizedCompoundRef="RJctk_pm" Stoichiometry="2" KeyValue="10486677" />
+        <Product LocalizedCompoundRef="RJctk2_pm" Stoichiometry="1" KeyValue="10486678" />
+        <Kinetics KineticsType="MassAction">
+          <Parameter Name="J" Role="reaction rate" Unit="molecules.um-2.s-1">((Kf * pow(RJctk_pm,2.0)) - (Kr * RJctk2_pm))</Parameter>
+          <Parameter Name="I" Role="inward current density" Unit="pA.um-2">0.0</Parameter>
+          <Parameter Name="netValence" Role="net charge valence" Unit="1">0.0</Parameter>
+          <Parameter Name="Kf" Role="forward rate constant" Unit="um2.s-1.molecules-1">20.0</Parameter>
+          <Parameter Name="Kr" Role="reverse rate constant" Unit="s-1">0.1</Parameter>
+        </Kinetics>
+      </SimpleReaction>
+      <SimpleReaction Structure="cytosol" Name="SOCSmRNAdegradation" Reversible="true" FluxOption="MolecularOnly" KeyValue="10486679">
+        <Reactant LocalizedCompoundRef="SOCS_mRNA_cytosol" Stoichiometry="1" KeyValue="10486680" />
+        <Kinetics KineticsType="GeneralKinetics">
+          <Parameter Name="J" Role="reaction rate" Unit="uM.s-1">(SOCS_mRNA_cytosol * kRNAdegrad)</Parameter>
+          <Parameter Name="kRNAdegrad" Role="user defined" Unit="s-1">5.0E-4</Parameter>
+        </Kinetics>
+      </SimpleReaction>
+      <SimpleReaction Structure="pm" Name="ctkBinding" Reversible="true" FluxOption="MolecularOnly" KeyValue="10486681">
+        <Reactant LocalizedCompoundRef="ctk_extraCellular" Stoichiometry="1" KeyValue="10486682" />
+        <Reactant LocalizedCompoundRef="RJ_pm" Stoichiometry="1" KeyValue="10486683" />
+        <Product LocalizedCompoundRef="RJctk_pm" Stoichiometry="1" KeyValue="10486684" />
+        <Kinetics KineticsType="MassAction">
+          <Parameter Name="J" Role="reaction rate" Unit="molecules.um-2.s-1">(((Kf * ctk_extraCellular) * RJ_pm) - (Kr * RJctk_pm))</Parameter>
+          <Parameter Name="I" Role="inward current density" Unit="pA.um-2">0.0</Parameter>
+          <Parameter Name="netValence" Role="net charge valence" Unit="1">0.0</Parameter>
+          <Parameter Name="Kf" Role="forward rate constant" Unit="s-1.uM-1">0.6</Parameter>
+          <Parameter Name="Kr" Role="reverse rate constant" Unit="s-1">0.002</Parameter>
+        </Kinetics>
+      </SimpleReaction>
+      <SimpleReaction Structure="cytosol" Name="PstatDimerisationSol" Reversible="true" FluxOption="MolecularOnly" KeyValue="10486685">
+        <Reactant LocalizedCompoundRef="Pstat_cytosol" Stoichiometry="2" KeyValue="10486686" />
+        <Product LocalizedCompoundRef="PstatDimer_cytosol" Stoichiometry="1" KeyValue="10486687" />
+        <Kinetics KineticsType="MassAction">
+          <Parameter Name="J" Role="reaction rate" Unit="uM.s-1">((Kf_PstatDimerisation * pow(Pstat_cytosol,2.0)) - (Kr_Pstat_dimerisation * PstatDimer_cytosol))</Parameter>
+          <Parameter Name="Kf_PstatDimerisation" Role="forward rate constant" Unit="s-1.uM-1">0.6</Parameter>
+          <Parameter Name="Kr_Pstat_dimerisation" Role="reverse rate constant" Unit="s-1">0.03</Parameter>
+        </Kinetics>
+      </SimpleReaction>
+      <SimpleReaction Structure="pm" Name="RjakActivation" Reversible="true" FluxOption="MolecularOnly" KeyValue="10486688">
+        <Reactant LocalizedCompoundRef="RJctk2_pm" Stoichiometry="1" KeyValue="10486689" />
+        <Product LocalizedCompoundRef="RJa_pm" Stoichiometry="1" KeyValue="10486690" />
+        <Kinetics KineticsType="GeneralKinetics">
+          <Parameter Name="J" Role="reaction rate" Unit="molecules.um-2.s-1">(kRJact * RJctk2_pm)</Parameter>
+          <Parameter Name="I" Role="inward current density" Unit="pA.um-2">0.0</Parameter>
+          <Parameter Name="netValence" Role="net charge valence" Unit="1">0.0</Parameter>
+          <Parameter Name="kRJact" Role="user defined" Unit="s-1">0.004</Parameter>
+        </Kinetics>
+      </SimpleReaction>
+      <SimpleReaction Structure="pm" Name="SHPbinding" Reversible="true" FluxOption="MolecularOnly" KeyValue="10486691">
+        <Reactant LocalizedCompoundRef="SHP_cytosol" Stoichiometry="1" KeyValue="10486692" />
+        <Reactant LocalizedCompoundRef="RJa_pm" Stoichiometry="1" KeyValue="10486693" />
+        <Product LocalizedCompoundRef="RJa_SHP_pm" Stoichiometry="1" KeyValue="10486694" />
+        <Kinetics KineticsType="MassAction">
+          <Parameter Name="J" Role="reaction rate" Unit="molecules.um-2.s-1">(((Kf * SHP_cytosol) * RJa_pm) - (Kr * RJa_SHP_pm))</Parameter>
+          <Parameter Name="I" Role="inward current density" Unit="pA.um-2">0.0</Parameter>
+          <Parameter Name="netValence" Role="net charge valence" Unit="1">0.0</Parameter>
+          <Parameter Name="Kf" Role="forward rate constant" Unit="s-1.uM-1">0.6</Parameter>
+          <Parameter Name="Kr" Role="reverse rate constant" Unit="s-1">0.01</Parameter>
+        </Kinetics>
+      </SimpleReaction>
+      <SimpleReaction Structure="nuc" Name="PstatDimerisationNuc" Reversible="true" FluxOption="MolecularOnly" KeyValue="10486695">
+        <Reactant LocalizedCompoundRef="Pstat_nuc" Stoichiometry="2" KeyValue="10486696" />
+        <Product LocalizedCompoundRef="PstatDimer_nuc" Stoichiometry="1" KeyValue="10486697" />
+        <Kinetics KineticsType="MassAction">
+          <Parameter Name="J" Role="reaction rate" Unit="uM.s-1">((Kf_PstatDimerisation * pow(Pstat_nuc,2.0)) - (Kr_Pstat_dimerisation * PstatDimer_nuc))</Parameter>
+          <Parameter Name="Kf_PstatDimerisation" Role="forward rate constant" Unit="s-1.uM-1">0.6</Parameter>
+          <Parameter Name="Kr_Pstat_dimerisation" Role="reverse rate constant" Unit="s-1">0.03</Parameter>
+        </Kinetics>
+      </SimpleReaction>
+      <FluxStep Name="PstatDimer_ import" Structure="nm" Reversible="true" FluxOption="MolecularOnly" KeyValue="10486698">
+        <Reactant LocalizedCompoundRef="PstatDimer_cytosol" Stoichiometry="1" />
+        <Product LocalizedCompoundRef="PstatDimer_nuc" Stoichiometry="1" />
+        <Kinetics KineticsType="GeneralKinetics">
+          <Parameter Name="J_PstatDimer_import" Role="reaction rate" Unit="uM.um.s-1">(PstatDimer_impMax * PstatDimer_cytosol / (Kpsd_imp + PstatDimer_cytosol))</Parameter>
+          <Parameter Name="I" Role="inward current density" Unit="pA.um-2">0.0</Parameter>
+          <Parameter Name="netValence" Role="net charge valence" Unit="1">1.0</Parameter>
+          <Parameter Name="Kpsd_imp" Role="user defined" Unit="uM">0.3</Parameter>
+          <Parameter Name="PstatDimer_impMax" Role="user defined" Unit="uM.um.s-1">0.045</Parameter>
+        </Kinetics>
+      </FluxStep>
+      <FluxStep Name="stat_import" Structure="nm" Reversible="true" FluxOption="MolecularOnly" KeyValue="10486701">
+        <Reactant LocalizedCompoundRef="stat_cytosol" Stoichiometry="1" />
+        <Product LocalizedCompoundRef="stat_nuc" Stoichiometry="1" />
+        <Kinetics KineticsType="GeneralKinetics">
+          <Parameter Name="J_stat_import" Role="reaction rate" Unit="uM.um.s-1">(stat_impMax * stat_cytosol / (Ks_imp + stat_cytosol))</Parameter>
+          <Parameter Name="I" Role="inward current density" Unit="pA.um-2">0.0</Parameter>
+          <Parameter Name="netValence" Role="net charge valence" Unit="1">0.0</Parameter>
+          <Parameter Name="stat_impMax" Role="user defined" Unit="uM.um.s-1">0.003</Parameter>
+          <Parameter Name="Ks_imp" Role="user defined" Unit="uM">3.0</Parameter>
+        </Kinetics>
+      </FluxStep>
+      <FluxStep Name="mRNAexport" Structure="nm" Reversible="true" FluxOption="MolecularOnly" KeyValue="10486704">
+        <Reactant LocalizedCompoundRef="SOCS_mRNA_cytosol" Stoichiometry="1" />
+        <Product LocalizedCompoundRef="SOCS_mRNA_nuc" Stoichiometry="1" />
+        <Kinetics KineticsType="GeneralKinetics">
+          <Parameter Name="J" Role="reaction rate" Unit="uM.um.s-1">- (SOCS_mRNA_nuc * kRNAexp)</Parameter>
+          <Parameter Name="I" Role="inward current density" Unit="pA.um-2">0.0</Parameter>
+          <Parameter Name="netValence" Role="net charge valence" Unit="1">0.0</Parameter>
+          <Parameter Name="kRNAexp" Role="user defined" Unit="um.s-1">0.01</Parameter>
+        </Kinetics>
+      </FluxStep>
+      <FluxStep Name="stat_export" Structure="nm" Reversible="true" FluxOption="MolecularOnly" KeyValue="10486707">
+        <Reactant LocalizedCompoundRef="stat_cytosol" Stoichiometry="1" />
+        <Product LocalizedCompoundRef="stat_nuc" Stoichiometry="1" />
+        <Kinetics KineticsType="GeneralKinetics">
+          <Parameter Name="J_stat_export" Role="reaction rate" Unit="uM.um.s-1">(stat_expMax * stat_nuc / (Ks_exp + stat_nuc))</Parameter>
+          <Parameter Name="I" Role="inward current density" Unit="pA.um-2">0.0</Parameter>
+          <Parameter Name="netValence" Role="net charge valence" Unit="1">0.0</Parameter>
+          <Parameter Name="stat_expMax" Role="user defined" Unit="uM.um.s-1">-0.06</Parameter>
+          <Parameter Name="Ks_exp" Role="user defined" Unit="uM">0.6</Parameter>
+        </Kinetics>
+      </FluxStep>
+      <Diagram Name="Unnamed compartment" Structure="extraCellular" />
+      <Diagram Name="pm" Structure="pm">
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="RJ_pm" LocationX="50" LocationY="25" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="RJctk_pm" LocationX="33" LocationY="145" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="RJa_pm" LocationX="34" LocationY="261" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="RJa_SOCS_pm" LocationX="39" LocationY="411" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="RJa_SHP_pm" LocationX="116" LocationY="71" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="RJctk2_pm" LocationX="142" LocationY="197" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="PstatDimer_cytosol" LocationX="45" LocationY="47" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="stat_cytosol" LocationX="36" LocationY="206" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="Pstat_cytosol" LocationX="33" LocationY="299" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="SOCS_cytosol" LocationX="46" LocationY="341" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="SHP_cytosol" LocationX="43" LocationY="145" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="SOCS_mRNA_cytosol" LocationX="46" LocationY="73" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="ctk_extraCellular" LocationX="42" LocationY="53" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="full" SimpleReactionRef="STATphosphorylation" LocationX="245" LocationY="247" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="full" SimpleReactionRef="ctkBinding" LocationX="25" LocationY="85" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="full" SimpleReactionRef="RjakActivation" LocationX="62" LocationY="221" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="full" SimpleReactionRef="RJdimerisation" LocationX="72" LocationY="176" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="full" SimpleReactionRef="RjakDephosphorylation" LocationX="230" LocationY="153" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="full" SimpleReactionRef="SHPbinding" LocationX="233" LocationY="81" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="full" SimpleReactionRef="SOCSbinding" LocationX="35" LocationY="340" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="full" SimpleReactionRef="RJa_SOCSdegradation" LocationX="187" LocationY="409" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="RJ_pm" LocationX="50" LocationY="25" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="RJctk_pm" LocationX="33" LocationY="145" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="RJa_pm" LocationX="34" LocationY="261" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="RJa_SOCS_pm" LocationX="39" LocationY="411" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="RJa_SHP_pm" LocationX="116" LocationY="71" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="RJctk2_pm" LocationX="142" LocationY="197" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="PstatDimer_cytosol" LocationX="45" LocationY="47" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="stat_cytosol" LocationX="36" LocationY="206" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="Pstat_cytosol" LocationX="33" LocationY="299" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="SOCS_cytosol" LocationX="46" LocationY="341" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="SHP_cytosol" LocationX="43" LocationY="145" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="SOCS_mRNA_cytosol" LocationX="46" LocationY="73" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="ctk_extraCellular" LocationX="42" LocationY="53" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="molecule" SimpleReactionRef="STATphosphorylation" LocationX="245" LocationY="247" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="molecule" SimpleReactionRef="ctkBinding" LocationX="25" LocationY="85" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="molecule" SimpleReactionRef="RjakActivation" LocationX="62" LocationY="221" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="molecule" SimpleReactionRef="RJdimerisation" LocationX="72" LocationY="176" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="molecule" SimpleReactionRef="RjakDephosphorylation" LocationX="230" LocationY="153" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="molecule" SimpleReactionRef="SHPbinding" LocationX="233" LocationY="81" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="molecule" SimpleReactionRef="SOCSbinding" LocationX="35" LocationY="340" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="molecule" SimpleReactionRef="RJa_SOCSdegradation" LocationX="187" LocationY="409" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="RJ_pm" LocationX="50" LocationY="25" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="RJctk_pm" LocationX="33" LocationY="145" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="RJa_pm" LocationX="34" LocationY="261" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="RJa_SOCS_pm" LocationX="39" LocationY="411" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="RJa_SHP_pm" LocationX="116" LocationY="71" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="RJctk2_pm" LocationX="142" LocationY="197" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="PstatDimer_cytosol" LocationX="45" LocationY="47" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="stat_cytosol" LocationX="36" LocationY="206" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="Pstat_cytosol" LocationX="33" LocationY="299" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="SOCS_cytosol" LocationX="46" LocationY="341" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="SHP_cytosol" LocationX="43" LocationY="145" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="SOCS_mRNA_cytosol" LocationX="46" LocationY="73" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="ctk_extraCellular" LocationX="42" LocationY="53" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="rule" SimpleReactionRef="STATphosphorylation" LocationX="245" LocationY="247" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="rule" SimpleReactionRef="ctkBinding" LocationX="25" LocationY="85" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="rule" SimpleReactionRef="RjakActivation" LocationX="62" LocationY="221" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="rule" SimpleReactionRef="RJdimerisation" LocationX="72" LocationY="176" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="rule" SimpleReactionRef="RjakDephosphorylation" LocationX="230" LocationY="153" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="rule" SimpleReactionRef="SHPbinding" LocationX="233" LocationY="81" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="rule" SimpleReactionRef="SOCSbinding" LocationX="35" LocationY="340" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="rule" SimpleReactionRef="RJa_SOCSdegradation" LocationX="187" LocationY="409" />
+      </Diagram>
+      <Diagram Name="cytosol" Structure="cytosol">
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="SOCS_cytosol" LocationX="155" LocationY="124" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="SHP_cytosol" LocationX="28" LocationY="267" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="SOCS_mRNA_cytosol" LocationX="347" LocationY="119" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="PstatDimer_cytosol" LocationX="240" LocationY="415" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="stat_cytosol" LocationX="206" LocationY="49" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="Pstat_cytosol" LocationX="369" LocationY="228" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="full" SimpleReactionRef="SOCSdegradation" LocationX="155" LocationY="181" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="full" SimpleReactionRef="SOCSmRNAdegradation" LocationX="347" LocationY="178" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="full" SimpleReactionRef="SOCStranslation" LocationX="249" LocationY="123" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="full" SimpleReactionRef="PstatDimerisationSol" LocationX="153" LocationY="290" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="SOCS_cytosol" LocationX="155" LocationY="124" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="SHP_cytosol" LocationX="28" LocationY="267" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="SOCS_mRNA_cytosol" LocationX="347" LocationY="119" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="PstatDimer_cytosol" LocationX="240" LocationY="415" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="stat_cytosol" LocationX="206" LocationY="49" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="Pstat_cytosol" LocationX="369" LocationY="228" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="molecule" SimpleReactionRef="SOCSdegradation" LocationX="155" LocationY="181" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="molecule" SimpleReactionRef="SOCSmRNAdegradation" LocationX="347" LocationY="178" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="molecule" SimpleReactionRef="SOCStranslation" LocationX="249" LocationY="123" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="molecule" SimpleReactionRef="PstatDimerisationSol" LocationX="153" LocationY="290" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="SOCS_cytosol" LocationX="155" LocationY="124" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="SHP_cytosol" LocationX="28" LocationY="267" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="SOCS_mRNA_cytosol" LocationX="347" LocationY="119" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="PstatDimer_cytosol" LocationX="240" LocationY="415" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="stat_cytosol" LocationX="206" LocationY="49" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="Pstat_cytosol" LocationX="369" LocationY="228" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="rule" SimpleReactionRef="SOCSdegradation" LocationX="155" LocationY="181" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="rule" SimpleReactionRef="SOCSmRNAdegradation" LocationX="347" LocationY="178" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="rule" SimpleReactionRef="SOCStranslation" LocationX="249" LocationY="123" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="rule" SimpleReactionRef="PstatDimerisationSol" LocationX="153" LocationY="290" />
+      </Diagram>
+      <Diagram Name="nm" Structure="nm">
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="Pstat_nuc" LocationX="60" LocationY="111" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="PstatDimer_nuc" LocationX="70" LocationY="39" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="stat_nuc" LocationX="78" LocationY="182" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="statPhosphatase_nuc" LocationX="70" LocationY="284" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="SOCS_mRNA_nuc" LocationX="69" LocationY="387" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="Pstat_cytosol" LocationX="59" LocationY="264" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="SOCS_cytosol" LocationX="41" LocationY="161" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="SHP_cytosol" LocationX="75" LocationY="123" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="SOCS_mRNA_cytosol" LocationX="69" LocationY="387" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="PstatDimer_cytosol" LocationX="33" LocationY="36" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="stat_cytosol" LocationX="55" LocationY="189" />
+        <FluxReactionShape NodeReferenceModeAttrTag="full" FluxReactionRef="stat_import" LocationX="109" LocationY="270" />
+        <FluxReactionShape NodeReferenceModeAttrTag="full" FluxReactionRef="stat_export" LocationX="108" LocationY="139" />
+        <FluxReactionShape NodeReferenceModeAttrTag="full" FluxReactionRef="PstatDimer_ import" LocationX="107" LocationY="37" />
+        <FluxReactionShape NodeReferenceModeAttrTag="full" FluxReactionRef="mRNAexport" LocationX="109" LocationY="381" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="Pstat_nuc" LocationX="60" LocationY="111" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="PstatDimer_nuc" LocationX="70" LocationY="39" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="stat_nuc" LocationX="78" LocationY="182" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="statPhosphatase_nuc" LocationX="70" LocationY="284" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="SOCS_mRNA_nuc" LocationX="69" LocationY="387" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="Pstat_cytosol" LocationX="59" LocationY="264" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="SOCS_cytosol" LocationX="41" LocationY="161" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="SHP_cytosol" LocationX="75" LocationY="123" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="SOCS_mRNA_cytosol" LocationX="69" LocationY="387" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="PstatDimer_cytosol" LocationX="33" LocationY="36" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="stat_cytosol" LocationX="55" LocationY="189" />
+        <FluxReactionShape NodeReferenceModeAttrTag="molecule" FluxReactionRef="stat_import" LocationX="109" LocationY="270" />
+        <FluxReactionShape NodeReferenceModeAttrTag="molecule" FluxReactionRef="stat_export" LocationX="108" LocationY="139" />
+        <FluxReactionShape NodeReferenceModeAttrTag="molecule" FluxReactionRef="PstatDimer_ import" LocationX="107" LocationY="37" />
+        <FluxReactionShape NodeReferenceModeAttrTag="molecule" FluxReactionRef="mRNAexport" LocationX="109" LocationY="381" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="Pstat_nuc" LocationX="60" LocationY="111" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="PstatDimer_nuc" LocationX="70" LocationY="39" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="stat_nuc" LocationX="78" LocationY="182" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="statPhosphatase_nuc" LocationX="70" LocationY="284" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="SOCS_mRNA_nuc" LocationX="69" LocationY="387" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="Pstat_cytosol" LocationX="59" LocationY="264" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="SOCS_cytosol" LocationX="41" LocationY="161" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="SHP_cytosol" LocationX="75" LocationY="123" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="SOCS_mRNA_cytosol" LocationX="69" LocationY="387" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="PstatDimer_cytosol" LocationX="33" LocationY="36" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="stat_cytosol" LocationX="55" LocationY="189" />
+        <FluxReactionShape NodeReferenceModeAttrTag="rule" FluxReactionRef="stat_import" LocationX="109" LocationY="270" />
+        <FluxReactionShape NodeReferenceModeAttrTag="rule" FluxReactionRef="stat_export" LocationX="108" LocationY="139" />
+        <FluxReactionShape NodeReferenceModeAttrTag="rule" FluxReactionRef="PstatDimer_ import" LocationX="107" LocationY="37" />
+        <FluxReactionShape NodeReferenceModeAttrTag="rule" FluxReactionRef="mRNAexport" LocationX="109" LocationY="381" />
+      </Diagram>
+      <Diagram Name="nuc" Structure="nuc">
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="Pstat_nuc" LocationX="207" LocationY="224" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="stat_nuc" LocationX="421" LocationY="223" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="statPhosphatase_nuc" LocationX="312" LocationY="132" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="SOCS_mRNA_nuc" LocationX="42" LocationY="136" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="PstatDimer_nuc" LocationX="205" LocationY="79" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="full" SimpleReactionRef="SOCStranscription" LocationX="39" LocationY="77" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="full" SimpleReactionRef="statDephosphorylation" LocationX="310" LocationY="223" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="full" SimpleReactionRef="PstatDimerisationNuc" LocationX="202" LocationY="153" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="Pstat_nuc" LocationX="207" LocationY="224" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="stat_nuc" LocationX="421" LocationY="223" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="statPhosphatase_nuc" LocationX="312" LocationY="132" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="SOCS_mRNA_nuc" LocationX="42" LocationY="136" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="PstatDimer_nuc" LocationX="205" LocationY="79" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="molecule" SimpleReactionRef="SOCStranscription" LocationX="39" LocationY="77" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="molecule" SimpleReactionRef="statDephosphorylation" LocationX="310" LocationY="223" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="molecule" SimpleReactionRef="PstatDimerisationNuc" LocationX="202" LocationY="153" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="Pstat_nuc" LocationX="207" LocationY="224" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="stat_nuc" LocationX="421" LocationY="223" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="statPhosphatase_nuc" LocationX="312" LocationY="132" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="SOCS_mRNA_nuc" LocationX="42" LocationY="136" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="PstatDimer_nuc" LocationX="205" LocationY="79" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="rule" SimpleReactionRef="SOCStranscription" LocationX="39" LocationY="77" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="rule" SimpleReactionRef="statDephosphorylation" LocationX="310" LocationY="223" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="rule" SimpleReactionRef="PstatDimerisationNuc" LocationX="202" LocationY="153" />
+      </Diagram>
+      <Version Name="unnamed" KeyValue="10486607" BranchId="10355592" Archived="0" Date="30-Nov-2004 19:23:22" FromVersionable="false">
+        <Owner Name="mayya" Identifier="4322010" />
+        <GroupAccess Type="1" />
+      </Version>
+      <ModelUnitSystem VolumeSubstanceUnit="uM.um3" MembraneSubstanceUnit="molecules" LumpedReactionSubstanceUnit="molecules" VolumeUnit="um3" AreaUnit="um2" LengthUnit="um" TimeUnit="s" />
+    </Model>
+    <SimulationSpec Name="steadyStateCheck1" Stochastic="false" UseConcentration="true" RuleBased="false" MassConservationModelReduction="true" InsufficientIterations="false" InsufficientMaxMolecules="false">
+      <NetworkConstraints RbmMaxIteration="1" RbmMaxMoleculesPerSpecies="10" RbmSpeciesLimit="800" RbmReactionsLimit="2500" />
+      <Annotation>checking steady state distribution of nuclear and cytosolic STATs.</Annotation>
+      <Geometry Name="non-spatial1009190526" Dimension="0">
+        <Extent X="10.0" Y="10.0" Z="10.0" />
+        <Origin X="0.0" Y="0.0" Z="0.0" />
+        <SubVolume Name="Compartment" Handle="0" Type="Compartmental" KeyValue="10356966" />
+        <Version Name="non-spatial1009190526" KeyValue="10356963" BranchId="10356964" Archived="0" Date="15-Nov-2004 22:32:54" FromVersionable="false">
+          <Owner Name="mayya" Identifier="4322010" />
+          <GroupAccess Type="1" />
+        </Version>
+      </Geometry>
+      <GeometryContext>
+        <FeatureMapping Feature="nuc" GeometryClass="Compartment" SubVolume="Compartment">
+          <BoundariesTypes Xm="Flux" Xp="Flux" Ym="Flux" Yp="Flux" Zm="Flux" Zp="Flux" />
+        </FeatureMapping>
+        <FeatureMapping Feature="extraCellular" GeometryClass="Compartment" SubVolume="Compartment">
+          <BoundariesTypes Xm="Flux" Xp="Flux" Ym="Flux" Yp="Flux" Zm="Flux" Zp="Flux" />
+        </FeatureMapping>
+        <FeatureMapping Feature="cytosol" GeometryClass="Compartment" SubVolume="Compartment">
+          <BoundariesTypes Xm="Flux" Xp="Flux" Ym="Flux" Yp="Flux" Zm="Flux" Zp="Flux" />
+        </FeatureMapping>
+        <MembraneMapping Membrane="pm" SurfaceToVolumeRatio="0.4" VolumeFraction="0.9" CalculateVoltage="false" SpecificCapacitance="1.0" InitialVoltage="0.0" GeometryClass="Compartment">
+          <BoundariesTypes Xm="Flux" Xp="Flux" Ym="Flux" Yp="Flux" Zm="Flux" Zp="Flux" />
+        </MembraneMapping>
+        <MembraneMapping Membrane="nm" SurfaceToVolumeRatio="1.0" VolumeFraction="0.064" CalculateVoltage="false" SpecificCapacitance="1.0" InitialVoltage="0.0" GeometryClass="Compartment">
+          <BoundariesTypes Xm="Flux" Xp="Flux" Ym="Flux" Yp="Flux" Zm="Flux" Zp="Flux" />
+        </MembraneMapping>
+      </GeometryContext>
+      <ReactionContext>
+        <LocalizedCompoundSpec LocalizedCompoundRef="Pstat_nuc" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>0.0</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="stat_nuc" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>0.0</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="statPhosphatase_nuc" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>0.05</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="SOCS_mRNA_nuc" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>0.0</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="PstatDimer_nuc" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>0.0</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="ctk_extraCellular" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>0.0</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="stat_cytosol" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>1.0</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="Pstat_cytosol" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>0.0</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="SOCS_cytosol" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>0.0</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="SHP_cytosol" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>0.05</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="SOCS_mRNA_cytosol" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>0.0</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="PstatDimer_cytosol" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>0.0</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="RJ_pm" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>30.0</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="RJctk_pm" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>0.0</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="RJa_pm" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>0.0</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="RJa_SOCS_pm" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>0.0</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="RJa_SHP_pm" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>0.0</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="RJctk2_pm" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>0.0</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <ReactionSpec ReactionStepRef="SOCStranscription" ReactionMapping="excluded" />
+        <ReactionSpec ReactionStepRef="statDephosphorylation" ReactionMapping="included" />
+        <ReactionSpec ReactionStepRef="SOCSbinding" ReactionMapping="excluded" />
+        <ReactionSpec ReactionStepRef="RJa_SOCSdegradation" ReactionMapping="excluded" />
+        <ReactionSpec ReactionStepRef="STATphosphorylation" ReactionMapping="excluded" />
+        <ReactionSpec ReactionStepRef="SOCStranslation" ReactionMapping="excluded" />
+        <ReactionSpec ReactionStepRef="SOCSdegradation" ReactionMapping="excluded" />
+        <ReactionSpec ReactionStepRef="RjakDephosphorylation" ReactionMapping="excluded" />
+        <ReactionSpec ReactionStepRef="RJdimerisation" ReactionMapping="excluded" />
+        <ReactionSpec ReactionStepRef="SOCSmRNAdegradation" ReactionMapping="excluded" />
+        <ReactionSpec ReactionStepRef="ctkBinding" ReactionMapping="excluded" />
+        <ReactionSpec ReactionStepRef="PstatDimerisationSol" ReactionMapping="included" />
+        <ReactionSpec ReactionStepRef="RjakActivation" ReactionMapping="excluded" />
+        <ReactionSpec ReactionStepRef="SHPbinding" ReactionMapping="excluded" />
+        <ReactionSpec ReactionStepRef="PstatDimerisationNuc" ReactionMapping="included" />
+        <ReactionSpec ReactionStepRef="PstatDimer_ import" ReactionMapping="included" />
+        <ReactionSpec ReactionStepRef="stat_import" ReactionMapping="included" />
+        <ReactionSpec ReactionStepRef="mRNAexport" ReactionMapping="excluded" />
+        <ReactionSpec ReactionStepRef="stat_export" ReactionMapping="included" />
+      </ReactionContext>
+      <MathDescription Name="steadyStateCheck_generated">
+        <Constant Name="_F_">96480.0</Constant>
+        <Constant Name="_F_nmol_">9.648E-5</Constant>
+        <Constant Name="_K_GHK_">1.0E-9</Constant>
+        <Constant Name="_N_pmol_">6.02E11</Constant>
+        <Constant Name="_R_">8314.0</Constant>
+        <Constant Name="_T_">300.0</Constant>
+        <Constant Name="ctk_extraCellular_init">0.0</Constant>
+        <Constant Name="K_millivolts_per_volt">1000.0</Constant>
+        <Constant Name="Kcat_dephos">1.0</Constant>
+        <Constant Name="Kf_PstatDimerisation_PstatDimerisationNuc">0.6</Constant>
+        <Constant Name="Kf_PstatDimerisation_PstatDimerisationSol">0.6</Constant>
+        <Constant Name="Km_dephos">2.0</Constant>
+        <Constant Name="KMOLE">0.0016611295681063123</Constant>
+        <Constant Name="Kpsd_imp">0.3</Constant>
+        <Constant Name="Kr_Pstat_dimerisation_PstatDimerisationNuc">0.03</Constant>
+        <Constant Name="Kr_Pstat_dimerisation_PstatDimerisationSol">0.03</Constant>
+        <Constant Name="Ks_exp">0.6</Constant>
+        <Constant Name="Ks_imp">3.0</Constant>
+        <Constant Name="Pstat_cytosol_init">0.0</Constant>
+        <Constant Name="Pstat_nuc_init">0.0</Constant>
+        <Constant Name="PstatDimer_cytosol_init">0.0</Constant>
+        <Constant Name="PstatDimer_impMax">0.045</Constant>
+        <Constant Name="PstatDimer_nuc_init">0.0</Constant>
+        <Constant Name="RJ_pm_init">30.0</Constant>
+        <Constant Name="RJa_pm_init">0.0</Constant>
+        <Constant Name="RJa_SHP_pm_init">0.0</Constant>
+        <Constant Name="RJa_SOCS_pm_init">0.0</Constant>
+        <Constant Name="RJctk2_pm_init">0.0</Constant>
+        <Constant Name="RJctk_pm_init">0.0</Constant>
+        <Constant Name="SHP_cytosol_init">0.05</Constant>
+        <Constant Name="SOCS_cytosol_init">0.0</Constant>
+        <Constant Name="SOCS_mRNA_cytosol_init">0.0</Constant>
+        <Constant Name="SOCS_mRNA_nuc_init">0.0</Constant>
+        <Constant Name="stat_cytosol_init">1.0</Constant>
+        <Constant Name="stat_expMax">-0.06</Constant>
+        <Constant Name="stat_impMax">0.003</Constant>
+        <Constant Name="stat_nuc_init">0.0</Constant>
+        <Constant Name="statPhosphatase_nuc_init">0.05</Constant>
+        <Constant Name="SurfToVol_nm">1.0</Constant>
+        <Constant Name="SurfToVol_pm">0.4</Constant>
+        <Constant Name="VolFract_cytosol">0.9</Constant>
+        <Constant Name="VolFract_nuc">0.064</Constant>
+        <VolumeVariable Name="Pstat_cytosol" />
+        <VolumeVariable Name="PstatDimer_cytosol" />
+        <VolumeVariable Name="PstatDimer_nuc" />
+        <VolumeVariable Name="stat_cytosol" />
+        <VolumeVariable Name="stat_nuc" />
+        <Function Name="ctk_extraCellular">(K_ctk_extraCellular_total / (1.0 - VolFract_cytosol))</Function>
+        <Function Name="J_PstatDimer_import">(PstatDimer_impMax * PstatDimer_cytosol / (Kpsd_imp + PstatDimer_cytosol))</Function>
+        <Function Name="J_PstatDimerisationNuc">((Kf_PstatDimerisation_PstatDimerisationNuc * pow(Pstat_nuc,2.0)) - (Kr_Pstat_dimerisation_PstatDimerisationNuc * PstatDimer_nuc))</Function>
+        <Function Name="J_PstatDimerisationSol">((Kf_PstatDimerisation_PstatDimerisationSol * pow(Pstat_cytosol,2.0)) - (Kr_Pstat_dimerisation_PstatDimerisationSol * PstatDimer_cytosol))</Function>
+        <Function Name="J_stat3_dephosphorylatn">(Kcat_dephos * statPhosphatase_nuc * Pstat_nuc / (Km_dephos + Pstat_nuc))</Function>
+        <Function Name="J_stat_export">(stat_expMax * stat_nuc / (Ks_exp + stat_nuc))</Function>
+        <Function Name="J_stat_import">(stat_impMax * stat_cytosol / (Ks_imp + stat_cytosol))</Function>
+        <Function Name="K_ctk_extraCellular_total">((1.0 - VolFract_cytosol) * ctk_extraCellular_init)</Function>
+        <Function Name="K_Pstat_nuc_total">((2.0 * PstatDimer_cytosol_init * (1.0 - VolFract_nuc) * VolFract_cytosol) + (Pstat_cytosol_init * (1.0 - VolFract_nuc) * VolFract_cytosol) + (stat_cytosol_init * (1.0 - VolFract_nuc) * VolFract_cytosol) + (2.0 * PstatDimer_nuc_init * VolFract_nuc * VolFract_cytosol) + (Pstat_nuc_init * VolFract_nuc * VolFract_cytosol) + (stat_nuc_init * VolFract_nuc * VolFract_cytosol))</Function>
+        <Function Name="K_RJ_pm_total">(RJ_pm_init * SurfToVol_pm * VolFract_cytosol * KMOLE)</Function>
+        <Function Name="K_RJa_pm_total">(RJa_pm_init * SurfToVol_pm * VolFract_cytosol * KMOLE)</Function>
+        <Function Name="K_RJa_SHP_pm_total">(RJa_SHP_pm_init * SurfToVol_pm * VolFract_cytosol * KMOLE)</Function>
+        <Function Name="K_RJa_SOCS_pm_total">(RJa_SOCS_pm_init * SurfToVol_pm * VolFract_cytosol * KMOLE)</Function>
+        <Function Name="K_RJctk2_pm_total">(RJctk2_pm_init * SurfToVol_pm * VolFract_cytosol * KMOLE)</Function>
+        <Function Name="K_RJctk_pm_total">(RJctk_pm_init * SurfToVol_pm * VolFract_cytosol * KMOLE)</Function>
+        <Function Name="K_SHP_cytosol_total">(SHP_cytosol_init * (1.0 - VolFract_nuc) * VolFract_cytosol)</Function>
+        <Function Name="K_SOCS_cytosol_total">(SOCS_cytosol_init * (1.0 - VolFract_nuc) * VolFract_cytosol)</Function>
+        <Function Name="K_SOCS_mRNA_cytosol_total">(SOCS_mRNA_cytosol_init * (1.0 - VolFract_nuc) * VolFract_cytosol)</Function>
+        <Function Name="K_SOCS_mRNA_nuc_total">(SOCS_mRNA_nuc_init * VolFract_nuc * VolFract_cytosol)</Function>
+        <Function Name="K_statPhosphatase_nuc_total">(statPhosphatase_nuc_init * VolFract_nuc * VolFract_cytosol)</Function>
+        <Function Name="KFlux_nm_cytosol">(SurfToVol_nm * VolFract_nuc / (1.0 - VolFract_nuc))</Function>
+        <Function Name="KFlux_nm_nuc">SurfToVol_nm</Function>
+        <Function Name="KFlux_pm_cytosol">(SurfToVol_pm / (1.0 - VolFract_nuc))</Function>
+        <Function Name="KFlux_pm_extraCellular">(SurfToVol_pm * VolFract_cytosol / (1.0 - VolFract_cytosol))</Function>
+        <Function Name="Pstat_nuc">(( - (2.0 * PstatDimer_cytosol * (1.0 - VolFract_nuc) * VolFract_cytosol) - (Pstat_cytosol * (1.0 - VolFract_nuc) * VolFract_cytosol) - (stat_cytosol * (1.0 - VolFract_nuc) * VolFract_cytosol) - (2.0 * PstatDimer_nuc * VolFract_nuc * VolFract_cytosol) + K_Pstat_nuc_total - (stat_nuc * VolFract_nuc * VolFract_cytosol)) / (VolFract_nuc * VolFract_cytosol))</Function>
+        <Function Name="RJ_pm">(K_RJ_pm_total / (SurfToVol_pm * VolFract_cytosol * KMOLE))</Function>
+        <Function Name="RJa_pm">(K_RJa_pm_total / (SurfToVol_pm * VolFract_cytosol * KMOLE))</Function>
+        <Function Name="RJa_SHP_pm">(K_RJa_SHP_pm_total / (SurfToVol_pm * VolFract_cytosol * KMOLE))</Function>
+        <Function Name="RJa_SOCS_pm">(K_RJa_SOCS_pm_total / (SurfToVol_pm * VolFract_cytosol * KMOLE))</Function>
+        <Function Name="RJctk2_pm">(K_RJctk2_pm_total / (SurfToVol_pm * VolFract_cytosol * KMOLE))</Function>
+        <Function Name="RJctk_pm">(K_RJctk_pm_total / (SurfToVol_pm * VolFract_cytosol * KMOLE))</Function>
+        <Function Name="SHP_cytosol">(K_SHP_cytosol_total / ((1.0 - VolFract_nuc) * VolFract_cytosol))</Function>
+        <Function Name="SOCS_cytosol">(K_SOCS_cytosol_total / ((1.0 - VolFract_nuc) * VolFract_cytosol))</Function>
+        <Function Name="SOCS_mRNA_cytosol">(K_SOCS_mRNA_cytosol_total / ((1.0 - VolFract_nuc) * VolFract_cytosol))</Function>
+        <Function Name="SOCS_mRNA_nuc">(K_SOCS_mRNA_nuc_total / (VolFract_nuc * VolFract_cytosol))</Function>
+        <Function Name="statPhosphatase_nuc">(K_statPhosphatase_nuc_total / (VolFract_nuc * VolFract_cytosol))</Function>
+        <Function Name="Voltage_nm">0.0</Function>
+        <Function Name="Voltage_pm">0.0</Function>
+        <CompartmentSubDomain Name="Compartment">
+          <BoundaryType Boundary="Xm" Type="Value" />
+          <BoundaryType Boundary="Xp" Type="Value" />
+          <BoundaryType Boundary="Ym" Type="Value" />
+          <BoundaryType Boundary="Yp" Type="Value" />
+          <BoundaryType Boundary="Zm" Type="Value" />
+          <BoundaryType Boundary="Zp" Type="Value" />
+          <OdeEquation Name="stat_nuc" SolutionType="Unknown">
+            <Rate>((KFlux_nm_nuc * J_stat_export) + J_stat3_dephosphorylatn + (KFlux_nm_nuc * J_stat_import))</Rate>
+            <Initial>stat_nuc_init</Initial>
+          </OdeEquation>
+          <OdeEquation Name="PstatDimer_nuc" SolutionType="Unknown">
+            <Rate>(J_PstatDimerisationNuc + (KFlux_nm_nuc * J_PstatDimer_import))</Rate>
+            <Initial>PstatDimer_nuc_init</Initial>
+          </OdeEquation>
+          <OdeEquation Name="stat_cytosol" SolutionType="Unknown">
+            <Rate>( - (KFlux_nm_cytosol * J_stat_import) - (KFlux_nm_cytosol * J_stat_export))</Rate>
+            <Initial>stat_cytosol_init</Initial>
+          </OdeEquation>
+          <OdeEquation Name="Pstat_cytosol" SolutionType="Unknown">
+            <Rate>- (2.0 * J_PstatDimerisationSol)</Rate>
+            <Initial>Pstat_cytosol_init</Initial>
+          </OdeEquation>
+          <OdeEquation Name="PstatDimer_cytosol" SolutionType="Unknown">
+            <Rate>(J_PstatDimerisationSol - (KFlux_nm_cytosol * J_PstatDimer_import))</Rate>
+            <Initial>PstatDimer_cytosol_init</Initial>
+          </OdeEquation>
+        </CompartmentSubDomain>
+        <Version Name="steadyStateCheck_generated" KeyValue="10487938" BranchId="10356968" Archived="0" Date="30-Nov-2004 22:37:54" FromVersionable="false">
+          <Owner Name="mayya" Identifier="4322010" />
+          <GroupAccess Type="1" />
+        </Version>
+      </MathDescription>
+      <Simulation Name="Simulation1">
+        <SolverTaskDescription TaskType="Unsteady" UseSymbolicJacobian="false" Solver="Runge-Kutta-Fehlberg (Fifth Order, Variable Time Step)">
+          <TimeBound StartTime="0.0" EndTime="20000.0" />
+          <TimeStep DefaultTime="0.1" MinTime="1.0E-8" MaxTime="1.0" />
+          <ErrorTolerance Absolut="1.0E-9" Relative="1.0E-9" />
+          <OutputOptions KeepEvery="20" KeepAtMost="1000" />
+          <NumberProcessors>1</NumberProcessors>
+        </SolverTaskDescription>
+        <MathOverrides />
+        <Version Name="Simulation1" KeyValue="10488158" BranchId="10357065" Archived="0" Date="30-Nov-2004 22:37:55" FromVersionable="false">
+          <Owner Name="mayya" Identifier="4322010" />
+          <GroupAccess Type="1" />
+          <ParentSimRef KeyValue="10391276" />
+        </Version>
+      </Simulation>
+      <Version Name="steadyStateCheck1" KeyValue="10487943" BranchId="10358992" Archived="0" Date="30-Nov-2004 22:37:54" FromVersionable="false">
+        <Owner Name="mayya" Identifier="4322010" />
+        <GroupAccess Type="1" />
+        <Annotation>checking steady state distribution of nuclear and cytosolic STATs.</Annotation>
+      </Version>
+      <MicroscopeMeasurement Name="fluor">
+        <ConvolutionKernel Type="ProjectionZKernel" />
+      </MicroscopeMeasurement>
+    </SimulationSpec>
+    <SimulationSpec Name="steadyStateCheck2" Stochastic="false" UseConcentration="true" RuleBased="false" MassConservationModelReduction="true" InsufficientIterations="false" InsufficientMaxMolecules="false">
+      <NetworkConstraints RbmMaxIteration="1" RbmMaxMoleculesPerSpecies="10" RbmSpeciesLimit="800" RbmReactionsLimit="2500" />
+      <Annotation>checking generation of psd(n) at different levels of receptor stimulation</Annotation>
+      <Geometry Name="non-spatial1009190526" Dimension="0">
+        <Extent X="10.0" Y="10.0" Z="10.0" />
+        <Origin X="0.0" Y="0.0" Z="0.0" />
+        <SubVolume Name="Compartment" Handle="0" Type="Compartmental" KeyValue="10356966" />
+        <Version Name="non-spatial1009190526" KeyValue="10356963" BranchId="10356964" Archived="0" Date="15-Nov-2004 22:32:54" FromVersionable="false">
+          <Owner Name="mayya" Identifier="4322010" />
+          <GroupAccess Type="1" />
+        </Version>
+      </Geometry>
+      <GeometryContext>
+        <FeatureMapping Feature="nuc" GeometryClass="Compartment" SubVolume="Compartment">
+          <BoundariesTypes Xm="Flux" Xp="Flux" Ym="Flux" Yp="Flux" Zm="Flux" Zp="Flux" />
+        </FeatureMapping>
+        <FeatureMapping Feature="extraCellular" GeometryClass="Compartment" SubVolume="Compartment">
+          <BoundariesTypes Xm="Flux" Xp="Flux" Ym="Flux" Yp="Flux" Zm="Flux" Zp="Flux" />
+        </FeatureMapping>
+        <FeatureMapping Feature="cytosol" GeometryClass="Compartment" SubVolume="Compartment">
+          <BoundariesTypes Xm="Flux" Xp="Flux" Ym="Flux" Yp="Flux" Zm="Flux" Zp="Flux" />
+        </FeatureMapping>
+        <MembraneMapping Membrane="pm" SurfaceToVolumeRatio="0.4" VolumeFraction="0.8" CalculateVoltage="false" SpecificCapacitance="1.0" InitialVoltage="0.0" GeometryClass="Compartment">
+          <BoundariesTypes Xm="Flux" Xp="Flux" Ym="Flux" Yp="Flux" Zm="Flux" Zp="Flux" />
+        </MembraneMapping>
+        <MembraneMapping Membrane="nm" SurfaceToVolumeRatio="1.0" VolumeFraction="0.064" CalculateVoltage="false" SpecificCapacitance="1.0" InitialVoltage="0.0" GeometryClass="Compartment">
+          <BoundariesTypes Xm="Flux" Xp="Flux" Ym="Flux" Yp="Flux" Zm="Flux" Zp="Flux" />
+        </MembraneMapping>
+      </GeometryContext>
+      <ReactionContext>
+        <LocalizedCompoundSpec LocalizedCompoundRef="Pstat_nuc" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>0.0</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="stat_nuc" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>0.00759194</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="statPhosphatase_nuc" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>0.05</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="SOCS_mRNA_nuc" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>0.0</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="PstatDimer_nuc" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>0.0</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="ctk_extraCellular" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>0.1</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="stat_cytosol" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>0.99948089</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="Pstat_cytosol" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>0.0</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="SOCS_cytosol" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>0.0</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="SHP_cytosol" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>0.01</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="SOCS_mRNA_cytosol" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>0.0</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="PstatDimer_cytosol" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>0.0</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="RJ_pm" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>30.0</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="RJctk_pm" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>0.0</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="RJa_pm" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>0.0</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="RJa_SOCS_pm" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>0.0</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="RJa_SHP_pm" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>0.0</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="RJctk2_pm" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>0.0</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <ReactionSpec ReactionStepRef="SOCStranscription" ReactionMapping="excluded" />
+        <ReactionSpec ReactionStepRef="statDephosphorylation" ReactionMapping="included" />
+        <ReactionSpec ReactionStepRef="SOCSbinding" ReactionMapping="excluded" />
+        <ReactionSpec ReactionStepRef="RJa_SOCSdegradation" ReactionMapping="excluded" />
+        <ReactionSpec ReactionStepRef="STATphosphorylation" ReactionMapping="included" />
+        <ReactionSpec ReactionStepRef="SOCStranslation" ReactionMapping="excluded" />
+        <ReactionSpec ReactionStepRef="SOCSdegradation" ReactionMapping="excluded" />
+        <ReactionSpec ReactionStepRef="RjakDephosphorylation" ReactionMapping="included" />
+        <ReactionSpec ReactionStepRef="RJdimerisation" ReactionMapping="included" />
+        <ReactionSpec ReactionStepRef="SOCSmRNAdegradation" ReactionMapping="excluded" />
+        <ReactionSpec ReactionStepRef="ctkBinding" ReactionMapping="included" />
+        <ReactionSpec ReactionStepRef="PstatDimerisationSol" ReactionMapping="included" />
+        <ReactionSpec ReactionStepRef="RjakActivation" ReactionMapping="included" />
+        <ReactionSpec ReactionStepRef="SHPbinding" ReactionMapping="included" />
+        <ReactionSpec ReactionStepRef="PstatDimerisationNuc" ReactionMapping="included" />
+        <ReactionSpec ReactionStepRef="PstatDimer_ import" ReactionMapping="included" />
+        <ReactionSpec ReactionStepRef="stat_import" ReactionMapping="included" />
+        <ReactionSpec ReactionStepRef="mRNAexport" ReactionMapping="excluded" />
+        <ReactionSpec ReactionStepRef="stat_export" ReactionMapping="included" />
+      </ReactionContext>
+      <MathDescription Name="steadyStateCheck2_generated">
+        <Constant Name="_F_">96480.0</Constant>
+        <Constant Name="_F_nmol_">9.648E-5</Constant>
+        <Constant Name="_K_GHK_">1.0E-9</Constant>
+        <Constant Name="_N_pmol_">6.02E11</Constant>
+        <Constant Name="_R_">8314.0</Constant>
+        <Constant Name="_T_">300.0</Constant>
+        <Constant Name="ctk_extraCellular_init">0.1</Constant>
+        <Constant Name="K_millivolts_per_volt">1000.0</Constant>
+        <Constant Name="Kcat_dephos">1.0</Constant>
+        <Constant Name="KcatRJa">1.0</Constant>
+        <Constant Name="kcatSHP">0.001</Constant>
+        <Constant Name="Kf_ctkBinding">0.6</Constant>
+        <Constant Name="Kf_PstatDimerisation_PstatDimerisationNuc">0.6</Constant>
+        <Constant Name="Kf_PstatDimerisation_PstatDimerisationSol">0.6</Constant>
+        <Constant Name="Kf_RJdimerisation">20.0</Constant>
+        <Constant Name="Kf_SHPbinding">0.6</Constant>
+        <Constant Name="Km">1.0</Constant>
+        <Constant Name="Km_dephos">2.0</Constant>
+        <Constant Name="KMOLE">0.0016611295681063123</Constant>
+        <Constant Name="Kpsd_imp">0.3</Constant>
+        <Constant Name="Kr_ctkBinding">0.002</Constant>
+        <Constant Name="Kr_Pstat_dimerisation_PstatDimerisationNuc">0.03</Constant>
+        <Constant Name="Kr_Pstat_dimerisation_PstatDimerisationSol">0.03</Constant>
+        <Constant Name="Kr_RJdimerisation">0.1</Constant>
+        <Constant Name="Kr_SHPbinding">0.01</Constant>
+        <Constant Name="kRJact">0.004</Constant>
+        <Constant Name="Ks_exp">0.6</Constant>
+        <Constant Name="Ks_imp">3.0</Constant>
+        <Constant Name="Pstat_cytosol_init">0.0</Constant>
+        <Constant Name="Pstat_nuc_init">0.0</Constant>
+        <Constant Name="PstatDimer_cytosol_init">0.0</Constant>
+        <Constant Name="PstatDimer_impMax">0.045</Constant>
+        <Constant Name="PstatDimer_nuc_init">0.0</Constant>
+        <Constant Name="RJ_pm_init">30.0</Constant>
+        <Constant Name="RJa_pm_init">0.0</Constant>
+        <Constant Name="RJa_SHP_pm_init">0.0</Constant>
+        <Constant Name="RJa_SOCS_pm_init">0.0</Constant>
+        <Constant Name="RJctk2_pm_init">0.0</Constant>
+        <Constant Name="RJctk_pm_init">0.0</Constant>
+        <Constant Name="SHP_cytosol_init">0.01</Constant>
+        <Constant Name="SOCS_cytosol_init">0.0</Constant>
+        <Constant Name="SOCS_mRNA_cytosol_init">0.0</Constant>
+        <Constant Name="SOCS_mRNA_nuc_init">0.0</Constant>
+        <Constant Name="stat_cytosol_init">0.99948089</Constant>
+        <Constant Name="stat_expMax">-0.06</Constant>
+        <Constant Name="stat_impMax">0.003</Constant>
+        <Constant Name="stat_nuc_init">0.00759194</Constant>
+        <Constant Name="statPhosphatase_nuc_init">0.05</Constant>
+        <Constant Name="SurfToVol_nm">1.0</Constant>
+        <Constant Name="SurfToVol_pm">0.4</Constant>
+        <Constant Name="VolFract_cytosol">0.8</Constant>
+        <Constant Name="VolFract_nuc">0.064</Constant>
+        <VolumeVariable Name="Pstat_cytosol" />
+        <VolumeVariable Name="PstatDimer_cytosol" />
+        <VolumeVariable Name="PstatDimer_nuc" />
+        <VolumeVariable Name="RJa_pm" />
+        <VolumeVariable Name="RJa_SHP_pm" />
+        <VolumeVariable Name="RJctk2_pm" />
+        <VolumeVariable Name="RJctk_pm" />
+        <VolumeVariable Name="stat_cytosol" />
+        <VolumeVariable Name="stat_nuc" />
+        <Function Name="ctk_extraCellular">(( - (2.0 * RJctk2_pm * SurfToVol_pm * VolFract_cytosol * KMOLE) - (2.0 * RJa_SHP_pm * SurfToVol_pm * VolFract_cytosol * KMOLE) - (2.0 * RJa_pm * SurfToVol_pm * VolFract_cytosol * KMOLE) + K_ctk_extraCellular_total - (RJctk_pm * SurfToVol_pm * VolFract_cytosol * KMOLE)) / (1.0 - VolFract_cytosol))</Function>
+        <Function Name="J_ctkBinding">((RJ_pm * Kf_ctkBinding * ctk_extraCellular) - (Kr_ctkBinding * RJctk_pm))</Function>
+        <Function Name="J_PstatDimer_import">(PstatDimer_impMax * PstatDimer_cytosol / (Kpsd_imp + PstatDimer_cytosol))</Function>
+        <Function Name="J_PstatDimerisationNuc">((Kf_PstatDimerisation_PstatDimerisationNuc * pow(Pstat_nuc,2.0)) - (Kr_Pstat_dimerisation_PstatDimerisationNuc * PstatDimer_nuc))</Function>
+        <Function Name="J_PstatDimerisationSol">((Kf_PstatDimerisation_PstatDimerisationSol * pow(Pstat_cytosol,2.0)) - (Kr_Pstat_dimerisation_PstatDimerisationSol * PstatDimer_cytosol))</Function>
+        <Function Name="J_RjakActivation">(kRJact * RJctk2_pm)</Function>
+        <Function Name="J_RjakDephosphorylation">(kcatSHP * RJa_SHP_pm)</Function>
+        <Function Name="J_RJdimerisation">((Kf_RJdimerisation * pow(RJctk_pm,2.0)) - (Kr_RJdimerisation * RJctk2_pm))</Function>
+        <Function Name="J_SHPbinding">((RJa_pm * Kf_SHPbinding * SHP_cytosol) - (Kr_SHPbinding * RJa_SHP_pm))</Function>
+        <Function Name="J_stat3_dephosphorylatn">(Kcat_dephos * statPhosphatase_nuc * Pstat_nuc / (Km_dephos + Pstat_nuc))</Function>
+        <Function Name="J_stat_export">(stat_expMax * stat_nuc / (Ks_exp + stat_nuc))</Function>
+        <Function Name="J_stat_import">(stat_impMax * stat_cytosol / (Ks_imp + stat_cytosol))</Function>
+        <Function Name="J_STATphosphorylation">(Vmax * stat_cytosol / (Km + stat_cytosol))</Function>
+        <Function Name="K_ctk_extraCellular_total">((2.0 * RJctk2_pm_init * SurfToVol_pm * VolFract_cytosol * KMOLE) + (2.0 * RJa_SHP_pm_init * SurfToVol_pm * VolFract_cytosol * KMOLE) + (2.0 * RJa_pm_init * SurfToVol_pm * VolFract_cytosol * KMOLE) + ((1.0 - VolFract_cytosol) * ctk_extraCellular_init) + (RJctk_pm_init * SurfToVol_pm * VolFract_cytosol * KMOLE))</Function>
+        <Function Name="K_Pstat_nuc_total">((2.0 * PstatDimer_cytosol_init * (1.0 - VolFract_nuc) * VolFract_cytosol) + (Pstat_cytosol_init * (1.0 - VolFract_nuc) * VolFract_cytosol) + (stat_cytosol_init * (1.0 - VolFract_nuc) * VolFract_cytosol) + (2.0 * PstatDimer_nuc_init * VolFract_nuc * VolFract_cytosol) + (Pstat_nuc_init * VolFract_nuc * VolFract_cytosol) + (stat_nuc_init * VolFract_nuc * VolFract_cytosol))</Function>
+        <Function Name="K_RJ_pm_total">((2.0 * RJctk2_pm_init * SurfToVol_pm * VolFract_cytosol * KMOLE) + (2.0 * RJa_SHP_pm_init * SurfToVol_pm * VolFract_cytosol * KMOLE) + (2.0 * RJa_pm_init * SurfToVol_pm * VolFract_cytosol * KMOLE) + (RJ_pm_init * SurfToVol_pm * VolFract_cytosol * KMOLE) + (RJctk_pm_init * SurfToVol_pm * VolFract_cytosol * KMOLE))</Function>
+        <Function Name="K_RJa_SOCS_pm_total">(RJa_SOCS_pm_init * SurfToVol_pm * VolFract_cytosol * KMOLE)</Function>
+        <Function Name="K_SHP_cytosol_total">((SHP_cytosol_init * (1.0 - VolFract_nuc) * VolFract_cytosol) + (RJa_SHP_pm_init * SurfToVol_pm * VolFract_cytosol * KMOLE))</Function>
+        <Function Name="K_SOCS_cytosol_total">(SOCS_cytosol_init * (1.0 - VolFract_nuc) * VolFract_cytosol)</Function>
+        <Function Name="K_SOCS_mRNA_cytosol_total">(SOCS_mRNA_cytosol_init * (1.0 - VolFract_nuc) * VolFract_cytosol)</Function>
+        <Function Name="K_SOCS_mRNA_nuc_total">(SOCS_mRNA_nuc_init * VolFract_nuc * VolFract_cytosol)</Function>
+        <Function Name="K_statPhosphatase_nuc_total">(statPhosphatase_nuc_init * VolFract_nuc * VolFract_cytosol)</Function>
+        <Function Name="KFlux_nm_cytosol">(SurfToVol_nm * VolFract_nuc / (1.0 - VolFract_nuc))</Function>
+        <Function Name="KFlux_nm_nuc">SurfToVol_nm</Function>
+        <Function Name="KFlux_pm_cytosol">(SurfToVol_pm / (1.0 - VolFract_nuc))</Function>
+        <Function Name="KFlux_pm_extraCellular">(SurfToVol_pm * VolFract_cytosol / (1.0 - VolFract_cytosol))</Function>
+        <Function Name="Pstat_nuc">(( - (2.0 * PstatDimer_cytosol * (1.0 - VolFract_nuc) * VolFract_cytosol) - (Pstat_cytosol * (1.0 - VolFract_nuc) * VolFract_cytosol) - (stat_cytosol * (1.0 - VolFract_nuc) * VolFract_cytosol) - (2.0 * PstatDimer_nuc * VolFract_nuc * VolFract_cytosol) + K_Pstat_nuc_total - (stat_nuc * VolFract_nuc * VolFract_cytosol)) / (VolFract_nuc * VolFract_cytosol))</Function>
+        <Function Name="RJ_pm">(( - (2.0 * RJctk2_pm * SurfToVol_pm * VolFract_cytosol * KMOLE) - (2.0 * RJa_SHP_pm * SurfToVol_pm * VolFract_cytosol * KMOLE) - (2.0 * RJa_pm * SurfToVol_pm * VolFract_cytosol * KMOLE) + K_RJ_pm_total - (RJctk_pm * SurfToVol_pm * VolFract_cytosol * KMOLE)) / (SurfToVol_pm * VolFract_cytosol * KMOLE))</Function>
+        <Function Name="RJa_SOCS_pm">(K_RJa_SOCS_pm_total / (SurfToVol_pm * VolFract_cytosol * KMOLE))</Function>
+        <Function Name="SHP_cytosol">((K_SHP_cytosol_total - (RJa_SHP_pm * SurfToVol_pm * VolFract_cytosol * KMOLE)) / ((1.0 - VolFract_nuc) * VolFract_cytosol))</Function>
+        <Function Name="SOCS_cytosol">(K_SOCS_cytosol_total / ((1.0 - VolFract_nuc) * VolFract_cytosol))</Function>
+        <Function Name="SOCS_mRNA_cytosol">(K_SOCS_mRNA_cytosol_total / ((1.0 - VolFract_nuc) * VolFract_cytosol))</Function>
+        <Function Name="SOCS_mRNA_nuc">(K_SOCS_mRNA_nuc_total / (VolFract_nuc * VolFract_cytosol))</Function>
+        <Function Name="statPhosphatase_nuc">(K_statPhosphatase_nuc_total / (VolFract_nuc * VolFract_cytosol))</Function>
+        <Function Name="Vmax">(KcatRJa * RJa_pm)</Function>
+        <Function Name="Voltage_nm">0.0</Function>
+        <Function Name="Voltage_pm">0.0</Function>
+        <CompartmentSubDomain Name="Compartment">
+          <BoundaryType Boundary="Xm" Type="Value" />
+          <BoundaryType Boundary="Xp" Type="Value" />
+          <BoundaryType Boundary="Ym" Type="Value" />
+          <BoundaryType Boundary="Yp" Type="Value" />
+          <BoundaryType Boundary="Zm" Type="Value" />
+          <BoundaryType Boundary="Zp" Type="Value" />
+          <OdeEquation Name="stat_nuc" SolutionType="Unknown">
+            <Rate>((KFlux_nm_nuc * J_stat_export) + J_stat3_dephosphorylatn + (KFlux_nm_nuc * J_stat_import))</Rate>
+            <Initial>stat_nuc_init</Initial>
+          </OdeEquation>
+          <OdeEquation Name="PstatDimer_nuc" SolutionType="Unknown">
+            <Rate>(J_PstatDimerisationNuc + (KFlux_nm_nuc * J_PstatDimer_import))</Rate>
+            <Initial>PstatDimer_nuc_init</Initial>
+          </OdeEquation>
+          <OdeEquation Name="stat_cytosol" SolutionType="Unknown">
+            <Rate>( - (KFlux_nm_cytosol * J_stat_export) - (KFlux_pm_cytosol * KMOLE * J_STATphosphorylation) - (KFlux_nm_cytosol * J_stat_import))</Rate>
+            <Initial>stat_cytosol_init</Initial>
+          </OdeEquation>
+          <OdeEquation Name="Pstat_cytosol" SolutionType="Unknown">
+            <Rate>((KFlux_pm_cytosol * KMOLE * J_STATphosphorylation) - (2.0 * J_PstatDimerisationSol))</Rate>
+            <Initial>Pstat_cytosol_init</Initial>
+          </OdeEquation>
+          <OdeEquation Name="PstatDimer_cytosol" SolutionType="Unknown">
+            <Rate>(J_PstatDimerisationSol - (KFlux_nm_cytosol * J_PstatDimer_import))</Rate>
+            <Initial>PstatDimer_cytosol_init</Initial>
+          </OdeEquation>
+          <OdeEquation Name="RJctk_pm" SolutionType="Unknown">
+            <Rate>( - (2.0 * J_RJdimerisation) + J_ctkBinding)</Rate>
+            <Initial>RJctk_pm_init</Initial>
+          </OdeEquation>
+          <OdeEquation Name="RJa_pm" SolutionType="Unknown">
+            <Rate>(J_RjakActivation - J_SHPbinding)</Rate>
+            <Initial>RJa_pm_init</Initial>
+          </OdeEquation>
+          <OdeEquation Name="RJa_SHP_pm" SolutionType="Unknown">
+            <Rate>( - J_RjakDephosphorylation + J_SHPbinding)</Rate>
+            <Initial>RJa_SHP_pm_init</Initial>
+          </OdeEquation>
+          <OdeEquation Name="RJctk2_pm" SolutionType="Unknown">
+            <Rate>( - J_RjakActivation + J_RjakDephosphorylation + J_RJdimerisation)</Rate>
+            <Initial>RJctk2_pm_init</Initial>
+          </OdeEquation>
+        </CompartmentSubDomain>
+        <Version Name="steadyStateCheck2_generated" KeyValue="10487939" BranchId="10358988" Archived="0" Date="30-Nov-2004 22:37:54" FromVersionable="false">
+          <Owner Name="mayya" Identifier="4322010" />
+          <GroupAccess Type="1" />
+        </Version>
+      </MathDescription>
+      <Simulation Name="Simulation0">
+        <Annotation>ctk: 0.001; psd: 0.2; RJa: 0.11</Annotation>
+        <SolverTaskDescription TaskType="Unsteady" UseSymbolicJacobian="false" Solver="Runge-Kutta-Fehlberg (Fifth Order, Variable Time Step)">
+          <TimeBound StartTime="0.0" EndTime="10000.0" />
+          <TimeStep DefaultTime="0.2" MinTime="1.0E-8" MaxTime="1.0" />
+          <ErrorTolerance Absolut="1.0E-9" Relative="1.0E-9" />
+          <OutputOptions KeepEvery="10" KeepAtMost="1000" />
+          <NumberProcessors>1</NumberProcessors>
+        </SolverTaskDescription>
+        <MathOverrides>
+          <Constant Name="ctk_extraCellular_init">0.001</Constant>
+        </MathOverrides>
+        <Version Name="Simulation0" KeyValue="10488159" BranchId="10488160" Archived="0" Date="30-Nov-2004 22:37:55" FromVersionable="false">
+          <Owner Name="mayya" Identifier="4322010" />
+          <GroupAccess Type="1" />
+          <Annotation>ctk: 0.001; psd: 0.2; RJa: 0.11</Annotation>
+        </Version>
+      </Simulation>
+      <Simulation Name="Simulation2">
+        <Annotation>ctk: 0.01; psd: 1.1; RJa: 1.1; Sc: 0.75</Annotation>
+        <SolverTaskDescription TaskType="Unsteady" UseSymbolicJacobian="false" Solver="Runge-Kutta-Fehlberg (Fifth Order, Variable Time Step)">
+          <TimeBound StartTime="0.0" EndTime="10000.0" />
+          <TimeStep DefaultTime="0.2" MinTime="1.0E-8" MaxTime="1.0" />
+          <ErrorTolerance Absolut="1.0E-9" Relative="1.0E-9" />
+          <OutputOptions KeepEvery="10" KeepAtMost="1000" />
+          <NumberProcessors>1</NumberProcessors>
+        </SolverTaskDescription>
+        <MathOverrides>
+          <Constant Name="ctk_extraCellular_init">0.01</Constant>
+        </MathOverrides>
+        <Version Name="Simulation2" KeyValue="10488161" BranchId="10363778" Archived="0" Date="30-Nov-2004 22:37:55" FromVersionable="false">
+          <Owner Name="mayya" Identifier="4322010" />
+          <GroupAccess Type="1" />
+          <Annotation>ctk: 0.01; psd: 1.1; RJa: 1.1; Sc: 0.75</Annotation>
+          <ParentSimRef KeyValue="10391278" />
+        </Version>
+      </Simulation>
+      <Simulation Name="Simulation3">
+        <Annotation>ctk: 0.05; psd: 4.8; RJa: 6.0; Sc: 0.18</Annotation>
+        <SolverTaskDescription TaskType="Unsteady" UseSymbolicJacobian="false" Solver="Runge-Kutta-Fehlberg (Fifth Order, Variable Time Step)">
+          <TimeBound StartTime="0.0" EndTime="10000.0" />
+          <TimeStep DefaultTime="0.2" MinTime="1.0E-8" MaxTime="1.0" />
+          <ErrorTolerance Absolut="1.0E-9" Relative="1.0E-9" />
+          <OutputOptions KeepEvery="10" KeepAtMost="1000" />
+          <NumberProcessors>1</NumberProcessors>
+        </SolverTaskDescription>
+        <MathOverrides>
+          <Constant Name="ctk_extraCellular_init">0.05</Constant>
+        </MathOverrides>
+        <Version Name="Simulation3" KeyValue="10488162" BranchId="10363809" Archived="0" Date="30-Nov-2004 22:37:55" FromVersionable="false">
+          <Owner Name="mayya" Identifier="4322010" />
+          <GroupAccess Type="1" />
+          <Annotation>ctk: 0.05; psd: 4.8; RJa: 6.0; Sc: 0.18</Annotation>
+          <ParentSimRef KeyValue="10391329" />
+        </Version>
+      </Simulation>
+      <Simulation Name="Simulation4">
+        <Annotation>ctk: 0.1; psd: 5.3; RJa: 10.0; Sc: 0.11</Annotation>
+        <SolverTaskDescription TaskType="Unsteady" UseSymbolicJacobian="false" Solver="Runge-Kutta-Fehlberg (Fifth Order, Variable Time Step)">
+          <TimeBound StartTime="0.0" EndTime="10000.0" />
+          <TimeStep DefaultTime="0.2" MinTime="1.0E-8" MaxTime="1.0" />
+          <ErrorTolerance Absolut="1.0E-9" Relative="1.0E-9" />
+          <OutputOptions KeepEvery="10" KeepAtMost="1000" />
+          <NumberProcessors>1</NumberProcessors>
+        </SolverTaskDescription>
+        <MathOverrides />
+        <Version Name="Simulation4" KeyValue="10488163" BranchId="10391352" Archived="0" Date="30-Nov-2004 22:37:55" FromVersionable="false">
+          <Owner Name="mayya" Identifier="4322010" />
+          <GroupAccess Type="1" />
+          <Annotation>ctk: 0.1; psd: 5.3; RJa: 10.0; Sc: 0.11</Annotation>
+          <ParentSimRef KeyValue="10391351" />
+        </Version>
+      </Simulation>
+      <Version Name="steadyStateCheck2" KeyValue="10487986" BranchId="10359035" Archived="0" Date="30-Nov-2004 22:37:55" FromVersionable="false">
+        <Owner Name="mayya" Identifier="4322010" />
+        <GroupAccess Type="1" />
+        <Annotation>checking generation of psd(n) at different levels of receptor stimulation</Annotation>
+      </Version>
+      <MicroscopeMeasurement Name="fluor">
+        <ConvolutionKernel Type="ProjectionZKernel" />
+      </MicroscopeMeasurement>
+    </SimulationSpec>
+    <SimulationSpec Name="steadyStateCheck3" Stochastic="false" UseConcentration="true" RuleBased="false" MassConservationModelReduction="true" InsufficientIterations="false" InsufficientMaxMolecules="false">
+      <NetworkConstraints RbmMaxIteration="1" RbmMaxMoleculesPerSpecies="10" RbmSpeciesLimit="800" RbmReactionsLimit="2500" />
+      <Annotation>to check the build-up of negative feedback molecule SOCS &amp; also to check the output at different levels of active receptor.</Annotation>
+      <Geometry Name="non-spatial1009190526" Dimension="0">
+        <Extent X="10.0" Y="10.0" Z="10.0" />
+        <Origin X="0.0" Y="0.0" Z="0.0" />
+        <SubVolume Name="Compartment" Handle="0" Type="Compartmental" KeyValue="10356966" />
+        <Version Name="non-spatial1009190526" KeyValue="10356963" BranchId="10356964" Archived="0" Date="15-Nov-2004 22:32:54" FromVersionable="false">
+          <Owner Name="mayya" Identifier="4322010" />
+          <GroupAccess Type="1" />
+        </Version>
+      </Geometry>
+      <GeometryContext>
+        <FeatureMapping Feature="nuc" GeometryClass="Compartment" SubVolume="Compartment">
+          <BoundariesTypes Xm="Flux" Xp="Flux" Ym="Flux" Yp="Flux" Zm="Flux" Zp="Flux" />
+        </FeatureMapping>
+        <FeatureMapping Feature="extraCellular" GeometryClass="Compartment" SubVolume="Compartment">
+          <BoundariesTypes Xm="Flux" Xp="Flux" Ym="Flux" Yp="Flux" Zm="Flux" Zp="Flux" />
+        </FeatureMapping>
+        <FeatureMapping Feature="cytosol" GeometryClass="Compartment" SubVolume="Compartment">
+          <BoundariesTypes Xm="Flux" Xp="Flux" Ym="Flux" Yp="Flux" Zm="Flux" Zp="Flux" />
+        </FeatureMapping>
+        <MembraneMapping Membrane="pm" SurfaceToVolumeRatio="0.4" VolumeFraction="0.8" CalculateVoltage="false" SpecificCapacitance="1.0" InitialVoltage="0.0" GeometryClass="Compartment">
+          <BoundariesTypes Xm="Flux" Xp="Flux" Ym="Flux" Yp="Flux" Zm="Flux" Zp="Flux" />
+        </MembraneMapping>
+        <MembraneMapping Membrane="nm" SurfaceToVolumeRatio="1.0" VolumeFraction="0.064" CalculateVoltage="false" SpecificCapacitance="1.0" InitialVoltage="0.0" GeometryClass="Compartment">
+          <BoundariesTypes Xm="Flux" Xp="Flux" Ym="Flux" Yp="Flux" Zm="Flux" Zp="Flux" />
+        </MembraneMapping>
+      </GeometryContext>
+      <ReactionContext>
+        <LocalizedCompoundSpec LocalizedCompoundRef="Pstat_nuc" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>0.0</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="stat_nuc" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>0.00759194</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="statPhosphatase_nuc" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>0.05</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="SOCS_mRNA_nuc" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>0.0</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="PstatDimer_nuc" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>0.0</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="ctk_extraCellular" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>0.1</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="stat_cytosol" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>0.99948089</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="Pstat_cytosol" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>0.0</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="SOCS_cytosol" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>0.0</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="SHP_cytosol" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>0.01</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="SOCS_mRNA_cytosol" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>0.0</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="PstatDimer_cytosol" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>0.0</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="RJ_pm" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>20.0</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="RJctk_pm" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>0.0</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="RJa_pm" ForceConstant="true" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>10.0</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="RJa_SOCS_pm" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>0.0</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="RJa_SHP_pm" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>0.0</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="RJctk2_pm" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>0.0</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <ReactionSpec ReactionStepRef="SOCStranscription" ReactionMapping="included" />
+        <ReactionSpec ReactionStepRef="statDephosphorylation" ReactionMapping="included" />
+        <ReactionSpec ReactionStepRef="SOCSbinding" ReactionMapping="included" />
+        <ReactionSpec ReactionStepRef="RJa_SOCSdegradation" ReactionMapping="included" />
+        <ReactionSpec ReactionStepRef="STATphosphorylation" ReactionMapping="included" />
+        <ReactionSpec ReactionStepRef="SOCStranslation" ReactionMapping="included" />
+        <ReactionSpec ReactionStepRef="SOCSdegradation" ReactionMapping="included" />
+        <ReactionSpec ReactionStepRef="RjakDephosphorylation" ReactionMapping="included" />
+        <ReactionSpec ReactionStepRef="RJdimerisation" ReactionMapping="excluded" />
+        <ReactionSpec ReactionStepRef="SOCSmRNAdegradation" ReactionMapping="included" />
+        <ReactionSpec ReactionStepRef="ctkBinding" ReactionMapping="excluded" />
+        <ReactionSpec ReactionStepRef="PstatDimerisationSol" ReactionMapping="included" />
+        <ReactionSpec ReactionStepRef="RjakActivation" ReactionMapping="excluded" />
+        <ReactionSpec ReactionStepRef="SHPbinding" ReactionMapping="included" />
+        <ReactionSpec ReactionStepRef="PstatDimerisationNuc" ReactionMapping="included" />
+        <ReactionSpec ReactionStepRef="PstatDimer_ import" ReactionMapping="included" />
+        <ReactionSpec ReactionStepRef="stat_import" ReactionMapping="included" />
+        <ReactionSpec ReactionStepRef="mRNAexport" ReactionMapping="included" />
+        <ReactionSpec ReactionStepRef="stat_export" ReactionMapping="included" />
+      </ReactionContext>
+      <MathDescription Name="steadyStateCheck3_generated">
+        <Constant Name="_F_">96480.0</Constant>
+        <Constant Name="_F_nmol_">9.648E-5</Constant>
+        <Constant Name="_K_GHK_">1.0E-9</Constant>
+        <Constant Name="_N_pmol_">6.02E11</Constant>
+        <Constant Name="_R_">8314.0</Constant>
+        <Constant Name="_T_">300.0</Constant>
+        <Constant Name="ctk_extraCellular_init">0.1</Constant>
+        <Constant Name="K_millivolts_per_volt">1000.0</Constant>
+        <Constant Name="Kcat_dephos">1.0</Constant>
+        <Constant Name="KcatRJa">1.0</Constant>
+        <Constant Name="kcatSHP">0.001</Constant>
+        <Constant Name="Kf_PstatDimerisation_PstatDimerisationNuc">0.6</Constant>
+        <Constant Name="Kf_PstatDimerisation_PstatDimerisationSol">0.6</Constant>
+        <Constant Name="Kf_SHPbinding">0.6</Constant>
+        <Constant Name="Kf_SOCSbinding">0.6</Constant>
+        <Constant Name="Km">1.0</Constant>
+        <Constant Name="Km_dephos">2.0</Constant>
+        <Constant Name="KMOLE">0.0016611295681063123</Constant>
+        <Constant Name="Kpsd_imp">0.3</Constant>
+        <Constant Name="Kr_Pstat_dimerisation_PstatDimerisationNuc">0.03</Constant>
+        <Constant Name="Kr_Pstat_dimerisation_PstatDimerisationSol">0.03</Constant>
+        <Constant Name="Kr_SHPbinding">0.01</Constant>
+        <Constant Name="Kr_SOCSbinding">0.002</Constant>
+        <Constant Name="kRJSOCSdegrad">2.0E-4</Constant>
+        <Constant Name="kRNAdegrad">5.0E-4</Constant>
+        <Constant Name="kRNAexp">0.01</Constant>
+        <Constant Name="Ks_exp">0.6</Constant>
+        <Constant Name="Ks_imp">3.0</Constant>
+        <Constant Name="kSOCSdegrad">1.0E-4</Constant>
+        <Constant Name="Ktf">2.0</Constant>
+        <Constant Name="kTranslation">5.0E-4</Constant>
+        <Constant Name="Pstat_cytosol_init">0.0</Constant>
+        <Constant Name="Pstat_nuc_init">0.0</Constant>
+        <Constant Name="PstatDimer_cytosol_init">0.0</Constant>
+        <Constant Name="PstatDimer_impMax">0.045</Constant>
+        <Constant Name="PstatDimer_nuc_init">0.0</Constant>
+        <Constant Name="RJ_pm_init">20.0</Constant>
+        <Constant Name="RJa_pm">10.0</Constant>
+        <Constant Name="RJa_pm_init">10.0</Constant>
+        <Constant Name="RJa_SHP_pm_init">0.0</Constant>
+        <Constant Name="RJa_SOCS_pm_init">0.0</Constant>
+        <Constant Name="RJctk2_pm_init">0.0</Constant>
+        <Constant Name="RJctk_pm_init">0.0</Constant>
+        <Constant Name="SHP_cytosol_init">0.01</Constant>
+        <Constant Name="SOCS_cytosol_init">0.0</Constant>
+        <Constant Name="SOCS_mRNA_cytosol_init">0.0</Constant>
+        <Constant Name="SOCS_mRNA_nuc_init">0.0</Constant>
+        <Constant Name="stat_cytosol_init">0.99948089</Constant>
+        <Constant Name="stat_expMax">-0.06</Constant>
+        <Constant Name="stat_impMax">0.003</Constant>
+        <Constant Name="stat_nuc_init">0.00759194</Constant>
+        <Constant Name="statPhosphatase_nuc_init">0.05</Constant>
+        <Constant Name="SurfToVol_nm">1.0</Constant>
+        <Constant Name="SurfToVol_pm">0.4</Constant>
+        <Constant Name="VolFract_cytosol">0.8</Constant>
+        <Constant Name="VolFract_nuc">0.064</Constant>
+        <Constant Name="vTranscription">2.0E-4</Constant>
+        <VolumeVariable Name="Pstat_cytosol" />
+        <VolumeVariable Name="PstatDimer_cytosol" />
+        <VolumeVariable Name="PstatDimer_nuc" />
+        <VolumeVariable Name="RJa_SHP_pm" />
+        <VolumeVariable Name="RJa_SOCS_pm" />
+        <VolumeVariable Name="RJctk2_pm" />
+        <VolumeVariable Name="SOCS_cytosol" />
+        <VolumeVariable Name="SOCS_mRNA_cytosol" />
+        <VolumeVariable Name="SOCS_mRNA_nuc" />
+        <VolumeVariable Name="stat_cytosol" />
+        <VolumeVariable Name="stat_nuc" />
+        <Function Name="ctk_extraCellular">(K_ctk_extraCellular_total / (1.0 - VolFract_cytosol))</Function>
+        <Function Name="J_mRNAexport">- (SOCS_mRNA_nuc * kRNAexp)</Function>
+        <Function Name="J_PstatDimer_import">(PstatDimer_impMax * PstatDimer_cytosol / (Kpsd_imp + PstatDimer_cytosol))</Function>
+        <Function Name="J_PstatDimerisationNuc">((Kf_PstatDimerisation_PstatDimerisationNuc * pow(Pstat_nuc,2.0)) - (Kr_Pstat_dimerisation_PstatDimerisationNuc * PstatDimer_nuc))</Function>
+        <Function Name="J_PstatDimerisationSol">((Kf_PstatDimerisation_PstatDimerisationSol * pow(Pstat_cytosol,2.0)) - (Kr_Pstat_dimerisation_PstatDimerisationSol * PstatDimer_cytosol))</Function>
+        <Function Name="J_RJa_SOCSdegradation">(kRJSOCSdegrad * RJa_SOCS_pm)</Function>
+        <Function Name="J_RjakDephosphorylation">(kcatSHP * RJa_SHP_pm)</Function>
+        <Function Name="J_SHPbinding">((RJa_pm * Kf_SHPbinding * SHP_cytosol) - (Kr_SHPbinding * RJa_SHP_pm))</Function>
+        <Function Name="J_SOCSbinding">((SOCS_cytosol * Kf_SOCSbinding * RJa_pm) - (Kr_SOCSbinding * RJa_SOCS_pm))</Function>
+        <Function Name="J_SOCSdegradation">(SOCS_cytosol * kSOCSdegrad)</Function>
+        <Function Name="J_SOCSmRNAdegradation">(SOCS_mRNA_cytosol * kRNAdegrad)</Function>
+        <Function Name="J_SOCStranscription">(vTranscription * (PstatDimer_nuc ^ 2.0) / ((Ktf ^ 2.0) + (PstatDimer_nuc ^ 2.0)))</Function>
+        <Function Name="J_SOCStranslation">(kTranslation * SOCS_mRNA_cytosol)</Function>
+        <Function Name="J_stat3_dephosphorylatn">(Kcat_dephos * statPhosphatase_nuc * Pstat_nuc / (Km_dephos + Pstat_nuc))</Function>
+        <Function Name="J_stat_export">(stat_expMax * stat_nuc / (Ks_exp + stat_nuc))</Function>
+        <Function Name="J_stat_import">(stat_impMax * stat_cytosol / (Ks_imp + stat_cytosol))</Function>
+        <Function Name="J_STATphosphorylation">(Vmax * stat_cytosol / (Km + stat_cytosol))</Function>
+        <Function Name="K_ctk_extraCellular_total">((1.0 - VolFract_cytosol) * ctk_extraCellular_init)</Function>
+        <Function Name="K_Pstat_nuc_total">((2.0 * PstatDimer_cytosol_init * (1.0 - VolFract_nuc) * VolFract_cytosol) + (Pstat_cytosol_init * (1.0 - VolFract_nuc) * VolFract_cytosol) + (stat_cytosol_init * (1.0 - VolFract_nuc) * VolFract_cytosol) + (2.0 * PstatDimer_nuc_init * VolFract_nuc * VolFract_cytosol) + (Pstat_nuc_init * VolFract_nuc * VolFract_cytosol) + (stat_nuc_init * VolFract_nuc * VolFract_cytosol))</Function>
+        <Function Name="K_RJ_pm_total">(RJ_pm_init * SurfToVol_pm * VolFract_cytosol * KMOLE)</Function>
+        <Function Name="K_RJctk_pm_total">(RJctk_pm_init * SurfToVol_pm * VolFract_cytosol * KMOLE)</Function>
+        <Function Name="K_SHP_cytosol_total">((SHP_cytosol_init * (1.0 - VolFract_nuc) * VolFract_cytosol) + (RJa_SHP_pm_init * SurfToVol_pm * VolFract_cytosol * KMOLE))</Function>
+        <Function Name="K_statPhosphatase_nuc_total">(statPhosphatase_nuc_init * VolFract_nuc * VolFract_cytosol)</Function>
+        <Function Name="KFlux_nm_cytosol">(SurfToVol_nm * VolFract_nuc / (1.0 - VolFract_nuc))</Function>
+        <Function Name="KFlux_nm_nuc">SurfToVol_nm</Function>
+        <Function Name="KFlux_pm_cytosol">(SurfToVol_pm / (1.0 - VolFract_nuc))</Function>
+        <Function Name="KFlux_pm_extraCellular">(SurfToVol_pm * VolFract_cytosol / (1.0 - VolFract_cytosol))</Function>
+        <Function Name="Pstat_nuc">(( - (2.0 * PstatDimer_cytosol * (1.0 - VolFract_nuc) * VolFract_cytosol) - (Pstat_cytosol * (1.0 - VolFract_nuc) * VolFract_cytosol) - (stat_cytosol * (1.0 - VolFract_nuc) * VolFract_cytosol) - (2.0 * PstatDimer_nuc * VolFract_nuc * VolFract_cytosol) + K_Pstat_nuc_total - (stat_nuc * VolFract_nuc * VolFract_cytosol)) / (VolFract_nuc * VolFract_cytosol))</Function>
+        <Function Name="RJ_pm">(K_RJ_pm_total / (SurfToVol_pm * VolFract_cytosol * KMOLE))</Function>
+        <Function Name="RJctk_pm">(K_RJctk_pm_total / (SurfToVol_pm * VolFract_cytosol * KMOLE))</Function>
+        <Function Name="SHP_cytosol">((K_SHP_cytosol_total - (RJa_SHP_pm * SurfToVol_pm * VolFract_cytosol * KMOLE)) / ((1.0 - VolFract_nuc) * VolFract_cytosol))</Function>
+        <Function Name="statPhosphatase_nuc">(K_statPhosphatase_nuc_total / (VolFract_nuc * VolFract_cytosol))</Function>
+        <Function Name="Vmax">(KcatRJa * RJa_pm)</Function>
+        <Function Name="Voltage_nm">0.0</Function>
+        <Function Name="Voltage_pm">0.0</Function>
+        <CompartmentSubDomain Name="Compartment">
+          <BoundaryType Boundary="Xm" Type="Value" />
+          <BoundaryType Boundary="Xp" Type="Value" />
+          <BoundaryType Boundary="Ym" Type="Value" />
+          <BoundaryType Boundary="Yp" Type="Value" />
+          <BoundaryType Boundary="Zm" Type="Value" />
+          <BoundaryType Boundary="Zp" Type="Value" />
+          <OdeEquation Name="stat_nuc" SolutionType="Unknown">
+            <Rate>((KFlux_nm_nuc * J_stat_export) + J_stat3_dephosphorylatn + (KFlux_nm_nuc * J_stat_import))</Rate>
+            <Initial>stat_nuc_init</Initial>
+          </OdeEquation>
+          <OdeEquation Name="SOCS_mRNA_nuc" SolutionType="Unknown">
+            <Rate>(J_SOCStranscription + (KFlux_nm_nuc * J_mRNAexport))</Rate>
+            <Initial>SOCS_mRNA_nuc_init</Initial>
+          </OdeEquation>
+          <OdeEquation Name="PstatDimer_nuc" SolutionType="Unknown">
+            <Rate>(J_PstatDimerisationNuc + (KFlux_nm_nuc * J_PstatDimer_import))</Rate>
+            <Initial>PstatDimer_nuc_init</Initial>
+          </OdeEquation>
+          <OdeEquation Name="stat_cytosol" SolutionType="Unknown">
+            <Rate>( - (KFlux_nm_cytosol * J_stat_export) - (KFlux_pm_cytosol * KMOLE * J_STATphosphorylation) - (KFlux_nm_cytosol * J_stat_import))</Rate>
+            <Initial>stat_cytosol_init</Initial>
+          </OdeEquation>
+          <OdeEquation Name="Pstat_cytosol" SolutionType="Unknown">
+            <Rate>((KFlux_pm_cytosol * KMOLE * J_STATphosphorylation) - (2.0 * J_PstatDimerisationSol))</Rate>
+            <Initial>Pstat_cytosol_init</Initial>
+          </OdeEquation>
+          <OdeEquation Name="SOCS_cytosol" SolutionType="Unknown">
+            <Rate>( - J_SOCSdegradation - (KFlux_pm_cytosol * KMOLE * J_SOCSbinding) + J_SOCStranslation)</Rate>
+            <Initial>SOCS_cytosol_init</Initial>
+          </OdeEquation>
+          <OdeEquation Name="SOCS_mRNA_cytosol" SolutionType="Unknown">
+            <Rate>( - J_SOCSmRNAdegradation - (KFlux_nm_cytosol * J_mRNAexport))</Rate>
+            <Initial>SOCS_mRNA_cytosol_init</Initial>
+          </OdeEquation>
+          <OdeEquation Name="PstatDimer_cytosol" SolutionType="Unknown">
+            <Rate>(J_PstatDimerisationSol - (KFlux_nm_cytosol * J_PstatDimer_import))</Rate>
+            <Initial>PstatDimer_cytosol_init</Initial>
+          </OdeEquation>
+          <OdeEquation Name="RJa_SOCS_pm" SolutionType="Unknown">
+            <Rate>(J_SOCSbinding - J_RJa_SOCSdegradation)</Rate>
+            <Initial>RJa_SOCS_pm_init</Initial>
+          </OdeEquation>
+          <OdeEquation Name="RJa_SHP_pm" SolutionType="Unknown">
+            <Rate>( - J_RjakDephosphorylation + J_SHPbinding)</Rate>
+            <Initial>RJa_SHP_pm_init</Initial>
+          </OdeEquation>
+          <OdeEquation Name="RJctk2_pm" SolutionType="Unknown">
+            <Rate>J_RjakDephosphorylation</Rate>
+            <Initial>RJctk2_pm_init</Initial>
+          </OdeEquation>
+        </CompartmentSubDomain>
+        <Version Name="steadyStateCheck3_generated" KeyValue="10487940" BranchId="10364081" Archived="0" Date="30-Nov-2004 22:37:54" FromVersionable="false">
+          <Owner Name="mayya" Identifier="4322010" />
+          <GroupAccess Type="1" />
+        </Version>
+      </MathDescription>
+      <Simulation Name="Simulation5">
+        <SolverTaskDescription TaskType="Unsteady" UseSymbolicJacobian="false" Solver="Runge-Kutta-Fehlberg (Fifth Order, Variable Time Step)">
+          <TimeBound StartTime="0.0" EndTime="20000.0" />
+          <TimeStep DefaultTime="0.2" MinTime="1.0E-8" MaxTime="1.0" />
+          <ErrorTolerance Absolut="1.0E-9" Relative="1.0E-9" />
+          <OutputOptions KeepEvery="20" KeepAtMost="1000" />
+          <NumberProcessors>1</NumberProcessors>
+        </SolverTaskDescription>
+        <MathOverrides />
+        <Version Name="Simulation5" KeyValue="10488164" BranchId="10364126" Archived="0" Date="30-Nov-2004 22:37:56" FromVersionable="false">
+          <Owner Name="mayya" Identifier="4322010" />
+          <GroupAccess Type="1" />
+        </Version>
+      </Simulation>
+      <Version Name="steadyStateCheck3" KeyValue="10488029" BranchId="10364083" Archived="0" Date="30-Nov-2004 22:37:55" FromVersionable="false">
+        <Owner Name="mayya" Identifier="4322010" />
+        <GroupAccess Type="1" />
+        <Annotation>to check the build-up of negative feedback molecule SOCS &amp; also to check the output at different levels of active receptor.</Annotation>
+      </Version>
+      <MicroscopeMeasurement Name="fluor">
+        <ConvolutionKernel Type="ProjectionZKernel" />
+      </MicroscopeMeasurement>
+    </SimulationSpec>
+    <SimulationSpec Name="steadyStateCheck4" Stochastic="false" UseConcentration="true" RuleBased="false" MassConservationModelReduction="true" InsufficientIterations="false" InsufficientMaxMolecules="false">
+      <NetworkConstraints RbmMaxIteration="1" RbmMaxMoleculesPerSpecies="10" RbmSpeciesLimit="800" RbmReactionsLimit="2500" />
+      <Annotation>to check the build-up of SOCS for a given amount of nuclear phosphorylated STAT.</Annotation>
+      <Geometry Name="non-spatial1009190526" Dimension="0">
+        <Extent X="10.0" Y="10.0" Z="10.0" />
+        <Origin X="0.0" Y="0.0" Z="0.0" />
+        <SubVolume Name="Compartment" Handle="0" Type="Compartmental" KeyValue="10356966" />
+        <Version Name="non-spatial1009190526" KeyValue="10356963" BranchId="10356964" Archived="0" Date="15-Nov-2004 22:32:54" FromVersionable="false">
+          <Owner Name="mayya" Identifier="4322010" />
+          <GroupAccess Type="1" />
+        </Version>
+      </Geometry>
+      <GeometryContext>
+        <FeatureMapping Feature="nuc" GeometryClass="Compartment" SubVolume="Compartment">
+          <BoundariesTypes Xm="Flux" Xp="Flux" Ym="Flux" Yp="Flux" Zm="Flux" Zp="Flux" />
+        </FeatureMapping>
+        <FeatureMapping Feature="extraCellular" GeometryClass="Compartment" SubVolume="Compartment">
+          <BoundariesTypes Xm="Flux" Xp="Flux" Ym="Flux" Yp="Flux" Zm="Flux" Zp="Flux" />
+        </FeatureMapping>
+        <FeatureMapping Feature="cytosol" GeometryClass="Compartment" SubVolume="Compartment">
+          <BoundariesTypes Xm="Flux" Xp="Flux" Ym="Flux" Yp="Flux" Zm="Flux" Zp="Flux" />
+        </FeatureMapping>
+        <MembraneMapping Membrane="pm" SurfaceToVolumeRatio="0.4" VolumeFraction="0.8" CalculateVoltage="false" SpecificCapacitance="1.0" InitialVoltage="0.0" GeometryClass="Compartment">
+          <BoundariesTypes Xm="Flux" Xp="Flux" Ym="Flux" Yp="Flux" Zm="Flux" Zp="Flux" />
+        </MembraneMapping>
+        <MembraneMapping Membrane="nm" SurfaceToVolumeRatio="1.0" VolumeFraction="0.064" CalculateVoltage="false" SpecificCapacitance="1.0" InitialVoltage="0.0" GeometryClass="Compartment">
+          <BoundariesTypes Xm="Flux" Xp="Flux" Ym="Flux" Yp="Flux" Zm="Flux" Zp="Flux" />
+        </MembraneMapping>
+      </GeometryContext>
+      <ReactionContext>
+        <LocalizedCompoundSpec LocalizedCompoundRef="Pstat_nuc" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>2.0</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="stat_nuc" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>0.00759194</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="statPhosphatase_nuc" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>0.05</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="SOCS_mRNA_nuc" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>0.0</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="PstatDimer_nuc" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>0.0</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="ctk_extraCellular" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>0.0</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="stat_cytosol" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>0.99948089</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="Pstat_cytosol" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>0.0</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="SOCS_cytosol" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>0.0</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="SHP_cytosol" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>0.0</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="SOCS_mRNA_cytosol" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>0.0</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="PstatDimer_cytosol" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>0.0</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="RJ_pm" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>0.0</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="RJctk_pm" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>0.0</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="RJa_pm" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>0.0</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="RJa_SOCS_pm" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>0.0</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="RJa_SHP_pm" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>0.0</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="RJctk2_pm" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>0.0</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <ReactionSpec ReactionStepRef="SOCStranscription" ReactionMapping="included" />
+        <ReactionSpec ReactionStepRef="statDephosphorylation" ReactionMapping="included" />
+        <ReactionSpec ReactionStepRef="SOCSbinding" ReactionMapping="excluded" />
+        <ReactionSpec ReactionStepRef="RJa_SOCSdegradation" ReactionMapping="excluded" />
+        <ReactionSpec ReactionStepRef="STATphosphorylation" ReactionMapping="excluded" />
+        <ReactionSpec ReactionStepRef="SOCStranslation" ReactionMapping="included" />
+        <ReactionSpec ReactionStepRef="SOCSdegradation" ReactionMapping="included" />
+        <ReactionSpec ReactionStepRef="RjakDephosphorylation" ReactionMapping="excluded" />
+        <ReactionSpec ReactionStepRef="RJdimerisation" ReactionMapping="excluded" />
+        <ReactionSpec ReactionStepRef="SOCSmRNAdegradation" ReactionMapping="included" />
+        <ReactionSpec ReactionStepRef="ctkBinding" ReactionMapping="excluded" />
+        <ReactionSpec ReactionStepRef="PstatDimerisationSol" ReactionMapping="excluded" />
+        <ReactionSpec ReactionStepRef="RjakActivation" ReactionMapping="excluded" />
+        <ReactionSpec ReactionStepRef="SHPbinding" ReactionMapping="excluded" />
+        <ReactionSpec ReactionStepRef="PstatDimerisationNuc" ReactionMapping="included" />
+        <ReactionSpec ReactionStepRef="PstatDimer_ import" ReactionMapping="excluded" />
+        <ReactionSpec ReactionStepRef="stat_import" ReactionMapping="excluded" />
+        <ReactionSpec ReactionStepRef="mRNAexport" ReactionMapping="included" />
+        <ReactionSpec ReactionStepRef="stat_export" ReactionMapping="excluded" />
+      </ReactionContext>
+      <MathDescription Name="steadyStateCheck4_generated">
+        <Constant Name="_F_">96480.0</Constant>
+        <Constant Name="_F_nmol_">9.648E-5</Constant>
+        <Constant Name="_K_GHK_">1.0E-9</Constant>
+        <Constant Name="_N_pmol_">6.02E11</Constant>
+        <Constant Name="_R_">8314.0</Constant>
+        <Constant Name="_T_">300.0</Constant>
+        <Constant Name="ctk_extraCellular_init">0.0</Constant>
+        <Constant Name="K_millivolts_per_volt">1000.0</Constant>
+        <Constant Name="Kcat_dephos">1.0</Constant>
+        <Constant Name="Kf_PstatDimerisation_PstatDimerisationNuc">0.6</Constant>
+        <Constant Name="Km_dephos">2.0</Constant>
+        <Constant Name="KMOLE">0.0016611295681063123</Constant>
+        <Constant Name="Kr_Pstat_dimerisation_PstatDimerisationNuc">0.03</Constant>
+        <Constant Name="kRNAdegrad">5.0E-4</Constant>
+        <Constant Name="kRNAexp">0.01</Constant>
+        <Constant Name="kSOCSdegrad">1.0E-4</Constant>
+        <Constant Name="Ktf">2.0</Constant>
+        <Constant Name="kTranslation">5.0E-4</Constant>
+        <Constant Name="Pstat_cytosol_init">0.0</Constant>
+        <Constant Name="Pstat_nuc_init">2.0</Constant>
+        <Constant Name="PstatDimer_cytosol_init">0.0</Constant>
+        <Constant Name="PstatDimer_nuc_init">0.0</Constant>
+        <Constant Name="RJ_pm_init">0.0</Constant>
+        <Constant Name="RJa_pm_init">0.0</Constant>
+        <Constant Name="RJa_SHP_pm_init">0.0</Constant>
+        <Constant Name="RJa_SOCS_pm_init">0.0</Constant>
+        <Constant Name="RJctk2_pm_init">0.0</Constant>
+        <Constant Name="RJctk_pm_init">0.0</Constant>
+        <Constant Name="SHP_cytosol_init">0.0</Constant>
+        <Constant Name="SOCS_cytosol_init">0.0</Constant>
+        <Constant Name="SOCS_mRNA_cytosol_init">0.0</Constant>
+        <Constant Name="SOCS_mRNA_nuc_init">0.0</Constant>
+        <Constant Name="stat_cytosol_init">0.99948089</Constant>
+        <Constant Name="stat_nuc_init">0.00759194</Constant>
+        <Constant Name="statPhosphatase_nuc_init">0.05</Constant>
+        <Constant Name="SurfToVol_nm">1.0</Constant>
+        <Constant Name="SurfToVol_pm">0.4</Constant>
+        <Constant Name="VolFract_cytosol">0.8</Constant>
+        <Constant Name="VolFract_nuc">0.064</Constant>
+        <Constant Name="vTranscription">2.0E-4</Constant>
+        <VolumeVariable Name="PstatDimer_nuc" />
+        <VolumeVariable Name="SOCS_cytosol" />
+        <VolumeVariable Name="SOCS_mRNA_cytosol" />
+        <VolumeVariable Name="SOCS_mRNA_nuc" />
+        <VolumeVariable Name="stat_nuc" />
+        <Function Name="ctk_extraCellular">(K_ctk_extraCellular_total / (1.0 - VolFract_cytosol))</Function>
+        <Function Name="J_mRNAexport">- (SOCS_mRNA_nuc * kRNAexp)</Function>
+        <Function Name="J_PstatDimerisationNuc">((Kf_PstatDimerisation_PstatDimerisationNuc * pow(Pstat_nuc,2.0)) - (Kr_Pstat_dimerisation_PstatDimerisationNuc * PstatDimer_nuc))</Function>
+        <Function Name="J_SOCSdegradation">(SOCS_cytosol * kSOCSdegrad)</Function>
+        <Function Name="J_SOCSmRNAdegradation">(SOCS_mRNA_cytosol * kRNAdegrad)</Function>
+        <Function Name="J_SOCStranscription">(vTranscription * (PstatDimer_nuc ^ 2.0) / ((Ktf ^ 2.0) + (PstatDimer_nuc ^ 2.0)))</Function>
+        <Function Name="J_SOCStranslation">(kTranslation * SOCS_mRNA_cytosol)</Function>
+        <Function Name="J_stat3_dephosphorylatn">(Kcat_dephos * statPhosphatase_nuc * Pstat_nuc / (Km_dephos + Pstat_nuc))</Function>
+        <Function Name="K_ctk_extraCellular_total">((1.0 - VolFract_cytosol) * ctk_extraCellular_init)</Function>
+        <Function Name="K_Pstat_cytosol_total">(Pstat_cytosol_init * (1.0 - VolFract_nuc) * VolFract_cytosol)</Function>
+        <Function Name="K_Pstat_nuc_total">((2.0 * PstatDimer_nuc_init * VolFract_nuc * VolFract_cytosol) + (Pstat_nuc_init * VolFract_nuc * VolFract_cytosol) + (stat_nuc_init * VolFract_nuc * VolFract_cytosol))</Function>
+        <Function Name="K_PstatDimer_cytosol_total">(PstatDimer_cytosol_init * (1.0 - VolFract_nuc) * VolFract_cytosol)</Function>
+        <Function Name="K_RJ_pm_total">(RJ_pm_init * SurfToVol_pm * VolFract_cytosol * KMOLE)</Function>
+        <Function Name="K_RJa_pm_total">(RJa_pm_init * SurfToVol_pm * VolFract_cytosol * KMOLE)</Function>
+        <Function Name="K_RJa_SHP_pm_total">(RJa_SHP_pm_init * SurfToVol_pm * VolFract_cytosol * KMOLE)</Function>
+        <Function Name="K_RJa_SOCS_pm_total">(RJa_SOCS_pm_init * SurfToVol_pm * VolFract_cytosol * KMOLE)</Function>
+        <Function Name="K_RJctk2_pm_total">(RJctk2_pm_init * SurfToVol_pm * VolFract_cytosol * KMOLE)</Function>
+        <Function Name="K_RJctk_pm_total">(RJctk_pm_init * SurfToVol_pm * VolFract_cytosol * KMOLE)</Function>
+        <Function Name="K_SHP_cytosol_total">(SHP_cytosol_init * (1.0 - VolFract_nuc) * VolFract_cytosol)</Function>
+        <Function Name="K_stat_cytosol_total">(stat_cytosol_init * (1.0 - VolFract_nuc) * VolFract_cytosol)</Function>
+        <Function Name="K_statPhosphatase_nuc_total">(statPhosphatase_nuc_init * VolFract_nuc * VolFract_cytosol)</Function>
+        <Function Name="KFlux_nm_cytosol">(SurfToVol_nm * VolFract_nuc / (1.0 - VolFract_nuc))</Function>
+        <Function Name="KFlux_nm_nuc">SurfToVol_nm</Function>
+        <Function Name="KFlux_pm_cytosol">(SurfToVol_pm / (1.0 - VolFract_nuc))</Function>
+        <Function Name="KFlux_pm_extraCellular">(SurfToVol_pm * VolFract_cytosol / (1.0 - VolFract_cytosol))</Function>
+        <Function Name="Pstat_cytosol">(K_Pstat_cytosol_total / ((1.0 - VolFract_nuc) * VolFract_cytosol))</Function>
+        <Function Name="Pstat_nuc">(( - (2.0 * PstatDimer_nuc * VolFract_nuc * VolFract_cytosol) + K_Pstat_nuc_total - (stat_nuc * VolFract_nuc * VolFract_cytosol)) / (VolFract_nuc * VolFract_cytosol))</Function>
+        <Function Name="PstatDimer_cytosol">(K_PstatDimer_cytosol_total / ((1.0 - VolFract_nuc) * VolFract_cytosol))</Function>
+        <Function Name="RJ_pm">(K_RJ_pm_total / (SurfToVol_pm * VolFract_cytosol * KMOLE))</Function>
+        <Function Name="RJa_pm">(K_RJa_pm_total / (SurfToVol_pm * VolFract_cytosol * KMOLE))</Function>
+        <Function Name="RJa_SHP_pm">(K_RJa_SHP_pm_total / (SurfToVol_pm * VolFract_cytosol * KMOLE))</Function>
+        <Function Name="RJa_SOCS_pm">(K_RJa_SOCS_pm_total / (SurfToVol_pm * VolFract_cytosol * KMOLE))</Function>
+        <Function Name="RJctk2_pm">(K_RJctk2_pm_total / (SurfToVol_pm * VolFract_cytosol * KMOLE))</Function>
+        <Function Name="RJctk_pm">(K_RJctk_pm_total / (SurfToVol_pm * VolFract_cytosol * KMOLE))</Function>
+        <Function Name="SHP_cytosol">(K_SHP_cytosol_total / ((1.0 - VolFract_nuc) * VolFract_cytosol))</Function>
+        <Function Name="stat_cytosol">(K_stat_cytosol_total / ((1.0 - VolFract_nuc) * VolFract_cytosol))</Function>
+        <Function Name="statPhosphatase_nuc">(K_statPhosphatase_nuc_total / (VolFract_nuc * VolFract_cytosol))</Function>
+        <Function Name="Voltage_nm">0.0</Function>
+        <Function Name="Voltage_pm">0.0</Function>
+        <CompartmentSubDomain Name="Compartment">
+          <BoundaryType Boundary="Xm" Type="Value" />
+          <BoundaryType Boundary="Xp" Type="Value" />
+          <BoundaryType Boundary="Ym" Type="Value" />
+          <BoundaryType Boundary="Yp" Type="Value" />
+          <BoundaryType Boundary="Zm" Type="Value" />
+          <BoundaryType Boundary="Zp" Type="Value" />
+          <OdeEquation Name="stat_nuc" SolutionType="Unknown">
+            <Rate>J_stat3_dephosphorylatn</Rate>
+            <Initial>stat_nuc_init</Initial>
+          </OdeEquation>
+          <OdeEquation Name="SOCS_mRNA_nuc" SolutionType="Unknown">
+            <Rate>(J_SOCStranscription + (KFlux_nm_nuc * J_mRNAexport))</Rate>
+            <Initial>SOCS_mRNA_nuc_init</Initial>
+          </OdeEquation>
+          <OdeEquation Name="PstatDimer_nuc" SolutionType="Unknown">
+            <Rate>J_PstatDimerisationNuc</Rate>
+            <Initial>PstatDimer_nuc_init</Initial>
+          </OdeEquation>
+          <OdeEquation Name="SOCS_cytosol" SolutionType="Unknown">
+            <Rate>(J_SOCStranslation - J_SOCSdegradation)</Rate>
+            <Initial>SOCS_cytosol_init</Initial>
+          </OdeEquation>
+          <OdeEquation Name="SOCS_mRNA_cytosol" SolutionType="Unknown">
+            <Rate>( - J_SOCSmRNAdegradation - (KFlux_nm_cytosol * J_mRNAexport))</Rate>
+            <Initial>SOCS_mRNA_cytosol_init</Initial>
+          </OdeEquation>
+        </CompartmentSubDomain>
+        <Version Name="steadyStateCheck4_generated" KeyValue="10487941" BranchId="10364145" Archived="0" Date="30-Nov-2004 22:37:54" FromVersionable="false">
+          <Owner Name="mayya" Identifier="4322010" />
+          <GroupAccess Type="1" />
+        </Version>
+      </MathDescription>
+      <Simulation Name="Simulation6">
+        <SolverTaskDescription TaskType="Unsteady" UseSymbolicJacobian="false" Solver="CVODE (Variable Order, Variable Time Step)">
+          <TimeBound StartTime="0.0" EndTime="10000.0" />
+          <TimeStep DefaultTime="0.2" MinTime="1.0E-8" MaxTime="1.0" />
+          <ErrorTolerance Absolut="1.0E-9" Relative="1.0E-9" />
+          <OutputOptions KeepEvery="10" KeepAtMost="1000" />
+          <NumberProcessors>1</NumberProcessors>
+        </SolverTaskDescription>
+        <MathOverrides>
+          <Constant Name="Pstat_nuc_init">1.5</Constant>
+        </MathOverrides>
+        <Version Name="Simulation6" KeyValue="10488165" BranchId="10364423" Archived="0" Date="30-Nov-2004 22:37:56" FromVersionable="false">
+          <Owner Name="mayya" Identifier="4322010" />
+          <GroupAccess Type="1" />
+        </Version>
+      </Simulation>
+      <Version Name="steadyStateCheck4" KeyValue="10488072" BranchId="10364379" Archived="0" Date="30-Nov-2004 22:37:55" FromVersionable="false">
+        <Owner Name="mayya" Identifier="4322010" />
+        <GroupAccess Type="1" />
+        <Annotation>to check the build-up of SOCS for a given amount of nuclear phosphorylated STAT.</Annotation>
+      </Version>
+      <MicroscopeMeasurement Name="fluor">
+        <ConvolutionKernel Type="ProjectionZKernel" />
+      </MicroscopeMeasurement>
+    </SimulationSpec>
+    <SimulationSpec Name="supFig8and9" Stochastic="false" UseConcentration="true" RuleBased="false" MassConservationModelReduction="true" InsufficientIterations="false" InsufficientMaxMolecules="false">
+      <NetworkConstraints RbmMaxIteration="1" RbmMaxMoleculesPerSpecies="10" RbmSpeciesLimit="800" RbmReactionsLimit="2500" />
+      <Annotation>dose response: the pathway is stimulated with different levels of cytokine. To check if there is biphasic amplification feature to the JAK-STAT pathway.</Annotation>
+      <Geometry Name="non-spatial1009190526" Dimension="0">
+        <Extent X="10.0" Y="10.0" Z="10.0" />
+        <Origin X="0.0" Y="0.0" Z="0.0" />
+        <SubVolume Name="Compartment" Handle="0" Type="Compartmental" KeyValue="10356966" />
+        <Version Name="non-spatial1009190526" KeyValue="10356963" BranchId="10356964" Archived="0" Date="15-Nov-2004 22:32:54" FromVersionable="false">
+          <Owner Name="mayya" Identifier="4322010" />
+          <GroupAccess Type="1" />
+        </Version>
+      </Geometry>
+      <GeometryContext>
+        <FeatureMapping Feature="nuc" GeometryClass="Compartment" SubVolume="Compartment">
+          <BoundariesTypes Xm="Flux" Xp="Flux" Ym="Flux" Yp="Flux" Zm="Flux" Zp="Flux" />
+        </FeatureMapping>
+        <FeatureMapping Feature="extraCellular" GeometryClass="Compartment" SubVolume="Compartment">
+          <BoundariesTypes Xm="Flux" Xp="Flux" Ym="Flux" Yp="Flux" Zm="Flux" Zp="Flux" />
+        </FeatureMapping>
+        <FeatureMapping Feature="cytosol" GeometryClass="Compartment" SubVolume="Compartment">
+          <BoundariesTypes Xm="Flux" Xp="Flux" Ym="Flux" Yp="Flux" Zm="Flux" Zp="Flux" />
+        </FeatureMapping>
+        <MembraneMapping Membrane="pm" SurfaceToVolumeRatio="0.4" VolumeFraction="0.8" CalculateVoltage="false" SpecificCapacitance="1.0" InitialVoltage="0.0" GeometryClass="Compartment">
+          <BoundariesTypes Xm="Flux" Xp="Flux" Ym="Flux" Yp="Flux" Zm="Flux" Zp="Flux" />
+        </MembraneMapping>
+        <MembraneMapping Membrane="nm" SurfaceToVolumeRatio="1.0" VolumeFraction="0.064" CalculateVoltage="false" SpecificCapacitance="1.0" InitialVoltage="0.0" GeometryClass="Compartment">
+          <BoundariesTypes Xm="Flux" Xp="Flux" Ym="Flux" Yp="Flux" Zm="Flux" Zp="Flux" />
+        </MembraneMapping>
+      </GeometryContext>
+      <ReactionContext>
+        <LocalizedCompoundSpec LocalizedCompoundRef="Pstat_nuc" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>0.0</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="stat_nuc" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>0.00759194</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="statPhosphatase_nuc" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>0.05</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="SOCS_mRNA_nuc" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>0.0</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="PstatDimer_nuc" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>0.0</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="ctk_extraCellular" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>0.1</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="stat_cytosol" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>0.99948089</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="Pstat_cytosol" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>0.0</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="SOCS_cytosol" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>0.0</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="SHP_cytosol" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>0.01</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="SOCS_mRNA_cytosol" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>0.0</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="PstatDimer_cytosol" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>0.0</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="RJ_pm" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>30.0</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="RJctk_pm" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>0.0</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="RJa_pm" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>0.0</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="RJa_SOCS_pm" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>0.0</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="RJa_SHP_pm" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>0.0</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="RJctk2_pm" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>0.0</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <ReactionSpec ReactionStepRef="SOCStranscription" ReactionMapping="included" />
+        <ReactionSpec ReactionStepRef="statDephosphorylation" ReactionMapping="included" />
+        <ReactionSpec ReactionStepRef="SOCSbinding" ReactionMapping="included" />
+        <ReactionSpec ReactionStepRef="RJa_SOCSdegradation" ReactionMapping="included" />
+        <ReactionSpec ReactionStepRef="STATphosphorylation" ReactionMapping="included" />
+        <ReactionSpec ReactionStepRef="SOCStranslation" ReactionMapping="included" />
+        <ReactionSpec ReactionStepRef="SOCSdegradation" ReactionMapping="included" />
+        <ReactionSpec ReactionStepRef="RjakDephosphorylation" ReactionMapping="included" />
+        <ReactionSpec ReactionStepRef="RJdimerisation" ReactionMapping="included" />
+        <ReactionSpec ReactionStepRef="SOCSmRNAdegradation" ReactionMapping="included" />
+        <ReactionSpec ReactionStepRef="ctkBinding" ReactionMapping="included" />
+        <ReactionSpec ReactionStepRef="PstatDimerisationSol" ReactionMapping="included" />
+        <ReactionSpec ReactionStepRef="RjakActivation" ReactionMapping="included" />
+        <ReactionSpec ReactionStepRef="SHPbinding" ReactionMapping="included" />
+        <ReactionSpec ReactionStepRef="PstatDimerisationNuc" ReactionMapping="included" />
+        <ReactionSpec ReactionStepRef="PstatDimer_ import" ReactionMapping="included" />
+        <ReactionSpec ReactionStepRef="stat_import" ReactionMapping="included" />
+        <ReactionSpec ReactionStepRef="mRNAexport" ReactionMapping="included" />
+        <ReactionSpec ReactionStepRef="stat_export" ReactionMapping="included" />
+      </ReactionContext>
+      <MathDescription Name="doseResponse_generated">
+        <Constant Name="_F_">96480.0</Constant>
+        <Constant Name="_F_nmol_">9.648E-5</Constant>
+        <Constant Name="_K_GHK_">1.0E-9</Constant>
+        <Constant Name="_N_pmol_">6.02E11</Constant>
+        <Constant Name="_R_">8314.0</Constant>
+        <Constant Name="_T_">300.0</Constant>
+        <Constant Name="ctk_extraCellular_init">0.1</Constant>
+        <Constant Name="K_millivolts_per_volt">1000.0</Constant>
+        <Constant Name="Kcat_dephos">1.0</Constant>
+        <Constant Name="KcatRJa">1.0</Constant>
+        <Constant Name="kcatSHP">0.001</Constant>
+        <Constant Name="Kf_ctkBinding">0.6</Constant>
+        <Constant Name="Kf_PstatDimerisation_PstatDimerisationNuc">0.6</Constant>
+        <Constant Name="Kf_PstatDimerisation_PstatDimerisationSol">0.6</Constant>
+        <Constant Name="Kf_RJdimerisation">20.0</Constant>
+        <Constant Name="Kf_SHPbinding">0.6</Constant>
+        <Constant Name="Kf_SOCSbinding">0.6</Constant>
+        <Constant Name="Km">1.0</Constant>
+        <Constant Name="Km_dephos">2.0</Constant>
+        <Constant Name="KMOLE">0.0016611295681063123</Constant>
+        <Constant Name="Kpsd_imp">0.3</Constant>
+        <Constant Name="Kr_ctkBinding">0.002</Constant>
+        <Constant Name="Kr_Pstat_dimerisation_PstatDimerisationNuc">0.03</Constant>
+        <Constant Name="Kr_Pstat_dimerisation_PstatDimerisationSol">0.03</Constant>
+        <Constant Name="Kr_RJdimerisation">0.1</Constant>
+        <Constant Name="Kr_SHPbinding">0.01</Constant>
+        <Constant Name="Kr_SOCSbinding">0.002</Constant>
+        <Constant Name="kRJact">0.004</Constant>
+        <Constant Name="kRJSOCSdegrad">2.0E-4</Constant>
+        <Constant Name="kRNAdegrad">5.0E-4</Constant>
+        <Constant Name="kRNAexp">0.01</Constant>
+        <Constant Name="Ks_exp">0.6</Constant>
+        <Constant Name="Ks_imp">3.0</Constant>
+        <Constant Name="kSOCSdegrad">1.0E-4</Constant>
+        <Constant Name="Ktf">2.0</Constant>
+        <Constant Name="kTranslation">5.0E-4</Constant>
+        <Constant Name="Pstat_cytosol_init">0.0</Constant>
+        <Constant Name="Pstat_nuc_init">0.0</Constant>
+        <Constant Name="PstatDimer_cytosol_init">0.0</Constant>
+        <Constant Name="PstatDimer_impMax">0.045</Constant>
+        <Constant Name="PstatDimer_nuc_init">0.0</Constant>
+        <Constant Name="RJ_pm_init">30.0</Constant>
+        <Constant Name="RJa_pm_init">0.0</Constant>
+        <Constant Name="RJa_SHP_pm_init">0.0</Constant>
+        <Constant Name="RJa_SOCS_pm_init">0.0</Constant>
+        <Constant Name="RJctk2_pm_init">0.0</Constant>
+        <Constant Name="RJctk_pm_init">0.0</Constant>
+        <Constant Name="SHP_cytosol_init">0.01</Constant>
+        <Constant Name="SOCS_cytosol_init">0.0</Constant>
+        <Constant Name="SOCS_mRNA_cytosol_init">0.0</Constant>
+        <Constant Name="SOCS_mRNA_nuc_init">0.0</Constant>
+        <Constant Name="stat_cytosol_init">0.99948089</Constant>
+        <Constant Name="stat_expMax">-0.06</Constant>
+        <Constant Name="stat_impMax">0.003</Constant>
+        <Constant Name="stat_nuc_init">0.00759194</Constant>
+        <Constant Name="statPhosphatase_nuc_init">0.05</Constant>
+        <Constant Name="SurfToVol_nm">1.0</Constant>
+        <Constant Name="SurfToVol_pm">0.4</Constant>
+        <Constant Name="VolFract_cytosol">0.8</Constant>
+        <Constant Name="VolFract_nuc">0.064</Constant>
+        <Constant Name="vTranscription">2.0E-4</Constant>
+        <VolumeVariable Name="Pstat_cytosol" />
+        <VolumeVariable Name="PstatDimer_cytosol" />
+        <VolumeVariable Name="PstatDimer_nuc" />
+        <VolumeVariable Name="RJ_pm" />
+        <VolumeVariable Name="RJa_pm" />
+        <VolumeVariable Name="RJa_SHP_pm" />
+        <VolumeVariable Name="RJa_SOCS_pm" />
+        <VolumeVariable Name="RJctk2_pm" />
+        <VolumeVariable Name="RJctk_pm" />
+        <VolumeVariable Name="SOCS_cytosol" />
+        <VolumeVariable Name="SOCS_mRNA_cytosol" />
+        <VolumeVariable Name="SOCS_mRNA_nuc" />
+        <VolumeVariable Name="stat_cytosol" />
+        <VolumeVariable Name="stat_nuc" />
+        <Function Name="ctk_extraCellular">((K_ctk_extraCellular_total + (RJ_pm * SurfToVol_pm * VolFract_cytosol * KMOLE)) / (1.0 - VolFract_cytosol))</Function>
+        <Function Name="J_ctkBinding">((RJ_pm * Kf_ctkBinding * ctk_extraCellular) - (Kr_ctkBinding * RJctk_pm))</Function>
+        <Function Name="J_mRNAexport">- (SOCS_mRNA_nuc * kRNAexp)</Function>
+        <Function Name="J_PstatDimer_import">(PstatDimer_impMax * PstatDimer_cytosol / (Kpsd_imp + PstatDimer_cytosol))</Function>
+        <Function Name="J_PstatDimerisationNuc">((Kf_PstatDimerisation_PstatDimerisationNuc * pow(Pstat_nuc,2.0)) - (Kr_Pstat_dimerisation_PstatDimerisationNuc * PstatDimer_nuc))</Function>
+        <Function Name="J_PstatDimerisationSol">((Kf_PstatDimerisation_PstatDimerisationSol * pow(Pstat_cytosol,2.0)) - (Kr_Pstat_dimerisation_PstatDimerisationSol * PstatDimer_cytosol))</Function>
+        <Function Name="J_RJa_SOCSdegradation">(kRJSOCSdegrad * RJa_SOCS_pm)</Function>
+        <Function Name="J_RjakActivation">(kRJact * RJctk2_pm)</Function>
+        <Function Name="J_RjakDephosphorylation">(kcatSHP * RJa_SHP_pm)</Function>
+        <Function Name="J_RJdimerisation">((Kf_RJdimerisation * pow(RJctk_pm,2.0)) - (Kr_RJdimerisation * RJctk2_pm))</Function>
+        <Function Name="J_SHPbinding">((RJa_pm * Kf_SHPbinding * SHP_cytosol) - (Kr_SHPbinding * RJa_SHP_pm))</Function>
+        <Function Name="J_SOCSbinding">((SOCS_cytosol * Kf_SOCSbinding * RJa_pm) - (Kr_SOCSbinding * RJa_SOCS_pm))</Function>
+        <Function Name="J_SOCSdegradation">(SOCS_cytosol * kSOCSdegrad)</Function>
+        <Function Name="J_SOCSmRNAdegradation">(SOCS_mRNA_cytosol * kRNAdegrad)</Function>
+        <Function Name="J_SOCStranscription">(vTranscription * (PstatDimer_nuc ^ 2.0) / ((Ktf ^ 2.0) + (PstatDimer_nuc ^ 2.0)))</Function>
+        <Function Name="J_SOCStranslation">(kTranslation * SOCS_mRNA_cytosol)</Function>
+        <Function Name="J_stat3_dephosphorylatn">(Kcat_dephos * statPhosphatase_nuc * Pstat_nuc / (Km_dephos + Pstat_nuc))</Function>
+        <Function Name="J_stat_export">(stat_expMax * stat_nuc / (Ks_exp + stat_nuc))</Function>
+        <Function Name="J_stat_import">(stat_impMax * stat_cytosol / (Ks_imp + stat_cytosol))</Function>
+        <Function Name="J_STATphosphorylation">(Vmax * stat_cytosol / (Km + stat_cytosol))</Function>
+        <Function Name="K_ctk_extraCellular_total">(((1.0 - VolFract_cytosol) * ctk_extraCellular_init) - (RJ_pm_init * SurfToVol_pm * VolFract_cytosol * KMOLE))</Function>
+        <Function Name="K_Pstat_nuc_total">((2.0 * PstatDimer_cytosol_init * (1.0 - VolFract_nuc) * VolFract_cytosol) + (Pstat_cytosol_init * (1.0 - VolFract_nuc) * VolFract_cytosol) + (stat_cytosol_init * (1.0 - VolFract_nuc) * VolFract_cytosol) + (2.0 * PstatDimer_nuc_init * VolFract_nuc * VolFract_cytosol) + (Pstat_nuc_init * VolFract_nuc * VolFract_cytosol) + (stat_nuc_init * VolFract_nuc * VolFract_cytosol))</Function>
+        <Function Name="K_SHP_cytosol_total">((SHP_cytosol_init * (1.0 - VolFract_nuc) * VolFract_cytosol) + (RJa_SHP_pm_init * SurfToVol_pm * VolFract_cytosol * KMOLE))</Function>
+        <Function Name="K_statPhosphatase_nuc_total">(statPhosphatase_nuc_init * VolFract_nuc * VolFract_cytosol)</Function>
+        <Function Name="KFlux_nm_cytosol">(SurfToVol_nm * VolFract_nuc / (1.0 - VolFract_nuc))</Function>
+        <Function Name="KFlux_nm_nuc">SurfToVol_nm</Function>
+        <Function Name="KFlux_pm_cytosol">(SurfToVol_pm / (1.0 - VolFract_nuc))</Function>
+        <Function Name="KFlux_pm_extraCellular">(SurfToVol_pm * VolFract_cytosol / (1.0 - VolFract_cytosol))</Function>
+        <Function Name="Pstat_nuc">(( - (2.0 * PstatDimer_cytosol * (1.0 - VolFract_nuc) * VolFract_cytosol) - (Pstat_cytosol * (1.0 - VolFract_nuc) * VolFract_cytosol) - (stat_cytosol * (1.0 - VolFract_nuc) * VolFract_cytosol) - (2.0 * PstatDimer_nuc * VolFract_nuc * VolFract_cytosol) + K_Pstat_nuc_total - (stat_nuc * VolFract_nuc * VolFract_cytosol)) / (VolFract_nuc * VolFract_cytosol))</Function>
+        <Function Name="SHP_cytosol">((K_SHP_cytosol_total - (RJa_SHP_pm * SurfToVol_pm * VolFract_cytosol * KMOLE)) / ((1.0 - VolFract_nuc) * VolFract_cytosol))</Function>
+        <Function Name="statPhosphatase_nuc">(K_statPhosphatase_nuc_total / (VolFract_nuc * VolFract_cytosol))</Function>
+        <Function Name="Vmax">(KcatRJa * RJa_pm)</Function>
+        <Function Name="Voltage_nm">0.0</Function>
+        <Function Name="Voltage_pm">0.0</Function>
+        <CompartmentSubDomain Name="Compartment">
+          <BoundaryType Boundary="Xm" Type="Value" />
+          <BoundaryType Boundary="Xp" Type="Value" />
+          <BoundaryType Boundary="Ym" Type="Value" />
+          <BoundaryType Boundary="Yp" Type="Value" />
+          <BoundaryType Boundary="Zm" Type="Value" />
+          <BoundaryType Boundary="Zp" Type="Value" />
+          <OdeEquation Name="stat_nuc" SolutionType="Unknown">
+            <Rate>((KFlux_nm_nuc * J_stat_export) + J_stat3_dephosphorylatn + (KFlux_nm_nuc * J_stat_import))</Rate>
+            <Initial>stat_nuc_init</Initial>
+          </OdeEquation>
+          <OdeEquation Name="SOCS_mRNA_nuc" SolutionType="Unknown">
+            <Rate>(J_SOCStranscription + (KFlux_nm_nuc * J_mRNAexport))</Rate>
+            <Initial>SOCS_mRNA_nuc_init</Initial>
+          </OdeEquation>
+          <OdeEquation Name="PstatDimer_nuc" SolutionType="Unknown">
+            <Rate>(J_PstatDimerisationNuc + (KFlux_nm_nuc * J_PstatDimer_import))</Rate>
+            <Initial>PstatDimer_nuc_init</Initial>
+          </OdeEquation>
+          <OdeEquation Name="stat_cytosol" SolutionType="Unknown">
+            <Rate>( - (KFlux_nm_cytosol * J_stat_export) - (KFlux_pm_cytosol * KMOLE * J_STATphosphorylation) - (KFlux_nm_cytosol * J_stat_import))</Rate>
+            <Initial>stat_cytosol_init</Initial>
+          </OdeEquation>
+          <OdeEquation Name="Pstat_cytosol" SolutionType="Unknown">
+            <Rate>((KFlux_pm_cytosol * KMOLE * J_STATphosphorylation) - (2.0 * J_PstatDimerisationSol))</Rate>
+            <Initial>Pstat_cytosol_init</Initial>
+          </OdeEquation>
+          <OdeEquation Name="SOCS_cytosol" SolutionType="Unknown">
+            <Rate>( - J_SOCSdegradation - (KFlux_pm_cytosol * KMOLE * J_SOCSbinding) + J_SOCStranslation)</Rate>
+            <Initial>SOCS_cytosol_init</Initial>
+          </OdeEquation>
+          <OdeEquation Name="SOCS_mRNA_cytosol" SolutionType="Unknown">
+            <Rate>( - J_SOCSmRNAdegradation - (KFlux_nm_cytosol * J_mRNAexport))</Rate>
+            <Initial>SOCS_mRNA_cytosol_init</Initial>
+          </OdeEquation>
+          <OdeEquation Name="PstatDimer_cytosol" SolutionType="Unknown">
+            <Rate>(J_PstatDimerisationSol - (KFlux_nm_cytosol * J_PstatDimer_import))</Rate>
+            <Initial>PstatDimer_cytosol_init</Initial>
+          </OdeEquation>
+          <OdeEquation Name="RJ_pm" SolutionType="Unknown">
+            <Rate>- J_ctkBinding</Rate>
+            <Initial>RJ_pm_init</Initial>
+          </OdeEquation>
+          <OdeEquation Name="RJctk_pm" SolutionType="Unknown">
+            <Rate>( - (2.0 * J_RJdimerisation) + J_ctkBinding)</Rate>
+            <Initial>RJctk_pm_init</Initial>
+          </OdeEquation>
+          <OdeEquation Name="RJa_pm" SolutionType="Unknown">
+            <Rate>( - J_SHPbinding - J_SOCSbinding + J_RjakActivation)</Rate>
+            <Initial>RJa_pm_init</Initial>
+          </OdeEquation>
+          <OdeEquation Name="RJa_SOCS_pm" SolutionType="Unknown">
+            <Rate>(J_SOCSbinding - J_RJa_SOCSdegradation)</Rate>
+            <Initial>RJa_SOCS_pm_init</Initial>
+          </OdeEquation>
+          <OdeEquation Name="RJa_SHP_pm" SolutionType="Unknown">
+            <Rate>( - J_RjakDephosphorylation + J_SHPbinding)</Rate>
+            <Initial>RJa_SHP_pm_init</Initial>
+          </OdeEquation>
+          <OdeEquation Name="RJctk2_pm" SolutionType="Unknown">
+            <Rate>( - J_RjakActivation + J_RjakDephosphorylation + J_RJdimerisation)</Rate>
+            <Initial>RJctk2_pm_init</Initial>
+          </OdeEquation>
+        </CompartmentSubDomain>
+        <Version Name="doseResponse_generated" KeyValue="10487942" BranchId="10365440" Archived="0" Date="30-Nov-2004 22:37:54" FromVersionable="false">
+          <Owner Name="mayya" Identifier="4322010" />
+          <GroupAccess Type="1" />
+        </Version>
+      </MathDescription>
+      <Simulation Name="Simulation7">
+        <SolverTaskDescription TaskType="Unsteady" UseSymbolicJacobian="false" Solver="Runge-Kutta-Fehlberg (Fifth Order, Variable Time Step)">
+          <TimeBound StartTime="0.0" EndTime="150000.0" />
+          <TimeStep DefaultTime="0.2" MinTime="1.0E-8" MaxTime="1.0" />
+          <ErrorTolerance Absolut="1.0E-9" Relative="1.0E-9" />
+          <OutputOptions KeepEvery="150" KeepAtMost="1000" />
+          <NumberProcessors>1</NumberProcessors>
+        </SolverTaskDescription>
+        <MathOverrides>
+          <Constant Name="kSOCSdegrad">2.0E-4</Constant>
+          <Constant Name="ctk_extraCellular_init">0.005</Constant>
+          <Constant Name="kRJSOCSdegrad">3.0E-4</Constant>
+        </MathOverrides>
+        <Version Name="Simulation7" KeyValue="10488166" BranchId="10365485" Archived="0" Date="30-Nov-2004 22:37:56" FromVersionable="false">
+          <Owner Name="mayya" Identifier="4322010" />
+          <GroupAccess Type="1" />
+        </Version>
+      </Simulation>
+      <Simulation Name="Simulation8">
+        <Annotation>The degradation reaction parameters were changed here.
+However, we have observed biphasic amplification feature with many other parameter 
+- sets. Infact, all the parameter sets that show STAT phosphorylation (upto 90%) 
+- at some cytokine level, show biphasic amplification feature. So it is indeed a 
+- universal feature.</Annotation>
+        <SolverTaskDescription TaskType="Unsteady" UseSymbolicJacobian="false" Solver="Runge-Kutta-Fehlberg (Fifth Order, Variable Time Step)">
+          <TimeBound StartTime="0.0" EndTime="50000.0" />
+          <TimeStep DefaultTime="0.2" MinTime="1.0E-8" MaxTime="1.0" />
+          <ErrorTolerance Absolut="1.0E-9" Relative="1.0E-9" />
+          <OutputOptions KeepEvery="50" KeepAtMost="1000" />
+          <NumberProcessors>1</NumberProcessors>
+        </SolverTaskDescription>
+        <MathOverrides>
+          <Constant Name="kSOCSdegrad">2.0E-4</Constant>
+          <Constant Name="ctk_extraCellular_init">0.015</Constant>
+          <Constant Name="kRJSOCSdegrad">3.0E-4</Constant>
+        </MathOverrides>
+        <Version Name="Simulation8" KeyValue="10488254" BranchId="10411045" Archived="0" Date="30-Nov-2004 22:46:09" FromVersionable="false">
+          <Owner Name="mayya" Identifier="4322010" />
+          <GroupAccess Type="1" />
+          <Annotation>The degradation reaction parameters were changed here.
+However, we have observed biphasic amplification feature with many other parameter 
+- sets. Infact, all the parameter sets that show STAT phosphorylation (upto 90%) 
+- at some cytokine level, show biphasic amplification feature. So it is indeed a 
+- universal feature.</Annotation>
+          <ParentSimRef KeyValue="10436537" />
+        </Version>
+      </Simulation>
+      <Simulation Name="Simulation9">
+        <SolverTaskDescription TaskType="Unsteady" UseSymbolicJacobian="false" Solver="Runge-Kutta-Fehlberg (Fifth Order, Variable Time Step)">
+          <TimeBound StartTime="0.0" EndTime="30000.0" />
+          <TimeStep DefaultTime="0.2" MinTime="1.0E-8" MaxTime="1.0" />
+          <ErrorTolerance Absolut="1.0E-9" Relative="1.0E-9" />
+          <OutputOptions KeepEvery="30" KeepAtMost="1000" />
+          <NumberProcessors>1</NumberProcessors>
+        </SolverTaskDescription>
+        <MathOverrides>
+          <Constant Name="kSOCSdegrad">2.0E-4</Constant>
+          <Constant Name="ctk_extraCellular_init">0.02</Constant>
+          <Constant Name="kRJSOCSdegrad">3.0E-4</Constant>
+        </MathOverrides>
+        <Version Name="Simulation9" KeyValue="10488168" BranchId="10411217" Archived="0" Date="30-Nov-2004 22:37:56" FromVersionable="false">
+          <Owner Name="mayya" Identifier="4322010" />
+          <GroupAccess Type="1" />
+          <ParentSimRef KeyValue="10435919" />
+        </Version>
+      </Simulation>
+      <Simulation Name="Simulation10">
+        <SolverTaskDescription TaskType="Unsteady" UseSymbolicJacobian="false" Solver="Runge-Kutta-Fehlberg (Fifth Order, Variable Time Step)">
+          <TimeBound StartTime="0.0" EndTime="20000.0" />
+          <TimeStep DefaultTime="0.2" MinTime="1.0E-8" MaxTime="1.0" />
+          <ErrorTolerance Absolut="1.0E-9" Relative="1.0E-9" />
+          <OutputOptions KeepEvery="20" KeepAtMost="1000" />
+          <NumberProcessors>1</NumberProcessors>
+        </SolverTaskDescription>
+        <MathOverrides>
+          <Constant Name="kSOCSdegrad">2.0E-4</Constant>
+          <Constant Name="ctk_extraCellular_init">0.05</Constant>
+          <Constant Name="kRJSOCSdegrad">3.0E-4</Constant>
+        </MathOverrides>
+        <Version Name="Simulation10" KeyValue="10488169" BranchId="10411389" Archived="0" Date="30-Nov-2004 22:37:56" FromVersionable="false">
+          <Owner Name="mayya" Identifier="4322010" />
+          <GroupAccess Type="1" />
+          <ParentSimRef KeyValue="10435967" />
+        </Version>
+      </Simulation>
+      <Simulation Name="Simulation11">
+        <SolverTaskDescription TaskType="Unsteady" UseSymbolicJacobian="false" Solver="Runge-Kutta-Fehlberg (Fifth Order, Variable Time Step)">
+          <TimeBound StartTime="0.0" EndTime="20000.0" />
+          <TimeStep DefaultTime="0.2" MinTime="1.0E-8" MaxTime="1.0" />
+          <ErrorTolerance Absolut="1.0E-9" Relative="1.0E-9" />
+          <OutputOptions KeepEvery="20" KeepAtMost="1000" />
+          <NumberProcessors>1</NumberProcessors>
+        </SolverTaskDescription>
+        <MathOverrides>
+          <Constant Name="kSOCSdegrad">2.0E-4</Constant>
+          <Constant Name="kRJSOCSdegrad">3.0E-4</Constant>
+        </MathOverrides>
+        <Version Name="Simulation11" KeyValue="10488170" BranchId="10411573" Archived="0" Date="30-Nov-2004 22:37:56" FromVersionable="false">
+          <Owner Name="mayya" Identifier="4322010" />
+          <GroupAccess Type="1" />
+          <ParentSimRef KeyValue="10436433" />
+        </Version>
+      </Simulation>
+      <Simulation Name="Simulation12">
+        <SolverTaskDescription TaskType="Unsteady" UseSymbolicJacobian="false" Solver="Runge-Kutta-Fehlberg (Fifth Order, Variable Time Step)">
+          <TimeBound StartTime="0.0" EndTime="20000.0" />
+          <TimeStep DefaultTime="0.2" MinTime="1.0E-8" MaxTime="1.0" />
+          <ErrorTolerance Absolut="1.0E-9" Relative="1.0E-9" />
+          <OutputOptions KeepEvery="20" KeepAtMost="1000" />
+          <NumberProcessors>1</NumberProcessors>
+        </SolverTaskDescription>
+        <MathOverrides>
+          <Constant Name="kSOCSdegrad">2.0E-4</Constant>
+          <Constant Name="ctk_extraCellular_init">0.03</Constant>
+          <Constant Name="kRJSOCSdegrad">3.0E-4</Constant>
+        </MathOverrides>
+        <Version Name="Simulation12" KeyValue="10488171" BranchId="10436143" Archived="0" Date="30-Nov-2004 22:37:56" FromVersionable="false">
+          <Owner Name="mayya" Identifier="4322010" />
+          <GroupAccess Type="1" />
+          <ParentSimRef KeyValue="10436434" />
+        </Version>
+      </Simulation>
+      <Simulation Name="Simulation13">
+        <SolverTaskDescription TaskType="Unsteady" UseSymbolicJacobian="false" Solver="Runge-Kutta-Fehlberg (Fifth Order, Variable Time Step)">
+          <TimeBound StartTime="0.0" EndTime="20000.0" />
+          <TimeStep DefaultTime="0.2" MinTime="1.0E-8" MaxTime="1.0" />
+          <ErrorTolerance Absolut="1.0E-9" Relative="1.0E-9" />
+          <OutputOptions KeepEvery="20" KeepAtMost="1000" />
+          <NumberProcessors>1</NumberProcessors>
+        </SolverTaskDescription>
+        <MathOverrides>
+          <Constant Name="kSOCSdegrad">2.0E-4</Constant>
+          <Constant Name="ctk_extraCellular_init">0.5</Constant>
+          <Constant Name="kRJSOCSdegrad">3.0E-4</Constant>
+        </MathOverrides>
+        <Version Name="Simulation13" KeyValue="10488172" BranchId="10436103" Archived="0" Date="30-Nov-2004 22:37:56" FromVersionable="false">
+          <Owner Name="mayya" Identifier="4322010" />
+          <GroupAccess Type="1" />
+          <ParentSimRef KeyValue="10436102" />
+        </Version>
+      </Simulation>
+      <Version Name="supFig8and9" KeyValue="10489202" BranchId="10489203" Archived="0" Date="30-Nov-2004 23:42:19" FromVersionable="false">
+        <Owner Name="mayya" Identifier="4322010" />
+        <GroupAccess Type="1" />
+        <Annotation>dose response: the pathway is stimulated with different levels of cytokine. To check if there is biphasic amplification feature to the JAK-STAT pathway.</Annotation>
+      </Version>
+      <MicroscopeMeasurement Name="fluor">
+        <ConvolutionKernel Type="ProjectionZKernel" />
+      </MicroscopeMeasurement>
+    </SimulationSpec>
+    <Version Name="JAKSTATwithSOCSfeedback" KeyValue="10829149" BranchId="10385939" Archived="0" Date="12-Dec-2004 16:36:54" FromVersionable="false">
+      <Owner Name="mayya" Identifier="4322010" />
+      <GroupAccess Type="0" />
+      <Annotation>A model of cytokine induced JAK-STAT pathway with induced negative feedback regulation by SOCS. STAT module is from my well-characterised models. Receptor and JAK activation and inactivation schemes very closely resemble the published model on the JAK-STAT pathway (FEBS letters 2003). SOCS induced, proteasome mediated degradation of JAK is also included to give near-perfect adaptation.</Annotation>
+    </Version>
+    <pathwayModel>
+      <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:bp="http://www.biopax.org/release/biopax-level3.owl#" version="3.0" />
+    </pathwayModel>
+    <relationshipModel>
+      <RMNS version="3.0" />
+    </relationshipModel>
+    <vcmetadata>
+      <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" />
+      <nonrdfAnnotationList>
+        <nonrdfAnnotation vcid="Species(PstatDimer)">
+          <freetext>tyrPstat3 dimer</freetext>
+        </nonrdfAnnotation>
+        <nonrdfAnnotation vcid="Species(stat)">
+          <freetext>stat3</freetext>
+        </nonrdfAnnotation>
+        <nonrdfAnnotation vcid="Species(statPhosphatase)">
+          <freetext>stat3 phosphatase</freetext>
+        </nonrdfAnnotation>
+        <nonrdfAnnotation vcid="Species(Pstat)">
+          <freetext>tyrosine phosphorylated stat3</freetext>
+        </nonrdfAnnotation>
+        <nonrdfAnnotation vcid="BioModel(JAKSTATwithSOCSfeedback)">
+          <freetext>A model of cytokine induced JAK-STAT pathway with induced negative feedback regulation by SOCS. STAT module is from my well-characterised models. Receptor and JAK activation and inactivation schemes very closely resemble the published model on the JAK-STAT pathway (FEBS letters 2003). SOCS induced, proteasome mediated degradation of JAK is also included to give near-perfect adaptation.</freetext>
+        </nonrdfAnnotation>
+      </nonrdfAnnotationList>
+      <uriBindingList />
+    </vcmetadata>
+  </BioModel>
+</vcml>
+

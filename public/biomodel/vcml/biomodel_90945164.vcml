@@ -1,0 +1,445 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--This biomodel was generated in VCML Version Alpha_Version_7.4.0_build_87-->
+<vcml xmlns="http://sourceforge.net/projects/vcell/vcml" Version="Alpha_Version_7.4.0_build_87">
+  <BioModel Name="Circadian_Deterministic">
+    <Model Name="unnamed">
+      <ModelParameters>
+        <Parameter Name="Delta_A" Role="user defined" Unit="s-1">1.0</Parameter>
+      </ModelParameters>
+      <Compound Name="s2" />
+      <Compound Name="s3" />
+      <Compound Name="s4" />
+      <Compound Name="s5" />
+      <Compound Name="s6" />
+      <Compound Name="s7" />
+      <Compound Name="s8" />
+      <Compound Name="s0" />
+      <Compound Name="s1" />
+      <Feature Name="Cell_1" KeyValue="90939360" />
+      <LocalizedCompound Name="R" CompoundRef="s2" Structure="Cell_1" OverrideName="true" KeyValue="90939364" />
+      <LocalizedCompound Name="mRNA_A" CompoundRef="s3" Structure="Cell_1" OverrideName="true" KeyValue="90939365" />
+      <LocalizedCompound Name="mRNA_R" CompoundRef="s4" Structure="Cell_1" OverrideName="true" KeyValue="90939366" />
+      <LocalizedCompound Name="PrmA" CompoundRef="s5" Structure="Cell_1" OverrideName="true" KeyValue="90939367" />
+      <LocalizedCompound Name="PrmA_bound" CompoundRef="s6" Structure="Cell_1" OverrideName="true" KeyValue="90939368" />
+      <LocalizedCompound Name="PrmR" CompoundRef="s7" Structure="Cell_1" OverrideName="true" KeyValue="90939369" />
+      <LocalizedCompound Name="PrmR_bound" CompoundRef="s8" Structure="Cell_1" OverrideName="true" KeyValue="90939370" />
+      <LocalizedCompound Name="C" CompoundRef="s0" Structure="Cell_1" OverrideName="true" KeyValue="90939362" />
+      <LocalizedCompound Name="A" CompoundRef="s1" Structure="Cell_1" OverrideName="true" KeyValue="90939363" />
+      <SimpleReaction Structure="Cell_1" Name="Transl_A" Reversible="true" FluxOption="MolecularOnly" KeyValue="90939378">
+        <Reactant LocalizedCompoundRef="mRNA_A" Stoichiometry="1" KeyValue="90939379" />
+        <Product LocalizedCompoundRef="mRNA_A" Stoichiometry="1" KeyValue="90939380" />
+        <Product LocalizedCompoundRef="A" Stoichiometry="1" KeyValue="90939381" />
+        <Kinetics KineticsType="MassAction">
+          <Parameter Name="J" Role="reaction rate" Unit="uM.s-1">((Kf * mRNA_A) - ((Kr * mRNA_A) * A))</Parameter>
+          <Parameter Name="Kf" Role="forward rate constant" Unit="s-1">50.0</Parameter>
+          <Parameter Name="Kr" Role="reverse rate constant" Unit="s-1.uM-1">0.0</Parameter>
+        </Kinetics>
+      </SimpleReaction>
+      <SimpleReaction Structure="Cell_1" Name="Decay_mRNA_A" Reversible="true" FluxOption="MolecularOnly" KeyValue="90939382">
+        <Reactant LocalizedCompoundRef="mRNA_A" Stoichiometry="1" KeyValue="90939383" />
+        <Kinetics KineticsType="MassAction">
+          <Parameter Name="J" Role="reaction rate" Unit="uM.s-1">(Kf * mRNA_A)</Parameter>
+          <Parameter Name="Kf" Role="forward rate constant" Unit="s-1">10.0</Parameter>
+          <Parameter Name="Kr" Role="reverse rate constant" Unit="uM.s-1">0.0</Parameter>
+        </Kinetics>
+      </SimpleReaction>
+      <SimpleReaction Structure="Cell_1" Name="Transl_R" Reversible="true" FluxOption="MolecularOnly" KeyValue="90939384">
+        <Reactant LocalizedCompoundRef="mRNA_R" Stoichiometry="1" KeyValue="90939385" />
+        <Product LocalizedCompoundRef="mRNA_R" Stoichiometry="1" KeyValue="90939386" />
+        <Product LocalizedCompoundRef="R" Stoichiometry="1" KeyValue="90939387" />
+        <Kinetics KineticsType="MassAction">
+          <Parameter Name="J" Role="reaction rate" Unit="uM.s-1">((Kf * mRNA_R) - ((Kr * mRNA_R) * R))</Parameter>
+          <Parameter Name="Kf" Role="forward rate constant" Unit="s-1">50.0</Parameter>
+          <Parameter Name="Kr" Role="reverse rate constant" Unit="s-1.uM-1">0.0</Parameter>
+        </Kinetics>
+      </SimpleReaction>
+      <SimpleReaction Structure="Cell_1" Name="Inactivated_Complex" Reversible="true" FluxOption="MolecularOnly" KeyValue="90939371">
+        <Reactant LocalizedCompoundRef="A" Stoichiometry="1" KeyValue="90939372" />
+        <Reactant LocalizedCompoundRef="R" Stoichiometry="1" KeyValue="90939373" />
+        <Product LocalizedCompoundRef="C" Stoichiometry="1" KeyValue="90939374" />
+        <Kinetics KineticsType="MassAction">
+          <Parameter Name="J" Role="reaction rate" Unit="uM.s-1">(((Kf * A) * R) - (Kr * C))</Parameter>
+          <Parameter Name="Kf" Role="forward rate constant" Unit="s-1.uM-1">(2.0 / KMOLE)</Parameter>
+          <Parameter Name="Kr" Role="reverse rate constant" Unit="s-1">0.0</Parameter>
+        </Kinetics>
+      </SimpleReaction>
+      <SimpleReaction Structure="Cell_1" Name="Decay_C_R" Reversible="true" FluxOption="MolecularOnly" KeyValue="90939375">
+        <Reactant LocalizedCompoundRef="C" Stoichiometry="1" KeyValue="90939376" />
+        <Product LocalizedCompoundRef="R" Stoichiometry="1" KeyValue="90939377" />
+        <Kinetics KineticsType="MassAction">
+          <Parameter Name="J" Role="reaction rate" Unit="uM.s-1">((Kf * C) - (Kr * R))</Parameter>
+          <Parameter Name="Kf" Role="forward rate constant" Unit="s-1">1.0</Parameter>
+          <Parameter Name="Kr" Role="reverse rate constant" Unit="s-1">0.0</Parameter>
+        </Kinetics>
+      </SimpleReaction>
+      <SimpleReaction Structure="Cell_1" Name="Decay_A" Reversible="true" FluxOption="MolecularOnly" KeyValue="90939388">
+        <Reactant LocalizedCompoundRef="A" Stoichiometry="1" KeyValue="90939389" />
+        <Kinetics KineticsType="MassAction">
+          <Parameter Name="J" Role="reaction rate" Unit="uM.s-1">(Kf * A)</Parameter>
+          <Parameter Name="Kf" Role="forward rate constant" Unit="s-1">1.0</Parameter>
+          <Parameter Name="Kr" Role="reverse rate constant" Unit="uM.s-1">0.0</Parameter>
+        </Kinetics>
+      </SimpleReaction>
+      <SimpleReaction Structure="Cell_1" Name="Decay_R" Reversible="true" FluxOption="MolecularOnly" KeyValue="90939390">
+        <Reactant LocalizedCompoundRef="R" Stoichiometry="1" KeyValue="90939391" />
+        <Kinetics KineticsType="MassAction">
+          <Parameter Name="J" Role="reaction rate" Unit="uM.s-1">(Kf * R)</Parameter>
+          <Parameter Name="Kf" Role="forward rate constant" Unit="s-1">0.2</Parameter>
+          <Parameter Name="Kr" Role="reverse rate constant" Unit="uM.s-1">0.0</Parameter>
+        </Kinetics>
+      </SimpleReaction>
+      <SimpleReaction Structure="Cell_1" Name="Decay_mRNA_R" Reversible="true" FluxOption="MolecularOnly" KeyValue="90939392">
+        <Reactant LocalizedCompoundRef="mRNA_R" Stoichiometry="1" KeyValue="90939393" />
+        <Kinetics KineticsType="MassAction">
+          <Parameter Name="J" Role="reaction rate" Unit="uM.s-1">(Kf * mRNA_R)</Parameter>
+          <Parameter Name="Kf" Role="forward rate constant" Unit="s-1">0.5</Parameter>
+          <Parameter Name="Kr" Role="reverse rate constant" Unit="uM.s-1">0.0</Parameter>
+        </Kinetics>
+      </SimpleReaction>
+      <SimpleReaction Structure="Cell_1" Name="Transc_A" Reversible="true" FluxOption="MolecularOnly" KeyValue="90939394">
+        <Reactant LocalizedCompoundRef="PrmA" Stoichiometry="1" KeyValue="90939395" />
+        <Product LocalizedCompoundRef="PrmA" Stoichiometry="1" KeyValue="90939396" />
+        <Product LocalizedCompoundRef="mRNA_A" Stoichiometry="1" KeyValue="90939397" />
+        <Kinetics KineticsType="MassAction">
+          <Parameter Name="J" Role="reaction rate" Unit="uM.s-1">((Kf * PrmA) - ((Kr * PrmA) * mRNA_A))</Parameter>
+          <Parameter Name="Kf" Role="forward rate constant" Unit="s-1">50.0</Parameter>
+          <Parameter Name="Kr" Role="reverse rate constant" Unit="s-1.uM-1">0.0</Parameter>
+        </Kinetics>
+      </SimpleReaction>
+      <SimpleReaction Structure="Cell_1" Name="Transc_R" Reversible="true" FluxOption="MolecularOnly" KeyValue="90939398">
+        <Reactant LocalizedCompoundRef="PrmR" Stoichiometry="1" KeyValue="90939399" />
+        <Product LocalizedCompoundRef="PrmR" Stoichiometry="1" KeyValue="90939400" />
+        <Product LocalizedCompoundRef="mRNA_R" Stoichiometry="1" KeyValue="90939401" />
+        <Kinetics KineticsType="MassAction">
+          <Parameter Name="J" Role="reaction rate" Unit="uM.s-1">((Kf * PrmR) - ((Kr * PrmR) * mRNA_R))</Parameter>
+          <Parameter Name="Kf" Role="forward rate constant" Unit="s-1">0.01</Parameter>
+          <Parameter Name="Kr" Role="reverse rate constant" Unit="s-1.uM-1">0.0</Parameter>
+        </Kinetics>
+      </SimpleReaction>
+      <SimpleReaction Structure="Cell_1" Name="Activation_A" Reversible="true" FluxOption="MolecularOnly" KeyValue="90939402">
+        <Reactant LocalizedCompoundRef="PrmA" Stoichiometry="1" KeyValue="90939403" />
+        <Reactant LocalizedCompoundRef="A" Stoichiometry="1" KeyValue="90939404" />
+        <Product LocalizedCompoundRef="PrmA_bound" Stoichiometry="1" KeyValue="90939405" />
+        <Kinetics KineticsType="MassAction">
+          <Parameter Name="J" Role="reaction rate" Unit="uM.s-1">(((Kf * PrmA) * A) - (Kr * PrmA_bound))</Parameter>
+          <Parameter Name="Kf" Role="forward rate constant" Unit="s-1.uM-1">(1.0 / KMOLE)</Parameter>
+          <Parameter Name="Kr" Role="reverse rate constant" Unit="s-1">50.0</Parameter>
+        </Kinetics>
+      </SimpleReaction>
+      <SimpleReaction Structure="Cell_1" Name="Transc_Active_A" Reversible="true" FluxOption="MolecularOnly" KeyValue="90939406">
+        <Reactant LocalizedCompoundRef="PrmA_bound" Stoichiometry="1" KeyValue="90939407" />
+        <Product LocalizedCompoundRef="PrmA_bound" Stoichiometry="1" KeyValue="90939408" />
+        <Product LocalizedCompoundRef="mRNA_A" Stoichiometry="1" KeyValue="90939409" />
+        <Kinetics KineticsType="MassAction">
+          <Parameter Name="J" Role="reaction rate" Unit="uM.s-1">((Kf * PrmA_bound) - ((Kr * PrmA_bound) * mRNA_A))</Parameter>
+          <Parameter Name="Kf" Role="forward rate constant" Unit="s-1">500.0</Parameter>
+          <Parameter Name="Kr" Role="reverse rate constant" Unit="s-1.uM-1">0.0</Parameter>
+        </Kinetics>
+      </SimpleReaction>
+      <SimpleReaction Structure="Cell_1" Name="Transc_Active_R" Reversible="true" FluxOption="MolecularOnly" KeyValue="90939410">
+        <Reactant LocalizedCompoundRef="PrmR_bound" Stoichiometry="1" KeyValue="90939411" />
+        <Product LocalizedCompoundRef="PrmR_bound" Stoichiometry="1" KeyValue="90939412" />
+        <Product LocalizedCompoundRef="mRNA_R" Stoichiometry="1" KeyValue="90939413" />
+        <Kinetics KineticsType="MassAction">
+          <Parameter Name="J" Role="reaction rate" Unit="uM.s-1">((Kf * PrmR_bound) - ((Kr * PrmR_bound) * mRNA_R))</Parameter>
+          <Parameter Name="Kf" Role="forward rate constant" Unit="s-1">50.0</Parameter>
+          <Parameter Name="Kr" Role="reverse rate constant" Unit="s-1.uM-1">0.0</Parameter>
+        </Kinetics>
+      </SimpleReaction>
+      <SimpleReaction Structure="Cell_1" Name="Activation_R" Reversible="true" FluxOption="MolecularOnly" KeyValue="90939414">
+        <Reactant LocalizedCompoundRef="PrmR" Stoichiometry="1" KeyValue="90939415" />
+        <Reactant LocalizedCompoundRef="A" Stoichiometry="1" KeyValue="90939416" />
+        <Product LocalizedCompoundRef="PrmR_bound" Stoichiometry="1" KeyValue="90939417" />
+        <Kinetics KineticsType="MassAction">
+          <Parameter Name="J" Role="reaction rate" Unit="uM.s-1">(((Kf * PrmR) * A) - (Kr * PrmR_bound))</Parameter>
+          <Parameter Name="Kf" Role="forward rate constant" Unit="s-1.uM-1">(1.0 / KMOLE)</Parameter>
+          <Parameter Name="Kr" Role="reverse rate constant" Unit="s-1">100.0</Parameter>
+        </Kinetics>
+      </SimpleReaction>
+      <Diagram Name="c0" Structure="Cell_1">
+        <SimpleReactionShape NodeReferenceModeAttrTag="full" SimpleReactionRef="Transc_Active_A" LocationX="65" LocationY="183" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="R" LocationX="328" LocationY="79" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="PrmA" LocationX="233" LocationY="231" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="full" SimpleReactionRef="Transc_A" LocationX="149" LocationY="175" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="full" SimpleReactionRef="Decay_C_R" LocationX="327" LocationY="44" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="full" SimpleReactionRef="Activation_A" LocationX="228" LocationY="171" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="full" SimpleReactionRef="Decay_R" LocationX="379" LocationY="40" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="full" SimpleReactionRef="Transc_R" LocationX="408" LocationY="178" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="PrmA_bound" LocationX="85" LocationY="226" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="full" SimpleReactionRef="Decay_mRNA_R" LocationX="473" LocationY="107" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="full" SimpleReactionRef="Transl_A" LocationX="134" LocationY="43" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="full" SimpleReactionRef="Inactivated_Complex" LocationX="291" LocationY="115" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="C" LocationX="290" LocationY="39" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="full" SimpleReactionRef="Decay_A" LocationX="207" LocationY="34" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="A" LocationX="242" LocationY="79" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="PrmR_bound" LocationX="447" LocationY="224" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="full" SimpleReactionRef="Transc_Active_R" LocationX="473" LocationY="171" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="full" SimpleReactionRef="Transl_R" LocationX="440" LocationY="71" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="full" SimpleReactionRef="Activation_R" LocationX="314" LocationY="174" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="mRNA_R" LocationX="385" LocationY="127" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="full" SimpleReactionRef="Decay_mRNA_A" LocationX="87" LocationY="104" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="mRNA_A" LocationX="164" LocationY="130" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="PrmR" LocationX="315" LocationY="233" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="molecule" SimpleReactionRef="Transc_Active_A" LocationX="65" LocationY="183" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="R" LocationX="328" LocationY="79" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="PrmA" LocationX="233" LocationY="231" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="molecule" SimpleReactionRef="Transc_A" LocationX="149" LocationY="175" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="molecule" SimpleReactionRef="Decay_C_R" LocationX="327" LocationY="44" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="molecule" SimpleReactionRef="Activation_A" LocationX="228" LocationY="171" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="molecule" SimpleReactionRef="Decay_R" LocationX="379" LocationY="40" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="molecule" SimpleReactionRef="Transc_R" LocationX="408" LocationY="178" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="PrmA_bound" LocationX="85" LocationY="226" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="molecule" SimpleReactionRef="Decay_mRNA_R" LocationX="473" LocationY="107" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="molecule" SimpleReactionRef="Transl_A" LocationX="134" LocationY="43" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="molecule" SimpleReactionRef="Inactivated_Complex" LocationX="291" LocationY="115" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="C" LocationX="290" LocationY="39" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="molecule" SimpleReactionRef="Decay_A" LocationX="207" LocationY="34" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="A" LocationX="242" LocationY="79" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="PrmR_bound" LocationX="447" LocationY="224" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="molecule" SimpleReactionRef="Transc_Active_R" LocationX="473" LocationY="171" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="molecule" SimpleReactionRef="Transl_R" LocationX="440" LocationY="71" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="molecule" SimpleReactionRef="Activation_R" LocationX="314" LocationY="174" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="mRNA_R" LocationX="385" LocationY="127" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="molecule" SimpleReactionRef="Decay_mRNA_A" LocationX="87" LocationY="104" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="mRNA_A" LocationX="164" LocationY="130" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="PrmR" LocationX="315" LocationY="233" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="rule" SimpleReactionRef="Transc_Active_A" LocationX="65" LocationY="183" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="R" LocationX="328" LocationY="79" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="PrmA" LocationX="233" LocationY="231" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="rule" SimpleReactionRef="Transc_A" LocationX="149" LocationY="175" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="rule" SimpleReactionRef="Decay_C_R" LocationX="327" LocationY="44" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="rule" SimpleReactionRef="Activation_A" LocationX="228" LocationY="171" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="rule" SimpleReactionRef="Decay_R" LocationX="379" LocationY="40" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="rule" SimpleReactionRef="Transc_R" LocationX="408" LocationY="178" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="PrmA_bound" LocationX="85" LocationY="226" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="rule" SimpleReactionRef="Decay_mRNA_R" LocationX="473" LocationY="107" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="rule" SimpleReactionRef="Transl_A" LocationX="134" LocationY="43" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="rule" SimpleReactionRef="Inactivated_Complex" LocationX="291" LocationY="115" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="C" LocationX="290" LocationY="39" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="rule" SimpleReactionRef="Decay_A" LocationX="207" LocationY="34" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="A" LocationX="242" LocationY="79" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="PrmR_bound" LocationX="447" LocationY="224" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="rule" SimpleReactionRef="Transc_Active_R" LocationX="473" LocationY="171" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="rule" SimpleReactionRef="Transl_R" LocationX="440" LocationY="71" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="rule" SimpleReactionRef="Activation_R" LocationX="314" LocationY="174" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="mRNA_R" LocationX="385" LocationY="127" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="rule" SimpleReactionRef="Decay_mRNA_A" LocationX="87" LocationY="104" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="mRNA_A" LocationX="164" LocationY="130" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="PrmR" LocationX="315" LocationY="233" />
+      </Diagram>
+      <Version Name="unnamed" KeyValue="90939349" BranchId="90934108" Archived="0" Date="10-Sep-2014 12:59:32" FromVersionable="false">
+        <Owner Name="houman" Identifier="90839164" />
+        <GroupAccess Type="1" />
+      </Version>
+      <ModelUnitSystem VolumeSubstanceUnit="uM.um3" MembraneSubstanceUnit="molecules" LumpedReactionSubstanceUnit="molecules" VolumeUnit="um3" AreaUnit="um2" LengthUnit="um" TimeUnit="s" />
+    </Model>
+    <SimulationSpec Name="Application0" Stochastic="false" UseConcentration="true" RuleBased="false" MassConservationModelReduction="true" InsufficientIterations="false" InsufficientMaxMolecules="false">
+      <NetworkConstraints RbmMaxIteration="1" RbmMaxMoleculesPerSpecies="10" RbmSpeciesLimit="800" RbmReactionsLimit="2500" />
+      <Annotation />
+      <Geometry Name="non-spatial" Dimension="0">
+        <Extent X="10.0" Y="10.0" Z="10.0" />
+        <Origin X="0.0" Y="0.0" Z="0.0" />
+        <SubVolume Name="Compartment" Handle="0" Type="Compartmental" KeyValue="90945133" />
+        <Version Name="non-spatial" KeyValue="90945129" BranchId="90945130" Archived="0" Date="10-Sep-2014 14:44:57" FromVersionable="false">
+          <Owner Name="houman" Identifier="90839164" />
+          <GroupAccess Type="1" />
+        </Version>
+      </Geometry>
+      <GeometryContext>
+        <FeatureMapping Feature="Cell_1" GeometryClass="Compartment" SubVolume="Compartment" Size="50000.0">
+          <BoundariesTypes Xm="Flux" Xp="Flux" Ym="Flux" Yp="Flux" Zm="Flux" Zp="Flux" />
+        </FeatureMapping>
+      </GeometryContext>
+      <ReactionContext>
+        <LocalizedCompoundSpec LocalizedCompoundRef="R" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>0.0</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="mRNA_A" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>0.0</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="mRNA_R" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>0.0</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="PrmA" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>1000.0</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="PrmA_bound" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>0.0</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="PrmR" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>1000.0</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="PrmR_bound" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>0.0</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="C" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>0.0</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="A" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>0.0</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <ReactionSpec ReactionStepRef="Transl_A" ReactionMapping="included" />
+        <ReactionSpec ReactionStepRef="Decay_mRNA_A" ReactionMapping="included" />
+        <ReactionSpec ReactionStepRef="Transl_R" ReactionMapping="included" />
+        <ReactionSpec ReactionStepRef="Inactivated_Complex" ReactionMapping="included" />
+        <ReactionSpec ReactionStepRef="Decay_C_R" ReactionMapping="included" />
+        <ReactionSpec ReactionStepRef="Decay_A" ReactionMapping="included" />
+        <ReactionSpec ReactionStepRef="Decay_R" ReactionMapping="included" />
+        <ReactionSpec ReactionStepRef="Decay_mRNA_R" ReactionMapping="included" />
+        <ReactionSpec ReactionStepRef="Transc_A" ReactionMapping="included" />
+        <ReactionSpec ReactionStepRef="Transc_R" ReactionMapping="included" />
+        <ReactionSpec ReactionStepRef="Activation_A" ReactionMapping="included" />
+        <ReactionSpec ReactionStepRef="Transc_Active_A" ReactionMapping="included" />
+        <ReactionSpec ReactionStepRef="Transc_Active_R" ReactionMapping="included" />
+        <ReactionSpec ReactionStepRef="Activation_R" ReactionMapping="included" />
+      </ReactionContext>
+      <MathDescription Name="Application0_generated">
+        <Constant Name="_F_">96480.0</Constant>
+        <Constant Name="_F_nmol_">9.648E-5</Constant>
+        <Constant Name="_K_GHK_">1.0E-9</Constant>
+        <Constant Name="_N_pmol_">6.02E11</Constant>
+        <Constant Name="_PI_">3.141592653589793</Constant>
+        <Constant Name="_R_">8314.0</Constant>
+        <Constant Name="_T_">300.0</Constant>
+        <Constant Name="A_init_uM">0.0</Constant>
+        <Constant Name="C_init_uM">0.0</Constant>
+        <Constant Name="Delta_A">1.0</Constant>
+        <Constant Name="K_millivolts_per_volt">1000.0</Constant>
+        <Constant Name="Kf_Decay_A">1.0</Constant>
+        <Constant Name="Kf_Decay_C_R">1.0</Constant>
+        <Constant Name="Kf_Decay_mRNA_A">10.0</Constant>
+        <Constant Name="Kf_Decay_mRNA_R">0.5</Constant>
+        <Constant Name="Kf_Decay_R">0.2</Constant>
+        <Constant Name="Kf_Transc_A">50.0</Constant>
+        <Constant Name="Kf_Transc_Active_A">500.0</Constant>
+        <Constant Name="Kf_Transc_Active_R">50.0</Constant>
+        <Constant Name="Kf_Transc_R">0.01</Constant>
+        <Constant Name="Kf_Transl_A">50.0</Constant>
+        <Constant Name="Kf_Transl_R">50.0</Constant>
+        <Constant Name="KMOLE">(1.0 / 602.0)</Constant>
+        <Constant Name="Kr_Activation_A">50.0</Constant>
+        <Constant Name="Kr_Activation_R">100.0</Constant>
+        <Constant Name="Kr_Decay_A">0.0</Constant>
+        <Constant Name="Kr_Decay_C_R">0.0</Constant>
+        <Constant Name="Kr_Decay_mRNA_A">0.0</Constant>
+        <Constant Name="Kr_Decay_mRNA_R">0.0</Constant>
+        <Constant Name="Kr_Decay_R">0.0</Constant>
+        <Constant Name="Kr_Inactivated_Complex">0.0</Constant>
+        <Constant Name="Kr_Transc_A">0.0</Constant>
+        <Constant Name="Kr_Transc_Active_A">0.0</Constant>
+        <Constant Name="Kr_Transc_Active_R">0.0</Constant>
+        <Constant Name="Kr_Transc_R">0.0</Constant>
+        <Constant Name="Kr_Transl_A">0.0</Constant>
+        <Constant Name="Kr_Transl_R">0.0</Constant>
+        <Constant Name="mRNA_A_init_uM">0.0</Constant>
+        <Constant Name="mRNA_R_init_uM">0.0</Constant>
+        <Constant Name="PrmA_bound_init_uM">0.0</Constant>
+        <Constant Name="PrmA_init_uM">1000.0</Constant>
+        <Constant Name="PrmR_bound_init_uM">0.0</Constant>
+        <Constant Name="PrmR_init_uM">1000.0</Constant>
+        <Constant Name="R_init_uM">0.0</Constant>
+        <Constant Name="Size_Cell_1">50000.0</Constant>
+        <VolumeVariable Name="A" Domain="Compartment" />
+        <VolumeVariable Name="C" Domain="Compartment" />
+        <VolumeVariable Name="mRNA_A" Domain="Compartment" />
+        <VolumeVariable Name="mRNA_R" Domain="Compartment" />
+        <VolumeVariable Name="PrmA_bound" Domain="Compartment" />
+        <VolumeVariable Name="PrmR_bound" Domain="Compartment" />
+        <VolumeVariable Name="R" Domain="Compartment" />
+        <Function Name="J_Activation_A" Domain="Compartment">(((Kf_Activation_A * PrmA) * A) - (Kr_Activation_A * PrmA_bound))</Function>
+        <Function Name="J_Activation_R" Domain="Compartment">(((Kf_Activation_R * PrmR) * A) - (Kr_Activation_R * PrmR_bound))</Function>
+        <Function Name="J_Decay_A" Domain="Compartment">(Kf_Decay_A * A)</Function>
+        <Function Name="J_Decay_C_R" Domain="Compartment">((Kf_Decay_C_R * C) - (Kr_Decay_C_R * R))</Function>
+        <Function Name="J_Decay_mRNA_A" Domain="Compartment">(Kf_Decay_mRNA_A * mRNA_A)</Function>
+        <Function Name="J_Decay_mRNA_R" Domain="Compartment">(Kf_Decay_mRNA_R * mRNA_R)</Function>
+        <Function Name="J_Decay_R" Domain="Compartment">(Kf_Decay_R * R)</Function>
+        <Function Name="J_Inactivated_Complex" Domain="Compartment">(((Kf_Inactivated_Complex * A) * R) - (Kr_Inactivated_Complex * C))</Function>
+        <Function Name="J_Transc_A" Domain="Compartment">((Kf_Transc_A * PrmA) - ((Kr_Transc_A * PrmA) * mRNA_A))</Function>
+        <Function Name="J_Transc_Active_A" Domain="Compartment">((Kf_Transc_Active_A * PrmA_bound) - ((Kr_Transc_Active_A * PrmA_bound) * mRNA_A))</Function>
+        <Function Name="J_Transc_Active_R" Domain="Compartment">((Kf_Transc_Active_R * PrmR_bound) - ((Kr_Transc_Active_R * PrmR_bound) * mRNA_R))</Function>
+        <Function Name="J_Transc_R" Domain="Compartment">((Kf_Transc_R * PrmR) - ((Kr_Transc_R * PrmR) * mRNA_R))</Function>
+        <Function Name="J_Transl_A" Domain="Compartment">((Kf_Transl_A * mRNA_A) - ((Kr_Transl_A * mRNA_A) * A))</Function>
+        <Function Name="J_Transl_R" Domain="Compartment">((Kf_Transl_R * mRNA_R) - ((Kr_Transl_R * mRNA_R) * R))</Function>
+        <Function Name="K_PrmA_total" Domain="Compartment">((Size_Cell_1 * PrmA_init_uM) + (Size_Cell_1 * PrmA_bound_init_uM))</Function>
+        <Function Name="K_PrmR_total" Domain="Compartment">((Size_Cell_1 * PrmR_init_uM) + (Size_Cell_1 * PrmR_bound_init_uM))</Function>
+        <Function Name="Kf_Activation_A" Domain="Compartment">(1.0 / KMOLE)</Function>
+        <Function Name="Kf_Activation_R" Domain="Compartment">(1.0 / KMOLE)</Function>
+        <Function Name="Kf_Inactivated_Complex" Domain="Compartment">(2.0 / KMOLE)</Function>
+        <Function Name="PrmA" Domain="Compartment">((K_PrmA_total - (Size_Cell_1 * PrmA_bound)) / Size_Cell_1)</Function>
+        <Function Name="PrmR" Domain="Compartment">((K_PrmR_total - (Size_Cell_1 * PrmR_bound)) / Size_Cell_1)</Function>
+        <CompartmentSubDomain Name="Compartment">
+          <BoundaryType Boundary="Xm" Type="Value" />
+          <BoundaryType Boundary="Xp" Type="Value" />
+          <BoundaryType Boundary="Ym" Type="Value" />
+          <BoundaryType Boundary="Yp" Type="Value" />
+          <BoundaryType Boundary="Zm" Type="Value" />
+          <BoundaryType Boundary="Zp" Type="Value" />
+          <OdeEquation Name="R" SolutionType="Unknown">
+            <Rate>( - J_Decay_R + J_Decay_C_R + J_Transl_R - J_Inactivated_Complex)</Rate>
+            <Initial>R_init_uM</Initial>
+          </OdeEquation>
+          <OdeEquation Name="mRNA_A" SolutionType="Unknown">
+            <Rate>(J_Transc_Active_A - J_Decay_mRNA_A + J_Transc_A)</Rate>
+            <Initial>mRNA_A_init_uM</Initial>
+          </OdeEquation>
+          <OdeEquation Name="mRNA_R" SolutionType="Unknown">
+            <Rate>(J_Transc_Active_R - J_Decay_mRNA_R + J_Transc_R)</Rate>
+            <Initial>mRNA_R_init_uM</Initial>
+          </OdeEquation>
+          <OdeEquation Name="PrmA_bound" SolutionType="Unknown">
+            <Rate>J_Activation_A</Rate>
+            <Initial>PrmA_bound_init_uM</Initial>
+          </OdeEquation>
+          <OdeEquation Name="PrmR_bound" SolutionType="Unknown">
+            <Rate>J_Activation_R</Rate>
+            <Initial>PrmR_bound_init_uM</Initial>
+          </OdeEquation>
+          <OdeEquation Name="C" SolutionType="Unknown">
+            <Rate>(J_Inactivated_Complex - J_Decay_C_R)</Rate>
+            <Initial>C_init_uM</Initial>
+          </OdeEquation>
+          <OdeEquation Name="A" SolutionType="Unknown">
+            <Rate>( - J_Activation_R - J_Activation_A - J_Decay_A + J_Transl_A - J_Inactivated_Complex)</Rate>
+            <Initial>A_init_uM</Initial>
+          </OdeEquation>
+        </CompartmentSubDomain>
+        <Version Name="Application0_generated" KeyValue="90945134" BranchId="90945135" Archived="0" Date="10-Sep-2014 14:44:57" FromVersionable="false">
+          <Owner Name="houman" Identifier="90839164" />
+          <GroupAccess Type="1" />
+        </Version>
+      </MathDescription>
+      <Version Name="Application0" KeyValue="90945137" BranchId="90945138" Archived="0" Date="10-Sep-2014 14:44:59" FromVersionable="false">
+        <Owner Name="houman" Identifier="90839164" />
+        <GroupAccess Type="1" />
+      </Version>
+      <MicroscopeMeasurement Name="fluor">
+        <ConvolutionKernel Type="ProjectionZKernel" />
+      </MicroscopeMeasurement>
+    </SimulationSpec>
+    <Version Name="Circadian_Deterministic" KeyValue="90945164" BranchId="90934132" Archived="0" Date="10-Sep-2014 14:45:02" FromVersionable="false">
+      <Owner Name="houman" Identifier="90839164" />
+      <GroupAccess Type="0" />
+    </Version>
+    <pathwayModel>
+      <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:bp="http://www.biopax.org/release/biopax-level3.owl#" version="3.0" />
+    </pathwayModel>
+    <relationshipModel>
+      <RMNS version="3.0" />
+    </relationshipModel>
+    <vcmetadata>
+      <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" />
+      <nonrdfAnnotationList />
+      <uriBindingList />
+    </vcmetadata>
+  </BioModel>
+</vcml>
+

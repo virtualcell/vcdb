@@ -1,0 +1,440 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--This biomodel was generated in VCML Version Alpha_Version_7.4.0_build_87-->
+<vcml xmlns="http://sourceforge.net/projects/vcell/vcml" Version="Alpha_Version_7.4.0_build_87">
+  <BioModel Name="CM_PM12648679_MB1::Protein_synthesis_degradation">
+    <Annotation>cloned from 'CM_PM12648679_MB1::Protein_synthesis_degradation' owned by user shreyasinha28
+cloned from 'CM_PM12648679_MB1::Protein_synthesis_degradation' owned by user ModelBrick
+cloned from 'Tyson_2003_1a' owned by user mblinov</Annotation>
+    <Model Name="model">
+      <Annotation>cloned from 'model' owned by user shreyasinha28
+cloned from 'model' owned by user ModelBrick
+cloned from 'model' owned by user mblinov</Annotation>
+      <ModelParameters>
+        <Parameter Name="k_R_synth" Role="user defined" Unit="s-1">1.0</Parameter>
+        <Parameter Name="kd_R_degrad" Role="user defined" Unit="s-1">5.0</Parameter>
+      </ModelParameters>
+      <Compound Name="s0" />
+      <Compound Name="s1" />
+      <Feature Name="c0" KeyValue="212132022" />
+      <LocalizedCompound Name="R" CompoundRef="s0" Structure="c0" OverrideName="true" KeyValue="212132024">
+        <SpeciesPattern>
+          <MolecularTypePattern Index="1">
+            <MolecularType Name="R" />
+          </MolecularTypePattern>
+        </SpeciesPattern>
+      </LocalizedCompound>
+      <LocalizedCompound Name="S" CompoundRef="s1" Structure="c0" OverrideName="true" KeyValue="212132025">
+        <SpeciesPattern>
+          <MolecularTypePattern Index="1">
+            <MolecularType Name="S" />
+          </MolecularTypePattern>
+        </SpeciesPattern>
+      </LocalizedCompound>
+      <SimpleReaction Structure="c0" Name="R_degradation" Reversible="false" FluxOption="MolecularOnly" KeyValue="212132026">
+        <Reactant LocalizedCompoundRef="R" Stoichiometry="1" KeyValue="212132027" />
+        <Kinetics KineticsType="MassAction">
+          <Parameter Name="J" Role="reaction rate" Unit="uM.s-1">(Kf * R)</Parameter>
+          <Parameter Name="Kf" Role="forward rate constant" Unit="s-1">kd_R_degrad</Parameter>
+          <Parameter Name="Kr" Role="reverse rate constant" Unit="uM.s-1">0.0</Parameter>
+        </Kinetics>
+      </SimpleReaction>
+      <SimpleReaction Structure="c0" Name="R_synthesis" Reversible="false" FluxOption="MolecularOnly" KeyValue="212132028">
+        <Product LocalizedCompoundRef="R" Stoichiometry="1" KeyValue="212132029" />
+        <Modifier LocalizedCompoundRef="S" />
+        <Kinetics KineticsType="GeneralKinetics">
+          <Parameter Name="J" Role="reaction rate" Unit="uM.s-1">(k_R_synth * S)</Parameter>
+        </Kinetics>
+      </SimpleReaction>
+      <RbmModelContainer>
+        <MolecularTypeList>
+          <MolecularType Name="S" AnchorAll="true" />
+          <MolecularType Name="R" AnchorAll="true" />
+        </MolecularTypeList>
+        <RbmObservableList>
+          <Observable Name="O0_S_tot" ObservableType="Molecules" Sequence="Multimolecular" LengthEqual="2" LengthGreater="1" Structure="c0">
+            <SpeciesPattern>
+              <MolecularTypePattern Index="1">
+                <MolecularType Name="S" />
+              </MolecularTypePattern>
+            </SpeciesPattern>
+          </Observable>
+          <Observable Name="O0_R_tot" ObservableType="Molecules" Sequence="Multimolecular" LengthEqual="2" LengthGreater="1" Structure="c0">
+            <SpeciesPattern>
+              <MolecularTypePattern Index="1">
+                <MolecularType Name="R" />
+              </MolecularTypePattern>
+            </SpeciesPattern>
+          </Observable>
+        </RbmObservableList>
+      </RbmModelContainer>
+      <Diagram Name="c0" Structure="c0">
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="R" LocationX="224" LocationY="163" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="full" SimpleReactionRef="R_synthesis" LocationX="158" LocationY="165" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="S" LocationX="155" LocationY="76" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="full" SimpleReactionRef="R_degradation" LocationX="311" LocationY="165" />
+      </Diagram>
+      <Version Name="model" KeyValue="212132017" BranchId="212132018" Archived="0" Date="28-Jul-2021 15:49:53" FromVersionable="false">
+        <Owner Name="ModelBrick" Identifier="101222366" />
+        <GroupAccess Type="1" />
+        <Annotation>cloned from 'model' owned by user shreyasinha28
+cloned from 'model' owned by user ModelBrick
+cloned from 'model' owned by user mblinov</Annotation>
+      </Version>
+      <ModelUnitSystem VolumeSubstanceUnit="uM.um3" MembraneSubstanceUnit="molecules" LumpedReactionSubstanceUnit="molecules" VolumeUnit="um3" AreaUnit="um2" LengthUnit="um" TimeUnit="s" />
+    </Model>
+    <SimulationSpec Name="Linear" Stochastic="false" UseConcentration="true" RuleBased="false" MassConservationModelReduction="true" InsufficientIterations="false" InsufficientMaxMolecules="false">
+      <NetworkConstraints RbmMaxIteration="3" RbmMaxMoleculesPerSpecies="10" RbmSpeciesLimit="800" RbmReactionsLimit="2500">
+        <MaxStoichiometry MolecularType="S" Integer="100" />
+        <MaxStoichiometry MolecularType="R" Integer="100" />
+      </NetworkConstraints>
+      <Annotation>cloned from 'Linear' owned by user shreyasinha28
+cloned from 'Linear' owned by user ModelBrick</Annotation>
+      <Geometry Name="non-spatial1766805835" Dimension="0">
+        <Annotation>cloned from 'non-spatial222770520' owned by user shreyasinha28
+cloned from 'non-spatial222770520' owned by user ModelBrick
+cloned from 'non-spatial222770520' owned by user mblinov</Annotation>
+        <Extent X="10.0" Y="10.0" Z="10.0" />
+        <Origin X="0.0" Y="0.0" Z="0.0" />
+        <SubVolume Name="Compartment" Handle="0" Type="Compartmental" KeyValue="212132013" />
+        <Version Name="non-spatial1766805835" KeyValue="212132009" BranchId="212132010" Archived="0" Date="28-Jul-2021 15:49:53" FromVersionable="false">
+          <Owner Name="ModelBrick" Identifier="101222366" />
+          <GroupAccess Type="1" />
+          <Annotation>cloned from 'non-spatial222770520' owned by user shreyasinha28
+cloned from 'non-spatial222770520' owned by user ModelBrick
+cloned from 'non-spatial222770520' owned by user mblinov</Annotation>
+        </Version>
+      </Geometry>
+      <GeometryContext>
+        <FeatureMapping Feature="c0" GeometryClass="Compartment" SubVolume="Compartment" Size="50000.0">
+          <BoundariesTypes Xm="Flux" Xp="Flux" Ym="Flux" Yp="Flux" Zm="Flux" Zp="Flux" />
+        </FeatureMapping>
+      </GeometryContext>
+      <ReactionContext>
+        <LocalizedCompoundSpec LocalizedCompoundRef="R" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>0.0</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="S" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>t</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <ReactionSpec ReactionStepRef="R_degradation" ReactionMapping="included" />
+        <ReactionSpec ReactionStepRef="R_synthesis" ReactionMapping="included" />
+      </ReactionContext>
+      <MathDescription Name="Linear_generated">
+        <Annotation>cloned from 'Linear_generated' owned by user shreyasinha28
+cloned from 'Linear_generated' owned by user ModelBrick
+cloned from 'Linear_generated' owned by user mblinov</Annotation>
+        <Constant Name="_F_">96485.3321</Constant>
+        <Constant Name="_F_nmol_">9.64853321E-5</Constant>
+        <Constant Name="_K_GHK_">1.0E-9</Constant>
+        <Constant Name="_N_pmol_">6.02214179E11</Constant>
+        <Constant Name="_PI_">3.141592653589793</Constant>
+        <Constant Name="_R_">8314.46261815</Constant>
+        <Constant Name="_T_">300.0</Constant>
+        <Constant Name="K_millivolts_per_volt">1000.0</Constant>
+        <Constant Name="k_R_synth">1.0</Constant>
+        <Constant Name="kd_R_degrad">5.0</Constant>
+        <Constant Name="KMOLE">0.001660538783162726</Constant>
+        <Constant Name="Kr">0.0</Constant>
+        <Constant Name="R_init_uM">0.0</Constant>
+        <Constant Name="Size_c0">50000.0</Constant>
+        <VolumeVariable Name="R" Domain="Compartment" />
+        <Function Name="J_R_degradation" Domain="Compartment">(Kf * R)</Function>
+        <Function Name="J_R_synthesis" Domain="Compartment">(k_R_synth * S)</Function>
+        <Function Name="K_S_total" Domain="Compartment">(Size_c0 * S_init_uM)</Function>
+        <Function Name="Kf" Domain="Compartment">kd_R_degrad</Function>
+        <Function Name="S" Domain="Compartment">(K_S_total / Size_c0)</Function>
+        <Function Name="S_init_uM" Domain="Compartment">t</Function>
+        <CompartmentSubDomain Name="Compartment">
+          <BoundaryType Boundary="Xm" Type="Value" />
+          <BoundaryType Boundary="Xp" Type="Value" />
+          <BoundaryType Boundary="Ym" Type="Value" />
+          <BoundaryType Boundary="Yp" Type="Value" />
+          <BoundaryType Boundary="Zm" Type="Value" />
+          <BoundaryType Boundary="Zp" Type="Value" />
+          <OdeEquation Name="R" SolutionType="Unknown">
+            <Rate>( - J_R_degradation + J_R_synthesis)</Rate>
+            <Initial>R_init_uM</Initial>
+          </OdeEquation>
+        </CompartmentSubDomain>
+        <Version Name="Linear_generated" KeyValue="212132014" BranchId="212132015" Archived="0" Date="28-Jul-2021 15:49:53" FromVersionable="false">
+          <Owner Name="ModelBrick" Identifier="101222366" />
+          <GroupAccess Type="1" />
+          <Annotation>cloned from 'Linear_generated' owned by user shreyasinha28
+cloned from 'Linear_generated' owned by user ModelBrick
+cloned from 'Linear_generated' owned by user mblinov</Annotation>
+        </Version>
+      </MathDescription>
+      <Simulation Name="Simulation0">
+        <Annotation>cloned from 'Simulation0' owned by user shreyasinha28
+cloned from 'Simulation0' owned by user ModelBrick</Annotation>
+        <SolverTaskDescription TaskType="Unsteady" UseSymbolicJacobian="false" Solver="Combined Stiff Solver (IDA/CVODE)">
+          <TimeBound StartTime="0.0" EndTime="3.0" />
+          <TimeStep DefaultTime="0.1" MinTime="1.0E-8" MaxTime="1.0" />
+          <ErrorTolerance Absolut="1.0E-9" Relative="1.0E-9" />
+          <OutputOptions KeepEvery="1" KeepAtMost="1000" />
+          <NumberProcessors>1</NumberProcessors>
+        </SolverTaskDescription>
+        <MathOverrides />
+        <Version Name="Simulation0" KeyValue="212132041" BranchId="212132042" Archived="0" Date="28-Jul-2021 15:49:54" FromVersionable="false">
+          <Owner Name="ModelBrick" Identifier="101222366" />
+          <GroupAccess Type="1" />
+          <Annotation>cloned from 'Simulation0' owned by user shreyasinha28
+cloned from 'Simulation0' owned by user ModelBrick</Annotation>
+        </Version>
+      </Simulation>
+      <Version Name="Linear" KeyValue="212135411" BranchId="212132034" Archived="0" Date="28-Jul-2021 16:55:00" FromVersionable="false">
+        <Owner Name="ModelBrick" Identifier="101222366" />
+        <GroupAccess Type="1" />
+        <Annotation>cloned from 'Linear' owned by user shreyasinha28
+cloned from 'Linear' owned by user ModelBrick</Annotation>
+      </Version>
+      <MicroscopeMeasurement Name="fluor">
+        <ConvolutionKernel Type="ProjectionZKernel" />
+      </MicroscopeMeasurement>
+    </SimulationSpec>
+    <Version Name="CM_PM12648679_MB1::Protein_synthesis_degradation" KeyValue="212135418" BranchId="212132045" Archived="0" Date="28-Jul-2021 16:55:00" FromVersionable="false">
+      <Owner Name="ModelBrick" Identifier="101222366" />
+      <GroupAccess Type="0" />
+      <Annotation>cloned from 'CM_PM12648679_MB1::Protein_synthesis_degradation' owned by user shreyasinha28
+cloned from 'CM_PM12648679_MB1::Protein_synthesis_degradation' owned by user ModelBrick
+cloned from 'Tyson_2003_1a' owned by user mblinov</Annotation>
+    </Version>
+    <pathwayModel>
+      <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:bp="http://www.biopax.org/release/biopax-level3.owl#" version="3.0" />
+    </pathwayModel>
+    <relationshipModel>
+      <RMNS version="3.0" />
+    </relationshipModel>
+    <vcmetadata>
+      <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
+        <rdf:Description rdf:about="http://sourceforge.net/projects/vcell/vcml/cbit.vcell.biomodel.BioModel/metaid_188716002">
+          <bqbiol:hasProperty xmlns:bqbiol="http://biomodels.net/biology-qualifiers/">
+            <rdf:Bag rdf:nodeID="node0">
+              <rdf:_1>
+                <rdf:Description rdf:about="urn:miriam:mamo:MAMO_0000046" />
+              </rdf:_1>
+            </rdf:Bag>
+          </bqbiol:hasProperty>
+          <bqbiol:isVersionOf xmlns:bqbiol="http://biomodels.net/biology-qualifiers/">
+            <rdf:Bag rdf:nodeID="node1">
+              <rdf:_1>
+                <rdf:Description rdf:about="urn:miriam:obo.go:GO%3A0051098" />
+              </rdf:_1>
+            </rdf:Bag>
+          </bqbiol:isVersionOf>
+          <bqmodel:isDescribedBy xmlns:bqmodel="http://biomodels.net/model-qualifiers/">
+            <rdf:Bag rdf:nodeID="node2">
+              <rdf:_1>
+                <rdf:Description rdf:about="urn:miriam:pubmed:12648679" />
+              </rdf:_1>
+            </rdf:Bag>
+          </bqmodel:isDescribedBy>
+          <bqmodel:isDescribedBy xmlns:bqmodel="http://biomodels.net/model-qualifiers/">
+            <rdf:Bag rdf:nodeID="node3">
+              <rdf:_1>
+                <rdf:Description rdf:about="urn:miriam:doi:10.1016%2FS0955-0674%2803%2900017-6" />
+              </rdf:_1>
+            </rdf:Bag>
+          </bqmodel:isDescribedBy>
+        </rdf:Description>
+        <rdf:Description rdf:about="http://sourceforge.net/projects/vcell/vcml/cbit.vcell.model.Feature/metaid_2102227835">
+          <bqbiol:isVersionOf xmlns:bqbiol="http://biomodels.net/biology-qualifiers/">
+            <rdf:Bag rdf:nodeID="node4">
+              <rdf:_1>
+                <rdf:Description rdf:about="urn:miriam:obo.go:GO%3A0005575" />
+              </rdf:_1>
+            </rdf:Bag>
+          </bqbiol:isVersionOf>
+        </rdf:Description>
+        <rdf:Description rdf:about="http://sourceforge.net/projects/vcell/vcml/cbit.vcell.model.SimpleReaction/metaid_1490270091">
+          <bqbiol:hasProperty xmlns:bqbiol="http://biomodels.net/biology-qualifiers/">
+            <rdf:Bag rdf:nodeID="node5">
+              <rdf:_1>
+                <rdf:Description rdf:about="urn:miriam:sbo:SBO%3A0000012" />
+              </rdf:_1>
+            </rdf:Bag>
+          </bqbiol:hasProperty>
+          <bqmodel:isDescribedBy xmlns:bqmodel="http://biomodels.net/model-qualifiers/">
+            <rdf:Bag rdf:nodeID="node6">
+              <rdf:_1>
+                <rdf:Description rdf:about="urn:miriam:obo.go:GO%3A0009058" />
+              </rdf:_1>
+            </rdf:Bag>
+          </bqmodel:isDescribedBy>
+        </rdf:Description>
+        <rdf:Description rdf:about="http://sourceforge.net/projects/vcell/vcml/cbit.vcell.model.SimpleReaction/metaid_2043546989">
+          <bqbiol:hasProperty xmlns:bqbiol="http://biomodels.net/biology-qualifiers/">
+            <rdf:Bag rdf:nodeID="node7">
+              <rdf:_1>
+                <rdf:Description rdf:about="urn:miriam:sbo:SBO%3A0000012" />
+              </rdf:_1>
+            </rdf:Bag>
+          </bqbiol:hasProperty>
+          <bqbiol:isVersionOf xmlns:bqbiol="http://biomodels.net/biology-qualifiers/">
+            <rdf:Bag rdf:nodeID="node8">
+              <rdf:_1>
+                <rdf:Description rdf:about="urn:miriam:obo.go:GO%3A0009056" />
+              </rdf:_1>
+            </rdf:Bag>
+          </bqbiol:isVersionOf>
+        </rdf:Description>
+        <rdf:Description rdf:about="http://sourceforge.net/projects/vcell/vcml/cbit.vcell.model.Species/metaid_1694813691">
+          <bqbiol:isVersionOf xmlns:bqbiol="http://biomodels.net/biology-qualifiers/">
+            <rdf:Bag rdf:nodeID="node9">
+              <rdf:_1>
+                <rdf:Description rdf:about="urn:miriam:chebi:CHEBI%3A36080" />
+              </rdf:_1>
+            </rdf:Bag>
+          </bqbiol:isVersionOf>
+          <bqbiol:isVersionOf xmlns:bqbiol="http://biomodels.net/biology-qualifiers/">
+            <rdf:Bag rdf:nodeID="node10">
+              <rdf:_1>
+                <rdf:Description rdf:about="urn:miriam:kegg.compound:C00017" />
+              </rdf:_1>
+            </rdf:Bag>
+          </bqbiol:isVersionOf>
+        </rdf:Description>
+        <rdf:Description rdf:about="http://sourceforge.net/projects/vcell/vcml/org.vcell.model.rbm.MolecularType/metaid_525595000">
+          <bqbiol:isVersionOf xmlns:bqbiol="http://biomodels.net/biology-qualifiers/">
+            <rdf:Bag rdf:nodeID="node11">
+              <rdf:_1>
+                <rdf:Description rdf:about="urn:miriam:chebi:CHEBI%3A36080" />
+              </rdf:_1>
+            </rdf:Bag>
+          </bqbiol:isVersionOf>
+        </rdf:Description>
+      </rdf:RDF>
+      <nonrdfAnnotationList>
+        <nonrdfAnnotation vcid="ReactionStep(R_synthesis)">
+          <freetext>&lt;html&gt;&#xD;
+  &lt;head&gt;&#xD;
+    &#xD;
+  &lt;/head&gt;&#xD;
+  &lt;body&gt;&#xD;
+    &lt;p style="margin-top: 0"&gt;&#xD;
+      Synthesis of the response element (R)&#xD;
+    &lt;/p&gt;&#xD;
+  &lt;/body&gt;&#xD;
+&lt;/html&gt;</freetext>
+        </nonrdfAnnotation>
+        <nonrdfAnnotation vcid="MolecularType(S)">
+          <freetext>&lt;html&gt;&#xD;
+  &lt;head&gt;&#xD;
+    &#xD;
+  &lt;/head&gt;&#xD;
+  &lt;body&gt;&#xD;
+    &lt;p style="margin-top: 0"&gt;&#xD;
+      S = signal strength. For example, S could be the concentration of mRNA.&#xD;
+    &lt;/p&gt;&#xD;
+  &lt;/body&gt;&#xD;
+&lt;/html&gt;</freetext>
+        </nonrdfAnnotation>
+        <nonrdfAnnotation vcid="RbmObservable(O0_R_tot)">
+          <freetext>&lt;html&gt;&#xD;
+  &lt;head&gt;&#xD;
+    &#xD;
+  &lt;/head&gt;&#xD;
+  &lt;body&gt;&#xD;
+    &lt;p style="margin-top: 0"&gt;&#xD;
+      Total amount of R in the system.&#xD;
+    &lt;/p&gt;&#xD;
+  &lt;/body&gt;&#xD;
+&lt;/html&gt;&#xD;
+&lt;!--td {border: 1px solid #ccc;}br {mso-data-placement:same-cell;}--&gt;&#xD;
+&lt;!--td {border: 1px solid #ccc;}br {mso-data-placement:same-cell;}--&gt;&#xD;
+&lt;!--td {border: 1px solid #ccc;}br {mso-data-placement:same-cell;}--&gt;</freetext>
+        </nonrdfAnnotation>
+        <nonrdfAnnotation vcid="BioModel(CM_PM12648679_MB1::Protein_synthesis_degradation)">
+          <freetext>&lt;html&gt;&#xD;
+  &lt;head&gt;&#xD;
+    &#xD;
+  &lt;/head&gt;&#xD;
+  &lt;body&gt;&#xD;
+    &lt;p class="MsoNormal" style="margin-bottom: .0001pt; line-height: normal"&gt;&#xD;
+      &lt;span&gt;&lt;font size="12.0pt" face="Times New Roman,serif" color="black"&gt;This &#xD;
+      ModelBrick from the article, &amp;#8220;&lt;i&gt;Sniffers, buzzers, toggles and &#xD;
+      blinkers&amp;#8230;&lt;/i&gt;&amp;#8221; describes protein synthesis and degradation that &#xD;
+      yields a linear signal-response curve.&lt;/font&gt;&lt;/span&gt;&#xD;
+    &lt;/p&gt;&#xD;
+  &lt;/body&gt;&#xD;
+&lt;/html&gt;</freetext>
+        </nonrdfAnnotation>
+        <nonrdfAnnotation vcid="MolecularType(R)">
+          <freetext>&lt;html&gt;&#xD;
+  &lt;head&gt;&#xD;
+    &#xD;
+  &lt;/head&gt;&#xD;
+  &lt;body&gt;&#xD;
+    &lt;p style="margin-top: 0"&gt;&#xD;
+      R = response element. For example, R could be the concentration of &#xD;
+      protein.&#xD;
+    &lt;/p&gt;&#xD;
+  &lt;/body&gt;&#xD;
+&lt;/html&gt;</freetext>
+        </nonrdfAnnotation>
+        <nonrdfAnnotation vcid="RbmObservable(O0_S_tot)">
+          <freetext>&lt;html&gt;&#xD;
+  &lt;head&gt;&#xD;
+    &#xD;
+  &lt;/head&gt;&#xD;
+  &lt;body&gt;&#xD;
+    &lt;p style="margin-top: 0"&gt;&#xD;
+      Total signal strength of the system.&#xD;
+    &lt;/p&gt;&#xD;
+  &lt;/body&gt;&#xD;
+&lt;/html&gt;&#xD;
+&lt;!--td {border: 1px solid #ccc;}br {mso-data-placement:same-cell;}--&gt;&#xD;
+&lt;!--td {border: 1px solid #ccc;}br {mso-data-placement:same-cell;}--&gt;</freetext>
+        </nonrdfAnnotation>
+        <nonrdfAnnotation vcid="ReactionStep(R_degradation)">
+          <freetext>&lt;html&gt;&#xD;
+  &lt;head&gt;&#xD;
+    &#xD;
+  &lt;/head&gt;&#xD;
+  &lt;body&gt;&#xD;
+    &lt;p style="margin-top: 0"&gt;&#xD;
+      Degradation of the response element (R)&#xD;
+    &lt;/p&gt;&#xD;
+  &lt;/body&gt;&#xD;
+&lt;/html&gt;</freetext>
+        </nonrdfAnnotation>
+        <nonrdfAnnotation vcid="Species(s0)">
+          <freetext>&lt;html&gt;&#xD;
+  &lt;head&gt;&#xD;
+    &#xD;
+  &lt;/head&gt;&#xD;
+  &lt;body&gt;&#xD;
+    &lt;p style="margin-top: 0"&gt;&#xD;
+      R = response element. For example, R could be the concentration of &#xD;
+      protein.&#xD;
+    &lt;/p&gt;&#xD;
+  &lt;/body&gt;&#xD;
+&lt;/html&gt;</freetext>
+        </nonrdfAnnotation>
+        <nonrdfAnnotation vcid="Species(s1)">
+          <freetext>&lt;html&gt;&#xD;
+  &lt;head&gt;&#xD;
+    &#xD;
+  &lt;/head&gt;&#xD;
+  &lt;body&gt;&#xD;
+    &lt;p style="margin-top: 0"&gt;&#xD;
+      S = signal strength. For example, S could be the concentration of mRNA.&#xD;
+    &lt;/p&gt;&#xD;
+  &lt;/body&gt;&#xD;
+&lt;/html&gt;</freetext>
+        </nonrdfAnnotation>
+      </nonrdfAnnotationList>
+      <uriBindingList>
+        <uriBinding uri="http://sourceforge.net/projects/vcell/vcml/org.vcell.model.rbm.MolecularType/metaid_525595000" vcid="MolecularType(R)" />
+        <uriBinding uri="http://sourceforge.net/projects/vcell/vcml/cbit.vcell.model.Species/metaid_1694813691" vcid="Species(s0)" />
+        <uriBinding uri="http://sourceforge.net/projects/vcell/vcml/cbit.vcell.model.SimpleReaction/metaid_2043546989" vcid="ReactionStep(R_degradation)" />
+        <uriBinding uri="http://sourceforge.net/projects/vcell/vcml/cbit.vcell.model.SimpleReaction/metaid_1490270091" vcid="ReactionStep(R_synthesis)" />
+        <uriBinding uri="http://sourceforge.net/projects/vcell/vcml/cbit.vcell.model.Feature/metaid_2102227835" vcid="Structure(c0)" />
+        <uriBinding uri="http://sourceforge.net/projects/vcell/vcml/cbit.vcell.biomodel.BioModel/metaid_188716002" vcid="BioModel(CM_PM12648679_MB1::Protein_synthesis_degradation)" />
+      </uriBindingList>
+    </vcmetadata>
+  </BioModel>
+</vcml>
+

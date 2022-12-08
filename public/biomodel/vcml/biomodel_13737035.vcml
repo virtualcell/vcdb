@@ -1,0 +1,1913 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--This biomodel was generated in VCML Version Alpha_Version_7.4.0_build_87-->
+<vcml xmlns="http://sourceforge.net/projects/vcell/vcml" Version="Alpha_Version_7.4.0_build_87">
+  <BioModel Name="InsP3 dependent Calcium Release">
+    <Annotation>Fink, C.C., B. Slepchenko, I.I. Moraru, J. Schaff, J. Watras, and L.M. Loew. 1999. Morphological control of inositol-1,4,5-trisphosphate-dependent signals. Journal of Cell Biology. 147:929-935.
+Fink, C.C., B. Slepchenko, I.I. Moraru, J. Watras, J. Schaff, and L.M. Loew. 2000. An image-based model of calcium waves in differentiated neuroblastoma cells. Biophysical Journal. 79:163-183.</Annotation>
+    <Model Name="NE_Full">
+      <Annotation>cloned from 'NE_Full' owned by user schaff</Annotation>
+      <Compound Name="Calcium">
+        <Annotation>Calcium</Annotation>
+      </Compound>
+      <Compound Name="IP3">
+        <Annotation>IP3</Annotation>
+      </Compound>
+      <Compound Name="CalciumBufferUnbound">
+        <Annotation>CalciumBufferUnbound</Annotation>
+      </Compound>
+      <Compound Name="CalciumBufferBound">
+        <Annotation>CalciumBufferBound</Annotation>
+      </Compound>
+      <Compound Name="Fura2_unbound">
+        <Annotation>Fura2_unbound</Annotation>
+      </Compound>
+      <Compound Name="Fura2_bound">
+        <Annotation>Fura2_bound</Annotation>
+      </Compound>
+      <Compound Name="IP3ReceptorCalciumActivationSiteUnbound">
+        <Annotation>IP3ReceptorCalciumActivationSiteUnbound</Annotation>
+      </Compound>
+      <Compound Name="IP3ReceptorCalciumActivationSiteBound">
+        <Annotation>IP3ReceptorCalciumActivationSiteBound</Annotation>
+      </Compound>
+      <Compound Name="IP3ReceptorCalciumInhibitionSiteUnbound">
+        <Annotation>IP3ReceptorCalciumInhibitionSiteUnbound</Annotation>
+      </Compound>
+      <Compound Name="IP3ReceptorCalciumInhibitionSiteBound">
+        <Annotation>IP3ReceptorCalciumInhibitionSiteBound</Annotation>
+      </Compound>
+      <Compound Name="SERCA">
+        <Annotation>SERCA</Annotation>
+      </Compound>
+      <Compound Name="ER">
+        <Annotation>ERdistribution</Annotation>
+      </Compound>
+      <Feature Name="extracellular" KeyValue="2799229" />
+      <Feature Name="cytosol" KeyValue="2799232" />
+      <Feature Name="er" KeyValue="2799236" />
+      <Membrane InsideFeature="cytosol" OutsideFeature="extracellular" PositiveFeature="cytosol" NegativeFeature="extracellular" MembraneVoltage="Voltage_plasmaMembrane" Name="plasmaMembrane" KeyValue="2799231" />
+      <Membrane InsideFeature="er" OutsideFeature="cytosol" PositiveFeature="er" NegativeFeature="cytosol" MembraneVoltage="Voltage_erMembrane" Name="erMembrane" KeyValue="2799235" />
+      <LocalizedCompound Name="Ca" CompoundRef="Calcium" Structure="cytosol" OverrideName="true" KeyValue="2799239" />
+      <LocalizedCompound Name="IP3" CompoundRef="IP3" Structure="cytosol" OverrideName="true" KeyValue="2799240" />
+      <LocalizedCompound Name="Ca_ec" CompoundRef="Calcium" Structure="extracellular" OverrideName="true" KeyValue="2799241" />
+      <LocalizedCompound Name="Buffer" CompoundRef="CalciumBufferUnbound" Structure="cytosol" OverrideName="true" KeyValue="2799242" />
+      <LocalizedCompound Name="BufferCa" CompoundRef="CalciumBufferBound" Structure="cytosol" OverrideName="true" KeyValue="2799243" />
+      <LocalizedCompound Name="Fura2" CompoundRef="Fura2_unbound" Structure="cytosol" OverrideName="true" KeyValue="2799244" />
+      <LocalizedCompound Name="Fura2Ca" CompoundRef="Fura2_bound" Structure="cytosol" OverrideName="true" KeyValue="2799245" />
+      <LocalizedCompound Name="Ca_ER" CompoundRef="Calcium" Structure="er" OverrideName="true" KeyValue="2799246" />
+      <LocalizedCompound Name="Ract" CompoundRef="IP3ReceptorCalciumActivationSiteUnbound" Structure="erMembrane" OverrideName="true" KeyValue="2799247" />
+      <LocalizedCompound Name="RactCa" CompoundRef="IP3ReceptorCalciumActivationSiteBound" Structure="erMembrane" OverrideName="true" KeyValue="2799248" />
+      <LocalizedCompound Name="Rinh" CompoundRef="IP3ReceptorCalciumInhibitionSiteUnbound" Structure="erMembrane" OverrideName="true" KeyValue="2799249" />
+      <LocalizedCompound Name="RinhCa" CompoundRef="IP3ReceptorCalciumInhibitionSiteBound" Structure="erMembrane" OverrideName="true" KeyValue="2799250" />
+      <LocalizedCompound Name="serca" CompoundRef="SERCA" Structure="erMembrane" OverrideName="true" KeyValue="2799251" />
+      <LocalizedCompound Name="ER_erMembrane" CompoundRef="ER" Structure="erMembrane" OverrideName="true" KeyValue="2799252" />
+      <SimpleReaction Structure="cytosol" Name="ReactionStep_3" Reversible="true" FluxOption="MolecularOnly" KeyValue="2799285">
+        <Reactant LocalizedCompoundRef="Ca" Stoichiometry="1" KeyValue="2799286" />
+        <Reactant LocalizedCompoundRef="Fura2" Stoichiometry="1" KeyValue="2799287" />
+        <Product LocalizedCompoundRef="Fura2Ca" Stoichiometry="1" KeyValue="2799288" />
+        <Kinetics KineticsType="MassAction">
+          <Parameter Name="J" Role="reaction rate" Unit="uM.s-1">(((Kf * Ca) * Fura2) - (Kr * Fura2Ca))</Parameter>
+          <Parameter Name="Kf" Role="forward rate constant" Unit="s-1.uM-1">1000.0</Parameter>
+          <Parameter Name="Kr" Role="reverse rate constant" Unit="s-1">(1000.0 * Kd)</Parameter>
+          <Parameter Name="Kd" Role="user defined" Unit="uM.s-1">0.24</Parameter>
+        </Kinetics>
+      </SimpleReaction>
+      <SimpleReaction Structure="erMembrane" Name="ReactionStep_1" Reversible="true" FluxOption="MolecularOnly" KeyValue="2799253">
+        <Reactant LocalizedCompoundRef="Ca" Stoichiometry="1" KeyValue="2799254" />
+        <Reactant LocalizedCompoundRef="Ract" Stoichiometry="1" KeyValue="2799255" />
+        <Product LocalizedCompoundRef="RactCa" Stoichiometry="1" KeyValue="2799256" />
+        <Kinetics KineticsType="MassAction">
+          <Parameter Name="J" Role="reaction rate" Unit="molecules.um-2.s-1">(((Kf * Ca) * Ract) - (Kr * RactCa))</Parameter>
+          <Parameter Name="I" Role="inward current density" Unit="pA.um-2">0.0</Parameter>
+          <Parameter Name="netValence" Role="net charge valence" Unit="1">0.0</Parameter>
+          <Parameter Name="Kf" Role="forward rate constant" Unit="s-1.uM-1">1000.0</Parameter>
+          <Parameter Name="Kr" Role="reverse rate constant" Unit="s-1">(1000.0 * dact)</Parameter>
+          <Parameter Name="dact" Role="user defined" Unit="molecules.um-2.s-1">0.2</Parameter>
+        </Kinetics>
+      </SimpleReaction>
+      <SimpleReaction Structure="cytosol" Name="ReactionStep_4" Reversible="true" FluxOption="MolecularOnly" KeyValue="2799262">
+        <Reactant LocalizedCompoundRef="IP3" Stoichiometry="1" KeyValue="2799263" />
+        <Kinetics KineticsType="GeneralKinetics">
+          <Parameter Name="J" Role="reaction rate" Unit="uM.s-1">(K_degr * (IP3 - IP3_basal))</Parameter>
+          <Parameter Name="IP3_basal" Role="user defined" Unit="uM">0.16</Parameter>
+          <Parameter Name="K_degr" Role="user defined" Unit="s-1">0.16</Parameter>
+        </Kinetics>
+      </SimpleReaction>
+      <SimpleReaction Structure="cytosol" Name="ReactionStep_0" Reversible="true" FluxOption="MolecularOnly" KeyValue="2799264">
+        <Reactant LocalizedCompoundRef="Ca" Stoichiometry="1" KeyValue="2799265" />
+        <Reactant LocalizedCompoundRef="Buffer" Stoichiometry="1" KeyValue="2799266" />
+        <Product LocalizedCompoundRef="BufferCa" Stoichiometry="1" KeyValue="2799267" />
+        <Kinetics KineticsType="MassAction">
+          <Parameter Name="J" Role="reaction rate" Unit="uM.s-1">(((Kf * Ca) * Buffer) - (Kr * BufferCa))</Parameter>
+          <Parameter Name="Kf" Role="forward rate constant" Unit="s-1.uM-1">10000.0</Parameter>
+          <Parameter Name="Kr" Role="reverse rate constant" Unit="s-1">(10000.0 * K)</Parameter>
+          <Parameter Name="K" Role="user defined" Unit="uM.s-1">10.0</Parameter>
+        </Kinetics>
+      </SimpleReaction>
+      <SimpleReaction Structure="erMembrane" Name="ReactionStep_2" Reversible="true" FluxOption="MolecularOnly" KeyValue="2799268">
+        <Reactant LocalizedCompoundRef="Ca" Stoichiometry="1" KeyValue="2799269" />
+        <Reactant LocalizedCompoundRef="Rinh" Stoichiometry="1" KeyValue="2799270" />
+        <Product LocalizedCompoundRef="RinhCa" Stoichiometry="1" KeyValue="2799271" />
+        <Kinetics KineticsType="MassAction">
+          <Parameter Name="J" Role="reaction rate" Unit="molecules.um-2.s-1">(((Kon * Ca) * Rinh) - (Kr * RinhCa))</Parameter>
+          <Parameter Name="I" Role="inward current density" Unit="pA.um-2">0.0</Parameter>
+          <Parameter Name="netValence" Role="net charge valence" Unit="1">0.0</Parameter>
+          <Parameter Name="Kon" Role="forward rate constant" Unit="s-1.uM-1">2.1</Parameter>
+          <Parameter Name="Kr" Role="reverse rate constant" Unit="s-1">(Kon * dinh)</Parameter>
+          <Parameter Name="dinh" Role="user defined" Unit="1">0.11</Parameter>
+        </Kinetics>
+      </SimpleReaction>
+      <SimpleReaction Structure="plasmaMembrane" Name="ReactionStep_5" Reversible="true" FluxOption="MolecularOnly" KeyValue="2799289">
+        <Product LocalizedCompoundRef="IP3" Stoichiometry="1" KeyValue="2799290" />
+        <Kinetics KineticsType="GeneralKinetics">
+          <Parameter Name="J" Role="reaction rate" Unit="molecules.um-2.s-1">(Js * exp( - (t * k0)))</Parameter>
+          <Parameter Name="I" Role="inward current density" Unit="pA.um-2">0.0</Parameter>
+          <Parameter Name="netValence" Role="net charge valence" Unit="1">0.0</Parameter>
+          <Parameter Name="k0" Role="user defined" Unit="s-1">0.411</Parameter>
+          <Parameter Name="Js" Role="user defined" Unit="molecules.um-2.s-1">9.14</Parameter>
+        </Kinetics>
+      </SimpleReaction>
+      <FluxStep Name="FluxStep_2" Structure="erMembrane" Reversible="true" FluxOption="MolecularOnly" KeyValue="2799281">
+        <Reactant LocalizedCompoundRef="Ca" Stoichiometry="1" />
+        <Product LocalizedCompoundRef="Ca_ER" Stoichiometry="1" />
+        <Modifier LocalizedCompoundRef="ER_erMembrane" />
+        <Kinetics KineticsType="GeneralKinetics">
+          <Parameter Name="J" Role="reaction rate" Unit="uM.um.s-1">- (ER_erMembrane * (Ca_ER - Ca) * vL)</Parameter>
+          <Parameter Name="I" Role="inward current density" Unit="pA.um-2">0.0</Parameter>
+          <Parameter Name="netValence" Role="net charge valence" Unit="1">0.0</Parameter>
+          <Parameter Name="vL" Role="user defined" Unit="um3.molecules-1.s-1">3.16E-5</Parameter>
+        </Kinetics>
+      </FluxStep>
+      <FluxStep Name="FluxStep_1" Structure="erMembrane" Reversible="true" FluxOption="MolecularOnly" KeyValue="2799257">
+        <Reactant LocalizedCompoundRef="Ca" Stoichiometry="1" />
+        <Product LocalizedCompoundRef="Ca_ER" Stoichiometry="1" />
+        <Modifier LocalizedCompoundRef="ER_erMembrane" />
+        <Modifier LocalizedCompoundRef="serca" />
+        <Kinetics KineticsType="GeneralKinetics">
+          <Parameter Name="J" Role="reaction rate" Unit="uM.um.s-1">(ER_erMembrane * serca * vP * Ca * Ca / ((kP * kP) + (Ca * Ca)))</Parameter>
+          <Parameter Name="I" Role="inward current density" Unit="pA.um-2">0.0</Parameter>
+          <Parameter Name="netValence" Role="net charge valence" Unit="1">0.0</Parameter>
+          <Parameter Name="kP" Role="user defined" Unit="tbd">0.27</Parameter>
+          <Parameter Name="vP" Role="user defined" Unit="1.0E-33 m2.mol.item-2.s-1">0.0664</Parameter>
+        </Kinetics>
+      </FluxStep>
+      <FluxStep Name="FluxStep_0" Structure="erMembrane" Reversible="true" FluxOption="MolecularOnly" KeyValue="2799272">
+        <Reactant LocalizedCompoundRef="Ca" Stoichiometry="1" />
+        <Product LocalizedCompoundRef="Ca_ER" Stoichiometry="1" />
+        <Modifier LocalizedCompoundRef="ER_erMembrane" />
+        <Modifier LocalizedCompoundRef="RactCa" />
+        <Modifier LocalizedCompoundRef="Ract" />
+        <Modifier LocalizedCompoundRef="IP3" />
+        <Modifier LocalizedCompoundRef="Rinh" />
+        <Modifier LocalizedCompoundRef="RinhCa" />
+        <Kinetics KineticsType="GeneralKinetics">
+          <Parameter Name="J" Role="reaction rate" Unit="uM.um.s-1">- (0.25 * ER_erMembrane * (RactCa + Ract) * (Ca_ER - Ca) * pow((IP3 * RactCa * Rinh / (IP3 + dI) / (RactCa + Ract) / (RinhCa + Rinh)),3.0) * singleChanFlux)</Parameter>
+          <Parameter Name="I" Role="inward current density" Unit="pA.um-2">0.0</Parameter>
+          <Parameter Name="netValence" Role="net charge valence" Unit="1">0.0</Parameter>
+          <Parameter Name="singleChanFlux" Role="user defined" Unit="1.0E-30 m5.item-2.s-1">4.69</Parameter>
+          <Parameter Name="dI" Role="user defined" Unit="uM">0.8</Parameter>
+        </Kinetics>
+      </FluxStep>
+      <FluxStep Name="FluxStep_3" Structure="plasmaMembrane" Reversible="true" FluxOption="MolecularOnly" KeyValue="2799291">
+        <Reactant LocalizedCompoundRef="Ca_ec" Stoichiometry="1" />
+        <Product LocalizedCompoundRef="Ca" Stoichiometry="1" />
+        <Kinetics KineticsType="GeneralKinetics">
+          <Parameter Name="J" Role="reaction rate" Unit="uM.um.s-1">- ((Ca - CaThresh) * (Ca &gt; CaThresh) * pumpRate)</Parameter>
+          <Parameter Name="I" Role="inward current density" Unit="pA.um-2">0.0</Parameter>
+          <Parameter Name="netValence" Role="net charge valence" Unit="1">0.0</Parameter>
+          <Parameter Name="pumpRate" Role="user defined" Unit="um.s-1">11.0</Parameter>
+          <Parameter Name="CaThresh" Role="user defined" Unit="uM">0.2</Parameter>
+        </Kinetics>
+      </FluxStep>
+      <Diagram Name="extracellular_diagram" Structure="extracellular" />
+      <Diagram Name="plasmaMembrane_diagram" Structure="plasmaMembrane">
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="Ca" LocationX="19" LocationY="59" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="IP3" LocationX="23" LocationY="108" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="Buffer" LocationX="30" LocationY="147" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="BufferCa" LocationX="33" LocationY="189" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="Fura2" LocationX="32" LocationY="240" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="Fura2Ca" LocationX="33" LocationY="278" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="Ca_ec" LocationX="35" LocationY="50" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="full" SimpleReactionRef="ReactionStep_5" LocationX="121" LocationY="102" />
+        <FluxReactionShape NodeReferenceModeAttrTag="full" FluxReactionRef="FluxStep_3" LocationX="112" LocationY="38" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="Ca" LocationX="19" LocationY="59" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="IP3" LocationX="23" LocationY="108" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="Buffer" LocationX="30" LocationY="147" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="BufferCa" LocationX="33" LocationY="189" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="Fura2" LocationX="32" LocationY="240" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="Fura2Ca" LocationX="33" LocationY="278" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="Ca_ec" LocationX="35" LocationY="50" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="molecule" SimpleReactionRef="ReactionStep_5" LocationX="121" LocationY="102" />
+        <FluxReactionShape NodeReferenceModeAttrTag="molecule" FluxReactionRef="FluxStep_3" LocationX="112" LocationY="38" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="Ca" LocationX="19" LocationY="59" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="IP3" LocationX="23" LocationY="108" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="Buffer" LocationX="30" LocationY="147" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="BufferCa" LocationX="33" LocationY="189" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="Fura2" LocationX="32" LocationY="240" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="Fura2Ca" LocationX="33" LocationY="278" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="Ca_ec" LocationX="35" LocationY="50" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="rule" SimpleReactionRef="ReactionStep_5" LocationX="121" LocationY="102" />
+        <FluxReactionShape NodeReferenceModeAttrTag="rule" FluxReactionRef="FluxStep_3" LocationX="112" LocationY="38" />
+      </Diagram>
+      <Diagram Name="cytosol_diagram" Structure="cytosol">
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="Ca" LocationX="43" LocationY="128" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="IP3" LocationX="52" LocationY="269" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="Buffer" LocationX="54" LocationY="207" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="BufferCa" LocationX="262" LocationY="188" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="Fura2" LocationX="80" LocationY="66" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="Fura2Ca" LocationX="259" LocationY="98" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="full" SimpleReactionRef="ReactionStep_0" LocationX="136" LocationY="171" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="full" SimpleReactionRef="ReactionStep_3" LocationX="142" LocationY="98" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="full" SimpleReactionRef="ReactionStep_4" LocationX="138" LocationY="257" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="Ca" LocationX="43" LocationY="128" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="IP3" LocationX="52" LocationY="269" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="Buffer" LocationX="54" LocationY="207" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="BufferCa" LocationX="262" LocationY="188" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="Fura2" LocationX="80" LocationY="66" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="Fura2Ca" LocationX="259" LocationY="98" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="molecule" SimpleReactionRef="ReactionStep_0" LocationX="136" LocationY="171" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="molecule" SimpleReactionRef="ReactionStep_3" LocationX="142" LocationY="98" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="molecule" SimpleReactionRef="ReactionStep_4" LocationX="138" LocationY="257" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="Ca" LocationX="43" LocationY="128" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="IP3" LocationX="52" LocationY="269" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="Buffer" LocationX="54" LocationY="207" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="BufferCa" LocationX="262" LocationY="188" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="Fura2" LocationX="80" LocationY="66" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="Fura2Ca" LocationX="259" LocationY="98" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="rule" SimpleReactionRef="ReactionStep_0" LocationX="136" LocationY="171" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="rule" SimpleReactionRef="ReactionStep_3" LocationX="142" LocationY="98" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="rule" SimpleReactionRef="ReactionStep_4" LocationX="138" LocationY="257" />
+      </Diagram>
+      <Diagram Name="erMembrane_diagram" Structure="erMembrane">
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="Ract" LocationX="79" LocationY="201" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="RactCa" LocationX="204" LocationY="186" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="Rinh" LocationX="90" LocationY="270" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="RinhCa" LocationX="212" LocationY="267" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="serca" LocationX="146" LocationY="392" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="ER_erMembrane" LocationX="17" LocationY="89" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="Ca_ER" LocationX="17" LocationY="239" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="Ca" LocationX="32" LocationY="242" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="IP3" LocationX="34" LocationY="165" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="Buffer" LocationX="32" LocationY="443" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="BufferCa" LocationX="32" LocationY="406" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="Fura2" LocationX="31" LocationY="333" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="Fura2Ca" LocationX="31" LocationY="370" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="full" SimpleReactionRef="ReactionStep_1" LocationX="119" LocationY="141" />
+        <FluxReactionShape NodeReferenceModeAttrTag="full" FluxReactionRef="FluxStep_1" LocationX="120" LocationY="440" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="full" SimpleReactionRef="ReactionStep_2" LocationX="121" LocationY="307" />
+        <FluxReactionShape NodeReferenceModeAttrTag="full" FluxReactionRef="FluxStep_0" LocationX="114" LocationY="229" />
+        <FluxReactionShape NodeReferenceModeAttrTag="full" FluxReactionRef="FluxStep_2" LocationX="149" LocationY="44" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="Ract" LocationX="79" LocationY="201" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="RactCa" LocationX="204" LocationY="186" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="Rinh" LocationX="90" LocationY="270" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="RinhCa" LocationX="212" LocationY="267" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="serca" LocationX="146" LocationY="392" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="ER_erMembrane" LocationX="17" LocationY="89" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="Ca_ER" LocationX="17" LocationY="239" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="Ca" LocationX="32" LocationY="242" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="IP3" LocationX="34" LocationY="165" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="Buffer" LocationX="32" LocationY="443" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="BufferCa" LocationX="32" LocationY="406" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="Fura2" LocationX="31" LocationY="333" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="Fura2Ca" LocationX="31" LocationY="370" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="molecule" SimpleReactionRef="ReactionStep_1" LocationX="119" LocationY="141" />
+        <FluxReactionShape NodeReferenceModeAttrTag="molecule" FluxReactionRef="FluxStep_1" LocationX="120" LocationY="440" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="molecule" SimpleReactionRef="ReactionStep_2" LocationX="121" LocationY="307" />
+        <FluxReactionShape NodeReferenceModeAttrTag="molecule" FluxReactionRef="FluxStep_0" LocationX="114" LocationY="229" />
+        <FluxReactionShape NodeReferenceModeAttrTag="molecule" FluxReactionRef="FluxStep_2" LocationX="149" LocationY="44" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="Ract" LocationX="79" LocationY="201" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="RactCa" LocationX="204" LocationY="186" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="Rinh" LocationX="90" LocationY="270" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="RinhCa" LocationX="212" LocationY="267" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="serca" LocationX="146" LocationY="392" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="ER_erMembrane" LocationX="17" LocationY="89" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="Ca_ER" LocationX="17" LocationY="239" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="Ca" LocationX="32" LocationY="242" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="IP3" LocationX="34" LocationY="165" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="Buffer" LocationX="32" LocationY="443" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="BufferCa" LocationX="32" LocationY="406" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="Fura2" LocationX="31" LocationY="333" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="Fura2Ca" LocationX="31" LocationY="370" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="rule" SimpleReactionRef="ReactionStep_1" LocationX="119" LocationY="141" />
+        <FluxReactionShape NodeReferenceModeAttrTag="rule" FluxReactionRef="FluxStep_1" LocationX="120" LocationY="440" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="rule" SimpleReactionRef="ReactionStep_2" LocationX="121" LocationY="307" />
+        <FluxReactionShape NodeReferenceModeAttrTag="rule" FluxReactionRef="FluxStep_0" LocationX="114" LocationY="229" />
+        <FluxReactionShape NodeReferenceModeAttrTag="rule" FluxReactionRef="FluxStep_2" LocationX="149" LocationY="44" />
+      </Diagram>
+      <Diagram Name="er_diagram" Structure="er" />
+      <Version Name="NE_Full" KeyValue="2799227" BranchId="5062140" Archived="0" Date="26-Jul-2002 11:16:18" FromVersionable="false">
+        <Owner Name="CMC" Identifier="2794180" />
+        <GroupAccess Type="1" />
+        <Annotation>cloned from 'NE_Full' owned by user schaff</Annotation>
+      </Version>
+      <ModelUnitSystem VolumeSubstanceUnit="uM.um3" MembraneSubstanceUnit="molecules" LumpedReactionSubstanceUnit="molecules" VolumeUnit="um3" AreaUnit="um2" LengthUnit="um" TimeUnit="s" />
+    </Model>
+    <SimulationSpec Name="NE_Full_N1E_demo" Stochastic="false" UseConcentration="true" RuleBased="false" MassConservationModelReduction="true" InsufficientIterations="false" InsufficientMaxMolecules="false" CharacteristicSize="0.3826530612244898">
+      <NetworkConstraints RbmMaxIteration="1" RbmMaxMoleculesPerSpecies="10" RbmSpeciesLimit="800" RbmReactionsLimit="2500" />
+      <Annotation>Even distribution of ER and no correction for 3D geometrical differences between neurite and soma</Annotation>
+      <Geometry Name="NE_Full_N1E_demo_generated" Dimension="2">
+        <Annotation>cloned from 'NE_Full_N1E_demo_generated' owned by user schaff
+cloned from 'NE_Full_N1E_demo_generated' owned by user schaff</Annotation>
+        <Extent X="150.0" Y="60.0" Z="10.0" />
+        <Origin X="0.0" Y="0.0" Z="0.0" />
+        <Image Name="N1E_image">
+          <Annotation>cloned from 'N1E_image' owned by user schaff
+cloned from 'N1E_image' owned by user schaff
+77e4mask</Annotation>
+          <ImageData X="392" Y="149" Z="1" CompressedSize="1473">789CEC995172C3200C44B9FFA974B48E63A61313039290847686F7D18F4C0C4FBBD475D2520E87C3E170F0852E764B88203CE539804311A0F314BCA1084F9901DE5478C60C086F2A3C630E44605560D9B221B422AA2AEDF63006AE07C007EDCB79767088C09A40F1FC82932D5A0D883D4C9DA925C84B0F8AE78369BAA83DECB61033D6FEA921FF8810922F0CD27D6B21FB94F90D3B0CB2EDF69077D0DC7603FAC98E5AB8DE9EF2A3126A0FA3233E2922E3C049B5183C8FF8FBEB38552454E2F11AEAE7A623A064993CE3D1E84335E7CEA197FC2E7C5FB59F643A533439739BA0FF1F5BC7DA2220C2A7847BF87A3FDBD3C3FBB9C88A630DCF4A68F758A1FB4B21E9DFE0952E62262ABDC315B3BF9EA81EEE1B95A1B77414BBAD3D78E4546FE65E4518C6F1BA50C4C67E7C9E4D7FCE57EE1EEA52D4BC10B07334996B68170CDD3C1AD3F46DA3B01330D171C624F6610A7BCC4AD5B0F3F1656DDA6E0A8B5242ADF9DB0D9272451332279840AB7AC9FC9F279951E6CCCB4625245292CCB212933FDAA41D865EA880378E3A2477F441EB62EA694845FA8F408656A1E8529E07E5E27037B6B49E26A30096C25E9C968AF83B48F964EDEA493F4C2C27AE0C4CB616D52B94339666B9863F01D837A3DC86611886E6FEA7CAD1FA9102711DD98E1A9272123DEC6B582591AFE8B0759BE10354BB555E73A5672DEAE97BEEB430B0DDFF3668EE3BFB4AB4FD4ED21E723D2A702C0882804658C703EB87E2C39216FC0DB8FA56AFAEAF9604E66EF1836DFC3ABAC0F44D0EC2EA365167D6EC3B4554E5060191552B8704555EB1ACD24ACACD7310D27A456CEC80ED0641D5EF25843551DC300341FDEF3F21AC9DE344C9A32E28900B988879AE7A63FB05C203FB1BDEAD6111DED85FF06E0D4211FD0D7C03736B107B68EEA02AB8079293871BD283E2E8E17CA206522402FCAB47E353C31799076B3ED302270F0DEEE9A3D9A9A18078FD603451033A8904DAFDFDC14C0DD81C2A423CA48603C404CDC9540D7715C17B4F223DF86045A8DA59EDCFA7861D5A88BA22EFDF74A507D0E077BFE7E68798243D386066490F0E9E22027BB91E661CA506ECE511104D083D3C005AA6D4E083954AE701767228B4547665EBE13F29D3C286CA43F1DD14EA0176703C845CA3AED283093CD868605A3001873B33EB661E3E02B06F76490C832010F6FEA7F2687DE8CF244D34200B22B2D3A7626497AF4E3AE9D4E4058E67874164D3A5FE034A3292C684E12070E953B84F1B7146100E83163D0B96927C7172B8132A27E7C2A470512B292F2C734689E1224C5AEE4555C48219710961F20E4C28299C04893C34A30471D43C0E830F6079F19CAB96F7181E2641DE6E704AC9019B5930A4AD3110E3F37753321293033EB468489B7250882C1C516280727065C9BB7432CB46C4F024E8E24BF8CCBF2FBF06BEC2FCEC80C7F0D9D3C499B8891F6980285620C43DDC480543C18CE8D23F2E070E06FA336CCC8CFE2194C3AD2739103745BB2BDF3BF29023FFD200811AD06DE39818781CC83B82CD351D83FA38109E43C1FF77A26919D668B658182A7D4FA8BBB6694C1B0F52E08076D7783B1607DF201A3D231E08168809CEFA966D0DE9CA2B86368772F674BF66392DC8E17422E21C0BC71C3AA579C654B4E27188C8C137884E2918073A863AC159A7B42D8719BEFAD54018DC72E81D87120F041D439DE1EBA99E1C2C8C3D9437E550ED7D75EACC07E0842533C5C150ED8D11963CAD7B09C0AE19E43008C340B0FF7FD53EAD52119010D218997A4DB3732587C5632711625D7B53AE1F81E5CB80D147645B19EA6BF610DD449729F2D944C4BD90A5767FE3A16C70DB48E4F43058F9000F059F7E7F61DF11A81E2CA3678B151BDBCFF6D76EF5FB2E9AD38310AD8B2957B6D01E726A3079C897DAC1733DE40BED61DB9CD8416AC63B66C6D43E96339C9DA206DF45A49CE15B003B400D8E9C3EE4649B89C6C37AD7832C44D27AC0F19ECD8E3803A71A64219AB105B023CEC06008C0CC36139D03419B51307BD9A5814A5174692052D65C1A841042883E6F010600D3C96C9D</ImageData>
+          <PixelClass Name="extracellular" ImagePixelValue="0" KeyValue="2798771" />
+          <PixelClass Name="cytosol" ImagePixelValue="192" KeyValue="2798772" />
+          <Version Name="N1E_image" KeyValue="2798767" BranchId="5060373" Archived="0" Date="26-Jul-2002 08:33:05" FromVersionable="false">
+            <Owner Name="CMC" Identifier="2794180" />
+            <GroupAccess Type="1" />
+            <Annotation>cloned from 'N1E_image' owned by user schaff
+cloned from 'N1E_image' owned by user schaff
+77e4mask</Annotation>
+          </Version>
+        </Image>
+        <SubVolume Name="extracellular" Handle="0" Type="Image" ImagePixelValue="0" KeyValue="2798774" />
+        <SubVolume Name="cytosol" Handle="1" Type="Image" ImagePixelValue="192" KeyValue="2798775" />
+        <SurfaceClass Name="cytosol_extracellular_membrane" SubVolume1Ref="cytosol" SubVolume2Ref="extracellular" />
+        <SurfaceDescription NumSamplesX="159" NumSamplesY="63" NumSamplesZ="1" CutoffFrequency="0.3">
+          <VolumeRegion Name="extracellular0" RegionID="0" SubVolume="extracellular" Size="7060.534912209065" Unit="um2" />
+          <VolumeRegion Name="cytosol1" RegionID="1" SubVolume="cytosol" Size="1939.465087790935" Unit="um2" />
+          <MembraneRegion Name="membrane_extracellular0_cytosol1" VolumeRegion1="cytosol1" VolumeRegion2="extracellular0" Size="5206.431592520682" Unit="um" />
+        </SurfaceDescription>
+        <Version Name="NE_Full_N1E_demo_generated" KeyValue="2798766" BranchId="5059702" Archived="0" Date="26-Jul-2002 08:33:05" FromVersionable="false">
+          <Owner Name="CMC" Identifier="2794180" />
+          <GroupAccess Type="1" />
+          <Annotation>cloned from 'NE_Full_N1E_demo_generated' owned by user schaff
+cloned from 'NE_Full_N1E_demo_generated' owned by user schaff</Annotation>
+        </Version>
+      </Geometry>
+      <GeometryContext>
+        <FeatureMapping Feature="extracellular" GeometryClass="extracellular" SubVolume="extracellular">
+          <BoundariesTypes Xm="Value" Xp="Value" Ym="Value" Yp="Value" Zm="Value" Zp="Value" />
+        </FeatureMapping>
+        <FeatureMapping Feature="cytosol" GeometryClass="cytosol" SubVolume="cytosol">
+          <BoundariesTypes Xm="Value" Xp="Value" Ym="Value" Yp="Value" Zm="Value" Zp="Value" />
+        </FeatureMapping>
+        <FeatureMapping Feature="er" GeometryClass="cytosol" SubVolume="cytosol">
+          <BoundariesTypes Xm="Value" Xp="Value" Ym="Value" Yp="Value" Zm="Value" Zp="Value" />
+        </FeatureMapping>
+        <MembraneMapping Membrane="plasmaMembrane" SurfaceToVolumeRatio="0.274" VolumeFraction="0.5" CalculateVoltage="false" SpecificCapacitance="0.01" InitialVoltage="0.0" GeometryClass="cytosol_extracellular_membrane">
+          <BoundariesTypes Xm="Value" Xp="Value" Ym="Value" Yp="Value" Zm="Value" Zp="Value" />
+        </MembraneMapping>
+        <MembraneMapping Membrane="erMembrane" SurfaceToVolumeRatio="3.84" VolumeFraction="0.15" CalculateVoltage="false" SpecificCapacitance="0.01" InitialVoltage="0.0" GeometryClass="cytosol">
+          <BoundariesTypes Xm="Value" Xp="Value" Ym="Value" Yp="Value" Zm="Value" Zp="Value" />
+        </MembraneMapping>
+      </GeometryContext>
+      <ReactionContext>
+        <LocalizedCompoundSpec LocalizedCompoundRef="Ca_ec" ForceConstant="true" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>0.0</InitialConcentration>
+          <Diffusion>220.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="Ca" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>0.05</InitialConcentration>
+          <Diffusion>220.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="IP3" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>0.161</InitialConcentration>
+          <Diffusion>283.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="Buffer" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>447.76119</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="BufferCa" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>2.23881</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="Fura2" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>62.06897</InitialConcentration>
+          <Diffusion>50.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="Fura2Ca" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>12.93103</InitialConcentration>
+          <Diffusion>50.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="Ca_ER" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>400.01</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="Ract" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>9.056</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="RactCa" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>2.264</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="Rinh" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>7.7825</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="RinhCa" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>3.5375</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="serca" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>35.38</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="ER_erMembrane" ForceConstant="true" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>2.0</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <ReactionSpec ReactionStepRef="FluxStep_2" ReactionMapping="included" />
+        <ReactionSpec ReactionStepRef="ReactionStep_3" ReactionMapping="fast" />
+        <ReactionSpec ReactionStepRef="ReactionStep_1" ReactionMapping="included" />
+        <ReactionSpec ReactionStepRef="ReactionStep_4" ReactionMapping="included" />
+        <ReactionSpec ReactionStepRef="ReactionStep_0" ReactionMapping="fast" />
+        <ReactionSpec ReactionStepRef="ReactionStep_2" ReactionMapping="included" />
+        <ReactionSpec ReactionStepRef="FluxStep_1" ReactionMapping="included" />
+        <ReactionSpec ReactionStepRef="FluxStep_0" ReactionMapping="included" />
+        <ReactionSpec ReactionStepRef="FluxStep_3" ReactionMapping="included" />
+        <ReactionSpec ReactionStepRef="ReactionStep_5" ReactionMapping="included" />
+      </ReactionContext>
+      <MathDescription Name="NE_Full_N1E_demo_generated_33026">
+        <Annotation>cloned from 'NE_Full_N1E_demo_generated_33026' owned by user schaff</Annotation>
+        <Constant Name="_F_">96480.0</Constant>
+        <Constant Name="_F_nmol_">9.648E-5</Constant>
+        <Constant Name="_K_GHK_">1.0E-9</Constant>
+        <Constant Name="_N_pmol_">6.02E11</Constant>
+        <Constant Name="_R_">8314.0</Constant>
+        <Constant Name="_T_">300.0</Constant>
+        <Constant Name="Buffer_init">447.76119</Constant>
+        <Constant Name="BufferCa_init">2.23881</Constant>
+        <Constant Name="Ca_diffusionRate">220.0</Constant>
+        <Constant Name="Ca_ec">0.0</Constant>
+        <Constant Name="Ca_ec_diffusionRate">220.0</Constant>
+        <Constant Name="Ca_ec_init">0.0</Constant>
+        <Constant Name="Ca_ER_init">400.01</Constant>
+        <Constant Name="Ca_init">0.05</Constant>
+        <Constant Name="CaThresh">0.2</Constant>
+        <Constant Name="dact">0.2</Constant>
+        <Constant Name="dI">0.8</Constant>
+        <Constant Name="dinh">0.11</Constant>
+        <Constant Name="ER_erMembrane">2.0</Constant>
+        <Constant Name="ER_erMembrane_init">2.0</Constant>
+        <Constant Name="Fura2_diffusionRate">50.0</Constant>
+        <Constant Name="Fura2_init">62.06897</Constant>
+        <Constant Name="Fura2Ca_diffusionRate">50.0</Constant>
+        <Constant Name="Fura2Ca_init">12.93103</Constant>
+        <Constant Name="IP3_basal">0.16</Constant>
+        <Constant Name="IP3_diffusionRate">283.0</Constant>
+        <Constant Name="IP3_init">0.161</Constant>
+        <Constant Name="Js">9.14</Constant>
+        <Constant Name="K">10.0</Constant>
+        <Constant Name="k0">0.411</Constant>
+        <Constant Name="K_degr">0.16</Constant>
+        <Constant Name="K_millivolts_per_volt">1000.0</Constant>
+        <Constant Name="Kd">0.24</Constant>
+        <Constant Name="Kf_ReactionStep_0">10000.0</Constant>
+        <Constant Name="Kf_ReactionStep_1">1000.0</Constant>
+        <Constant Name="Kf_ReactionStep_3">1000.0</Constant>
+        <Constant Name="KMOLE">0.0016611295681063123</Constant>
+        <Constant Name="Kon">2.1</Constant>
+        <Constant Name="kP">0.27</Constant>
+        <Constant Name="pumpRate">11.0</Constant>
+        <Constant Name="Ract_init">9.056</Constant>
+        <Constant Name="RactCa_init">2.264</Constant>
+        <Constant Name="Rinh_init">7.7825</Constant>
+        <Constant Name="RinhCa_init">3.5375</Constant>
+        <Constant Name="serca_init">35.38</Constant>
+        <Constant Name="singleChanFlux">4.69</Constant>
+        <Constant Name="SurfToVol_erMembrane">3.84</Constant>
+        <Constant Name="vL">3.16E-5</Constant>
+        <Constant Name="VolFract_er">0.15</Constant>
+        <Constant Name="vP">0.0664</Constant>
+        <VolumeVariable Name="Ca_ER" />
+        <VolumeVariable Name="Calcium" />
+        <VolumeVariable Name="CalciumBufferBound" />
+        <VolumeVariable Name="Fura2_bound" />
+        <VolumeVariable Name="Fura2_unbound" />
+        <VolumeVariable Name="IP3" />
+        <VolumeVariable Name="RactCa" />
+        <VolumeVariable Name="RinhCa" />
+        <Function Name="Buffer">((K_Buffer_total - ((1.0 - VolFract_er) * CalciumBufferBound)) / (1.0 - VolFract_er))</Function>
+        <Function Name="J_FluxStep_0">- (0.25 * ER_erMembrane * (RactCa + Ract) * (Ca_ER - Calcium) * pow((IP3 * RactCa * Rinh / (IP3 + dI) / (RactCa + Ract) / (RinhCa + Rinh)),3.0) * singleChanFlux)</Function>
+        <Function Name="J_FluxStep_1">(ER_erMembrane * serca * vP * Calcium * Calcium / ((kP * kP) + (Calcium * Calcium)))</Function>
+        <Function Name="J_FluxStep_2">- (ER_erMembrane * (Ca_ER - Calcium) * vL)</Function>
+        <Function Name="J_FluxStep_3">- ((Calcium_INSIDE - CaThresh) * (Calcium_INSIDE &gt; CaThresh) * pumpRate)</Function>
+        <Function Name="J_ReactionStep_0">((Buffer * Kf_ReactionStep_0 * Calcium) - (Kr_ReactionStep_0 * CalciumBufferBound))</Function>
+        <Function Name="J_ReactionStep_1">((Ract * Kf_ReactionStep_1 * Calcium) - (Kr_ReactionStep_1 * RactCa))</Function>
+        <Function Name="J_ReactionStep_2">((Rinh * Kon * Calcium) - (Kr_ReactionStep_2 * RinhCa))</Function>
+        <Function Name="J_ReactionStep_3">((Fura2_unbound * Kf_ReactionStep_3 * Calcium) - (Kr_ReactionStep_3 * Fura2_bound))</Function>
+        <Function Name="J_ReactionStep_4">(K_degr * (IP3 - IP3_basal))</Function>
+        <Function Name="J_ReactionStep_5">(Js * exp( - (t * k0)))</Function>
+        <Function Name="K_Buffer_total">(((1.0 - VolFract_er) * Buffer_init) + ((1.0 - VolFract_er) * BufferCa_init))</Function>
+        <Function Name="K_Ract_total">((Ract_init * SurfToVol_erMembrane * VolFract_er * KMOLE) + (RactCa_init * SurfToVol_erMembrane * VolFract_er * KMOLE))</Function>
+        <Function Name="K_Rinh_total">((Rinh_init * SurfToVol_erMembrane * VolFract_er * KMOLE) + (RinhCa_init * SurfToVol_erMembrane * VolFract_er * KMOLE))</Function>
+        <Function Name="K_serca_total">(serca_init * SurfToVol_erMembrane * VolFract_er * KMOLE)</Function>
+        <Function Name="KFlux_erMembrane_cytosol">(SurfToVol_erMembrane * VolFract_er / (1.0 - VolFract_er))</Function>
+        <Function Name="KFlux_erMembrane_er">SurfToVol_erMembrane</Function>
+        <Function Name="Kr_ReactionStep_0">(10000.0 * K)</Function>
+        <Function Name="Kr_ReactionStep_1">(1000.0 * dact)</Function>
+        <Function Name="Kr_ReactionStep_2">(Kon * dinh)</Function>
+        <Function Name="Kr_ReactionStep_3">(1000.0 * Kd)</Function>
+        <Function Name="Ract">((K_Ract_total - (RactCa * SurfToVol_erMembrane * VolFract_er * KMOLE)) / (SurfToVol_erMembrane * VolFract_er * KMOLE))</Function>
+        <Function Name="Rinh">((K_Rinh_total - (RinhCa * SurfToVol_erMembrane * VolFract_er * KMOLE)) / (SurfToVol_erMembrane * VolFract_er * KMOLE))</Function>
+        <Function Name="serca">(K_serca_total / (SurfToVol_erMembrane * VolFract_er * KMOLE))</Function>
+        <Function Name="Voltage_erMembrane">0.0</Function>
+        <Function Name="Voltage_plasmaMembrane">0.0</Function>
+        <CompartmentSubDomain Name="extracellular">
+          <BoundaryType Boundary="Xm" Type="Value" />
+          <BoundaryType Boundary="Xp" Type="Value" />
+          <BoundaryType Boundary="Ym" Type="Value" />
+          <BoundaryType Boundary="Yp" Type="Value" />
+          <BoundaryType Boundary="Zm" Type="Value" />
+          <BoundaryType Boundary="Zp" Type="Value" />
+          <OdeEquation Name="CalciumBufferBound" SolutionType="Unknown">
+            <Rate>0.0</Rate>
+            <Initial>0.0</Initial>
+          </OdeEquation>
+          <OdeEquation Name="Ca_ER" SolutionType="Unknown">
+            <Rate>0.0</Rate>
+            <Initial>0.0</Initial>
+          </OdeEquation>
+          <OdeEquation Name="RactCa" SolutionType="Unknown">
+            <Rate>0.0</Rate>
+            <Initial>0.0</Initial>
+          </OdeEquation>
+          <OdeEquation Name="RinhCa" SolutionType="Unknown">
+            <Rate>0.0</Rate>
+            <Initial>0.0</Initial>
+          </OdeEquation>
+          <PdeEquation Name="Calcium" SolutionType="Unknown">
+            <Rate>0.0</Rate>
+            <Diffusion>Ca_diffusionRate</Diffusion>
+            <Initial>0.0</Initial>
+          </PdeEquation>
+          <PdeEquation Name="IP3" SolutionType="Unknown">
+            <Rate>0.0</Rate>
+            <Diffusion>IP3_diffusionRate</Diffusion>
+            <Initial>0.0</Initial>
+          </PdeEquation>
+          <PdeEquation Name="Fura2_unbound" SolutionType="Unknown">
+            <Rate>0.0</Rate>
+            <Diffusion>Fura2_diffusionRate</Diffusion>
+            <Initial>0.0</Initial>
+          </PdeEquation>
+          <PdeEquation Name="Fura2_bound" SolutionType="Unknown">
+            <Rate>0.0</Rate>
+            <Diffusion>Fura2Ca_diffusionRate</Diffusion>
+            <Initial>0.0</Initial>
+          </PdeEquation>
+        </CompartmentSubDomain>
+        <CompartmentSubDomain Name="cytosol">
+          <BoundaryType Boundary="Xm" Type="Value" />
+          <BoundaryType Boundary="Xp" Type="Value" />
+          <BoundaryType Boundary="Ym" Type="Value" />
+          <BoundaryType Boundary="Yp" Type="Value" />
+          <BoundaryType Boundary="Zm" Type="Value" />
+          <BoundaryType Boundary="Zp" Type="Value" />
+          <OdeEquation Name="CalciumBufferBound" SolutionType="Unknown">
+            <Rate>0.0</Rate>
+            <Initial>BufferCa_init</Initial>
+          </OdeEquation>
+          <OdeEquation Name="Ca_ER" SolutionType="Unknown">
+            <Rate>((KFlux_erMembrane_er * J_FluxStep_0) + (KFlux_erMembrane_er * J_FluxStep_2) + (KFlux_erMembrane_er * J_FluxStep_1))</Rate>
+            <Initial>Ca_ER_init</Initial>
+          </OdeEquation>
+          <OdeEquation Name="RactCa" SolutionType="Unknown">
+            <Rate>J_ReactionStep_1</Rate>
+            <Initial>RactCa_init</Initial>
+          </OdeEquation>
+          <OdeEquation Name="RinhCa" SolutionType="Unknown">
+            <Rate>J_ReactionStep_2</Rate>
+            <Initial>RinhCa_init</Initial>
+          </OdeEquation>
+          <PdeEquation Name="Calcium" SolutionType="Unknown">
+            <Rate>( - (KFlux_erMembrane_cytosol * J_FluxStep_0) - (KFlux_erMembrane_cytosol * J_FluxStep_1) - (KFlux_erMembrane_cytosol * KMOLE * J_ReactionStep_2) - (KFlux_erMembrane_cytosol * J_FluxStep_2) - (KFlux_erMembrane_cytosol * KMOLE * J_ReactionStep_1))</Rate>
+            <Diffusion>Ca_diffusionRate</Diffusion>
+            <Initial>Ca_init</Initial>
+          </PdeEquation>
+          <PdeEquation Name="IP3" SolutionType="Unknown">
+            <Rate>- J_ReactionStep_4</Rate>
+            <Diffusion>IP3_diffusionRate</Diffusion>
+            <Initial>IP3_init</Initial>
+          </PdeEquation>
+          <PdeEquation Name="Fura2_unbound" SolutionType="Unknown">
+            <Rate>0.0</Rate>
+            <Diffusion>Fura2_diffusionRate</Diffusion>
+            <Initial>Fura2_init</Initial>
+          </PdeEquation>
+          <PdeEquation Name="Fura2_bound" SolutionType="Unknown">
+            <Rate>0.0</Rate>
+            <Diffusion>Fura2Ca_diffusionRate</Diffusion>
+            <Initial>Fura2Ca_init</Initial>
+          </PdeEquation>
+          <FastSystem>
+            <FastInvariant>(Fura2_bound + Calcium + CalciumBufferBound)</FastInvariant>
+            <FastInvariant>(Fura2_unbound + Fura2_bound)</FastInvariant>
+            <FastRate>J_ReactionStep_0</FastRate>
+            <FastRate>J_ReactionStep_3</FastRate>
+          </FastSystem>
+        </CompartmentSubDomain>
+        <MembraneSubDomain Name="cytosol_extracellular_membrane" InsideCompartment="cytosol" OutsideCompartment="extracellular">
+          <BoundaryType Boundary="Xm" Type="Value" />
+          <BoundaryType Boundary="Xp" Type="Value" />
+          <BoundaryType Boundary="Ym" Type="Value" />
+          <BoundaryType Boundary="Yp" Type="Value" />
+          <BoundaryType Boundary="Zm" Type="Value" />
+          <BoundaryType Boundary="Zp" Type="Value" />
+          <JumpCondition Name="Calcium">
+            <InFlux>(J_FluxStep_3 / (1.0 - VolFract_er))</InFlux>
+            <OutFlux>0.0</OutFlux>
+          </JumpCondition>
+          <JumpCondition Name="IP3">
+            <InFlux>(J_ReactionStep_5 * KMOLE / (1.0 - VolFract_er))</InFlux>
+            <OutFlux>0.0</OutFlux>
+          </JumpCondition>
+          <JumpCondition Name="Fura2_unbound">
+            <InFlux>0.0</InFlux>
+            <OutFlux>0.0</OutFlux>
+          </JumpCondition>
+          <JumpCondition Name="Fura2_bound">
+            <InFlux>0.0</InFlux>
+            <OutFlux>0.0</OutFlux>
+          </JumpCondition>
+        </MembraneSubDomain>
+        <Version Name="NE_Full_N1E_demo_generated_33026" KeyValue="13736741" BranchId="5061418" Archived="0" Date="21-Jul-2005 09:31:54" FromVersionable="false">
+          <Owner Name="CMC" Identifier="2794180" />
+          <GroupAccess Type="1" />
+          <Annotation>cloned from 'NE_Full_N1E_demo_generated_33026' owned by user schaff</Annotation>
+        </Version>
+      </MathDescription>
+      <Simulation Name="NE_Full_N1E_demo_generated_33026_SIM">
+        <Annotation>cloned from 'NE_Full_N1E_demo_generated_33026_SIM' owned by user schaff</Annotation>
+        <SolverTaskDescription TaskType="Unsteady" UseSymbolicJacobian="false" Solver="Finite Volume, Regular Grid">
+          <TimeBound StartTime="0.0" EndTime="4.0" />
+          <TimeStep DefaultTime="5.0E-4" MinTime="1.0E-8" MaxTime="1.0" />
+          <ErrorTolerance Absolut="1.0E-9" Relative="1.0E-9" />
+          <OutputOptions KeepEvery="200" KeepAtMost="1000" />
+          <NumberProcessors>1</NumberProcessors>
+        </SolverTaskDescription>
+        <MathOverrides>
+          <Constant Name="KMOLE">1.0</Constant>
+        </MathOverrides>
+        <MeshSpecification>
+          <Size X="196" Y="79" Z="1" />
+        </MeshSpecification>
+        <Version Name="NE_Full_N1E_demo_generated_33026_SIM" KeyValue="13736873" BranchId="5064997" Archived="0" Date="21-Jul-2005 09:31:56" FromVersionable="false">
+          <Owner Name="CMC" Identifier="2794180" />
+          <GroupAccess Type="1" />
+          <Annotation>cloned from 'NE_Full_N1E_demo_generated_33026_SIM' owned by user schaff</Annotation>
+        </Version>
+      </Simulation>
+      <Simulation Name="20s simulation with more InsP3">
+        <Annotation>timestep changed to 2ms, save every 100ms</Annotation>
+        <SolverTaskDescription TaskType="Unsteady" UseSymbolicJacobian="false" Solver="Finite Volume, Regular Grid">
+          <TimeBound StartTime="0.0" EndTime="20.0" />
+          <TimeStep DefaultTime="0.002" MinTime="1.0E-8" MaxTime="1.0" />
+          <ErrorTolerance Absolut="1.0E-9" Relative="1.0E-9" />
+          <OutputOptions KeepEvery="50" KeepAtMost="1000" />
+          <NumberProcessors>1</NumberProcessors>
+        </SolverTaskDescription>
+        <MathOverrides>
+          <Constant Name="k0">1.1</Constant>
+          <Constant Name="K_degr">0.14</Constant>
+          <Constant Name="KMOLE">1.0</Constant>
+          <Constant Name="Js">21.0</Constant>
+        </MathOverrides>
+        <MeshSpecification>
+          <Size X="196" Y="79" Z="1" />
+        </MeshSpecification>
+        <Version Name="20s simulation with more InsP3" KeyValue="13736875" BranchId="2799074" Archived="0" Date="21-Jul-2005 09:31:56" FromVersionable="false">
+          <Owner Name="CMC" Identifier="2794180" />
+          <GroupAccess Type="1" />
+          <Annotation>timestep changed to 2ms, save every 100ms</Annotation>
+        </Version>
+      </Simulation>
+      <Simulation Name=" 20s simulation">
+        <Annotation>timestep changed to 2ms, save every 100ms</Annotation>
+        <SolverTaskDescription TaskType="Unsteady" UseSymbolicJacobian="false" Solver="Finite Volume, Regular Grid">
+          <TimeBound StartTime="0.0" EndTime="20.0" />
+          <TimeStep DefaultTime="0.002" MinTime="1.0E-8" MaxTime="1.0" />
+          <ErrorTolerance Absolut="1.0E-9" Relative="1.0E-9" />
+          <OutputOptions KeepEvery="50" KeepAtMost="1000" />
+          <NumberProcessors>1</NumberProcessors>
+        </SolverTaskDescription>
+        <MathOverrides>
+          <Constant Name="K_degr">0.14</Constant>
+          <Constant Name="ER_erMembrane">1.0</Constant>
+          <Constant Name="Js">5502.280000000001</Constant>
+        </MathOverrides>
+        <MeshSpecification>
+          <Size X="196" Y="79" Z="1" />
+        </MeshSpecification>
+        <Version Name=" 20s simulation" KeyValue="13736877" BranchId="2799869" Archived="0" Date="21-Jul-2005 09:31:56" FromVersionable="false">
+          <Owner Name="CMC" Identifier="2794180" />
+          <GroupAccess Type="1" />
+          <Annotation>timestep changed to 2ms, save every 100ms</Annotation>
+          <ParentSimRef KeyValue="2799868" />
+        </Version>
+      </Simulation>
+      <SpatialObjects>
+        <SpatialObject Name="vobj_extracellular0" Type="Volume" subVolume="extracellular" regionId="0">
+          <QuantityCategoryList>
+            <QuantityCategory Name="VolumeCentroid" Enabled="false" />
+            <QuantityCategory Name="InteriorVelocity" Enabled="false" />
+            <QuantityCategory Name="VolumeRegionSize" Enabled="true" />
+          </QuantityCategoryList>
+        </SpatialObject>
+        <SpatialObject Name="vobj_cytosol1" Type="Volume" subVolume="cytosol" regionId="1">
+          <QuantityCategoryList>
+            <QuantityCategory Name="VolumeCentroid" Enabled="false" />
+            <QuantityCategory Name="InteriorVelocity" Enabled="false" />
+            <QuantityCategory Name="VolumeRegionSize" Enabled="true" />
+          </QuantityCategoryList>
+        </SpatialObject>
+        <SpatialObject Name="sobj_cytosol1_extracellular0" Type="Surface" subVolumeInside="cytosol" regionIdInside="1" subVolumeOutside="extracellular" regionIdOutside="0">
+          <QuantityCategoryList>
+            <QuantityCategory Name="SurfaceNormal" Enabled="false" />
+            <QuantityCategory Name="SurfaceVelocity" Enabled="false" />
+            <QuantityCategory Name="DistanceToSurface" Enabled="false" />
+            <QuantityCategory Name="DirectionToSurface" Enabled="false" />
+            <QuantityCategory Name="SurfaceSize" Enabled="true" />
+          </QuantityCategoryList>
+        </SpatialObject>
+      </SpatialObjects>
+      <Version Name="NE_Full_N1E_demo" KeyValue="13736898" BranchId="5062977" Archived="0" Date="21-Jul-2005 09:43:05" FromVersionable="false">
+        <Owner Name="CMC" Identifier="2794180" />
+        <GroupAccess Type="1" />
+        <Annotation>Even distribution of ER and no correction for 3D geometrical differences between neurite and soma</Annotation>
+      </Version>
+      <MicroscopeMeasurement Name="fluor">
+        <ConvolutionKernel Type="ProjectionZKernel" />
+      </MicroscopeMeasurement>
+    </SimulationSpec>
+    <SimulationSpec Name="SS check" Stochastic="false" UseConcentration="true" RuleBased="false" MassConservationModelReduction="true" InsufficientIterations="false" InsufficientMaxMolecules="false" CharacteristicSize="0.3826530612244898">
+      <NetworkConstraints RbmMaxIteration="1" RbmMaxMoleculesPerSpecies="10" RbmSpeciesLimit="800" RbmReactionsLimit="2500" />
+      <Annotation>No stimulus - check if the system is stable</Annotation>
+      <Geometry Name="NE_Full_N1E_demo_generated" Dimension="2">
+        <Annotation>cloned from 'NE_Full_N1E_demo_generated' owned by user schaff
+cloned from 'NE_Full_N1E_demo_generated' owned by user schaff</Annotation>
+        <Extent X="150.0" Y="60.0" Z="10.0" />
+        <Origin X="0.0" Y="0.0" Z="0.0" />
+        <Image Name="N1E_image">
+          <Annotation>cloned from 'N1E_image' owned by user schaff
+cloned from 'N1E_image' owned by user schaff
+77e4mask</Annotation>
+          <ImageData X="392" Y="149" Z="1" CompressedSize="1473">789CEC995172C3200C44B9FFA974B48E63A61313039290847686F7D18F4C0C4FBBD475D2520E87C3E170F0852E764B88203CE539804311A0F314BCA1084F9901DE5478C60C086F2A3C630E44605560D9B221B422AA2AEDF63006AE07C007EDCB79767088C09A40F1FC82932D5A0D883D4C9DA925C84B0F8AE78369BAA83DECB61033D6FEA921FF8810922F0CD27D6B21FB94F90D3B0CB2EDF69077D0DC7603FAC98E5AB8DE9EF2A3126A0FA3233E2922E3C049B5183C8FF8FBEB38552454E2F11AEAE7A623A064993CE3D1E84335E7CEA197FC2E7C5FB59F643A533439739BA0FF1F5BC7DA2220C2A7847BF87A3FDBD3C3FBB9C88A630DCF4A68F758A1FB4B21E9DFE0952E62262ABDC315B3BF9EA81EEE1B95A1B77414BBAD3D78E4546FE65E4518C6F1BA50C4C67E7C9E4D7FCE57EE1EEA52D4BC10B07334996B68170CDD3C1AD3F46DA3B01330D171C624F6610A7BCC4AD5B0F3F1656DDA6E0A8B5242ADF9DB0D9272451332279840AB7AC9FC9F279951E6CCCB4625245292CCB212933FDAA41D865EA880378E3A2477F441EB62EA694845FA8F408656A1E8529E07E5E27037B6B49E26A30096C25E9C968AF83B48F964EDEA493F4C2C27AE0C4CB616D52B94339666B9863F01D837A3DC86611886E6FEA7CAD1FA9102711DD98E1A9272123DEC6B582591AFE8B0759BE10354BB555E73A5672DEAE97BEEB430B0DDFF3668EE3BFB4AB4FD4ED21E723D2A702C0882804658C703EB87E2C39216FC0DB8FA56AFAEAF9604E66EF1836DFC3ABAC0F44D0EC2EA365167D6EC3B4554E5060191552B8704555EB1ACD24ACACD7310D27A456CEC80ED0641D5EF25843551DC300341FDEF3F21AC9DE344C9A32E28900B988879AE7A63FB05C203FB1BDEAD6111DED85FF06E0D4211FD0D7C03736B107B68EEA02AB8079293871BD283E2E8E17CA206522402FCAB47E353C31799076B3ED302270F0DEEE9A3D9A9A18078FD603451033A8904DAFDFDC14C0DD81C2A423CA48603C404CDC9540D7715C17B4F223DF86045A8DA59EDCFA7861D5A88BA22EFDF74A507D0E077BFE7E68798243D386066490F0E9E22027BB91E661CA506ECE511104D083D3C005AA6D4E083954AE701767228B4547665EBE13F29D3C286CA43F1DD14EA0176703C845CA3AED283093CD868605A3001873B33EB661E3E02B06F76490C832010F6FEA7F2687DE8CF244D34200B22B2D3A7626497AF4E3AE9D4E4058E67874164D3A5FE034A3292C684E12070E953B84F1B7146100E83163D0B96927C7172B8132A27E7C2A470512B292F2C734689E1224C5AEE4555C48219710961F20E4C28299C04893C34A30471D43C0E830F6079F19CAB96F7181E2641DE6E704AC9019B5930A4AD3110E3F37753321293033EB468489B7250882C1C516280727065C9BB7432CB46C4F024E8E24BF8CCBF2FBF06BEC2FCEC80C7F0D9D3C499B8891F6980285620C43DDC480543C18CE8D23F2E070E06FA336CCC8CFE2194C3AD2739103745BB2BDF3BF29023FFD200811AD06DE39818781CC83B82CD351D83FA38109E43C1FF77A26919D668B658182A7D4FA8BBB6694C1B0F52E08076D7783B1607DF201A3D231E08168809CEFA966D0DE9CA2B86368772F674BF66392DC8E17422E21C0BC71C3AA579C654B4E27188C8C137884E2918073A863AC159A7B42D8719BEFAD54018DC72E81D87120F041D439DE1EBA99E1C2C8C3D9437E550ED7D75EACC07E0842533C5C150ED8D11963CAD7B09C0AE19E43008C340B0FF7FD53EAD52119010D218997A4DB3732587C5632711625D7B53AE1F81E5CB80D147645B19EA6BF610DD449729F2D944C4BD90A5767FE3A16C70DB48E4F43058F9000F059F7E7F61DF11A81E2CA3678B151BDBCFF6D76EF5FB2E9AD38310AD8B2957B6D01E726A3079C897DAC1733DE40BED61DB9CD8416AC63B66C6D43E96339C9DA206DF45A49CE15B003B400D8E9C3EE4649B89C6C37AD7832C44D27AC0F19ECD8E3803A71A64219AB105B023CEC06008C0CC36139D03419B51307BD9A5814A5174692052D65C1A841042883E6F010600D3C96C9D</ImageData>
+          <PixelClass Name="extracellular" ImagePixelValue="0" KeyValue="2798771" />
+          <PixelClass Name="cytosol" ImagePixelValue="192" KeyValue="2798772" />
+          <Version Name="N1E_image" KeyValue="2798767" BranchId="5060373" Archived="0" Date="26-Jul-2002 08:33:05" FromVersionable="false">
+            <Owner Name="CMC" Identifier="2794180" />
+            <GroupAccess Type="1" />
+            <Annotation>cloned from 'N1E_image' owned by user schaff
+cloned from 'N1E_image' owned by user schaff
+77e4mask</Annotation>
+          </Version>
+        </Image>
+        <SubVolume Name="extracellular" Handle="0" Type="Image" ImagePixelValue="0" KeyValue="2798774" />
+        <SubVolume Name="cytosol" Handle="1" Type="Image" ImagePixelValue="192" KeyValue="2798775" />
+        <SurfaceClass Name="cytosol_extracellular_membrane" SubVolume1Ref="cytosol" SubVolume2Ref="extracellular" />
+        <SurfaceDescription NumSamplesX="159" NumSamplesY="63" NumSamplesZ="1" CutoffFrequency="0.3">
+          <VolumeRegion Name="extracellular0" RegionID="0" SubVolume="extracellular" Size="7060.534912209065" Unit="um2" />
+          <VolumeRegion Name="cytosol1" RegionID="1" SubVolume="cytosol" Size="1939.465087790935" Unit="um2" />
+          <MembraneRegion Name="membrane_extracellular0_cytosol1" VolumeRegion1="cytosol1" VolumeRegion2="extracellular0" Size="5206.431592520682" Unit="um" />
+        </SurfaceDescription>
+        <Version Name="NE_Full_N1E_demo_generated" KeyValue="2798766" BranchId="5059702" Archived="0" Date="26-Jul-2002 08:33:05" FromVersionable="false">
+          <Owner Name="CMC" Identifier="2794180" />
+          <GroupAccess Type="1" />
+          <Annotation>cloned from 'NE_Full_N1E_demo_generated' owned by user schaff
+cloned from 'NE_Full_N1E_demo_generated' owned by user schaff</Annotation>
+        </Version>
+      </Geometry>
+      <GeometryContext>
+        <FeatureMapping Feature="extracellular" GeometryClass="extracellular" SubVolume="extracellular">
+          <BoundariesTypes Xm="Value" Xp="Value" Ym="Value" Yp="Value" Zm="Value" Zp="Value" />
+        </FeatureMapping>
+        <FeatureMapping Feature="cytosol" GeometryClass="cytosol" SubVolume="cytosol">
+          <BoundariesTypes Xm="Value" Xp="Value" Ym="Value" Yp="Value" Zm="Value" Zp="Value" />
+        </FeatureMapping>
+        <FeatureMapping Feature="er" GeometryClass="cytosol" SubVolume="cytosol">
+          <BoundariesTypes Xm="Value" Xp="Value" Ym="Value" Yp="Value" Zm="Value" Zp="Value" />
+        </FeatureMapping>
+        <MembraneMapping Membrane="plasmaMembrane" SurfaceToVolumeRatio="0.274" VolumeFraction="0.5" CalculateVoltage="false" SpecificCapacitance="0.01" InitialVoltage="0.0" GeometryClass="cytosol_extracellular_membrane">
+          <BoundariesTypes Xm="Value" Xp="Value" Ym="Value" Yp="Value" Zm="Value" Zp="Value" />
+        </MembraneMapping>
+        <MembraneMapping Membrane="erMembrane" SurfaceToVolumeRatio="3.84" VolumeFraction="0.15" CalculateVoltage="false" SpecificCapacitance="0.01" InitialVoltage="0.0" GeometryClass="cytosol">
+          <BoundariesTypes Xm="Value" Xp="Value" Ym="Value" Yp="Value" Zm="Value" Zp="Value" />
+        </MembraneMapping>
+      </GeometryContext>
+      <ReactionContext>
+        <LocalizedCompoundSpec LocalizedCompoundRef="Ca_ec" ForceConstant="true" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>0.0</InitialConcentration>
+          <Diffusion>220.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="Ca" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>0.05</InitialConcentration>
+          <Diffusion>220.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="IP3" ForceConstant="true" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>0.16</InitialConcentration>
+          <Diffusion>283.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="Buffer" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>447.76119</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="BufferCa" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>2.23881</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="Fura2" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>62.06897</InitialConcentration>
+          <Diffusion>50.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="Fura2Ca" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>12.93103</InitialConcentration>
+          <Diffusion>50.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="Ca_ER" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>400.01</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="Ract" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>9.056</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="RactCa" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>2.264</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="Rinh" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>7.7825</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="RinhCa" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>3.5375</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="serca" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>35.38</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="ER_erMembrane" ForceConstant="true" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>2.0</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <ReactionSpec ReactionStepRef="FluxStep_2" ReactionMapping="included" />
+        <ReactionSpec ReactionStepRef="ReactionStep_3" ReactionMapping="fast" />
+        <ReactionSpec ReactionStepRef="ReactionStep_1" ReactionMapping="included" />
+        <ReactionSpec ReactionStepRef="ReactionStep_4" ReactionMapping="included" />
+        <ReactionSpec ReactionStepRef="ReactionStep_0" ReactionMapping="fast" />
+        <ReactionSpec ReactionStepRef="ReactionStep_2" ReactionMapping="included" />
+        <ReactionSpec ReactionStepRef="FluxStep_1" ReactionMapping="included" />
+        <ReactionSpec ReactionStepRef="FluxStep_0" ReactionMapping="included" />
+        <ReactionSpec ReactionStepRef="FluxStep_3" ReactionMapping="included" />
+        <ReactionSpec ReactionStepRef="ReactionStep_5" ReactionMapping="included" />
+      </ReactionContext>
+      <MathDescription Name="SS check">
+        <Constant Name="_F_">96480.0</Constant>
+        <Constant Name="_F_nmol_">9.648E-5</Constant>
+        <Constant Name="_K_GHK_">1.0E-9</Constant>
+        <Constant Name="_N_pmol_">6.02E11</Constant>
+        <Constant Name="_R_">8314.0</Constant>
+        <Constant Name="_T_">300.0</Constant>
+        <Constant Name="Buffer_init">447.76119</Constant>
+        <Constant Name="BufferCa_init">2.23881</Constant>
+        <Constant Name="Ca_diffusionRate">220.0</Constant>
+        <Constant Name="Ca_ec">0.0</Constant>
+        <Constant Name="Ca_ec_diffusionRate">220.0</Constant>
+        <Constant Name="Ca_ec_init">0.0</Constant>
+        <Constant Name="Ca_ER_init">400.01</Constant>
+        <Constant Name="Ca_init">0.05</Constant>
+        <Constant Name="CaThresh">0.2</Constant>
+        <Constant Name="dact">0.2</Constant>
+        <Constant Name="dI">0.8</Constant>
+        <Constant Name="dinh">0.11</Constant>
+        <Constant Name="ER_erMembrane">2.0</Constant>
+        <Constant Name="ER_erMembrane_init">2.0</Constant>
+        <Constant Name="Fura2_init">62.06897</Constant>
+        <Constant Name="Fura2Ca_init">12.93103</Constant>
+        <Constant Name="IP3">0.16</Constant>
+        <Constant Name="IP3_basal">0.16</Constant>
+        <Constant Name="IP3_init">0.16</Constant>
+        <Constant Name="Js">9.14</Constant>
+        <Constant Name="K">10.0</Constant>
+        <Constant Name="k0">0.411</Constant>
+        <Constant Name="K_degr">0.16</Constant>
+        <Constant Name="K_millivolts_per_volt">1000.0</Constant>
+        <Constant Name="Kd">0.24</Constant>
+        <Constant Name="Kf_ReactionStep_0">10000.0</Constant>
+        <Constant Name="Kf_ReactionStep_1">1000.0</Constant>
+        <Constant Name="Kf_ReactionStep_3">1000.0</Constant>
+        <Constant Name="KMOLE">0.0016611295681063123</Constant>
+        <Constant Name="Kon">2.1</Constant>
+        <Constant Name="kP">0.27</Constant>
+        <Constant Name="pumpRate">11.0</Constant>
+        <Constant Name="Ract_init">9.056</Constant>
+        <Constant Name="RactCa_init">2.264</Constant>
+        <Constant Name="Rinh_init">7.7825</Constant>
+        <Constant Name="RinhCa_init">3.5375</Constant>
+        <Constant Name="serca_init">35.38</Constant>
+        <Constant Name="singleChanFlux">4.69</Constant>
+        <Constant Name="SurfToVol_erMembrane">3.84</Constant>
+        <Constant Name="vL">3.16E-5</Constant>
+        <Constant Name="VolFract_er">0.15</Constant>
+        <Constant Name="vP">0.0664</Constant>
+        <VolumeVariable Name="Ca_ER" />
+        <VolumeVariable Name="Calcium" />
+        <VolumeVariable Name="CalciumBufferBound" />
+        <VolumeVariable Name="Fura2_bound" />
+        <VolumeVariable Name="RactCa" />
+        <VolumeVariable Name="RinhCa" />
+        <Function Name="Buffer">((K_Buffer_total - ((1.0 - VolFract_er) * CalciumBufferBound)) / (1.0 - VolFract_er))</Function>
+        <Function Name="Fura2">((K_Fura2_total - ((1.0 - VolFract_er) * Fura2_bound)) / (1.0 - VolFract_er))</Function>
+        <Function Name="J_FluxStep_0">- (0.25 * ER_erMembrane * (RactCa + Ract) * (Ca_ER - Calcium) * pow((IP3 * RactCa * Rinh / (IP3 + dI) / (RactCa + Ract) / (RinhCa + Rinh)),3.0) * singleChanFlux)</Function>
+        <Function Name="J_FluxStep_1">(ER_erMembrane * serca * vP * Calcium * Calcium / ((kP * kP) + (Calcium * Calcium)))</Function>
+        <Function Name="J_FluxStep_2">- (ER_erMembrane * (Ca_ER - Calcium) * vL)</Function>
+        <Function Name="J_FluxStep_3">- ((Calcium_INSIDE - CaThresh) * (Calcium_INSIDE &gt; CaThresh) * pumpRate)</Function>
+        <Function Name="J_ReactionStep_0">((Buffer * Kf_ReactionStep_0 * Calcium) - (Kr_ReactionStep_0 * CalciumBufferBound))</Function>
+        <Function Name="J_ReactionStep_1">((Ract * Kf_ReactionStep_1 * Calcium) - (Kr_ReactionStep_1 * RactCa))</Function>
+        <Function Name="J_ReactionStep_2">((Rinh * Kon * Calcium) - (Kr_ReactionStep_2 * RinhCa))</Function>
+        <Function Name="J_ReactionStep_3">((Fura2 * Kf_ReactionStep_3 * Calcium) - (Kr_ReactionStep_3 * Fura2_bound))</Function>
+        <Function Name="J_ReactionStep_4">(K_degr * (IP3 - IP3_basal))</Function>
+        <Function Name="J_ReactionStep_5">(Js * exp( - (t * k0)))</Function>
+        <Function Name="K_Buffer_total">(((1.0 - VolFract_er) * Buffer_init) + ((1.0 - VolFract_er) * BufferCa_init))</Function>
+        <Function Name="K_Fura2_total">(((1.0 - VolFract_er) * Fura2_init) + ((1.0 - VolFract_er) * Fura2Ca_init))</Function>
+        <Function Name="K_Ract_total">((Ract_init * SurfToVol_erMembrane * VolFract_er * KMOLE) + (RactCa_init * SurfToVol_erMembrane * VolFract_er * KMOLE))</Function>
+        <Function Name="K_Rinh_total">((Rinh_init * SurfToVol_erMembrane * VolFract_er * KMOLE) + (RinhCa_init * SurfToVol_erMembrane * VolFract_er * KMOLE))</Function>
+        <Function Name="K_serca_total">(serca_init * SurfToVol_erMembrane * VolFract_er * KMOLE)</Function>
+        <Function Name="KFlux_erMembrane_cytosol">(SurfToVol_erMembrane * VolFract_er / (1.0 - VolFract_er))</Function>
+        <Function Name="KFlux_erMembrane_er">SurfToVol_erMembrane</Function>
+        <Function Name="Kr_ReactionStep_0">(10000.0 * K)</Function>
+        <Function Name="Kr_ReactionStep_1">(1000.0 * dact)</Function>
+        <Function Name="Kr_ReactionStep_2">(Kon * dinh)</Function>
+        <Function Name="Kr_ReactionStep_3">(1000.0 * Kd)</Function>
+        <Function Name="Ract">((K_Ract_total - (RactCa * SurfToVol_erMembrane * VolFract_er * KMOLE)) / (SurfToVol_erMembrane * VolFract_er * KMOLE))</Function>
+        <Function Name="Rinh">((K_Rinh_total - (RinhCa * SurfToVol_erMembrane * VolFract_er * KMOLE)) / (SurfToVol_erMembrane * VolFract_er * KMOLE))</Function>
+        <Function Name="serca">(K_serca_total / (SurfToVol_erMembrane * VolFract_er * KMOLE))</Function>
+        <Function Name="Voltage_erMembrane">0.0</Function>
+        <Function Name="Voltage_plasmaMembrane">0.0</Function>
+        <CompartmentSubDomain Name="extracellular">
+          <BoundaryType Boundary="Xm" Type="Value" />
+          <BoundaryType Boundary="Xp" Type="Value" />
+          <BoundaryType Boundary="Ym" Type="Value" />
+          <BoundaryType Boundary="Yp" Type="Value" />
+          <BoundaryType Boundary="Zm" Type="Value" />
+          <BoundaryType Boundary="Zp" Type="Value" />
+          <OdeEquation Name="CalciumBufferBound" SolutionType="Unknown">
+            <Rate>0.0</Rate>
+            <Initial>0.0</Initial>
+          </OdeEquation>
+          <OdeEquation Name="Fura2_bound" SolutionType="Unknown">
+            <Rate>0.0</Rate>
+            <Initial>0.0</Initial>
+          </OdeEquation>
+          <OdeEquation Name="Ca_ER" SolutionType="Unknown">
+            <Rate>0.0</Rate>
+            <Initial>0.0</Initial>
+          </OdeEquation>
+          <OdeEquation Name="RactCa" SolutionType="Unknown">
+            <Rate>0.0</Rate>
+            <Initial>0.0</Initial>
+          </OdeEquation>
+          <OdeEquation Name="RinhCa" SolutionType="Unknown">
+            <Rate>0.0</Rate>
+            <Initial>0.0</Initial>
+          </OdeEquation>
+          <PdeEquation Name="Calcium" SolutionType="Unknown">
+            <Rate>0.0</Rate>
+            <Diffusion>Ca_diffusionRate</Diffusion>
+            <Initial>0.0</Initial>
+          </PdeEquation>
+        </CompartmentSubDomain>
+        <CompartmentSubDomain Name="cytosol">
+          <BoundaryType Boundary="Xm" Type="Value" />
+          <BoundaryType Boundary="Xp" Type="Value" />
+          <BoundaryType Boundary="Ym" Type="Value" />
+          <BoundaryType Boundary="Yp" Type="Value" />
+          <BoundaryType Boundary="Zm" Type="Value" />
+          <BoundaryType Boundary="Zp" Type="Value" />
+          <OdeEquation Name="CalciumBufferBound" SolutionType="Unknown">
+            <Rate>0.0</Rate>
+            <Initial>BufferCa_init</Initial>
+          </OdeEquation>
+          <OdeEquation Name="Fura2_bound" SolutionType="Unknown">
+            <Rate>0.0</Rate>
+            <Initial>Fura2Ca_init</Initial>
+          </OdeEquation>
+          <OdeEquation Name="Ca_ER" SolutionType="Unknown">
+            <Rate>((KFlux_erMembrane_er * J_FluxStep_0) + (KFlux_erMembrane_er * J_FluxStep_2) + (KFlux_erMembrane_er * J_FluxStep_1))</Rate>
+            <Initial>Ca_ER_init</Initial>
+          </OdeEquation>
+          <OdeEquation Name="RactCa" SolutionType="Unknown">
+            <Rate>J_ReactionStep_1</Rate>
+            <Initial>RactCa_init</Initial>
+          </OdeEquation>
+          <OdeEquation Name="RinhCa" SolutionType="Unknown">
+            <Rate>J_ReactionStep_2</Rate>
+            <Initial>RinhCa_init</Initial>
+          </OdeEquation>
+          <PdeEquation Name="Calcium" SolutionType="Unknown">
+            <Rate>( - (KFlux_erMembrane_cytosol * J_FluxStep_0) - (KFlux_erMembrane_cytosol * J_FluxStep_1) - (KFlux_erMembrane_cytosol * KMOLE * J_ReactionStep_2) - (KFlux_erMembrane_cytosol * J_FluxStep_2) - (KFlux_erMembrane_cytosol * KMOLE * J_ReactionStep_1))</Rate>
+            <Diffusion>Ca_diffusionRate</Diffusion>
+            <Initial>Ca_init</Initial>
+          </PdeEquation>
+          <FastSystem>
+            <FastInvariant>(Fura2_bound + Calcium + CalciumBufferBound)</FastInvariant>
+            <FastRate>J_ReactionStep_0</FastRate>
+            <FastRate>J_ReactionStep_3</FastRate>
+          </FastSystem>
+        </CompartmentSubDomain>
+        <MembraneSubDomain Name="cytosol_extracellular_membrane" InsideCompartment="cytosol" OutsideCompartment="extracellular">
+          <BoundaryType Boundary="Xm" Type="Value" />
+          <BoundaryType Boundary="Xp" Type="Value" />
+          <BoundaryType Boundary="Ym" Type="Value" />
+          <BoundaryType Boundary="Yp" Type="Value" />
+          <BoundaryType Boundary="Zm" Type="Value" />
+          <BoundaryType Boundary="Zp" Type="Value" />
+          <JumpCondition Name="Calcium">
+            <InFlux>(J_FluxStep_3 / (1.0 - VolFract_er))</InFlux>
+            <OutFlux>0.0</OutFlux>
+          </JumpCondition>
+        </MembraneSubDomain>
+        <Version Name="SS check" KeyValue="13736743" BranchId="2799434" Archived="0" Date="21-Jul-2005 09:31:55" FromVersionable="false">
+          <Owner Name="CMC" Identifier="2794180" />
+          <GroupAccess Type="1" />
+        </Version>
+      </MathDescription>
+      <Simulation Name="Simulation 1">
+        <SolverTaskDescription TaskType="Unsteady" UseSymbolicJacobian="false" Solver="Finite Volume, Regular Grid">
+          <TimeBound StartTime="0.0" EndTime="0.1" />
+          <TimeStep DefaultTime="0.002" MinTime="1.0E-8" MaxTime="1.0" />
+          <ErrorTolerance Absolut="1.0E-9" Relative="1.0E-9" />
+          <OutputOptions KeepEvery="1" KeepAtMost="1000" />
+          <NumberProcessors>1</NumberProcessors>
+        </SolverTaskDescription>
+        <MathOverrides />
+        <MeshSpecification>
+          <Size X="111" Y="45" Z="1" />
+        </MeshSpecification>
+        <Version Name="Simulation 1" KeyValue="13736879" BranchId="2799473" Archived="0" Date="21-Jul-2005 09:31:56" FromVersionable="false">
+          <Owner Name="CMC" Identifier="2794180" />
+          <GroupAccess Type="1" />
+          <ParentSimRef KeyValue="2799472" />
+        </Version>
+      </Simulation>
+      <SpatialObjects>
+        <SpatialObject Name="vobj_extracellular0" Type="Volume" subVolume="extracellular" regionId="0">
+          <QuantityCategoryList>
+            <QuantityCategory Name="VolumeCentroid" Enabled="false" />
+            <QuantityCategory Name="InteriorVelocity" Enabled="false" />
+            <QuantityCategory Name="VolumeRegionSize" Enabled="true" />
+          </QuantityCategoryList>
+        </SpatialObject>
+        <SpatialObject Name="vobj_cytosol1" Type="Volume" subVolume="cytosol" regionId="1">
+          <QuantityCategoryList>
+            <QuantityCategory Name="VolumeCentroid" Enabled="false" />
+            <QuantityCategory Name="InteriorVelocity" Enabled="false" />
+            <QuantityCategory Name="VolumeRegionSize" Enabled="true" />
+          </QuantityCategoryList>
+        </SpatialObject>
+        <SpatialObject Name="sobj_cytosol1_extracellular0" Type="Surface" subVolumeInside="cytosol" regionIdInside="1" subVolumeOutside="extracellular" regionIdOutside="0">
+          <QuantityCategoryList>
+            <QuantityCategory Name="SurfaceNormal" Enabled="false" />
+            <QuantityCategory Name="SurfaceVelocity" Enabled="false" />
+            <QuantityCategory Name="DistanceToSurface" Enabled="false" />
+            <QuantityCategory Name="DirectionToSurface" Enabled="false" />
+            <QuantityCategory Name="SurfaceSize" Enabled="true" />
+          </QuantityCategoryList>
+        </SpatialObject>
+      </SpatialObjects>
+      <Version Name="SS check" KeyValue="13736929" BranchId="2799432" Archived="0" Date="21-Jul-2005 09:43:06" FromVersionable="false">
+        <Owner Name="CMC" Identifier="2794180" />
+        <GroupAccess Type="1" />
+        <Annotation>No stimulus - check if the system is stable</Annotation>
+      </Version>
+      <MicroscopeMeasurement Name="fluor">
+        <ConvolutionKernel Type="ProjectionZKernel" />
+      </MicroscopeMeasurement>
+    </SimulationSpec>
+    <SimulationSpec Name="No Ca Extrusion" Stochastic="false" UseConcentration="true" RuleBased="false" MassConservationModelReduction="true" InsufficientIterations="false" InsufficientMaxMolecules="false" CharacteristicSize="0.3826530612244898">
+      <NetworkConstraints RbmMaxIteration="1" RbmMaxMoleculesPerSpecies="10" RbmSpeciesLimit="800" RbmReactionsLimit="2500" />
+      <Annotation>(copied from NE_Full_N1E_demo) Calcium extrusin mechanism turned off</Annotation>
+      <Geometry Name="NE_Full_N1E_demo_generated" Dimension="2">
+        <Annotation>cloned from 'NE_Full_N1E_demo_generated' owned by user schaff
+cloned from 'NE_Full_N1E_demo_generated' owned by user schaff</Annotation>
+        <Extent X="150.0" Y="60.0" Z="10.0" />
+        <Origin X="0.0" Y="0.0" Z="0.0" />
+        <Image Name="N1E_image">
+          <Annotation>cloned from 'N1E_image' owned by user schaff
+cloned from 'N1E_image' owned by user schaff
+77e4mask</Annotation>
+          <ImageData X="392" Y="149" Z="1" CompressedSize="1473">789CEC995172C3200C44B9FFA974B48E63A61313039290847686F7D18F4C0C4FBBD475D2520E87C3E170F0852E764B88203CE539804311A0F314BCA1084F9901DE5478C60C086F2A3C630E44605560D9B221B422AA2AEDF63006AE07C007EDCB79767088C09A40F1FC82932D5A0D883D4C9DA925C84B0F8AE78369BAA83DECB61033D6FEA921FF8810922F0CD27D6B21FB94F90D3B0CB2EDF69077D0DC7603FAC98E5AB8DE9EF2A3126A0FA3233E2922E3C049B5183C8FF8FBEB38552454E2F11AEAE7A623A064993CE3D1E84335E7CEA197FC2E7C5FB59F643A533439739BA0FF1F5BC7DA2220C2A7847BF87A3FDBD3C3FBB9C88A630DCF4A68F758A1FB4B21E9DFE0952E62262ABDC315B3BF9EA81EEE1B95A1B77414BBAD3D78E4546FE65E4518C6F1BA50C4C67E7C9E4D7FCE57EE1EEA52D4BC10B07334996B68170CDD3C1AD3F46DA3B01330D171C624F6610A7BCC4AD5B0F3F1656DDA6E0A8B5242ADF9DB0D9272451332279840AB7AC9FC9F279951E6CCCB4625245292CCB212933FDAA41D865EA880378E3A2477F441EB62EA694845FA8F408656A1E8529E07E5E27037B6B49E26A30096C25E9C968AF83B48F964EDEA493F4C2C27AE0C4CB616D52B94339666B9863F01D837A3DC86611886E6FEA7CAD1FA9102711DD98E1A9272123DEC6B582591AFE8B0759BE10354BB555E73A5672DEAE97BEEB430B0DDFF3668EE3BFB4AB4FD4ED21E723D2A702C0882804658C703EB87E2C39216FC0DB8FA56AFAEAF9604E66EF1836DFC3ABAC0F44D0EC2EA365167D6EC3B4554E5060191552B8704555EB1ACD24ACACD7310D27A456CEC80ED0641D5EF25843551DC300341FDEF3F21AC9DE344C9A32E28900B988879AE7A63FB05C203FB1BDEAD6111DED85FF06E0D4211FD0D7C03736B107B68EEA02AB8079293871BD283E2E8E17CA206522402FCAB47E353C31799076B3ED302270F0DEEE9A3D9A9A18078FD603451033A8904DAFDFDC14C0DD81C2A423CA48603C404CDC9540D7715C17B4F223DF86045A8DA59EDCFA7861D5A88BA22EFDF74A507D0E077BFE7E68798243D386066490F0E9E22027BB91E661CA506ECE511104D083D3C005AA6D4E083954AE701767228B4547665EBE13F29D3C286CA43F1DD14EA0176703C845CA3AED283093CD868605A3001873B33EB661E3E02B06F76490C832010F6FEA7F2687DE8CF244D34200B22B2D3A7626497AF4E3AE9D4E4058E67874164D3A5FE034A3292C684E12070E953B84F1B7146100E83163D0B96927C7172B8132A27E7C2A470512B292F2C734689E1224C5AEE4555C48219710961F20E4C28299C04893C34A30471D43C0E830F6079F19CAB96F7181E2641DE6E704AC9019B5930A4AD3110E3F37753321293033EB468489B7250882C1C516280727065C9BB7432CB46C4F024E8E24BF8CCBF2FBF06BEC2FCEC80C7F0D9D3C499B8891F6980285620C43DDC480543C18CE8D23F2E070E06FA336CCC8CFE2194C3AD2739103745BB2BDF3BF29023FFD200811AD06DE39818781CC83B82CD351D83FA38109E43C1FF77A26919D668B658182A7D4FA8BBB6694C1B0F52E08076D7783B1607DF201A3D231E08168809CEFA966D0DE9CA2B86368772F674BF66392DC8E17422E21C0BC71C3AA579C654B4E27188C8C137884E2918073A863AC159A7B42D8719BEFAD54018DC72E81D87120F041D439DE1EBA99E1C2C8C3D9437E550ED7D75EACC07E0842533C5C150ED8D11963CAD7B09C0AE19E43008C340B0FF7FD53EAD52119010D218997A4DB3732587C5632711625D7B53AE1F81E5CB80D147645B19EA6BF610DD449729F2D944C4BD90A5767FE3A16C70DB48E4F43058F9000F059F7E7F61DF11A81E2CA3678B151BDBCFF6D76EF5FB2E9AD38310AD8B2957B6D01E726A3079C897DAC1733DE40BED61DB9CD8416AC63B66C6D43E96339C9DA206DF45A49CE15B003B400D8E9C3EE4649B89C6C37AD7832C44D27AC0F19ECD8E3803A71A64219AB105B023CEC06008C0CC36139D03419B51307BD9A5814A5174692052D65C1A841042883E6F010600D3C96C9D</ImageData>
+          <PixelClass Name="extracellular" ImagePixelValue="0" KeyValue="2798771" />
+          <PixelClass Name="cytosol" ImagePixelValue="192" KeyValue="2798772" />
+          <Version Name="N1E_image" KeyValue="2798767" BranchId="5060373" Archived="0" Date="26-Jul-2002 08:33:05" FromVersionable="false">
+            <Owner Name="CMC" Identifier="2794180" />
+            <GroupAccess Type="1" />
+            <Annotation>cloned from 'N1E_image' owned by user schaff
+cloned from 'N1E_image' owned by user schaff
+77e4mask</Annotation>
+          </Version>
+        </Image>
+        <SubVolume Name="extracellular" Handle="0" Type="Image" ImagePixelValue="0" KeyValue="2798774" />
+        <SubVolume Name="cytosol" Handle="1" Type="Image" ImagePixelValue="192" KeyValue="2798775" />
+        <SurfaceClass Name="cytosol_extracellular_membrane" SubVolume1Ref="cytosol" SubVolume2Ref="extracellular" />
+        <SurfaceDescription NumSamplesX="159" NumSamplesY="63" NumSamplesZ="1" CutoffFrequency="0.3">
+          <VolumeRegion Name="extracellular0" RegionID="0" SubVolume="extracellular" Size="7060.534912209065" Unit="um2" />
+          <VolumeRegion Name="cytosol1" RegionID="1" SubVolume="cytosol" Size="1939.465087790935" Unit="um2" />
+          <MembraneRegion Name="membrane_extracellular0_cytosol1" VolumeRegion1="cytosol1" VolumeRegion2="extracellular0" Size="5206.431592520682" Unit="um" />
+        </SurfaceDescription>
+        <Version Name="NE_Full_N1E_demo_generated" KeyValue="2798766" BranchId="5059702" Archived="0" Date="26-Jul-2002 08:33:05" FromVersionable="false">
+          <Owner Name="CMC" Identifier="2794180" />
+          <GroupAccess Type="1" />
+          <Annotation>cloned from 'NE_Full_N1E_demo_generated' owned by user schaff
+cloned from 'NE_Full_N1E_demo_generated' owned by user schaff</Annotation>
+        </Version>
+      </Geometry>
+      <GeometryContext>
+        <FeatureMapping Feature="extracellular" GeometryClass="extracellular" SubVolume="extracellular">
+          <BoundariesTypes Xm="Value" Xp="Value" Ym="Value" Yp="Value" Zm="Value" Zp="Value" />
+        </FeatureMapping>
+        <FeatureMapping Feature="cytosol" GeometryClass="cytosol" SubVolume="cytosol">
+          <BoundariesTypes Xm="Value" Xp="Value" Ym="Value" Yp="Value" Zm="Value" Zp="Value" />
+        </FeatureMapping>
+        <FeatureMapping Feature="er" GeometryClass="cytosol" SubVolume="cytosol">
+          <BoundariesTypes Xm="Value" Xp="Value" Ym="Value" Yp="Value" Zm="Value" Zp="Value" />
+        </FeatureMapping>
+        <MembraneMapping Membrane="plasmaMembrane" SurfaceToVolumeRatio="0.274" VolumeFraction="0.5" CalculateVoltage="false" SpecificCapacitance="0.01" InitialVoltage="0.0" GeometryClass="cytosol_extracellular_membrane">
+          <BoundariesTypes Xm="Value" Xp="Value" Ym="Value" Yp="Value" Zm="Value" Zp="Value" />
+        </MembraneMapping>
+        <MembraneMapping Membrane="erMembrane" SurfaceToVolumeRatio="3.84" VolumeFraction="0.15" CalculateVoltage="false" SpecificCapacitance="0.01" InitialVoltage="0.0" GeometryClass="cytosol">
+          <BoundariesTypes Xm="Value" Xp="Value" Ym="Value" Yp="Value" Zm="Value" Zp="Value" />
+        </MembraneMapping>
+      </GeometryContext>
+      <ReactionContext>
+        <LocalizedCompoundSpec LocalizedCompoundRef="Ca_ec" ForceConstant="true" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>0.0</InitialConcentration>
+          <Diffusion>220.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="Ca" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>0.05</InitialConcentration>
+          <Diffusion>220.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="IP3" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>0.161</InitialConcentration>
+          <Diffusion>283.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="Buffer" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>447.76119</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="BufferCa" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>2.23881</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="Fura2" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>62.06897</InitialConcentration>
+          <Diffusion>50.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="Fura2Ca" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>12.93103</InitialConcentration>
+          <Diffusion>50.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="Ca_ER" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>400.01</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="Ract" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>9.056</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="RactCa" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>2.264</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="Rinh" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>7.7825</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="RinhCa" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>3.5375</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="serca" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>35.38</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="ER_erMembrane" ForceConstant="true" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>1.0</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <ReactionSpec ReactionStepRef="FluxStep_2" ReactionMapping="included" />
+        <ReactionSpec ReactionStepRef="ReactionStep_3" ReactionMapping="fast" />
+        <ReactionSpec ReactionStepRef="ReactionStep_1" ReactionMapping="included" />
+        <ReactionSpec ReactionStepRef="ReactionStep_4" ReactionMapping="included" />
+        <ReactionSpec ReactionStepRef="ReactionStep_0" ReactionMapping="fast" />
+        <ReactionSpec ReactionStepRef="ReactionStep_2" ReactionMapping="included" />
+        <ReactionSpec ReactionStepRef="FluxStep_1" ReactionMapping="included" />
+        <ReactionSpec ReactionStepRef="FluxStep_0" ReactionMapping="included" />
+        <ReactionSpec ReactionStepRef="FluxStep_3" ReactionMapping="excluded" />
+        <ReactionSpec ReactionStepRef="ReactionStep_5" ReactionMapping="included" />
+      </ReactionContext>
+      <MathDescription Name="No Ca Extrusion">
+        <Constant Name="_F_">96480.0</Constant>
+        <Constant Name="_F_nmol_">9.648E-5</Constant>
+        <Constant Name="_K_GHK_">1.0E-9</Constant>
+        <Constant Name="_N_pmol_">6.02E11</Constant>
+        <Constant Name="_R_">8314.0</Constant>
+        <Constant Name="_T_">300.0</Constant>
+        <Constant Name="Buffer_init">447.76119</Constant>
+        <Constant Name="BufferCa_init">2.23881</Constant>
+        <Constant Name="Ca_diffusionRate">220.0</Constant>
+        <Constant Name="Ca_ec">0.0</Constant>
+        <Constant Name="Ca_ec_diffusionRate">220.0</Constant>
+        <Constant Name="Ca_ec_init">0.0</Constant>
+        <Constant Name="Ca_ER_init">400.01</Constant>
+        <Constant Name="Ca_init">0.05</Constant>
+        <Constant Name="dact">0.2</Constant>
+        <Constant Name="dI">0.8</Constant>
+        <Constant Name="dinh">0.11</Constant>
+        <Constant Name="ER_erMembrane">1.0</Constant>
+        <Constant Name="ER_erMembrane_init">1.0</Constant>
+        <Constant Name="Fura2_diffusionRate">50.0</Constant>
+        <Constant Name="Fura2_init">62.06897</Constant>
+        <Constant Name="Fura2Ca_diffusionRate">50.0</Constant>
+        <Constant Name="Fura2Ca_init">12.93103</Constant>
+        <Constant Name="IP3_basal">0.16</Constant>
+        <Constant Name="IP3_diffusionRate">283.0</Constant>
+        <Constant Name="IP3_init">0.161</Constant>
+        <Constant Name="Js">9.14</Constant>
+        <Constant Name="K">10.0</Constant>
+        <Constant Name="k0">0.411</Constant>
+        <Constant Name="K_degr">0.16</Constant>
+        <Constant Name="K_millivolts_per_volt">1000.0</Constant>
+        <Constant Name="Kd">0.24</Constant>
+        <Constant Name="Kf_ReactionStep_0">10000.0</Constant>
+        <Constant Name="Kf_ReactionStep_1">1000.0</Constant>
+        <Constant Name="Kf_ReactionStep_3">1000.0</Constant>
+        <Constant Name="KMOLE">0.0016611295681063123</Constant>
+        <Constant Name="Kon">2.1</Constant>
+        <Constant Name="kP">0.27</Constant>
+        <Constant Name="Ract_init">9.056</Constant>
+        <Constant Name="RactCa_init">2.264</Constant>
+        <Constant Name="Rinh_init">7.7825</Constant>
+        <Constant Name="RinhCa_init">3.5375</Constant>
+        <Constant Name="serca_init">35.38</Constant>
+        <Constant Name="singleChanFlux">4.69</Constant>
+        <Constant Name="SurfToVol_erMembrane">3.84</Constant>
+        <Constant Name="vL">3.16E-5</Constant>
+        <Constant Name="VolFract_er">0.15</Constant>
+        <Constant Name="vP">0.0664</Constant>
+        <VolumeVariable Name="Ca_ER" />
+        <VolumeVariable Name="Calcium" />
+        <VolumeVariable Name="CalciumBufferBound" />
+        <VolumeVariable Name="Fura2_bound" />
+        <VolumeVariable Name="Fura2_unbound" />
+        <VolumeVariable Name="IP3" />
+        <VolumeVariable Name="RactCa" />
+        <VolumeVariable Name="RinhCa" />
+        <Function Name="Buffer">((K_Buffer_total - ((1.0 - VolFract_er) * CalciumBufferBound)) / (1.0 - VolFract_er))</Function>
+        <Function Name="J_FluxStep_0">- (0.25 * ER_erMembrane * (RactCa + Ract) * (Ca_ER - Calcium) * pow((IP3 * RactCa * Rinh / (IP3 + dI) / (RactCa + Ract) / (RinhCa + Rinh)),3.0) * singleChanFlux)</Function>
+        <Function Name="J_FluxStep_1">(ER_erMembrane * serca * vP * Calcium * Calcium / ((kP * kP) + (Calcium * Calcium)))</Function>
+        <Function Name="J_FluxStep_2">- (ER_erMembrane * (Ca_ER - Calcium) * vL)</Function>
+        <Function Name="J_ReactionStep_0">((Buffer * Kf_ReactionStep_0 * Calcium) - (Kr_ReactionStep_0 * CalciumBufferBound))</Function>
+        <Function Name="J_ReactionStep_1">((Ract * Kf_ReactionStep_1 * Calcium) - (Kr_ReactionStep_1 * RactCa))</Function>
+        <Function Name="J_ReactionStep_2">((Rinh * Kon * Calcium) - (Kr_ReactionStep_2 * RinhCa))</Function>
+        <Function Name="J_ReactionStep_3">((Fura2_unbound * Kf_ReactionStep_3 * Calcium) - (Kr_ReactionStep_3 * Fura2_bound))</Function>
+        <Function Name="J_ReactionStep_4">(K_degr * (IP3 - IP3_basal))</Function>
+        <Function Name="J_ReactionStep_5">(Js * exp( - (t * k0)))</Function>
+        <Function Name="K_Buffer_total">(((1.0 - VolFract_er) * Buffer_init) + ((1.0 - VolFract_er) * BufferCa_init))</Function>
+        <Function Name="K_Ract_total">((Ract_init * SurfToVol_erMembrane * VolFract_er * KMOLE) + (RactCa_init * SurfToVol_erMembrane * VolFract_er * KMOLE))</Function>
+        <Function Name="K_Rinh_total">((Rinh_init * SurfToVol_erMembrane * VolFract_er * KMOLE) + (RinhCa_init * SurfToVol_erMembrane * VolFract_er * KMOLE))</Function>
+        <Function Name="K_serca_total">(serca_init * SurfToVol_erMembrane * VolFract_er * KMOLE)</Function>
+        <Function Name="KFlux_erMembrane_cytosol">(SurfToVol_erMembrane * VolFract_er / (1.0 - VolFract_er))</Function>
+        <Function Name="KFlux_erMembrane_er">SurfToVol_erMembrane</Function>
+        <Function Name="Kr_ReactionStep_0">(10000.0 * K)</Function>
+        <Function Name="Kr_ReactionStep_1">(1000.0 * dact)</Function>
+        <Function Name="Kr_ReactionStep_2">(Kon * dinh)</Function>
+        <Function Name="Kr_ReactionStep_3">(1000.0 * Kd)</Function>
+        <Function Name="Ract">((K_Ract_total - (RactCa * SurfToVol_erMembrane * VolFract_er * KMOLE)) / (SurfToVol_erMembrane * VolFract_er * KMOLE))</Function>
+        <Function Name="Rinh">((K_Rinh_total - (RinhCa * SurfToVol_erMembrane * VolFract_er * KMOLE)) / (SurfToVol_erMembrane * VolFract_er * KMOLE))</Function>
+        <Function Name="serca">(K_serca_total / (SurfToVol_erMembrane * VolFract_er * KMOLE))</Function>
+        <Function Name="Voltage_erMembrane">0.0</Function>
+        <Function Name="Voltage_plasmaMembrane">0.0</Function>
+        <CompartmentSubDomain Name="extracellular">
+          <BoundaryType Boundary="Xm" Type="Value" />
+          <BoundaryType Boundary="Xp" Type="Value" />
+          <BoundaryType Boundary="Ym" Type="Value" />
+          <BoundaryType Boundary="Yp" Type="Value" />
+          <BoundaryType Boundary="Zm" Type="Value" />
+          <BoundaryType Boundary="Zp" Type="Value" />
+          <OdeEquation Name="CalciumBufferBound" SolutionType="Unknown">
+            <Rate>0.0</Rate>
+            <Initial>0.0</Initial>
+          </OdeEquation>
+          <OdeEquation Name="Ca_ER" SolutionType="Unknown">
+            <Rate>0.0</Rate>
+            <Initial>0.0</Initial>
+          </OdeEquation>
+          <OdeEquation Name="RactCa" SolutionType="Unknown">
+            <Rate>0.0</Rate>
+            <Initial>0.0</Initial>
+          </OdeEquation>
+          <OdeEquation Name="RinhCa" SolutionType="Unknown">
+            <Rate>0.0</Rate>
+            <Initial>0.0</Initial>
+          </OdeEquation>
+          <PdeEquation Name="Calcium" SolutionType="Unknown">
+            <Rate>0.0</Rate>
+            <Diffusion>Ca_diffusionRate</Diffusion>
+            <Initial>0.0</Initial>
+          </PdeEquation>
+          <PdeEquation Name="IP3" SolutionType="Unknown">
+            <Rate>0.0</Rate>
+            <Diffusion>IP3_diffusionRate</Diffusion>
+            <Initial>0.0</Initial>
+          </PdeEquation>
+          <PdeEquation Name="Fura2_unbound" SolutionType="Unknown">
+            <Rate>0.0</Rate>
+            <Diffusion>Fura2_diffusionRate</Diffusion>
+            <Initial>0.0</Initial>
+          </PdeEquation>
+          <PdeEquation Name="Fura2_bound" SolutionType="Unknown">
+            <Rate>0.0</Rate>
+            <Diffusion>Fura2Ca_diffusionRate</Diffusion>
+            <Initial>0.0</Initial>
+          </PdeEquation>
+        </CompartmentSubDomain>
+        <CompartmentSubDomain Name="cytosol">
+          <BoundaryType Boundary="Xm" Type="Value" />
+          <BoundaryType Boundary="Xp" Type="Value" />
+          <BoundaryType Boundary="Ym" Type="Value" />
+          <BoundaryType Boundary="Yp" Type="Value" />
+          <BoundaryType Boundary="Zm" Type="Value" />
+          <BoundaryType Boundary="Zp" Type="Value" />
+          <OdeEquation Name="CalciumBufferBound" SolutionType="Unknown">
+            <Rate>0.0</Rate>
+            <Initial>BufferCa_init</Initial>
+          </OdeEquation>
+          <OdeEquation Name="Ca_ER" SolutionType="Unknown">
+            <Rate>((KFlux_erMembrane_er * J_FluxStep_0) + (KFlux_erMembrane_er * J_FluxStep_2) + (KFlux_erMembrane_er * J_FluxStep_1))</Rate>
+            <Initial>Ca_ER_init</Initial>
+          </OdeEquation>
+          <OdeEquation Name="RactCa" SolutionType="Unknown">
+            <Rate>J_ReactionStep_1</Rate>
+            <Initial>RactCa_init</Initial>
+          </OdeEquation>
+          <OdeEquation Name="RinhCa" SolutionType="Unknown">
+            <Rate>J_ReactionStep_2</Rate>
+            <Initial>RinhCa_init</Initial>
+          </OdeEquation>
+          <PdeEquation Name="Calcium" SolutionType="Unknown">
+            <Rate>( - (KFlux_erMembrane_cytosol * J_FluxStep_0) - (KFlux_erMembrane_cytosol * J_FluxStep_1) - (KFlux_erMembrane_cytosol * KMOLE * J_ReactionStep_2) - (KFlux_erMembrane_cytosol * J_FluxStep_2) - (KFlux_erMembrane_cytosol * KMOLE * J_ReactionStep_1))</Rate>
+            <Diffusion>Ca_diffusionRate</Diffusion>
+            <Initial>Ca_init</Initial>
+          </PdeEquation>
+          <PdeEquation Name="IP3" SolutionType="Unknown">
+            <Rate>- J_ReactionStep_4</Rate>
+            <Diffusion>IP3_diffusionRate</Diffusion>
+            <Initial>IP3_init</Initial>
+          </PdeEquation>
+          <PdeEquation Name="Fura2_unbound" SolutionType="Unknown">
+            <Rate>0.0</Rate>
+            <Diffusion>Fura2_diffusionRate</Diffusion>
+            <Initial>Fura2_init</Initial>
+          </PdeEquation>
+          <PdeEquation Name="Fura2_bound" SolutionType="Unknown">
+            <Rate>0.0</Rate>
+            <Diffusion>Fura2Ca_diffusionRate</Diffusion>
+            <Initial>Fura2Ca_init</Initial>
+          </PdeEquation>
+          <FastSystem>
+            <FastInvariant>(Fura2_bound + Calcium + CalciumBufferBound)</FastInvariant>
+            <FastInvariant>(Fura2_unbound + Fura2_bound)</FastInvariant>
+            <FastRate>J_ReactionStep_0</FastRate>
+            <FastRate>J_ReactionStep_3</FastRate>
+          </FastSystem>
+        </CompartmentSubDomain>
+        <MembraneSubDomain Name="cytosol_extracellular_membrane" InsideCompartment="cytosol" OutsideCompartment="extracellular">
+          <BoundaryType Boundary="Xm" Type="Value" />
+          <BoundaryType Boundary="Xp" Type="Value" />
+          <BoundaryType Boundary="Ym" Type="Value" />
+          <BoundaryType Boundary="Yp" Type="Value" />
+          <BoundaryType Boundary="Zm" Type="Value" />
+          <BoundaryType Boundary="Zp" Type="Value" />
+          <JumpCondition Name="Calcium">
+            <InFlux>0.0</InFlux>
+            <OutFlux>0.0</OutFlux>
+          </JumpCondition>
+          <JumpCondition Name="IP3">
+            <InFlux>(J_ReactionStep_5 * KMOLE / (1.0 - VolFract_er))</InFlux>
+            <OutFlux>0.0</OutFlux>
+          </JumpCondition>
+          <JumpCondition Name="Fura2_unbound">
+            <InFlux>0.0</InFlux>
+            <OutFlux>0.0</OutFlux>
+          </JumpCondition>
+          <JumpCondition Name="Fura2_bound">
+            <InFlux>0.0</InFlux>
+            <OutFlux>0.0</OutFlux>
+          </JumpCondition>
+        </MembraneSubDomain>
+        <Version Name="No Ca Extrusion" KeyValue="13736745" BranchId="2799529" Archived="0" Date="21-Jul-2005 09:31:55" FromVersionable="false">
+          <Owner Name="CMC" Identifier="2794180" />
+          <GroupAccess Type="1" />
+        </Version>
+      </MathDescription>
+      <Simulation Name="Simulation 2">
+        <SolverTaskDescription TaskType="Unsteady" UseSymbolicJacobian="false" Solver="Finite Volume, Regular Grid">
+          <TimeBound StartTime="0.0" EndTime="20.0" />
+          <TimeStep DefaultTime="0.002" MinTime="1.0E-8" MaxTime="1.0" />
+          <ErrorTolerance Absolut="1.0E-9" Relative="1.0E-9" />
+          <OutputOptions KeepEvery="50" KeepAtMost="1000" />
+          <NumberProcessors>1</NumberProcessors>
+        </SolverTaskDescription>
+        <MathOverrides>
+          <Constant Name="Js">5502.280000000001</Constant>
+        </MathOverrides>
+        <MeshSpecification>
+          <Size X="111" Y="45" Z="1" />
+        </MeshSpecification>
+        <Version Name="Simulation 2" KeyValue="13736881" BranchId="2799568" Archived="0" Date="21-Jul-2005 09:31:56" FromVersionable="false">
+          <Owner Name="CMC" Identifier="2794180" />
+          <GroupAccess Type="1" />
+        </Version>
+      </Simulation>
+      <SpatialObjects>
+        <SpatialObject Name="vobj_extracellular0" Type="Volume" subVolume="extracellular" regionId="0">
+          <QuantityCategoryList>
+            <QuantityCategory Name="VolumeCentroid" Enabled="false" />
+            <QuantityCategory Name="InteriorVelocity" Enabled="false" />
+            <QuantityCategory Name="VolumeRegionSize" Enabled="true" />
+          </QuantityCategoryList>
+        </SpatialObject>
+        <SpatialObject Name="vobj_cytosol1" Type="Volume" subVolume="cytosol" regionId="1">
+          <QuantityCategoryList>
+            <QuantityCategory Name="VolumeCentroid" Enabled="false" />
+            <QuantityCategory Name="InteriorVelocity" Enabled="false" />
+            <QuantityCategory Name="VolumeRegionSize" Enabled="true" />
+          </QuantityCategoryList>
+        </SpatialObject>
+        <SpatialObject Name="sobj_cytosol1_extracellular0" Type="Surface" subVolumeInside="cytosol" regionIdInside="1" subVolumeOutside="extracellular" regionIdOutside="0">
+          <QuantityCategoryList>
+            <QuantityCategory Name="SurfaceNormal" Enabled="false" />
+            <QuantityCategory Name="SurfaceVelocity" Enabled="false" />
+            <QuantityCategory Name="DistanceToSurface" Enabled="false" />
+            <QuantityCategory Name="DirectionToSurface" Enabled="false" />
+            <QuantityCategory Name="SurfaceSize" Enabled="true" />
+          </QuantityCategoryList>
+        </SpatialObject>
+      </SpatialObjects>
+      <Version Name="No Ca Extrusion" KeyValue="13737004" BranchId="2799527" Archived="0" Date="21-Jul-2005 09:44:30" FromVersionable="false">
+        <Owner Name="CMC" Identifier="2794180" />
+        <GroupAccess Type="1" />
+        <Annotation>(copied from NE_Full_N1E_demo) Calcium extrusin mechanism turned off</Annotation>
+      </Version>
+      <MicroscopeMeasurement Name="fluor">
+        <ConvolutionKernel Type="ProjectionZKernel" />
+      </MicroscopeMeasurement>
+    </SimulationSpec>
+    <SimulationSpec Name="No Ca or Fura Diff" Stochastic="false" UseConcentration="true" RuleBased="false" MassConservationModelReduction="true" InsufficientIterations="false" InsufficientMaxMolecules="false" CharacteristicSize="0.3826530612244898">
+      <NetworkConstraints RbmMaxIteration="1" RbmMaxMoleculesPerSpecies="10" RbmSpeciesLimit="800" RbmReactionsLimit="2500" />
+      <Annotation>(cloned from NE_Full_N1E_demo) Ca and Fura diffusion clamped to zero</Annotation>
+      <Geometry Name="NE_Full_N1E_demo_generated" Dimension="2">
+        <Annotation>cloned from 'NE_Full_N1E_demo_generated' owned by user schaff
+cloned from 'NE_Full_N1E_demo_generated' owned by user schaff</Annotation>
+        <Extent X="150.0" Y="60.0" Z="10.0" />
+        <Origin X="0.0" Y="0.0" Z="0.0" />
+        <Image Name="N1E_image">
+          <Annotation>cloned from 'N1E_image' owned by user schaff
+cloned from 'N1E_image' owned by user schaff
+77e4mask</Annotation>
+          <ImageData X="392" Y="149" Z="1" CompressedSize="1473">789CEC995172C3200C44B9FFA974B48E63A61313039290847686F7D18F4C0C4FBBD475D2520E87C3E170F0852E764B88203CE539804311A0F314BCA1084F9901DE5478C60C086F2A3C630E44605560D9B221B422AA2AEDF63006AE07C007EDCB79767088C09A40F1FC82932D5A0D883D4C9DA925C84B0F8AE78369BAA83DECB61033D6FEA921FF8810922F0CD27D6B21FB94F90D3B0CB2EDF69077D0DC7603FAC98E5AB8DE9EF2A3126A0FA3233E2922E3C049B5183C8FF8FBEB38552454E2F11AEAE7A623A064993CE3D1E84335E7CEA197FC2E7C5FB59F643A533439739BA0FF1F5BC7DA2220C2A7847BF87A3FDBD3C3FBB9C88A630DCF4A68F758A1FB4B21E9DFE0952E62262ABDC315B3BF9EA81EEE1B95A1B77414BBAD3D78E4546FE65E4518C6F1BA50C4C67E7C9E4D7FCE57EE1EEA52D4BC10B07334996B68170CDD3C1AD3F46DA3B01330D171C624F6610A7BCC4AD5B0F3F1656DDA6E0A8B5242ADF9DB0D9272451332279840AB7AC9FC9F279951E6CCCB4625245292CCB212933FDAA41D865EA880378E3A2477F441EB62EA694845FA8F408656A1E8529E07E5E27037B6B49E26A30096C25E9C968AF83B48F964EDEA493F4C2C27AE0C4CB616D52B94339666B9863F01D837A3DC86611886E6FEA7CAD1FA9102711DD98E1A9272123DEC6B582591AFE8B0759BE10354BB555E73A5672DEAE97BEEB430B0DDFF3668EE3BFB4AB4FD4ED21E723D2A702C0882804658C703EB87E2C39216FC0DB8FA56AFAEAF9604E66EF1836DFC3ABAC0F44D0EC2EA365167D6EC3B4554E5060191552B8704555EB1ACD24ACACD7310D27A456CEC80ED0641D5EF25843551DC300341FDEF3F21AC9DE344C9A32E28900B988879AE7A63FB05C203FB1BDEAD6111DED85FF06E0D4211FD0D7C03736B107B68EEA02AB8079293871BD283E2E8E17CA206522402FCAB47E353C31799076B3ED302270F0DEEE9A3D9A9A18078FD603451033A8904DAFDFDC14C0DD81C2A423CA48603C404CDC9540D7715C17B4F223DF86045A8DA59EDCFA7861D5A88BA22EFDF74A507D0E077BFE7E68798243D386066490F0E9E22027BB91E661CA506ECE511104D083D3C005AA6D4E083954AE701767228B4547665EBE13F29D3C286CA43F1DD14EA0176703C845CA3AED283093CD868605A3001873B33EB661E3E02B06F76490C832010F6FEA7F2687DE8CF244D34200B22B2D3A7626497AF4E3AE9D4E4058E67874164D3A5FE034A3292C684E12070E953B84F1B7146100E83163D0B96927C7172B8132A27E7C2A470512B292F2C734689E1224C5AEE4555C48219710961F20E4C28299C04893C34A30471D43C0E830F6079F19CAB96F7181E2641DE6E704AC9019B5930A4AD3110E3F37753321293033EB468489B7250882C1C516280727065C9BB7432CB46C4F024E8E24BF8CCBF2FBF06BEC2FCEC80C7F0D9D3C499B8891F6980285620C43DDC480543C18CE8D23F2E070E06FA336CCC8CFE2194C3AD2739103745BB2BDF3BF29023FFD200811AD06DE39818781CC83B82CD351D83FA38109E43C1FF77A26919D668B658182A7D4FA8BBB6694C1B0F52E08076D7783B1607DF201A3D231E08168809CEFA966D0DE9CA2B86368772F674BF66392DC8E17422E21C0BC71C3AA579C654B4E27188C8C137884E2918073A863AC159A7B42D8719BEFAD54018DC72E81D87120F041D439DE1EBA99E1C2C8C3D9437E550ED7D75EACC07E0842533C5C150ED8D11963CAD7B09C0AE19E43008C340B0FF7FD53EAD52119010D218997A4DB3732587C5632711625D7B53AE1F81E5CB80D147645B19EA6BF610DD449729F2D944C4BD90A5767FE3A16C70DB48E4F43058F9000F059F7E7F61DF11A81E2CA3678B151BDBCFF6D76EF5FB2E9AD38310AD8B2957B6D01E726A3079C897DAC1733DE40BED61DB9CD8416AC63B66C6D43E96339C9DA206DF45A49CE15B003B400D8E9C3EE4649B89C6C37AD7832C44D27AC0F19ECD8E3803A71A64219AB105B023CEC06008C0CC36139D03419B51307BD9A5814A5174692052D65C1A841042883E6F010600D3C96C9D</ImageData>
+          <PixelClass Name="extracellular" ImagePixelValue="0" KeyValue="2798771" />
+          <PixelClass Name="cytosol" ImagePixelValue="192" KeyValue="2798772" />
+          <Version Name="N1E_image" KeyValue="2798767" BranchId="5060373" Archived="0" Date="26-Jul-2002 08:33:05" FromVersionable="false">
+            <Owner Name="CMC" Identifier="2794180" />
+            <GroupAccess Type="1" />
+            <Annotation>cloned from 'N1E_image' owned by user schaff
+cloned from 'N1E_image' owned by user schaff
+77e4mask</Annotation>
+          </Version>
+        </Image>
+        <SubVolume Name="extracellular" Handle="0" Type="Image" ImagePixelValue="0" KeyValue="2798774" />
+        <SubVolume Name="cytosol" Handle="1" Type="Image" ImagePixelValue="192" KeyValue="2798775" />
+        <SurfaceClass Name="cytosol_extracellular_membrane" SubVolume1Ref="cytosol" SubVolume2Ref="extracellular" />
+        <SurfaceDescription NumSamplesX="159" NumSamplesY="63" NumSamplesZ="1" CutoffFrequency="0.3">
+          <VolumeRegion Name="extracellular0" RegionID="0" SubVolume="extracellular" Size="7060.534912209065" Unit="um2" />
+          <VolumeRegion Name="cytosol1" RegionID="1" SubVolume="cytosol" Size="1939.465087790935" Unit="um2" />
+          <MembraneRegion Name="membrane_extracellular0_cytosol1" VolumeRegion1="cytosol1" VolumeRegion2="extracellular0" Size="5206.431592520682" Unit="um" />
+        </SurfaceDescription>
+        <Version Name="NE_Full_N1E_demo_generated" KeyValue="2798766" BranchId="5059702" Archived="0" Date="26-Jul-2002 08:33:05" FromVersionable="false">
+          <Owner Name="CMC" Identifier="2794180" />
+          <GroupAccess Type="1" />
+          <Annotation>cloned from 'NE_Full_N1E_demo_generated' owned by user schaff
+cloned from 'NE_Full_N1E_demo_generated' owned by user schaff</Annotation>
+        </Version>
+      </Geometry>
+      <GeometryContext>
+        <FeatureMapping Feature="extracellular" GeometryClass="extracellular" SubVolume="extracellular">
+          <BoundariesTypes Xm="Value" Xp="Value" Ym="Value" Yp="Value" Zm="Value" Zp="Value" />
+        </FeatureMapping>
+        <FeatureMapping Feature="cytosol" GeometryClass="cytosol" SubVolume="cytosol">
+          <BoundariesTypes Xm="Value" Xp="Value" Ym="Value" Yp="Value" Zm="Value" Zp="Value" />
+        </FeatureMapping>
+        <FeatureMapping Feature="er" GeometryClass="cytosol" SubVolume="cytosol">
+          <BoundariesTypes Xm="Value" Xp="Value" Ym="Value" Yp="Value" Zm="Value" Zp="Value" />
+        </FeatureMapping>
+        <MembraneMapping Membrane="plasmaMembrane" SurfaceToVolumeRatio="0.274" VolumeFraction="0.5" CalculateVoltage="false" SpecificCapacitance="0.01" InitialVoltage="0.0" GeometryClass="cytosol_extracellular_membrane">
+          <BoundariesTypes Xm="Value" Xp="Value" Ym="Value" Yp="Value" Zm="Value" Zp="Value" />
+        </MembraneMapping>
+        <MembraneMapping Membrane="erMembrane" SurfaceToVolumeRatio="3.84" VolumeFraction="0.15" CalculateVoltage="false" SpecificCapacitance="0.01" InitialVoltage="0.0" GeometryClass="cytosol">
+          <BoundariesTypes Xm="Value" Xp="Value" Ym="Value" Yp="Value" Zm="Value" Zp="Value" />
+        </MembraneMapping>
+      </GeometryContext>
+      <ReactionContext>
+        <LocalizedCompoundSpec LocalizedCompoundRef="Ca_ec" ForceConstant="true" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>0.0</InitialConcentration>
+          <Diffusion>220.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="Ca" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>0.05</InitialConcentration>
+          <Diffusion>220.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="IP3" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>0.161</InitialConcentration>
+          <Diffusion>283.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="Buffer" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>447.76119</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="BufferCa" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>2.23881</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="Fura2" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>62.06897</InitialConcentration>
+          <Diffusion>50.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="Fura2Ca" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>12.93103</InitialConcentration>
+          <Diffusion>50.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="Ca_ER" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>400.01</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="Ract" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>9.056</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="RactCa" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>2.264</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="Rinh" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>7.7825</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="RinhCa" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>3.5375</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="serca" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>35.38</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="ER_erMembrane" ForceConstant="true" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>2.0</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <ReactionSpec ReactionStepRef="FluxStep_2" ReactionMapping="included" />
+        <ReactionSpec ReactionStepRef="ReactionStep_3" ReactionMapping="fast" />
+        <ReactionSpec ReactionStepRef="ReactionStep_1" ReactionMapping="included" />
+        <ReactionSpec ReactionStepRef="ReactionStep_4" ReactionMapping="included" />
+        <ReactionSpec ReactionStepRef="ReactionStep_0" ReactionMapping="fast" />
+        <ReactionSpec ReactionStepRef="ReactionStep_2" ReactionMapping="included" />
+        <ReactionSpec ReactionStepRef="FluxStep_1" ReactionMapping="included" />
+        <ReactionSpec ReactionStepRef="FluxStep_0" ReactionMapping="included" />
+        <ReactionSpec ReactionStepRef="FluxStep_3" ReactionMapping="included" />
+        <ReactionSpec ReactionStepRef="ReactionStep_5" ReactionMapping="included" />
+      </ReactionContext>
+      <MathDescription Name="No Ca or Fura Diff">
+        <Constant Name="_F_">96480.0</Constant>
+        <Constant Name="_F_nmol_">9.648E-5</Constant>
+        <Constant Name="_K_GHK_">1.0E-9</Constant>
+        <Constant Name="_N_pmol_">6.02E11</Constant>
+        <Constant Name="_R_">8314.0</Constant>
+        <Constant Name="_T_">300.0</Constant>
+        <Constant Name="Buffer_init">447.76119</Constant>
+        <Constant Name="BufferCa_init">2.23881</Constant>
+        <Constant Name="Ca_diffusionRate">220.0</Constant>
+        <Constant Name="Ca_ec">0.0</Constant>
+        <Constant Name="Ca_ec_diffusionRate">220.0</Constant>
+        <Constant Name="Ca_ec_init">0.0</Constant>
+        <Constant Name="Ca_ER_init">400.01</Constant>
+        <Constant Name="Ca_init">0.05</Constant>
+        <Constant Name="CaThresh">0.2</Constant>
+        <Constant Name="dact">0.2</Constant>
+        <Constant Name="dI">0.8</Constant>
+        <Constant Name="dinh">0.11</Constant>
+        <Constant Name="ER_erMembrane">2.0</Constant>
+        <Constant Name="ER_erMembrane_init">2.0</Constant>
+        <Constant Name="Fura2_diffusionRate">50.0</Constant>
+        <Constant Name="Fura2_init">62.06897</Constant>
+        <Constant Name="Fura2Ca_diffusionRate">50.0</Constant>
+        <Constant Name="Fura2Ca_init">12.93103</Constant>
+        <Constant Name="IP3_basal">0.16</Constant>
+        <Constant Name="IP3_diffusionRate">283.0</Constant>
+        <Constant Name="IP3_init">0.161</Constant>
+        <Constant Name="Js">9.14</Constant>
+        <Constant Name="K">10.0</Constant>
+        <Constant Name="k0">0.411</Constant>
+        <Constant Name="K_degr">0.16</Constant>
+        <Constant Name="K_millivolts_per_volt">1000.0</Constant>
+        <Constant Name="Kd">0.24</Constant>
+        <Constant Name="Kf_ReactionStep_0">10000.0</Constant>
+        <Constant Name="Kf_ReactionStep_1">1000.0</Constant>
+        <Constant Name="Kf_ReactionStep_3">1000.0</Constant>
+        <Constant Name="KMOLE">0.0016611295681063123</Constant>
+        <Constant Name="Kon">2.1</Constant>
+        <Constant Name="kP">0.27</Constant>
+        <Constant Name="pumpRate">11.0</Constant>
+        <Constant Name="Ract_init">9.056</Constant>
+        <Constant Name="RactCa_init">2.264</Constant>
+        <Constant Name="Rinh_init">7.7825</Constant>
+        <Constant Name="RinhCa_init">3.5375</Constant>
+        <Constant Name="serca_init">35.38</Constant>
+        <Constant Name="singleChanFlux">4.69</Constant>
+        <Constant Name="SurfToVol_erMembrane">3.84</Constant>
+        <Constant Name="vL">3.16E-5</Constant>
+        <Constant Name="VolFract_er">0.15</Constant>
+        <Constant Name="vP">0.0664</Constant>
+        <VolumeVariable Name="Ca_ER" />
+        <VolumeVariable Name="Calcium" />
+        <VolumeVariable Name="CalciumBufferBound" />
+        <VolumeVariable Name="Fura2_bound" />
+        <VolumeVariable Name="Fura2_unbound" />
+        <VolumeVariable Name="IP3" />
+        <VolumeVariable Name="RactCa" />
+        <VolumeVariable Name="RinhCa" />
+        <Function Name="Buffer">((K_Buffer_total - ((1.0 - VolFract_er) * CalciumBufferBound)) / (1.0 - VolFract_er))</Function>
+        <Function Name="J_FluxStep_0">- (0.25 * ER_erMembrane * (RactCa + Ract) * (Ca_ER - Calcium) * pow((IP3 * RactCa * Rinh / (IP3 + dI) / (RactCa + Ract) / (RinhCa + Rinh)),3.0) * singleChanFlux)</Function>
+        <Function Name="J_FluxStep_1">(ER_erMembrane * serca * vP * Calcium * Calcium / ((kP * kP) + (Calcium * Calcium)))</Function>
+        <Function Name="J_FluxStep_2">- (ER_erMembrane * (Ca_ER - Calcium) * vL)</Function>
+        <Function Name="J_FluxStep_3">- ((Calcium_INSIDE - CaThresh) * (Calcium_INSIDE &gt; CaThresh) * pumpRate)</Function>
+        <Function Name="J_ReactionStep_0">((Buffer * Kf_ReactionStep_0 * Calcium) - (Kr_ReactionStep_0 * CalciumBufferBound))</Function>
+        <Function Name="J_ReactionStep_1">((Ract * Kf_ReactionStep_1 * Calcium) - (Kr_ReactionStep_1 * RactCa))</Function>
+        <Function Name="J_ReactionStep_2">((Rinh * Kon * Calcium) - (Kr_ReactionStep_2 * RinhCa))</Function>
+        <Function Name="J_ReactionStep_3">((Fura2_unbound * Kf_ReactionStep_3 * Calcium) - (Kr_ReactionStep_3 * Fura2_bound))</Function>
+        <Function Name="J_ReactionStep_4">(K_degr * (IP3 - IP3_basal))</Function>
+        <Function Name="J_ReactionStep_5">(Js * exp( - (t * k0)))</Function>
+        <Function Name="K_Buffer_total">(((1.0 - VolFract_er) * Buffer_init) + ((1.0 - VolFract_er) * BufferCa_init))</Function>
+        <Function Name="K_Ract_total">((Ract_init * SurfToVol_erMembrane * VolFract_er * KMOLE) + (RactCa_init * SurfToVol_erMembrane * VolFract_er * KMOLE))</Function>
+        <Function Name="K_Rinh_total">((Rinh_init * SurfToVol_erMembrane * VolFract_er * KMOLE) + (RinhCa_init * SurfToVol_erMembrane * VolFract_er * KMOLE))</Function>
+        <Function Name="K_serca_total">(serca_init * SurfToVol_erMembrane * VolFract_er * KMOLE)</Function>
+        <Function Name="KFlux_erMembrane_cytosol">(SurfToVol_erMembrane * VolFract_er / (1.0 - VolFract_er))</Function>
+        <Function Name="KFlux_erMembrane_er">SurfToVol_erMembrane</Function>
+        <Function Name="Kr_ReactionStep_0">(10000.0 * K)</Function>
+        <Function Name="Kr_ReactionStep_1">(1000.0 * dact)</Function>
+        <Function Name="Kr_ReactionStep_2">(Kon * dinh)</Function>
+        <Function Name="Kr_ReactionStep_3">(1000.0 * Kd)</Function>
+        <Function Name="Ract">((K_Ract_total - (RactCa * SurfToVol_erMembrane * VolFract_er * KMOLE)) / (SurfToVol_erMembrane * VolFract_er * KMOLE))</Function>
+        <Function Name="Rinh">((K_Rinh_total - (RinhCa * SurfToVol_erMembrane * VolFract_er * KMOLE)) / (SurfToVol_erMembrane * VolFract_er * KMOLE))</Function>
+        <Function Name="serca">(K_serca_total / (SurfToVol_erMembrane * VolFract_er * KMOLE))</Function>
+        <Function Name="Voltage_erMembrane">0.0</Function>
+        <Function Name="Voltage_plasmaMembrane">0.0</Function>
+        <CompartmentSubDomain Name="extracellular">
+          <BoundaryType Boundary="Xm" Type="Value" />
+          <BoundaryType Boundary="Xp" Type="Value" />
+          <BoundaryType Boundary="Ym" Type="Value" />
+          <BoundaryType Boundary="Yp" Type="Value" />
+          <BoundaryType Boundary="Zm" Type="Value" />
+          <BoundaryType Boundary="Zp" Type="Value" />
+          <OdeEquation Name="CalciumBufferBound" SolutionType="Unknown">
+            <Rate>0.0</Rate>
+            <Initial>0.0</Initial>
+          </OdeEquation>
+          <OdeEquation Name="Ca_ER" SolutionType="Unknown">
+            <Rate>0.0</Rate>
+            <Initial>0.0</Initial>
+          </OdeEquation>
+          <OdeEquation Name="RactCa" SolutionType="Unknown">
+            <Rate>0.0</Rate>
+            <Initial>0.0</Initial>
+          </OdeEquation>
+          <OdeEquation Name="RinhCa" SolutionType="Unknown">
+            <Rate>0.0</Rate>
+            <Initial>0.0</Initial>
+          </OdeEquation>
+          <PdeEquation Name="Calcium" SolutionType="Unknown">
+            <Rate>0.0</Rate>
+            <Diffusion>Ca_diffusionRate</Diffusion>
+            <Initial>0.0</Initial>
+          </PdeEquation>
+          <PdeEquation Name="IP3" SolutionType="Unknown">
+            <Rate>0.0</Rate>
+            <Diffusion>IP3_diffusionRate</Diffusion>
+            <Initial>0.0</Initial>
+          </PdeEquation>
+          <PdeEquation Name="Fura2_unbound" SolutionType="Unknown">
+            <Rate>0.0</Rate>
+            <Diffusion>Fura2_diffusionRate</Diffusion>
+            <Initial>0.0</Initial>
+          </PdeEquation>
+          <PdeEquation Name="Fura2_bound" SolutionType="Unknown">
+            <Rate>0.0</Rate>
+            <Diffusion>Fura2Ca_diffusionRate</Diffusion>
+            <Initial>0.0</Initial>
+          </PdeEquation>
+        </CompartmentSubDomain>
+        <CompartmentSubDomain Name="cytosol">
+          <BoundaryType Boundary="Xm" Type="Value" />
+          <BoundaryType Boundary="Xp" Type="Value" />
+          <BoundaryType Boundary="Ym" Type="Value" />
+          <BoundaryType Boundary="Yp" Type="Value" />
+          <BoundaryType Boundary="Zm" Type="Value" />
+          <BoundaryType Boundary="Zp" Type="Value" />
+          <OdeEquation Name="CalciumBufferBound" SolutionType="Unknown">
+            <Rate>0.0</Rate>
+            <Initial>BufferCa_init</Initial>
+          </OdeEquation>
+          <OdeEquation Name="Ca_ER" SolutionType="Unknown">
+            <Rate>((KFlux_erMembrane_er * J_FluxStep_0) + (KFlux_erMembrane_er * J_FluxStep_2) + (KFlux_erMembrane_er * J_FluxStep_1))</Rate>
+            <Initial>Ca_ER_init</Initial>
+          </OdeEquation>
+          <OdeEquation Name="RactCa" SolutionType="Unknown">
+            <Rate>J_ReactionStep_1</Rate>
+            <Initial>RactCa_init</Initial>
+          </OdeEquation>
+          <OdeEquation Name="RinhCa" SolutionType="Unknown">
+            <Rate>J_ReactionStep_2</Rate>
+            <Initial>RinhCa_init</Initial>
+          </OdeEquation>
+          <PdeEquation Name="Calcium" SolutionType="Unknown">
+            <Rate>( - (KFlux_erMembrane_cytosol * J_FluxStep_0) - (KFlux_erMembrane_cytosol * J_FluxStep_1) - (KFlux_erMembrane_cytosol * KMOLE * J_ReactionStep_2) - (KFlux_erMembrane_cytosol * J_FluxStep_2) - (KFlux_erMembrane_cytosol * KMOLE * J_ReactionStep_1))</Rate>
+            <Diffusion>Ca_diffusionRate</Diffusion>
+            <Initial>Ca_init</Initial>
+          </PdeEquation>
+          <PdeEquation Name="IP3" SolutionType="Unknown">
+            <Rate>- J_ReactionStep_4</Rate>
+            <Diffusion>IP3_diffusionRate</Diffusion>
+            <Initial>IP3_init</Initial>
+          </PdeEquation>
+          <PdeEquation Name="Fura2_unbound" SolutionType="Unknown">
+            <Rate>0.0</Rate>
+            <Diffusion>Fura2_diffusionRate</Diffusion>
+            <Initial>Fura2_init</Initial>
+          </PdeEquation>
+          <PdeEquation Name="Fura2_bound" SolutionType="Unknown">
+            <Rate>0.0</Rate>
+            <Diffusion>Fura2Ca_diffusionRate</Diffusion>
+            <Initial>Fura2Ca_init</Initial>
+          </PdeEquation>
+          <FastSystem>
+            <FastInvariant>(Fura2_bound + Calcium + CalciumBufferBound)</FastInvariant>
+            <FastInvariant>(Fura2_unbound + Fura2_bound)</FastInvariant>
+            <FastRate>J_ReactionStep_0</FastRate>
+            <FastRate>J_ReactionStep_3</FastRate>
+          </FastSystem>
+        </CompartmentSubDomain>
+        <MembraneSubDomain Name="cytosol_extracellular_membrane" InsideCompartment="cytosol" OutsideCompartment="extracellular">
+          <BoundaryType Boundary="Xm" Type="Value" />
+          <BoundaryType Boundary="Xp" Type="Value" />
+          <BoundaryType Boundary="Ym" Type="Value" />
+          <BoundaryType Boundary="Yp" Type="Value" />
+          <BoundaryType Boundary="Zm" Type="Value" />
+          <BoundaryType Boundary="Zp" Type="Value" />
+          <JumpCondition Name="Calcium">
+            <InFlux>(J_FluxStep_3 / (1.0 - VolFract_er))</InFlux>
+            <OutFlux>0.0</OutFlux>
+          </JumpCondition>
+          <JumpCondition Name="IP3">
+            <InFlux>(J_ReactionStep_5 * KMOLE / (1.0 - VolFract_er))</InFlux>
+            <OutFlux>0.0</OutFlux>
+          </JumpCondition>
+          <JumpCondition Name="Fura2_unbound">
+            <InFlux>0.0</InFlux>
+            <OutFlux>0.0</OutFlux>
+          </JumpCondition>
+          <JumpCondition Name="Fura2_bound">
+            <InFlux>0.0</InFlux>
+            <OutFlux>0.0</OutFlux>
+          </JumpCondition>
+        </MembraneSubDomain>
+        <Version Name="No Ca or Fura Diff" KeyValue="13736747" BranchId="2800101" Archived="0" Date="21-Jul-2005 09:31:55" FromVersionable="false">
+          <Owner Name="CMC" Identifier="2794180" />
+          <GroupAccess Type="1" />
+        </Version>
+      </MathDescription>
+      <Simulation Name="Simulation 3">
+        <SolverTaskDescription TaskType="Unsteady" UseSymbolicJacobian="false" Solver="Finite Volume, Regular Grid">
+          <TimeBound StartTime="0.0" EndTime="20.0" />
+          <TimeStep DefaultTime="0.002" MinTime="1.0E-8" MaxTime="1.0" />
+          <ErrorTolerance Absolut="1.0E-9" Relative="1.0E-9" />
+          <OutputOptions KeepEvery="50" KeepAtMost="1000" />
+          <NumberProcessors>1</NumberProcessors>
+        </SolverTaskDescription>
+        <MathOverrides>
+          <Constant Name="Js">5502.280000000001</Constant>
+        </MathOverrides>
+        <MeshSpecification>
+          <Size X="111" Y="45" Z="1" />
+        </MeshSpecification>
+        <Version Name="Simulation 3" KeyValue="13736883" BranchId="2800140" Archived="0" Date="21-Jul-2005 09:31:56" FromVersionable="false">
+          <Owner Name="CMC" Identifier="2794180" />
+          <GroupAccess Type="1" />
+          <ParentSimRef KeyValue="2800139" />
+        </Version>
+      </Simulation>
+      <SpatialObjects>
+        <SpatialObject Name="vobj_extracellular0" Type="Volume" subVolume="extracellular" regionId="0">
+          <QuantityCategoryList>
+            <QuantityCategory Name="VolumeCentroid" Enabled="false" />
+            <QuantityCategory Name="InteriorVelocity" Enabled="false" />
+            <QuantityCategory Name="VolumeRegionSize" Enabled="true" />
+          </QuantityCategoryList>
+        </SpatialObject>
+        <SpatialObject Name="vobj_cytosol1" Type="Volume" subVolume="cytosol" regionId="1">
+          <QuantityCategoryList>
+            <QuantityCategory Name="VolumeCentroid" Enabled="false" />
+            <QuantityCategory Name="InteriorVelocity" Enabled="false" />
+            <QuantityCategory Name="VolumeRegionSize" Enabled="true" />
+          </QuantityCategoryList>
+        </SpatialObject>
+        <SpatialObject Name="sobj_cytosol1_extracellular0" Type="Surface" subVolumeInside="cytosol" regionIdInside="1" subVolumeOutside="extracellular" regionIdOutside="0">
+          <QuantityCategoryList>
+            <QuantityCategory Name="SurfaceNormal" Enabled="false" />
+            <QuantityCategory Name="SurfaceVelocity" Enabled="false" />
+            <QuantityCategory Name="DistanceToSurface" Enabled="false" />
+            <QuantityCategory Name="DirectionToSurface" Enabled="false" />
+            <QuantityCategory Name="SurfaceSize" Enabled="true" />
+          </QuantityCategoryList>
+        </SpatialObject>
+      </SpatialObjects>
+      <Version Name="No Ca or Fura Diff" KeyValue="13736960" BranchId="2800099" Archived="0" Date="21-Jul-2005 09:43:06" FromVersionable="false">
+        <Owner Name="CMC" Identifier="2794180" />
+        <GroupAccess Type="1" />
+        <Annotation>(cloned from NE_Full_N1E_demo) Ca and Fura diffusion clamped to zero</Annotation>
+      </Version>
+      <MicroscopeMeasurement Name="fluor">
+        <ConvolutionKernel Type="ProjectionZKernel" />
+      </MicroscopeMeasurement>
+    </SimulationSpec>
+    <Version Name="InsP3 dependent Calcium Release" KeyValue="13737035" BranchId="2798879" Archived="0" Date="21-Jul-2005 09:44:31" FromVersionable="false">
+      <Owner Name="CMC" Identifier="2794180" />
+      <GroupAccess Type="0" />
+      <Annotation>Fink, C.C., B. Slepchenko, I.I. Moraru, J. Schaff, J. Watras, and L.M. Loew. 1999. Morphological control of inositol-1,4,5-trisphosphate-dependent signals. Journal of Cell Biology. 147:929-935.
+Fink, C.C., B. Slepchenko, I.I. Moraru, J. Watras, J. Schaff, and L.M. Loew. 2000. An image-based model of calcium waves in differentiated neuroblastoma cells. Biophysical Journal. 79:163-183.</Annotation>
+    </Version>
+    <pathwayModel>
+      <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:bp="http://www.biopax.org/release/biopax-level3.owl#" version="3.0" />
+    </pathwayModel>
+    <relationshipModel>
+      <RMNS version="3.0" />
+    </relationshipModel>
+    <vcmetadata>
+      <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" />
+      <nonrdfAnnotationList>
+        <nonrdfAnnotation vcid="Species(IP3ReceptorCalciumInhibitionSiteUnbound)">
+          <freetext>IP3ReceptorCalciumInhibitionSiteUnbound</freetext>
+        </nonrdfAnnotation>
+        <nonrdfAnnotation vcid="Species(IP3ReceptorCalciumInhibitionSiteBound)">
+          <freetext>IP3ReceptorCalciumInhibitionSiteBound</freetext>
+        </nonrdfAnnotation>
+        <nonrdfAnnotation vcid="Species(CalciumBufferBound)">
+          <freetext>CalciumBufferBound</freetext>
+        </nonrdfAnnotation>
+        <nonrdfAnnotation vcid="Species(Fura2_bound)">
+          <freetext>Fura2_bound</freetext>
+        </nonrdfAnnotation>
+        <nonrdfAnnotation vcid="Species(ER)">
+          <freetext>ERdistribution</freetext>
+        </nonrdfAnnotation>
+        <nonrdfAnnotation vcid="Species(IP3)">
+          <freetext>IP3</freetext>
+        </nonrdfAnnotation>
+        <nonrdfAnnotation vcid="Species(IP3ReceptorCalciumActivationSiteUnbound)">
+          <freetext>IP3ReceptorCalciumActivationSiteUnbound</freetext>
+        </nonrdfAnnotation>
+        <nonrdfAnnotation vcid="Species(CalciumBufferUnbound)">
+          <freetext>CalciumBufferUnbound</freetext>
+        </nonrdfAnnotation>
+        <nonrdfAnnotation vcid="BioModel(InsP3 dependent Calcium Release)">
+          <freetext>Fink, C.C., B. Slepchenko, I.I. Moraru, J. Schaff, J. Watras, and L.M. Loew. 1999. Morphological control of inositol-1,4,5-trisphosphate-dependent signals. Journal of Cell Biology. 147:929-935.
+Fink, C.C., B. Slepchenko, I.I. Moraru, J. Watras, J. Schaff, and L.M. Loew. 2000. An image-based model of calcium waves in differentiated neuroblastoma cells. Biophysical Journal. 79:163-183.</freetext>
+        </nonrdfAnnotation>
+        <nonrdfAnnotation vcid="Species(Calcium)">
+          <freetext>Calcium</freetext>
+        </nonrdfAnnotation>
+        <nonrdfAnnotation vcid="Species(IP3ReceptorCalciumActivationSiteBound)">
+          <freetext>IP3ReceptorCalciumActivationSiteBound</freetext>
+        </nonrdfAnnotation>
+        <nonrdfAnnotation vcid="Species(SERCA)">
+          <freetext>SERCA</freetext>
+        </nonrdfAnnotation>
+        <nonrdfAnnotation vcid="Species(Fura2_unbound)">
+          <freetext>Fura2_unbound</freetext>
+        </nonrdfAnnotation>
+      </nonrdfAnnotationList>
+      <uriBindingList />
+    </vcmetadata>
+  </BioModel>
+</vcml>
+

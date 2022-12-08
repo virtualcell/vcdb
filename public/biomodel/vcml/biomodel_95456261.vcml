@@ -1,0 +1,988 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--This biomodel was generated in VCML Version Alpha_Version_7.4.0_build_87-->
+<vcml xmlns="http://sourceforge.net/projects/vcell/vcml" Version="Alpha_Version_7.4.0_build_87">
+  <BioModel Name="Caoscillation evol">
+    <Model Name="unnamed">
+      <ModelParameters>
+        <Parameter Name="v1" Role="user defined" Unit="s-1">800.0</Parameter>
+        <Parameter Name="v3" Role="user defined" Unit="uM.s-1">2.0</Parameter>
+        <Parameter Name="v7" Role="user defined" Unit="s-1">1.0</Parameter>
+        <Parameter Name="v8" Role="user defined" Unit="s-1">0.15</Parameter>
+        <Parameter Name="k6" Role="user defined" Unit="uM">1.1</Parameter>
+        <Parameter Name="a1" Role="user defined" Unit="uM-1.s-1">50.0</Parameter>
+        <Parameter Name="a2" Role="user defined" Unit="uM-1.s-1">1.0</Parameter>
+        <Parameter Name="a3" Role="user defined" Unit="uM-1.s-1">20.0</Parameter>
+        <Parameter Name="a4" Role="user defined" Unit="uM-1.s-1">0.9</Parameter>
+        <Parameter Name="b1" Role="user defined" Unit="s-1">6.5</Parameter>
+        <Parameter Name="b2" Role="user defined" Unit="s-1">0.5</Parameter>
+        <Parameter Name="b3" Role="user defined" Unit="s-1">14.5</Parameter>
+        <Parameter Name="b4" Role="user defined" Unit="s-1">0.0806</Parameter>
+        <Parameter Name="c0" Role="user defined" Unit="uM">2.0</Parameter>
+        <Parameter Name="c2" Role="user defined" Unit="tbd">0.185</Parameter>
+        <Parameter Name="c9" Role="user defined" Unit="s">0.05</Parameter>
+        <Parameter Name="Kd1" Role="user defined" Unit="uM">0.145</Parameter>
+        <Parameter Name="Kd2" Role="user defined" Unit="uM">0.542</Parameter>
+        <Parameter Name="IP3_" Role="user defined" Unit="uM">0.015</Parameter>
+        <Parameter Name="v4" Role="user defined" Unit="uM.s-1">0.5</Parameter>
+        <Parameter Name="k4" Role="user defined" Unit="uM">0.09</Parameter>
+        <Parameter Name="beta" Role="user defined" Unit="tbd">0.237</Parameter>
+        <Parameter Name="k" Role="user defined" Unit="tbd">0.166666666</Parameter>
+        <Parameter Name="m" Role="user defined" Unit="tbd">2.0</Parameter>
+        <Parameter Name="n" Role="user defined" Unit="tbd">2.0</Parameter>
+        <Parameter Name="p" Role="user defined" Unit="tbd">4.0</Parameter>
+        <Parameter Name="V_M2" Role="user defined" Unit="tbd">1.0753</Parameter>
+        <Parameter Name="V_M3" Role="user defined" Unit="tbd">10.8333333</Parameter>
+        <Parameter Name="vone" Role="user defined" Unit="tbd">0.056666</Parameter>
+        <Parameter Name="g8" Role="user defined" Unit="tbd">0.0</Parameter>
+        <Parameter Name="g9" Role="user defined" Unit="tbd">0.0</Parameter>
+        <Parameter Name="K_2" Role="user defined" Unit="tbd">1.0</Parameter>
+        <Parameter Name="K_A" Role="user defined" Unit="tbd">0.9</Parameter>
+        <Parameter Name="K_R" Role="user defined" Unit="tbd">2.0</Parameter>
+        <Parameter Name="kf" Role="user defined" Unit="tbd">0.0166666666</Parameter>
+        <Parameter Name="kx1" Role="user defined" Unit="tbd">6.0</Parameter>
+      </ModelParameters>
+      <Compound Name="s1" />
+      <Compound Name="s3" />
+      <Compound Name="s0" />
+      <Compound Name="s4" />
+      <Compound Name="s5" />
+      <Compound Name="s2" />
+      <Feature Name="intracellular" KeyValue="95456021" />
+      <Feature Name="ER_inside" KeyValue="95456023" />
+      <Membrane InsideFeature="ER_inside" OutsideFeature="intracellular" PositiveFeature="ER_inside" NegativeFeature="intracellular" MembraneVoltage="Voltage_ERmembrane" Name="ERmembrane" KeyValue="95456025" />
+      <LocalizedCompound Name="Ca2_ER" CompoundRef="s1" Structure="ER_inside" OverrideName="true" KeyValue="95456027" />
+      <LocalizedCompound Name="Ca2_i" CompoundRef="s1" Structure="intracellular" OverrideName="true" KeyValue="95456028" />
+      <LocalizedCompound Name="Z" CompoundRef="s3" Structure="intracellular" OverrideName="true" KeyValue="95456029" />
+      <LocalizedCompound Name="IP3" CompoundRef="s0" Structure="intracellular" OverrideName="true" KeyValue="95456030" />
+      <LocalizedCompound Name="x0" CompoundRef="s4" Structure="ERmembrane" OverrideName="true" KeyValue="95456031" />
+      <LocalizedCompound Name="Y" CompoundRef="s5" Structure="intracellular" OverrideName="true" KeyValue="95456032" />
+      <LocalizedCompound Name="xother" CompoundRef="s2" Structure="ERmembrane" OverrideName="true" KeyValue="95456033" />
+      <SimpleReaction Structure="intracellular" Name="dX" Reversible="true" FluxOption="MolecularOnly" KeyValue="95456034">
+        <Product LocalizedCompoundRef="Y" Stoichiometry="1" KeyValue="95456035" />
+        <Modifier LocalizedCompoundRef="Z" />
+        <Kinetics KineticsType="GeneralKinetics">
+          <Parameter Name="J" Role="reaction rate" Unit="uM.s-1">(V2 - V3 - (kf * Y))</Parameter>
+          <Parameter Name="V2" Role="user defined" Unit="uM.s-1">(V_M2 * (Z ^ n) / ((K_2 ^ n) + (Z ^ n)))</Parameter>
+          <Parameter Name="V3" Role="user defined" Unit="uM.s-1">1.0</Parameter>
+        </Kinetics>
+      </SimpleReaction>
+      <SimpleReaction Structure="intracellular" Name="PLC" Reversible="true" FluxOption="MolecularOnly" KeyValue="95456038">
+        <Product LocalizedCompoundRef="IP3" Stoichiometry="1" KeyValue="95456039" />
+        <Modifier LocalizedCompoundRef="Ca2_i" />
+        <Modifier LocalizedCompoundRef="Y" />
+        <Kinetics KineticsType="GeneralKinetics">
+          <Parameter Name="J" Role="reaction rate" Unit="uM.s-1">(v6 * PLC_conc * (1.0 - exp( - (0.03333333333333333 * t))) * (Ca2_i + ((1.0 - alpha) * k6)) * kx1 / (Ca2_i + k6) / (kx1 + Y))</Parameter>
+          <Parameter Name="v6" Role="user defined" Unit="uM.s-1">0.36</Parameter>
+          <Parameter Name="alpha" Role="user defined" Unit="1">1.0</Parameter>
+          <Parameter Name="PLC_conc" Role="user defined" Unit="1">1.0</Parameter>
+        </Kinetics>
+      </SimpleReaction>
+      <SimpleReaction Structure="intracellular" Name="bunkai" Reversible="true" FluxOption="MolecularOnly" KeyValue="95456041">
+        <Reactant LocalizedCompoundRef="IP3" Stoichiometry="1" KeyValue="95456042" />
+        <Kinetics KineticsType="GeneralKinetics">
+          <Parameter Name="J" Role="reaction rate" Unit="uM.s-1">(v7 * IP3)</Parameter>
+        </Kinetics>
+      </SimpleReaction>
+      <SimpleReaction Structure="intracellular" Name="dCa2_int" Reversible="true" FluxOption="MolecularOnly" KeyValue="95456043">
+        <Product LocalizedCompoundRef="Z" Stoichiometry="1" KeyValue="95456044" />
+        <Modifier LocalizedCompoundRef="Y" />
+        <Kinetics KineticsType="GeneralKinetics">
+          <Parameter Name="J" Role="reaction rate" Unit="uM.s-1">(Vin - V2 + V3 + (kf * Y) - (k * Z))</Parameter>
+          <Parameter Name="Vin" Role="user defined" Unit="uM.s-1">(v0 + (vone * beta))</Parameter>
+          <Parameter Name="V2" Role="user defined" Unit="uM.s-1">(V_M2 * (Z ^ n) / ((K_2 ^ n) + (Z ^ n)))</Parameter>
+          <Parameter Name="V3" Role="user defined" Unit="uM.s-1">(beta * V_M3 * (Z ^ p) * (Y ^ m) / ((K_A ^ p) + (Z ^ p)) / ((K_R ^ m) + (Y ^ m)))</Parameter>
+          <Parameter Name="v0" Role="user defined" Unit="uM.s-1">0.056666</Parameter>
+        </Kinetics>
+      </SimpleReaction>
+      <SimpleReaction Structure="ERmembrane" Name="CaGate" Reversible="true" FluxOption="MolecularOnly" KeyValue="95456046">
+        <Reactant LocalizedCompoundRef="xother" Stoichiometry="1" KeyValue="95456047" />
+        <Product LocalizedCompoundRef="x0" Stoichiometry="1" KeyValue="95456048" />
+        <Modifier LocalizedCompoundRef="Ca2_i" />
+        <Modifier LocalizedCompoundRef="IP3" />
+        <Kinetics KineticsType="GeneralKinetics">
+          <Parameter Name="J" Role="reaction rate" Unit="molecules.um-2.s-1">( - (Ca2_i * x0 * a4) + (b4 * (1.0 - x0 - x1_ - x2_)))</Parameter>
+          <Parameter Name="I" Role="inward current density" Unit="pA.um-2">0.0</Parameter>
+          <Parameter Name="netValence" Role="net charge valence" Unit="1">1.0</Parameter>
+          <Parameter Name="x2_" Role="user defined" Unit="molecules.um-2">(IP3 * (1.0 - x0 - x1_) / (IP3 + ((Kd2 - IP3_) * (1.0 + (b2 / a2))) - (b1 * b2 / a1 / a2)))</Parameter>
+          <Parameter Name="x1_" Role="user defined" Unit="molecules.um-2">(IP3 * x0 / (Kd1 - IP3_))</Parameter>
+        </Kinetics>
+      </SimpleReaction>
+      <FluxStep Name="Ca2_outwardflux" Structure="ERmembrane" Reversible="true" FluxOption="MolecularOnly" KeyValue="95456049">
+        <Reactant LocalizedCompoundRef="Ca2_i" Stoichiometry="1" KeyValue="95456050" />
+        <Product LocalizedCompoundRef="Ca2_ER" Stoichiometry="1" KeyValue="95456051" />
+        <Modifier LocalizedCompoundRef="IP3" />
+        <Modifier LocalizedCompoundRef="x0" />
+        <Kinetics KineticsType="GeneralKinetics">
+          <Parameter Name="J" Role="reaction rate" Unit="uM.um.s-1">- (((v1 * ((IP3 * x0 / (Kd1 - IP3_)) ^ 4.0)) + v8) * (((c0 - Ca2_i) / c2) - Ca2_i) * c2)</Parameter>
+          <Parameter Name="I" Role="inward current density" Unit="pA.um-2">0.0</Parameter>
+          <Parameter Name="netValence" Role="net charge valence" Unit="1">1.0</Parameter>
+        </Kinetics>
+      </FluxStep>
+      <FluxStep Name="ATPdependentCa2channel" Structure="ERmembrane" Reversible="true" FluxOption="MolecularOnly" KeyValue="95456054">
+        <Reactant LocalizedCompoundRef="Ca2_i" Stoichiometry="1" KeyValue="95456055" />
+        <Product LocalizedCompoundRef="Ca2_ER" Stoichiometry="1" KeyValue="95456056" />
+        <Kinetics KineticsType="GeneralKinetics">
+          <Parameter Name="J" Role="reaction rate" Unit="uM.um.s-1">(v4 * (Ca2_i ^ 2.0) / ((Ca2_i ^ 2.0) + (k4 ^ 2.0)))</Parameter>
+          <Parameter Name="I" Role="inward current density" Unit="pA.um-2">0.0</Parameter>
+          <Parameter Name="netValence" Role="net charge valence" Unit="1">1.0</Parameter>
+        </Kinetics>
+      </FluxStep>
+      <Diagram Name="c0" Structure="intracellular">
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="IP3" LocationX="98" LocationY="143" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="full" SimpleReactionRef="bunkai" LocationX="122" LocationY="122" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="full" SimpleReactionRef="dX" LocationX="19" LocationY="181" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="xother" LocationX="14" LocationY="64" />
+        <FluxReactionShape NodeReferenceModeAttrTag="full" FluxReactionRef="ATPdependentCa2channel" LocationX="73" LocationY="194" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="Z" LocationX="117" LocationY="44" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="Ca2_i" LocationX="138" LocationY="177" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="Ca2_ER" LocationX="53" LocationY="152" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="full" SimpleReactionRef="PLC" LocationX="99" LocationY="197" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="full" SimpleReactionRef="CaGate" LocationX="61" LocationY="66" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="x0" LocationX="110" LocationY="64" />
+        <FluxReactionShape NodeReferenceModeAttrTag="full" FluxReactionRef="Ca2_outwardflux" LocationX="57" LocationY="118" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="Y" LocationX="43" LocationY="102" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="full" SimpleReactionRef="dCa2_int" LocationX="48" LocationY="38" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="IP3" LocationX="98" LocationY="143" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="molecule" SimpleReactionRef="bunkai" LocationX="122" LocationY="122" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="molecule" SimpleReactionRef="dX" LocationX="19" LocationY="181" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="xother" LocationX="14" LocationY="64" />
+        <FluxReactionShape NodeReferenceModeAttrTag="molecule" FluxReactionRef="ATPdependentCa2channel" LocationX="73" LocationY="194" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="Z" LocationX="117" LocationY="44" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="Ca2_i" LocationX="138" LocationY="177" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="Ca2_ER" LocationX="53" LocationY="152" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="molecule" SimpleReactionRef="PLC" LocationX="99" LocationY="197" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="molecule" SimpleReactionRef="CaGate" LocationX="61" LocationY="66" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="x0" LocationX="110" LocationY="64" />
+        <FluxReactionShape NodeReferenceModeAttrTag="molecule" FluxReactionRef="Ca2_outwardflux" LocationX="57" LocationY="118" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="Y" LocationX="43" LocationY="102" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="molecule" SimpleReactionRef="dCa2_int" LocationX="48" LocationY="38" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="IP3" LocationX="98" LocationY="143" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="rule" SimpleReactionRef="bunkai" LocationX="122" LocationY="122" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="rule" SimpleReactionRef="dX" LocationX="19" LocationY="181" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="xother" LocationX="14" LocationY="64" />
+        <FluxReactionShape NodeReferenceModeAttrTag="rule" FluxReactionRef="ATPdependentCa2channel" LocationX="73" LocationY="194" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="Z" LocationX="117" LocationY="44" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="Ca2_i" LocationX="138" LocationY="177" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="Ca2_ER" LocationX="53" LocationY="152" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="rule" SimpleReactionRef="PLC" LocationX="99" LocationY="197" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="rule" SimpleReactionRef="CaGate" LocationX="61" LocationY="66" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="x0" LocationX="110" LocationY="64" />
+        <FluxReactionShape NodeReferenceModeAttrTag="rule" FluxReactionRef="Ca2_outwardflux" LocationX="57" LocationY="118" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="Y" LocationX="43" LocationY="102" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="rule" SimpleReactionRef="dCa2_int" LocationX="48" LocationY="38" />
+      </Diagram>
+      <Diagram Name="Membrane0" Structure="ERmembrane">
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="IP3" LocationX="98" LocationY="143" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="full" SimpleReactionRef="bunkai" LocationX="122" LocationY="122" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="full" SimpleReactionRef="dX" LocationX="19" LocationY="181" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="xother" LocationX="14" LocationY="64" />
+        <FluxReactionShape NodeReferenceModeAttrTag="full" FluxReactionRef="ATPdependentCa2channel" LocationX="73" LocationY="194" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="Z" LocationX="117" LocationY="44" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="Ca2_i" LocationX="138" LocationY="177" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="Ca2_ER" LocationX="53" LocationY="152" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="full" SimpleReactionRef="PLC" LocationX="99" LocationY="197" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="full" SimpleReactionRef="CaGate" LocationX="61" LocationY="66" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="x0" LocationX="110" LocationY="64" />
+        <FluxReactionShape NodeReferenceModeAttrTag="full" FluxReactionRef="Ca2_outwardflux" LocationX="57" LocationY="118" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="Y" LocationX="43" LocationY="102" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="full" SimpleReactionRef="dCa2_int" LocationX="48" LocationY="38" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="IP3" LocationX="98" LocationY="143" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="molecule" SimpleReactionRef="bunkai" LocationX="122" LocationY="122" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="molecule" SimpleReactionRef="dX" LocationX="19" LocationY="181" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="xother" LocationX="14" LocationY="64" />
+        <FluxReactionShape NodeReferenceModeAttrTag="molecule" FluxReactionRef="ATPdependentCa2channel" LocationX="73" LocationY="194" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="Z" LocationX="117" LocationY="44" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="Ca2_i" LocationX="138" LocationY="177" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="Ca2_ER" LocationX="53" LocationY="152" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="molecule" SimpleReactionRef="PLC" LocationX="99" LocationY="197" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="molecule" SimpleReactionRef="CaGate" LocationX="61" LocationY="66" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="x0" LocationX="110" LocationY="64" />
+        <FluxReactionShape NodeReferenceModeAttrTag="molecule" FluxReactionRef="Ca2_outwardflux" LocationX="57" LocationY="118" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="Y" LocationX="43" LocationY="102" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="molecule" SimpleReactionRef="dCa2_int" LocationX="48" LocationY="38" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="IP3" LocationX="98" LocationY="143" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="rule" SimpleReactionRef="bunkai" LocationX="122" LocationY="122" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="rule" SimpleReactionRef="dX" LocationX="19" LocationY="181" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="xother" LocationX="14" LocationY="64" />
+        <FluxReactionShape NodeReferenceModeAttrTag="rule" FluxReactionRef="ATPdependentCa2channel" LocationX="73" LocationY="194" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="Z" LocationX="117" LocationY="44" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="Ca2_i" LocationX="138" LocationY="177" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="Ca2_ER" LocationX="53" LocationY="152" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="rule" SimpleReactionRef="PLC" LocationX="99" LocationY="197" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="rule" SimpleReactionRef="CaGate" LocationX="61" LocationY="66" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="x0" LocationX="110" LocationY="64" />
+        <FluxReactionShape NodeReferenceModeAttrTag="rule" FluxReactionRef="Ca2_outwardflux" LocationX="57" LocationY="118" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="Y" LocationX="43" LocationY="102" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="rule" SimpleReactionRef="dCa2_int" LocationX="48" LocationY="38" />
+      </Diagram>
+      <Diagram Name="c1" Structure="ER_inside">
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="IP3" LocationX="98" LocationY="143" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="full" SimpleReactionRef="bunkai" LocationX="122" LocationY="122" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="full" SimpleReactionRef="dX" LocationX="19" LocationY="181" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="xother" LocationX="14" LocationY="64" />
+        <FluxReactionShape NodeReferenceModeAttrTag="full" FluxReactionRef="ATPdependentCa2channel" LocationX="73" LocationY="194" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="Z" LocationX="117" LocationY="44" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="Ca2_i" LocationX="138" LocationY="177" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="Ca2_ER" LocationX="53" LocationY="152" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="full" SimpleReactionRef="PLC" LocationX="99" LocationY="197" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="full" SimpleReactionRef="CaGate" LocationX="61" LocationY="66" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="x0" LocationX="110" LocationY="64" />
+        <FluxReactionShape NodeReferenceModeAttrTag="full" FluxReactionRef="Ca2_outwardflux" LocationX="57" LocationY="118" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="Y" LocationX="43" LocationY="102" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="full" SimpleReactionRef="dCa2_int" LocationX="48" LocationY="38" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="IP3" LocationX="98" LocationY="143" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="molecule" SimpleReactionRef="bunkai" LocationX="122" LocationY="122" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="molecule" SimpleReactionRef="dX" LocationX="19" LocationY="181" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="xother" LocationX="14" LocationY="64" />
+        <FluxReactionShape NodeReferenceModeAttrTag="molecule" FluxReactionRef="ATPdependentCa2channel" LocationX="73" LocationY="194" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="Z" LocationX="117" LocationY="44" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="Ca2_i" LocationX="138" LocationY="177" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="Ca2_ER" LocationX="53" LocationY="152" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="molecule" SimpleReactionRef="PLC" LocationX="99" LocationY="197" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="molecule" SimpleReactionRef="CaGate" LocationX="61" LocationY="66" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="x0" LocationX="110" LocationY="64" />
+        <FluxReactionShape NodeReferenceModeAttrTag="molecule" FluxReactionRef="Ca2_outwardflux" LocationX="57" LocationY="118" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="Y" LocationX="43" LocationY="102" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="molecule" SimpleReactionRef="dCa2_int" LocationX="48" LocationY="38" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="IP3" LocationX="98" LocationY="143" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="rule" SimpleReactionRef="bunkai" LocationX="122" LocationY="122" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="rule" SimpleReactionRef="dX" LocationX="19" LocationY="181" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="xother" LocationX="14" LocationY="64" />
+        <FluxReactionShape NodeReferenceModeAttrTag="rule" FluxReactionRef="ATPdependentCa2channel" LocationX="73" LocationY="194" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="Z" LocationX="117" LocationY="44" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="Ca2_i" LocationX="138" LocationY="177" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="Ca2_ER" LocationX="53" LocationY="152" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="rule" SimpleReactionRef="PLC" LocationX="99" LocationY="197" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="rule" SimpleReactionRef="CaGate" LocationX="61" LocationY="66" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="x0" LocationX="110" LocationY="64" />
+        <FluxReactionShape NodeReferenceModeAttrTag="rule" FluxReactionRef="Ca2_outwardflux" LocationX="57" LocationY="118" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="Y" LocationX="43" LocationY="102" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="rule" SimpleReactionRef="dCa2_int" LocationX="48" LocationY="38" />
+      </Diagram>
+      <Version Name="unnamed" KeyValue="95456013" BranchId="74968488" Archived="0" Date="03-Jul-2015 06:36:03" FromVersionable="false">
+        <Owner Name="moutoutan" Identifier="73424874" />
+        <GroupAccess Type="1" />
+      </Version>
+      <ModelUnitSystem VolumeSubstanceUnit="uM.um3" MembraneSubstanceUnit="molecules" LumpedReactionSubstanceUnit="molecules" VolumeUnit="um3" AreaUnit="um2" LengthUnit="um" TimeUnit="s" />
+    </Model>
+    <SimulationSpec Name="Application0" Stochastic="false" UseConcentration="true" RuleBased="false" MassConservationModelReduction="true" InsufficientIterations="false" InsufficientMaxMolecules="false">
+      <NetworkConstraints RbmMaxIteration="1" RbmMaxMoleculesPerSpecies="10" RbmSpeciesLimit="800" RbmReactionsLimit="2500" />
+      <Annotation />
+      <Geometry Name="non-spatial" Dimension="0">
+        <Extent X="10.0" Y="10.0" Z="10.0" />
+        <Origin X="0.0" Y="0.0" Z="0.0" />
+        <SubVolume Name="Compartment" Handle="0" Type="Compartmental" KeyValue="74968576" />
+        <Version Name="non-spatial" KeyValue="74968572" BranchId="74968573" Archived="0" Date="18-Sep-2012 02:30:36" FromVersionable="false">
+          <Owner Name="moutoutan" Identifier="73424874" />
+          <GroupAccess Type="1" />
+        </Version>
+      </Geometry>
+      <GeometryContext>
+        <FeatureMapping Feature="intracellular" GeometryClass="Compartment" SubVolume="Compartment" Size="500.0">
+          <BoundariesTypes Xm="Flux" Xp="Flux" Ym="Flux" Yp="Flux" Zm="Flux" Zp="Flux" />
+        </FeatureMapping>
+        <FeatureMapping Feature="ER_inside" GeometryClass="Compartment" SubVolume="Compartment" Size="500.0">
+          <BoundariesTypes Xm="Flux" Xp="Flux" Ym="Flux" Yp="Flux" Zm="Flux" Zp="Flux" />
+        </FeatureMapping>
+        <MembraneMapping Membrane="ERmembrane" SurfaceToVolumeRatio="28.208" VolumeFraction="0.5" Size="14104.0" CalculateVoltage="false" SpecificCapacitance="1.0" InitialVoltage="0.0" GeometryClass="Compartment">
+          <BoundariesTypes Xm="Flux" Xp="Flux" Ym="Flux" Yp="Flux" Zm="Flux" Zp="Flux" />
+        </MembraneMapping>
+      </GeometryContext>
+      <ReactionContext>
+        <LocalizedCompoundSpec LocalizedCompoundRef="Ca2_i" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>0.1</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="Z" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>0.37</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="IP3" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>0.0</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="Y" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>0.37</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="Ca2_ER" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>((c0 - Ca2_i) / c2)</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="x0" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>0.0</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="xother" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>1.0</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <ReactionSpec ReactionStepRef="dX" ReactionMapping="included" />
+        <ReactionSpec ReactionStepRef="PLC" ReactionMapping="included" />
+        <ReactionSpec ReactionStepRef="bunkai" ReactionMapping="included" />
+        <ReactionSpec ReactionStepRef="dCa2_int" ReactionMapping="included" />
+        <ReactionSpec ReactionStepRef="CaGate" ReactionMapping="included" />
+        <ReactionSpec ReactionStepRef="Ca2_outwardflux" ReactionMapping="included" />
+        <ReactionSpec ReactionStepRef="ATPdependentCa2channel" ReactionMapping="included" />
+      </ReactionContext>
+      <MathDescription Name="Application0_generated">
+        <Constant Name="_F_">96480.0</Constant>
+        <Constant Name="_F_nmol_">9.648E-5</Constant>
+        <Constant Name="_K_GHK_">1.0E-9</Constant>
+        <Constant Name="_N_pmol_">6.02E11</Constant>
+        <Constant Name="_PI_">3.141592653589793</Constant>
+        <Constant Name="_R_">8314.0</Constant>
+        <Constant Name="_T_">300.0</Constant>
+        <Constant Name="a1">50.0</Constant>
+        <Constant Name="a2">1.0</Constant>
+        <Constant Name="a3">20.0</Constant>
+        <Constant Name="a4">0.9</Constant>
+        <Constant Name="alpha">1.0</Constant>
+        <Constant Name="b1">6.5</Constant>
+        <Constant Name="b2">0.5</Constant>
+        <Constant Name="b3">14.5</Constant>
+        <Constant Name="b4">0.0806</Constant>
+        <Constant Name="beta">0.237</Constant>
+        <Constant Name="c0">2.0</Constant>
+        <Constant Name="c2">0.185</Constant>
+        <Constant Name="c9">0.05</Constant>
+        <Constant Name="Ca2_i_init_uM">0.1</Constant>
+        <Constant Name="g8">0.0</Constant>
+        <Constant Name="g9">0.0</Constant>
+        <Constant Name="IP3_">0.015</Constant>
+        <Constant Name="IP3_init_uM">0.0</Constant>
+        <Constant Name="k">0.166666666</Constant>
+        <Constant Name="k4">0.09</Constant>
+        <Constant Name="k6">1.1</Constant>
+        <Constant Name="K_2">1.0</Constant>
+        <Constant Name="K_A">0.9</Constant>
+        <Constant Name="K_millivolts_per_volt">1000.0</Constant>
+        <Constant Name="K_R">2.0</Constant>
+        <Constant Name="Kd1">0.145</Constant>
+        <Constant Name="Kd2">0.542</Constant>
+        <Constant Name="kf">0.0166666666</Constant>
+        <Constant Name="KMOLE">(1.0 / 602.0)</Constant>
+        <Constant Name="kx1">6.0</Constant>
+        <Constant Name="m">2.0</Constant>
+        <Constant Name="n">2.0</Constant>
+        <Constant Name="netValence_ATPdependentCa2channel">1.0</Constant>
+        <Constant Name="netValence_Ca2_outwardflux">1.0</Constant>
+        <Constant Name="netValence_CaGate">1.0</Constant>
+        <Constant Name="p">4.0</Constant>
+        <Constant Name="PLC_conc">1.0</Constant>
+        <Constant Name="Size_ER_inside">500.0</Constant>
+        <Constant Name="Size_ERmembrane">14104.0</Constant>
+        <Constant Name="Size_intracellular">500.0</Constant>
+        <Constant Name="v0">0.056666</Constant>
+        <Constant Name="v1">800.0</Constant>
+        <Constant Name="v3">2.0</Constant>
+        <Constant Name="V3_dX">1.0</Constant>
+        <Constant Name="v4">0.5</Constant>
+        <Constant Name="v6">0.36</Constant>
+        <Constant Name="v7">1.0</Constant>
+        <Constant Name="v8">0.15</Constant>
+        <Constant Name="V_M2">1.0753</Constant>
+        <Constant Name="V_M3">10.8333333</Constant>
+        <Constant Name="Voltage_ERmembrane">0.0</Constant>
+        <Constant Name="vone">0.056666</Constant>
+        <Constant Name="x0_init_molecules_um_2">0.0</Constant>
+        <Constant Name="xother_init_molecules_um_2">1.0</Constant>
+        <Constant Name="Y_init_uM">0.37</Constant>
+        <Constant Name="Z_init_uM">0.37</Constant>
+        <VolumeVariable Name="Ca2_ER" Domain="Compartment" />
+        <VolumeVariable Name="IP3" Domain="Compartment" />
+        <VolumeVariable Name="xother" Domain="Compartment" />
+        <VolumeVariable Name="Y" Domain="Compartment" />
+        <VolumeVariable Name="Z" Domain="Compartment" />
+        <Function Name="Ca2_ER_init_uM" Domain="Compartment">((c0 - Ca2_i_init_uM) / c2)</Function>
+        <Function Name="Ca2_i" Domain="Compartment">((K_Ca2_i_total - (Size_ER_inside * Ca2_ER)) / Size_intracellular)</Function>
+        <Function Name="J_ATPdependentCa2channel" Domain="Compartment">(v4 * (Ca2_i ^ 2.0) / ((Ca2_i ^ 2.0) + (k4 ^ 2.0)))</Function>
+        <Function Name="J_bunkai" Domain="Compartment">(v7 * IP3)</Function>
+        <Function Name="J_Ca2_outwardflux" Domain="Compartment">- (((v1 * ((IP3 * x0 / (Kd1 - IP3_)) ^ 4.0)) + v8) * (((c0 - Ca2_i) / c2) - Ca2_i) * c2)</Function>
+        <Function Name="J_CaGate" Domain="Compartment">( - (Ca2_i * x0 * a4) + (b4 * (1.0 - x0 - x1_ - x2_)))</Function>
+        <Function Name="J_dCa2_int" Domain="Compartment">(Vin - V2_dCa2_int + V3_dCa2_int + (kf * Y) - (k * Z))</Function>
+        <Function Name="J_dX" Domain="Compartment">(V2_dX - V3_dX - (kf * Y))</Function>
+        <Function Name="J_PLC" Domain="Compartment">(v6 * PLC_conc * (1.0 - exp( - (0.03333333333333333 * t))) * (Ca2_i + ((1.0 - alpha) * k6)) * kx1 / (Ca2_i + k6) / (kx1 + Y))</Function>
+        <Function Name="K_Ca2_i_total" Domain="Compartment">((Size_intracellular * Ca2_i_init_uM) + (Size_ER_inside * Ca2_ER_init_uM))</Function>
+        <Function Name="K_x0_total" Domain="Compartment">((Size_ERmembrane * UnitFactor_uM_um3_molecules_neg_1 * x0_init_molecules_um_2) + (Size_ERmembrane * UnitFactor_uM_um3_molecules_neg_1 * xother_init_molecules_um_2))</Function>
+        <Function Name="KFlux_ERmembrane_ER_inside" Domain="Compartment">(Size_ERmembrane / Size_ER_inside)</Function>
+        <Function Name="KFlux_ERmembrane_intracellular" Domain="Compartment">(Size_ERmembrane / Size_intracellular)</Function>
+        <Function Name="UnitFactor_uM_um3_molecules_neg_1">(1.0 / 602.0)</Function>
+        <Function Name="V2_dCa2_int" Domain="Compartment">(V_M2 * (Z ^ n) / ((K_2 ^ n) + (Z ^ n)))</Function>
+        <Function Name="V2_dX" Domain="Compartment">(V_M2 * (Z ^ n) / ((K_2 ^ n) + (Z ^ n)))</Function>
+        <Function Name="V3_dCa2_int" Domain="Compartment">(beta * V_M3 * (Z ^ p) * (Y ^ m) / ((K_A ^ p) + (Z ^ p)) / ((K_R ^ m) + (Y ^ m)))</Function>
+        <Function Name="Vin" Domain="Compartment">(v0 + (vone * beta))</Function>
+        <Function Name="x0" Domain="Compartment">((K_x0_total - (Size_ERmembrane * UnitFactor_uM_um3_molecules_neg_1 * xother)) / (Size_ERmembrane * UnitFactor_uM_um3_molecules_neg_1))</Function>
+        <Function Name="x1_" Domain="Compartment">(IP3 * x0 / (Kd1 - IP3_))</Function>
+        <Function Name="x2_" Domain="Compartment">(IP3 * (1.0 - x0 - x1_) / (IP3 + ((Kd2 - IP3_) * (1.0 + (b2 / a2))) - (b1 * b2 / a1 / a2)))</Function>
+        <CompartmentSubDomain Name="Compartment">
+          <BoundaryType Boundary="Xm" Type="Value" />
+          <BoundaryType Boundary="Xp" Type="Value" />
+          <BoundaryType Boundary="Ym" Type="Value" />
+          <BoundaryType Boundary="Yp" Type="Value" />
+          <BoundaryType Boundary="Zm" Type="Value" />
+          <BoundaryType Boundary="Zp" Type="Value" />
+          <OdeEquation Name="Z" SolutionType="Unknown">
+            <Rate>J_dCa2_int</Rate>
+            <Initial>Z_init_uM</Initial>
+          </OdeEquation>
+          <OdeEquation Name="IP3" SolutionType="Unknown">
+            <Rate>(J_PLC - J_bunkai)</Rate>
+            <Initial>IP3_init_uM</Initial>
+          </OdeEquation>
+          <OdeEquation Name="Y" SolutionType="Unknown">
+            <Rate>J_dX</Rate>
+            <Initial>Y_init_uM</Initial>
+          </OdeEquation>
+          <OdeEquation Name="Ca2_ER" SolutionType="Unknown">
+            <Rate>((KFlux_ERmembrane_ER_inside * J_Ca2_outwardflux) + (KFlux_ERmembrane_ER_inside * J_ATPdependentCa2channel))</Rate>
+            <Initial>Ca2_ER_init_uM</Initial>
+          </OdeEquation>
+          <OdeEquation Name="xother" SolutionType="Unknown">
+            <Rate>- J_CaGate</Rate>
+            <Initial>xother_init_molecules_um_2</Initial>
+          </OdeEquation>
+        </CompartmentSubDomain>
+        <Version Name="Application0_generated" KeyValue="95456178" BranchId="74968578" Archived="0" Date="03-Jul-2015 06:36:14" FromVersionable="false">
+          <Owner Name="moutoutan" Identifier="73424874" />
+          <GroupAccess Type="1" />
+        </Version>
+      </MathDescription>
+      <Simulation Name="k6scan">
+        <SolverTaskDescription TaskType="Unsteady" UseSymbolicJacobian="false" Solver="Combined Stiff Solver (IDA/CVODE)">
+          <TimeBound StartTime="0.0" EndTime="30.0" />
+          <TimeStep DefaultTime="0.1" MinTime="1.0E-8" MaxTime="1.0" />
+          <ErrorTolerance Absolut="1.0E-9" Relative="1.0E-9" />
+          <OutputOptions KeepEvery="1" KeepAtMost="1000" />
+          <NumberProcessors>1</NumberProcessors>
+        </SolverTaskDescription>
+        <MathOverrides>
+          <Constant Name="k6" ConstantArraySpec="1001">0.5 to 1.8, 20 values</Constant>
+        </MathOverrides>
+        <Version Name="k6scan" KeyValue="95456199" BranchId="75190963" Archived="0" Date="03-Jul-2015 06:36:14" FromVersionable="false">
+          <Owner Name="moutoutan" Identifier="73424874" />
+          <GroupAccess Type="1" />
+        </Version>
+      </Simulation>
+      <Simulation Name="k4scan">
+        <SolverTaskDescription TaskType="Unsteady" UseSymbolicJacobian="false" Solver="Combined Stiff Solver (IDA/CVODE)">
+          <TimeBound StartTime="0.0" EndTime="40.0" />
+          <TimeStep DefaultTime="0.1" MinTime="1.0E-8" MaxTime="1.0" />
+          <ErrorTolerance Absolut="1.0E-9" Relative="1.0E-9" />
+          <OutputOptions KeepEvery="1" KeepAtMost="1000" />
+          <NumberProcessors>1</NumberProcessors>
+        </SolverTaskDescription>
+        <MathOverrides>
+          <Constant Name="k4" ConstantArraySpec="1001">0.01 to 0.16, 20 values</Constant>
+        </MathOverrides>
+        <Version Name="k4scan" KeyValue="95456201" BranchId="75190966" Archived="0" Date="03-Jul-2015 06:36:14" FromVersionable="false">
+          <Owner Name="moutoutan" Identifier="73424874" />
+          <GroupAccess Type="1" />
+        </Version>
+      </Simulation>
+      <Simulation Name="Normal">
+        <SolverTaskDescription TaskType="Unsteady" UseSymbolicJacobian="false" Solver="Combined Stiff Solver (IDA/CVODE)">
+          <TimeBound StartTime="0.0" EndTime="3000.0" />
+          <TimeStep DefaultTime="0.1" MinTime="1.0E-8" MaxTime="1.0" />
+          <ErrorTolerance Absolut="1.0E-9" Relative="1.0E-9" />
+          <OutputOptions KeepEvery="1" KeepAtMost="5000" />
+          <NumberProcessors>1</NumberProcessors>
+        </SolverTaskDescription>
+        <MathOverrides>
+          <Constant Name="PLC_conc">10.0</Constant>
+          <Constant Name="kx1">13.0</Constant>
+        </MathOverrides>
+        <Version Name="Normal" KeyValue="95456203" BranchId="75193649" Archived="0" Date="03-Jul-2015 06:36:14" FromVersionable="false">
+          <Owner Name="moutoutan" Identifier="73424874" />
+          <GroupAccess Type="1" />
+        </Version>
+      </Simulation>
+      <Simulation Name="IP3_scan">
+        <SolverTaskDescription TaskType="Unsteady" UseSymbolicJacobian="false" Solver="Combined Stiff Solver (IDA/CVODE)">
+          <TimeBound StartTime="0.0" EndTime="40.0" />
+          <TimeStep DefaultTime="0.1" MinTime="1.0E-8" MaxTime="1.0" />
+          <ErrorTolerance Absolut="1.0E-9" Relative="1.0E-9" />
+          <OutputOptions KeepEvery="1" KeepAtMost="1000" />
+          <NumberProcessors>1</NumberProcessors>
+        </SolverTaskDescription>
+        <MathOverrides>
+          <Constant Name="IP3_" ConstantArraySpec="1001">1.0E-5 to 0.1, log, 20 values</Constant>
+        </MathOverrides>
+        <Version Name="IP3_scan" KeyValue="95456205" BranchId="75191998" Archived="0" Date="03-Jul-2015 06:36:14" FromVersionable="false">
+          <Owner Name="moutoutan" Identifier="73424874" />
+          <GroupAccess Type="1" />
+        </Version>
+      </Simulation>
+      <Simulation Name="a1scan">
+        <SolverTaskDescription TaskType="Unsteady" UseSymbolicJacobian="false" Solver="Combined Stiff Solver (IDA/CVODE)">
+          <TimeBound StartTime="0.0" EndTime="40.0" />
+          <TimeStep DefaultTime="0.1" MinTime="1.0E-8" MaxTime="1.0" />
+          <ErrorTolerance Absolut="1.0E-9" Relative="1.0E-9" />
+          <OutputOptions KeepEvery="1" KeepAtMost="1000" />
+          <NumberProcessors>1</NumberProcessors>
+        </SolverTaskDescription>
+        <MathOverrides>
+          <Constant Name="a1" ConstantArraySpec="1001">1.0 to 700.0, 20 values</Constant>
+        </MathOverrides>
+        <Version Name="a1scan" KeyValue="95456207" BranchId="75192300" Archived="0" Date="03-Jul-2015 06:36:14" FromVersionable="false">
+          <Owner Name="moutoutan" Identifier="73424874" />
+          <GroupAccess Type="1" />
+        </Version>
+      </Simulation>
+      <Simulation Name="a2scan">
+        <SolverTaskDescription TaskType="Unsteady" UseSymbolicJacobian="false" Solver="Combined Stiff Solver (IDA/CVODE)">
+          <TimeBound StartTime="0.0" EndTime="40.0" />
+          <TimeStep DefaultTime="0.1" MinTime="1.0E-8" MaxTime="1.0" />
+          <ErrorTolerance Absolut="1.0E-9" Relative="1.0E-9" />
+          <OutputOptions KeepEvery="1" KeepAtMost="1000" />
+          <NumberProcessors>1</NumberProcessors>
+        </SolverTaskDescription>
+        <MathOverrides>
+          <Constant Name="a2" ConstantArraySpec="1001">10.0 to 100.0, 30 values</Constant>
+        </MathOverrides>
+        <Version Name="a2scan" KeyValue="95456209" BranchId="75192173" Archived="0" Date="03-Jul-2015 06:36:14" FromVersionable="false">
+          <Owner Name="moutoutan" Identifier="73424874" />
+          <GroupAccess Type="1" />
+        </Version>
+      </Simulation>
+      <Simulation Name="ERmembranescan">
+        <SolverTaskDescription TaskType="Unsteady" UseSymbolicJacobian="false" Solver="Combined Stiff Solver (IDA/CVODE)">
+          <TimeBound StartTime="0.0" EndTime="40.0" />
+          <TimeStep DefaultTime="0.1" MinTime="1.0E-8" MaxTime="1.0" />
+          <ErrorTolerance Absolut="1.0E-9" Relative="1.0E-9" />
+          <OutputOptions KeepEvery="1" KeepAtMost="1000" />
+          <NumberProcessors>1</NumberProcessors>
+        </SolverTaskDescription>
+        <MathOverrides>
+          <Constant Name="Size_ERmembrane" ConstantArraySpec="1001">10000.0 to 100000.0, log, 10 values</Constant>
+        </MathOverrides>
+        <Version Name="ERmembranescan" KeyValue="95456211" BranchId="75192417" Archived="0" Date="03-Jul-2015 06:36:14" FromVersionable="false">
+          <Owner Name="moutoutan" Identifier="73424874" />
+          <GroupAccess Type="1" />
+        </Version>
+      </Simulation>
+      <Simulation Name="Kd1scan">
+        <SolverTaskDescription TaskType="Unsteady" UseSymbolicJacobian="false" Solver="Combined Stiff Solver (IDA/CVODE)">
+          <TimeBound StartTime="0.0" EndTime="40.0" />
+          <TimeStep DefaultTime="0.1" MinTime="1.0E-8" MaxTime="1.0" />
+          <ErrorTolerance Absolut="1.0E-9" Relative="1.0E-9" />
+          <OutputOptions KeepEvery="1" KeepAtMost="1000" />
+          <NumberProcessors>1</NumberProcessors>
+        </SolverTaskDescription>
+        <MathOverrides>
+          <Constant Name="Kd1" ConstantArraySpec="1001">0.05 to 0.3, log, 20 values</Constant>
+        </MathOverrides>
+        <Version Name="Kd1scan" KeyValue="95456213" BranchId="75192461" Archived="0" Date="03-Jul-2015 06:36:15" FromVersionable="false">
+          <Owner Name="moutoutan" Identifier="73424874" />
+          <GroupAccess Type="1" />
+        </Version>
+      </Simulation>
+      <Simulation Name="Kd1scan detail">
+        <SolverTaskDescription TaskType="Unsteady" UseSymbolicJacobian="false" Solver="Combined Stiff Solver (IDA/CVODE)">
+          <TimeBound StartTime="0.0" EndTime="40.0" />
+          <TimeStep DefaultTime="0.1" MinTime="1.0E-8" MaxTime="1.0" />
+          <ErrorTolerance Absolut="1.0E-9" Relative="1.0E-9" />
+          <OutputOptions KeepEvery="1" KeepAtMost="1000" />
+          <NumberProcessors>1</NumberProcessors>
+        </SolverTaskDescription>
+        <MathOverrides>
+          <Constant Name="Kd1" ConstantArraySpec="1001">0.13 to 0.17, 20 values</Constant>
+        </MathOverrides>
+        <Version Name="Kd1scan detail" KeyValue="95456215" BranchId="75192621" Archived="0" Date="03-Jul-2015 06:36:15" FromVersionable="false">
+          <Owner Name="moutoutan" Identifier="73424874" />
+          <GroupAccess Type="1" />
+        </Version>
+      </Simulation>
+      <Simulation Name="Kd2scan">
+        <SolverTaskDescription TaskType="Unsteady" UseSymbolicJacobian="false" Solver="Combined Stiff Solver (IDA/CVODE)">
+          <TimeBound StartTime="0.0" EndTime="40.0" />
+          <TimeStep DefaultTime="0.1" MinTime="1.0E-8" MaxTime="1.0" />
+          <ErrorTolerance Absolut="1.0E-9" Relative="1.0E-9" />
+          <OutputOptions KeepEvery="1" KeepAtMost="1000" />
+          <NumberProcessors>1</NumberProcessors>
+        </SolverTaskDescription>
+        <MathOverrides>
+          <Constant Name="Kd2" ConstantArraySpec="1001">0.1 to 1.0, log, 20 values</Constant>
+        </MathOverrides>
+        <Version Name="Kd2scan" KeyValue="95456217" BranchId="75192676" Archived="0" Date="03-Jul-2015 06:36:15" FromVersionable="false">
+          <Owner Name="moutoutan" Identifier="73424874" />
+          <GroupAccess Type="1" />
+        </Version>
+      </Simulation>
+      <Simulation Name="Copy of Kd2scan">
+        <SolverTaskDescription TaskType="Unsteady" UseSymbolicJacobian="false" Solver="Combined Stiff Solver (IDA/CVODE)">
+          <TimeBound StartTime="0.0" EndTime="40.0" />
+          <TimeStep DefaultTime="0.1" MinTime="1.0E-8" MaxTime="1.0" />
+          <ErrorTolerance Absolut="1.0E-9" Relative="1.0E-9" />
+          <OutputOptions KeepEvery="1" KeepAtMost="1000" />
+          <NumberProcessors>1</NumberProcessors>
+        </SolverTaskDescription>
+        <MathOverrides>
+          <Constant Name="Kd2" ConstantArraySpec="1001">100.0 to 10000.0, log, 5 values</Constant>
+        </MathOverrides>
+        <Version Name="Copy of Kd2scan" KeyValue="95456219" BranchId="75192732" Archived="0" Date="03-Jul-2015 06:36:15" FromVersionable="false">
+          <Owner Name="moutoutan" Identifier="73424874" />
+          <GroupAccess Type="1" />
+        </Version>
+      </Simulation>
+      <Simulation Name="v7scan">
+        <SolverTaskDescription TaskType="Unsteady" UseSymbolicJacobian="false" Solver="Combined Stiff Solver (IDA/CVODE)">
+          <TimeBound StartTime="0.0" EndTime="40.0" />
+          <TimeStep DefaultTime="0.1" MinTime="1.0E-8" MaxTime="1.0" />
+          <ErrorTolerance Absolut="1.0E-9" Relative="1.0E-9" />
+          <OutputOptions KeepEvery="1" KeepAtMost="1000" />
+          <NumberProcessors>1</NumberProcessors>
+        </SolverTaskDescription>
+        <MathOverrides>
+          <Constant Name="v7" ConstantArraySpec="1001">0.01 to 10.0, log, 10 values</Constant>
+        </MathOverrides>
+        <Version Name="v7scan" KeyValue="95456221" BranchId="75192830" Archived="0" Date="03-Jul-2015 06:36:15" FromVersionable="false">
+          <Owner Name="moutoutan" Identifier="73424874" />
+          <GroupAccess Type="1" />
+        </Version>
+      </Simulation>
+      <Simulation Name="v6scan">
+        <SolverTaskDescription TaskType="Unsteady" UseSymbolicJacobian="false" Solver="Combined Stiff Solver (IDA/CVODE)">
+          <TimeBound StartTime="0.0" EndTime="40.0" />
+          <TimeStep DefaultTime="0.1" MinTime="1.0E-8" MaxTime="1.0" />
+          <ErrorTolerance Absolut="1.0E-9" Relative="1.0E-9" />
+          <OutputOptions KeepEvery="1" KeepAtMost="1000" />
+          <NumberProcessors>1</NumberProcessors>
+        </SolverTaskDescription>
+        <MathOverrides>
+          <Constant Name="v6" ConstantArraySpec="1001">0.01 to 10.0, 40 values</Constant>
+        </MathOverrides>
+        <Version Name="v6scan" KeyValue="95456223" BranchId="75192878" Archived="0" Date="03-Jul-2015 06:36:15" FromVersionable="false">
+          <Owner Name="moutoutan" Identifier="73424874" />
+          <GroupAccess Type="1" />
+        </Version>
+      </Simulation>
+      <Simulation Name="v7scan 1-2">
+        <SolverTaskDescription TaskType="Unsteady" UseSymbolicJacobian="false" Solver="Combined Stiff Solver (IDA/CVODE)">
+          <TimeBound StartTime="0.0" EndTime="40.0" />
+          <TimeStep DefaultTime="0.1" MinTime="1.0E-8" MaxTime="1.0" />
+          <ErrorTolerance Absolut="1.0E-9" Relative="1.0E-9" />
+          <OutputOptions KeepEvery="1" KeepAtMost="1000" />
+          <NumberProcessors>1</NumberProcessors>
+        </SolverTaskDescription>
+        <MathOverrides>
+          <Constant Name="v7" ConstantArraySpec="1001">1.0 to 2.0, log, 20 values</Constant>
+        </MathOverrides>
+        <Version Name="v7scan 1-2" KeyValue="95456225" BranchId="75192957" Archived="0" Date="03-Jul-2015 06:36:15" FromVersionable="false">
+          <Owner Name="moutoutan" Identifier="73424874" />
+          <GroupAccess Type="1" />
+        </Version>
+      </Simulation>
+      <Simulation Name="v6scan 0.3-0.45">
+        <SolverTaskDescription TaskType="Unsteady" UseSymbolicJacobian="false" Solver="Combined Stiff Solver (IDA/CVODE)">
+          <TimeBound StartTime="0.0" EndTime="40.0" />
+          <TimeStep DefaultTime="0.1" MinTime="1.0E-8" MaxTime="1.0" />
+          <ErrorTolerance Absolut="1.0E-9" Relative="1.0E-9" />
+          <OutputOptions KeepEvery="1" KeepAtMost="1000" />
+          <NumberProcessors>1</NumberProcessors>
+        </SolverTaskDescription>
+        <MathOverrides>
+          <Constant Name="v6" ConstantArraySpec="1001">0.3 to 0.45, 40 values</Constant>
+        </MathOverrides>
+        <Version Name="v6scan 0.3-0.45" KeyValue="95456227" BranchId="75193118" Archived="0" Date="03-Jul-2015 06:36:15" FromVersionable="false">
+          <Owner Name="moutoutan" Identifier="73424874" />
+          <GroupAccess Type="1" />
+        </Version>
+      </Simulation>
+      <Simulation Name="cell-ER sizescan">
+        <SolverTaskDescription TaskType="Unsteady" UseSymbolicJacobian="false" Solver="Combined Stiff Solver (IDA/CVODE)">
+          <TimeBound StartTime="0.0" EndTime="40.0" />
+          <TimeStep DefaultTime="0.1" MinTime="1.0E-8" MaxTime="1.0" />
+          <ErrorTolerance Absolut="1.0E-9" Relative="1.0E-9" />
+          <OutputOptions KeepEvery="1" KeepAtMost="1000" />
+          <NumberProcessors>1</NumberProcessors>
+        </SolverTaskDescription>
+        <MathOverrides>
+          <Constant Name="Size_ER_inside" ConstantArraySpec="1001">1.0 to 20000.0, 6 values</Constant>
+          <Constant Name="Size_intracellular" ConstantArraySpec="1001">1.0 to 1000.0, 6 values</Constant>
+        </MathOverrides>
+        <Version Name="cell-ER sizescan" KeyValue="95456229" BranchId="75193247" Archived="0" Date="03-Jul-2015 06:36:15" FromVersionable="false">
+          <Owner Name="moutoutan" Identifier="73424874" />
+          <GroupAccess Type="1" />
+        </Version>
+      </Simulation>
+      <Simulation Name="v6-k6scan">
+        <SolverTaskDescription TaskType="Unsteady" UseSymbolicJacobian="false" Solver="Combined Stiff Solver (IDA/CVODE)">
+          <TimeBound StartTime="0.0" EndTime="40.0" />
+          <TimeStep DefaultTime="0.1" MinTime="1.0E-8" MaxTime="1.0" />
+          <ErrorTolerance Absolut="1.0E-9" Relative="1.0E-9" />
+          <OutputOptions KeepEvery="1" KeepAtMost="1000" />
+          <NumberProcessors>1</NumberProcessors>
+        </SolverTaskDescription>
+        <MathOverrides>
+          <Constant Name="k6" ConstantArraySpec="1001">0.001 to 10.0, log, 5 values</Constant>
+          <Constant Name="v6" ConstantArraySpec="1001">0.5 to 1.0, log, 6 values</Constant>
+        </MathOverrides>
+        <Version Name="v6-k6scan" KeyValue="95456231" BranchId="75240662" Archived="0" Date="03-Jul-2015 06:36:15" FromVersionable="false">
+          <Owner Name="moutoutan" Identifier="73424874" />
+          <GroupAccess Type="1" />
+        </Version>
+      </Simulation>
+      <Simulation Name="v6k6 lowv6">
+        <SolverTaskDescription TaskType="Unsteady" UseSymbolicJacobian="false" Solver="Combined Stiff Solver (IDA/CVODE)">
+          <TimeBound StartTime="0.0" EndTime="40.0" />
+          <TimeStep DefaultTime="0.1" MinTime="1.0E-8" MaxTime="1.0" />
+          <ErrorTolerance Absolut="1.0E-9" Relative="1.0E-9" />
+          <OutputOptions KeepEvery="1" KeepAtMost="1000" />
+          <NumberProcessors>1</NumberProcessors>
+        </SolverTaskDescription>
+        <MathOverrides>
+          <Constant Name="k6" ConstantArraySpec="1001">1.0E-6 to 0.001, log, 6 values</Constant>
+          <Constant Name="v6" ConstantArraySpec="1001">0.5 to 1.0, log, 6 values</Constant>
+        </MathOverrides>
+        <Version Name="v6k6 lowv6" KeyValue="95456233" BranchId="75241035" Archived="0" Date="03-Jul-2015 06:36:15" FromVersionable="false">
+          <Owner Name="moutoutan" Identifier="73424874" />
+          <GroupAccess Type="1" />
+        </Version>
+      </Simulation>
+      <Simulation Name=" v6k6 lowk6 E-9">
+        <SolverTaskDescription TaskType="Unsteady" UseSymbolicJacobian="false" Solver="Combined Stiff Solver (IDA/CVODE)">
+          <TimeBound StartTime="0.0" EndTime="40.0" />
+          <TimeStep DefaultTime="0.1" MinTime="1.0E-8" MaxTime="1.0" />
+          <ErrorTolerance Absolut="1.0E-9" Relative="1.0E-9" />
+          <OutputOptions KeepEvery="1" KeepAtMost="1000" />
+          <NumberProcessors>1</NumberProcessors>
+        </SolverTaskDescription>
+        <MathOverrides>
+          <Constant Name="v6" ConstantArraySpec="1001">0.5 to 1.0, log, 6 values</Constant>
+          <Constant Name="k6" ConstantArraySpec="1001">1.0E-9 to 1.0E-6, log, 6 values</Constant>
+        </MathOverrides>
+        <Version Name=" v6k6 lowk6 E-9" KeyValue="95456235" BranchId="75241311" Archived="0" Date="03-Jul-2015 06:36:15" FromVersionable="false">
+          <Owner Name="moutoutan" Identifier="73424874" />
+          <GroupAccess Type="1" />
+        </Version>
+      </Simulation>
+      <Simulation Name="Copy of  v6k6 lowv6 ">
+        <SolverTaskDescription TaskType="Unsteady" UseSymbolicJacobian="false" Solver="Combined Stiff Solver (IDA/CVODE)">
+          <TimeBound StartTime="0.0" EndTime="40.0" />
+          <TimeStep DefaultTime="0.1" MinTime="1.0E-8" MaxTime="1.0" />
+          <ErrorTolerance Absolut="1.0E-9" Relative="1.0E-9" />
+          <OutputOptions KeepEvery="1" KeepAtMost="1000" />
+          <NumberProcessors>1</NumberProcessors>
+        </SolverTaskDescription>
+        <MathOverrides>
+          <Constant Name="k6" ConstantArraySpec="1001">1.0E-9 to 1.0E-6, log, 6 values</Constant>
+          <Constant Name="v6" ConstantArraySpec="1001">0.01 to 0.5, log, 6 values</Constant>
+        </MathOverrides>
+        <Version Name="Copy of  v6k6 lowv6 " KeyValue="95456237" BranchId="75241314" Archived="0" Date="03-Jul-2015 06:36:15" FromVersionable="false">
+          <Owner Name="moutoutan" Identifier="73424874" />
+          <GroupAccess Type="1" />
+        </Version>
+      </Simulation>
+      <Simulation Name="x0scan">
+        <SolverTaskDescription TaskType="Unsteady" UseSymbolicJacobian="false" Solver="Combined Stiff Solver (IDA/CVODE)">
+          <TimeBound StartTime="0.0" EndTime="800.0" />
+          <TimeStep DefaultTime="0.1" MinTime="1.0E-8" MaxTime="1.0" />
+          <ErrorTolerance Absolut="1.0E-9" Relative="1.0E-9" />
+          <OutputOptions KeepEvery="1" KeepAtMost="1000" />
+          <NumberProcessors>1</NumberProcessors>
+        </SolverTaskDescription>
+        <MathOverrides>
+          <Constant Name="x0_init_molecules_um_2" ConstantArraySpec="1001">0.0 to 1.0, 20 values</Constant>
+        </MathOverrides>
+        <Version Name="x0scan" KeyValue="95456239" BranchId="75241604" Archived="0" Date="03-Jul-2015 06:36:15" FromVersionable="false">
+          <Owner Name="moutoutan" Identifier="73424874" />
+          <GroupAccess Type="1" />
+        </Version>
+      </Simulation>
+      <Simulation Name="equal size scan">
+        <SolverTaskDescription TaskType="Unsteady" UseSymbolicJacobian="false" Solver="Combined Stiff Solver (IDA/CVODE)">
+          <TimeBound StartTime="0.0" EndTime="30.0" />
+          <TimeStep DefaultTime="0.1" MinTime="1.0E-8" MaxTime="0.1" />
+          <ErrorTolerance Absolut="1.0E-9" Relative="1.0E-9" />
+          <OutputOptions KeepEvery="1" KeepAtMost="10000" />
+          <NumberProcessors>1</NumberProcessors>
+        </SolverTaskDescription>
+        <MathOverrides>
+          <Constant Name="Size_ER_inside" ConstantArraySpec="1001">1.0E-5 to 0.01, 6 values</Constant>
+          <Constant Name="Size_intracellular" ConstantArraySpec="1001">0.01 to 1000.0, 6 values</Constant>
+        </MathOverrides>
+        <Version Name="equal size scan" KeyValue="95456241" BranchId="75320923" Archived="0" Date="03-Jul-2015 06:36:15" FromVersionable="false">
+          <Owner Name="moutoutan" Identifier="73424874" />
+          <GroupAccess Type="1" />
+        </Version>
+      </Simulation>
+      <Simulation Name="Copy of equal size scan">
+        <SolverTaskDescription TaskType="Unsteady" UseSymbolicJacobian="false" Solver="Combined Stiff Solver (IDA/CVODE)">
+          <TimeBound StartTime="0.0" EndTime="30.0" />
+          <TimeStep DefaultTime="0.1" MinTime="1.0E-8" MaxTime="1.0E-5" />
+          <ErrorTolerance Absolut="1.0E-9" Relative="1.0E-9" />
+          <OutputOptions KeepEvery="1" KeepAtMost="10000" />
+          <NumberProcessors>1</NumberProcessors>
+        </SolverTaskDescription>
+        <MathOverrides>
+          <Constant Name="Size_ER_inside" ConstantArraySpec="1001">0.01 to 1000.0, 6 values</Constant>
+          <Constant Name="Size_intracellular" ConstantArraySpec="1001">1.0E-5 to 0.01, 6 values</Constant>
+        </MathOverrides>
+        <Version Name="Copy of equal size scan" KeyValue="95456243" BranchId="75321252" Archived="0" Date="03-Jul-2015 06:36:15" FromVersionable="false">
+          <Owner Name="moutoutan" Identifier="73424874" />
+          <GroupAccess Type="1" />
+        </Version>
+      </Simulation>
+      <Simulation Name="v4-alphascan">
+        <SolverTaskDescription TaskType="Unsteady" UseSymbolicJacobian="false" Solver="Combined Stiff Solver (IDA/CVODE)">
+          <TimeBound StartTime="0.0" EndTime="30.0" />
+          <TimeStep DefaultTime="0.1" MinTime="1.0E-8" MaxTime="1.0" />
+          <ErrorTolerance Absolut="1.0E-9" Relative="1.0E-9" />
+          <OutputOptions KeepEvery="1" KeepAtMost="1000" />
+          <NumberProcessors>1</NumberProcessors>
+        </SolverTaskDescription>
+        <MathOverrides>
+          <Constant Name="v4" ConstantArraySpec="1001">0.0 to 2.9, 6 values</Constant>
+          <Constant Name="alpha" ConstantArraySpec="1001">0.0 to 1.0, 6 values</Constant>
+        </MathOverrides>
+        <Version Name="v4-alphascan" KeyValue="95456245" BranchId="75322532" Archived="0" Date="03-Jul-2015 06:36:15" FromVersionable="false">
+          <Owner Name="moutoutan" Identifier="73424874" />
+          <GroupAccess Type="1" />
+        </Version>
+      </Simulation>
+      <Simulation Name="k6k4scan">
+        <SolverTaskDescription TaskType="Unsteady" UseSymbolicJacobian="false" Solver="Combined Stiff Solver (IDA/CVODE)">
+          <TimeBound StartTime="0.0" EndTime="40.0" />
+          <TimeStep DefaultTime="0.1" MinTime="1.0E-8" MaxTime="1.0" />
+          <ErrorTolerance Absolut="1.0E-9" Relative="1.0E-9" />
+          <OutputOptions KeepEvery="1" KeepAtMost="1000" />
+          <NumberProcessors>1</NumberProcessors>
+        </SolverTaskDescription>
+        <MathOverrides>
+          <Constant Name="k6" ConstantArraySpec="1001">0.1 to 1.6, 6 values</Constant>
+          <Constant Name="k4" ConstantArraySpec="1001">0.01 to 0.15, 6 values</Constant>
+        </MathOverrides>
+        <Version Name="k6k4scan" KeyValue="95456247" BranchId="75387734" Archived="0" Date="03-Jul-2015 06:36:15" FromVersionable="false">
+          <Owner Name="moutoutan" Identifier="73424874" />
+          <GroupAccess Type="1" />
+        </Version>
+      </Simulation>
+      <Simulation Name=" k6k4scan 2nd">
+        <SolverTaskDescription TaskType="Unsteady" UseSymbolicJacobian="false" Solver="Combined Stiff Solver (IDA/CVODE)">
+          <TimeBound StartTime="0.0" EndTime="40.0" />
+          <TimeStep DefaultTime="0.1" MinTime="1.0E-8" MaxTime="1.0" />
+          <ErrorTolerance Absolut="1.0E-9" Relative="1.0E-9" />
+          <OutputOptions KeepEvery="1" KeepAtMost="1000" />
+          <NumberProcessors>1</NumberProcessors>
+        </SolverTaskDescription>
+        <MathOverrides>
+          <Constant Name="k6" ConstantArraySpec="1001">1.0 to 2.0, 6 values</Constant>
+          <Constant Name="k4" ConstantArraySpec="1001">0.9 to 1.5, 6 values</Constant>
+        </MathOverrides>
+        <Version Name=" k6k4scan 2nd" KeyValue="95456249" BranchId="75388664" Archived="0" Date="03-Jul-2015 06:36:15" FromVersionable="false">
+          <Owner Name="moutoutan" Identifier="73424874" />
+          <GroupAccess Type="1" />
+        </Version>
+      </Simulation>
+      <Simulation Name="Copy of  k6k4scan 3rd">
+        <SolverTaskDescription TaskType="Unsteady" UseSymbolicJacobian="false" Solver="Combined Stiff Solver (IDA/CVODE)">
+          <TimeBound StartTime="0.0" EndTime="40.0" />
+          <TimeStep DefaultTime="0.1" MinTime="1.0E-8" MaxTime="1.0" />
+          <ErrorTolerance Absolut="1.0E-9" Relative="1.0E-9" />
+          <OutputOptions KeepEvery="1" KeepAtMost="1000" />
+          <NumberProcessors>1</NumberProcessors>
+        </SolverTaskDescription>
+        <MathOverrides>
+          <Constant Name="k6" ConstantArraySpec="1001">10.0 to 20.0, 6 values</Constant>
+          <Constant Name="k4" ConstantArraySpec="1001">0.9 to 1.5, 6 values</Constant>
+        </MathOverrides>
+        <Version Name="Copy of  k6k4scan 3rd" KeyValue="95456251" BranchId="75388756" Archived="0" Date="03-Jul-2015 06:36:15" FromVersionable="false">
+          <Owner Name="moutoutan" Identifier="73424874" />
+          <GroupAccess Type="1" />
+        </Version>
+      </Simulation>
+      <Simulation Name="Copy of Normal">
+        <SolverTaskDescription TaskType="Unsteady" UseSymbolicJacobian="false" Solver="Combined Stiff Solver (IDA/CVODE)">
+          <TimeBound StartTime="0.0" EndTime="1000.0" />
+          <TimeStep DefaultTime="0.1" MinTime="1.0E-8" MaxTime="1.0" />
+          <ErrorTolerance Absolut="1.0E-9" Relative="1.0E-9" />
+          <OutputOptions KeepEvery="1" KeepAtMost="5000" />
+          <NumberProcessors>1</NumberProcessors>
+        </SolverTaskDescription>
+        <MathOverrides>
+          <Constant Name="x0_init_molecules_um_2" ConstantArraySpec="1001">0.0 to 1.0, 10 values</Constant>
+          <Constant Name="kx1">13.0</Constant>
+          <Constant Name="xother_init_molecules_um_2" ConstantArraySpec="1001">0.0 to 1.0, 10 values</Constant>
+        </MathOverrides>
+        <Version Name="Copy of Normal" KeyValue="95456253" BranchId="75822140" Archived="0" Date="03-Jul-2015 06:36:15" FromVersionable="false">
+          <Owner Name="moutoutan" Identifier="73424874" />
+          <GroupAccess Type="1" />
+        </Version>
+      </Simulation>
+      <Simulation Name="IP3 init scan">
+        <SolverTaskDescription TaskType="Unsteady" UseSymbolicJacobian="false" Solver="Combined Stiff Solver (IDA/CVODE)">
+          <TimeBound StartTime="0.0" EndTime="350.0" />
+          <TimeStep DefaultTime="0.1" MinTime="1.0E-8" MaxTime="1.0" />
+          <ErrorTolerance Absolut="1.0E-9" Relative="1.0E-9" />
+          <OutputOptions KeepEvery="1" KeepAtMost="1000" />
+          <NumberProcessors>1</NumberProcessors>
+        </SolverTaskDescription>
+        <MathOverrides>
+          <Constant Name="IP3_init_uM" ConstantArraySpec="1001">0.0 to 100.0, 10 values</Constant>
+          <Constant Name="kx1">13.0</Constant>
+        </MathOverrides>
+        <Version Name="IP3 init scan" KeyValue="95456255" BranchId="75926790" Archived="0" Date="03-Jul-2015 06:36:15" FromVersionable="false">
+          <Owner Name="moutoutan" Identifier="73424874" />
+          <GroupAccess Type="1" />
+        </Version>
+      </Simulation>
+      <Simulation Name="PLC conc scan">
+        <SolverTaskDescription TaskType="Unsteady" UseSymbolicJacobian="false" Solver="Combined Stiff Solver (IDA/CVODE)">
+          <TimeBound StartTime="0.0" EndTime="3000.0" />
+          <TimeStep DefaultTime="0.1" MinTime="1.0E-8" MaxTime="1.0" />
+          <ErrorTolerance Absolut="1.0E-9" Relative="1.0E-9" />
+          <OutputOptions KeepEvery="1" KeepAtMost="8000" />
+          <NumberProcessors>1</NumberProcessors>
+        </SolverTaskDescription>
+        <MathOverrides>
+          <Constant Name="PLC_conc" ConstantArraySpec="1001">0.1 to 10.0, 20 values</Constant>
+        </MathOverrides>
+        <Version Name="PLC conc scan" KeyValue="95456257" BranchId="75933509" Archived="0" Date="03-Jul-2015 06:36:15" FromVersionable="false">
+          <Owner Name="moutoutan" Identifier="73424874" />
+          <GroupAccess Type="1" />
+        </Version>
+      </Simulation>
+      <Simulation Name="Copy of Normal 1">
+        <SolverTaskDescription TaskType="Unsteady" UseSymbolicJacobian="false" Solver="Combined Stiff Solver (IDA/CVODE)">
+          <TimeBound StartTime="0.0" EndTime="3000.0" />
+          <TimeStep DefaultTime="0.1" MinTime="1.0E-8" MaxTime="1.0" />
+          <ErrorTolerance Absolut="1.0E-9" Relative="1.0E-9" />
+          <OutputOptions KeepEvery="1" KeepAtMost="5000" />
+          <NumberProcessors>1</NumberProcessors>
+        </SolverTaskDescription>
+        <MathOverrides>
+          <Constant Name="PLC_conc">3.0</Constant>
+          <Constant Name="kx1">13.0</Constant>
+        </MathOverrides>
+        <Version Name="Copy of Normal 1" KeyValue="95456259" BranchId="75954196" Archived="0" Date="03-Jul-2015 06:36:15" FromVersionable="false">
+          <Owner Name="moutoutan" Identifier="73424874" />
+          <GroupAccess Type="1" />
+        </Version>
+      </Simulation>
+      <Version Name="Application0" KeyValue="95456180" BranchId="74968581" Archived="0" Date="03-Jul-2015 06:36:14" FromVersionable="false">
+        <Owner Name="moutoutan" Identifier="73424874" />
+        <GroupAccess Type="1" />
+      </Version>
+      <MicroscopeMeasurement Name="fluor">
+        <ConvolutionKernel Type="ProjectionZKernel" />
+      </MicroscopeMeasurement>
+    </SimulationSpec>
+    <Version Name="Caoscillation evol" KeyValue="95456261" BranchId="75820611" Archived="0" Date="03-Jul-2015 06:36:15" FromVersionable="false">
+      <Owner Name="moutoutan" Identifier="73424874" />
+      <GroupAccess Type="0" />
+    </Version>
+    <pathwayModel>
+      <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:bp="http://www.biopax.org/release/biopax-level3.owl#" version="3.0" />
+    </pathwayModel>
+    <relationshipModel>
+      <RMNS version="3.0" />
+    </relationshipModel>
+    <vcmetadata>
+      <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" />
+      <nonrdfAnnotationList />
+      <uriBindingList />
+    </vcmetadata>
+  </BioModel>
+</vcml>
+

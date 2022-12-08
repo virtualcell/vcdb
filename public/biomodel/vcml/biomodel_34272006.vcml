@@ -1,0 +1,482 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--This biomodel was generated in VCML Version Alpha_Version_7.4.0_build_87-->
+<vcml xmlns="http://sourceforge.net/projects/vcell/vcml" Version="Alpha_Version_7.4.0_build_87">
+  <BioModel Name="XPC-without_bleaching">
+    <Model Name="unnamed">
+      <Compound Name="xpcGFP">
+        <Annotation>GFP tagged XPC</Annotation>
+        <SpeciesBinding KeyValue="31031533" Type="Protein">
+          <DBFormalSpecies KeyValue="3466302" Type="Protein">
+            <SpeciesInfo FormalID="XPC_HUMAN" Organism="Homo sapiens (Human)" Accession="Q01831; Q96AX0;" Keywords="Direct protein sequencing; Disease mutation; DNA damage; DNA repair; DNA-binding; Nuclear protein; Xeroderma pigmentosum" Description="(Xeroderma pigmentosum group C complementing protein) (p125)." Type="Protein">
+              <Name>DNA-repair protein complementing XP-C cells</Name>
+            </SpeciesInfo>
+          </DBFormalSpecies>
+        </SpeciesBinding>
+      </Compound>
+      <Compound Name="BS">
+        <Annotation>Binding sites (DNA damage introduced by the laser irradiation)</Annotation>
+        <SpeciesBinding KeyValue="31034117" Type="Compound">
+          <DBFormalSpecies KeyValue="2939644" Type="Compound">
+            <SpeciesInfo FormalID="C03103" Formula="C18H34N4O12P2" Type="Compound">
+              <Name>Cyclobutadipyrimidine</Name>
+              <Name>Cyclobutadipyrimidine (in DNA)</Name>
+            </SpeciesInfo>
+          </DBFormalSpecies>
+        </SpeciesBinding>
+      </Compound>
+      <Compound Name="laser">
+        <Annotation>laser irradiation</Annotation>
+      </Compound>
+      <Compound Name="xpcGFPbound">
+        <Annotation>bound xpcGFP</Annotation>
+        <SpeciesBinding KeyValue="31031533" Type="Protein">
+          <DBFormalSpecies KeyValue="3466302" Type="Protein">
+            <SpeciesInfo FormalID="XPC_HUMAN" Organism="Homo sapiens (Human)" Accession="Q01831; Q96AX0;" Keywords="Direct protein sequencing; Disease mutation; DNA damage; DNA repair; DNA-binding; Nuclear protein; Xeroderma pigmentosum" Description="(Xeroderma pigmentosum group C complementing protein) (p125)." Type="Protein">
+              <Name>DNA-repair protein complementing XP-C cells</Name>
+            </SpeciesInfo>
+          </DBFormalSpecies>
+        </SpeciesBinding>
+      </Compound>
+      <Compound Name="DNA">
+        <Annotation>DNA - possible damage sites</Annotation>
+        <SpeciesBinding KeyValue="31034117" Type="Compound">
+          <DBFormalSpecies KeyValue="2939644" Type="Compound">
+            <SpeciesInfo FormalID="C03103" Formula="C18H34N4O12P2" Type="Compound">
+              <Name>Cyclobutadipyrimidine</Name>
+              <Name>Cyclobutadipyrimidine (in DNA)</Name>
+            </SpeciesInfo>
+          </DBFormalSpecies>
+        </SpeciesBinding>
+      </Compound>
+      <Feature Name="nucleus" KeyValue="31393968" />
+      <Feature Name="cell" KeyValue="31393966" />
+      <Membrane InsideFeature="nucleus" OutsideFeature="cell" PositiveFeature="nucleus" NegativeFeature="cell" MembraneVoltage="Voltage_NM" Name="NM" KeyValue="31393967" />
+      <LocalizedCompound Name="xpcGFP_nucleus" CompoundRef="xpcGFP" Structure="nucleus" OverrideName="true" KeyValue="31393972" />
+      <LocalizedCompound Name="BS_nucleus" CompoundRef="BS" Structure="nucleus" OverrideName="true" KeyValue="31393973" />
+      <LocalizedCompound Name="laser_nucleus" CompoundRef="laser" Structure="nucleus" OverrideName="true" KeyValue="31393974" />
+      <LocalizedCompound Name="xpcGFPbound_nucleus" CompoundRef="xpcGFPbound" Structure="nucleus" OverrideName="true" KeyValue="31393975" />
+      <LocalizedCompound Name="DNA_nucleus" CompoundRef="DNA" Structure="nucleus" OverrideName="true" KeyValue="31393976" />
+      <SimpleReaction Structure="nucleus" Name="binding2damage" Reversible="true" FluxOption="MolecularOnly" KeyValue="31393977">
+        <Reactant LocalizedCompoundRef="xpcGFP_nucleus" Stoichiometry="1" KeyValue="31393978" />
+        <Reactant LocalizedCompoundRef="BS_nucleus" Stoichiometry="1" KeyValue="31393979" />
+        <Product LocalizedCompoundRef="xpcGFPbound_nucleus" Stoichiometry="1" KeyValue="31393980" />
+        <Kinetics KineticsType="MassAction">
+          <Parameter Name="J" Role="reaction rate" Unit="uM.s-1">(((Kf * xpcGFP_nucleus) * BS_nucleus) - (Kr * xpcGFPbound_nucleus))</Parameter>
+          <Parameter Name="Kf" Role="forward rate constant" Unit="s-1.uM-1">0.1</Parameter>
+          <Parameter Name="Kr" Role="reverse rate constant" Unit="s-1">0.01</Parameter>
+        </Kinetics>
+      </SimpleReaction>
+      <SimpleReaction Structure="nucleus" Name="DNAdamage" Reversible="true" FluxOption="MolecularOnly" KeyValue="31393981">
+        <Reactant LocalizedCompoundRef="DNA_nucleus" Stoichiometry="1" KeyValue="31393982" />
+        <Product LocalizedCompoundRef="BS_nucleus" Stoichiometry="1" KeyValue="31393983" />
+        <Modifier LocalizedCompoundRef="laser_nucleus" />
+        <Kinetics KineticsType="GeneralKinetics">
+          <Parameter Name="J" Role="reaction rate" Unit="uM.s-1">(Vmax * laser_nucleus * DNA_nucleus * ((t &gt; 1.0) &amp;&amp; (t &lt; 12.0)))</Parameter>
+          <Parameter Name="Vmax" Role="user defined" Unit="uM-1.s-1">1.0</Parameter>
+        </Kinetics>
+      </SimpleReaction>
+      <Diagram Name="cell" Structure="cell" />
+      <Diagram Name="NM" Structure="NM" />
+      <Diagram Name="nucleus" Structure="nucleus">
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="xpcGFP_nucleus" LocationX="126" LocationY="357" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="BS_nucleus" LocationX="316" LocationY="183" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="xpcGFPbleached_nucleus" LocationX="352" LocationY="334" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="laser_nucleus" LocationX="202" LocationY="169" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="xpcGFPbound_nucleus" LocationX="77" LocationY="140" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="xpc_bb_nucleus" LocationX="361" LocationY="57" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="DNA_nucleus" LocationX="307" LocationY="94" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="full" SimpleReactionRef="binding2damage" LocationX="125" LocationY="252" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="full" SimpleReactionRef="DNAdamage" LocationX="273" LocationY="114" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="full" SimpleReactionRef="binding2damage2" LocationX="388" LocationY="214" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="xpcGFP_nucleus" LocationX="126" LocationY="357" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="BS_nucleus" LocationX="316" LocationY="183" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="xpcGFPbleached_nucleus" LocationX="352" LocationY="334" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="laser_nucleus" LocationX="202" LocationY="169" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="xpcGFPbound_nucleus" LocationX="77" LocationY="140" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="xpc_bb_nucleus" LocationX="361" LocationY="57" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="DNA_nucleus" LocationX="307" LocationY="94" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="molecule" SimpleReactionRef="binding2damage" LocationX="125" LocationY="252" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="molecule" SimpleReactionRef="DNAdamage" LocationX="273" LocationY="114" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="molecule" SimpleReactionRef="binding2damage2" LocationX="388" LocationY="214" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="xpcGFP_nucleus" LocationX="126" LocationY="357" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="BS_nucleus" LocationX="316" LocationY="183" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="xpcGFPbleached_nucleus" LocationX="352" LocationY="334" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="laser_nucleus" LocationX="202" LocationY="169" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="xpcGFPbound_nucleus" LocationX="77" LocationY="140" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="xpc_bb_nucleus" LocationX="361" LocationY="57" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="DNA_nucleus" LocationX="307" LocationY="94" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="rule" SimpleReactionRef="binding2damage" LocationX="125" LocationY="252" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="rule" SimpleReactionRef="DNAdamage" LocationX="273" LocationY="114" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="rule" SimpleReactionRef="binding2damage2" LocationX="388" LocationY="214" />
+      </Diagram>
+      <Version Name="unnamed" KeyValue="31393959" BranchId="31031536" Archived="0" Date="22-Jan-2009 08:52:40" FromVersionable="false">
+        <Owner Name="Fluokauz" Identifier="31016931" />
+        <GroupAccess Type="1" />
+      </Version>
+      <ModelUnitSystem VolumeSubstanceUnit="uM.um3" MembraneSubstanceUnit="molecules" LumpedReactionSubstanceUnit="molecules" VolumeUnit="um3" AreaUnit="um2" LengthUnit="um" TimeUnit="s" />
+    </Model>
+    <SimulationSpec Name="xpc-accumulation" Stochastic="false" UseConcentration="true" RuleBased="false" MassConservationModelReduction="true" InsufficientIterations="false" InsufficientMaxMolecules="false" CharacteristicSize="0.24967585837615114">
+      <NetworkConstraints RbmMaxIteration="1" RbmMaxMoleculesPerSpecies="10" RbmSpeciesLimit="800" RbmReactionsLimit="2500" />
+      <Annotation />
+      <Geometry Name="simple-nucleus" Dimension="3">
+        <Extent X="20.0" Y="20.0" Z="20.0" />
+        <Origin X="-10.0" Y="-10.0" Z="-10.0" />
+        <SubVolume Name="nucleus" Handle="0" Type="Analytical" KeyValue="31393883">
+          <AnalyticExpression>(((x * x) + (y * y) + (z * z)) &lt; 100.0)</AnalyticExpression>
+        </SubVolume>
+        <SubVolume Name="subVolume0" Handle="1" Type="Analytical" KeyValue="31393884">
+          <AnalyticExpression>1.0</AnalyticExpression>
+        </SubVolume>
+        <SurfaceClass Name="nucleus_subVolume0_membrane" SubVolume1Ref="nucleus" SubVolume2Ref="subVolume0" />
+        <SurfaceDescription NumSamplesX="100" NumSamplesY="100" NumSamplesZ="100" CutoffFrequency="0.3">
+          <VolumeRegion Name="subVolume00" RegionID="0" SubVolume="subVolume0" Size="3816.745147629751" Unit="um3" />
+          <VolumeRegion Name="nucleus1" RegionID="1" SubVolume="nucleus" Size="4183.254852370249" Unit="um3" />
+          <MembraneRegion Name="membrane_subVolume00_nucleus1" VolumeRegion1="nucleus1" VolumeRegion2="subVolume00" Size="1255.5810345702705" Unit="um2" />
+        </SurfaceDescription>
+        <Version Name="simple-nucleus" KeyValue="31393879" BranchId="31393880" Archived="0" Date="22-Jan-2009 08:39:40" FromVersionable="false">
+          <Owner Name="Fluokauz" Identifier="31016931" />
+          <GroupAccess Type="1" />
+        </Version>
+      </Geometry>
+      <GeometryContext>
+        <FeatureMapping Feature="nucleus" GeometryClass="nucleus" SubVolume="nucleus">
+          <BoundariesTypes Xm="Flux" Xp="Flux" Ym="Flux" Yp="Flux" Zm="Flux" Zp="Flux" />
+        </FeatureMapping>
+        <FeatureMapping Feature="cell" GeometryClass="subVolume0" SubVolume="subVolume0">
+          <BoundariesTypes Xm="Flux" Xp="Flux" Ym="Flux" Yp="Flux" Zm="Flux" Zp="Flux" />
+        </FeatureMapping>
+        <MembraneMapping Membrane="NM" SurfaceToVolumeRatio="1.0" VolumeFraction="0.2" CalculateVoltage="false" SpecificCapacitance="1.0" InitialVoltage="0.0" GeometryClass="nucleus_subVolume0_membrane">
+          <BoundariesTypes Xm="Flux" Xp="Flux" Ym="Flux" Yp="Flux" Zm="Flux" Zp="Flux" />
+        </MembraneMapping>
+      </GeometryContext>
+      <ReactionContext>
+        <LocalizedCompoundSpec LocalizedCompoundRef="xpcGFP_nucleus" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>0.44</InitialConcentration>
+          <Diffusion>0.25</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="BS_nucleus" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>0.0</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="laser_nucleus" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>((x &gt; 0.0) &amp;&amp; (x &lt; 1.0) &amp;&amp; (y &gt;  - 5.0) &amp;&amp; (y &lt; 5.0) &amp;&amp; (z &gt; 0.0) &amp;&amp; (z &lt; 1.0))</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="xpcGFPbound_nucleus" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>0.0</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="DNA_nucleus" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>100.0</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <ReactionSpec ReactionStepRef="binding2damage" ReactionMapping="included" />
+        <ReactionSpec ReactionStepRef="DNAdamage" ReactionMapping="included" />
+      </ReactionContext>
+      <MathDescription Name="xpc-accumulation_generated">
+        <Constant Name="_F_">96480.0</Constant>
+        <Constant Name="_F_nmol_">9.648E-5</Constant>
+        <Constant Name="_K_GHK_">1.0E-9</Constant>
+        <Constant Name="_N_pmol_">6.02E11</Constant>
+        <Constant Name="_R_">8314.0</Constant>
+        <Constant Name="_T_">300.0</Constant>
+        <Constant Name="BS_nucleus_init">0.0</Constant>
+        <Constant Name="DNA_nucleus_init">100.0</Constant>
+        <Constant Name="K_millivolts_per_volt">1000.0</Constant>
+        <Constant Name="Kf">0.1</Constant>
+        <Constant Name="KMOLE">0.0016611295681063123</Constant>
+        <Constant Name="Kr">0.01</Constant>
+        <Constant Name="Vmax">1.0</Constant>
+        <Constant Name="Voltage_NM">0.0</Constant>
+        <Constant Name="xpcGFP_nucleus_diffusionRate">0.25</Constant>
+        <Constant Name="xpcGFP_nucleus_init">0.44</Constant>
+        <Constant Name="xpcGFPbound_nucleus_init">0.0</Constant>
+        <VolumeVariable Name="DNA" />
+        <VolumeVariable Name="xpcGFP" />
+        <VolumeVariable Name="xpcGFPbound" />
+        <Function Name="BS_nucleus">( - DNA + K_BS_nucleus_total - xpcGFPbound)</Function>
+        <Function Name="J_binding2damage">((BS_nucleus * Kf * xpcGFP) - (Kr * xpcGFPbound))</Function>
+        <Function Name="J_DNAdamage">(Vmax * laser_nucleus * DNA * ((t &gt; 1.0) &amp;&amp; (t &lt; 12.0)))</Function>
+        <Function Name="K_BS_nucleus_total">(DNA_nucleus_init + BS_nucleus_init + xpcGFPbound_nucleus_init)</Function>
+        <Function Name="K_laser_nucleus_total">laser_nucleus_init</Function>
+        <Function Name="laser_nucleus">K_laser_nucleus_total</Function>
+        <Function Name="laser_nucleus_init">((x &gt; 0.0) &amp;&amp; (x &lt; 1.0) &amp;&amp; (y &gt;  - 5.0) &amp;&amp; (y &lt; 5.0) &amp;&amp; (z &gt; 0.0) &amp;&amp; (z &lt; 1.0))</Function>
+        <CompartmentSubDomain Name="nucleus">
+          <BoundaryType Boundary="Xm" Type="Flux" />
+          <BoundaryType Boundary="Xp" Type="Flux" />
+          <BoundaryType Boundary="Ym" Type="Flux" />
+          <BoundaryType Boundary="Yp" Type="Flux" />
+          <BoundaryType Boundary="Zm" Type="Flux" />
+          <BoundaryType Boundary="Zp" Type="Flux" />
+          <OdeEquation Name="xpcGFPbound" SolutionType="Unknown">
+            <Rate>J_binding2damage</Rate>
+            <Initial>xpcGFPbound_nucleus_init</Initial>
+          </OdeEquation>
+          <OdeEquation Name="DNA" SolutionType="Unknown">
+            <Rate>- J_DNAdamage</Rate>
+            <Initial>DNA_nucleus_init</Initial>
+          </OdeEquation>
+          <PdeEquation Name="xpcGFP" SolutionType="Unknown">
+            <Rate>- J_binding2damage</Rate>
+            <Diffusion>xpcGFP_nucleus_diffusionRate</Diffusion>
+            <Initial>xpcGFP_nucleus_init</Initial>
+          </PdeEquation>
+        </CompartmentSubDomain>
+        <CompartmentSubDomain Name="subVolume0">
+          <BoundaryType Boundary="Xm" Type="Flux" />
+          <BoundaryType Boundary="Xp" Type="Flux" />
+          <BoundaryType Boundary="Ym" Type="Flux" />
+          <BoundaryType Boundary="Yp" Type="Flux" />
+          <BoundaryType Boundary="Zm" Type="Flux" />
+          <BoundaryType Boundary="Zp" Type="Flux" />
+          <OdeEquation Name="xpcGFPbound" SolutionType="Unknown">
+            <Rate>0.0</Rate>
+            <Initial>0.0</Initial>
+          </OdeEquation>
+          <OdeEquation Name="DNA" SolutionType="Unknown">
+            <Rate>0.0</Rate>
+            <Initial>0.0</Initial>
+          </OdeEquation>
+          <PdeEquation Name="xpcGFP" SolutionType="Unknown">
+            <Rate>0.0</Rate>
+            <Diffusion>xpcGFP_nucleus_diffusionRate</Diffusion>
+            <Initial>0.0</Initial>
+          </PdeEquation>
+        </CompartmentSubDomain>
+        <MembraneSubDomain Name="nucleus_subVolume0_membrane" InsideCompartment="nucleus" OutsideCompartment="subVolume0">
+          <BoundaryType Boundary="Xm" Type="Value" />
+          <BoundaryType Boundary="Xp" Type="Value" />
+          <BoundaryType Boundary="Ym" Type="Value" />
+          <BoundaryType Boundary="Yp" Type="Value" />
+          <BoundaryType Boundary="Zm" Type="Value" />
+          <BoundaryType Boundary="Zp" Type="Value" />
+          <JumpCondition Name="xpcGFP">
+            <InFlux>0.0</InFlux>
+            <OutFlux>0.0</OutFlux>
+          </JumpCondition>
+        </MembraneSubDomain>
+        <Version Name="xpc-accumulation_generated" KeyValue="31393957" BranchId="31033980" Archived="0" Date="22-Jan-2009 08:52:40" FromVersionable="false">
+          <Owner Name="Fluokauz" Identifier="31016931" />
+          <GroupAccess Type="1" />
+        </Version>
+      </MathDescription>
+      <Simulation Name="Simulation1">
+        <SolverTaskDescription TaskType="Unsteady" UseSymbolicJacobian="false" Solver="Finite Volume Standalone, Regular Grid">
+          <TimeBound StartTime="0.0" EndTime="400.0" />
+          <TimeStep DefaultTime="0.1" MinTime="1.0E-8" MaxTime="1.0" />
+          <ErrorTolerance Absolut="1.0E-9" Relative="1.0E-9" />
+          <OutputOptions OutputTimeStep="2.0" />
+          <NumberProcessors>1</NumberProcessors>
+        </SolverTaskDescription>
+        <MathOverrides>
+          <Constant Name="Kr">5.75E-4</Constant>
+          <Constant Name="Kf" ConstantArraySpec="1000">"0.038", "0.058"</Constant>
+          <Constant Name="Vmax">1.2E-4</Constant>
+          <Constant Name="xpcGFP_nucleus_diffusionRate">0.297</Constant>
+        </MathOverrides>
+        <MeshSpecification>
+          <Size X="41" Y="41" Z="41" />
+        </MeshSpecification>
+        <Version Name="Simulation1" KeyValue="34268599" BranchId="34256168" Archived="0" Date="07-Jul-2009 12:18:01" FromVersionable="false">
+          <Owner Name="Fluokauz" Identifier="31016931" />
+          <GroupAccess Type="1" />
+        </Version>
+      </Simulation>
+      <Simulation Name="Simulation2">
+        <SolverTaskDescription TaskType="Unsteady" UseSymbolicJacobian="false" Solver="Finite Volume, Regular Grid">
+          <TimeBound StartTime="0.0" EndTime="300.0" />
+          <TimeStep DefaultTime="0.1" MinTime="1.0E-8" MaxTime="1.0" />
+          <ErrorTolerance Absolut="1.0E-9" Relative="1.0E-9" />
+          <OutputOptions OutputTimeStep="2.0" />
+          <NumberProcessors>1</NumberProcessors>
+        </SolverTaskDescription>
+        <MathOverrides>
+          <Constant Name="xpcGFP_nucleus_init" ConstantArraySpec="1000">"0.34", "0.44", "0.54"</Constant>
+          <Constant Name="Kr">5.75E-4</Constant>
+          <Constant Name="Kf">0.048</Constant>
+          <Constant Name="Vmax">1.2E-4</Constant>
+          <Constant Name="xpcGFP_nucleus_diffusionRate">0.297</Constant>
+        </MathOverrides>
+        <MeshSpecification>
+          <Size X="51" Y="51" Z="51" />
+        </MeshSpecification>
+        <Version Name="Simulation2" KeyValue="34267861" BranchId="34267520" Archived="0" Date="07-Jul-2009 11:52:29" FromVersionable="false">
+          <Owner Name="Fluokauz" Identifier="31016931" />
+          <GroupAccess Type="1" />
+        </Version>
+      </Simulation>
+      <Simulation Name="Simulation0">
+        <SolverTaskDescription TaskType="Unsteady" UseSymbolicJacobian="false" Solver="Finite Volume, Regular Grid">
+          <TimeBound StartTime="0.0" EndTime="300.0" />
+          <TimeStep DefaultTime="0.1" MinTime="1.0E-8" MaxTime="1.0" />
+          <ErrorTolerance Absolut="1.0E-9" Relative="1.0E-9" />
+          <OutputOptions OutputTimeStep="2.5" />
+          <NumberProcessors>1</NumberProcessors>
+        </SolverTaskDescription>
+        <MathOverrides>
+          <Constant Name="Kr">5.75E-4</Constant>
+          <Constant Name="Kf">0.048</Constant>
+          <Constant Name="Vmax" ConstantArraySpec="1000">"1.1E-4", "1.2E-4", "1.3E-4"</Constant>
+          <Constant Name="xpcGFP_nucleus_diffusionRate">0.297</Constant>
+        </MathOverrides>
+        <MeshSpecification>
+          <Size X="51" Y="51" Z="51" />
+        </MeshSpecification>
+        <Version Name="Simulation0" KeyValue="34268303" BranchId="34268304" Archived="0" Date="07-Jul-2009 12:04:12" FromVersionable="false">
+          <Owner Name="Fluokauz" Identifier="31016931" />
+          <GroupAccess Type="1" />
+        </Version>
+      </Simulation>
+      <Simulation Name="Simulation3">
+        <SolverTaskDescription TaskType="Unsteady" UseSymbolicJacobian="false" Solver="Finite Volume, Regular Grid">
+          <TimeBound StartTime="0.0" EndTime="300.0" />
+          <TimeStep DefaultTime="0.1" MinTime="1.0E-8" MaxTime="1.0" />
+          <ErrorTolerance Absolut="1.0E-9" Relative="1.0E-9" />
+          <OutputOptions OutputTimeStep="2.5" />
+          <NumberProcessors>1</NumberProcessors>
+        </SolverTaskDescription>
+        <MathOverrides>
+          <Constant Name="Kr" ConstantArraySpec="1000">"0.00575", "5.75E-5"</Constant>
+          <Constant Name="Kf">0.048</Constant>
+          <Constant Name="Vmax">1.2E-4</Constant>
+          <Constant Name="xpcGFP_nucleus_diffusionRate">0.297</Constant>
+        </MathOverrides>
+        <MeshSpecification>
+          <Size X="51" Y="51" Z="51" />
+        </MeshSpecification>
+        <Version Name="Simulation3" KeyValue="34270710" BranchId="34268711" Archived="0" Date="07-Jul-2009 13:19:59" FromVersionable="false">
+          <Owner Name="Fluokauz" Identifier="31016931" />
+          <GroupAccess Type="1" />
+        </Version>
+      </Simulation>
+      <Simulation Name="Simulation4">
+        <SolverTaskDescription TaskType="Unsteady" UseSymbolicJacobian="false" Solver="Finite Volume, Regular Grid">
+          <TimeBound StartTime="0.0" EndTime="300.0" />
+          <TimeStep DefaultTime="0.1" MinTime="1.0E-8" MaxTime="1.0" />
+          <ErrorTolerance Absolut="1.0E-9" Relative="1.0E-9" />
+          <OutputOptions OutputTimeStep="2.5" />
+          <NumberProcessors>1</NumberProcessors>
+        </SolverTaskDescription>
+        <MathOverrides>
+          <Constant Name="Kr">5.75E-4</Constant>
+          <Constant Name="Kf">0.048</Constant>
+          <Constant Name="Vmax">1.2E-4</Constant>
+          <Constant Name="xpcGFP_nucleus_diffusionRate" ConstantArraySpec="1000">"0.028", "2.87"</Constant>
+        </MathOverrides>
+        <MeshSpecification>
+          <Size X="51" Y="51" Z="51" />
+        </MeshSpecification>
+        <Version Name="Simulation4" KeyValue="34272004" BranchId="34268951" Archived="0" Date="07-Jul-2009 13:32:29" FromVersionable="false">
+          <Owner Name="Fluokauz" Identifier="31016931" />
+          <GroupAccess Type="1" />
+        </Version>
+      </Simulation>
+      <SpatialObjects>
+        <SpatialObject Name="vobj_subVolume00" Type="Volume" subVolume="subVolume0" regionId="0">
+          <QuantityCategoryList>
+            <QuantityCategory Name="VolumeCentroid" Enabled="false" />
+            <QuantityCategory Name="InteriorVelocity" Enabled="false" />
+            <QuantityCategory Name="VolumeRegionSize" Enabled="true" />
+          </QuantityCategoryList>
+        </SpatialObject>
+        <SpatialObject Name="vobj_nucleus1" Type="Volume" subVolume="nucleus" regionId="1">
+          <QuantityCategoryList>
+            <QuantityCategory Name="VolumeCentroid" Enabled="false" />
+            <QuantityCategory Name="InteriorVelocity" Enabled="false" />
+            <QuantityCategory Name="VolumeRegionSize" Enabled="true" />
+          </QuantityCategoryList>
+        </SpatialObject>
+        <SpatialObject Name="sobj_nucleus1_subVolume00" Type="Surface" subVolumeInside="nucleus" regionIdInside="1" subVolumeOutside="subVolume0" regionIdOutside="0">
+          <QuantityCategoryList>
+            <QuantityCategory Name="SurfaceNormal" Enabled="false" />
+            <QuantityCategory Name="SurfaceVelocity" Enabled="false" />
+            <QuantityCategory Name="DistanceToSurface" Enabled="false" />
+            <QuantityCategory Name="DirectionToSurface" Enabled="false" />
+            <QuantityCategory Name="SurfaceSize" Enabled="true" />
+          </QuantityCategoryList>
+        </SpatialObject>
+      </SpatialObjects>
+      <Version Name="xpc-accumulation" KeyValue="31393988" BranchId="31034025" Archived="0" Date="22-Jan-2009 08:52:41" FromVersionable="false">
+        <Owner Name="Fluokauz" Identifier="31016931" />
+        <GroupAccess Type="1" />
+      </Version>
+      <MicroscopeMeasurement Name="fluor">
+        <ConvolutionKernel Type="ProjectionZKernel" />
+      </MicroscopeMeasurement>
+    </SimulationSpec>
+    <Version Name="XPC-without_bleaching" KeyValue="34272006" BranchId="31393294" Archived="0" Date="07-Jul-2009 13:32:29" FromVersionable="false">
+      <Owner Name="Fluokauz" Identifier="31016931" />
+      <GroupAccess Type="1" />
+    </Version>
+    <pathwayModel>
+      <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:bp="http://www.biopax.org/release/biopax-level3.owl#" version="3.0" />
+    </pathwayModel>
+    <relationshipModel>
+      <RMNS version="3.0" />
+    </relationshipModel>
+    <vcmetadata>
+      <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
+        <rdf:Description rdf:about="http://sourceforge.net/projects/vcell/vcml/cbit.vcell.model.Species/metaid_1141910274">
+          <bqbiol:isVersionOf xmlns:bqbiol="http://biomodels.net/biology-qualifiers/">
+            <rdf:Bag rdf:nodeID="node0">
+              <rdf:li>
+                <rdf:Description rdf:about="urn:miriam:kegg.compound:C03103" />
+              </rdf:li>
+            </rdf:Bag>
+          </bqbiol:isVersionOf>
+        </rdf:Description>
+        <rdf:Description rdf:about="http://sourceforge.net/projects/vcell/vcml/cbit.vcell.model.Species/metaid_1181703714">
+          <bqbiol:isVersionOf xmlns:bqbiol="http://biomodels.net/biology-qualifiers/">
+            <rdf:Bag rdf:nodeID="node1">
+              <rdf:li>
+                <rdf:Description rdf:about="urn:miriam:uniprot:XPC_HUMAN" />
+              </rdf:li>
+            </rdf:Bag>
+          </bqbiol:isVersionOf>
+        </rdf:Description>
+        <rdf:Description rdf:about="http://sourceforge.net/projects/vcell/vcml/cbit.vcell.model.Species/metaid_563340920">
+          <bqbiol:isVersionOf xmlns:bqbiol="http://biomodels.net/biology-qualifiers/">
+            <rdf:Bag rdf:nodeID="node2">
+              <rdf:li>
+                <rdf:Description rdf:about="urn:miriam:kegg.compound:C03103" />
+              </rdf:li>
+            </rdf:Bag>
+          </bqbiol:isVersionOf>
+        </rdf:Description>
+        <rdf:Description rdf:about="http://sourceforge.net/projects/vcell/vcml/cbit.vcell.model.Species/metaid_677625128">
+          <bqbiol:isVersionOf xmlns:bqbiol="http://biomodels.net/biology-qualifiers/">
+            <rdf:Bag rdf:nodeID="node3">
+              <rdf:li>
+                <rdf:Description rdf:about="urn:miriam:uniprot:XPC_HUMAN" />
+              </rdf:li>
+            </rdf:Bag>
+          </bqbiol:isVersionOf>
+        </rdf:Description>
+      </rdf:RDF>
+      <nonrdfAnnotationList>
+        <nonrdfAnnotation vcid="Species(laser)">
+          <freetext>laser irradiation</freetext>
+        </nonrdfAnnotation>
+        <nonrdfAnnotation vcid="Species(xpcGFPbound)">
+          <freetext>bound xpcGFP</freetext>
+        </nonrdfAnnotation>
+        <nonrdfAnnotation vcid="Species(DNA)">
+          <freetext>DNA - possible damage sites</freetext>
+        </nonrdfAnnotation>
+        <nonrdfAnnotation vcid="Species(BS)">
+          <freetext>Binding sites (DNA damage introduced by the laser irradiation)</freetext>
+        </nonrdfAnnotation>
+        <nonrdfAnnotation vcid="Species(xpcGFP)">
+          <freetext>GFP tagged XPC</freetext>
+        </nonrdfAnnotation>
+      </nonrdfAnnotationList>
+      <uriBindingList>
+        <uriBinding uri="http://sourceforge.net/projects/vcell/vcml/cbit.vcell.model.Species/metaid_1181703714" vcid="Species(xpcGFPbound)" />
+        <uriBinding uri="http://sourceforge.net/projects/vcell/vcml/cbit.vcell.model.Species/metaid_677625128" vcid="Species(xpcGFP)" />
+        <uriBinding uri="http://sourceforge.net/projects/vcell/vcml/cbit.vcell.model.Species/metaid_563340920" vcid="Species(DNA)" />
+        <uriBinding uri="http://sourceforge.net/projects/vcell/vcml/cbit.vcell.model.Species/metaid_1141910274" vcid="Species(BS)" />
+      </uriBindingList>
+    </vcmetadata>
+  </BioModel>
+</vcml>
+

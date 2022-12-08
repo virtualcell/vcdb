@@ -1,0 +1,329 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--This biomodel was generated in VCML Version Alpha_Version_7.4.0_build_87-->
+<vcml xmlns="http://sourceforge.net/projects/vcell/vcml" Version="Alpha_Version_7.4.0_build_87">
+  <BioModel Name="HW1">
+    <Model Name="unnamed">
+      <Compound Name="GFP" />
+      <Feature Name="EC" KeyValue="21447034" />
+      <Feature Name="Cell" KeyValue="21447037" />
+      <Membrane InsideFeature="Cell" OutsideFeature="EC" PositiveFeature="Cell" NegativeFeature="EC" MembraneVoltage="Voltage_PM" Name="PM" KeyValue="21447036" />
+      <LocalizedCompound Name="GFP_Cell" CompoundRef="GFP" Structure="Cell" OverrideName="true" KeyValue="21447040" />
+      <Diagram Name="Unnamed compartment" Structure="EC" />
+      <Diagram Name="Cell" Structure="Cell" />
+      <Diagram Name="PM" Structure="PM" />
+      <Version Name="unnamed" KeyValue="21447030" BranchId="21447031" Archived="0" Date="24-Apr-2007 10:12:20" FromVersionable="false">
+        <Owner Name="jyang" Identifier="21442363" />
+        <GroupAccess Type="1" />
+      </Version>
+      <ModelUnitSystem VolumeSubstanceUnit="uM.um3" MembraneSubstanceUnit="molecules" LumpedReactionSubstanceUnit="molecules" VolumeUnit="um3" AreaUnit="um2" LengthUnit="um" TimeUnit="s" />
+    </Model>
+    <SimulationSpec Name="GFP_DIFF" Stochastic="false" UseConcentration="true" RuleBased="false" MassConservationModelReduction="true" InsufficientIterations="false" InsufficientMaxMolecules="false" CharacteristicSize="0.09247254013931522">
+      <NetworkConstraints RbmMaxIteration="1" RbmMaxMoleculesPerSpecies="10" RbmSpeciesLimit="800" RbmReactionsLimit="2500" />
+      <Annotation />
+      <Geometry Name="HWGEOM1" Dimension="2">
+        <Extent X="42.0" Y="42.0" Z="10.0" />
+        <Origin X="-21.0" Y="-21.0" Z="0.0" />
+        <SubVolume Name="Cell" Handle="0" Type="Analytical" KeyValue="21447089">
+          <AnalyticExpression>(((x * x) + (y * y)) &lt; 441.0)</AnalyticExpression>
+        </SubVolume>
+        <SubVolume Name="EC" Handle="1" Type="Analytical" KeyValue="21447090">
+          <AnalyticExpression>1.0</AnalyticExpression>
+        </SubVolume>
+        <SurfaceClass Name="Cell_EC_membrane" SubVolume1Ref="Cell" SubVolume2Ref="EC" />
+        <SurfaceDescription NumSamplesX="101" NumSamplesY="101" NumSamplesZ="1" CutoffFrequency="0.3">
+          <VolumeRegion Name="EC0" RegionID="0" SubVolume="EC" Size="382.96439999999996" Unit="um2" />
+          <VolumeRegion Name="Cell1" RegionID="1" SubVolume="Cell" Size="1381.0356" Unit="um2" />
+          <MembraneRegion Name="membrane_EC0_Cell1" VolumeRegion1="Cell1" VolumeRegion2="EC0" Size="130.78179322895235" Unit="um" />
+        </SurfaceDescription>
+        <Version Name="HWGEOM1" KeyValue="21447085" BranchId="21447086" Archived="0" Date="24-Apr-2007 10:13:52" FromVersionable="false">
+          <Owner Name="jyang" Identifier="21442363" />
+          <GroupAccess Type="1" />
+        </Version>
+      </Geometry>
+      <GeometryContext>
+        <FeatureMapping Feature="EC" GeometryClass="EC" SubVolume="EC">
+          <BoundariesTypes Xm="Flux" Xp="Flux" Ym="Flux" Yp="Flux" Zm="Flux" Zp="Flux" />
+        </FeatureMapping>
+        <FeatureMapping Feature="Cell" GeometryClass="Cell" SubVolume="Cell">
+          <BoundariesTypes Xm="Flux" Xp="Flux" Ym="Flux" Yp="Flux" Zm="Flux" Zp="Flux" />
+        </FeatureMapping>
+        <MembraneMapping Membrane="PM" SurfaceToVolumeRatio="1.0" VolumeFraction="0.2" CalculateVoltage="false" SpecificCapacitance="1.0" InitialVoltage="0.0" GeometryClass="Cell_EC_membrane">
+          <BoundariesTypes Xm="Flux" Xp="Flux" Ym="Flux" Yp="Flux" Zm="Flux" Zp="Flux" />
+        </MembraneMapping>
+      </GeometryContext>
+      <ReactionContext>
+        <LocalizedCompoundSpec LocalizedCompoundRef="GFP_Cell" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>(80.0 * ((x &gt;  - 21.0) &amp;&amp; (x &lt; 21.0) &amp;&amp; (y &gt;  - 21.0) &amp;&amp; (y &lt; 0.0)))</InitialConcentration>
+          <Diffusion>65.0</Diffusion>
+        </LocalizedCompoundSpec>
+      </ReactionContext>
+      <MathDescription Name="GFP_DIFF_generated">
+        <Constant Name="_F_">96480.0</Constant>
+        <Constant Name="_F_nmol_">9.648E-5</Constant>
+        <Constant Name="_K_GHK_">1.0E-9</Constant>
+        <Constant Name="_N_pmol_">6.02E11</Constant>
+        <Constant Name="_R_">8314.0</Constant>
+        <Constant Name="_T_">300.0</Constant>
+        <Constant Name="GFP_Cell_diffusionRate">65.0</Constant>
+        <Constant Name="K_millivolts_per_volt">1000.0</Constant>
+        <Constant Name="KMOLE">0.0016611295681063123</Constant>
+        <Constant Name="Voltage_PM">0.0</Constant>
+        <VolumeVariable Name="GFP" />
+        <Function Name="GFP_Cell_init">(80.0 * ((x &gt;  - 21.0) &amp;&amp; (x &lt; 21.0) &amp;&amp; (y &gt;  - 21.0) &amp;&amp; (y &lt; 0.0)))</Function>
+        <CompartmentSubDomain Name="Cell">
+          <BoundaryType Boundary="Xm" Type="Flux" />
+          <BoundaryType Boundary="Xp" Type="Flux" />
+          <BoundaryType Boundary="Ym" Type="Flux" />
+          <BoundaryType Boundary="Yp" Type="Flux" />
+          <BoundaryType Boundary="Zm" Type="Value" />
+          <BoundaryType Boundary="Zp" Type="Value" />
+          <PdeEquation Name="GFP" SolutionType="Unknown">
+            <Rate>0.0</Rate>
+            <Diffusion>GFP_Cell_diffusionRate</Diffusion>
+            <Initial>GFP_Cell_init</Initial>
+          </PdeEquation>
+        </CompartmentSubDomain>
+        <CompartmentSubDomain Name="EC">
+          <BoundaryType Boundary="Xm" Type="Flux" />
+          <BoundaryType Boundary="Xp" Type="Flux" />
+          <BoundaryType Boundary="Ym" Type="Flux" />
+          <BoundaryType Boundary="Yp" Type="Flux" />
+          <BoundaryType Boundary="Zm" Type="Value" />
+          <BoundaryType Boundary="Zp" Type="Value" />
+          <PdeEquation Name="GFP" SolutionType="Unknown">
+            <Rate>0.0</Rate>
+            <Diffusion>GFP_Cell_diffusionRate</Diffusion>
+            <Initial>0.0</Initial>
+          </PdeEquation>
+        </CompartmentSubDomain>
+        <MembraneSubDomain Name="Cell_EC_membrane" InsideCompartment="Cell" OutsideCompartment="EC">
+          <BoundaryType Boundary="Xm" Type="Value" />
+          <BoundaryType Boundary="Xp" Type="Value" />
+          <BoundaryType Boundary="Ym" Type="Value" />
+          <BoundaryType Boundary="Yp" Type="Value" />
+          <BoundaryType Boundary="Zm" Type="Value" />
+          <BoundaryType Boundary="Zp" Type="Value" />
+          <JumpCondition Name="GFP">
+            <InFlux>0.0</InFlux>
+            <OutFlux>0.0</OutFlux>
+          </JumpCondition>
+        </MembraneSubDomain>
+        <Version Name="GFP_DIFF_generated" KeyValue="21448151" BranchId="21447098" Archived="0" Date="24-Apr-2007 11:13:24" FromVersionable="false">
+          <Owner Name="jyang" Identifier="21442363" />
+          <GroupAccess Type="1" />
+        </Version>
+      </MathDescription>
+      <Simulation Name="GFP_DIFF_1">
+        <SolverTaskDescription TaskType="Unsteady" UseSymbolicJacobian="false" Solver="Finite Volume, Regular Grid">
+          <TimeBound StartTime="0.0" EndTime="26.36" />
+          <TimeStep DefaultTime="0.05" MinTime="1.0E-8" MaxTime="1.0" />
+          <ErrorTolerance Absolut="1.0E-9" Relative="1.0E-9" />
+          <OutputOptions KeepEvery="10" KeepAtMost="1000" />
+          <NumberProcessors>1</NumberProcessors>
+        </SolverTaskDescription>
+        <MathOverrides />
+        <MeshSpecification>
+          <Size X="51" Y="51" Z="1" />
+        </MeshSpecification>
+        <Version Name="GFP_DIFF_1" KeyValue="21448159" BranchId="21447154" Archived="0" Date="24-Apr-2007 11:13:24" FromVersionable="false">
+          <Owner Name="jyang" Identifier="21442363" />
+          <GroupAccess Type="1" />
+        </Version>
+      </Simulation>
+      <SpatialObjects>
+        <SpatialObject Name="vobj_EC0" Type="Volume" subVolume="EC" regionId="0">
+          <QuantityCategoryList>
+            <QuantityCategory Name="VolumeCentroid" Enabled="false" />
+            <QuantityCategory Name="InteriorVelocity" Enabled="false" />
+            <QuantityCategory Name="VolumeRegionSize" Enabled="true" />
+          </QuantityCategoryList>
+        </SpatialObject>
+        <SpatialObject Name="vobj_Cell1" Type="Volume" subVolume="Cell" regionId="1">
+          <QuantityCategoryList>
+            <QuantityCategory Name="VolumeCentroid" Enabled="false" />
+            <QuantityCategory Name="InteriorVelocity" Enabled="false" />
+            <QuantityCategory Name="VolumeRegionSize" Enabled="true" />
+          </QuantityCategoryList>
+        </SpatialObject>
+        <SpatialObject Name="sobj_Cell1_EC0" Type="Surface" subVolumeInside="Cell" regionIdInside="1" subVolumeOutside="EC" regionIdOutside="0">
+          <QuantityCategoryList>
+            <QuantityCategory Name="SurfaceNormal" Enabled="false" />
+            <QuantityCategory Name="SurfaceVelocity" Enabled="false" />
+            <QuantityCategory Name="DistanceToSurface" Enabled="false" />
+            <QuantityCategory Name="DirectionToSurface" Enabled="false" />
+            <QuantityCategory Name="SurfaceSize" Enabled="true" />
+          </QuantityCategoryList>
+        </SpatialObject>
+      </SpatialObjects>
+      <Version Name="GFP_DIFF" KeyValue="21448153" BranchId="21447101" Archived="0" Date="24-Apr-2007 11:13:24" FromVersionable="false">
+        <Owner Name="jyang" Identifier="21442363" />
+        <GroupAccess Type="1" />
+      </Version>
+      <MicroscopeMeasurement Name="fluor">
+        <ConvolutionKernel Type="ProjectionZKernel" />
+      </MicroscopeMeasurement>
+    </SimulationSpec>
+    <SimulationSpec Name="GFP_DIFF2" Stochastic="false" UseConcentration="true" RuleBased="false" MassConservationModelReduction="true" InsufficientIterations="false" InsufficientMaxMolecules="false" CharacteristicSize="0.10403160765672961">
+      <NetworkConstraints RbmMaxIteration="1" RbmMaxMoleculesPerSpecies="10" RbmSpeciesLimit="800" RbmReactionsLimit="2500" />
+      <Annotation />
+      <Geometry Name="HWGEOM2" Dimension="2">
+        <Extent X="49.0" Y="49.0" Z="10.0" />
+        <Origin X="-24.5" Y="-24.5" Z="0.0" />
+        <SubVolume Name="Cell" Handle="0" Type="Analytical" KeyValue="21447894">
+          <AnalyticExpression>(((x * x) + (y * y)) &lt; 600.25)</AnalyticExpression>
+        </SubVolume>
+        <SubVolume Name="EC" Handle="1" Type="Analytical" KeyValue="21447895">
+          <AnalyticExpression>1.0</AnalyticExpression>
+        </SubVolume>
+        <SurfaceClass Name="Cell_EC_membrane" SubVolume1Ref="Cell" SubVolume2Ref="EC" />
+        <SurfaceDescription NumSamplesX="101" NumSamplesY="101" NumSamplesZ="1" CutoffFrequency="0.3">
+          <VolumeRegion Name="EC0" RegionID="0" SubVolume="EC" Size="521.2571" Unit="um2" />
+          <VolumeRegion Name="Cell1" RegionID="1" SubVolume="Cell" Size="1879.7428999999997" Unit="um2" />
+          <MembraneRegion Name="membrane_EC0_Cell1" VolumeRegion1="Cell1" VolumeRegion2="EC0" Size="152.57875876711097" Unit="um" />
+        </SurfaceDescription>
+        <Version Name="HWGEOM2" KeyValue="21447891" BranchId="21447802" Archived="0" Date="24-Apr-2007 11:02:13" FromVersionable="false">
+          <Owner Name="jyang" Identifier="21442363" />
+          <GroupAccess Type="1" />
+        </Version>
+      </Geometry>
+      <GeometryContext>
+        <FeatureMapping Feature="EC" GeometryClass="EC" SubVolume="EC">
+          <BoundariesTypes Xm="Flux" Xp="Flux" Ym="Flux" Yp="Flux" Zm="Flux" Zp="Flux" />
+        </FeatureMapping>
+        <FeatureMapping Feature="Cell" GeometryClass="Cell" SubVolume="Cell">
+          <BoundariesTypes Xm="Flux" Xp="Flux" Ym="Flux" Yp="Flux" Zm="Flux" Zp="Flux" />
+        </FeatureMapping>
+        <MembraneMapping Membrane="PM" SurfaceToVolumeRatio="1.0" VolumeFraction="0.2" CalculateVoltage="false" SpecificCapacitance="1.0" InitialVoltage="0.0" GeometryClass="Cell_EC_membrane">
+          <BoundariesTypes Xm="Flux" Xp="Flux" Ym="Flux" Yp="Flux" Zm="Flux" Zp="Flux" />
+        </MembraneMapping>
+      </GeometryContext>
+      <ReactionContext>
+        <LocalizedCompoundSpec LocalizedCompoundRef="GFP_Cell" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>(180.0 * ((x &gt;  - 24.5) &amp;&amp; (x &lt; 24.5) &amp;&amp; (y &gt;  - 24.5) &amp;&amp; (y &lt; 0.0)))</InitialConcentration>
+          <Diffusion>90.0</Diffusion>
+        </LocalizedCompoundSpec>
+      </ReactionContext>
+      <MathDescription Name="GFP_DIFF2_generated">
+        <Constant Name="_F_">96480.0</Constant>
+        <Constant Name="_F_nmol_">9.648E-5</Constant>
+        <Constant Name="_K_GHK_">1.0E-9</Constant>
+        <Constant Name="_N_pmol_">6.02E11</Constant>
+        <Constant Name="_R_">8314.0</Constant>
+        <Constant Name="_T_">300.0</Constant>
+        <Constant Name="GFP_Cell_diffusionRate">90.0</Constant>
+        <Constant Name="K_millivolts_per_volt">1000.0</Constant>
+        <Constant Name="KMOLE">0.0016611295681063123</Constant>
+        <Constant Name="Voltage_PM">0.0</Constant>
+        <VolumeVariable Name="GFP" />
+        <Function Name="GFP_Cell_init">(180.0 * ((x &gt;  - 24.5) &amp;&amp; (x &lt; 24.5) &amp;&amp; (y &gt;  - 24.5) &amp;&amp; (y &lt; 0.0)))</Function>
+        <CompartmentSubDomain Name="Cell">
+          <BoundaryType Boundary="Xm" Type="Flux" />
+          <BoundaryType Boundary="Xp" Type="Flux" />
+          <BoundaryType Boundary="Ym" Type="Flux" />
+          <BoundaryType Boundary="Yp" Type="Flux" />
+          <BoundaryType Boundary="Zm" Type="Value" />
+          <BoundaryType Boundary="Zp" Type="Value" />
+          <PdeEquation Name="GFP" SolutionType="Unknown">
+            <Rate>0.0</Rate>
+            <Diffusion>GFP_Cell_diffusionRate</Diffusion>
+            <Initial>GFP_Cell_init</Initial>
+          </PdeEquation>
+        </CompartmentSubDomain>
+        <CompartmentSubDomain Name="EC">
+          <BoundaryType Boundary="Xm" Type="Flux" />
+          <BoundaryType Boundary="Xp" Type="Flux" />
+          <BoundaryType Boundary="Ym" Type="Flux" />
+          <BoundaryType Boundary="Yp" Type="Flux" />
+          <BoundaryType Boundary="Zm" Type="Value" />
+          <BoundaryType Boundary="Zp" Type="Value" />
+          <PdeEquation Name="GFP" SolutionType="Unknown">
+            <Rate>0.0</Rate>
+            <Diffusion>GFP_Cell_diffusionRate</Diffusion>
+            <Initial>0.0</Initial>
+          </PdeEquation>
+        </CompartmentSubDomain>
+        <MembraneSubDomain Name="Cell_EC_membrane" InsideCompartment="Cell" OutsideCompartment="EC">
+          <BoundaryType Boundary="Xm" Type="Value" />
+          <BoundaryType Boundary="Xp" Type="Value" />
+          <BoundaryType Boundary="Ym" Type="Value" />
+          <BoundaryType Boundary="Yp" Type="Value" />
+          <BoundaryType Boundary="Zm" Type="Value" />
+          <BoundaryType Boundary="Zp" Type="Value" />
+          <JumpCondition Name="GFP">
+            <InFlux>0.0</InFlux>
+            <OutFlux>0.0</OutFlux>
+          </JumpCondition>
+        </MembraneSubDomain>
+        <Version Name="GFP_DIFF2_generated" KeyValue="21448060" BranchId="21447970" Archived="0" Date="24-Apr-2007 11:09:39" FromVersionable="false">
+          <Owner Name="jyang" Identifier="21442363" />
+          <GroupAccess Type="1" />
+        </Version>
+      </MathDescription>
+      <Simulation Name="Simulation0">
+        <SolverTaskDescription TaskType="Unsteady" UseSymbolicJacobian="false" Solver="Finite Volume, Regular Grid">
+          <TimeBound StartTime="0.0" EndTime="26.4" />
+          <TimeStep DefaultTime="0.1" MinTime="1.0E-8" MaxTime="1.0" />
+          <ErrorTolerance Absolut="1.0E-9" Relative="1.0E-9" />
+          <OutputOptions KeepEvery="1" KeepAtMost="1000" />
+          <NumberProcessors>1</NumberProcessors>
+        </SolverTaskDescription>
+        <MathOverrides />
+        <MeshSpecification>
+          <Size X="101" Y="101" Z="1" />
+        </MeshSpecification>
+        <Version Name="Simulation0" KeyValue="21448068" BranchId="21447980" Archived="0" Date="24-Apr-2007 11:09:39" FromVersionable="false">
+          <Owner Name="jyang" Identifier="21442363" />
+          <GroupAccess Type="1" />
+        </Version>
+      </Simulation>
+      <SpatialObjects>
+        <SpatialObject Name="vobj_EC0" Type="Volume" subVolume="EC" regionId="0">
+          <QuantityCategoryList>
+            <QuantityCategory Name="VolumeCentroid" Enabled="false" />
+            <QuantityCategory Name="InteriorVelocity" Enabled="false" />
+            <QuantityCategory Name="VolumeRegionSize" Enabled="true" />
+          </QuantityCategoryList>
+        </SpatialObject>
+        <SpatialObject Name="vobj_Cell1" Type="Volume" subVolume="Cell" regionId="1">
+          <QuantityCategoryList>
+            <QuantityCategory Name="VolumeCentroid" Enabled="false" />
+            <QuantityCategory Name="InteriorVelocity" Enabled="false" />
+            <QuantityCategory Name="VolumeRegionSize" Enabled="true" />
+          </QuantityCategoryList>
+        </SpatialObject>
+        <SpatialObject Name="sobj_Cell1_EC0" Type="Surface" subVolumeInside="Cell" regionIdInside="1" subVolumeOutside="EC" regionIdOutside="0">
+          <QuantityCategoryList>
+            <QuantityCategory Name="SurfaceNormal" Enabled="false" />
+            <QuantityCategory Name="SurfaceVelocity" Enabled="false" />
+            <QuantityCategory Name="DistanceToSurface" Enabled="false" />
+            <QuantityCategory Name="DirectionToSurface" Enabled="false" />
+            <QuantityCategory Name="SurfaceSize" Enabled="true" />
+          </QuantityCategoryList>
+        </SpatialObject>
+      </SpatialObjects>
+      <Version Name="GFP_DIFF2" KeyValue="21448062" BranchId="21447973" Archived="0" Date="24-Apr-2007 11:09:39" FromVersionable="false">
+        <Owner Name="jyang" Identifier="21442363" />
+        <GroupAccess Type="1" />
+      </Version>
+      <MicroscopeMeasurement Name="fluor">
+        <ConvolutionKernel Type="ProjectionZKernel" />
+      </MicroscopeMeasurement>
+    </SimulationSpec>
+    <Version Name="HW1" KeyValue="21448161" BranchId="21447045" Archived="0" Date="24-Apr-2007 11:13:24" FromVersionable="false">
+      <Owner Name="jyang" Identifier="21442363" />
+      <GroupAccess Type="0" />
+    </Version>
+    <pathwayModel>
+      <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:bp="http://www.biopax.org/release/biopax-level3.owl#" version="3.0" />
+    </pathwayModel>
+    <relationshipModel>
+      <RMNS version="3.0" />
+    </relationshipModel>
+    <vcmetadata>
+      <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" />
+      <nonrdfAnnotationList />
+      <uriBindingList />
+    </vcmetadata>
+  </BioModel>
+</vcml>
+

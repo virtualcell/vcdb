@@ -1,0 +1,818 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--This biomodel was generated in VCML Version Alpha_Version_7.4.0_build_87-->
+<vcml xmlns="http://sourceforge.net/projects/vcell/vcml" Version="Alpha_Version_7.4.0_build_87">
+  <BioModel Name="CM_PM12648679_MB10::Substrate_depletion_oscillator">
+    <Model Name="unnamed">
+      <ModelParameters>
+        <Parameter Name="k0_prime" Role="user defined" Unit="s-1">0.01</Parameter>
+        <Parameter Name="k0" Role="user defined" Unit="M-1.s-1">0.4</Parameter>
+        <Parameter Name="k1" Role="user defined" Unit="s-1">1.0</Parameter>
+        <Parameter Name="k2" Role="user defined" Unit="s-1">1.0</Parameter>
+        <Parameter Name="k3" Role="user defined" Unit="s-1">1.0</Parameter>
+        <Parameter Name="J3" Role="user defined" Unit="1">0.05</Parameter>
+        <Parameter Name="k4" Role="user defined" Unit="mol.s-1.l-1">0.3</Parameter>
+        <Parameter Name="J4" Role="user defined" Unit="1">0.05</Parameter>
+        <Parameter Name="Et" Role="user defined" Unit="M">1.0</Parameter>
+        <Parameter Name="Km3" Role="user defined" Unit="M">(J3 * Et)</Parameter>
+        <Parameter Name="Km4" Role="user defined" Unit="M">(J4 * Et)</Parameter>
+      </ModelParameters>
+      <Compound Name="R">
+        <Annotation>R</Annotation>
+      </Compound>
+      <Compound Name="X">
+        <Annotation>X</Annotation>
+      </Compound>
+      <Compound Name="S">
+        <Annotation>S</Annotation>
+      </Compound>
+      <Compound Name="Ep">
+        <Annotation>Ep</Annotation>
+      </Compound>
+      <Compound Name="E">
+        <Annotation>E</Annotation>
+      </Compound>
+      <Feature Name="env" KeyValue="173285849" />
+      <LocalizedCompound Name="R" CompoundRef="R" Structure="env" OverrideName="true" KeyValue="173285851">
+        <SpeciesPattern>
+          <MolecularTypePattern Index="1">
+            <MolecularType Name="R" />
+          </MolecularTypePattern>
+        </SpeciesPattern>
+      </LocalizedCompound>
+      <LocalizedCompound Name="X" CompoundRef="X" Structure="env" OverrideName="true" KeyValue="173285852">
+        <SpeciesPattern>
+          <MolecularTypePattern Index="1">
+            <MolecularType Name="X" />
+          </MolecularTypePattern>
+        </SpeciesPattern>
+      </LocalizedCompound>
+      <LocalizedCompound Name="S" CompoundRef="S" Structure="env" OverrideName="true" KeyValue="173285853">
+        <SpeciesPattern>
+          <MolecularTypePattern Index="1">
+            <MolecularType Name="S" />
+          </MolecularTypePattern>
+        </SpeciesPattern>
+      </LocalizedCompound>
+      <LocalizedCompound Name="Ep" CompoundRef="Ep" Structure="env" OverrideName="true" KeyValue="173285854">
+        <SpeciesPattern>
+          <MolecularTypePattern Index="1">
+            <MolecularType Name="E" />
+            <ComponentPattern MolecularComponent="mod" ComponentStatePattern="P" BondType="-" />
+          </MolecularTypePattern>
+        </SpeciesPattern>
+      </LocalizedCompound>
+      <LocalizedCompound Name="E" CompoundRef="E" Structure="env" OverrideName="true" KeyValue="173285855">
+        <SpeciesPattern>
+          <MolecularTypePattern Index="1">
+            <MolecularType Name="E" />
+            <ComponentPattern MolecularComponent="mod" ComponentStatePattern="U" BondType="-" />
+          </MolecularTypePattern>
+        </SpeciesPattern>
+      </LocalizedCompound>
+      <SimpleReaction Structure="env" Name="X_conversion_to_R" Reversible="false" FluxOption="MolecularOnly" KeyValue="173285856">
+        <Reactant LocalizedCompoundRef="X" Stoichiometry="1" KeyValue="173285857" />
+        <Product LocalizedCompoundRef="R" Stoichiometry="1" KeyValue="173285858" />
+        <Modifier LocalizedCompoundRef="Ep" />
+        <Kinetics KineticsType="GeneralKinetics">
+          <Parameter Name="J" Role="reaction rate" Unit="mol.litre-1.s-1">((k0_prime + (k0 * Ep)) * X)</Parameter>
+        </Kinetics>
+      </SimpleReaction>
+      <SimpleReaction Structure="env" Name="X_synthesis" Reversible="false" FluxOption="MolecularOnly" KeyValue="173285860">
+        <Product LocalizedCompoundRef="X" Stoichiometry="1" KeyValue="173285861" />
+        <Modifier LocalizedCompoundRef="S" />
+        <Kinetics KineticsType="GeneralKinetics">
+          <Parameter Name="J" Role="reaction rate" Unit="mol.litre-1.s-1">(k1 * S)</Parameter>
+        </Kinetics>
+      </SimpleReaction>
+      <SimpleReaction Structure="env" Name="R_degradation" Reversible="false" FluxOption="MolecularOnly" KeyValue="173285863">
+        <Reactant LocalizedCompoundRef="R" Stoichiometry="1" KeyValue="173285864" />
+        <Kinetics KineticsType="GeneralKinetics">
+          <Parameter Name="J" Role="reaction rate" Unit="mol.litre-1.s-1">(k2 * R)</Parameter>
+        </Kinetics>
+      </SimpleReaction>
+      <SimpleReaction Structure="env" Name="E_phosphorylation" Reversible="false" FluxOption="MolecularOnly" KeyValue="173285865">
+        <Reactant LocalizedCompoundRef="E" Stoichiometry="1" KeyValue="173285866" />
+        <Product LocalizedCompoundRef="Ep" Stoichiometry="1" KeyValue="173285867" />
+        <Modifier LocalizedCompoundRef="R" />
+        <Kinetics KineticsType="GeneralKinetics">
+          <Parameter Name="J" Role="reaction rate" Unit="mol.litre-1.s-1">(k3 * R * E / (Km3 + E))</Parameter>
+        </Kinetics>
+      </SimpleReaction>
+      <SimpleReaction Structure="env" Name="E_dephosphorylation" Reversible="false" FluxOption="MolecularOnly" KeyValue="173285869">
+        <Reactant LocalizedCompoundRef="Ep" Stoichiometry="1" KeyValue="173285870" />
+        <Product LocalizedCompoundRef="E" Stoichiometry="1" KeyValue="173285871" />
+        <Kinetics KineticsType="GeneralKinetics">
+          <Parameter Name="J" Role="reaction rate" Unit="mol.litre-1.s-1">(k4 * Ep / (Km4 + Ep))</Parameter>
+        </Kinetics>
+      </SimpleReaction>
+      <RbmModelContainer>
+        <MolecularTypeList>
+          <MolecularType Name="R" AnchorAll="true" />
+          <MolecularType Name="X" AnchorAll="true" />
+          <MolecularType Name="S" AnchorAll="true" />
+          <MolecularType Name="E" AnchorAll="true">
+            <MolecularComponent Name="mod" Index="1">
+              <AllowableState Name="P" />
+              <AllowableState Name="U" />
+            </MolecularComponent>
+          </MolecularType>
+        </MolecularTypeList>
+        <RbmObservableList>
+          <Observable Name="O0_R_tot" ObservableType="Molecules" Sequence="Multimolecular" LengthEqual="2" LengthGreater="1" Structure="env">
+            <SpeciesPattern>
+              <MolecularTypePattern Index="1">
+                <MolecularType Name="R" />
+              </MolecularTypePattern>
+            </SpeciesPattern>
+          </Observable>
+          <Observable Name="O0_X_tot" ObservableType="Molecules" Sequence="Multimolecular" LengthEqual="2" LengthGreater="1" Structure="env">
+            <SpeciesPattern>
+              <MolecularTypePattern Index="1">
+                <MolecularType Name="X" />
+              </MolecularTypePattern>
+            </SpeciesPattern>
+          </Observable>
+          <Observable Name="O0_S_tot" ObservableType="Molecules" Sequence="Multimolecular" LengthEqual="2" LengthGreater="1" Structure="env">
+            <SpeciesPattern>
+              <MolecularTypePattern Index="1">
+                <MolecularType Name="S" />
+              </MolecularTypePattern>
+            </SpeciesPattern>
+          </Observable>
+          <Observable Name="O0_E_tot" ObservableType="Molecules" Sequence="Multimolecular" LengthEqual="2" LengthGreater="1" Structure="env">
+            <SpeciesPattern>
+              <MolecularTypePattern Index="1">
+                <MolecularType Name="E" />
+                <ComponentPattern MolecularComponent="mod" Any="true" BondType="?" />
+              </MolecularTypePattern>
+            </SpeciesPattern>
+          </Observable>
+        </RbmObservableList>
+      </RbmModelContainer>
+      <Diagram Name="env" Structure="env">
+        <SimpleReactionShape NodeReferenceModeAttrTag="full" SimpleReactionRef="E_phosphorylation" LocationX="82" LocationY="166" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="Ep" LocationX="113" LocationY="105" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="full" SimpleReactionRef="E_dephosphorylation" LocationX="40" LocationY="110" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="X" LocationX="325" LocationY="70" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="full" SimpleReactionRef="R_degradation" LocationX="170" LocationY="224" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="R" LocationX="170" LocationY="168" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="full" SimpleReactionRef="X_synthesis" LocationX="407" LocationY="48" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="E" LocationX="14" LocationY="152" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="full" SimpleReactionRef="X_conversion_to_R" LocationX="229" LocationY="100" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="S" LocationX="421" LocationY="97" />
+      </Diagram>
+      <Version Name="unnamed" KeyValue="173285842" BranchId="172829619" Archived="0" Date="18-Feb-2020 20:18:47" FromVersionable="false">
+        <Owner Name="ModelBrick" Identifier="101222366" />
+        <GroupAccess Type="1" />
+      </Version>
+      <ModelUnitSystem VolumeSubstanceUnit="mol" MembraneSubstanceUnit="mol" LumpedReactionSubstanceUnit="mol" VolumeUnit="litre" AreaUnit="m2" LengthUnit="m" TimeUnit="s" />
+    </Model>
+    <SimulationSpec Name="Deterministic" Stochastic="false" UseConcentration="true" RuleBased="false" MassConservationModelReduction="false" InsufficientIterations="false" InsufficientMaxMolecules="false">
+      <NetworkConstraints RbmMaxIteration="3" RbmMaxMoleculesPerSpecies="10" RbmSpeciesLimit="800" RbmReactionsLimit="2500">
+        <MaxStoichiometry MolecularType="R" Integer="100" />
+        <MaxStoichiometry MolecularType="X" Integer="100" />
+        <MaxStoichiometry MolecularType="S" Integer="100" />
+        <MaxStoichiometry MolecularType="E" Integer="100" />
+      </NetworkConstraints>
+      <Annotation />
+      <Geometry Name="Compartmental907219619" Dimension="0">
+        <Extent X="10.0" Y="10.0" Z="10.0" />
+        <Origin X="0.0" Y="0.0" Z="0.0" />
+        <SubVolume Name="Compartment" Handle="0" Type="Compartmental" KeyValue="172829614" />
+        <Version Name="Compartmental907219619" KeyValue="172829610" BranchId="172829611" Archived="0" Date="11-Feb-2020 17:57:26" FromVersionable="false">
+          <Owner Name="ModelBrick" Identifier="101222366" />
+          <GroupAccess Type="1" />
+        </Version>
+      </Geometry>
+      <GeometryContext>
+        <FeatureMapping Feature="env" GeometryClass="Compartment" SubVolume="Compartment" Size="1.0">
+          <BoundariesTypes Xm="Flux" Xp="Flux" Ym="Flux" Yp="Flux" Zm="Flux" Zp="Flux" />
+        </FeatureMapping>
+      </GeometryContext>
+      <ReactionContext>
+        <LocalizedCompoundSpec LocalizedCompoundRef="R" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>0.0</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="X" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>0.0</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="S" ForceConstant="true" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>0.0</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="Ep" ForceConstant="true" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>(((2.0 * (k3 * R) * J4) / ((k4 - (k3 * R)) + (J3 * k4) + (J4 * (k3 * R)) + pow((pow(((k4 - (k3 * R)) + (J3 * k4) + (J4 * (k3 * R))),2.0) - (4.0 * (k4 - (k3 * R)) * (k3 * R) * J4)),(1.0 / 2.0)))) * Et)</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="E" ForceConstant="true" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>(Et - Ep)</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <ReactionSpec ReactionStepRef="X_conversion_to_R" ReactionMapping="included" />
+        <ReactionSpec ReactionStepRef="X_synthesis" ReactionMapping="included" />
+        <ReactionSpec ReactionStepRef="R_degradation" ReactionMapping="included" />
+        <ReactionSpec ReactionStepRef="E_phosphorylation" ReactionMapping="included" />
+        <ReactionSpec ReactionStepRef="E_dephosphorylation" ReactionMapping="included" />
+      </ReactionContext>
+      <MathDescription Name="Deterministic_generated">
+        <Constant Name="_F_">96485.3321</Constant>
+        <Constant Name="_F_nmol_">9.64853321E-5</Constant>
+        <Constant Name="_K_GHK_">1.0E-9</Constant>
+        <Constant Name="_N_pmol_">6.02214179E11</Constant>
+        <Constant Name="_PI_">3.141592653589793</Constant>
+        <Constant Name="_R_">8314.46261815</Constant>
+        <Constant Name="_T_">300.0</Constant>
+        <Constant Name="Et">1.0</Constant>
+        <Constant Name="J3">0.05</Constant>
+        <Constant Name="J4">0.05</Constant>
+        <Constant Name="k0">0.4</Constant>
+        <Constant Name="k0_prime">0.01</Constant>
+        <Constant Name="k1">1.0</Constant>
+        <Constant Name="k2">1.0</Constant>
+        <Constant Name="k3">1.0</Constant>
+        <Constant Name="k4">0.3</Constant>
+        <Constant Name="K_millivolts_per_volt">1000.0</Constant>
+        <Constant Name="KMOLE">0.001660538783162726</Constant>
+        <Constant Name="R_init_mol_litre_1">0.0</Constant>
+        <Constant Name="S_init_mol_litre_1">0.0</Constant>
+        <Constant Name="Size_env">1.0</Constant>
+        <Constant Name="X_init_mol_litre_1">0.0</Constant>
+        <VolumeVariable Name="R" Domain="Compartment" />
+        <VolumeVariable Name="X" Domain="Compartment" />
+        <Function Name="E" Domain="Compartment">(Et - Ep)</Function>
+        <Function Name="E_init_mol_litre_1" Domain="Compartment">(Et - Ep_init_mol_litre_1)</Function>
+        <Function Name="Ep" Domain="Compartment">(((2.0 * (k3 * R) * J4) / ((k4 - (k3 * R)) + (J3 * k4) + (J4 * (k3 * R)) + pow((pow(((k4 - (k3 * R)) + (J3 * k4) + (J4 * (k3 * R))),2.0) - (4.0 * (k4 - (k3 * R)) * (k3 * R) * J4)),(1.0 / 2.0)))) * Et)</Function>
+        <Function Name="Ep_init_mol_litre_1" Domain="Compartment">(((2.0 * (k3 * R_init_mol_litre_1) * J4) / ((k4 - (k3 * R_init_mol_litre_1)) + (J3 * k4) + (J4 * (k3 * R_init_mol_litre_1)) + pow((pow(((k4 - (k3 * R_init_mol_litre_1)) + (J3 * k4) + (J4 * (k3 * R_init_mol_litre_1))),2.0) - (4.0 * (k4 - (k3 * R_init_mol_litre_1)) * (k3 * R_init_mol_litre_1) * J4)),(1.0 / 2.0)))) * Et)</Function>
+        <Function Name="J_E_dephosphorylation" Domain="Compartment">(k4 * Ep / (Km4 + Ep))</Function>
+        <Function Name="J_E_phosphorylation" Domain="Compartment">(k3 * R * E / (Km3 + E))</Function>
+        <Function Name="J_R_degradation" Domain="Compartment">(k2 * R)</Function>
+        <Function Name="J_X_conversion_to_R" Domain="Compartment">((k0_prime + (k0 * Ep)) * X)</Function>
+        <Function Name="J_X_synthesis" Domain="Compartment">(k1 * S)</Function>
+        <Function Name="Km3" Domain="Compartment">(J3 * Et)</Function>
+        <Function Name="Km4" Domain="Compartment">(J4 * Et)</Function>
+        <Function Name="S" Domain="Compartment">S_init_mol_litre_1</Function>
+        <CompartmentSubDomain Name="Compartment">
+          <BoundaryType Boundary="Xm" Type="Value" />
+          <BoundaryType Boundary="Xp" Type="Value" />
+          <BoundaryType Boundary="Ym" Type="Value" />
+          <BoundaryType Boundary="Yp" Type="Value" />
+          <BoundaryType Boundary="Zm" Type="Value" />
+          <BoundaryType Boundary="Zp" Type="Value" />
+          <OdeEquation Name="R" SolutionType="Unknown">
+            <Rate>(J_X_conversion_to_R - J_R_degradation)</Rate>
+            <Initial>R_init_mol_litre_1</Initial>
+          </OdeEquation>
+          <OdeEquation Name="X" SolutionType="Unknown">
+            <Rate>( - J_X_conversion_to_R + J_X_synthesis)</Rate>
+            <Initial>X_init_mol_litre_1</Initial>
+          </OdeEquation>
+        </CompartmentSubDomain>
+        <Version Name="Deterministic_generated" KeyValue="172829615" BranchId="172829616" Archived="0" Date="11-Feb-2020 17:57:26" FromVersionable="false">
+          <Owner Name="ModelBrick" Identifier="101222366" />
+          <GroupAccess Type="1" />
+        </Version>
+      </MathDescription>
+      <Simulation Name="Simulation0">
+        <SolverTaskDescription TaskType="Unsteady" UseSymbolicJacobian="false" Solver="Combined Stiff Solver (IDA/CVODE)">
+          <TimeBound StartTime="0.0" EndTime="1.0" />
+          <TimeStep DefaultTime="0.1" MinTime="1.0E-8" MaxTime="1.0" />
+          <ErrorTolerance Absolut="1.0E-9" Relative="1.0E-9" />
+          <OutputOptions KeepEvery="1" KeepAtMost="1000" />
+          <NumberProcessors>1</NumberProcessors>
+        </SolverTaskDescription>
+        <MathOverrides />
+        <Version Name="Simulation0" KeyValue="172829665" BranchId="172829666" Archived="0" Date="11-Feb-2020 17:57:27" FromVersionable="false">
+          <Owner Name="ModelBrick" Identifier="101222366" />
+          <GroupAccess Type="1" />
+        </Version>
+      </Simulation>
+      <AssignmentRules>
+        <AssignmentRule Name="assignmentRule0" AssignmentRuleVariable="Km3">(J3 * Et)</AssignmentRule>
+        <AssignmentRule Name="assignmentRule1" AssignmentRuleVariable="Km4">(J4 * Et)</AssignmentRule>
+        <AssignmentRule Name="assignmentRule2" AssignmentRuleVariable="E">(Et - Ep)</AssignmentRule>
+        <AssignmentRule Name="assignmentRule3" AssignmentRuleVariable="Ep">(((2.0 * (k3 * R) * J4) / ((k4 - (k3 * R)) + (J3 * k4) + (J4 * (k3 * R)) + pow((pow(((k4 - (k3 * R)) + (J3 * k4) + (J4 * (k3 * R))),2.0) - (4.0 * (k4 - (k3 * R)) * (k3 * R) * J4)),(1.0 / 2.0)))) * Et)</AssignmentRule>
+      </AssignmentRules>
+      <Version Name="Deterministic" KeyValue="176191830" BranchId="172829652" Archived="0" Date="01-Apr-2020 17:33:04" FromVersionable="false">
+        <Owner Name="ModelBrick" Identifier="101222366" />
+        <GroupAccess Type="1" />
+      </Version>
+      <MicroscopeMeasurement Name="fluor">
+        <ConvolutionKernel Type="ProjectionZKernel" />
+      </MicroscopeMeasurement>
+    </SimulationSpec>
+    <Version Name="CM_PM12648679_MB10::Substrate_depletion_oscillator" KeyValue="176191843" BranchId="172840334" Archived="0" Date="01-Apr-2020 17:33:05" FromVersionable="false">
+      <Owner Name="ModelBrick" Identifier="101222366" />
+      <GroupAccess Type="0" />
+    </Version>
+    <pathwayModel>
+      <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:bp="http://www.biopax.org/release/biopax-level3.owl#" version="3.0" />
+    </pathwayModel>
+    <relationshipModel>
+      <RMNS version="3.0" />
+    </relationshipModel>
+    <vcmetadata>
+      <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
+        <rdf:Description rdf:about="http://sourceforge.net/projects/vcell/vcml/org.vcell.model.rbm.MolecularType/metaid_1611216946">
+          <bqbiol:isVersionOf xmlns:bqbiol="http://biomodels.net/biology-qualifiers/">
+            <rdf:Bag rdf:nodeID="node0">
+              <rdf:_1>
+                <rdf:Description rdf:about="urn:miriam:obo.go:GO%3A0032991" />
+              </rdf:_1>
+            </rdf:Bag>
+          </bqbiol:isVersionOf>
+          <bqbiol:isVersionOf xmlns:bqbiol="http://biomodels.net/biology-qualifiers/">
+            <rdf:Bag rdf:nodeID="node1">
+              <rdf:_1>
+                <rdf:Description rdf:about="urn:miriam:uniprot:P13350" />
+              </rdf:_1>
+            </rdf:Bag>
+          </bqbiol:isVersionOf>
+          <bqbiol:isVersionOf xmlns:bqbiol="http://biomodels.net/biology-qualifiers/">
+            <rdf:Bag rdf:nodeID="node2">
+              <rdf:_1>
+                <rdf:Description rdf:about="urn:miriam:uniprot:P24033" />
+              </rdf:_1>
+            </rdf:Bag>
+          </bqbiol:isVersionOf>
+        </rdf:Description>
+        <rdf:Description rdf:about="http://sourceforge.net/projects/vcell/vcml/org.vcell.model.rbm.MolecularType/metaid_1779813507">
+          <bqbiol:isVersionOf xmlns:bqbiol="http://biomodels.net/biology-qualifiers/">
+            <rdf:Bag rdf:nodeID="node3">
+              <rdf:_1>
+                <rdf:Description rdf:about="urn:miriam:chebi:CHEBI%3A36080" />
+              </rdf:_1>
+            </rdf:Bag>
+          </bqbiol:isVersionOf>
+          <bqbiol:isVersionOf xmlns:bqbiol="http://biomodels.net/biology-qualifiers/">
+            <rdf:Bag rdf:nodeID="node4">
+              <rdf:_1>
+                <rdf:Description rdf:about="urn:miriam:uniprot:P30309" />
+              </rdf:_1>
+            </rdf:Bag>
+          </bqbiol:isVersionOf>
+        </rdf:Description>
+        <rdf:Description rdf:about="http://sourceforge.net/projects/vcell/vcml/org.vcell.model.rbm.MolecularType/metaid_581966718">
+          <bqbiol:isVersionOf xmlns:bqbiol="http://biomodels.net/biology-qualifiers/">
+            <rdf:Bag rdf:nodeID="node5">
+              <rdf:_1>
+                <rdf:Description rdf:about="urn:miriam:obo.go:GO%3A0032991" />
+              </rdf:_1>
+            </rdf:Bag>
+          </bqbiol:isVersionOf>
+          <bqbiol:isVersionOf xmlns:bqbiol="http://biomodels.net/biology-qualifiers/">
+            <rdf:Bag rdf:nodeID="node6">
+              <rdf:_1>
+                <rdf:Description rdf:about="urn:miriam:uniprot:P13350" />
+              </rdf:_1>
+            </rdf:Bag>
+          </bqbiol:isVersionOf>
+          <bqbiol:isVersionOf xmlns:bqbiol="http://biomodels.net/biology-qualifiers/">
+            <rdf:Bag rdf:nodeID="node7">
+              <rdf:_1>
+                <rdf:Description rdf:about="urn:miriam:uniprot:P24033" />
+              </rdf:_1>
+            </rdf:Bag>
+          </bqbiol:isVersionOf>
+        </rdf:Description>
+        <rdf:Description rdf:about="http://www.sbml.org/sbml/level2/version4/_739814">
+          <bqbiol:hasProperty xmlns:bqbiol="http://biomodels.net/biology-qualifiers/">
+            <rdf:Bag rdf:nodeID="node8">
+              <rdf:_1>
+                <rdf:Description rdf:about="http://identifiers.org/mamo/MAMO_0000046" />
+              </rdf:_1>
+            </rdf:Bag>
+          </bqbiol:hasProperty>
+          <bqbiol:hasTaxon xmlns:bqbiol="http://biomodels.net/biology-qualifiers/">
+            <rdf:Bag rdf:nodeID="node9">
+              <rdf:_1>
+                <rdf:Description rdf:about="http://identifiers.org/taxonomy/131567" />
+              </rdf:_1>
+            </rdf:Bag>
+          </bqbiol:hasTaxon>
+          <bqbiol:isVersionOf xmlns:bqbiol="http://biomodels.net/biology-qualifiers/">
+            <rdf:Bag rdf:nodeID="node10">
+              <rdf:_1>
+                <rdf:Description rdf:about="http://identifiers.org/go/GO:0051098" />
+              </rdf:_1>
+            </rdf:Bag>
+          </bqbiol:isVersionOf>
+          <bqmodel:is xmlns:bqmodel="http://biomodels.net/model-qualifiers/">
+            <rdf:Bag rdf:nodeID="node11">
+              <rdf:_1>
+                <rdf:Description rdf:about="http://identifiers.org/biomodels.db/MODEL1102100006" />
+              </rdf:_1>
+            </rdf:Bag>
+          </bqmodel:is>
+          <bqmodel:is xmlns:bqmodel="http://biomodels.net/model-qualifiers/">
+            <rdf:Bag rdf:nodeID="node12">
+              <rdf:_1>
+                <rdf:Description rdf:about="http://identifiers.org/biomodels.db/BIOMD0000000307" />
+              </rdf:_1>
+            </rdf:Bag>
+          </bqmodel:is>
+          <bqmodel:isDescribedBy xmlns:bqmodel="http://biomodels.net/model-qualifiers/">
+            <rdf:Bag rdf:nodeID="node13">
+              <rdf:_1>
+                <rdf:Description rdf:about="http://identifiers.org/pubmed/12648679" />
+              </rdf:_1>
+            </rdf:Bag>
+          </bqmodel:isDescribedBy>
+          <dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">
+            <rdf:Bag rdf:nodeID="node14">
+              <rdf:_1>
+                <rdf:Description rdf:nodeID="node33">
+                  <vcard:EMAIL xmlns:vcard="http://www.w3.org/2001/vcard-rdf/3.0#" rdf:datatype="http://www.w3.org/2001/XMLSchema#string">lukas@ebi.ac.uk</vcard:EMAIL>
+                  <vcard:N xmlns:vcard="http://www.w3.org/2001/vcard-rdf/3.0#">
+                    <rdf:Description rdf:nodeID="node34">
+                      <vcard:Family rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Endler</vcard:Family>
+                      <vcard:Given rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Lukas</vcard:Given>
+                    </rdf:Description>
+                  </vcard:N>
+                  <vcard:ORG xmlns:vcard="http://www.w3.org/2001/vcard-rdf/3.0#">
+                    <rdf:Description rdf:nodeID="node35">
+                      <vcard:Orgname rdf:datatype="http://www.w3.org/2001/XMLSchema#string">EMBL-EBI</vcard:Orgname>
+                    </rdf:Description>
+                  </vcard:ORG>
+                </rdf:Description>
+              </rdf:_1>
+            </rdf:Bag>
+          </dc:creator>
+          <n0:created xmlns:n0="http://purl.org/dc/terms/">
+            <rdf:Description rdf:nodeID="node15">
+              <n0:W3CDTF rdf:datatype="http://www.w3.org/2001/XMLSchema#string">2011-02-10T03:49:02Z</n0:W3CDTF>
+            </rdf:Description>
+          </n0:created>
+          <n0:modified xmlns:n0="http://purl.org/dc/terms/">
+            <rdf:Description rdf:nodeID="node16">
+              <n0:W3CDTF rdf:datatype="http://www.w3.org/2001/XMLSchema#string">2014-04-06T20:01:13Z</n0:W3CDTF>
+            </rdf:Description>
+          </n0:modified>
+        </rdf:Description>
+        <rdf:Description rdf:about="http://www.sbml.org/sbml/level2/version4/_739815">
+          <bqbiol:isVersionOf xmlns:bqbiol="http://biomodels.net/biology-qualifiers/">
+            <rdf:Bag rdf:nodeID="node17">
+              <rdf:_1>
+                <rdf:Description rdf:about="http://identifiers.org/go/GO:0005623" />
+              </rdf:_1>
+            </rdf:Bag>
+          </bqbiol:isVersionOf>
+        </rdf:Description>
+        <rdf:Description rdf:about="http://www.sbml.org/sbml/level2/version4/_739816">
+          <bqbiol:isPropertyOf xmlns:bqbiol="http://biomodels.net/biology-qualifiers/">
+            <rdf:Bag rdf:nodeID="node18">
+              <rdf:_1>
+                <rdf:Description rdf:about="urn:miriam:obo.go:GO%3A0032991" />
+              </rdf:_1>
+            </rdf:Bag>
+          </bqbiol:isPropertyOf>
+          <bqbiol:isVersionOf xmlns:bqbiol="http://biomodels.net/biology-qualifiers/">
+            <rdf:Bag rdf:nodeID="node19">
+              <rdf:_1>
+                <rdf:Description rdf:about="urn:miriam:uniprot:P13350" />
+              </rdf:_1>
+            </rdf:Bag>
+          </bqbiol:isVersionOf>
+          <bqbiol:isVersionOf xmlns:bqbiol="http://biomodels.net/biology-qualifiers/">
+            <rdf:Bag rdf:nodeID="node20">
+              <rdf:_1>
+                <rdf:Description rdf:about="urn:miriam:uniprot:P24033" />
+              </rdf:_1>
+            </rdf:Bag>
+          </bqbiol:isVersionOf>
+        </rdf:Description>
+        <rdf:Description rdf:about="http://www.sbml.org/sbml/level2/version4/_739817">
+          <bqbiol:isVersionOf xmlns:bqbiol="http://biomodels.net/biology-qualifiers/">
+            <rdf:Bag rdf:nodeID="node21">
+              <rdf:_1>
+                <rdf:Description rdf:about="urn:miriam:uniprot:P13350" />
+              </rdf:_1>
+            </rdf:Bag>
+          </bqbiol:isVersionOf>
+          <bqbiol:isVersionOf xmlns:bqbiol="http://biomodels.net/biology-qualifiers/">
+            <rdf:Bag rdf:nodeID="node22">
+              <rdf:_1>
+                <rdf:Description rdf:about="urn:miriam:uniprot:P24033" />
+              </rdf:_1>
+            </rdf:Bag>
+          </bqbiol:isVersionOf>
+          <bqbiol:isVersionOf xmlns:bqbiol="http://biomodels.net/biology-qualifiers/">
+            <rdf:Bag rdf:nodeID="node23">
+              <rdf:_1>
+                <rdf:Description rdf:about="urn:miriam:obo.go:GO%3A0032991" />
+              </rdf:_1>
+            </rdf:Bag>
+          </bqbiol:isVersionOf>
+        </rdf:Description>
+        <rdf:Description rdf:about="http://www.sbml.org/sbml/level2/version4/_739819">
+          <bqbiol:hasVersion xmlns:bqbiol="http://biomodels.net/biology-qualifiers/">
+            <rdf:Bag rdf:nodeID="node24">
+              <rdf:_1>
+                <rdf:Description rdf:about="http://identifiers.org/psimod/MOD:00696" />
+              </rdf:_1>
+            </rdf:Bag>
+          </bqbiol:hasVersion>
+          <bqbiol:isVersionOf xmlns:bqbiol="http://biomodels.net/biology-qualifiers/">
+            <rdf:Bag rdf:nodeID="node25">
+              <rdf:_1>
+                <rdf:Description rdf:about="urn:miriam:uniprot:P30309" />
+              </rdf:_1>
+            </rdf:Bag>
+          </bqbiol:isVersionOf>
+          <bqbiol:isVersionOf xmlns:bqbiol="http://biomodels.net/biology-qualifiers/">
+            <rdf:Bag rdf:nodeID="node26">
+              <rdf:_1>
+                <rdf:Description rdf:about="http://identifiers.org/kegg.compound/C00562" />
+              </rdf:_1>
+            </rdf:Bag>
+          </bqbiol:isVersionOf>
+        </rdf:Description>
+        <rdf:Description rdf:about="http://www.sbml.org/sbml/level2/version4/_739822">
+          <bqbiol:isVersionOf xmlns:bqbiol="http://biomodels.net/biology-qualifiers/">
+            <rdf:Bag rdf:nodeID="node27">
+              <rdf:_1>
+                <rdf:Description rdf:about="urn:miriam:uniprot:P30309" />
+              </rdf:_1>
+            </rdf:Bag>
+          </bqbiol:isVersionOf>
+          <bqbiol:isVersionOf xmlns:bqbiol="http://biomodels.net/biology-qualifiers/">
+            <rdf:Bag rdf:nodeID="node28">
+              <rdf:_1>
+                <rdf:Description rdf:about="http://identifiers.org/chebi/CHEBI:36080" />
+              </rdf:_1>
+            </rdf:Bag>
+          </bqbiol:isVersionOf>
+        </rdf:Description>
+        <rdf:Description rdf:about="http://www.sbml.org/sbml/level2/version4/_739824">
+          <bqbiol:isVersionOf xmlns:bqbiol="http://biomodels.net/biology-qualifiers/">
+            <rdf:Bag rdf:nodeID="node29">
+              <rdf:_1>
+                <rdf:Description rdf:about="http://identifiers.org/go/GO:0009058" />
+              </rdf:_1>
+            </rdf:Bag>
+          </bqbiol:isVersionOf>
+        </rdf:Description>
+        <rdf:Description rdf:about="http://www.sbml.org/sbml/level2/version4/_739825">
+          <bqbiol:isVersionOf xmlns:bqbiol="http://biomodels.net/biology-qualifiers/">
+            <rdf:Bag rdf:nodeID="node30">
+              <rdf:_1>
+                <rdf:Description rdf:about="http://identifiers.org/go/GO:0009056" />
+              </rdf:_1>
+            </rdf:Bag>
+          </bqbiol:isVersionOf>
+        </rdf:Description>
+        <rdf:Description rdf:about="http://www.sbml.org/sbml/level2/version4/_739828">
+          <bqbiol:isVersionOf xmlns:bqbiol="http://biomodels.net/biology-qualifiers/">
+            <rdf:Bag rdf:nodeID="node31">
+              <rdf:_1>
+                <rdf:Description rdf:about="http://identifiers.org/go/GO:0006468" />
+              </rdf:_1>
+            </rdf:Bag>
+          </bqbiol:isVersionOf>
+        </rdf:Description>
+        <rdf:Description rdf:about="http://www.sbml.org/sbml/level2/version4/_739831">
+          <bqbiol:isVersionOf xmlns:bqbiol="http://biomodels.net/biology-qualifiers/">
+            <rdf:Bag rdf:nodeID="node32">
+              <rdf:_1>
+                <rdf:Description rdf:about="http://identifiers.org/go/GO:0006470" />
+              </rdf:_1>
+            </rdf:Bag>
+          </bqbiol:isVersionOf>
+        </rdf:Description>
+      </rdf:RDF>
+      <nonrdfAnnotationList>
+        <nonrdfAnnotation vcid="ReactionStep(X_conversion_to_R)">
+          <freetext>&lt;html&gt;
+  &lt;head&gt;
+    
+  &lt;/head&gt;
+  &lt;body xmlns="http://www.w3.org/1999/xhtml"&gt;
+    &lt;p style="margin-top: 0"&gt;
+      X is converted into R in an autocatalytic process, modulated by the 
+      phosphorylated form of the enzymatic protein (Ep)
+    &lt;/p&gt;
+  &lt;/body&gt;
+&lt;/html&gt;</freetext>
+        </nonrdfAnnotation>
+        <nonrdfAnnotation vcid="Species(E)">
+          <freetext>&lt;html&gt;
+  &lt;head&gt;
+    
+  &lt;/head&gt;
+  &lt;body xmlns="http://www.w3.org/1999/xhtml"&gt;
+    &lt;p style="margin-top: 0"&gt;
+      enzymatic protein.
+    &lt;/p&gt;
+    &lt;p style="margin-top: 0"&gt;
+      In the mechanism of MPF oscillations in frog egg extracts, E is the 
+      unphosphorylated form of the phosphatase Cdc25
+    &lt;/p&gt;
+  &lt;/body&gt;
+&lt;/html&gt;</freetext>
+        </nonrdfAnnotation>
+        <nonrdfAnnotation vcid="MolecularType(E)">
+          <freetext>&lt;html&gt;
+  &lt;head&gt;
+    
+  &lt;/head&gt;
+  &lt;body xmlns="http://www.w3.org/1999/xhtml"&gt;
+    &lt;p style="margin-top: 0"&gt;
+      enzymatic protein.
+    &lt;/p&gt;
+    &lt;p style="margin-top: 0"&gt;
+      In the mechanism of MPF oscillations in frog egg extracts, E is the 
+      phosphatase Cdc25
+    &lt;/p&gt;
+  &lt;/body&gt;
+&lt;/html&gt;</freetext>
+        </nonrdfAnnotation>
+        <nonrdfAnnotation vcid="Species(Ep)">
+          <freetext>&lt;html&gt;
+  &lt;head&gt;
+    
+  &lt;/head&gt;
+  &lt;body xmlns="http://www.w3.org/1999/xhtml"&gt;
+    &lt;p style="margin-top: 0"&gt;
+      phosphorylated form of E, an enzymatic protein.
+    &lt;/p&gt;
+    &lt;p style="margin-top: 0"&gt;
+      In the mechanism of MPF oscillations in frog egg extracts, Ep is the 
+      phosphatase Cdc25
+    &lt;/p&gt;
+  &lt;/body&gt;
+&lt;/html&gt;</freetext>
+        </nonrdfAnnotation>
+        <nonrdfAnnotation vcid="ReactionStep(E_dephosphorylation)">
+          <freetext>&lt;html&gt;
+  &lt;head&gt;
+    
+  &lt;/head&gt;
+  &lt;body xmlns="http://www.w3.org/1999/xhtml"&gt;
+    &lt;p style="margin-top: 0"&gt;
+      dephosphorylation of the enzymatic protein (E)
+    &lt;/p&gt;
+  &lt;/body&gt;
+&lt;/html&gt;</freetext>
+        </nonrdfAnnotation>
+        <nonrdfAnnotation vcid="Species(X)">
+          <freetext>&lt;html&gt;
+  &lt;head&gt;
+    
+  &lt;/head&gt;
+  &lt;body xmlns="http://www.w3.org/1999/xhtml"&gt;
+    &lt;p style="margin-top: 0"&gt;
+      species X.
+    &lt;/p&gt;
+    &lt;p style="margin-top: 0"&gt;
+      In the mechanism of MPF oscillations in frog egg extracts, R is the 
+      phosphorylated form of cyclin B-CDK1
+    &lt;/p&gt;
+  &lt;/body&gt;
+&lt;/html&gt;</freetext>
+        </nonrdfAnnotation>
+        <nonrdfAnnotation vcid="Species(R)">
+          <freetext>&lt;html&gt;
+  &lt;head&gt;
+    
+  &lt;/head&gt;
+  &lt;body xmlns="http://www.w3.org/1999/xhtml"&gt;
+    &lt;p style="margin-top: 0"&gt;
+      Response element. In the mechanism of MPF oscillations in frog egg 
+      extracts, R is the unphosphorylated form of cyclin B-CDK1 or active MPF.
+    &lt;/p&gt;
+  &lt;/body&gt;
+&lt;/html&gt;</freetext>
+        </nonrdfAnnotation>
+        <nonrdfAnnotation vcid="ReactionStep(X_synthesis)">
+          <freetext>&lt;html&gt;
+  &lt;head&gt;
+    
+  &lt;/head&gt;
+  &lt;body xmlns="http://www.w3.org/1999/xhtml"&gt;
+    &lt;p style="margin-top: 0"&gt;
+      Synthesis of X, modulated by the signal strength (S)
+    &lt;/p&gt;
+  &lt;/body&gt;
+&lt;/html&gt;</freetext>
+        </nonrdfAnnotation>
+        <nonrdfAnnotation vcid="MolecularType(S)">
+          <freetext>&lt;html&gt;
+  &lt;head&gt;
+    
+  &lt;/head&gt;
+  &lt;body xmlns="http://www.w3.org/1999/xhtml"&gt;
+    &lt;p style="margin-top: 0"&gt;
+      signal strength. Rate of synthesis of species X
+    &lt;/p&gt;
+  &lt;/body&gt;
+&lt;/html&gt;</freetext>
+        </nonrdfAnnotation>
+        <nonrdfAnnotation vcid="MolecularType(X)">
+          <freetext>&lt;html&gt;
+  &lt;head&gt;
+    
+  &lt;/head&gt;
+  &lt;body xmlns="http://www.w3.org/1999/xhtml"&gt;
+    &lt;p style="margin-top: 0"&gt;
+      species X.
+    &lt;/p&gt;
+    &lt;p style="margin-top: 0"&gt;
+      In the mechanism of MPF oscillations in frog egg extracts, R is the 
+      phosphorylated form of cyclin B-CDK1
+    &lt;/p&gt;
+  &lt;/body&gt;
+&lt;/html&gt;</freetext>
+        </nonrdfAnnotation>
+        <nonrdfAnnotation vcid="MolecularType(R)">
+          <freetext>&lt;html&gt;
+  &lt;head&gt;
+    
+  &lt;/head&gt;
+  &lt;body xmlns="http://www.w3.org/1999/xhtml"&gt;
+    &lt;p style="margin-top: 0"&gt;
+      response element. In the mechanism of MPF oscillations in frog egg 
+      extracts, R is the unphosphorylated form of cyclin B-CDK1 or active MPF.
+    &lt;/p&gt;
+  &lt;/body&gt;
+&lt;/html&gt;</freetext>
+        </nonrdfAnnotation>
+        <nonrdfAnnotation vcid="BioModel(CM_PM12648679_MB10::Substrate_depletion_oscillator)">
+          <freetext>&lt;html&gt;
+  &lt;head&gt;
+    
+  &lt;/head&gt;
+  &lt;body&gt;
+    &lt;p style="margin-top: 0in"&gt;
+      This ModelBrick from the article, &amp;quot;&lt;i&gt;Sniffers, buzzers, toggles 
+      and blinkers&lt;/i&gt;&amp;#8230;&amp;quot; describes a substrate-depletion oscillator. Species X 
+      is converted into R in an autocatalytic process. At first, X is abundant 
+      and R is scarce. As R builds up, R production accelerates until there is 
+      an explosive conversion of the entire pool of X into R. Then the 
+      autocatalytic reaction shuts off for lack of substrate, X. R is 
+      degraded, and X must build up again before another burst of R is 
+      produced. This is essentially the mechanism of MPF oscillations in frog 
+      egg extracts.
+    &lt;/p&gt;
+  &lt;/body&gt;
+&lt;/html&gt;</freetext>
+        </nonrdfAnnotation>
+        <nonrdfAnnotation vcid="ReactionStep(R_degradation)">
+          <freetext>&lt;html&gt;
+  &lt;head&gt;
+    
+  &lt;/head&gt;
+  &lt;body xmlns="http://www.w3.org/1999/xhtml"&gt;
+    &lt;p style="margin-top: 0"&gt;
+      degradation of te response element (R)
+    &lt;/p&gt;
+  &lt;/body&gt;
+&lt;/html&gt;</freetext>
+        </nonrdfAnnotation>
+        <nonrdfAnnotation vcid="ReactionStep(E_phosphorylation)">
+          <freetext>&lt;html&gt;
+  &lt;head&gt;
+    
+  &lt;/head&gt;
+  &lt;body xmlns="http://www.w3.org/1999/xhtml"&gt;
+    &lt;p style="margin-top: 0"&gt;
+      phosphorylation of the enzymatic protein (E), modulated by the response 
+      element (R)
+    &lt;/p&gt;
+  &lt;/body&gt;
+&lt;/html&gt;</freetext>
+        </nonrdfAnnotation>
+        <nonrdfAnnotation vcid="Species(S)">
+          <freetext>&lt;html&gt;
+  &lt;head&gt;
+    
+  &lt;/head&gt;
+  &lt;body xmlns="http://www.w3.org/1999/xhtml"&gt;
+    &lt;p style="margin-top: 0"&gt;
+      signal strength. Rate of synthesis of species X
+    &lt;/p&gt;
+  &lt;/body&gt;
+&lt;/html&gt;</freetext>
+        </nonrdfAnnotation>
+      </nonrdfAnnotationList>
+      <uriBindingList>
+        <uriBinding uri="http://sourceforge.net/projects/vcell/vcml/org.vcell.model.rbm.MolecularType/metaid_1611216946" vcid="MolecularType(R)" />
+        <uriBinding uri="http://www.sbml.org/sbml/level2/version4/_739823" vcid="ReactionStep(X_conversion_to_R)" />
+        <uriBinding uri="http://www.sbml.org/sbml/level2/version4/_739817" vcid="Species(X)" />
+        <uriBinding uri="http://www.sbml.org/sbml/level2/version4/_739825" vcid="ReactionStep(R_degradation)" />
+        <uriBinding uri="http://www.sbml.org/sbml/level2/version4/_739814" vcid="BioModel(CM_PM12648679_MB10::Substrate_depletion_oscillator)" />
+        <uriBinding uri="http://www.sbml.org/sbml/level2/version4/_739824" vcid="ReactionStep(X_synthesis)" />
+        <uriBinding uri="http://www.sbml.org/sbml/level2/version4/_739828" vcid="ReactionStep(E_phosphorylation)" />
+        <uriBinding uri="http://www.sbml.org/sbml/level2/version4/_739819" vcid="Species(Ep)" />
+        <uriBinding uri="http://www.sbml.org/sbml/level2/version4/_739831" vcid="ReactionStep(E_dephosphorylation)" />
+        <uriBinding uri="http://www.sbml.org/sbml/level2/version4/_739816" vcid="Species(R)" />
+        <uriBinding uri="http://sourceforge.net/projects/vcell/vcml/org.vcell.model.rbm.MolecularType/metaid_581966718" vcid="MolecularType(X)" />
+        <uriBinding uri="http://www.sbml.org/sbml/level2/version4/_739822" vcid="Species(E)" />
+        <uriBinding uri="http://www.sbml.org/sbml/level2/version4/_739815" vcid="Structure(env)" />
+        <uriBinding uri="http://sourceforge.net/projects/vcell/vcml/org.vcell.model.rbm.MolecularType/metaid_1779813507" vcid="MolecularType(E)" />
+        <uriBinding uri="http://www.sbml.org/sbml/level2/version4/_739818" vcid="Species(S)" />
+      </uriBindingList>
+    </vcmetadata>
+  </BioModel>
+</vcml>
+

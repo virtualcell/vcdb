@@ -1,0 +1,1001 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--This biomodel was generated in VCML Version Alpha_Version_7.4.0_build_87-->
+<vcml xmlns="http://sourceforge.net/projects/vcell/vcml" Version="Alpha_Version_7.4.0_build_87">
+  <BioModel Name="Problem simulation to use for write up">
+    <Model Name="unnamed">
+      <Compound Name="s3" />
+      <Compound Name="s4" />
+      <Compound Name="s1" />
+      <Compound Name="s2" />
+      <Compound Name="s0" />
+      <Compound Name="s5" />
+      <Compound Name="s6" />
+      <Compound Name="s7" />
+      <Compound Name="s8" />
+      <Compound Name="s9" />
+      <Compound Name="s10" />
+      <Compound Name="s11" />
+      <Compound Name="s12" />
+      <Compound Name="s13" />
+      <Compound Name="s14" />
+      <Compound Name="s15" />
+      <Feature Name="Cytosol" KeyValue="91719533" />
+      <LocalizedCompound Name="BufferPool" CompoundRef="s3" Structure="Cytosol" OverrideName="true" KeyValue="91719537" />
+      <LocalizedCompound Name="Apoenzyme" CompoundRef="s4" Structure="Cytosol" OverrideName="true" KeyValue="91719538" />
+      <LocalizedCompound Name="MetalIn" CompoundRef="s1" Structure="Cytosol" OverrideName="true" KeyValue="91719535" />
+      <LocalizedCompound Name="Enzyme1" CompoundRef="s2" Structure="Cytosol" OverrideName="true" KeyValue="91719536" />
+      <LocalizedCompound Name="MetalOut" CompoundRef="s0" Structure="Cytosol" OverrideName="true" KeyValue="91719539" />
+      <LocalizedCompound Name="Metaloenzyme" CompoundRef="s5" Structure="Cytosol" OverrideName="true" KeyValue="91719540" />
+      <LocalizedCompound Name="FreeAminoAcid" CompoundRef="s6" Structure="Cytosol" OverrideName="true" KeyValue="91719541" />
+      <LocalizedCompound Name="Metalloregulator" CompoundRef="s7" Structure="Cytosol" OverrideName="true" KeyValue="91719542" />
+      <LocalizedCompound Name="MetalFreeTR" CompoundRef="s8" Structure="Cytosol" OverrideName="true" KeyValue="91719543" />
+      <LocalizedCompound Name="InactiveGene" CompoundRef="s9" Structure="Cytosol" OverrideName="true" KeyValue="91719544" />
+      <LocalizedCompound Name="ActiveGene" CompoundRef="s10" Structure="Cytosol" OverrideName="true" KeyValue="91719545" />
+      <LocalizedCompound Name="Peptides" CompoundRef="s11" Structure="Cytosol" OverrideName="true" KeyValue="91719546" />
+      <LocalizedCompound Name="Protease" CompoundRef="s12" Structure="Cytosol" OverrideName="true" KeyValue="91719547" />
+      <LocalizedCompound Name="NonSpecificProtein" CompoundRef="s13" Structure="Cytosol" OverrideName="true" KeyValue="91719548" />
+      <LocalizedCompound Name="ToxicProtein" CompoundRef="s14" Structure="Cytosol" OverrideName="true" KeyValue="91719549" />
+      <LocalizedCompound Name="RNAPolymerase" CompoundRef="s15" Structure="Cytosol" OverrideName="true" KeyValue="91719550" />
+      <SimpleReaction Structure="Cytosol" Name="r9" Reversible="true" FluxOption="MolecularOnly" KeyValue="91719559">
+        <Reactant LocalizedCompoundRef="ActiveGene" Stoichiometry="1" KeyValue="91719560" />
+        <Reactant LocalizedCompoundRef="Metalloregulator" Stoichiometry="1" KeyValue="91719561" />
+        <Product LocalizedCompoundRef="InactiveGene" Stoichiometry="1" KeyValue="91719562" />
+        <Kinetics KineticsType="MassAction">
+          <Parameter Name="J" Role="reaction rate" Unit="uM.s-1">(((Kf * ActiveGene) * Metalloregulator) - (Kr * InactiveGene))</Parameter>
+          <Parameter Name="Kf" Role="forward rate constant" Unit="s-1.uM-1">100.0</Parameter>
+          <Parameter Name="Kr" Role="reverse rate constant" Unit="s-1">1.0E-6</Parameter>
+        </Kinetics>
+      </SimpleReaction>
+      <SimpleReaction Structure="Cytosol" Name="r4" Reversible="true" FluxOption="MolecularOnly" KeyValue="91719563">
+        <Reactant LocalizedCompoundRef="Enzyme1" Stoichiometry="1" KeyValue="91719564" />
+        <Product LocalizedCompoundRef="Peptides" Stoichiometry="1" KeyValue="91719565" />
+        <Modifier LocalizedCompoundRef="Protease" />
+        <Kinetics KineticsType="GeneralLumpedKinetics">
+          <Parameter Name="LumpedJ" Role="lumped reaction rate" Unit="molecules.s-1">(Protease * ((Kf * Enzyme1) - (Kr * Peptides)) / KMOLE)</Parameter>
+          <Parameter Name="Kr" Role="user defined" Unit="s-1">1.0E-10</Parameter>
+          <Parameter Name="Kf" Role="user defined" Unit="s-1">0.1</Parameter>
+        </Kinetics>
+      </SimpleReaction>
+      <SimpleReaction Structure="Cytosol" Name="r0" Reversible="true" FluxOption="MolecularOnly" KeyValue="91719551">
+        <Reactant LocalizedCompoundRef="MetalOut" Stoichiometry="1" KeyValue="91719552" />
+        <Product LocalizedCompoundRef="MetalIn" Stoichiometry="1" KeyValue="91719553" />
+        <Modifier LocalizedCompoundRef="Enzyme1" />
+        <Kinetics KineticsType="GeneralLumpedKinetics">
+          <Parameter Name="LumpedJ" Role="lumped reaction rate" Unit="molecules.s-1">(Enzyme1 * ((Kf * MetalOut) - (Kr * MetalIn)) / KMOLE)</Parameter>
+          <Parameter Name="Kr" Role="user defined" Unit="s-1">9.999999999999999E-6</Parameter>
+          <Parameter Name="Kf" Role="user defined" Unit="s-1">100.0</Parameter>
+        </Kinetics>
+      </SimpleReaction>
+      <SimpleReaction Structure="Cytosol" Name="r7" Reversible="true" FluxOption="MolecularOnly" KeyValue="91719555">
+        <Reactant LocalizedCompoundRef="RNAPolymerase" Stoichiometry="1" KeyValue="91719556" />
+        <Product LocalizedCompoundRef="Enzyme1" Stoichiometry="1" KeyValue="91719557" />
+        <Modifier LocalizedCompoundRef="ActiveGene" />
+        <Kinetics KineticsType="GeneralLumpedKinetics">
+          <Parameter Name="LumpedJ" Role="lumped reaction rate" Unit="molecules.s-1">(ActiveGene * ((Kf * RNAPolymerase) - (Kr * Enzyme1)))</Parameter>
+          <Parameter Name="Kr" Role="user defined" Unit="s-1">9.999999999999999E-6</Parameter>
+          <Parameter Name="Kf" Role="user defined" Unit="s-1">100.0</Parameter>
+        </Kinetics>
+      </SimpleReaction>
+      <SimpleReaction Structure="Cytosol" Name="r1" Reversible="true" FluxOption="MolecularOnly" KeyValue="91719567">
+        <Reactant LocalizedCompoundRef="NonSpecificProtein" Stoichiometry="1" KeyValue="91719568" />
+        <Reactant LocalizedCompoundRef="MetalIn" Stoichiometry="1" KeyValue="91719569" />
+        <Product LocalizedCompoundRef="ToxicProtein" Stoichiometry="1" KeyValue="91719570" />
+        <Kinetics KineticsType="MassAction">
+          <Parameter Name="J" Role="reaction rate" Unit="uM.s-1">(((Kf * NonSpecificProtein) * MetalIn) - (Kr * ToxicProtein))</Parameter>
+          <Parameter Name="Kf" Role="forward rate constant" Unit="s-1.uM-1">100.0</Parameter>
+          <Parameter Name="Kr" Role="reverse rate constant" Unit="s-1">1.0E-7</Parameter>
+        </Kinetics>
+      </SimpleReaction>
+      <SimpleReaction Structure="Cytosol" Name="r2" Reversible="true" FluxOption="MolecularOnly" KeyValue="91719571">
+        <Reactant LocalizedCompoundRef="BufferPool" Stoichiometry="1" KeyValue="91719572" />
+        <Reactant LocalizedCompoundRef="Apoenzyme" Stoichiometry="1" KeyValue="91719573" />
+        <Product LocalizedCompoundRef="Metaloenzyme" Stoichiometry="1" KeyValue="91719574" />
+        <Product LocalizedCompoundRef="FreeAminoAcid" Stoichiometry="1" KeyValue="91719575" />
+        <Kinetics KineticsType="MassAction">
+          <Parameter Name="J" Role="reaction rate" Unit="uM.s-1">(((Kf * BufferPool) * Apoenzyme) - ((Kr * Metaloenzyme) * FreeAminoAcid))</Parameter>
+          <Parameter Name="Kf" Role="forward rate constant" Unit="s-1.uM-1">100.0</Parameter>
+          <Parameter Name="Kr" Role="reverse rate constant" Unit="s-1.uM-1">1.0E-10</Parameter>
+        </Kinetics>
+      </SimpleReaction>
+      <SimpleReaction Structure="Cytosol" Name="r3" Reversible="true" FluxOption="MolecularOnly" KeyValue="91719576">
+        <Reactant LocalizedCompoundRef="FreeAminoAcid" Stoichiometry="1" KeyValue="91719577" />
+        <Reactant LocalizedCompoundRef="MetalIn" Stoichiometry="1" KeyValue="91719578" />
+        <Product LocalizedCompoundRef="BufferPool" Stoichiometry="1" KeyValue="91719579" />
+        <Kinetics KineticsType="MassAction">
+          <Parameter Name="J" Role="reaction rate" Unit="uM.s-1">(((Kf * FreeAminoAcid) * MetalIn) - (Kr * BufferPool))</Parameter>
+          <Parameter Name="Kf" Role="forward rate constant" Unit="s-1.uM-1">100.0</Parameter>
+          <Parameter Name="Kr" Role="reverse rate constant" Unit="s-1">0.001</Parameter>
+        </Kinetics>
+      </SimpleReaction>
+      <SimpleReaction Structure="Cytosol" Name="r5" Reversible="true" FluxOption="MolecularOnly" KeyValue="91719580">
+        <Reactant LocalizedCompoundRef="MetalFreeTR" Stoichiometry="1" KeyValue="91719581" />
+        <Reactant LocalizedCompoundRef="MetalIn" Stoichiometry="1" KeyValue="91719582" />
+        <Product LocalizedCompoundRef="Metalloregulator" Stoichiometry="1" KeyValue="91719583" />
+        <Kinetics KineticsType="MassAction">
+          <Parameter Name="J" Role="reaction rate" Unit="uM.s-1">(((Kf * MetalFreeTR) * MetalIn) - (Kr * Metalloregulator))</Parameter>
+          <Parameter Name="Kf" Role="forward rate constant" Unit="s-1.uM-1">1000.0</Parameter>
+          <Parameter Name="Kr" Role="reverse rate constant" Unit="s-1">0.1</Parameter>
+        </Kinetics>
+      </SimpleReaction>
+      <Diagram Name="c0" Structure="Cytosol">
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="Metaloenzyme" LocationX="441" LocationY="204" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="full" SimpleReactionRef="r4" LocationX="49" LocationY="118" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="InactiveGene" LocationX="270" LocationY="75" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="Peptides" LocationX="15" LocationY="119" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="FreeAminoAcid" LocationX="309" LocationY="213" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="Metalloregulator" LocationX="148" LocationY="103" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="Enzyme1" LocationX="83" LocationY="118" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="full" SimpleReactionRef="r0" LocationX="85" LocationY="169" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="full" SimpleReactionRef="r1" LocationX="151" LocationY="217" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="ToxicProtein" LocationX="91" LocationY="217" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="full" SimpleReactionRef="r2" LocationX="352" LocationY="211" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="RNAPolymerase" LocationX="52" LocationY="39" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="Apoenzyme" LocationX="319" LocationY="248" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="full" SimpleReactionRef="r9" LocationX="146" LocationY="51" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="NonSpecificProtein" LocationX="213" LocationY="215" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="ActiveGene" LocationX="81" LocationY="22" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="full" SimpleReactionRef="r3" LocationX="341" LocationY="168" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="BufferPool" LocationX="378" LocationY="167" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="Protease" LocationX="45" LocationY="79" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="full" SimpleReactionRef="r5" LocationX="180" LocationY="124" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="full" SimpleReactionRef="r7" LocationX="83" LocationY="63" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="MetalFreeTR" LocationX="129" LocationY="138" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="MetalIn" LocationX="169" LocationY="167" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="MetalOut" LocationX="30" LocationY="167" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="Metaloenzyme" LocationX="441" LocationY="204" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="molecule" SimpleReactionRef="r4" LocationX="49" LocationY="118" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="InactiveGene" LocationX="270" LocationY="75" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="Peptides" LocationX="15" LocationY="119" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="FreeAminoAcid" LocationX="309" LocationY="213" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="Metalloregulator" LocationX="148" LocationY="103" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="Enzyme1" LocationX="83" LocationY="118" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="molecule" SimpleReactionRef="r0" LocationX="85" LocationY="169" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="molecule" SimpleReactionRef="r1" LocationX="151" LocationY="217" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="ToxicProtein" LocationX="91" LocationY="217" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="molecule" SimpleReactionRef="r2" LocationX="352" LocationY="211" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="RNAPolymerase" LocationX="52" LocationY="39" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="Apoenzyme" LocationX="319" LocationY="248" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="molecule" SimpleReactionRef="r9" LocationX="146" LocationY="51" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="NonSpecificProtein" LocationX="213" LocationY="215" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="ActiveGene" LocationX="81" LocationY="22" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="molecule" SimpleReactionRef="r3" LocationX="341" LocationY="168" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="BufferPool" LocationX="378" LocationY="167" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="Protease" LocationX="45" LocationY="79" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="molecule" SimpleReactionRef="r5" LocationX="180" LocationY="124" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="molecule" SimpleReactionRef="r7" LocationX="83" LocationY="63" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="MetalFreeTR" LocationX="129" LocationY="138" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="MetalIn" LocationX="169" LocationY="167" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="MetalOut" LocationX="30" LocationY="167" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="Metaloenzyme" LocationX="441" LocationY="204" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="rule" SimpleReactionRef="r4" LocationX="49" LocationY="118" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="InactiveGene" LocationX="270" LocationY="75" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="Peptides" LocationX="15" LocationY="119" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="FreeAminoAcid" LocationX="309" LocationY="213" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="Metalloregulator" LocationX="148" LocationY="103" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="Enzyme1" LocationX="83" LocationY="118" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="rule" SimpleReactionRef="r0" LocationX="85" LocationY="169" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="rule" SimpleReactionRef="r1" LocationX="151" LocationY="217" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="ToxicProtein" LocationX="91" LocationY="217" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="rule" SimpleReactionRef="r2" LocationX="352" LocationY="211" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="RNAPolymerase" LocationX="52" LocationY="39" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="Apoenzyme" LocationX="319" LocationY="248" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="rule" SimpleReactionRef="r9" LocationX="146" LocationY="51" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="NonSpecificProtein" LocationX="213" LocationY="215" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="ActiveGene" LocationX="81" LocationY="22" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="rule" SimpleReactionRef="r3" LocationX="341" LocationY="168" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="BufferPool" LocationX="378" LocationY="167" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="Protease" LocationX="45" LocationY="79" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="rule" SimpleReactionRef="r5" LocationX="180" LocationY="124" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="rule" SimpleReactionRef="r7" LocationX="83" LocationY="63" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="MetalFreeTR" LocationX="129" LocationY="138" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="MetalIn" LocationX="169" LocationY="167" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="MetalOut" LocationX="30" LocationY="167" />
+      </Diagram>
+      <Version Name="unnamed" KeyValue="91719515" BranchId="89139763" Archived="0" Date="12-Oct-2014 06:03:27" FromVersionable="false">
+        <Owner Name="ElizabethThomas" Identifier="89068648" />
+        <GroupAccess Type="1" />
+      </Version>
+      <ModelUnitSystem VolumeSubstanceUnit="uM.um3" MembraneSubstanceUnit="molecules" LumpedReactionSubstanceUnit="molecules" VolumeUnit="um3" AreaUnit="um2" LengthUnit="um" TimeUnit="s" />
+    </Model>
+    <SimulationSpec Name="Application0" Stochastic="false" UseConcentration="true" RuleBased="false" MassConservationModelReduction="true" InsufficientIterations="false" InsufficientMaxMolecules="false">
+      <NetworkConstraints RbmMaxIteration="1" RbmMaxMoleculesPerSpecies="10" RbmSpeciesLimit="800" RbmReactionsLimit="2500" />
+      <Annotation />
+      <Geometry Name="non-spatial1450966580" Dimension="0">
+        <Extent X="10.0" Y="10.0" Z="10.0" />
+        <Origin X="0.0" Y="0.0" Z="0.0" />
+        <SubVolume Name="Compartment" Handle="0" Type="Compartmental" KeyValue="89139758" />
+        <Version Name="non-spatial1450966580" KeyValue="89139754" BranchId="89139755" Archived="0" Date="19-Jun-2014 08:01:16" FromVersionable="false">
+          <Owner Name="ElizabethThomas" Identifier="89068648" />
+          <GroupAccess Type="1" />
+        </Version>
+      </Geometry>
+      <GeometryContext>
+        <FeatureMapping Feature="Cytosol" GeometryClass="Compartment" SubVolume="Compartment" Size="50000.0">
+          <BoundariesTypes Xm="Flux" Xp="Flux" Ym="Flux" Yp="Flux" Zm="Flux" Zp="Flux" />
+        </FeatureMapping>
+      </GeometryContext>
+      <ReactionContext>
+        <LocalizedCompoundSpec LocalizedCompoundRef="BufferPool" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>0.0</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="Apoenzyme" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>0.8</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="MetalIn" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>0.0</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="Enzyme1" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>0.1</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="MetalOut" ForceConstant="true" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>1.0</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="Metaloenzyme" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>0.0</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="FreeAminoAcid" ForceConstant="true" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>1.6</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="Metalloregulator" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>0.0</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="MetalFreeTR" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>0.166</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="InactiveGene" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>0.0</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="ActiveGene" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>0.00166</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="Peptides" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>0.0</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="Protease" ForceConstant="true" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>0.05</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="NonSpecificProtein" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>0.0</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="ToxicProtein" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>0.0</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="RNAPolymerase" ForceConstant="true" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>0.05</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <ReactionSpec ReactionStepRef="r9" ReactionMapping="included" />
+        <ReactionSpec ReactionStepRef="r4" ReactionMapping="included" />
+        <ReactionSpec ReactionStepRef="r0" ReactionMapping="included" />
+        <ReactionSpec ReactionStepRef="r7" ReactionMapping="included" />
+        <ReactionSpec ReactionStepRef="r1" ReactionMapping="included" />
+        <ReactionSpec ReactionStepRef="r2" ReactionMapping="included" />
+        <ReactionSpec ReactionStepRef="r3" ReactionMapping="included" />
+        <ReactionSpec ReactionStepRef="r5" ReactionMapping="included" />
+      </ReactionContext>
+      <MathDescription Name="Application0_generated">
+        <Constant Name="_F_">96480.0</Constant>
+        <Constant Name="_F_nmol_">9.648E-5</Constant>
+        <Constant Name="_K_GHK_">1.0E-9</Constant>
+        <Constant Name="_N_pmol_">6.02E11</Constant>
+        <Constant Name="_PI_">3.141592653589793</Constant>
+        <Constant Name="_R_">8314.0</Constant>
+        <Constant Name="_T_">300.0</Constant>
+        <Constant Name="ActiveGene_init_uM">0.00166</Constant>
+        <Constant Name="Apoenzyme_init_uM">0.8</Constant>
+        <Constant Name="BufferPool_init_uM">0.0</Constant>
+        <Constant Name="Enzyme1_init_uM">0.1</Constant>
+        <Constant Name="FreeAminoAcid">1.6</Constant>
+        <Constant Name="FreeAminoAcid_init_uM">1.6</Constant>
+        <Constant Name="InactiveGene_init_uM">0.0</Constant>
+        <Constant Name="K_millivolts_per_volt">1000.0</Constant>
+        <Constant Name="Kf_r0">100.0</Constant>
+        <Constant Name="Kf_r1">100.0</Constant>
+        <Constant Name="Kf_r2">100.0</Constant>
+        <Constant Name="Kf_r3">100.0</Constant>
+        <Constant Name="Kf_r4">0.1</Constant>
+        <Constant Name="Kf_r5">1000.0</Constant>
+        <Constant Name="Kf_r7">100.0</Constant>
+        <Constant Name="Kf_r9">100.0</Constant>
+        <Constant Name="KMOLE">0.0016611295681063123</Constant>
+        <Constant Name="Kr_r0">9.999999999999999E-6</Constant>
+        <Constant Name="Kr_r1">1.0E-7</Constant>
+        <Constant Name="Kr_r2">1.0E-10</Constant>
+        <Constant Name="Kr_r3">0.001</Constant>
+        <Constant Name="Kr_r4">1.0E-10</Constant>
+        <Constant Name="Kr_r7">9.999999999999999E-6</Constant>
+        <Constant Name="Kr_r9">1.0E-6</Constant>
+        <Constant Name="MetalFreeTR_init_uM">0.166</Constant>
+        <Constant Name="MetalIn_init_uM">0.0</Constant>
+        <Constant Name="Metalloregulator_init_uM">0.0</Constant>
+        <Constant Name="Metaloenzyme_init_uM">0.0</Constant>
+        <Constant Name="MetalOut">1.0</Constant>
+        <Constant Name="MetalOut_init_uM">1.0</Constant>
+        <Constant Name="NonSpecificProtein_init_uM">0.0</Constant>
+        <Constant Name="Peptides_init_uM">0.0</Constant>
+        <Constant Name="Protease">0.05</Constant>
+        <Constant Name="Protease_init_uM">0.05</Constant>
+        <Constant Name="RNAPolymerase">0.05</Constant>
+        <Constant Name="RNAPolymerase_init_uM">0.05</Constant>
+        <Constant Name="Size_Cytosol">50000.0</Constant>
+        <Constant Name="ToxicProtein_init_uM">0.0</Constant>
+        <VolumeVariable Name="ActiveGene" Domain="Compartment" />
+        <VolumeVariable Name="BufferPool" Domain="Compartment" />
+        <VolumeVariable Name="Enzyme1" Domain="Compartment" />
+        <VolumeVariable Name="MetalFreeTR" Domain="Compartment" />
+        <VolumeVariable Name="MetalIn" Domain="Compartment" />
+        <VolumeVariable Name="Metaloenzyme" Domain="Compartment" />
+        <VolumeVariable Name="Peptides" Domain="Compartment" />
+        <VolumeVariable Name="ToxicProtein" Domain="Compartment" />
+        <Function Name="Apoenzyme" Domain="Compartment">((K_Apoenzyme_total - (Size_Cytosol * Metaloenzyme)) / Size_Cytosol)</Function>
+        <Function Name="InactiveGene" Domain="Compartment">((K_InactiveGene_total - (Size_Cytosol * ActiveGene)) / Size_Cytosol)</Function>
+        <Function Name="J_r1" Domain="Compartment">((MetalIn * Kf_r1 * NonSpecificProtein) - (Kr_r1 * ToxicProtein))</Function>
+        <Function Name="J_r2" Domain="Compartment">((Apoenzyme * Kf_r2 * BufferPool) - (FreeAminoAcid * Kr_r2 * Metaloenzyme))</Function>
+        <Function Name="J_r3" Domain="Compartment">((MetalIn * Kf_r3 * FreeAminoAcid) - (Kr_r3 * BufferPool))</Function>
+        <Function Name="J_r5" Domain="Compartment">((MetalIn * Kf_r5 * MetalFreeTR) - (Kr_r5 * Metalloregulator))</Function>
+        <Function Name="J_r9" Domain="Compartment">((Metalloregulator * Kf_r9 * ActiveGene) - (Kr_r9 * InactiveGene))</Function>
+        <Function Name="K_Apoenzyme_total" Domain="Compartment">((Size_Cytosol * Apoenzyme_init_uM) + (Size_Cytosol * Metaloenzyme_init_uM))</Function>
+        <Function Name="K_InactiveGene_total" Domain="Compartment">((Size_Cytosol * InactiveGene_init_uM) + (Size_Cytosol * ActiveGene_init_uM))</Function>
+        <Function Name="K_Metalloregulator_total" Domain="Compartment">( - (Size_Cytosol * ActiveGene_init_uM) + (Size_Cytosol * Metalloregulator_init_uM) + (Size_Cytosol * MetalFreeTR_init_uM))</Function>
+        <Function Name="K_NonSpecificProtein_total" Domain="Compartment">((Size_Cytosol * NonSpecificProtein_init_uM) + (Size_Cytosol * ToxicProtein_init_uM))</Function>
+        <Function Name="Kr_r5" Domain="Compartment">0.1</Function>
+        <Function Name="LumpedJ_r0" Domain="Compartment">(Enzyme1 * ((Kf_r0 * MetalOut) - (Kr_r0 * MetalIn)) / KMOLE)</Function>
+        <Function Name="LumpedJ_r4" Domain="Compartment">(Protease * ((Kf_r4 * Enzyme1) - (Kr_r4 * Peptides)) / KMOLE)</Function>
+        <Function Name="LumpedJ_r7" Domain="Compartment">(ActiveGene * ((Kf_r7 * RNAPolymerase) - (Kr_r7 * Enzyme1)))</Function>
+        <Function Name="Metalloregulator" Domain="Compartment">(((Size_Cytosol * ActiveGene) + K_Metalloregulator_total - (Size_Cytosol * MetalFreeTR)) / Size_Cytosol)</Function>
+        <Function Name="NonSpecificProtein" Domain="Compartment">((K_NonSpecificProtein_total - (Size_Cytosol * ToxicProtein)) / Size_Cytosol)</Function>
+        <CompartmentSubDomain Name="Compartment">
+          <BoundaryType Boundary="Xm" Type="Value" />
+          <BoundaryType Boundary="Xp" Type="Value" />
+          <BoundaryType Boundary="Ym" Type="Value" />
+          <BoundaryType Boundary="Yp" Type="Value" />
+          <BoundaryType Boundary="Zm" Type="Value" />
+          <BoundaryType Boundary="Zp" Type="Value" />
+          <OdeEquation Name="MetalIn" SolutionType="Unknown">
+            <Rate>( - J_r5 - J_r3 + (LumpedJ_r0 * KMOLE / Size_Cytosol) - J_r1)</Rate>
+            <Initial>MetalIn_init_uM</Initial>
+          </OdeEquation>
+          <OdeEquation Name="Enzyme1" SolutionType="Unknown">
+            <Rate>((LumpedJ_r7 * KMOLE / Size_Cytosol) - (LumpedJ_r4 * KMOLE / Size_Cytosol))</Rate>
+            <Initial>Enzyme1_init_uM</Initial>
+          </OdeEquation>
+          <OdeEquation Name="BufferPool" SolutionType="Unknown">
+            <Rate>( - J_r2 + J_r3)</Rate>
+            <Initial>BufferPool_init_uM</Initial>
+          </OdeEquation>
+          <OdeEquation Name="Metaloenzyme" SolutionType="Unknown">
+            <Rate>J_r2</Rate>
+            <Initial>Metaloenzyme_init_uM</Initial>
+          </OdeEquation>
+          <OdeEquation Name="MetalFreeTR" SolutionType="Unknown">
+            <Rate>- J_r5</Rate>
+            <Initial>MetalFreeTR_init_uM</Initial>
+          </OdeEquation>
+          <OdeEquation Name="ActiveGene" SolutionType="Unknown">
+            <Rate>- J_r9</Rate>
+            <Initial>ActiveGene_init_uM</Initial>
+          </OdeEquation>
+          <OdeEquation Name="Peptides" SolutionType="Unknown">
+            <Rate>(LumpedJ_r4 * KMOLE / Size_Cytosol)</Rate>
+            <Initial>Peptides_init_uM</Initial>
+          </OdeEquation>
+          <OdeEquation Name="ToxicProtein" SolutionType="Unknown">
+            <Rate>J_r1</Rate>
+            <Initial>ToxicProtein_init_uM</Initial>
+          </OdeEquation>
+        </CompartmentSubDomain>
+        <Version Name="Application0_generated" KeyValue="91719511" BranchId="89139760" Archived="0" Date="12-Oct-2014 06:03:26" FromVersionable="false">
+          <Owner Name="ElizabethThomas" Identifier="89068648" />
+          <GroupAccess Type="1" />
+        </Version>
+      </MathDescription>
+      <Simulation Name="Simulation0">
+        <SolverTaskDescription TaskType="Unsteady" UseSymbolicJacobian="false" Solver="Combined Stiff Solver (IDA/CVODE)">
+          <TimeBound StartTime="0.0" EndTime="2400.0" />
+          <TimeStep DefaultTime="0.1" MinTime="1.0E-8" MaxTime="1.0" />
+          <ErrorTolerance Absolut="1.0E-9" Relative="1.0E-9" />
+          <OutputOptions KeepEvery="1" KeepAtMost="1000" />
+          <NumberProcessors>1</NumberProcessors>
+        </SolverTaskDescription>
+        <MathOverrides />
+        <Version Name="Simulation0" KeyValue="91719639" BranchId="89139850" Archived="0" Date="12-Oct-2014 06:03:31" FromVersionable="false">
+          <Owner Name="ElizabethThomas" Identifier="89068648" />
+          <GroupAccess Type="1" />
+        </Version>
+      </Simulation>
+      <Simulation Name="Simulation1">
+        <SolverTaskDescription TaskType="Unsteady" UseSymbolicJacobian="false" Solver="Combined Stiff Solver (IDA/CVODE)">
+          <TimeBound StartTime="0.0" EndTime="1.0" />
+          <TimeStep DefaultTime="0.1" MinTime="1.0E-8" MaxTime="1.0" />
+          <ErrorTolerance Absolut="1.0E-9" Relative="1.0E-9" />
+          <OutputOptions KeepEvery="1" KeepAtMost="1000" />
+          <NumberProcessors>1</NumberProcessors>
+        </SolverTaskDescription>
+        <MathOverrides />
+        <Version Name="Simulation1" KeyValue="91719641" BranchId="89139853" Archived="0" Date="12-Oct-2014 06:03:31" FromVersionable="false">
+          <Owner Name="ElizabethThomas" Identifier="89068648" />
+          <GroupAccess Type="1" />
+        </Version>
+      </Simulation>
+      <Simulation Name="Simulation2">
+        <SolverTaskDescription TaskType="Unsteady" UseSymbolicJacobian="false" Solver="Combined Stiff Solver (IDA/CVODE)">
+          <TimeBound StartTime="0.0" EndTime="2400.0" />
+          <TimeStep DefaultTime="0.1" MinTime="1.0E-8" MaxTime="1.0" />
+          <ErrorTolerance Absolut="1.0E-9" Relative="1.0E-9" />
+          <OutputOptions KeepEvery="1" KeepAtMost="1000" />
+          <NumberProcessors>1</NumberProcessors>
+        </SolverTaskDescription>
+        <MathOverrides />
+        <Version Name="Simulation2" KeyValue="91719643" BranchId="89139856" Archived="0" Date="12-Oct-2014 06:03:31" FromVersionable="false">
+          <Owner Name="ElizabethThomas" Identifier="89068648" />
+          <GroupAccess Type="1" />
+        </Version>
+      </Simulation>
+      <Simulation Name="Simulation3">
+        <SolverTaskDescription TaskType="Unsteady" UseSymbolicJacobian="false" Solver="Combined Stiff Solver (IDA/CVODE)">
+          <TimeBound StartTime="0.0" EndTime="2400.0" />
+          <TimeStep DefaultTime="0.1" MinTime="1.0E-8" MaxTime="1.0" />
+          <ErrorTolerance Absolut="1.0E-9" Relative="1.0E-9" />
+          <OutputOptions KeepEvery="1" KeepAtMost="1000" />
+          <NumberProcessors>1</NumberProcessors>
+        </SolverTaskDescription>
+        <MathOverrides />
+        <Version Name="Simulation3" KeyValue="91719645" BranchId="89157866" Archived="0" Date="12-Oct-2014 06:03:31" FromVersionable="false">
+          <Owner Name="ElizabethThomas" Identifier="89068648" />
+          <GroupAccess Type="1" />
+        </Version>
+      </Simulation>
+      <Simulation Name="Simulation4">
+        <SolverTaskDescription TaskType="Unsteady" UseSymbolicJacobian="false" Solver="Combined Stiff Solver (IDA/CVODE)">
+          <TimeBound StartTime="0.0" EndTime="2400.0" />
+          <TimeStep DefaultTime="0.1" MinTime="1.0E-8" MaxTime="1.0" />
+          <ErrorTolerance Absolut="1.0E-9" Relative="1.0E-9" />
+          <OutputOptions KeepEvery="1" KeepAtMost="1000" />
+          <NumberProcessors>1</NumberProcessors>
+        </SolverTaskDescription>
+        <MathOverrides />
+        <Version Name="Simulation4" KeyValue="91719647" BranchId="89157869" Archived="0" Date="12-Oct-2014 06:03:31" FromVersionable="false">
+          <Owner Name="ElizabethThomas" Identifier="89068648" />
+          <GroupAccess Type="1" />
+        </Version>
+      </Simulation>
+      <Simulation Name="Simulation5">
+        <SolverTaskDescription TaskType="Unsteady" UseSymbolicJacobian="false" Solver="Combined Stiff Solver (IDA/CVODE)">
+          <TimeBound StartTime="0.0" EndTime="2400.0" />
+          <TimeStep DefaultTime="0.1" MinTime="1.0E-8" MaxTime="1.0" />
+          <ErrorTolerance Absolut="1.0E-9" Relative="1.0E-9" />
+          <OutputOptions KeepEvery="1" KeepAtMost="1000" />
+          <NumberProcessors>1</NumberProcessors>
+        </SolverTaskDescription>
+        <MathOverrides />
+        <Version Name="Simulation5" KeyValue="91719649" BranchId="89157872" Archived="0" Date="12-Oct-2014 06:03:31" FromVersionable="false">
+          <Owner Name="ElizabethThomas" Identifier="89068648" />
+          <GroupAccess Type="1" />
+        </Version>
+      </Simulation>
+      <Simulation Name="Simulation6">
+        <SolverTaskDescription TaskType="Unsteady" UseSymbolicJacobian="false" Solver="Combined Stiff Solver (IDA/CVODE)">
+          <TimeBound StartTime="0.0" EndTime="2400.0" />
+          <TimeStep DefaultTime="0.1" MinTime="1.0E-8" MaxTime="1.0" />
+          <ErrorTolerance Absolut="1.0E-9" Relative="1.0E-9" />
+          <OutputOptions KeepEvery="1" KeepAtMost="1000" />
+          <NumberProcessors>1</NumberProcessors>
+        </SolverTaskDescription>
+        <MathOverrides />
+        <Version Name="Simulation6" KeyValue="91719651" BranchId="89157875" Archived="0" Date="12-Oct-2014 06:03:31" FromVersionable="false">
+          <Owner Name="ElizabethThomas" Identifier="89068648" />
+          <GroupAccess Type="1" />
+        </Version>
+      </Simulation>
+      <Simulation Name="Simulation7">
+        <SolverTaskDescription TaskType="Unsteady" UseSymbolicJacobian="false" Solver="Combined Stiff Solver (IDA/CVODE)">
+          <TimeBound StartTime="0.0" EndTime="2400.0" />
+          <TimeStep DefaultTime="0.1" MinTime="1.0E-8" MaxTime="1.0" />
+          <ErrorTolerance Absolut="1.0E-9" Relative="1.0E-9" />
+          <OutputOptions KeepEvery="1" KeepAtMost="1000" />
+          <NumberProcessors>1</NumberProcessors>
+        </SolverTaskDescription>
+        <MathOverrides />
+        <Version Name="Simulation7" KeyValue="91719653" BranchId="89157878" Archived="0" Date="12-Oct-2014 06:03:31" FromVersionable="false">
+          <Owner Name="ElizabethThomas" Identifier="89068648" />
+          <GroupAccess Type="1" />
+        </Version>
+      </Simulation>
+      <Simulation Name="Simulation8">
+        <SolverTaskDescription TaskType="Unsteady" UseSymbolicJacobian="false" Solver="Combined Stiff Solver (IDA/CVODE)">
+          <TimeBound StartTime="0.0" EndTime="2400.0" />
+          <TimeStep DefaultTime="0.1" MinTime="1.0E-8" MaxTime="1.0" />
+          <ErrorTolerance Absolut="1.0E-9" Relative="1.0E-9" />
+          <OutputOptions KeepEvery="1" KeepAtMost="1000" />
+          <NumberProcessors>1</NumberProcessors>
+        </SolverTaskDescription>
+        <MathOverrides />
+        <Version Name="Simulation8" KeyValue="91719655" BranchId="89157881" Archived="0" Date="12-Oct-2014 06:03:31" FromVersionable="false">
+          <Owner Name="ElizabethThomas" Identifier="89068648" />
+          <GroupAccess Type="1" />
+        </Version>
+      </Simulation>
+      <Simulation Name="Simulation9">
+        <SolverTaskDescription TaskType="Unsteady" UseSymbolicJacobian="false" Solver="Combined Stiff Solver (IDA/CVODE)">
+          <TimeBound StartTime="0.0" EndTime="2400.0" />
+          <TimeStep DefaultTime="0.1" MinTime="1.0E-8" MaxTime="1.0" />
+          <ErrorTolerance Absolut="1.0E-9" Relative="1.0E-9" />
+          <OutputOptions KeepEvery="1" KeepAtMost="1000" />
+          <NumberProcessors>1</NumberProcessors>
+        </SolverTaskDescription>
+        <MathOverrides />
+        <Version Name="Simulation9" KeyValue="91719657" BranchId="89232258" Archived="0" Date="12-Oct-2014 06:03:31" FromVersionable="false">
+          <Owner Name="ElizabethThomas" Identifier="89068648" />
+          <GroupAccess Type="1" />
+        </Version>
+      </Simulation>
+      <Simulation Name="Simulation10">
+        <SolverTaskDescription TaskType="Unsteady" UseSymbolicJacobian="false" Solver="Combined Stiff Solver (IDA/CVODE)">
+          <TimeBound StartTime="0.0" EndTime="2400.0" />
+          <TimeStep DefaultTime="0.1" MinTime="1.0E-8" MaxTime="1.0" />
+          <ErrorTolerance Absolut="1.0E-9" Relative="1.0E-9" />
+          <OutputOptions KeepEvery="1" KeepAtMost="1000" />
+          <NumberProcessors>1</NumberProcessors>
+        </SolverTaskDescription>
+        <MathOverrides />
+        <Version Name="Simulation10" KeyValue="91719659" BranchId="89239734" Archived="0" Date="12-Oct-2014 06:03:31" FromVersionable="false">
+          <Owner Name="ElizabethThomas" Identifier="89068648" />
+          <GroupAccess Type="1" />
+        </Version>
+      </Simulation>
+      <Simulation Name="Simulation11">
+        <SolverTaskDescription TaskType="Unsteady" UseSymbolicJacobian="false" Solver="Combined Stiff Solver (IDA/CVODE)">
+          <TimeBound StartTime="0.0" EndTime="2400.0" />
+          <TimeStep DefaultTime="0.1" MinTime="1.0E-8" MaxTime="1.0" />
+          <ErrorTolerance Absolut="1.0E-9" Relative="1.0E-9" />
+          <OutputOptions KeepEvery="1" KeepAtMost="1000" />
+          <NumberProcessors>1</NumberProcessors>
+        </SolverTaskDescription>
+        <MathOverrides />
+        <Version Name="Simulation11" KeyValue="91719661" BranchId="89239737" Archived="0" Date="12-Oct-2014 06:03:31" FromVersionable="false">
+          <Owner Name="ElizabethThomas" Identifier="89068648" />
+          <GroupAccess Type="1" />
+        </Version>
+      </Simulation>
+      <Simulation Name="Simulation12">
+        <SolverTaskDescription TaskType="Unsteady" UseSymbolicJacobian="false" Solver="Combined Stiff Solver (IDA/CVODE)">
+          <TimeBound StartTime="0.0" EndTime="5000.0" />
+          <TimeStep DefaultTime="0.1" MinTime="1.0E-8" MaxTime="1.0" />
+          <ErrorTolerance Absolut="1.0E-9" Relative="1.0E-9" />
+          <OutputOptions KeepEvery="1" KeepAtMost="1000" />
+          <NumberProcessors>1</NumberProcessors>
+        </SolverTaskDescription>
+        <MathOverrides />
+        <Version Name="Simulation12" KeyValue="91719663" BranchId="89239740" Archived="0" Date="12-Oct-2014 06:03:31" FromVersionable="false">
+          <Owner Name="ElizabethThomas" Identifier="89068648" />
+          <GroupAccess Type="1" />
+        </Version>
+      </Simulation>
+      <Simulation Name="Simulation13">
+        <SolverTaskDescription TaskType="Unsteady" UseSymbolicJacobian="false" Solver="Combined Stiff Solver (IDA/CVODE)">
+          <TimeBound StartTime="0.0" EndTime="5000.0" />
+          <TimeStep DefaultTime="0.1" MinTime="1.0E-8" MaxTime="1.0" />
+          <ErrorTolerance Absolut="1.0E-9" Relative="1.0E-9" />
+          <OutputOptions KeepEvery="1" KeepAtMost="1000" />
+          <NumberProcessors>1</NumberProcessors>
+        </SolverTaskDescription>
+        <MathOverrides />
+        <Version Name="Simulation13" KeyValue="91719665" BranchId="89282779" Archived="0" Date="12-Oct-2014 06:03:31" FromVersionable="false">
+          <Owner Name="ElizabethThomas" Identifier="89068648" />
+          <GroupAccess Type="1" />
+        </Version>
+      </Simulation>
+      <Simulation Name="Simulation14">
+        <SolverTaskDescription TaskType="Unsteady" UseSymbolicJacobian="false" Solver="Combined Stiff Solver (IDA/CVODE)">
+          <TimeBound StartTime="0.0" EndTime="5000.0" />
+          <TimeStep DefaultTime="0.1" MinTime="1.0E-8" MaxTime="1.0" />
+          <ErrorTolerance Absolut="1.0E-9" Relative="1.0E-9" />
+          <OutputOptions KeepEvery="1" KeepAtMost="1000" />
+          <NumberProcessors>1</NumberProcessors>
+        </SolverTaskDescription>
+        <MathOverrides />
+        <Version Name="Simulation14" KeyValue="91719667" BranchId="89287662" Archived="0" Date="12-Oct-2014 06:03:31" FromVersionable="false">
+          <Owner Name="ElizabethThomas" Identifier="89068648" />
+          <GroupAccess Type="1" />
+        </Version>
+      </Simulation>
+      <Simulation Name="Simulation15">
+        <SolverTaskDescription TaskType="Unsteady" UseSymbolicJacobian="false" Solver="Combined Stiff Solver (IDA/CVODE)">
+          <TimeBound StartTime="0.0" EndTime="5000.0" />
+          <TimeStep DefaultTime="0.1" MinTime="1.0E-8" MaxTime="1.0" />
+          <ErrorTolerance Absolut="1.0E-9" Relative="1.0E-9" />
+          <OutputOptions KeepEvery="1" KeepAtMost="1000" />
+          <NumberProcessors>1</NumberProcessors>
+        </SolverTaskDescription>
+        <MathOverrides />
+        <Version Name="Simulation15" KeyValue="91719669" BranchId="89291228" Archived="0" Date="12-Oct-2014 06:03:31" FromVersionable="false">
+          <Owner Name="ElizabethThomas" Identifier="89068648" />
+          <GroupAccess Type="1" />
+        </Version>
+      </Simulation>
+      <Simulation Name="Simulation16">
+        <SolverTaskDescription TaskType="Unsteady" UseSymbolicJacobian="false" Solver="Combined Stiff Solver (IDA/CVODE)">
+          <TimeBound StartTime="0.0" EndTime="5000.0" />
+          <TimeStep DefaultTime="0.1" MinTime="1.0E-8" MaxTime="1.0" />
+          <ErrorTolerance Absolut="1.0E-9" Relative="1.0E-9" />
+          <OutputOptions KeepEvery="1" KeepAtMost="1000" />
+          <NumberProcessors>1</NumberProcessors>
+        </SolverTaskDescription>
+        <MathOverrides />
+        <Version Name="Simulation16" KeyValue="91719671" BranchId="89291231" Archived="0" Date="12-Oct-2014 06:03:31" FromVersionable="false">
+          <Owner Name="ElizabethThomas" Identifier="89068648" />
+          <GroupAccess Type="1" />
+        </Version>
+      </Simulation>
+      <Simulation Name="Simulation17">
+        <SolverTaskDescription TaskType="Unsteady" UseSymbolicJacobian="false" Solver="Combined Stiff Solver (IDA/CVODE)">
+          <TimeBound StartTime="0.0" EndTime="5000.0" />
+          <TimeStep DefaultTime="0.1" MinTime="1.0E-8" MaxTime="1.0" />
+          <ErrorTolerance Absolut="1.0E-9" Relative="1.0E-9" />
+          <OutputOptions KeepEvery="1" KeepAtMost="1000" />
+          <NumberProcessors>1</NumberProcessors>
+        </SolverTaskDescription>
+        <MathOverrides />
+        <Version Name="Simulation17" KeyValue="91719673" BranchId="89300386" Archived="0" Date="12-Oct-2014 06:03:31" FromVersionable="false">
+          <Owner Name="ElizabethThomas" Identifier="89068648" />
+          <GroupAccess Type="1" />
+        </Version>
+      </Simulation>
+      <Simulation Name="Simulation18">
+        <SolverTaskDescription TaskType="Unsteady" UseSymbolicJacobian="false" Solver="Combined Stiff Solver (IDA/CVODE)">
+          <TimeBound StartTime="0.0" EndTime="5000.0" />
+          <TimeStep DefaultTime="0.1" MinTime="1.0E-8" MaxTime="1.0" />
+          <ErrorTolerance Absolut="1.0E-9" Relative="1.0E-9" />
+          <OutputOptions KeepEvery="1" KeepAtMost="1000" />
+          <NumberProcessors>1</NumberProcessors>
+        </SolverTaskDescription>
+        <MathOverrides />
+        <Version Name="Simulation18" KeyValue="91719675" BranchId="89318909" Archived="0" Date="12-Oct-2014 06:03:31" FromVersionable="false">
+          <Owner Name="ElizabethThomas" Identifier="89068648" />
+          <GroupAccess Type="1" />
+        </Version>
+      </Simulation>
+      <Simulation Name="Simulation19">
+        <SolverTaskDescription TaskType="Unsteady" UseSymbolicJacobian="false" Solver="Combined Stiff Solver (IDA/CVODE)">
+          <TimeBound StartTime="0.0" EndTime="5000.0" />
+          <TimeStep DefaultTime="0.1" MinTime="1.0E-8" MaxTime="1.0" />
+          <ErrorTolerance Absolut="1.0E-9" Relative="1.0E-9" />
+          <OutputOptions KeepEvery="1" KeepAtMost="1000" />
+          <NumberProcessors>1</NumberProcessors>
+        </SolverTaskDescription>
+        <MathOverrides />
+        <Version Name="Simulation19" KeyValue="91719677" BranchId="89318912" Archived="0" Date="12-Oct-2014 06:03:31" FromVersionable="false">
+          <Owner Name="ElizabethThomas" Identifier="89068648" />
+          <GroupAccess Type="1" />
+        </Version>
+      </Simulation>
+      <Simulation Name="Simulation20">
+        <SolverTaskDescription TaskType="Unsteady" UseSymbolicJacobian="false" Solver="Combined Stiff Solver (IDA/CVODE)">
+          <TimeBound StartTime="0.0" EndTime="5000.0" />
+          <TimeStep DefaultTime="0.1" MinTime="1.0E-8" MaxTime="1.0" />
+          <ErrorTolerance Absolut="1.0E-9" Relative="1.0E-9" />
+          <OutputOptions KeepEvery="1" KeepAtMost="1000" />
+          <NumberProcessors>1</NumberProcessors>
+        </SolverTaskDescription>
+        <MathOverrides />
+        <Version Name="Simulation20" KeyValue="91719679" BranchId="89319706" Archived="0" Date="12-Oct-2014 06:03:31" FromVersionable="false">
+          <Owner Name="ElizabethThomas" Identifier="89068648" />
+          <GroupAccess Type="1" />
+        </Version>
+      </Simulation>
+      <Simulation Name="Simulation 1N">
+        <SolverTaskDescription TaskType="Unsteady" UseSymbolicJacobian="false" Solver="Combined Stiff Solver (IDA/CVODE)">
+          <TimeBound StartTime="0.0" EndTime="2400.0" />
+          <TimeStep DefaultTime="0.1" MinTime="1.0E-8" MaxTime="1.0" />
+          <ErrorTolerance Absolut="1.0E-9" Relative="1.0E-9" />
+          <OutputOptions KeepEvery="1" KeepAtMost="1000" />
+          <NumberProcessors>1</NumberProcessors>
+        </SolverTaskDescription>
+        <MathOverrides />
+        <Version Name="Simulation 1N" KeyValue="91719681" BranchId="91705514" Archived="0" Date="12-Oct-2014 06:03:31" FromVersionable="false">
+          <Owner Name="ElizabethThomas" Identifier="89068648" />
+          <GroupAccess Type="1" />
+        </Version>
+      </Simulation>
+      <Simulation Name="Simulation2N">
+        <SolverTaskDescription TaskType="Unsteady" UseSymbolicJacobian="false" Solver="Combined Stiff Solver (IDA/CVODE)">
+          <TimeBound StartTime="0.0" EndTime="2400.0" />
+          <TimeStep DefaultTime="0.1" MinTime="1.0E-8" MaxTime="1.0" />
+          <ErrorTolerance Absolut="1.0E-9" Relative="1.0E-9" />
+          <OutputOptions KeepEvery="1" KeepAtMost="1000" />
+          <NumberProcessors>1</NumberProcessors>
+        </SolverTaskDescription>
+        <MathOverrides />
+        <Version Name="Simulation2N" KeyValue="91719683" BranchId="91719269" Archived="0" Date="12-Oct-2014 06:03:31" FromVersionable="false">
+          <Owner Name="ElizabethThomas" Identifier="89068648" />
+          <GroupAccess Type="1" />
+        </Version>
+      </Simulation>
+      <Simulation Name="Simulation2N proper">
+        <SolverTaskDescription TaskType="Unsteady" UseSymbolicJacobian="false" Solver="Combined Stiff Solver (IDA/CVODE)">
+          <TimeBound StartTime="0.0" EndTime="2400.0" />
+          <TimeStep DefaultTime="0.1" MinTime="1.0E-8" MaxTime="1.0" />
+          <ErrorTolerance Absolut="1.0E-9" Relative="1.0E-9" />
+          <OutputOptions KeepEvery="1" KeepAtMost="1000" />
+          <NumberProcessors>1</NumberProcessors>
+        </SolverTaskDescription>
+        <MathOverrides />
+        <Version Name="Simulation2N proper" KeyValue="91719685" BranchId="91719477" Archived="0" Date="12-Oct-2014 06:03:31" FromVersionable="false">
+          <Owner Name="ElizabethThomas" Identifier="89068648" />
+          <GroupAccess Type="1" />
+        </Version>
+      </Simulation>
+      <Simulation Name="Simulation3N">
+        <SolverTaskDescription TaskType="Unsteady" UseSymbolicJacobian="false" Solver="Combined Stiff Solver (IDA/CVODE)">
+          <TimeBound StartTime="0.0" EndTime="2400.0" />
+          <TimeStep DefaultTime="0.1" MinTime="1.0E-8" MaxTime="1.0" />
+          <ErrorTolerance Absolut="1.0E-9" Relative="1.0E-9" />
+          <OutputOptions KeepEvery="1" KeepAtMost="1000" />
+          <NumberProcessors>1</NumberProcessors>
+        </SolverTaskDescription>
+        <MathOverrides />
+        <Version Name="Simulation3N" KeyValue="91719687" BranchId="91719688" Archived="0" Date="12-Oct-2014 06:03:32" FromVersionable="false">
+          <Owner Name="ElizabethThomas" Identifier="89068648" />
+          <GroupAccess Type="1" />
+        </Version>
+      </Simulation>
+      <Version Name="Application0" KeyValue="91719585" BranchId="89139824" Archived="0" Date="12-Oct-2014 06:03:29" FromVersionable="false">
+        <Owner Name="ElizabethThomas" Identifier="89068648" />
+        <GroupAccess Type="1" />
+      </Version>
+      <MicroscopeMeasurement Name="fluor">
+        <ConvolutionKernel Type="ProjectionZKernel" />
+      </MicroscopeMeasurement>
+    </SimulationSpec>
+    <SimulationSpec Name="Application1" Stochastic="false" UseConcentration="true" RuleBased="false" MassConservationModelReduction="true" InsufficientIterations="false" InsufficientMaxMolecules="false">
+      <NetworkConstraints RbmMaxIteration="1" RbmMaxMoleculesPerSpecies="10" RbmSpeciesLimit="800" RbmReactionsLimit="2500" />
+      <Annotation />
+      <Geometry Name="non-spatial16967171" Dimension="0">
+        <Extent X="10.0" Y="10.0" Z="10.0" />
+        <Origin X="0.0" Y="0.0" Z="0.0" />
+        <SubVolume Name="Compartment" Handle="0" Type="Compartmental" KeyValue="91719093" />
+        <Version Name="non-spatial16967171" KeyValue="91719089" BranchId="91719090" Archived="0" Date="12-Oct-2014 05:14:51" FromVersionable="false">
+          <Owner Name="ElizabethThomas" Identifier="89068648" />
+          <GroupAccess Type="1" />
+        </Version>
+      </Geometry>
+      <GeometryContext>
+        <FeatureMapping Feature="Cytosol" GeometryClass="Compartment" SubVolume="Compartment" Size="50000.0">
+          <BoundariesTypes Xm="Flux" Xp="Flux" Ym="Flux" Yp="Flux" Zm="Flux" Zp="Flux" />
+        </FeatureMapping>
+      </GeometryContext>
+      <ReactionContext>
+        <LocalizedCompoundSpec LocalizedCompoundRef="BufferPool" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>0.0</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="Apoenzyme" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>0.0</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="MetalIn" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>0.0</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="Enzyme1" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>0.0</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="MetalOut" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>0.0</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="Metaloenzyme" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>0.0</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="FreeAminoAcid" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>0.0</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="Metalloregulator" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>0.0</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="MetalFreeTR" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>0.0</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="InactiveGene" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>0.0</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="ActiveGene" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>0.0</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="Peptides" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>0.0</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="Protease" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>0.0</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="NonSpecificProtein" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>0.0</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="ToxicProtein" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>0.0</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="RNAPolymerase" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>0.0</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <ReactionSpec ReactionStepRef="r9" ReactionMapping="included" />
+        <ReactionSpec ReactionStepRef="r4" ReactionMapping="included" />
+        <ReactionSpec ReactionStepRef="r0" ReactionMapping="included" />
+        <ReactionSpec ReactionStepRef="r7" ReactionMapping="included" />
+        <ReactionSpec ReactionStepRef="r1" ReactionMapping="included" />
+        <ReactionSpec ReactionStepRef="r2" ReactionMapping="included" />
+        <ReactionSpec ReactionStepRef="r3" ReactionMapping="included" />
+        <ReactionSpec ReactionStepRef="r5" ReactionMapping="included" />
+      </ReactionContext>
+      <MathDescription Name="Application1_generated">
+        <Constant Name="_F_">96480.0</Constant>
+        <Constant Name="_F_nmol_">9.648E-5</Constant>
+        <Constant Name="_K_GHK_">1.0E-9</Constant>
+        <Constant Name="_N_pmol_">6.02E11</Constant>
+        <Constant Name="_PI_">3.141592653589793</Constant>
+        <Constant Name="_R_">8314.0</Constant>
+        <Constant Name="_T_">300.0</Constant>
+        <Constant Name="ActiveGene_init_uM">0.0</Constant>
+        <Constant Name="Apoenzyme_init_uM">0.0</Constant>
+        <Constant Name="BufferPool_init_uM">0.0</Constant>
+        <Constant Name="Enzyme1_init_uM">0.0</Constant>
+        <Constant Name="FreeAminoAcid_init_uM">0.0</Constant>
+        <Constant Name="InactiveGene_init_uM">0.0</Constant>
+        <Constant Name="K_millivolts_per_volt">1000.0</Constant>
+        <Constant Name="Kf_r0">100.0</Constant>
+        <Constant Name="Kf_r1">100.0</Constant>
+        <Constant Name="Kf_r2">100.0</Constant>
+        <Constant Name="Kf_r3">100.0</Constant>
+        <Constant Name="Kf_r4">0.1</Constant>
+        <Constant Name="Kf_r5">1000.0</Constant>
+        <Constant Name="Kf_r7">100.0</Constant>
+        <Constant Name="Kf_r9">100.0</Constant>
+        <Constant Name="KMOLE">0.0016611295681063123</Constant>
+        <Constant Name="Kr_r0">9.999999999999999E-6</Constant>
+        <Constant Name="Kr_r1">1.0E-7</Constant>
+        <Constant Name="Kr_r2">1.0E-10</Constant>
+        <Constant Name="Kr_r3">0.001</Constant>
+        <Constant Name="Kr_r4">1.0E-10</Constant>
+        <Constant Name="Kr_r7">9.999999999999999E-6</Constant>
+        <Constant Name="Kr_r9">1.0E-6</Constant>
+        <Constant Name="MetalFreeTR_init_uM">0.0</Constant>
+        <Constant Name="MetalIn_init_uM">0.0</Constant>
+        <Constant Name="Metalloregulator_init_uM">0.0</Constant>
+        <Constant Name="Metaloenzyme_init_uM">0.0</Constant>
+        <Constant Name="MetalOut_init_uM">0.0</Constant>
+        <Constant Name="NonSpecificProtein_init_uM">0.0</Constant>
+        <Constant Name="Peptides_init_uM">0.0</Constant>
+        <Constant Name="Protease_init_uM">0.0</Constant>
+        <Constant Name="RNAPolymerase_init_uM">0.0</Constant>
+        <Constant Name="Size_Cytosol">50000.0</Constant>
+        <Constant Name="ToxicProtein_init_uM">0.0</Constant>
+        <VolumeVariable Name="ActiveGene" Domain="Compartment" />
+        <VolumeVariable Name="FreeAminoAcid" Domain="Compartment" />
+        <VolumeVariable Name="MetalFreeTR" Domain="Compartment" />
+        <VolumeVariable Name="Metaloenzyme" Domain="Compartment" />
+        <VolumeVariable Name="MetalOut" Domain="Compartment" />
+        <VolumeVariable Name="Peptides" Domain="Compartment" />
+        <VolumeVariable Name="RNAPolymerase" Domain="Compartment" />
+        <VolumeVariable Name="ToxicProtein" Domain="Compartment" />
+        <Function Name="Apoenzyme" Domain="Compartment">((K_Apoenzyme_total - (Size_Cytosol * Metaloenzyme)) / Size_Cytosol)</Function>
+        <Function Name="BufferPool" Domain="Compartment">((K_BufferPool_total - (Size_Cytosol * FreeAminoAcid)) / Size_Cytosol)</Function>
+        <Function Name="Enzyme1" Domain="Compartment">(( - (Size_Cytosol * RNAPolymerase) + K_Enzyme1_total - (Size_Cytosol * Peptides)) / Size_Cytosol)</Function>
+        <Function Name="InactiveGene" Domain="Compartment">((K_InactiveGene_total - (Size_Cytosol * ActiveGene)) / Size_Cytosol)</Function>
+        <Function Name="J_r1" Domain="Compartment">((MetalIn * Kf_r1 * NonSpecificProtein) - (Kr_r1 * ToxicProtein))</Function>
+        <Function Name="J_r2" Domain="Compartment">((Apoenzyme * Kf_r2 * BufferPool) - (FreeAminoAcid * Kr_r2 * Metaloenzyme))</Function>
+        <Function Name="J_r3" Domain="Compartment">((MetalIn * Kf_r3 * FreeAminoAcid) - (Kr_r3 * BufferPool))</Function>
+        <Function Name="J_r5" Domain="Compartment">((MetalIn * Kf_r5 * MetalFreeTR) - (Kr_r5 * Metalloregulator))</Function>
+        <Function Name="J_r9" Domain="Compartment">((Metalloregulator * Kf_r9 * ActiveGene) - (Kr_r9 * InactiveGene))</Function>
+        <Function Name="K_Apoenzyme_total" Domain="Compartment">((Size_Cytosol * Apoenzyme_init_uM) + (Size_Cytosol * Metaloenzyme_init_uM))</Function>
+        <Function Name="K_BufferPool_total" Domain="Compartment">((Size_Cytosol * BufferPool_init_uM) + (Size_Cytosol * FreeAminoAcid_init_uM))</Function>
+        <Function Name="K_Enzyme1_total" Domain="Compartment">((Size_Cytosol * RNAPolymerase_init_uM) + (Size_Cytosol * Enzyme1_init_uM) + (Size_Cytosol * Peptides_init_uM))</Function>
+        <Function Name="K_InactiveGene_total" Domain="Compartment">((Size_Cytosol * InactiveGene_init_uM) + (Size_Cytosol * ActiveGene_init_uM))</Function>
+        <Function Name="K_MetalIn_total" Domain="Compartment">((Size_Cytosol * ToxicProtein_init_uM) - (Size_Cytosol * MetalFreeTR_init_uM) - (Size_Cytosol * FreeAminoAcid_init_uM) + (Size_Cytosol * Metaloenzyme_init_uM) + (Size_Cytosol * MetalIn_init_uM) + (Size_Cytosol * MetalOut_init_uM))</Function>
+        <Function Name="K_Metalloregulator_total" Domain="Compartment">( - (Size_Cytosol * ActiveGene_init_uM) + (Size_Cytosol * Metalloregulator_init_uM) + (Size_Cytosol * MetalFreeTR_init_uM))</Function>
+        <Function Name="K_NonSpecificProtein_total" Domain="Compartment">((Size_Cytosol * NonSpecificProtein_init_uM) + (Size_Cytosol * ToxicProtein_init_uM))</Function>
+        <Function Name="K_Protease_total" Domain="Compartment">(Size_Cytosol * Protease_init_uM)</Function>
+        <Function Name="Kr_r5" Domain="Compartment">0.1</Function>
+        <Function Name="LumpedJ_r0" Domain="Compartment">(Enzyme1 * ((Kf_r0 * MetalOut) - (Kr_r0 * MetalIn)) / KMOLE)</Function>
+        <Function Name="LumpedJ_r4" Domain="Compartment">(Protease * ((Kf_r4 * Enzyme1) - (Kr_r4 * Peptides)) / KMOLE)</Function>
+        <Function Name="LumpedJ_r7" Domain="Compartment">(ActiveGene * ((Kf_r7 * RNAPolymerase) - (Kr_r7 * Enzyme1)))</Function>
+        <Function Name="MetalIn" Domain="Compartment">(( - (Size_Cytosol * ToxicProtein) + (Size_Cytosol * MetalFreeTR) + (Size_Cytosol * FreeAminoAcid) - (Size_Cytosol * Metaloenzyme) + K_MetalIn_total - (Size_Cytosol * MetalOut)) / Size_Cytosol)</Function>
+        <Function Name="Metalloregulator" Domain="Compartment">(((Size_Cytosol * ActiveGene) + K_Metalloregulator_total - (Size_Cytosol * MetalFreeTR)) / Size_Cytosol)</Function>
+        <Function Name="NonSpecificProtein" Domain="Compartment">((K_NonSpecificProtein_total - (Size_Cytosol * ToxicProtein)) / Size_Cytosol)</Function>
+        <Function Name="Protease" Domain="Compartment">(K_Protease_total / Size_Cytosol)</Function>
+        <CompartmentSubDomain Name="Compartment">
+          <BoundaryType Boundary="Xm" Type="Value" />
+          <BoundaryType Boundary="Xp" Type="Value" />
+          <BoundaryType Boundary="Ym" Type="Value" />
+          <BoundaryType Boundary="Yp" Type="Value" />
+          <BoundaryType Boundary="Zm" Type="Value" />
+          <BoundaryType Boundary="Zp" Type="Value" />
+          <OdeEquation Name="MetalOut" SolutionType="Unknown">
+            <Rate>- (LumpedJ_r0 * KMOLE / Size_Cytosol)</Rate>
+            <Initial>MetalOut_init_uM</Initial>
+          </OdeEquation>
+          <OdeEquation Name="Metaloenzyme" SolutionType="Unknown">
+            <Rate>J_r2</Rate>
+            <Initial>Metaloenzyme_init_uM</Initial>
+          </OdeEquation>
+          <OdeEquation Name="FreeAminoAcid" SolutionType="Unknown">
+            <Rate>(J_r2 - J_r3)</Rate>
+            <Initial>FreeAminoAcid_init_uM</Initial>
+          </OdeEquation>
+          <OdeEquation Name="MetalFreeTR" SolutionType="Unknown">
+            <Rate>- J_r5</Rate>
+            <Initial>MetalFreeTR_init_uM</Initial>
+          </OdeEquation>
+          <OdeEquation Name="ActiveGene" SolutionType="Unknown">
+            <Rate>- J_r9</Rate>
+            <Initial>ActiveGene_init_uM</Initial>
+          </OdeEquation>
+          <OdeEquation Name="Peptides" SolutionType="Unknown">
+            <Rate>(LumpedJ_r4 * KMOLE / Size_Cytosol)</Rate>
+            <Initial>Peptides_init_uM</Initial>
+          </OdeEquation>
+          <OdeEquation Name="ToxicProtein" SolutionType="Unknown">
+            <Rate>J_r1</Rate>
+            <Initial>ToxicProtein_init_uM</Initial>
+          </OdeEquation>
+          <OdeEquation Name="RNAPolymerase" SolutionType="Unknown">
+            <Rate>- (LumpedJ_r7 * KMOLE / Size_Cytosol)</Rate>
+            <Initial>RNAPolymerase_init_uM</Initial>
+          </OdeEquation>
+        </CompartmentSubDomain>
+        <Version Name="Application1_generated" KeyValue="91719513" BranchId="91719097" Archived="0" Date="12-Oct-2014 06:03:27" FromVersionable="false">
+          <Owner Name="ElizabethThomas" Identifier="89068648" />
+          <GroupAccess Type="1" />
+        </Version>
+      </MathDescription>
+      <Version Name="Application1" KeyValue="91719612" BranchId="91719197" Archived="0" Date="12-Oct-2014 06:03:30" FromVersionable="false">
+        <Owner Name="ElizabethThomas" Identifier="89068648" />
+        <GroupAccess Type="1" />
+      </Version>
+      <MicroscopeMeasurement Name="fluor">
+        <ConvolutionKernel Type="ProjectionZKernel" />
+      </MicroscopeMeasurement>
+    </SimulationSpec>
+    <Version Name="Problem simulation to use for write up" KeyValue="91719690" BranchId="91705340" Archived="0" Date="12-Oct-2014 06:03:32" FromVersionable="false">
+      <Owner Name="ElizabethThomas" Identifier="89068648" />
+      <GroupAccess Type="0" />
+    </Version>
+    <pathwayModel>
+      <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:bp="http://www.biopax.org/release/biopax-level3.owl#" version="3.0" />
+    </pathwayModel>
+    <relationshipModel>
+      <RMNS version="3.0" />
+    </relationshipModel>
+    <vcmetadata>
+      <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" />
+      <nonrdfAnnotationList />
+      <uriBindingList />
+    </vcmetadata>
+  </BioModel>
+</vcml>
+

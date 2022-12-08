@@ -1,0 +1,347 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--This biomodel was generated in VCML Version Alpha_Version_7.4.0_build_87-->
+<vcml xmlns="http://sourceforge.net/projects/vcell/vcml" Version="Alpha_Version_7.4.0_build_87">
+  <BioModel Name="LEGI_Model_20070710.1">
+    <Annotation>Simple Local-Excitation/Global-Inhibition Model</Annotation>
+    <Model Name="unnamed">
+      <Compound Name="S" />
+      <Compound Name="I" />
+      <Compound Name="E" />
+      <Compound Name="R" />
+      <Feature Name="Ext" KeyValue="22709618" />
+      <Feature Name="Cytosol" KeyValue="22709621" />
+      <Membrane InsideFeature="Cytosol" OutsideFeature="Ext" PositiveFeature="Cytosol" NegativeFeature="Ext" MembraneVoltage="Voltage_PM" Name="PM" KeyValue="22709620" />
+      <LocalizedCompound Name="S_Ext" CompoundRef="S" Structure="Ext" OverrideName="true" KeyValue="22709624" />
+      <LocalizedCompound Name="I_Cytosol" CompoundRef="I" Structure="Cytosol" OverrideName="true" KeyValue="22709625" />
+      <LocalizedCompound Name="E_PM" CompoundRef="E" Structure="PM" OverrideName="true" KeyValue="22709626" />
+      <LocalizedCompound Name="R_PM" CompoundRef="R" Structure="PM" OverrideName="true" KeyValue="22709627" />
+      <SimpleReaction Structure="PM" Name="Excitor_Generation" Reversible="true" FluxOption="MolecularOnly" KeyValue="22709628">
+        <Product LocalizedCompoundRef="E_PM" Stoichiometry="1" KeyValue="22709629" />
+        <Modifier LocalizedCompoundRef="S_Ext" />
+        <Kinetics KineticsType="GeneralKinetics">
+          <Parameter Name="v_E" Role="reaction rate" Unit="molecules.um-2.s-1">(ke * S_Ext)</Parameter>
+          <Parameter Name="I" Role="inward current density" Unit="pA.um-2">0.0</Parameter>
+          <Parameter Name="netValence" Role="net charge valence" Unit="1">0.0</Parameter>
+          <Parameter Name="ke" Role="user defined" Unit="molecules.um-2.uM-1.s-1">1.0</Parameter>
+        </Kinetics>
+      </SimpleReaction>
+      <SimpleReaction Structure="PM" Name="Inhibitor_Generation" Reversible="true" FluxOption="MolecularOnly" KeyValue="22709631">
+        <Product LocalizedCompoundRef="I_Cytosol" Stoichiometry="1" KeyValue="22709632" />
+        <Modifier LocalizedCompoundRef="S_Ext" />
+        <Kinetics KineticsType="GeneralKinetics">
+          <Parameter Name="v_I" Role="reaction rate" Unit="molecules.um-2.s-1">(ki * S_Ext)</Parameter>
+          <Parameter Name="I" Role="inward current density" Unit="pA.um-2">0.0</Parameter>
+          <Parameter Name="netValence" Role="net charge valence" Unit="1">0.0</Parameter>
+          <Parameter Name="ki" Role="user defined" Unit="molecules.um-2.uM-1.s-1">1.0</Parameter>
+        </Kinetics>
+      </SimpleReaction>
+      <SimpleReaction Structure="PM" Name="ReadOut_Generation" Reversible="true" FluxOption="MolecularOnly" KeyValue="22709634">
+        <Reactant LocalizedCompoundRef="E_PM" Stoichiometry="1" KeyValue="22709635" />
+        <Product LocalizedCompoundRef="R_PM" Stoichiometry="1" KeyValue="22709636" />
+        <Kinetics KineticsType="GeneralKinetics">
+          <Parameter Name="v_R" Role="reaction rate" Unit="molecules.um-2.s-1">(kr * E_PM)</Parameter>
+          <Parameter Name="I" Role="inward current density" Unit="pA.um-2">0.0</Parameter>
+          <Parameter Name="netValence" Role="net charge valence" Unit="1">0.0</Parameter>
+          <Parameter Name="kr" Role="user defined" Unit="s-1">1.0</Parameter>
+        </Kinetics>
+      </SimpleReaction>
+      <SimpleReaction Structure="PM" Name="Readout_Degradation" Reversible="true" FluxOption="MolecularOnly" KeyValue="22709637">
+        <Reactant LocalizedCompoundRef="R_PM" Stoichiometry="1" KeyValue="22709638" />
+        <Reactant LocalizedCompoundRef="I_Cytosol" Stoichiometry="1" KeyValue="22709639" />
+        <Kinetics KineticsType="GeneralKinetics">
+          <Parameter Name="v_RI" Role="reaction rate" Unit="molecules.um-2.s-1">- (I_Cytosol * R_PM * k_r)</Parameter>
+          <Parameter Name="I" Role="inward current density" Unit="pA.um-2">0.0</Parameter>
+          <Parameter Name="netValence" Role="net charge valence" Unit="1">0.0</Parameter>
+          <Parameter Name="k_r" Role="user defined" Unit="uM-1.s-1">1.0</Parameter>
+        </Kinetics>
+      </SimpleReaction>
+      <SimpleReaction Structure="PM" Name="Excitor_Degradation" Reversible="true" FluxOption="MolecularOnly" KeyValue="22709640">
+        <Reactant LocalizedCompoundRef="E_PM" Stoichiometry="1" KeyValue="22709641" />
+        <Kinetics KineticsType="GeneralKinetics">
+          <Parameter Name="J" Role="reaction rate" Unit="molecules.um-2.s-1">(k_e * E_PM)</Parameter>
+          <Parameter Name="I" Role="inward current density" Unit="pA.um-2">0.0</Parameter>
+          <Parameter Name="netValence" Role="net charge valence" Unit="1">0.0</Parameter>
+          <Parameter Name="k_e" Role="user defined" Unit="s-1">1.0</Parameter>
+        </Kinetics>
+      </SimpleReaction>
+      <SimpleReaction Structure="PM" Name="Inhibitor_Degradation" Reversible="true" FluxOption="MolecularOnly" KeyValue="22709642">
+        <Reactant LocalizedCompoundRef="I_Cytosol" Stoichiometry="1" KeyValue="22709643" />
+        <Kinetics KineticsType="GeneralKinetics">
+          <Parameter Name="v_Edeg" Role="reaction rate" Unit="molecules.um-2.s-1">(k_e * I_Cytosol)</Parameter>
+          <Parameter Name="I" Role="inward current density" Unit="pA.um-2">0.0</Parameter>
+          <Parameter Name="netValence" Role="net charge valence" Unit="1">0.0</Parameter>
+          <Parameter Name="k_e" Role="user defined" Unit="molecules.um-2.uM-1.s-1">1.0</Parameter>
+        </Kinetics>
+      </SimpleReaction>
+      <Diagram Name="Extracellular Space" Structure="Ext" />
+      <Diagram Name="PM" Structure="PM">
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="E_PM" LocationX="63" LocationY="157" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="R_PM" LocationX="191" LocationY="334" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="I_Cytosol" LocationX="31" LocationY="162" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="S_Ext" LocationX="83" LocationY="27" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="full" SimpleReactionRef="Excitor_Generation" LocationX="36" LocationY="82" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="full" SimpleReactionRef="Inhibitor_Generation" LocationX="221" LocationY="67" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="full" SimpleReactionRef="ReadOut_Generation" LocationX="97" LocationY="246" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="full" SimpleReactionRef="Readout_Degradation" LocationX="250" LocationY="406" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="full" SimpleReactionRef="Excitor_Degradation" LocationX="46" LocationY="39" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="full" SimpleReactionRef="Inhibitor_Degradation" LocationX="9" LocationY="64" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="E_PM" LocationX="63" LocationY="157" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="R_PM" LocationX="191" LocationY="334" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="I_Cytosol" LocationX="31" LocationY="162" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="S_Ext" LocationX="83" LocationY="27" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="molecule" SimpleReactionRef="Excitor_Generation" LocationX="36" LocationY="82" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="molecule" SimpleReactionRef="Inhibitor_Generation" LocationX="221" LocationY="67" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="molecule" SimpleReactionRef="ReadOut_Generation" LocationX="97" LocationY="246" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="molecule" SimpleReactionRef="Readout_Degradation" LocationX="250" LocationY="406" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="molecule" SimpleReactionRef="Excitor_Degradation" LocationX="46" LocationY="39" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="molecule" SimpleReactionRef="Inhibitor_Degradation" LocationX="9" LocationY="64" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="E_PM" LocationX="63" LocationY="157" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="R_PM" LocationX="191" LocationY="334" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="I_Cytosol" LocationX="31" LocationY="162" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="S_Ext" LocationX="83" LocationY="27" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="rule" SimpleReactionRef="Excitor_Generation" LocationX="36" LocationY="82" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="rule" SimpleReactionRef="Inhibitor_Generation" LocationX="221" LocationY="67" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="rule" SimpleReactionRef="ReadOut_Generation" LocationX="97" LocationY="246" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="rule" SimpleReactionRef="Readout_Degradation" LocationX="250" LocationY="406" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="rule" SimpleReactionRef="Excitor_Degradation" LocationX="46" LocationY="39" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="rule" SimpleReactionRef="Inhibitor_Degradation" LocationX="9" LocationY="64" />
+      </Diagram>
+      <Diagram Name="Unnamed compartment" Structure="Cytosol" />
+      <Version Name="unnamed" KeyValue="22709612" BranchId="22696299" Archived="0" Date="10-Jul-2007 20:03:31" FromVersionable="false">
+        <Owner Name="natsuki_tanaka" Identifier="22650046" />
+        <GroupAccess Type="1" />
+      </Version>
+      <ModelUnitSystem VolumeSubstanceUnit="uM.um3" MembraneSubstanceUnit="molecules" LumpedReactionSubstanceUnit="molecules" VolumeUnit="um3" AreaUnit="um2" LengthUnit="um" TimeUnit="s" />
+    </Model>
+    <SimulationSpec Name="LEGI_model_20070710.1.app" Stochastic="false" UseConcentration="true" RuleBased="false" MassConservationModelReduction="true" InsufficientIterations="false" InsufficientMaxMolecules="false" CharacteristicSize="0.04561394691467284">
+      <NetworkConstraints RbmMaxIteration="1" RbmMaxMoleculesPerSpecies="10" RbmSpeciesLimit="800" RbmReactionsLimit="2500" />
+      <Annotation />
+      <Geometry Name="LEGI_cyto_ext.geom" Dimension="2">
+        <Annotation>cloned from 'Tutorial FRAP' owned by user tutorial
+cloned from 'Tutorial FRAP' owned by user susan</Annotation>
+        <Extent X="30.0" Y="30.0" Z="10.0" />
+        <Origin X="-15.0" Y="-15.0" Z="0.0" />
+        <SubVolume Name="Cytosol" Handle="1" Type="Analytical" KeyValue="22700275">
+          <AnalyticExpression>(((x * x) + (y * y)) &lt; 100.0)</AnalyticExpression>
+        </SubVolume>
+        <SubVolume Name="extracellular" Handle="2" Type="Analytical" KeyValue="22700276">
+          <AnalyticExpression>1.0</AnalyticExpression>
+        </SubVolume>
+        <SurfaceClass Name="Cytosol_extracellular_membrane" SubVolume1Ref="Cytosol" SubVolume2Ref="extracellular" />
+        <SurfaceDescription NumSamplesX="101" NumSamplesY="101" NumSamplesZ="1" CutoffFrequency="0.3">
+          <VolumeRegion Name="extracellular0" RegionID="0" SubVolume="extracellular" Size="584.55" Unit="um2" />
+          <VolumeRegion Name="Cytosol1" RegionID="1" SubVolume="Cytosol" Size="315.45" Unit="um2" />
+          <MembraneRegion Name="membrane_extracellular0_Cytosol1" VolumeRegion1="Cytosol1" VolumeRegion2="extracellular0" Size="62.53091176272958" Unit="um" />
+        </SurfaceDescription>
+        <Version Name="LEGI_cyto_ext.geom" KeyValue="22700271" BranchId="22700272" Archived="0" Date="10-Jul-2007 18:21:57" FromVersionable="false">
+          <Owner Name="natsuki_tanaka" Identifier="22650046" />
+          <GroupAccess Type="1" />
+          <Annotation>cloned from 'Tutorial FRAP' owned by user tutorial
+cloned from 'Tutorial FRAP' owned by user susan</Annotation>
+        </Version>
+      </Geometry>
+      <GeometryContext>
+        <FeatureMapping Feature="Ext" GeometryClass="extracellular" SubVolume="extracellular">
+          <BoundariesTypes Xm="Flux" Xp="Flux" Ym="Flux" Yp="Flux" Zm="Flux" Zp="Flux" />
+        </FeatureMapping>
+        <FeatureMapping Feature="Cytosol" GeometryClass="Cytosol" SubVolume="Cytosol">
+          <BoundariesTypes Xm="Flux" Xp="Flux" Ym="Flux" Yp="Flux" Zm="Flux" Zp="Flux" />
+        </FeatureMapping>
+        <MembraneMapping Membrane="PM" SurfaceToVolumeRatio="1.0" VolumeFraction="0.2" CalculateVoltage="false" SpecificCapacitance="1.0" InitialVoltage="0.0" GeometryClass="Cytosol_extracellular_membrane">
+          <BoundariesTypes Xm="Flux" Xp="Flux" Ym="Flux" Yp="Flux" Zm="Flux" Zp="Flux" />
+        </MembraneMapping>
+      </GeometryContext>
+      <ReactionContext>
+        <LocalizedCompoundSpec LocalizedCompoundRef="S_Ext" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>(((( - 14.0 + x) * ( - 14.0 + x)) + (y * y)) &lt; 1.0)</InitialConcentration>
+          <Diffusion>1.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="I_Cytosol" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>0.0</InitialConcentration>
+          <Diffusion>1.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="E_PM" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>0.0</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="R_PM" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>0.0</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <ReactionSpec ReactionStepRef="Excitor_Generation" ReactionMapping="included" />
+        <ReactionSpec ReactionStepRef="Inhibitor_Generation" ReactionMapping="included" />
+        <ReactionSpec ReactionStepRef="ReadOut_Generation" ReactionMapping="included" />
+        <ReactionSpec ReactionStepRef="Readout_Degradation" ReactionMapping="included" />
+        <ReactionSpec ReactionStepRef="Excitor_Degradation" ReactionMapping="included" />
+        <ReactionSpec ReactionStepRef="Inhibitor_Degradation" ReactionMapping="included" />
+      </ReactionContext>
+      <MathDescription Name="LEGI_model_20070710.1.app_generated">
+        <Constant Name="_F_">96480.0</Constant>
+        <Constant Name="_F_nmol_">9.648E-5</Constant>
+        <Constant Name="_K_GHK_">1.0E-9</Constant>
+        <Constant Name="_N_pmol_">6.02E11</Constant>
+        <Constant Name="_R_">8314.0</Constant>
+        <Constant Name="_T_">300.0</Constant>
+        <Constant Name="E_PM_init">0.0</Constant>
+        <Constant Name="I_Cytosol_diffusionRate">1.0</Constant>
+        <Constant Name="I_Cytosol_init">0.0</Constant>
+        <Constant Name="k_e_Excitor_Degradation">1.0</Constant>
+        <Constant Name="k_e_Inhibitor_Degradation">1.0</Constant>
+        <Constant Name="K_millivolts_per_volt">1000.0</Constant>
+        <Constant Name="k_r">1.0</Constant>
+        <Constant Name="ke">1.0</Constant>
+        <Constant Name="ki">1.0</Constant>
+        <Constant Name="KMOLE">0.0016611295681063123</Constant>
+        <Constant Name="kr">1.0</Constant>
+        <Constant Name="R_PM_init">0.0</Constant>
+        <Constant Name="S_Ext_diffusionRate">1.0</Constant>
+        <Constant Name="Voltage_PM">0.0</Constant>
+        <MembraneVariable Name="E_PM" />
+        <VolumeVariable Name="I" />
+        <MembraneVariable Name="R_PM" />
+        <VolumeVariable Name="S" />
+        <Function Name="J_Excitor_Degradation">(k_e_Excitor_Degradation * E_PM)</Function>
+        <Function Name="S_Ext_init">(((( - 14.0 + x) * ( - 14.0 + x)) + (y * y)) &lt; 1.0)</Function>
+        <Function Name="v_E">(ke * S_OUTSIDE)</Function>
+        <Function Name="v_Edeg">(k_e_Inhibitor_Degradation * I_INSIDE)</Function>
+        <Function Name="v_I">(ki * S_OUTSIDE)</Function>
+        <Function Name="v_R">(kr * E_PM)</Function>
+        <Function Name="v_RI">- (I_INSIDE * R_PM * k_r)</Function>
+        <CompartmentSubDomain Name="Cytosol">
+          <BoundaryType Boundary="Xm" Type="Flux" />
+          <BoundaryType Boundary="Xp" Type="Flux" />
+          <BoundaryType Boundary="Ym" Type="Flux" />
+          <BoundaryType Boundary="Yp" Type="Flux" />
+          <BoundaryType Boundary="Zm" Type="Value" />
+          <BoundaryType Boundary="Zp" Type="Value" />
+          <PdeEquation Name="S" SolutionType="Unknown">
+            <Rate>0.0</Rate>
+            <Diffusion>S_Ext_diffusionRate</Diffusion>
+            <Initial>0.0</Initial>
+          </PdeEquation>
+          <PdeEquation Name="I" SolutionType="Unknown">
+            <Rate>0.0</Rate>
+            <Diffusion>I_Cytosol_diffusionRate</Diffusion>
+            <Initial>I_Cytosol_init</Initial>
+          </PdeEquation>
+        </CompartmentSubDomain>
+        <CompartmentSubDomain Name="extracellular">
+          <BoundaryType Boundary="Xm" Type="Flux" />
+          <BoundaryType Boundary="Xp" Type="Flux" />
+          <BoundaryType Boundary="Ym" Type="Flux" />
+          <BoundaryType Boundary="Yp" Type="Flux" />
+          <BoundaryType Boundary="Zm" Type="Value" />
+          <BoundaryType Boundary="Zp" Type="Value" />
+          <PdeEquation Name="S" SolutionType="Unknown">
+            <Rate>0.0</Rate>
+            <Diffusion>S_Ext_diffusionRate</Diffusion>
+            <Initial>S_Ext_init</Initial>
+          </PdeEquation>
+          <PdeEquation Name="I" SolutionType="Unknown">
+            <Rate>0.0</Rate>
+            <Diffusion>I_Cytosol_diffusionRate</Diffusion>
+            <Initial>0.0</Initial>
+          </PdeEquation>
+        </CompartmentSubDomain>
+        <MembraneSubDomain Name="Cytosol_extracellular_membrane" InsideCompartment="Cytosol" OutsideCompartment="extracellular">
+          <BoundaryType Boundary="Xm" Type="Value" />
+          <BoundaryType Boundary="Xp" Type="Value" />
+          <BoundaryType Boundary="Ym" Type="Value" />
+          <BoundaryType Boundary="Yp" Type="Value" />
+          <BoundaryType Boundary="Zm" Type="Value" />
+          <BoundaryType Boundary="Zp" Type="Value" />
+          <OdeEquation Name="E_PM" SolutionType="Unknown">
+            <Rate>( - J_Excitor_Degradation + v_E - v_R)</Rate>
+            <Initial>E_PM_init</Initial>
+          </OdeEquation>
+          <OdeEquation Name="R_PM" SolutionType="Unknown">
+            <Rate>(v_R - v_RI)</Rate>
+            <Initial>R_PM_init</Initial>
+          </OdeEquation>
+          <JumpCondition Name="S">
+            <InFlux>0.0</InFlux>
+            <OutFlux>0.0</OutFlux>
+          </JumpCondition>
+          <JumpCondition Name="I">
+            <InFlux>( - (KMOLE * v_Edeg) + (KMOLE * v_I) - (KMOLE * v_RI))</InFlux>
+            <OutFlux>0.0</OutFlux>
+          </JumpCondition>
+        </MembraneSubDomain>
+        <Version Name="LEGI_model_20070710.1.app_generated" KeyValue="22704325" BranchId="22700955" Archived="0" Date="10-Jul-2007 18:57:49" FromVersionable="false">
+          <Owner Name="natsuki_tanaka" Identifier="22650046" />
+          <GroupAccess Type="1" />
+        </Version>
+      </MathDescription>
+      <Simulation Name="Simulation0">
+        <SolverTaskDescription TaskType="Unsteady" UseSymbolicJacobian="false" Solver="Finite Volume, Regular Grid">
+          <TimeBound StartTime="0.0" EndTime="30.0" />
+          <TimeStep DefaultTime="0.001" MinTime="1.0E-8" MaxTime="1.0" />
+          <ErrorTolerance Absolut="1.0E-9" Relative="1.0E-9" />
+          <OutputOptions KeepEvery="1000" KeepAtMost="1000" />
+          <NumberProcessors>1</NumberProcessors>
+        </SolverTaskDescription>
+        <MathOverrides />
+        <MeshSpecification>
+          <Size X="101" Y="101" Z="1" />
+        </MeshSpecification>
+        <Version Name="Simulation0" KeyValue="22704342" BranchId="22701854" Archived="0" Date="10-Jul-2007 18:57:49" FromVersionable="false">
+          <Owner Name="natsuki_tanaka" Identifier="22650046" />
+          <GroupAccess Type="1" />
+        </Version>
+      </Simulation>
+      <SpatialObjects>
+        <SpatialObject Name="vobj_extracellular0" Type="Volume" subVolume="extracellular" regionId="0">
+          <QuantityCategoryList>
+            <QuantityCategory Name="VolumeCentroid" Enabled="false" />
+            <QuantityCategory Name="InteriorVelocity" Enabled="false" />
+            <QuantityCategory Name="VolumeRegionSize" Enabled="true" />
+          </QuantityCategoryList>
+        </SpatialObject>
+        <SpatialObject Name="vobj_Cytosol1" Type="Volume" subVolume="Cytosol" regionId="1">
+          <QuantityCategoryList>
+            <QuantityCategory Name="VolumeCentroid" Enabled="false" />
+            <QuantityCategory Name="InteriorVelocity" Enabled="false" />
+            <QuantityCategory Name="VolumeRegionSize" Enabled="true" />
+          </QuantityCategoryList>
+        </SpatialObject>
+        <SpatialObject Name="sobj_Cytosol1_extracellular0" Type="Surface" subVolumeInside="Cytosol" regionIdInside="1" subVolumeOutside="extracellular" regionIdOutside="0">
+          <QuantityCategoryList>
+            <QuantityCategory Name="SurfaceNormal" Enabled="false" />
+            <QuantityCategory Name="SurfaceVelocity" Enabled="false" />
+            <QuantityCategory Name="DistanceToSurface" Enabled="false" />
+            <QuantityCategory Name="DirectionToSurface" Enabled="false" />
+            <QuantityCategory Name="SurfaceSize" Enabled="true" />
+          </QuantityCategoryList>
+        </SpatialObject>
+      </SpatialObjects>
+      <Version Name="LEGI_model_20070710.1.app" KeyValue="22709647" BranchId="22700958" Archived="0" Date="10-Jul-2007 20:03:32" FromVersionable="false">
+        <Owner Name="natsuki_tanaka" Identifier="22650046" />
+        <GroupAccess Type="1" />
+      </Version>
+      <MicroscopeMeasurement Name="fluor">
+        <ConvolutionKernel Type="ProjectionZKernel" />
+      </MicroscopeMeasurement>
+    </SimulationSpec>
+    <Version Name="LEGI_Model_20070710.1" KeyValue="22709662" BranchId="22696319" Archived="0" Date="10-Jul-2007 20:03:32" FromVersionable="false">
+      <Owner Name="natsuki_tanaka" Identifier="22650046" />
+      <GroupAccess Type="0" />
+      <Annotation>Simple Local-Excitation/Global-Inhibition Model</Annotation>
+    </Version>
+    <pathwayModel>
+      <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:bp="http://www.biopax.org/release/biopax-level3.owl#" version="3.0" />
+    </pathwayModel>
+    <relationshipModel>
+      <RMNS version="3.0" />
+    </relationshipModel>
+    <vcmetadata>
+      <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" />
+      <nonrdfAnnotationList>
+        <nonrdfAnnotation vcid="BioModel(LEGI_Model_20070710.1)">
+          <freetext>Simple Local-Excitation/Global-Inhibition Model</freetext>
+        </nonrdfAnnotation>
+      </nonrdfAnnotationList>
+      <uriBindingList />
+    </vcmetadata>
+  </BioModel>
+</vcml>
+

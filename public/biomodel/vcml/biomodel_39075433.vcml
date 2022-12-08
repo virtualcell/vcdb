@@ -1,0 +1,259 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--This biomodel was generated in VCML Version Alpha_Version_7.4.0_build_87-->
+<vcml xmlns="http://sourceforge.net/projects/vcell/vcml" Version="Alpha_Version_7.4.0_build_87">
+  <BioModel Name="FRAP_bio">
+    <Model Name="unnamed">
+      <ModelParameters>
+        <Parameter Name="a" Role="user defined" Unit="s">4.0</Parameter>
+      </ModelParameters>
+      <Compound Name="Dex">
+        <Annotation>Dextran</Annotation>
+        <SpeciesBinding KeyValue="6578790" Type="Compound">
+          <DBFormalSpecies KeyValue="2933167" Type="Compound">
+            <SpeciesInfo FormalID="C00372" Formula="(C12H20O11)n" Type="Compound">
+              <Name>Dextran</Name>
+              <Name>1,6-alpha-D-Glucan</Name>
+              <Name>(1,6-alpha-D-Glucosyl)m+1</Name>
+              <Name>(1,6-alpha-D-Glucosyl)n+1</Name>
+              <Name>(1,6-alpha-D-Glucosyl)m</Name>
+              <Name>(1,6-alpha-D-Glucosyl)n</Name>
+            </SpeciesInfo>
+          </DBFormalSpecies>
+        </SpeciesBinding>
+      </Compound>
+      <Feature Name="Cell" KeyValue="39075411" />
+      <Feature Name="EC" KeyValue="39075409" />
+      <Membrane InsideFeature="Cell" OutsideFeature="EC" PositiveFeature="Cell" NegativeFeature="EC" MembraneVoltage="Voltage_PM" Name="PM" KeyValue="39075410" />
+      <LocalizedCompound Name="Dex_Cell" CompoundRef="Dex" Structure="Cell" OverrideName="true" KeyValue="39075415" />
+      <Diagram Name="Unnamed compartment" Structure="EC" />
+      <Diagram Name="PM" Structure="PM" />
+      <Diagram Name="Cell" Structure="Cell">
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="Dex_Cell" LocationX="44" LocationY="51" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="full" SimpleReactionRef="reaction0" LocationX="99" LocationY="64" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="Dex_Cell" LocationX="44" LocationY="51" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="molecule" SimpleReactionRef="reaction0" LocationX="99" LocationY="64" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="Dex_Cell" LocationX="44" LocationY="51" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="rule" SimpleReactionRef="reaction0" LocationX="99" LocationY="64" />
+      </Diagram>
+      <Version Name="unnamed" KeyValue="39075406" BranchId="38962613" Archived="0" Date="18-Feb-2010 11:10:18" FromVersionable="false">
+        <Owner Name="isaacnaggar" Identifier="37752539" />
+        <GroupAccess Type="1" />
+      </Version>
+      <ModelUnitSystem VolumeSubstanceUnit="uM.um3" MembraneSubstanceUnit="molecules" LumpedReactionSubstanceUnit="molecules" VolumeUnit="um3" AreaUnit="um2" LengthUnit="um" TimeUnit="s" />
+    </Model>
+    <SimulationSpec Name="FRAP_app" Stochastic="false" UseConcentration="true" RuleBased="false" MassConservationModelReduction="true" InsufficientIterations="false" InsufficientMaxMolecules="false" CharacteristicSize="0.04561394691467284">
+      <NetworkConstraints RbmMaxIteration="1" RbmMaxMoleculesPerSpecies="10" RbmSpeciesLimit="800" RbmReactionsLimit="2500" />
+      <Annotation />
+      <Geometry Name="FRAP_geo" Dimension="2">
+        <Extent X="22.0" Y="22.0" Z="10.0" />
+        <Origin X="-11.0" Y="-11.0" Z="0.0" />
+        <SubVolume Name="Cell" Handle="0" Type="Analytical" KeyValue="38972649">
+          <AnalyticExpression>(((x * x) + (y * y)) &lt; 100.0)</AnalyticExpression>
+        </SubVolume>
+        <SubVolume Name="EC" Handle="1" Type="Analytical" KeyValue="38972650">
+          <AnalyticExpression>1.0</AnalyticExpression>
+        </SubVolume>
+        <SurfaceClass Name="Cell_EC_membrane" SubVolume1Ref="Cell" SubVolume2Ref="EC" />
+        <SurfaceDescription NumSamplesX="101" NumSamplesY="101" NumSamplesZ="1" CutoffFrequency="0.3">
+          <VolumeRegion Name="Cell1" RegionID="1" SubVolume="Cell" Size="314.6484" Unit="um2" />
+          <VolumeRegion Name="EC0" RegionID="0" SubVolume="EC" Size="169.3516" Unit="um2" />
+          <MembraneRegion Name="membrane_EC0_Cell1" VolumeRegion1="Cell1" VolumeRegion2="EC0" Size="63.01392253613547" Unit="um" />
+        </SurfaceDescription>
+        <Version Name="FRAP_geo" KeyValue="38972645" BranchId="38972646" Archived="0" Date="17-Feb-2010 11:06:59" FromVersionable="false">
+          <Owner Name="isaacnaggar" Identifier="37752539" />
+          <GroupAccess Type="0" />
+        </Version>
+      </Geometry>
+      <GeometryContext>
+        <FeatureMapping Feature="Cell" GeometryClass="Cell" SubVolume="Cell">
+          <BoundariesTypes Xm="Flux" Xp="Flux" Ym="Flux" Yp="Flux" Zm="Flux" Zp="Flux" />
+        </FeatureMapping>
+        <FeatureMapping Feature="EC" GeometryClass="EC" SubVolume="EC">
+          <BoundariesTypes Xm="Flux" Xp="Flux" Ym="Flux" Yp="Flux" Zm="Flux" Zp="Flux" />
+        </FeatureMapping>
+        <MembraneMapping Membrane="PM" SurfaceToVolumeRatio="1.0" VolumeFraction="0.2" CalculateVoltage="false" SpecificCapacitance="1.0" InitialVoltage="0.0" GeometryClass="Cell_EC_membrane">
+          <BoundariesTypes Xm="Flux" Xp="Flux" Ym="Flux" Yp="Flux" Zm="Flux" Zp="Flux" />
+        </MembraneMapping>
+      </GeometryContext>
+      <ReactionContext>
+        <LocalizedCompoundSpec LocalizedCompoundRef="Dex_Cell" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>(10.0 * (((x * x) + (y * y)) &lt; 3.0))</InitialConcentration>
+          <Diffusion>20.0</Diffusion>
+        </LocalizedCompoundSpec>
+      </ReactionContext>
+      <MathDescription Name="FRAP_app_generated">
+        <Constant Name="_F_">96480.0</Constant>
+        <Constant Name="_F_nmol_">9.648E-5</Constant>
+        <Constant Name="_K_GHK_">1.0E-9</Constant>
+        <Constant Name="_N_pmol_">6.02E11</Constant>
+        <Constant Name="_R_">8314.0</Constant>
+        <Constant Name="_T_">300.0</Constant>
+        <Constant Name="a">4.0</Constant>
+        <Constant Name="Dex_Cell_diffusionRate">20.0</Constant>
+        <Constant Name="K_millivolts_per_volt">1000.0</Constant>
+        <Constant Name="KMOLE">0.0016611295681063123</Constant>
+        <Constant Name="Voltage_PM">0.0</Constant>
+        <VolumeVariable Name="Dex" />
+        <Function Name="Dex_Cell_init">(10.0 * (((x * x) + (y * y)) &lt; 3.0))</Function>
+        <CompartmentSubDomain Name="Cell">
+          <BoundaryType Boundary="Xm" Type="Flux" />
+          <BoundaryType Boundary="Xp" Type="Flux" />
+          <BoundaryType Boundary="Ym" Type="Flux" />
+          <BoundaryType Boundary="Yp" Type="Flux" />
+          <BoundaryType Boundary="Zm" Type="Value" />
+          <BoundaryType Boundary="Zp" Type="Value" />
+          <PdeEquation Name="Dex" SolutionType="Unknown">
+            <Rate>0.0</Rate>
+            <Diffusion>Dex_Cell_diffusionRate</Diffusion>
+            <Initial>Dex_Cell_init</Initial>
+          </PdeEquation>
+        </CompartmentSubDomain>
+        <CompartmentSubDomain Name="EC">
+          <BoundaryType Boundary="Xm" Type="Flux" />
+          <BoundaryType Boundary="Xp" Type="Flux" />
+          <BoundaryType Boundary="Ym" Type="Flux" />
+          <BoundaryType Boundary="Yp" Type="Flux" />
+          <BoundaryType Boundary="Zm" Type="Value" />
+          <BoundaryType Boundary="Zp" Type="Value" />
+          <PdeEquation Name="Dex" SolutionType="Unknown">
+            <Rate>0.0</Rate>
+            <Diffusion>Dex_Cell_diffusionRate</Diffusion>
+            <Initial>0.0</Initial>
+          </PdeEquation>
+        </CompartmentSubDomain>
+        <MembraneSubDomain Name="Cell_EC_membrane" InsideCompartment="Cell" OutsideCompartment="EC">
+          <BoundaryType Boundary="Xm" Type="Value" />
+          <BoundaryType Boundary="Xp" Type="Value" />
+          <BoundaryType Boundary="Ym" Type="Value" />
+          <BoundaryType Boundary="Yp" Type="Value" />
+          <BoundaryType Boundary="Zm" Type="Value" />
+          <BoundaryType Boundary="Zp" Type="Value" />
+          <JumpCondition Name="Dex">
+            <InFlux>0.0</InFlux>
+            <OutFlux>0.0</OutFlux>
+          </JumpCondition>
+        </MembraneSubDomain>
+        <Version Name="FRAP_app_generated" KeyValue="39075404" BranchId="38972773" Archived="0" Date="18-Feb-2010 11:10:18" FromVersionable="false">
+          <Owner Name="isaacnaggar" Identifier="37752539" />
+          <GroupAccess Type="1" />
+        </Version>
+      </MathDescription>
+      <Simulation Name="Simulation0">
+        <SolverTaskDescription TaskType="Unsteady" UseSymbolicJacobian="false" Solver="Finite Volume, Regular Grid">
+          <TimeBound StartTime="0.0" EndTime="10.0" />
+          <TimeStep DefaultTime="0.1" MinTime="1.0E-8" MaxTime="1.0" />
+          <ErrorTolerance Absolut="1.0E-9" Relative="1.0E-9" />
+          <OutputOptions OutputTimeStep="0.1" />
+          <NumberProcessors>1</NumberProcessors>
+        </SolverTaskDescription>
+        <MathOverrides />
+        <MeshSpecification>
+          <Size X="51" Y="51" Z="1" />
+        </MeshSpecification>
+        <Version Name="Simulation0" KeyValue="39075426" BranchId="38972839" Archived="0" Date="18-Feb-2010 11:10:24" FromVersionable="false">
+          <Owner Name="isaacnaggar" Identifier="37752539" />
+          <GroupAccess Type="1" />
+        </Version>
+      </Simulation>
+      <Simulation Name="Simulation1">
+        <SolverTaskDescription TaskType="Unsteady" UseSymbolicJacobian="false" Solver="Finite Volume, Regular Grid">
+          <TimeBound StartTime="0.0" EndTime="3.0" />
+          <TimeStep DefaultTime="0.1" MinTime="1.0E-8" MaxTime="1.0" />
+          <ErrorTolerance Absolut="1.0E-9" Relative="1.0E-9" />
+          <OutputOptions OutputTimeStep="0.1" />
+          <NumberProcessors>1</NumberProcessors>
+        </SolverTaskDescription>
+        <MathOverrides />
+        <MeshSpecification>
+          <Size X="51" Y="51" Z="1" />
+        </MeshSpecification>
+        <Version Name="Simulation1" KeyValue="39075428" BranchId="38980413" Archived="0" Date="18-Feb-2010 11:10:24" FromVersionable="false">
+          <Owner Name="isaacnaggar" Identifier="37752539" />
+          <GroupAccess Type="1" />
+          <ParentSimRef KeyValue="38980412" />
+        </Version>
+      </Simulation>
+      <Simulation Name="Simulation2">
+        <SolverTaskDescription TaskType="Unsteady" UseSymbolicJacobian="false" Solver="Finite Volume, Regular Grid">
+          <TimeBound StartTime="0.0" EndTime="10.0" />
+          <TimeStep DefaultTime="0.1" MinTime="1.0E-8" MaxTime="1.0" />
+          <ErrorTolerance Absolut="1.0E-9" Relative="1.0E-9" />
+          <OutputOptions OutputTimeStep="0.1" />
+          <NumberProcessors>1</NumberProcessors>
+        </SolverTaskDescription>
+        <MathOverrides />
+        <MeshSpecification>
+          <Size X="101" Y="101" Z="1" />
+        </MeshSpecification>
+        <Version Name="Simulation2" KeyValue="39075430" BranchId="39075431" Archived="0" Date="18-Feb-2010 11:10:24" FromVersionable="false">
+          <Owner Name="isaacnaggar" Identifier="37752539" />
+          <GroupAccess Type="1" />
+        </Version>
+      </Simulation>
+      <SpatialObjects>
+        <SpatialObject Name="vobj_Cell1" Type="Volume" subVolume="Cell" regionId="1">
+          <QuantityCategoryList>
+            <QuantityCategory Name="VolumeCentroid" Enabled="false" />
+            <QuantityCategory Name="InteriorVelocity" Enabled="false" />
+            <QuantityCategory Name="VolumeRegionSize" Enabled="true" />
+          </QuantityCategoryList>
+        </SpatialObject>
+        <SpatialObject Name="vobj_EC0" Type="Volume" subVolume="EC" regionId="0">
+          <QuantityCategoryList>
+            <QuantityCategory Name="VolumeCentroid" Enabled="false" />
+            <QuantityCategory Name="InteriorVelocity" Enabled="false" />
+            <QuantityCategory Name="VolumeRegionSize" Enabled="true" />
+          </QuantityCategoryList>
+        </SpatialObject>
+        <SpatialObject Name="sobj_Cell1_EC0" Type="Surface" subVolumeInside="Cell" regionIdInside="1" subVolumeOutside="EC" regionIdOutside="0">
+          <QuantityCategoryList>
+            <QuantityCategory Name="SurfaceNormal" Enabled="false" />
+            <QuantityCategory Name="SurfaceVelocity" Enabled="false" />
+            <QuantityCategory Name="DistanceToSurface" Enabled="false" />
+            <QuantityCategory Name="DirectionToSurface" Enabled="false" />
+            <QuantityCategory Name="SurfaceSize" Enabled="true" />
+          </QuantityCategoryList>
+        </SpatialObject>
+      </SpatialObjects>
+      <Version Name="FRAP_app" KeyValue="39075420" BranchId="38972776" Archived="0" Date="18-Feb-2010 11:10:24" FromVersionable="false">
+        <Owner Name="isaacnaggar" Identifier="37752539" />
+        <GroupAccess Type="1" />
+      </Version>
+      <MicroscopeMeasurement Name="fluor">
+        <ConvolutionKernel Type="ProjectionZKernel" />
+      </MicroscopeMeasurement>
+    </SimulationSpec>
+    <Version Name="FRAP_bio" KeyValue="39075433" BranchId="38962750" Archived="0" Date="18-Feb-2010 11:10:24" FromVersionable="false">
+      <Owner Name="isaacnaggar" Identifier="37752539" />
+      <GroupAccess Type="0" />
+    </Version>
+    <pathwayModel>
+      <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:bp="http://www.biopax.org/release/biopax-level3.owl#" version="3.0" />
+    </pathwayModel>
+    <relationshipModel>
+      <RMNS version="3.0" />
+    </relationshipModel>
+    <vcmetadata>
+      <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
+        <rdf:Description rdf:about="http://sourceforge.net/projects/vcell/vcml/cbit.vcell.model.Species/metaid_72101962">
+          <bqbiol:isVersionOf xmlns:bqbiol="http://biomodels.net/biology-qualifiers/">
+            <rdf:Bag rdf:nodeID="node0">
+              <rdf:li>
+                <rdf:Description rdf:about="urn:miriam:kegg.compound:C00372" />
+              </rdf:li>
+            </rdf:Bag>
+          </bqbiol:isVersionOf>
+        </rdf:Description>
+      </rdf:RDF>
+      <nonrdfAnnotationList>
+        <nonrdfAnnotation vcid="Species(Dex)">
+          <freetext>Dextran</freetext>
+        </nonrdfAnnotation>
+      </nonrdfAnnotationList>
+      <uriBindingList>
+        <uriBinding uri="http://sourceforge.net/projects/vcell/vcml/cbit.vcell.model.Species/metaid_72101962" vcid="Species(Dex)" />
+      </uriBindingList>
+    </vcmetadata>
+  </BioModel>
+</vcml>
+

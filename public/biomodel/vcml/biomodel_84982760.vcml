@@ -1,0 +1,229 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--This biomodel was generated in VCML Version Alpha_Version_7.4.0_build_87-->
+<vcml xmlns="http://sourceforge.net/projects/vcell/vcml" Version="Alpha_Version_7.4.0_build_87">
+  <BioModel Name="CSH_09_multiple_compartments">
+    <Annotation>cloned from 'CSH_09_multiple_compartments' owned by user boris</Annotation>
+    <Model Name="unnamed">
+      <Annotation>cloned from 'unnamed' owned by user boris</Annotation>
+      <Compound Name="Ca" />
+      <Feature Name="extracellular" KeyValue="35789322" />
+      <Feature Name="cytosol" KeyValue="35789325" />
+      <Feature Name="ER" KeyValue="35789328" />
+      <Membrane InsideFeature="cytosol" OutsideFeature="extracellular" PositiveFeature="cytosol" NegativeFeature="extracellular" MembraneVoltage="Voltage_pm" Name="pm" KeyValue="35789324" />
+      <Membrane InsideFeature="ER" OutsideFeature="cytosol" PositiveFeature="ER" NegativeFeature="cytosol" MembraneVoltage="Voltage_ERm" Name="ERm" KeyValue="35789327" />
+      <LocalizedCompound Name="Ca_extracellular" CompoundRef="Ca" Structure="extracellular" OverrideName="true" KeyValue="35789332" />
+      <LocalizedCompound Name="Ca_cytosol" CompoundRef="Ca" Structure="cytosol" OverrideName="true" KeyValue="35789333" />
+      <LocalizedCompound Name="Ca_ER" CompoundRef="Ca" Structure="ER" OverrideName="true" KeyValue="35789334" />
+      <FluxStep Name="flux1" Structure="ERm" Reversible="true" FluxOption="MolecularOnly" KeyValue="35789335">
+        <Reactant LocalizedCompoundRef="Ca_cytosol" Stoichiometry="1" />
+        <Product LocalizedCompoundRef="Ca_ER" Stoichiometry="1" />
+        <Kinetics KineticsType="GeneralKinetics">
+          <Parameter Name="J" Role="reaction rate" Unit="uM.um.s-1">(P2 * (Ca_cytosol - Ca_ER))</Parameter>
+          <Parameter Name="I" Role="inward current density" Unit="pA.um-2">0.0</Parameter>
+          <Parameter Name="netValence" Role="net charge valence" Unit="1">0.0</Parameter>
+          <Parameter Name="P2" Role="user defined" Unit="um.s-1">0.005</Parameter>
+        </Kinetics>
+      </FluxStep>
+      <FluxStep Name="flux0" Structure="pm" Reversible="true" FluxOption="MolecularOnly" KeyValue="35789338">
+        <Reactant LocalizedCompoundRef="Ca_extracellular" Stoichiometry="1" />
+        <Product LocalizedCompoundRef="Ca_cytosol" Stoichiometry="1" />
+        <Kinetics KineticsType="GeneralKinetics">
+          <Parameter Name="J" Role="reaction rate" Unit="uM.um.s-1">(P1 * (Ca_extracellular - Ca_cytosol))</Parameter>
+          <Parameter Name="I" Role="inward current density" Unit="pA.um-2">0.0</Parameter>
+          <Parameter Name="netValence" Role="net charge valence" Unit="1">0.0</Parameter>
+          <Parameter Name="P1" Role="user defined" Unit="um.s-1">0.01</Parameter>
+        </Kinetics>
+      </FluxStep>
+      <Diagram Name="Unnamed compartment" Structure="extracellular">
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="Rpr_i" LocationX="107" LocationY="187" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="Rpr_a" LocationX="219" LocationY="138" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="Ca_extracellular" LocationX="95" LocationY="98" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="full" SimpleReactionRef="repressor_activation" LocationX="156" LocationY="138" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="Rpr_i" LocationX="107" LocationY="187" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="Rpr_a" LocationX="219" LocationY="138" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="Ca_extracellular" LocationX="95" LocationY="98" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="molecule" SimpleReactionRef="repressor_activation" LocationX="156" LocationY="138" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="Rpr_i" LocationX="107" LocationY="187" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="Rpr_a" LocationX="219" LocationY="138" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="Ca_extracellular" LocationX="95" LocationY="98" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="rule" SimpleReactionRef="repressor_activation" LocationX="156" LocationY="138" />
+      </Diagram>
+      <Diagram Name="plasma membrane" Structure="pm">
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="Ca_cytosol" LocationX="43" LocationY="57" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="Ca_extracellular" LocationX="28" LocationY="61" />
+        <FluxReactionShape NodeReferenceModeAttrTag="full" FluxReactionRef="flux0" LocationX="61" LocationY="57" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="Ca_cytosol" LocationX="43" LocationY="57" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="Ca_extracellular" LocationX="28" LocationY="61" />
+        <FluxReactionShape NodeReferenceModeAttrTag="molecule" FluxReactionRef="flux0" LocationX="61" LocationY="57" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="Ca_cytosol" LocationX="43" LocationY="57" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="Ca_extracellular" LocationX="28" LocationY="61" />
+        <FluxReactionShape NodeReferenceModeAttrTag="rule" FluxReactionRef="flux0" LocationX="61" LocationY="57" />
+      </Diagram>
+      <Diagram Name="cytosol" Structure="cytosol" />
+      <Diagram Name="ER_membrane" Structure="ERm">
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="Ca_ER" LocationX="44" LocationY="47" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="Ca_cytosol" LocationX="41" LocationY="45" />
+        <FluxReactionShape NodeReferenceModeAttrTag="full" FluxReactionRef="flux1" LocationX="69" LocationY="41" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="Ca_ER" LocationX="44" LocationY="47" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="Ca_cytosol" LocationX="41" LocationY="45" />
+        <FluxReactionShape NodeReferenceModeAttrTag="molecule" FluxReactionRef="flux1" LocationX="69" LocationY="41" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="Ca_ER" LocationX="44" LocationY="47" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="Ca_cytosol" LocationX="41" LocationY="45" />
+        <FluxReactionShape NodeReferenceModeAttrTag="rule" FluxReactionRef="flux1" LocationX="69" LocationY="41" />
+      </Diagram>
+      <Diagram Name="ER" Structure="ER" />
+      <Version Name="unnamed" KeyValue="35789318" BranchId="35789319" Archived="0" Date="20-Sep-2009 01:19:05" FromVersionable="false">
+        <Owner Name="Education" Identifier="30625624" />
+        <GroupAccess Type="1" />
+        <Annotation>cloned from 'unnamed' owned by user boris</Annotation>
+      </Version>
+      <ModelUnitSystem VolumeSubstanceUnit="uM.um3" MembraneSubstanceUnit="molecules" LumpedReactionSubstanceUnit="molecules" VolumeUnit="um3" AreaUnit="um2" LengthUnit="um" TimeUnit="s" />
+    </Model>
+    <SimulationSpec Name="compartmental" Stochastic="false" UseConcentration="true" RuleBased="false" MassConservationModelReduction="true" InsufficientIterations="false" InsufficientMaxMolecules="false">
+      <NetworkConstraints RbmMaxIteration="1" RbmMaxMoleculesPerSpecies="10" RbmSpeciesLimit="800" RbmReactionsLimit="2500" />
+      <Annotation>cloned from 'compartmental' owned by user boris</Annotation>
+      <Geometry Name="non-spatial1217131924" Dimension="0">
+        <Annotation>cloned from 'non-spatial1217131924' owned by user boris</Annotation>
+        <Extent X="10.0" Y="10.0" Z="10.0" />
+        <Origin X="0.0" Y="0.0" Z="0.0" />
+        <SubVolume Name="Compartment" Handle="0" Type="Compartmental" KeyValue="35789314" />
+        <Version Name="non-spatial1217131924" KeyValue="35789310" BranchId="35789311" Archived="0" Date="20-Sep-2009 01:19:04" FromVersionable="false">
+          <Owner Name="Education" Identifier="30625624" />
+          <GroupAccess Type="1" />
+          <Annotation>cloned from 'non-spatial1217131924' owned by user boris</Annotation>
+        </Version>
+      </Geometry>
+      <GeometryContext>
+        <FeatureMapping Feature="extracellular" GeometryClass="Compartment" SubVolume="Compartment" Size="10000.0">
+          <BoundariesTypes Xm="Flux" Xp="Flux" Ym="Flux" Yp="Flux" Zm="Flux" Zp="Flux" />
+        </FeatureMapping>
+        <FeatureMapping Feature="cytosol" GeometryClass="Compartment" SubVolume="Compartment" Size="1000.0">
+          <BoundariesTypes Xm="Flux" Xp="Flux" Ym="Flux" Yp="Flux" Zm="Flux" Zp="Flux" />
+        </FeatureMapping>
+        <FeatureMapping Feature="ER" GeometryClass="Compartment" SubVolume="Compartment" Size="150.0">
+          <BoundariesTypes Xm="Flux" Xp="Flux" Ym="Flux" Yp="Flux" Zm="Flux" Zp="Flux" />
+        </FeatureMapping>
+        <MembraneMapping Membrane="pm" SurfaceToVolumeRatio="1.0434782608695652" VolumeFraction="0.1031390134529148" Size="1200.0" CalculateVoltage="false" SpecificCapacitance="1.0" InitialVoltage="0.0" GeometryClass="Compartment">
+          <BoundariesTypes Xm="Flux" Xp="Flux" Ym="Flux" Yp="Flux" Zm="Flux" Zp="Flux" />
+        </MembraneMapping>
+        <MembraneMapping Membrane="ERm" SurfaceToVolumeRatio="133.33333333333334" VolumeFraction="0.13043478260869565" Size="20000.0" CalculateVoltage="false" SpecificCapacitance="1.0" InitialVoltage="0.0" GeometryClass="Compartment">
+          <BoundariesTypes Xm="Flux" Xp="Flux" Ym="Flux" Yp="Flux" Zm="Flux" Zp="Flux" />
+        </MembraneMapping>
+      </GeometryContext>
+      <ReactionContext>
+        <LocalizedCompoundSpec LocalizedCompoundRef="Ca_extracellular" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>2000.0</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="Ca_cytosol" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>0.05</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="Ca_ER" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>500.0</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <ReactionSpec ReactionStepRef="flux1" ReactionMapping="included" />
+        <ReactionSpec ReactionStepRef="flux0" ReactionMapping="included" />
+      </ReactionContext>
+      <MathDescription Name="compartmental_generated">
+        <Annotation>cloned from 'compartmental_generated' owned by user boris</Annotation>
+        <Constant Name="_F_">96480.0</Constant>
+        <Constant Name="_F_nmol_">9.648E-5</Constant>
+        <Constant Name="_K_GHK_">1.0E-9</Constant>
+        <Constant Name="_N_pmol_">6.02E11</Constant>
+        <Constant Name="_PI_">3.141592653589793</Constant>
+        <Constant Name="_R_">8314.0</Constant>
+        <Constant Name="_T_">300.0</Constant>
+        <Constant Name="Ca_cytosol_init_uM">0.05</Constant>
+        <Constant Name="Ca_ER_init_uM">500.0</Constant>
+        <Constant Name="Ca_extracellular_init_uM">2000.0</Constant>
+        <Constant Name="K_millivolts_per_volt">1000.0</Constant>
+        <Constant Name="KMOLE">0.0016611295681063123</Constant>
+        <Constant Name="P1">0.01</Constant>
+        <Constant Name="P2">0.005</Constant>
+        <Constant Name="Size_cytosol">1000.0</Constant>
+        <Constant Name="Size_ER">150.0</Constant>
+        <Constant Name="Size_ERm">20000.0</Constant>
+        <Constant Name="Size_extracellular">10000.0</Constant>
+        <Constant Name="Size_pm">1200.0</Constant>
+        <Constant Name="Voltage_ERm">0.0</Constant>
+        <Constant Name="Voltage_pm">0.0</Constant>
+        <VolumeVariable Name="Ca_cytosol" Domain="Compartment" />
+        <VolumeVariable Name="Ca_ER" Domain="Compartment" />
+        <Function Name="Ca_extracellular" Domain="Compartment">(( - (Size_ER * Ca_ER) + K_Ca_extracellular_total - (Size_cytosol * Ca_cytosol)) / Size_extracellular)</Function>
+        <Function Name="J_flux0" Domain="Compartment">(P1 * (Ca_extracellular - Ca_cytosol))</Function>
+        <Function Name="J_flux1" Domain="Compartment">(P2 * (Ca_cytosol - Ca_ER))</Function>
+        <Function Name="K_Ca_extracellular_total" Domain="Compartment">((Size_ER * Ca_ER_init_uM) + (Size_extracellular * Ca_extracellular_init_uM) + (Size_cytosol * Ca_cytosol_init_uM))</Function>
+        <Function Name="KFlux_ERm_cytosol" Domain="Compartment">(Size_ERm / Size_cytosol)</Function>
+        <Function Name="KFlux_ERm_ER" Domain="Compartment">(Size_ERm / Size_ER)</Function>
+        <Function Name="KFlux_pm_cytosol" Domain="Compartment">(Size_pm / Size_cytosol)</Function>
+        <Function Name="KFlux_pm_extracellular" Domain="Compartment">(Size_pm / Size_extracellular)</Function>
+        <CompartmentSubDomain Name="Compartment">
+          <BoundaryType Boundary="Xm" Type="Value" />
+          <BoundaryType Boundary="Xp" Type="Value" />
+          <BoundaryType Boundary="Ym" Type="Value" />
+          <BoundaryType Boundary="Yp" Type="Value" />
+          <BoundaryType Boundary="Zm" Type="Value" />
+          <BoundaryType Boundary="Zp" Type="Value" />
+          <OdeEquation Name="Ca_cytosol" SolutionType="Unknown">
+            <Rate>( - (KFlux_ERm_cytosol * J_flux1) + (KFlux_pm_cytosol * J_flux0))</Rate>
+            <Initial>Ca_cytosol_init_uM</Initial>
+          </OdeEquation>
+          <OdeEquation Name="Ca_ER" SolutionType="Unknown">
+            <Rate>(KFlux_ERm_ER * J_flux1)</Rate>
+            <Initial>Ca_ER_init_uM</Initial>
+          </OdeEquation>
+        </CompartmentSubDomain>
+        <Version Name="compartmental_generated" KeyValue="84982744" BranchId="35789316" Archived="0" Date="02-Nov-2013 13:18:30" FromVersionable="false">
+          <Owner Name="Education" Identifier="30625624" />
+          <GroupAccess Type="1" />
+          <Annotation>cloned from 'compartmental_generated' owned by user boris</Annotation>
+        </Version>
+      </MathDescription>
+      <Simulation Name="Simulation0">
+        <SolverTaskDescription TaskType="Unsteady" UseSymbolicJacobian="false" Solver="Combined Stiff Solver (IDA/CVODE)">
+          <TimeBound StartTime="0.0" EndTime="10.0" />
+          <TimeStep DefaultTime="0.1" MinTime="1.0E-8" MaxTime="1.0" />
+          <ErrorTolerance Absolut="1.0E-9" Relative="1.0E-9" />
+          <OutputOptions KeepEvery="1" KeepAtMost="1000" />
+          <NumberProcessors>1</NumberProcessors>
+        </SolverTaskDescription>
+        <MathOverrides />
+        <Version Name="Simulation0" KeyValue="84982758" BranchId="57205879" Archived="0" Date="02-Nov-2013 13:18:30" FromVersionable="false">
+          <Owner Name="Education" Identifier="30625624" />
+          <GroupAccess Type="1" />
+        </Version>
+      </Simulation>
+      <Version Name="compartmental" KeyValue="84982746" BranchId="35789347" Archived="0" Date="02-Nov-2013 13:18:30" FromVersionable="false">
+        <Owner Name="Education" Identifier="30625624" />
+        <GroupAccess Type="1" />
+        <Annotation>cloned from 'compartmental' owned by user boris</Annotation>
+      </Version>
+      <MicroscopeMeasurement Name="fluor">
+        <ConvolutionKernel Type="ProjectionZKernel" />
+      </MicroscopeMeasurement>
+    </SimulationSpec>
+    <Version Name="CSH_09_multiple_compartments" KeyValue="84982760" BranchId="35789360" Archived="0" Date="02-Nov-2013 13:18:30" FromVersionable="false">
+      <Owner Name="Education" Identifier="30625624" />
+      <GroupAccess Type="0" />
+      <Annotation>cloned from 'CSH_09_multiple_compartments' owned by user boris</Annotation>
+    </Version>
+    <pathwayModel>
+      <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:bp="http://www.biopax.org/release/biopax-level3.owl#" version="3.0" />
+    </pathwayModel>
+    <relationshipModel>
+      <RMNS version="3.0" />
+    </relationshipModel>
+    <vcmetadata>
+      <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" />
+      <nonrdfAnnotationList>
+        <nonrdfAnnotation vcid="BioModel(CSH_09_multiple_compartments)">
+          <freetext>cloned from 'CSH_09_multiple_compartments' owned by user boris</freetext>
+        </nonrdfAnnotation>
+      </nonrdfAnnotationList>
+      <uriBindingList />
+    </vcmetadata>
+  </BioModel>
+</vcml>
+

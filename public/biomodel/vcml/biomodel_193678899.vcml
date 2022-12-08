@@ -1,0 +1,367 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--This biomodel was generated in VCML Version Alpha_Version_7.4.0_build_87-->
+<vcml xmlns="http://sourceforge.net/projects/vcell/vcml" Version="Alpha_Version_7.4.0_build_87">
+  <BioModel Name="bistable_switch">
+    <Model Name="model">
+      <ModelParameters>
+        <Parameter Name="Sx" Role="user defined" Unit="uM">0.0</Parameter>
+      </ModelParameters>
+      <Compound Name="s0" />
+      <Compound Name="s1" />
+      <Compound Name="s2" />
+      <Compound Name="s3" />
+      <Feature Name="c0" KeyValue="193678852" />
+      <LocalizedCompound Name="R" CompoundRef="s0" Structure="c0" OverrideName="true" KeyValue="193678854" />
+      <LocalizedCompound Name="S" CompoundRef="s1" Structure="c0" OverrideName="true" KeyValue="193678855" />
+      <LocalizedCompound Name="E" CompoundRef="s2" Structure="c0" OverrideName="true" KeyValue="193678856" />
+      <LocalizedCompound Name="EP" CompoundRef="s3" Structure="c0" OverrideName="true" KeyValue="193678857" />
+      <SimpleReaction Structure="c0" Name="R_prod" Reversible="true" FluxOption="MolecularOnly" KeyValue="193678858">
+        <Product LocalizedCompoundRef="R" Stoichiometry="1" KeyValue="193678859" />
+        <Kinetics KineticsType="GeneralKinetics">
+          <Parameter Name="J" Role="reaction rate" Unit="uM.s-1">(0.05 * Sx)</Parameter>
+        </Kinetics>
+      </SimpleReaction>
+      <SimpleReaction Structure="c0" Name="R_degred" Reversible="false" FluxOption="MolecularOnly" KeyValue="193678861">
+        <Reactant LocalizedCompoundRef="R" Stoichiometry="1" KeyValue="193678862" />
+        <Modifier LocalizedCompoundRef="E" />
+        <Kinetics KineticsType="MassAction">
+          <Parameter Name="J" Role="reaction rate" Unit="uM.s-1">(Kf * R)</Parameter>
+          <Parameter Name="Kf" Role="forward rate constant" Unit="s-1">(0.1 + (0.5 * E))</Parameter>
+          <Parameter Name="Kr" Role="reverse rate constant" Unit="uM.s-1">0.0</Parameter>
+        </Kinetics>
+      </SimpleReaction>
+      <SimpleReaction Structure="c0" Name="E_dephosph" Reversible="true" FluxOption="MolecularOnly" KeyValue="193678864">
+        <Reactant LocalizedCompoundRef="EP" Stoichiometry="1" KeyValue="193678865" />
+        <Product LocalizedCompoundRef="E" Stoichiometry="1" KeyValue="193678866" />
+        <Kinetics KineticsType="HMMIrreversible">
+          <Parameter Name="J" Role="reaction rate" Unit="uM.s-1">((Vmax * EP) / (Km + EP))</Parameter>
+          <Parameter Name="Km" Role="Km (1/2 max)" Unit="uM">0.05</Parameter>
+          <Parameter Name="Vmax" Role="max reaction rate" Unit="uM.s-1">0.2</Parameter>
+        </Kinetics>
+      </SimpleReaction>
+      <SimpleReaction Structure="c0" Name="E_phosph" Reversible="true" FluxOption="MolecularOnly" KeyValue="193678867">
+        <Reactant LocalizedCompoundRef="E" Stoichiometry="1" KeyValue="193678868" />
+        <Product LocalizedCompoundRef="EP" Stoichiometry="1" KeyValue="193678869" />
+        <Modifier LocalizedCompoundRef="R" />
+        <Kinetics KineticsType="HMMIrreversible">
+          <Parameter Name="J" Role="reaction rate" Unit="uM.s-1">((Vmax * E) / (Km + E))</Parameter>
+          <Parameter Name="Km" Role="Km (1/2 max)" Unit="uM">0.05</Parameter>
+          <Parameter Name="Vmax" Role="max reaction rate" Unit="uM.s-1">(R * 1.0)</Parameter>
+        </Kinetics>
+      </SimpleReaction>
+      <Diagram Name="c0" Structure="c0">
+        <SimpleReactionShape NodeReferenceModeAttrTag="full" SimpleReactionRef="R_degred" LocationX="268" LocationY="97" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="full" SimpleReactionRef="E_dephosph" LocationX="220" LocationY="208" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="EP" LocationX="147" LocationY="182" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="full" SimpleReactionRef="R_prod" LocationX="173" LocationY="96" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="S" LocationX="145" LocationY="134" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="R" LocationX="217" LocationY="95" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="full" SimpleReactionRef="E_phosph" LocationX="219" LocationY="159" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="E" LocationX="282" LocationY="181" />
+      </Diagram>
+      <Version Name="model" KeyValue="193678846" BranchId="193570686" Archived="0" Date="12-Nov-2020 03:06:24" FromVersionable="false">
+        <Owner Name="pariksheet" Identifier="188567844" />
+        <GroupAccess Type="1" />
+      </Version>
+      <ModelUnitSystem VolumeSubstanceUnit="uM.um3" MembraneSubstanceUnit="molecules" LumpedReactionSubstanceUnit="molecules" VolumeUnit="um3" AreaUnit="um2" LengthUnit="um" TimeUnit="s" />
+    </Model>
+    <SimulationSpec Name="Equilibrium" Stochastic="false" UseConcentration="true" RuleBased="false" MassConservationModelReduction="false" InsufficientIterations="false" InsufficientMaxMolecules="false">
+      <NetworkConstraints RbmMaxIteration="3" RbmMaxMoleculesPerSpecies="10" RbmSpeciesLimit="800" RbmReactionsLimit="2500" />
+      <Annotation />
+      <Geometry Name="non-spatial563227779" Dimension="0">
+        <Extent X="10.0" Y="10.0" Z="10.0" />
+        <Origin X="0.0" Y="0.0" Z="0.0" />
+        <SubVolume Name="Compartment" Handle="0" Type="Compartmental" KeyValue="193574422" />
+        <Version Name="non-spatial563227779" KeyValue="193574418" BranchId="193574419" Archived="0" Date="10-Nov-2020 18:03:23" FromVersionable="false">
+          <Owner Name="pariksheet" Identifier="188567844" />
+          <GroupAccess Type="1" />
+        </Version>
+      </Geometry>
+      <GeometryContext>
+        <FeatureMapping Feature="c0" GeometryClass="Compartment" SubVolume="Compartment" Size="50000.0">
+          <BoundariesTypes Xm="Flux" Xp="Flux" Ym="Flux" Yp="Flux" Zm="Flux" Zp="Flux" />
+        </FeatureMapping>
+      </GeometryContext>
+      <ReactionContext>
+        <LocalizedCompoundSpec LocalizedCompoundRef="R" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>0.0</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="S" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>0.0</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="E" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>1.0</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="EP" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>0.0</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <ReactionSpec ReactionStepRef="R_prod" ReactionMapping="included" />
+        <ReactionSpec ReactionStepRef="R_degred" ReactionMapping="included" />
+        <ReactionSpec ReactionStepRef="E_dephosph" ReactionMapping="included" />
+        <ReactionSpec ReactionStepRef="E_phosph" ReactionMapping="included" />
+      </ReactionContext>
+      <MathDescription Name="Application0_generated">
+        <Constant Name="_F_">96485.3321</Constant>
+        <Constant Name="_F_nmol_">9.64853321E-5</Constant>
+        <Constant Name="_K_GHK_">1.0E-9</Constant>
+        <Constant Name="_N_pmol_">6.02214179E11</Constant>
+        <Constant Name="_PI_">3.141592653589793</Constant>
+        <Constant Name="_R_">8314.46261815</Constant>
+        <Constant Name="_T_">300.0</Constant>
+        <Constant Name="E_init_uM">1.0</Constant>
+        <Constant Name="EP_init_uM">0.0</Constant>
+        <Constant Name="K_millivolts_per_volt">1000.0</Constant>
+        <Constant Name="Km_E_dephosph">0.05</Constant>
+        <Constant Name="Km_E_phosph">0.05</Constant>
+        <Constant Name="KMOLE">0.001660538783162726</Constant>
+        <Constant Name="Kr">0.0</Constant>
+        <Constant Name="R_init_uM">0.0</Constant>
+        <Constant Name="S_init_uM">0.0</Constant>
+        <Constant Name="Size_c0">50000.0</Constant>
+        <Constant Name="Sx">0.0</Constant>
+        <Constant Name="Vmax_E_dephosph">0.2</Constant>
+        <VolumeVariable Name="E" Domain="Compartment" />
+        <VolumeVariable Name="EP" Domain="Compartment" />
+        <VolumeVariable Name="R" Domain="Compartment" />
+        <VolumeVariable Name="S" Domain="Compartment" />
+        <Function Name="J_E_dephosph" Domain="Compartment">((Vmax_E_dephosph * EP) / (Km_E_dephosph + EP))</Function>
+        <Function Name="J_E_phosph" Domain="Compartment">((Vmax_E_phosph * E) / (Km_E_phosph + E))</Function>
+        <Function Name="J_R_degred" Domain="Compartment">(Kf * R)</Function>
+        <Function Name="J_R_prod" Domain="Compartment">(0.05 * Sx)</Function>
+        <Function Name="Kf" Domain="Compartment">(0.1 + (0.5 * E))</Function>
+        <Function Name="Vmax_E_phosph" Domain="Compartment">(R * 1.0)</Function>
+        <CompartmentSubDomain Name="Compartment">
+          <BoundaryType Boundary="Xm" Type="Value" />
+          <BoundaryType Boundary="Xp" Type="Value" />
+          <BoundaryType Boundary="Ym" Type="Value" />
+          <BoundaryType Boundary="Yp" Type="Value" />
+          <BoundaryType Boundary="Zm" Type="Value" />
+          <BoundaryType Boundary="Zp" Type="Value" />
+          <OdeEquation Name="R" SolutionType="Unknown">
+            <Rate>(J_R_prod - J_R_degred)</Rate>
+            <Initial>R_init_uM</Initial>
+          </OdeEquation>
+          <OdeEquation Name="S" SolutionType="Unknown">
+            <Rate>0.0</Rate>
+            <Initial>S_init_uM</Initial>
+          </OdeEquation>
+          <OdeEquation Name="E" SolutionType="Unknown">
+            <Rate>(J_E_dephosph - J_E_phosph)</Rate>
+            <Initial>E_init_uM</Initial>
+          </OdeEquation>
+          <OdeEquation Name="EP" SolutionType="Unknown">
+            <Rate>( - J_E_dephosph + J_E_phosph)</Rate>
+            <Initial>EP_init_uM</Initial>
+          </OdeEquation>
+        </CompartmentSubDomain>
+        <Version Name="Application0_generated" KeyValue="193678842" BranchId="193574424" Archived="0" Date="12-Nov-2020 03:06:23" FromVersionable="false">
+          <Owner Name="pariksheet" Identifier="188567844" />
+          <GroupAccess Type="1" />
+        </Version>
+      </MathDescription>
+      <Simulation Name="Equilibrium">
+        <SolverTaskDescription TaskType="Unsteady" UseSymbolicJacobian="false" Solver="Combined Stiff Solver (IDA/CVODE)">
+          <TimeBound StartTime="0.0" EndTime="40.0" />
+          <TimeStep DefaultTime="0.1" MinTime="1.0E-8" MaxTime="1.0" />
+          <ErrorTolerance Absolut="1.0E-9" Relative="1.0E-9" />
+          <OutputOptions KeepEvery="1" KeepAtMost="1000" />
+          <NumberProcessors>1</NumberProcessors>
+        </SolverTaskDescription>
+        <MathOverrides>
+          <Constant Name="S_init_uM" ConstantArraySpec="1001">0.0 to 2.5, 6 values</Constant>
+        </MathOverrides>
+        <Version Name="Equilibrium" KeyValue="193678895" BranchId="193575654" Archived="0" Date="12-Nov-2020 03:06:25" FromVersionable="false">
+          <Owner Name="pariksheet" Identifier="188567844" />
+          <GroupAccess Type="1" />
+        </Version>
+      </Simulation>
+      <Version Name="Equilibrium" KeyValue="193678873" BranchId="193575942" Archived="0" Date="12-Nov-2020 03:06:24" FromVersionable="false">
+        <Owner Name="pariksheet" Identifier="188567844" />
+        <GroupAccess Type="1" />
+      </Version>
+      <MicroscopeMeasurement Name="fluor">
+        <ConvolutionKernel Type="ProjectionZKernel" />
+      </MicroscopeMeasurement>
+    </SimulationSpec>
+    <SimulationSpec Name="Switch" Stochastic="false" UseConcentration="true" RuleBased="false" MassConservationModelReduction="false" InsufficientIterations="false" InsufficientMaxMolecules="false">
+      <NetworkConstraints RbmMaxIteration="3" RbmMaxMoleculesPerSpecies="10" RbmSpeciesLimit="800" RbmReactionsLimit="2500" />
+      <Annotation>(copied from Application0)</Annotation>
+      <Geometry Name="non-spatial1237974279" Dimension="0">
+        <Extent X="10.0" Y="10.0" Z="10.0" />
+        <Origin X="0.0" Y="0.0" Z="0.0" />
+        <SubVolume Name="Compartment" Handle="0" Type="Compartmental" KeyValue="193575935" />
+        <Version Name="non-spatial1237974279" KeyValue="193575931" BranchId="193575932" Archived="0" Date="10-Nov-2020 18:31:16" FromVersionable="false">
+          <Owner Name="pariksheet" Identifier="188567844" />
+          <GroupAccess Type="1" />
+        </Version>
+      </Geometry>
+      <GeometryContext>
+        <FeatureMapping Feature="c0" GeometryClass="Compartment" SubVolume="Compartment" Size="50000.0">
+          <BoundariesTypes Xm="Flux" Xp="Flux" Ym="Flux" Yp="Flux" Zm="Flux" Zp="Flux" />
+        </FeatureMapping>
+      </GeometryContext>
+      <ReactionContext>
+        <LocalizedCompoundSpec LocalizedCompoundRef="R" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>0.0</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="S" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>0.0</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="E" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>1.0</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="EP" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>0.0</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <ReactionSpec ReactionStepRef="R_prod" ReactionMapping="included" />
+        <ReactionSpec ReactionStepRef="R_degred" ReactionMapping="included" />
+        <ReactionSpec ReactionStepRef="E_dephosph" ReactionMapping="included" />
+        <ReactionSpec ReactionStepRef="E_phosph" ReactionMapping="included" />
+      </ReactionContext>
+      <MathDescription Name="Copy of Application0_generated">
+        <Constant Name="_F_">96485.3321</Constant>
+        <Constant Name="_F_nmol_">9.64853321E-5</Constant>
+        <Constant Name="_K_GHK_">1.0E-9</Constant>
+        <Constant Name="_N_pmol_">6.02214179E11</Constant>
+        <Constant Name="_PI_">3.141592653589793</Constant>
+        <Constant Name="_R_">8314.46261815</Constant>
+        <Constant Name="_T_">300.0</Constant>
+        <Constant Name="E_init_uM">1.0</Constant>
+        <Constant Name="EP_init_uM">0.0</Constant>
+        <Constant Name="K_millivolts_per_volt">1000.0</Constant>
+        <Constant Name="Km_E_dephosph">0.05</Constant>
+        <Constant Name="Km_E_phosph">0.05</Constant>
+        <Constant Name="KMOLE">0.001660538783162726</Constant>
+        <Constant Name="Kr">0.0</Constant>
+        <Constant Name="R_init_uM">0.0</Constant>
+        <Constant Name="S_init_uM">0.0</Constant>
+        <Constant Name="Size_c0">50000.0</Constant>
+        <Constant Name="Sx_dec.delay">0.0</Constant>
+        <Constant Name="Sx_dec.maxTime">4480.0</Constant>
+        <Constant Name="Sx_dec.minTime">2280.0</Constant>
+        <Constant Name="Sx_dec.numTimes">56.0</Constant>
+        <Constant Name="Sx_inc.delay">0.0</Constant>
+        <Constant Name="Sx_inc.maxTime">2240.0</Constant>
+        <Constant Name="Sx_inc.minTime">40.0</Constant>
+        <Constant Name="Sx_inc.numTimes">56.0</Constant>
+        <Constant Name="Sx_protocol_init">0.0</Constant>
+        <Constant Name="Vmax_E_dephosph">0.2</Constant>
+        <VolumeVariable Name="E" Domain="Compartment" />
+        <VolumeVariable Name="EP" Domain="Compartment" />
+        <VolumeVariable Name="R" Domain="Compartment" />
+        <VolumeVariable Name="S" Domain="Compartment" />
+        <VolumeVariable Name="Sx" Domain="Compartment" />
+        <Function Name="J_E_dephosph" Domain="Compartment">((Vmax_E_dephosph * EP) / (Km_E_dephosph + EP))</Function>
+        <Function Name="J_E_phosph" Domain="Compartment">((Vmax_E_phosph * E) / (Km_E_phosph + E))</Function>
+        <Function Name="J_R_degred" Domain="Compartment">(Kf * R)</Function>
+        <Function Name="J_R_prod" Domain="Compartment">(0.05 * Sx)</Function>
+        <Function Name="Kf" Domain="Compartment">(0.1 + (0.5 * E))</Function>
+        <Function Name="Sx_dec.triggerFunction">(((t &gt;= Sx_dec.minTime) &amp;&amp; (t &lt;= (Sx_dec.minTime + 20.0))) || ((t &gt;= (Sx_dec.minTime + (((Sx_dec.maxTime - Sx_dec.minTime) / (Sx_dec.numTimes - 1.0)) * 1.0))) &amp;&amp; (t &lt;= ((Sx_dec.minTime + (((Sx_dec.maxTime - Sx_dec.minTime) / (Sx_dec.numTimes - 1.0)) * 1.0)) + 20.0))) || ((t &gt;= (Sx_dec.minTime + (((Sx_dec.maxTime - Sx_dec.minTime) / (Sx_dec.numTimes - 1.0)) * 2.0))) &amp;&amp; (t &lt;= ((Sx_dec.minTime + (((Sx_dec.maxTime - Sx_dec.minTime) / (Sx_dec.numTimes - 1.0)) * 2.0)) + 20.0))) || ((t &gt;= (Sx_dec.minTime + (((Sx_dec.maxTime - Sx_dec.minTime) / (Sx_dec.numTimes - 1.0)) * 3.0))) &amp;&amp; (t &lt;= ((Sx_dec.minTime + (((Sx_dec.maxTime - Sx_dec.minTime) / (Sx_dec.numTimes - 1.0)) * 3.0)) + 20.0))) || ((t &gt;= (Sx_dec.minTime + (((Sx_dec.maxTime - Sx_dec.minTime) / (Sx_dec.numTimes - 1.0)) * 4.0))) &amp;&amp; (t &lt;= ((Sx_dec.minTime + (((Sx_dec.maxTime - Sx_dec.minTime) / (Sx_dec.numTimes - 1.0)) * 4.0)) + 20.0))) || ((t &gt;= (Sx_dec.minTime + (((Sx_dec.maxTime - Sx_dec.minTime) / (Sx_dec.numTimes - 1.0)) * 5.0))) &amp;&amp; (t &lt;= ((Sx_dec.minTime + (((Sx_dec.maxTime - Sx_dec.minTime) / (Sx_dec.numTimes - 1.0)) * 5.0)) + 20.0))) || ((t &gt;= (Sx_dec.minTime + (((Sx_dec.maxTime - Sx_dec.minTime) / (Sx_dec.numTimes - 1.0)) * 6.0))) &amp;&amp; (t &lt;= ((Sx_dec.minTime + (((Sx_dec.maxTime - Sx_dec.minTime) / (Sx_dec.numTimes - 1.0)) * 6.0)) + 20.0))) || ((t &gt;= (Sx_dec.minTime + (((Sx_dec.maxTime - Sx_dec.minTime) / (Sx_dec.numTimes - 1.0)) * 7.0))) &amp;&amp; (t &lt;= ((Sx_dec.minTime + (((Sx_dec.maxTime - Sx_dec.minTime) / (Sx_dec.numTimes - 1.0)) * 7.0)) + 20.0))) || ((t &gt;= (Sx_dec.minTime + (((Sx_dec.maxTime - Sx_dec.minTime) / (Sx_dec.numTimes - 1.0)) * 8.0))) &amp;&amp; (t &lt;= ((Sx_dec.minTime + (((Sx_dec.maxTime - Sx_dec.minTime) / (Sx_dec.numTimes - 1.0)) * 8.0)) + 20.0))) || ((t &gt;= (Sx_dec.minTime + (((Sx_dec.maxTime - Sx_dec.minTime) / (Sx_dec.numTimes - 1.0)) * 9.0))) &amp;&amp; (t &lt;= ((Sx_dec.minTime + (((Sx_dec.maxTime - Sx_dec.minTime) / (Sx_dec.numTimes - 1.0)) * 9.0)) + 20.0))) || ((t &gt;= (Sx_dec.minTime + (((Sx_dec.maxTime - Sx_dec.minTime) / (Sx_dec.numTimes - 1.0)) * 10.0))) &amp;&amp; (t &lt;= ((Sx_dec.minTime + (((Sx_dec.maxTime - Sx_dec.minTime) / (Sx_dec.numTimes - 1.0)) * 10.0)) + 20.0))) || ((t &gt;= (Sx_dec.minTime + (((Sx_dec.maxTime - Sx_dec.minTime) / (Sx_dec.numTimes - 1.0)) * 11.0))) &amp;&amp; (t &lt;= ((Sx_dec.minTime + (((Sx_dec.maxTime - Sx_dec.minTime) / (Sx_dec.numTimes - 1.0)) * 11.0)) + 20.0))) || ((t &gt;= (Sx_dec.minTime + (((Sx_dec.maxTime - Sx_dec.minTime) / (Sx_dec.numTimes - 1.0)) * 12.0))) &amp;&amp; (t &lt;= ((Sx_dec.minTime + (((Sx_dec.maxTime - Sx_dec.minTime) / (Sx_dec.numTimes - 1.0)) * 12.0)) + 20.0))) || ((t &gt;= (Sx_dec.minTime + (((Sx_dec.maxTime - Sx_dec.minTime) / (Sx_dec.numTimes - 1.0)) * 13.0))) &amp;&amp; (t &lt;= ((Sx_dec.minTime + (((Sx_dec.maxTime - Sx_dec.minTime) / (Sx_dec.numTimes - 1.0)) * 13.0)) + 20.0))) || ((t &gt;= (Sx_dec.minTime + (((Sx_dec.maxTime - Sx_dec.minTime) / (Sx_dec.numTimes - 1.0)) * 14.0))) &amp;&amp; (t &lt;= ((Sx_dec.minTime + (((Sx_dec.maxTime - Sx_dec.minTime) / (Sx_dec.numTimes - 1.0)) * 14.0)) + 20.0))) || ((t &gt;= (Sx_dec.minTime + (((Sx_dec.maxTime - Sx_dec.minTime) / (Sx_dec.numTimes - 1.0)) * 15.0))) &amp;&amp; (t &lt;= ((Sx_dec.minTime + (((Sx_dec.maxTime - Sx_dec.minTime) / (Sx_dec.numTimes - 1.0)) * 15.0)) + 20.0))) || ((t &gt;= (Sx_dec.minTime + (((Sx_dec.maxTime - Sx_dec.minTime) / (Sx_dec.numTimes - 1.0)) * 16.0))) &amp;&amp; (t &lt;= ((Sx_dec.minTime + (((Sx_dec.maxTime - Sx_dec.minTime) / (Sx_dec.numTimes - 1.0)) * 16.0)) + 20.0))) || ((t &gt;= (Sx_dec.minTime + (((Sx_dec.maxTime - Sx_dec.minTime) / (Sx_dec.numTimes - 1.0)) * 17.0))) &amp;&amp; (t &lt;= ((Sx_dec.minTime + (((Sx_dec.maxTime - Sx_dec.minTime) / (Sx_dec.numTimes - 1.0)) * 17.0)) + 20.0))) || ((t &gt;= (Sx_dec.minTime + (((Sx_dec.maxTime - Sx_dec.minTime) / (Sx_dec.numTimes - 1.0)) * 18.0))) &amp;&amp; (t &lt;= ((Sx_dec.minTime + (((Sx_dec.maxTime - Sx_dec.minTime) / (Sx_dec.numTimes - 1.0)) * 18.0)) + 20.0))) || ((t &gt;= (Sx_dec.minTime + (((Sx_dec.maxTime - Sx_dec.minTime) / (Sx_dec.numTimes - 1.0)) * 19.0))) &amp;&amp; (t &lt;= ((Sx_dec.minTime + (((Sx_dec.maxTime - Sx_dec.minTime) / (Sx_dec.numTimes - 1.0)) * 19.0)) + 20.0))) || ((t &gt;= (Sx_dec.minTime + (((Sx_dec.maxTime - Sx_dec.minTime) / (Sx_dec.numTimes - 1.0)) * 20.0))) &amp;&amp; (t &lt;= ((Sx_dec.minTime + (((Sx_dec.maxTime - Sx_dec.minTime) / (Sx_dec.numTimes - 1.0)) * 20.0)) + 20.0))) || ((t &gt;= (Sx_dec.minTime + (((Sx_dec.maxTime - Sx_dec.minTime) / (Sx_dec.numTimes - 1.0)) * 21.0))) &amp;&amp; (t &lt;= ((Sx_dec.minTime + (((Sx_dec.maxTime - Sx_dec.minTime) / (Sx_dec.numTimes - 1.0)) * 21.0)) + 20.0))) || ((t &gt;= (Sx_dec.minTime + (((Sx_dec.maxTime - Sx_dec.minTime) / (Sx_dec.numTimes - 1.0)) * 22.0))) &amp;&amp; (t &lt;= ((Sx_dec.minTime + (((Sx_dec.maxTime - Sx_dec.minTime) / (Sx_dec.numTimes - 1.0)) * 22.0)) + 20.0))) || ((t &gt;= (Sx_dec.minTime + (((Sx_dec.maxTime - Sx_dec.minTime) / (Sx_dec.numTimes - 1.0)) * 23.0))) &amp;&amp; (t &lt;= ((Sx_dec.minTime + (((Sx_dec.maxTime - Sx_dec.minTime) / (Sx_dec.numTimes - 1.0)) * 23.0)) + 20.0))) || ((t &gt;= (Sx_dec.minTime + (((Sx_dec.maxTime - Sx_dec.minTime) / (Sx_dec.numTimes - 1.0)) * 24.0))) &amp;&amp; (t &lt;= ((Sx_dec.minTime + (((Sx_dec.maxTime - Sx_dec.minTime) / (Sx_dec.numTimes - 1.0)) * 24.0)) + 20.0))) || ((t &gt;= (Sx_dec.minTime + (((Sx_dec.maxTime - Sx_dec.minTime) / (Sx_dec.numTimes - 1.0)) * 25.0))) &amp;&amp; (t &lt;= ((Sx_dec.minTime + (((Sx_dec.maxTime - Sx_dec.minTime) / (Sx_dec.numTimes - 1.0)) * 25.0)) + 20.0))) || ((t &gt;= (Sx_dec.minTime + (((Sx_dec.maxTime - Sx_dec.minTime) / (Sx_dec.numTimes - 1.0)) * 26.0))) &amp;&amp; (t &lt;= ((Sx_dec.minTime + (((Sx_dec.maxTime - Sx_dec.minTime) / (Sx_dec.numTimes - 1.0)) * 26.0)) + 20.0))) || ((t &gt;= (Sx_dec.minTime + (((Sx_dec.maxTime - Sx_dec.minTime) / (Sx_dec.numTimes - 1.0)) * 27.0))) &amp;&amp; (t &lt;= ((Sx_dec.minTime + (((Sx_dec.maxTime - Sx_dec.minTime) / (Sx_dec.numTimes - 1.0)) * 27.0)) + 20.0))) || ((t &gt;= (Sx_dec.minTime + (((Sx_dec.maxTime - Sx_dec.minTime) / (Sx_dec.numTimes - 1.0)) * 28.0))) &amp;&amp; (t &lt;= ((Sx_dec.minTime + (((Sx_dec.maxTime - Sx_dec.minTime) / (Sx_dec.numTimes - 1.0)) * 28.0)) + 20.0))) || ((t &gt;= (Sx_dec.minTime + (((Sx_dec.maxTime - Sx_dec.minTime) / (Sx_dec.numTimes - 1.0)) * 29.0))) &amp;&amp; (t &lt;= ((Sx_dec.minTime + (((Sx_dec.maxTime - Sx_dec.minTime) / (Sx_dec.numTimes - 1.0)) * 29.0)) + 20.0))) || ((t &gt;= (Sx_dec.minTime + (((Sx_dec.maxTime - Sx_dec.minTime) / (Sx_dec.numTimes - 1.0)) * 30.0))) &amp;&amp; (t &lt;= ((Sx_dec.minTime + (((Sx_dec.maxTime - Sx_dec.minTime) / (Sx_dec.numTimes - 1.0)) * 30.0)) + 20.0))) || ((t &gt;= (Sx_dec.minTime + (((Sx_dec.maxTime - Sx_dec.minTime) / (Sx_dec.numTimes - 1.0)) * 31.0))) &amp;&amp; (t &lt;= ((Sx_dec.minTime + (((Sx_dec.maxTime - Sx_dec.minTime) / (Sx_dec.numTimes - 1.0)) * 31.0)) + 20.0))) || ((t &gt;= (Sx_dec.minTime + (((Sx_dec.maxTime - Sx_dec.minTime) / (Sx_dec.numTimes - 1.0)) * 32.0))) &amp;&amp; (t &lt;= ((Sx_dec.minTime + (((Sx_dec.maxTime - Sx_dec.minTime) / (Sx_dec.numTimes - 1.0)) * 32.0)) + 20.0))) || ((t &gt;= (Sx_dec.minTime + (((Sx_dec.maxTime - Sx_dec.minTime) / (Sx_dec.numTimes - 1.0)) * 33.0))) &amp;&amp; (t &lt;= ((Sx_dec.minTime + (((Sx_dec.maxTime - Sx_dec.minTime) / (Sx_dec.numTimes - 1.0)) * 33.0)) + 20.0))) || ((t &gt;= (Sx_dec.minTime + (((Sx_dec.maxTime - Sx_dec.minTime) / (Sx_dec.numTimes - 1.0)) * 34.0))) &amp;&amp; (t &lt;= ((Sx_dec.minTime + (((Sx_dec.maxTime - Sx_dec.minTime) / (Sx_dec.numTimes - 1.0)) * 34.0)) + 20.0))) || ((t &gt;= (Sx_dec.minTime + (((Sx_dec.maxTime - Sx_dec.minTime) / (Sx_dec.numTimes - 1.0)) * 35.0))) &amp;&amp; (t &lt;= ((Sx_dec.minTime + (((Sx_dec.maxTime - Sx_dec.minTime) / (Sx_dec.numTimes - 1.0)) * 35.0)) + 20.0))) || ((t &gt;= (Sx_dec.minTime + (((Sx_dec.maxTime - Sx_dec.minTime) / (Sx_dec.numTimes - 1.0)) * 36.0))) &amp;&amp; (t &lt;= ((Sx_dec.minTime + (((Sx_dec.maxTime - Sx_dec.minTime) / (Sx_dec.numTimes - 1.0)) * 36.0)) + 20.0))) || ((t &gt;= (Sx_dec.minTime + (((Sx_dec.maxTime - Sx_dec.minTime) / (Sx_dec.numTimes - 1.0)) * 37.0))) &amp;&amp; (t &lt;= ((Sx_dec.minTime + (((Sx_dec.maxTime - Sx_dec.minTime) / (Sx_dec.numTimes - 1.0)) * 37.0)) + 20.0))) || ((t &gt;= (Sx_dec.minTime + (((Sx_dec.maxTime - Sx_dec.minTime) / (Sx_dec.numTimes - 1.0)) * 38.0))) &amp;&amp; (t &lt;= ((Sx_dec.minTime + (((Sx_dec.maxTime - Sx_dec.minTime) / (Sx_dec.numTimes - 1.0)) * 38.0)) + 20.0))) || ((t &gt;= (Sx_dec.minTime + (((Sx_dec.maxTime - Sx_dec.minTime) / (Sx_dec.numTimes - 1.0)) * 39.0))) &amp;&amp; (t &lt;= ((Sx_dec.minTime + (((Sx_dec.maxTime - Sx_dec.minTime) / (Sx_dec.numTimes - 1.0)) * 39.0)) + 20.0))) || ((t &gt;= (Sx_dec.minTime + (((Sx_dec.maxTime - Sx_dec.minTime) / (Sx_dec.numTimes - 1.0)) * 40.0))) &amp;&amp; (t &lt;= ((Sx_dec.minTime + (((Sx_dec.maxTime - Sx_dec.minTime) / (Sx_dec.numTimes - 1.0)) * 40.0)) + 20.0))) || ((t &gt;= (Sx_dec.minTime + (((Sx_dec.maxTime - Sx_dec.minTime) / (Sx_dec.numTimes - 1.0)) * 41.0))) &amp;&amp; (t &lt;= ((Sx_dec.minTime + (((Sx_dec.maxTime - Sx_dec.minTime) / (Sx_dec.numTimes - 1.0)) * 41.0)) + 20.0))) || ((t &gt;= (Sx_dec.minTime + (((Sx_dec.maxTime - Sx_dec.minTime) / (Sx_dec.numTimes - 1.0)) * 42.0))) &amp;&amp; (t &lt;= ((Sx_dec.minTime + (((Sx_dec.maxTime - Sx_dec.minTime) / (Sx_dec.numTimes - 1.0)) * 42.0)) + 20.0))) || ((t &gt;= (Sx_dec.minTime + (((Sx_dec.maxTime - Sx_dec.minTime) / (Sx_dec.numTimes - 1.0)) * 43.0))) &amp;&amp; (t &lt;= ((Sx_dec.minTime + (((Sx_dec.maxTime - Sx_dec.minTime) / (Sx_dec.numTimes - 1.0)) * 43.0)) + 20.0))) || ((t &gt;= (Sx_dec.minTime + (((Sx_dec.maxTime - Sx_dec.minTime) / (Sx_dec.numTimes - 1.0)) * 44.0))) &amp;&amp; (t &lt;= ((Sx_dec.minTime + (((Sx_dec.maxTime - Sx_dec.minTime) / (Sx_dec.numTimes - 1.0)) * 44.0)) + 20.0))) || ((t &gt;= (Sx_dec.minTime + (((Sx_dec.maxTime - Sx_dec.minTime) / (Sx_dec.numTimes - 1.0)) * 45.0))) &amp;&amp; (t &lt;= ((Sx_dec.minTime + (((Sx_dec.maxTime - Sx_dec.minTime) / (Sx_dec.numTimes - 1.0)) * 45.0)) + 20.0))) || ((t &gt;= (Sx_dec.minTime + (((Sx_dec.maxTime - Sx_dec.minTime) / (Sx_dec.numTimes - 1.0)) * 46.0))) &amp;&amp; (t &lt;= ((Sx_dec.minTime + (((Sx_dec.maxTime - Sx_dec.minTime) / (Sx_dec.numTimes - 1.0)) * 46.0)) + 20.0))) || ((t &gt;= (Sx_dec.minTime + (((Sx_dec.maxTime - Sx_dec.minTime) / (Sx_dec.numTimes - 1.0)) * 47.0))) &amp;&amp; (t &lt;= ((Sx_dec.minTime + (((Sx_dec.maxTime - Sx_dec.minTime) / (Sx_dec.numTimes - 1.0)) * 47.0)) + 20.0))) || ((t &gt;= (Sx_dec.minTime + (((Sx_dec.maxTime - Sx_dec.minTime) / (Sx_dec.numTimes - 1.0)) * 48.0))) &amp;&amp; (t &lt;= ((Sx_dec.minTime + (((Sx_dec.maxTime - Sx_dec.minTime) / (Sx_dec.numTimes - 1.0)) * 48.0)) + 20.0))) || ((t &gt;= (Sx_dec.minTime + (((Sx_dec.maxTime - Sx_dec.minTime) / (Sx_dec.numTimes - 1.0)) * 49.0))) &amp;&amp; (t &lt;= ((Sx_dec.minTime + (((Sx_dec.maxTime - Sx_dec.minTime) / (Sx_dec.numTimes - 1.0)) * 49.0)) + 20.0))) || ((t &gt;= (Sx_dec.minTime + (((Sx_dec.maxTime - Sx_dec.minTime) / (Sx_dec.numTimes - 1.0)) * 50.0))) &amp;&amp; (t &lt;= ((Sx_dec.minTime + (((Sx_dec.maxTime - Sx_dec.minTime) / (Sx_dec.numTimes - 1.0)) * 50.0)) + 20.0))) || ((t &gt;= (Sx_dec.minTime + (((Sx_dec.maxTime - Sx_dec.minTime) / (Sx_dec.numTimes - 1.0)) * 51.0))) &amp;&amp; (t &lt;= ((Sx_dec.minTime + (((Sx_dec.maxTime - Sx_dec.minTime) / (Sx_dec.numTimes - 1.0)) * 51.0)) + 20.0))) || ((t &gt;= (Sx_dec.minTime + (((Sx_dec.maxTime - Sx_dec.minTime) / (Sx_dec.numTimes - 1.0)) * 52.0))) &amp;&amp; (t &lt;= ((Sx_dec.minTime + (((Sx_dec.maxTime - Sx_dec.minTime) / (Sx_dec.numTimes - 1.0)) * 52.0)) + 20.0))) || ((t &gt;= (Sx_dec.minTime + (((Sx_dec.maxTime - Sx_dec.minTime) / (Sx_dec.numTimes - 1.0)) * 53.0))) &amp;&amp; (t &lt;= ((Sx_dec.minTime + (((Sx_dec.maxTime - Sx_dec.minTime) / (Sx_dec.numTimes - 1.0)) * 53.0)) + 20.0))) || ((t &gt;= (Sx_dec.minTime + (((Sx_dec.maxTime - Sx_dec.minTime) / (Sx_dec.numTimes - 1.0)) * 54.0))) &amp;&amp; (t &lt;= ((Sx_dec.minTime + (((Sx_dec.maxTime - Sx_dec.minTime) / (Sx_dec.numTimes - 1.0)) * 54.0)) + 20.0))) || ((t &gt;= (Sx_dec.minTime + (((Sx_dec.maxTime - Sx_dec.minTime) / (Sx_dec.numTimes - 1.0)) * 55.0))) &amp;&amp; (t &lt;= ((Sx_dec.minTime + (((Sx_dec.maxTime - Sx_dec.minTime) / (Sx_dec.numTimes - 1.0)) * 55.0)) + 20.0))))</Function>
+        <Function Name="Sx_inc.triggerFunction">(((t &gt;= Sx_inc.minTime) &amp;&amp; (t &lt;= (Sx_inc.minTime + 20.0))) || ((t &gt;= (Sx_inc.minTime + (((Sx_inc.maxTime - Sx_inc.minTime) / (Sx_inc.numTimes - 1.0)) * 1.0))) &amp;&amp; (t &lt;= ((Sx_inc.minTime + (((Sx_inc.maxTime - Sx_inc.minTime) / (Sx_inc.numTimes - 1.0)) * 1.0)) + 20.0))) || ((t &gt;= (Sx_inc.minTime + (((Sx_inc.maxTime - Sx_inc.minTime) / (Sx_inc.numTimes - 1.0)) * 2.0))) &amp;&amp; (t &lt;= ((Sx_inc.minTime + (((Sx_inc.maxTime - Sx_inc.minTime) / (Sx_inc.numTimes - 1.0)) * 2.0)) + 20.0))) || ((t &gt;= (Sx_inc.minTime + (((Sx_inc.maxTime - Sx_inc.minTime) / (Sx_inc.numTimes - 1.0)) * 3.0))) &amp;&amp; (t &lt;= ((Sx_inc.minTime + (((Sx_inc.maxTime - Sx_inc.minTime) / (Sx_inc.numTimes - 1.0)) * 3.0)) + 20.0))) || ((t &gt;= (Sx_inc.minTime + (((Sx_inc.maxTime - Sx_inc.minTime) / (Sx_inc.numTimes - 1.0)) * 4.0))) &amp;&amp; (t &lt;= ((Sx_inc.minTime + (((Sx_inc.maxTime - Sx_inc.minTime) / (Sx_inc.numTimes - 1.0)) * 4.0)) + 20.0))) || ((t &gt;= (Sx_inc.minTime + (((Sx_inc.maxTime - Sx_inc.minTime) / (Sx_inc.numTimes - 1.0)) * 5.0))) &amp;&amp; (t &lt;= ((Sx_inc.minTime + (((Sx_inc.maxTime - Sx_inc.minTime) / (Sx_inc.numTimes - 1.0)) * 5.0)) + 20.0))) || ((t &gt;= (Sx_inc.minTime + (((Sx_inc.maxTime - Sx_inc.minTime) / (Sx_inc.numTimes - 1.0)) * 6.0))) &amp;&amp; (t &lt;= ((Sx_inc.minTime + (((Sx_inc.maxTime - Sx_inc.minTime) / (Sx_inc.numTimes - 1.0)) * 6.0)) + 20.0))) || ((t &gt;= (Sx_inc.minTime + (((Sx_inc.maxTime - Sx_inc.minTime) / (Sx_inc.numTimes - 1.0)) * 7.0))) &amp;&amp; (t &lt;= ((Sx_inc.minTime + (((Sx_inc.maxTime - Sx_inc.minTime) / (Sx_inc.numTimes - 1.0)) * 7.0)) + 20.0))) || ((t &gt;= (Sx_inc.minTime + (((Sx_inc.maxTime - Sx_inc.minTime) / (Sx_inc.numTimes - 1.0)) * 8.0))) &amp;&amp; (t &lt;= ((Sx_inc.minTime + (((Sx_inc.maxTime - Sx_inc.minTime) / (Sx_inc.numTimes - 1.0)) * 8.0)) + 20.0))) || ((t &gt;= (Sx_inc.minTime + (((Sx_inc.maxTime - Sx_inc.minTime) / (Sx_inc.numTimes - 1.0)) * 9.0))) &amp;&amp; (t &lt;= ((Sx_inc.minTime + (((Sx_inc.maxTime - Sx_inc.minTime) / (Sx_inc.numTimes - 1.0)) * 9.0)) + 20.0))) || ((t &gt;= (Sx_inc.minTime + (((Sx_inc.maxTime - Sx_inc.minTime) / (Sx_inc.numTimes - 1.0)) * 10.0))) &amp;&amp; (t &lt;= ((Sx_inc.minTime + (((Sx_inc.maxTime - Sx_inc.minTime) / (Sx_inc.numTimes - 1.0)) * 10.0)) + 20.0))) || ((t &gt;= (Sx_inc.minTime + (((Sx_inc.maxTime - Sx_inc.minTime) / (Sx_inc.numTimes - 1.0)) * 11.0))) &amp;&amp; (t &lt;= ((Sx_inc.minTime + (((Sx_inc.maxTime - Sx_inc.minTime) / (Sx_inc.numTimes - 1.0)) * 11.0)) + 20.0))) || ((t &gt;= (Sx_inc.minTime + (((Sx_inc.maxTime - Sx_inc.minTime) / (Sx_inc.numTimes - 1.0)) * 12.0))) &amp;&amp; (t &lt;= ((Sx_inc.minTime + (((Sx_inc.maxTime - Sx_inc.minTime) / (Sx_inc.numTimes - 1.0)) * 12.0)) + 20.0))) || ((t &gt;= (Sx_inc.minTime + (((Sx_inc.maxTime - Sx_inc.minTime) / (Sx_inc.numTimes - 1.0)) * 13.0))) &amp;&amp; (t &lt;= ((Sx_inc.minTime + (((Sx_inc.maxTime - Sx_inc.minTime) / (Sx_inc.numTimes - 1.0)) * 13.0)) + 20.0))) || ((t &gt;= (Sx_inc.minTime + (((Sx_inc.maxTime - Sx_inc.minTime) / (Sx_inc.numTimes - 1.0)) * 14.0))) &amp;&amp; (t &lt;= ((Sx_inc.minTime + (((Sx_inc.maxTime - Sx_inc.minTime) / (Sx_inc.numTimes - 1.0)) * 14.0)) + 20.0))) || ((t &gt;= (Sx_inc.minTime + (((Sx_inc.maxTime - Sx_inc.minTime) / (Sx_inc.numTimes - 1.0)) * 15.0))) &amp;&amp; (t &lt;= ((Sx_inc.minTime + (((Sx_inc.maxTime - Sx_inc.minTime) / (Sx_inc.numTimes - 1.0)) * 15.0)) + 20.0))) || ((t &gt;= (Sx_inc.minTime + (((Sx_inc.maxTime - Sx_inc.minTime) / (Sx_inc.numTimes - 1.0)) * 16.0))) &amp;&amp; (t &lt;= ((Sx_inc.minTime + (((Sx_inc.maxTime - Sx_inc.minTime) / (Sx_inc.numTimes - 1.0)) * 16.0)) + 20.0))) || ((t &gt;= (Sx_inc.minTime + (((Sx_inc.maxTime - Sx_inc.minTime) / (Sx_inc.numTimes - 1.0)) * 17.0))) &amp;&amp; (t &lt;= ((Sx_inc.minTime + (((Sx_inc.maxTime - Sx_inc.minTime) / (Sx_inc.numTimes - 1.0)) * 17.0)) + 20.0))) || ((t &gt;= (Sx_inc.minTime + (((Sx_inc.maxTime - Sx_inc.minTime) / (Sx_inc.numTimes - 1.0)) * 18.0))) &amp;&amp; (t &lt;= ((Sx_inc.minTime + (((Sx_inc.maxTime - Sx_inc.minTime) / (Sx_inc.numTimes - 1.0)) * 18.0)) + 20.0))) || ((t &gt;= (Sx_inc.minTime + (((Sx_inc.maxTime - Sx_inc.minTime) / (Sx_inc.numTimes - 1.0)) * 19.0))) &amp;&amp; (t &lt;= ((Sx_inc.minTime + (((Sx_inc.maxTime - Sx_inc.minTime) / (Sx_inc.numTimes - 1.0)) * 19.0)) + 20.0))) || ((t &gt;= (Sx_inc.minTime + (((Sx_inc.maxTime - Sx_inc.minTime) / (Sx_inc.numTimes - 1.0)) * 20.0))) &amp;&amp; (t &lt;= ((Sx_inc.minTime + (((Sx_inc.maxTime - Sx_inc.minTime) / (Sx_inc.numTimes - 1.0)) * 20.0)) + 20.0))) || ((t &gt;= (Sx_inc.minTime + (((Sx_inc.maxTime - Sx_inc.minTime) / (Sx_inc.numTimes - 1.0)) * 21.0))) &amp;&amp; (t &lt;= ((Sx_inc.minTime + (((Sx_inc.maxTime - Sx_inc.minTime) / (Sx_inc.numTimes - 1.0)) * 21.0)) + 20.0))) || ((t &gt;= (Sx_inc.minTime + (((Sx_inc.maxTime - Sx_inc.minTime) / (Sx_inc.numTimes - 1.0)) * 22.0))) &amp;&amp; (t &lt;= ((Sx_inc.minTime + (((Sx_inc.maxTime - Sx_inc.minTime) / (Sx_inc.numTimes - 1.0)) * 22.0)) + 20.0))) || ((t &gt;= (Sx_inc.minTime + (((Sx_inc.maxTime - Sx_inc.minTime) / (Sx_inc.numTimes - 1.0)) * 23.0))) &amp;&amp; (t &lt;= ((Sx_inc.minTime + (((Sx_inc.maxTime - Sx_inc.minTime) / (Sx_inc.numTimes - 1.0)) * 23.0)) + 20.0))) || ((t &gt;= (Sx_inc.minTime + (((Sx_inc.maxTime - Sx_inc.minTime) / (Sx_inc.numTimes - 1.0)) * 24.0))) &amp;&amp; (t &lt;= ((Sx_inc.minTime + (((Sx_inc.maxTime - Sx_inc.minTime) / (Sx_inc.numTimes - 1.0)) * 24.0)) + 20.0))) || ((t &gt;= (Sx_inc.minTime + (((Sx_inc.maxTime - Sx_inc.minTime) / (Sx_inc.numTimes - 1.0)) * 25.0))) &amp;&amp; (t &lt;= ((Sx_inc.minTime + (((Sx_inc.maxTime - Sx_inc.minTime) / (Sx_inc.numTimes - 1.0)) * 25.0)) + 20.0))) || ((t &gt;= (Sx_inc.minTime + (((Sx_inc.maxTime - Sx_inc.minTime) / (Sx_inc.numTimes - 1.0)) * 26.0))) &amp;&amp; (t &lt;= ((Sx_inc.minTime + (((Sx_inc.maxTime - Sx_inc.minTime) / (Sx_inc.numTimes - 1.0)) * 26.0)) + 20.0))) || ((t &gt;= (Sx_inc.minTime + (((Sx_inc.maxTime - Sx_inc.minTime) / (Sx_inc.numTimes - 1.0)) * 27.0))) &amp;&amp; (t &lt;= ((Sx_inc.minTime + (((Sx_inc.maxTime - Sx_inc.minTime) / (Sx_inc.numTimes - 1.0)) * 27.0)) + 20.0))) || ((t &gt;= (Sx_inc.minTime + (((Sx_inc.maxTime - Sx_inc.minTime) / (Sx_inc.numTimes - 1.0)) * 28.0))) &amp;&amp; (t &lt;= ((Sx_inc.minTime + (((Sx_inc.maxTime - Sx_inc.minTime) / (Sx_inc.numTimes - 1.0)) * 28.0)) + 20.0))) || ((t &gt;= (Sx_inc.minTime + (((Sx_inc.maxTime - Sx_inc.minTime) / (Sx_inc.numTimes - 1.0)) * 29.0))) &amp;&amp; (t &lt;= ((Sx_inc.minTime + (((Sx_inc.maxTime - Sx_inc.minTime) / (Sx_inc.numTimes - 1.0)) * 29.0)) + 20.0))) || ((t &gt;= (Sx_inc.minTime + (((Sx_inc.maxTime - Sx_inc.minTime) / (Sx_inc.numTimes - 1.0)) * 30.0))) &amp;&amp; (t &lt;= ((Sx_inc.minTime + (((Sx_inc.maxTime - Sx_inc.minTime) / (Sx_inc.numTimes - 1.0)) * 30.0)) + 20.0))) || ((t &gt;= (Sx_inc.minTime + (((Sx_inc.maxTime - Sx_inc.minTime) / (Sx_inc.numTimes - 1.0)) * 31.0))) &amp;&amp; (t &lt;= ((Sx_inc.minTime + (((Sx_inc.maxTime - Sx_inc.minTime) / (Sx_inc.numTimes - 1.0)) * 31.0)) + 20.0))) || ((t &gt;= (Sx_inc.minTime + (((Sx_inc.maxTime - Sx_inc.minTime) / (Sx_inc.numTimes - 1.0)) * 32.0))) &amp;&amp; (t &lt;= ((Sx_inc.minTime + (((Sx_inc.maxTime - Sx_inc.minTime) / (Sx_inc.numTimes - 1.0)) * 32.0)) + 20.0))) || ((t &gt;= (Sx_inc.minTime + (((Sx_inc.maxTime - Sx_inc.minTime) / (Sx_inc.numTimes - 1.0)) * 33.0))) &amp;&amp; (t &lt;= ((Sx_inc.minTime + (((Sx_inc.maxTime - Sx_inc.minTime) / (Sx_inc.numTimes - 1.0)) * 33.0)) + 20.0))) || ((t &gt;= (Sx_inc.minTime + (((Sx_inc.maxTime - Sx_inc.minTime) / (Sx_inc.numTimes - 1.0)) * 34.0))) &amp;&amp; (t &lt;= ((Sx_inc.minTime + (((Sx_inc.maxTime - Sx_inc.minTime) / (Sx_inc.numTimes - 1.0)) * 34.0)) + 20.0))) || ((t &gt;= (Sx_inc.minTime + (((Sx_inc.maxTime - Sx_inc.minTime) / (Sx_inc.numTimes - 1.0)) * 35.0))) &amp;&amp; (t &lt;= ((Sx_inc.minTime + (((Sx_inc.maxTime - Sx_inc.minTime) / (Sx_inc.numTimes - 1.0)) * 35.0)) + 20.0))) || ((t &gt;= (Sx_inc.minTime + (((Sx_inc.maxTime - Sx_inc.minTime) / (Sx_inc.numTimes - 1.0)) * 36.0))) &amp;&amp; (t &lt;= ((Sx_inc.minTime + (((Sx_inc.maxTime - Sx_inc.minTime) / (Sx_inc.numTimes - 1.0)) * 36.0)) + 20.0))) || ((t &gt;= (Sx_inc.minTime + (((Sx_inc.maxTime - Sx_inc.minTime) / (Sx_inc.numTimes - 1.0)) * 37.0))) &amp;&amp; (t &lt;= ((Sx_inc.minTime + (((Sx_inc.maxTime - Sx_inc.minTime) / (Sx_inc.numTimes - 1.0)) * 37.0)) + 20.0))) || ((t &gt;= (Sx_inc.minTime + (((Sx_inc.maxTime - Sx_inc.minTime) / (Sx_inc.numTimes - 1.0)) * 38.0))) &amp;&amp; (t &lt;= ((Sx_inc.minTime + (((Sx_inc.maxTime - Sx_inc.minTime) / (Sx_inc.numTimes - 1.0)) * 38.0)) + 20.0))) || ((t &gt;= (Sx_inc.minTime + (((Sx_inc.maxTime - Sx_inc.minTime) / (Sx_inc.numTimes - 1.0)) * 39.0))) &amp;&amp; (t &lt;= ((Sx_inc.minTime + (((Sx_inc.maxTime - Sx_inc.minTime) / (Sx_inc.numTimes - 1.0)) * 39.0)) + 20.0))) || ((t &gt;= (Sx_inc.minTime + (((Sx_inc.maxTime - Sx_inc.minTime) / (Sx_inc.numTimes - 1.0)) * 40.0))) &amp;&amp; (t &lt;= ((Sx_inc.minTime + (((Sx_inc.maxTime - Sx_inc.minTime) / (Sx_inc.numTimes - 1.0)) * 40.0)) + 20.0))) || ((t &gt;= (Sx_inc.minTime + (((Sx_inc.maxTime - Sx_inc.minTime) / (Sx_inc.numTimes - 1.0)) * 41.0))) &amp;&amp; (t &lt;= ((Sx_inc.minTime + (((Sx_inc.maxTime - Sx_inc.minTime) / (Sx_inc.numTimes - 1.0)) * 41.0)) + 20.0))) || ((t &gt;= (Sx_inc.minTime + (((Sx_inc.maxTime - Sx_inc.minTime) / (Sx_inc.numTimes - 1.0)) * 42.0))) &amp;&amp; (t &lt;= ((Sx_inc.minTime + (((Sx_inc.maxTime - Sx_inc.minTime) / (Sx_inc.numTimes - 1.0)) * 42.0)) + 20.0))) || ((t &gt;= (Sx_inc.minTime + (((Sx_inc.maxTime - Sx_inc.minTime) / (Sx_inc.numTimes - 1.0)) * 43.0))) &amp;&amp; (t &lt;= ((Sx_inc.minTime + (((Sx_inc.maxTime - Sx_inc.minTime) / (Sx_inc.numTimes - 1.0)) * 43.0)) + 20.0))) || ((t &gt;= (Sx_inc.minTime + (((Sx_inc.maxTime - Sx_inc.minTime) / (Sx_inc.numTimes - 1.0)) * 44.0))) &amp;&amp; (t &lt;= ((Sx_inc.minTime + (((Sx_inc.maxTime - Sx_inc.minTime) / (Sx_inc.numTimes - 1.0)) * 44.0)) + 20.0))) || ((t &gt;= (Sx_inc.minTime + (((Sx_inc.maxTime - Sx_inc.minTime) / (Sx_inc.numTimes - 1.0)) * 45.0))) &amp;&amp; (t &lt;= ((Sx_inc.minTime + (((Sx_inc.maxTime - Sx_inc.minTime) / (Sx_inc.numTimes - 1.0)) * 45.0)) + 20.0))) || ((t &gt;= (Sx_inc.minTime + (((Sx_inc.maxTime - Sx_inc.minTime) / (Sx_inc.numTimes - 1.0)) * 46.0))) &amp;&amp; (t &lt;= ((Sx_inc.minTime + (((Sx_inc.maxTime - Sx_inc.minTime) / (Sx_inc.numTimes - 1.0)) * 46.0)) + 20.0))) || ((t &gt;= (Sx_inc.minTime + (((Sx_inc.maxTime - Sx_inc.minTime) / (Sx_inc.numTimes - 1.0)) * 47.0))) &amp;&amp; (t &lt;= ((Sx_inc.minTime + (((Sx_inc.maxTime - Sx_inc.minTime) / (Sx_inc.numTimes - 1.0)) * 47.0)) + 20.0))) || ((t &gt;= (Sx_inc.minTime + (((Sx_inc.maxTime - Sx_inc.minTime) / (Sx_inc.numTimes - 1.0)) * 48.0))) &amp;&amp; (t &lt;= ((Sx_inc.minTime + (((Sx_inc.maxTime - Sx_inc.minTime) / (Sx_inc.numTimes - 1.0)) * 48.0)) + 20.0))) || ((t &gt;= (Sx_inc.minTime + (((Sx_inc.maxTime - Sx_inc.minTime) / (Sx_inc.numTimes - 1.0)) * 49.0))) &amp;&amp; (t &lt;= ((Sx_inc.minTime + (((Sx_inc.maxTime - Sx_inc.minTime) / (Sx_inc.numTimes - 1.0)) * 49.0)) + 20.0))) || ((t &gt;= (Sx_inc.minTime + (((Sx_inc.maxTime - Sx_inc.minTime) / (Sx_inc.numTimes - 1.0)) * 50.0))) &amp;&amp; (t &lt;= ((Sx_inc.minTime + (((Sx_inc.maxTime - Sx_inc.minTime) / (Sx_inc.numTimes - 1.0)) * 50.0)) + 20.0))) || ((t &gt;= (Sx_inc.minTime + (((Sx_inc.maxTime - Sx_inc.minTime) / (Sx_inc.numTimes - 1.0)) * 51.0))) &amp;&amp; (t &lt;= ((Sx_inc.minTime + (((Sx_inc.maxTime - Sx_inc.minTime) / (Sx_inc.numTimes - 1.0)) * 51.0)) + 20.0))) || ((t &gt;= (Sx_inc.minTime + (((Sx_inc.maxTime - Sx_inc.minTime) / (Sx_inc.numTimes - 1.0)) * 52.0))) &amp;&amp; (t &lt;= ((Sx_inc.minTime + (((Sx_inc.maxTime - Sx_inc.minTime) / (Sx_inc.numTimes - 1.0)) * 52.0)) + 20.0))) || ((t &gt;= (Sx_inc.minTime + (((Sx_inc.maxTime - Sx_inc.minTime) / (Sx_inc.numTimes - 1.0)) * 53.0))) &amp;&amp; (t &lt;= ((Sx_inc.minTime + (((Sx_inc.maxTime - Sx_inc.minTime) / (Sx_inc.numTimes - 1.0)) * 53.0)) + 20.0))) || ((t &gt;= (Sx_inc.minTime + (((Sx_inc.maxTime - Sx_inc.minTime) / (Sx_inc.numTimes - 1.0)) * 54.0))) &amp;&amp; (t &lt;= ((Sx_inc.minTime + (((Sx_inc.maxTime - Sx_inc.minTime) / (Sx_inc.numTimes - 1.0)) * 54.0)) + 20.0))) || ((t &gt;= (Sx_inc.minTime + (((Sx_inc.maxTime - Sx_inc.minTime) / (Sx_inc.numTimes - 1.0)) * 55.0))) &amp;&amp; (t &lt;= ((Sx_inc.minTime + (((Sx_inc.maxTime - Sx_inc.minTime) / (Sx_inc.numTimes - 1.0)) * 55.0)) + 20.0))))</Function>
+        <Function Name="Vmax_E_phosph" Domain="Compartment">(R * 1.0)</Function>
+        <CompartmentSubDomain Name="Compartment">
+          <BoundaryType Boundary="Xm" Type="Value" />
+          <BoundaryType Boundary="Xp" Type="Value" />
+          <BoundaryType Boundary="Ym" Type="Value" />
+          <BoundaryType Boundary="Yp" Type="Value" />
+          <BoundaryType Boundary="Zm" Type="Value" />
+          <BoundaryType Boundary="Zp" Type="Value" />
+          <OdeEquation Name="R" SolutionType="Unknown">
+            <Rate>(J_R_prod - J_R_degred)</Rate>
+            <Initial>R_init_uM</Initial>
+          </OdeEquation>
+          <OdeEquation Name="S" SolutionType="Unknown">
+            <Rate>0.0</Rate>
+            <Initial>S_init_uM</Initial>
+          </OdeEquation>
+          <OdeEquation Name="E" SolutionType="Unknown">
+            <Rate>(J_E_dephosph - J_E_phosph)</Rate>
+            <Initial>E_init_uM</Initial>
+          </OdeEquation>
+          <OdeEquation Name="EP" SolutionType="Unknown">
+            <Rate>( - J_E_dephosph + J_E_phosph)</Rate>
+            <Initial>EP_init_uM</Initial>
+          </OdeEquation>
+          <OdeEquation Name="Sx" SolutionType="Unknown">
+            <Rate>0.0</Rate>
+            <Initial>Sx_protocol_init</Initial>
+          </OdeEquation>
+        </CompartmentSubDomain>
+        <Version Name="Copy of Application0_generated" KeyValue="193678844" BranchId="193575939" Archived="0" Date="12-Nov-2020 03:06:24" FromVersionable="false">
+          <Owner Name="pariksheet" Identifier="188567844" />
+          <GroupAccess Type="1" />
+        </Version>
+        <Event Name="Sx_inc">
+          <Trigger>Sx_inc.triggerFunction</Trigger>
+          <EventAssignment Variable="Sx">(Sx + 0.05)</EventAssignment>
+        </Event>
+        <Event Name="Sx_dec">
+          <Trigger>Sx_dec.triggerFunction</Trigger>
+          <EventAssignment Variable="Sx">(Sx - 0.05)</EventAssignment>
+        </Event>
+      </MathDescription>
+      <Simulation Name="Switch">
+        <SolverTaskDescription TaskType="Unsteady" UseSymbolicJacobian="false" Solver="Combined Stiff Solver (IDA/CVODE)">
+          <TimeBound StartTime="0.0" EndTime="4520.0" />
+          <TimeStep DefaultTime="0.1" MinTime="1.0E-8" MaxTime="1.0" />
+          <ErrorTolerance Absolut="1.0E-9" Relative="1.0E-9" />
+          <OutputOptions KeepEvery="1" KeepAtMost="1000" />
+          <NumberProcessors>1</NumberProcessors>
+        </SolverTaskDescription>
+        <MathOverrides />
+        <Version Name="Switch" KeyValue="193678897" BranchId="193576523" Archived="0" Date="12-Nov-2020 03:06:25" FromVersionable="false">
+          <Owner Name="pariksheet" Identifier="188567844" />
+          <GroupAccess Type="1" />
+        </Version>
+      </Simulation>
+      <BioEvents>
+        <BioEvent Name="Sx_inc" TriggerType="LinearRangeTimes" UseValuesFromTriggerTime="true">
+          <Parameter Name="delay" Role="TriggerDelay" Unit="s">0.0</Parameter>
+          <Parameter Name="minTime" Role="RangeMinTime" Unit="s">40.0</Parameter>
+          <Parameter Name="maxTime" Role="RangeMaxTime" Unit="s">2240.0</Parameter>
+          <Parameter Name="numTimes" Role="RangeNumTimes" Unit="s">56.0</Parameter>
+          <EventAssignment Variable="Sx">(Sx + 0.05)</EventAssignment>
+        </BioEvent>
+        <BioEvent Name="Sx_dec" TriggerType="LinearRangeTimes" UseValuesFromTriggerTime="true">
+          <Parameter Name="delay" Role="TriggerDelay" Unit="s">0.0</Parameter>
+          <Parameter Name="minTime" Role="RangeMinTime" Unit="s">2280.0</Parameter>
+          <Parameter Name="maxTime" Role="RangeMaxTime" Unit="s">4480.0</Parameter>
+          <Parameter Name="numTimes" Role="RangeNumTimes" Unit="s">56.0</Parameter>
+          <EventAssignment Variable="Sx">(Sx - 0.05)</EventAssignment>
+        </BioEvent>
+      </BioEvents>
+      <Version Name="Switch" KeyValue="193678884" BranchId="193575954" Archived="0" Date="12-Nov-2020 03:06:25" FromVersionable="false">
+        <Owner Name="pariksheet" Identifier="188567844" />
+        <GroupAccess Type="1" />
+        <Annotation>(copied from Application0)</Annotation>
+      </Version>
+      <MicroscopeMeasurement Name="fluor">
+        <ConvolutionKernel Type="ProjectionZKernel" />
+      </MicroscopeMeasurement>
+    </SimulationSpec>
+    <Version Name="bistable_switch" KeyValue="193678899" BranchId="193570692" Archived="0" Date="12-Nov-2020 03:06:25" FromVersionable="false">
+      <Owner Name="pariksheet" Identifier="188567844" />
+      <GroupAccess Type="0" />
+    </Version>
+    <pathwayModel>
+      <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:bp="http://www.biopax.org/release/biopax-level3.owl#" version="3.0" />
+    </pathwayModel>
+    <relationshipModel>
+      <RMNS version="3.0" />
+    </relationshipModel>
+    <vcmetadata>
+      <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" />
+      <nonrdfAnnotationList />
+      <uriBindingList />
+    </vcmetadata>
+  </BioModel>
+</vcml>
+

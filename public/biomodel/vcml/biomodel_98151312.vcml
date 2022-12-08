@@ -1,0 +1,698 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--This biomodel was generated in VCML Version Alpha_Version_7.4.0_build_87-->
+<vcml xmlns="http://sourceforge.net/projects/vcell/vcml" Version="Alpha_Version_7.4.0_build_87">
+  <BioModel Name="RB_EnzymeKinetics_MultipleApps">
+    <Model Name="model">
+      <ModelParameters>
+        <Parameter Name="V" Role="user defined" Unit="tbd">1.0E-12</Parameter>
+        <Parameter Name="kp1" Role="user defined" Unit="tbd">1.0</Parameter>
+        <Parameter Name="km1" Role="user defined" Unit="tbd">0.1</Parameter>
+        <Parameter Name="k2" Role="user defined" Unit="tbd">0.01</Parameter>
+        <Parameter Name="kf" Role="user defined" Unit="tbd">1.0</Parameter>
+        <Parameter Name="kcat" Role="user defined" Unit="tbd">0.01</Parameter>
+        <Parameter Name="kr" Role="user defined" Unit="tbd">0.1</Parameter>
+        <Parameter Name="Km" Role="user defined" Unit="tbd">((kcat + kr) / kf)</Parameter>
+        <Parameter Name="E0" Role="user defined" Unit="tbd">0.01</Parameter>
+        <Parameter Name="S0" Role="user defined" Unit="tbd">1.0</Parameter>
+        <Parameter Name="MMrate" Role="user defined" Unit="s-1.uM-1">(kcat / (Km + Su))</Parameter>
+      </ModelParameters>
+      <Compound Name="E_s" />
+      <Compound Name="S_Y0" />
+      <Feature Name="c0" KeyValue="98009709" />
+      <LocalizedCompound Name="E" CompoundRef="E_s" Structure="c0" OverrideName="true" KeyValue="98009711">
+        <SpeciesPattern>
+          <MolecularTypePattern Index="1">
+            <MolecularType Name="E" />
+            <ComponentPattern MolecularComponent="s" BondType="-" />
+          </MolecularTypePattern>
+        </SpeciesPattern>
+      </LocalizedCompound>
+      <LocalizedCompound Name="S" CompoundRef="S_Y0" Structure="c0" OverrideName="true" KeyValue="98009712">
+        <SpeciesPattern>
+          <MolecularTypePattern Index="1">
+            <MolecularType Name="S" />
+            <ComponentPattern MolecularComponent="Y" ComponentStatePattern="0" BondType="-" />
+          </MolecularTypePattern>
+        </SpeciesPattern>
+      </LocalizedCompound>
+      <RbmModelContainer>
+        <MolecularTypeList>
+          <MolecularType Name="E" AnchorAll="true">
+            <MolecularComponent Name="s" Index="1" />
+          </MolecularType>
+          <MolecularType Name="S" AnchorAll="true">
+            <MolecularComponent Name="Y" Index="1">
+              <AllowableState Name="0" />
+              <AllowableState Name="P" />
+            </MolecularComponent>
+          </MolecularType>
+        </MolecularTypeList>
+        <RbmObservableList>
+          <Observable Name="Su" ObservableType="Molecules" Sequence="Multimolecular" LengthEqual="2" LengthGreater="1" Structure="c0">
+            <SpeciesPattern>
+              <MolecularTypePattern Index="1">
+                <MolecularType Name="S" />
+                <ComponentPattern MolecularComponent="Y" ComponentStatePattern="0" BondType="-" />
+              </MolecularTypePattern>
+            </SpeciesPattern>
+          </Observable>
+          <Observable Name="Sp" ObservableType="Molecules" Sequence="Multimolecular" LengthEqual="2" LengthGreater="1" Structure="c0">
+            <SpeciesPattern>
+              <MolecularTypePattern Index="1">
+                <MolecularType Name="S" />
+                <ComponentPattern MolecularComponent="Y" ComponentStatePattern="P" BondType="-" />
+              </MolecularTypePattern>
+            </SpeciesPattern>
+          </Observable>
+          <Observable Name="ES" ObservableType="Molecules" Sequence="Multimolecular" LengthEqual="2" LengthGreater="1" Structure="c0">
+            <SpeciesPattern>
+              <MolecularTypePattern Index="1">
+                <MolecularType Name="E" />
+                <ComponentPattern MolecularComponent="s" BondType="1">
+                  <Bond MolecularTypePattern="S" ComponentPattern="Y" />
+                </ComponentPattern>
+              </MolecularTypePattern>
+              <MolecularTypePattern Index="2">
+                <MolecularType Name="S" />
+                <ComponentPattern MolecularComponent="Y" Any="true" BondType="1">
+                  <Bond MolecularTypePattern="E" ComponentPattern="s" />
+                </ComponentPattern>
+              </MolecularTypePattern>
+            </SpeciesPattern>
+          </Observable>
+        </RbmObservableList>
+        <ReactionRuleList>
+          <ReactionRule Name="ESbind" Structure="c0" ReactionRuleLabel="ESbind" ReactionRuleReversible="true">
+            <ReactantPatternsList>
+              <ReactantPattern Structure="c0">
+                <SpeciesPattern>
+                  <MolecularTypePattern Index="1">
+                    <MolecularType Name="E" />
+                    <ComponentPattern MolecularComponent="s" BondType="-" />
+                  </MolecularTypePattern>
+                </SpeciesPattern>
+              </ReactantPattern>
+              <ReactantPattern Structure="c0">
+                <SpeciesPattern>
+                  <MolecularTypePattern Index="1">
+                    <MolecularType Name="S" />
+                    <ComponentPattern MolecularComponent="Y" ComponentStatePattern="0" BondType="-" />
+                  </MolecularTypePattern>
+                </SpeciesPattern>
+              </ReactantPattern>
+            </ReactantPatternsList>
+            <ProductPatternsList>
+              <ProductPattern Structure="c0">
+                <SpeciesPattern>
+                  <MolecularTypePattern Index="1">
+                    <MolecularType Name="E" />
+                    <ComponentPattern MolecularComponent="s" BondType="1">
+                      <Bond MolecularTypePattern="S" ComponentPattern="Y" />
+                    </ComponentPattern>
+                  </MolecularTypePattern>
+                  <MolecularTypePattern Index="2">
+                    <MolecularType Name="S" />
+                    <ComponentPattern MolecularComponent="Y" ComponentStatePattern="0" BondType="1">
+                      <Bond MolecularTypePattern="E" ComponentPattern="s" />
+                    </ComponentPattern>
+                  </MolecularTypePattern>
+                </SpeciesPattern>
+              </ProductPattern>
+            </ProductPatternsList>
+            <Kinetics KineticsType="MassAction">
+              <Parameter Name="ruleRate" Role="RuleRate" Unit="uM.s-1" />
+              <Parameter Name="Kf" Role="MassActionKf" Unit="s-1.uM-1">kp1</Parameter>
+              <Parameter Name="Kr" Role="MassActionKr" Unit="s-1">km1</Parameter>
+            </Kinetics>
+          </ReactionRule>
+          <ReactionRule Name="ESconvert" Structure="c0" ReactionRuleLabel="ESconvert" ReactionRuleReversible="false">
+            <ReactantPatternsList>
+              <ReactantPattern Structure="c0">
+                <SpeciesPattern>
+                  <MolecularTypePattern Index="1">
+                    <MolecularType Name="E" />
+                    <ComponentPattern MolecularComponent="s" BondType="1">
+                      <Bond MolecularTypePattern="S" ComponentPattern="Y" />
+                    </ComponentPattern>
+                  </MolecularTypePattern>
+                  <MolecularTypePattern Index="2">
+                    <MolecularType Name="S" />
+                    <ComponentPattern MolecularComponent="Y" ComponentStatePattern="0" BondType="1">
+                      <Bond MolecularTypePattern="E" ComponentPattern="s" />
+                    </ComponentPattern>
+                  </MolecularTypePattern>
+                </SpeciesPattern>
+              </ReactantPattern>
+            </ReactantPatternsList>
+            <ProductPatternsList>
+              <ProductPattern Structure="c0">
+                <SpeciesPattern>
+                  <MolecularTypePattern Index="1">
+                    <MolecularType Name="E" />
+                    <ComponentPattern MolecularComponent="s" BondType="-" />
+                  </MolecularTypePattern>
+                </SpeciesPattern>
+              </ProductPattern>
+              <ProductPattern Structure="c0">
+                <SpeciesPattern>
+                  <MolecularTypePattern Index="1">
+                    <MolecularType Name="S" />
+                    <ComponentPattern MolecularComponent="Y" ComponentStatePattern="P" BondType="-" />
+                  </MolecularTypePattern>
+                </SpeciesPattern>
+              </ProductPattern>
+            </ProductPatternsList>
+            <Kinetics KineticsType="MassAction">
+              <Parameter Name="ruleRate" Role="RuleRate" Unit="uM.s-1" />
+              <Parameter Name="Kf" Role="MassActionKf" Unit="s-1">k2</Parameter>
+              <Parameter Name="Kr" Role="MassActionKr" Unit="s-1.uM-1">0.0</Parameter>
+            </Kinetics>
+          </ReactionRule>
+          <ReactionRule Name="ES_MM" Structure="c0" ReactionRuleLabel="ES_MM" ReactionRuleReversible="false">
+            <ReactantPatternsList>
+              <ReactantPattern Structure="c0">
+                <SpeciesPattern>
+                  <MolecularTypePattern Index="1">
+                    <MolecularType Name="E" />
+                    <ComponentPattern MolecularComponent="s" BondType="-" />
+                  </MolecularTypePattern>
+                </SpeciesPattern>
+              </ReactantPattern>
+              <ReactantPattern Structure="c0">
+                <SpeciesPattern>
+                  <MolecularTypePattern Index="1">
+                    <MolecularType Name="S" />
+                    <ComponentPattern MolecularComponent="Y" ComponentStatePattern="0" BondType="-" />
+                  </MolecularTypePattern>
+                </SpeciesPattern>
+              </ReactantPattern>
+            </ReactantPatternsList>
+            <ProductPatternsList>
+              <ProductPattern Structure="c0">
+                <SpeciesPattern>
+                  <MolecularTypePattern Index="1">
+                    <MolecularType Name="E" />
+                    <ComponentPattern MolecularComponent="s" BondType="-" />
+                  </MolecularTypePattern>
+                </SpeciesPattern>
+              </ProductPattern>
+              <ProductPattern Structure="c0">
+                <SpeciesPattern>
+                  <MolecularTypePattern Index="1">
+                    <MolecularType Name="S" />
+                    <ComponentPattern MolecularComponent="Y" ComponentStatePattern="P" BondType="-" />
+                  </MolecularTypePattern>
+                </SpeciesPattern>
+              </ProductPattern>
+            </ProductPatternsList>
+            <Kinetics KineticsType="MassAction">
+              <Parameter Name="ruleRate" Role="RuleRate" Unit="uM.s-1" />
+              <Parameter Name="Kf" Role="MassActionKf" Unit="s-1.uM-1">MMrate</Parameter>
+              <Parameter Name="Kr" Role="MassActionKr" Unit="s-1.uM-1">0.0</Parameter>
+            </Kinetics>
+          </ReactionRule>
+        </ReactionRuleList>
+      </RbmModelContainer>
+      <Diagram Name="c0" Structure="c0" />
+      <Version Name="model" KeyValue="98009705" BranchId="95772649" Archived="0" Date="29-Dec-2015 13:54:15" FromVersionable="false">
+        <Owner Name="BioNetGen" Identifier="95093638" />
+        <GroupAccess Type="1" />
+      </Version>
+      <ModelUnitSystem VolumeSubstanceUnit="uM.um3" MembraneSubstanceUnit="molecules" LumpedReactionSubstanceUnit="molecules" VolumeUnit="um3" AreaUnit="um2" LengthUnit="um" TimeUnit="s" />
+    </Model>
+    <SimulationSpec Name="NFSim-exact" Stochastic="false" UseConcentration="true" RuleBased="true" RandomizeInitCondition="false" MassConservationModelReduction="true" InsufficientIterations="false" InsufficientMaxMolecules="false">
+      <NetworkConstraints RbmMaxIteration="10" RbmMaxMoleculesPerSpecies="10" RbmSpeciesLimit="800" RbmReactionsLimit="2500">
+        <MaxStoichiometry MolecularType="E" Integer="100" />
+        <MaxStoichiometry MolecularType="S" Integer="100" />
+      </NetworkConstraints>
+      <Annotation />
+      <Geometry Name="non-spatial1437578422" Dimension="0">
+        <Extent X="10.0" Y="10.0" Z="10.0" />
+        <Origin X="0.0" Y="0.0" Z="0.0" />
+        <SubVolume Name="Compartment" Handle="0" Type="Compartmental" KeyValue="95772628" />
+        <Version Name="non-spatial1437578422" KeyValue="95772624" BranchId="95772625" Archived="0" Date="17-Aug-2015 21:00:20" FromVersionable="false">
+          <Owner Name="BioNetGen" Identifier="95093638" />
+          <GroupAccess Type="1" />
+        </Version>
+      </Geometry>
+      <GeometryContext>
+        <FeatureMapping Feature="c0" GeometryClass="Compartment" SubVolume="Compartment" Size="100.0">
+          <BoundariesTypes Xm="Flux" Xp="Flux" Ym="Flux" Yp="Flux" Zm="Flux" Zp="Flux" />
+        </FeatureMapping>
+      </GeometryContext>
+      <ReactionContext>
+        <LocalizedCompoundSpec LocalizedCompoundRef="E" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>0.01</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="S" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>0.01</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <ReactionRuleSpecs>
+          <ReactionRuleSpec ReactionRuleRef="ESbind" ReactionRuleMapping="included" />
+          <ReactionRuleSpec ReactionRuleRef="ESconvert" ReactionRuleMapping="included" />
+          <ReactionRuleSpec ReactionRuleRef="ES_MM" ReactionRuleMapping="excluded" />
+        </ReactionRuleSpecs>
+      </ReactionContext>
+      <MathDescription Name="NFSim app_generated">
+        <ParticleMolecularType Name="E">
+          <Component Name="s" />
+        </ParticleMolecularType>
+        <ParticleMolecularType Name="S">
+          <Component Name="Y">
+            <AllowableState Name="0" />
+            <AllowableState Name="P" />
+          </Component>
+        </ParticleMolecularType>
+        <Constant Name="_F_">96480.0</Constant>
+        <Constant Name="_F_nmol_">9.648E-5</Constant>
+        <Constant Name="_N_pmol_">6.02E11</Constant>
+        <Constant Name="_PI_">3.141592653589793</Constant>
+        <Constant Name="_R_">8314.0</Constant>
+        <Constant Name="_T_">300.0</Constant>
+        <Constant Name="E0">0.01</Constant>
+        <Constant Name="E_Count_init_uM">0.01</Constant>
+        <Constant Name="k2">0.01</Constant>
+        <Constant Name="kcat">0.01</Constant>
+        <Constant Name="kf">1.0</Constant>
+        <Constant Name="km1">0.1</Constant>
+        <Constant Name="KMOLE">(1.0 / 602.0)</Constant>
+        <Constant Name="kp1">1.0</Constant>
+        <Constant Name="kr">0.1</Constant>
+        <Constant Name="S0">1.0</Constant>
+        <Constant Name="S_Count_init_uM">0.01</Constant>
+        <Constant Name="Size_c0">100.0</Constant>
+        <Constant Name="V">1.0E-12</Constant>
+        <VolumeParticleSpeciesPattern Name="speciesPattern0" Domain="Compartment">
+          <MolecularType Name="S" MatchLabel="*">
+            <Component Name="Y" State="0" Bond="-" />
+          </MolecularType>
+        </VolumeParticleSpeciesPattern>
+        <VolumeParticleSpeciesPattern Name="speciesPattern1" Domain="Compartment">
+          <MolecularType Name="S" MatchLabel="*">
+            <Component Name="Y" State="P" Bond="-" />
+          </MolecularType>
+        </VolumeParticleSpeciesPattern>
+        <VolumeParticleSpeciesPattern Name="speciesPattern2" Domain="Compartment">
+          <MolecularType Name="E" MatchLabel="*">
+            <Component Name="s" State="*" Bond="1" />
+          </MolecularType>
+          <MolecularType Name="S" MatchLabel="*">
+            <Component Name="Y" State="*" Bond="1" />
+          </MolecularType>
+        </VolumeParticleSpeciesPattern>
+        <VolumeParticleSpeciesPattern Name="speciesPattern3" Domain="Compartment">
+          <MolecularType Name="E" MatchLabel="*">
+            <Component Name="s" State="*" Bond="-" />
+          </MolecularType>
+        </VolumeParticleSpeciesPattern>
+        <VolumeParticleSpeciesPattern Name="speciesPattern4" Domain="Compartment">
+          <MolecularType Name="E" MatchLabel="*">
+            <Component Name="s" State="*" Bond="1" />
+          </MolecularType>
+          <MolecularType Name="S" MatchLabel="*">
+            <Component Name="Y" State="0" Bond="1" />
+          </MolecularType>
+        </VolumeParticleSpeciesPattern>
+        <VolumeParticleObservable Name="E_Count" Domain="Compartment" MolecularType="Species" SequenceType="Multimolecular">
+          <VolumeParticleSpeciesPatterns>
+            <VolumeParticleSpeciesPattern Name="speciesPattern3" />
+          </VolumeParticleSpeciesPatterns>
+        </VolumeParticleObservable>
+        <VolumeParticleObservable Name="ES_Count" Domain="Compartment" MolecularType="Molecules" SequenceType="Multimolecular">
+          <VolumeParticleSpeciesPatterns>
+            <VolumeParticleSpeciesPattern Name="speciesPattern2" />
+          </VolumeParticleSpeciesPatterns>
+        </VolumeParticleObservable>
+        <VolumeParticleObservable Name="S_Count" Domain="Compartment" MolecularType="Species" SequenceType="Multimolecular">
+          <VolumeParticleSpeciesPatterns>
+            <VolumeParticleSpeciesPattern Name="speciesPattern0" />
+          </VolumeParticleSpeciesPatterns>
+        </VolumeParticleObservable>
+        <VolumeParticleObservable Name="Sp_Count" Domain="Compartment" MolecularType="Molecules" SequenceType="Multimolecular">
+          <VolumeParticleSpeciesPatterns>
+            <VolumeParticleSpeciesPattern Name="speciesPattern1" />
+          </VolumeParticleSpeciesPatterns>
+        </VolumeParticleObservable>
+        <VolumeParticleObservable Name="Su_Count" Domain="Compartment" MolecularType="Molecules" SequenceType="Multimolecular">
+          <VolumeParticleSpeciesPatterns>
+            <VolumeParticleSpeciesPattern Name="speciesPattern0" />
+          </VolumeParticleSpeciesPatterns>
+        </VolumeParticleObservable>
+        <Function Name="E" Domain="Compartment">(E_Count * (UnitFactor_uM_um3_molecules_neg_1 / Size_c0))</Function>
+        <Function Name="E_Count_initCount" Domain="Compartment">((E_Count_init_uM * Size_c0) * UnitFactor_molecules_uM_neg_1_um_neg_3)</Function>
+        <Function Name="ES" Domain="Compartment">(ES_Count * (UnitFactor_uM_um3_molecules_neg_1 / Size_c0))</Function>
+        <Function Name="Kf_ESbind" Domain="Compartment">kp1</Function>
+        <Function Name="Kf_ESconvert" Domain="Compartment">k2</Function>
+        <Function Name="Km" Domain="Compartment">((kcat + kr) / kf)</Function>
+        <Function Name="Kr_ESbind" Domain="Compartment">km1</Function>
+        <Function Name="MMrate" Domain="Compartment">(kcat / (Km + Su))</Function>
+        <Function Name="P_ESbind" Domain="Compartment">(Kf_ESbind * UnitFactor_uM_um3_molecules_neg_1 / Size_c0)</Function>
+        <Function Name="P_ESbind_reverse" Domain="Compartment">Kr_ESbind</Function>
+        <Function Name="P_ESconvert" Domain="Compartment">Kf_ESconvert</Function>
+        <Function Name="S" Domain="Compartment">(S_Count * (UnitFactor_uM_um3_molecules_neg_1 / Size_c0))</Function>
+        <Function Name="S_Count_initCount" Domain="Compartment">((S_Count_init_uM * Size_c0) * UnitFactor_molecules_uM_neg_1_um_neg_3)</Function>
+        <Function Name="Sp" Domain="Compartment">(Sp_Count * (UnitFactor_uM_um3_molecules_neg_1 / Size_c0))</Function>
+        <Function Name="Su" Domain="Compartment">(Su_Count * (UnitFactor_uM_um3_molecules_neg_1 / Size_c0))</Function>
+        <Function Name="UnitFactor_molecules_uM_neg_1_um_neg_3">(602.0 / 1.0)</Function>
+        <Function Name="UnitFactor_uM_um3_molecules_neg_1">(1.0 / 602.0)</Function>
+        <CompartmentSubDomain Name="Compartment">
+          <BoundaryType Boundary="Xm" Type="Value" />
+          <BoundaryType Boundary="Xp" Type="Value" />
+          <BoundaryType Boundary="Ym" Type="Value" />
+          <BoundaryType Boundary="Yp" Type="Value" />
+          <BoundaryType Boundary="Zm" Type="Value" />
+          <BoundaryType Boundary="Zp" Type="Value" />
+          <ParticleJumpProcess Name="ESbind" ProcessSymmetryFactor="1.0">
+            <SelectedParticle Name="speciesPattern3" />
+            <SelectedParticle Name="speciesPattern0" />
+            <MacroscopicRateConstant>P_ESbind</MacroscopicRateConstant>
+            <Effect VarName="speciesPattern3" Operation="destroy" />
+            <Effect VarName="speciesPattern0" Operation="destroy" />
+            <Effect VarName="speciesPattern4" Operation="create" />
+          </ParticleJumpProcess>
+          <ParticleJumpProcess Name="ESbind_reverse" ProcessSymmetryFactor="1.0">
+            <SelectedParticle Name="speciesPattern4" />
+            <MacroscopicRateConstant>P_ESbind_reverse</MacroscopicRateConstant>
+            <Effect VarName="speciesPattern3" Operation="create" />
+            <Effect VarName="speciesPattern0" Operation="create" />
+            <Effect VarName="speciesPattern4" Operation="destroy" />
+          </ParticleJumpProcess>
+          <ParticleJumpProcess Name="ESconvert" ProcessSymmetryFactor="1.0">
+            <SelectedParticle Name="speciesPattern4" />
+            <MacroscopicRateConstant>P_ESconvert</MacroscopicRateConstant>
+            <Effect VarName="speciesPattern4" Operation="destroy" />
+            <Effect VarName="speciesPattern3" Operation="create" />
+            <Effect VarName="speciesPattern1" Operation="create" />
+          </ParticleJumpProcess>
+          <ParticleProperties Name="speciesPattern3">
+            <ParticleInitialCount>
+              <ParticleCount>E_Count_initCount</ParticleCount>
+              <ParticleLocationX>0.0</ParticleLocationX>
+              <ParticleLocationY>u</ParticleLocationY>
+              <ParticleLocationZ>u</ParticleLocationZ>
+            </ParticleInitialCount>
+            <ParticleDiffusion>0.0</ParticleDiffusion>
+            <ParticleDriftX>0.0</ParticleDriftX>
+            <ParticleDriftY>0.0</ParticleDriftY>
+            <ParticleDriftZ>0.0</ParticleDriftZ>
+          </ParticleProperties>
+          <ParticleProperties Name="speciesPattern0">
+            <ParticleInitialCount>
+              <ParticleCount>S_Count_initCount</ParticleCount>
+              <ParticleLocationX>0.0</ParticleLocationX>
+              <ParticleLocationY>u</ParticleLocationY>
+              <ParticleLocationZ>u</ParticleLocationZ>
+            </ParticleInitialCount>
+            <ParticleDiffusion>0.0</ParticleDiffusion>
+            <ParticleDriftX>0.0</ParticleDriftX>
+            <ParticleDriftY>0.0</ParticleDriftY>
+            <ParticleDriftZ>0.0</ParticleDriftZ>
+          </ParticleProperties>
+        </CompartmentSubDomain>
+        <Version Name="NFSim app_generated" KeyValue="98151305" BranchId="95772640" Archived="0" Date="22-Jan-2016 11:21:44" FromVersionable="false">
+          <Owner Name="BioNetGen" Identifier="95093638" />
+          <GroupAccess Type="1" />
+        </Version>
+      </MathDescription>
+      <Simulation Name="Exact">
+        <SolverTaskDescription TaskType="Unsteady" UseSymbolicJacobian="false" Solver="NFSim">
+          <TimeBound StartTime="0.0" EndTime="10000.0" />
+          <TimeStep DefaultTime="0.1" MinTime="1.0E-8" MaxTime="1.0" />
+          <ErrorTolerance Absolut="1.0E-9" Relative="1.0E-9" />
+          <OutputOptions OutputTimeStep="10.0" />
+          <NFSimSimulationOptions>
+            <ObservableComputationOff>true</ObservableComputationOff>
+            <PreventIntraBonds>false</PreventIntraBonds>
+            <AggregateBookkeeping>true</AggregateBookkeeping>
+            <MatchComplexes>true</MatchComplexes>
+            <MoleculeDistance>1000</MoleculeDistance>
+            <NumOfTrials>1</NumOfTrials>
+          </NFSimSimulationOptions>
+          <NumberProcessors>1</NumberProcessors>
+        </SolverTaskDescription>
+        <MathOverrides />
+        <Version Name="Exact" KeyValue="98009756" BranchId="95772678" Archived="0" Date="29-Dec-2015 13:55:31" FromVersionable="false">
+          <Owner Name="BioNetGen" Identifier="95093638" />
+          <GroupAccess Type="1" />
+        </Version>
+      </Simulation>
+      <Version Name="NFSim-exact" KeyValue="98151307" BranchId="95772660" Archived="0" Date="22-Jan-2016 11:21:44" FromVersionable="false">
+        <Owner Name="BioNetGen" Identifier="95093638" />
+        <GroupAccess Type="1" />
+      </Version>
+      <MicroscopeMeasurement Name="fluor">
+        <ConvolutionKernel Type="ProjectionZKernel" />
+      </MicroscopeMeasurement>
+    </SimulationSpec>
+    <SimulationSpec Name="BioNetGen - exact" Stochastic="false" UseConcentration="true" RuleBased="false" MassConservationModelReduction="true" InsufficientIterations="false" InsufficientMaxMolecules="false">
+      <NetworkConstraints RbmMaxIteration="10" RbmMaxMoleculesPerSpecies="10" RbmSpeciesLimit="800" RbmReactionsLimit="2500">
+        <MaxStoichiometry MolecularType="E" Integer="100" />
+        <MaxStoichiometry MolecularType="S" Integer="100" />
+      </NetworkConstraints>
+      <Annotation />
+      <Geometry Name="non-spatial2047926287" Dimension="0">
+        <Extent X="10.0" Y="10.0" Z="10.0" />
+        <Origin X="0.0" Y="0.0" Z="0.0" />
+        <SubVolume Name="Compartment" Handle="0" Type="Compartmental" KeyValue="95772633" />
+        <Version Name="non-spatial2047926287" KeyValue="95772629" BranchId="95772630" Archived="0" Date="17-Aug-2015 21:00:20" FromVersionable="false">
+          <Owner Name="BioNetGen" Identifier="95093638" />
+          <GroupAccess Type="1" />
+        </Version>
+      </Geometry>
+      <GeometryContext>
+        <FeatureMapping Feature="c0" GeometryClass="Compartment" SubVolume="Compartment" Size="50000.0">
+          <BoundariesTypes Xm="Flux" Xp="Flux" Ym="Flux" Yp="Flux" Zm="Flux" Zp="Flux" />
+        </FeatureMapping>
+      </GeometryContext>
+      <ReactionContext>
+        <LocalizedCompoundSpec LocalizedCompoundRef="E" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>0.01</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="S" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>0.01</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <ReactionRuleSpecs>
+          <ReactionRuleSpec ReactionRuleRef="ESbind" ReactionRuleMapping="included" />
+          <ReactionRuleSpec ReactionRuleRef="ESconvert" ReactionRuleMapping="included" />
+          <ReactionRuleSpec ReactionRuleRef="ES_MM" ReactionRuleMapping="excluded" />
+        </ReactionRuleSpecs>
+      </ReactionContext>
+      <MathDescription Name="BioNetGen app_generated">
+        <Constant Name="_F_">96480.0</Constant>
+        <Constant Name="_F_nmol_">9.648E-5</Constant>
+        <Constant Name="_K_GHK_">1.0E-9</Constant>
+        <Constant Name="_N_pmol_">6.02E11</Constant>
+        <Constant Name="_PI_">3.141592653589793</Constant>
+        <Constant Name="_R_">8314.0</Constant>
+        <Constant Name="_T_">300.0</Constant>
+        <Constant Name="E0">0.01</Constant>
+        <Constant Name="E_init_uM">0.01</Constant>
+        <Constant Name="k2">0.01</Constant>
+        <Constant Name="K_millivolts_per_volt">1000.0</Constant>
+        <Constant Name="kcat">0.01</Constant>
+        <Constant Name="kf">1.0</Constant>
+        <Constant Name="km1">0.1</Constant>
+        <Constant Name="KMOLE">(1.0 / 602.0)</Constant>
+        <Constant Name="kp1">1.0</Constant>
+        <Constant Name="kr">0.1</Constant>
+        <Constant Name="Kr__reverse_ESbind">0.0</Constant>
+        <Constant Name="Kr_ESbind">0.0</Constant>
+        <Constant Name="Kr_ESconvert">0.0</Constant>
+        <Constant Name="S0">1.0</Constant>
+        <Constant Name="s0_init_uM">0.0</Constant>
+        <Constant Name="s1_init_uM">0.0</Constant>
+        <Constant Name="S_init_uM">0.01</Constant>
+        <Constant Name="Size_c0">50000.0</Constant>
+        <Constant Name="V">1.0E-12</Constant>
+        <VolumeVariable Name="s0" Domain="Compartment" />
+        <VolumeVariable Name="s1" Domain="Compartment" />
+        <Function Name="E" Domain="Compartment">((K_E_total - (Size_c0 * s0)) / Size_c0)</Function>
+        <Function Name="ES">(1.0 * s0)</Function>
+        <Function Name="J__reverse_ESbind" Domain="Compartment">((Kf__reverse_ESbind * s0) - ((Kr__reverse_ESbind * E) * S))</Function>
+        <Function Name="J_ESbind" Domain="Compartment">(((Kf_ESbind * E) * S) - (Kr_ESbind * s0))</Function>
+        <Function Name="J_ESconvert" Domain="Compartment">((Kf_ESconvert * s0) - ((Kr_ESconvert * E) * s1))</Function>
+        <Function Name="K_E_total" Domain="Compartment">((Size_c0 * E_init_uM) + (Size_c0 * s0_init_uM))</Function>
+        <Function Name="K_S_total" Domain="Compartment">((Size_c0 * S_init_uM) + (Size_c0 * s0_init_uM) + (Size_c0 * s1_init_uM))</Function>
+        <Function Name="Kf__reverse_ESbind" Domain="Compartment">km1</Function>
+        <Function Name="Kf_ESbind" Domain="Compartment">kp1</Function>
+        <Function Name="Kf_ESconvert" Domain="Compartment">k2</Function>
+        <Function Name="Km">((kcat + kr) / kf)</Function>
+        <Function Name="MMrate">(kcat / (Km + Su))</Function>
+        <Function Name="S" Domain="Compartment">((K_S_total - (Size_c0 * s0) - (Size_c0 * s1)) / Size_c0)</Function>
+        <Function Name="Sp">(1.0 * s1)</Function>
+        <Function Name="Su">(1.0 * S)</Function>
+        <CompartmentSubDomain Name="Compartment">
+          <BoundaryType Boundary="Xm" Type="Value" />
+          <BoundaryType Boundary="Xp" Type="Value" />
+          <BoundaryType Boundary="Ym" Type="Value" />
+          <BoundaryType Boundary="Yp" Type="Value" />
+          <BoundaryType Boundary="Zm" Type="Value" />
+          <BoundaryType Boundary="Zp" Type="Value" />
+          <OdeEquation Name="s0" SolutionType="Unknown">
+            <Rate>( - J__reverse_ESbind + J_ESbind - J_ESconvert)</Rate>
+            <Initial>s0_init_uM</Initial>
+          </OdeEquation>
+          <OdeEquation Name="s1" SolutionType="Unknown">
+            <Rate>J_ESconvert</Rate>
+            <Initial>s1_init_uM</Initial>
+          </OdeEquation>
+        </CompartmentSubDomain>
+        <Version Name="BioNetGen app_generated" KeyValue="98009744" BranchId="95772643" Archived="0" Date="29-Dec-2015 13:55:30" FromVersionable="false">
+          <Owner Name="BioNetGen" Identifier="95093638" />
+          <GroupAccess Type="1" />
+        </Version>
+      </MathDescription>
+      <Simulation Name="Simulation1">
+        <SolverTaskDescription TaskType="Unsteady" UseSymbolicJacobian="false" Solver="Combined Stiff Solver (IDA/CVODE)">
+          <TimeBound StartTime="0.0" EndTime="10000.0" />
+          <TimeStep DefaultTime="0.1" MinTime="1.0E-8" MaxTime="1.0" />
+          <ErrorTolerance Absolut="1.0E-9" Relative="1.0E-9" />
+          <OutputOptions KeepEvery="10" KeepAtMost="1000" />
+          <NumberProcessors>1</NumberProcessors>
+        </SolverTaskDescription>
+        <MathOverrides />
+        <Version Name="Simulation1" KeyValue="98009758" BranchId="95772681" Archived="0" Date="29-Dec-2015 13:55:31" FromVersionable="false">
+          <Owner Name="BioNetGen" Identifier="95093638" />
+          <GroupAccess Type="1" />
+        </Version>
+      </Simulation>
+      <Version Name="BioNetGen - exact" KeyValue="98009751" BranchId="97786641" Archived="0" Date="29-Dec-2015 13:55:30" FromVersionable="false">
+        <Owner Name="BioNetGen" Identifier="95093638" />
+        <GroupAccess Type="1" />
+      </Version>
+      <MicroscopeMeasurement Name="fluor">
+        <ConvolutionKernel Type="ProjectionZKernel" />
+      </MicroscopeMeasurement>
+    </SimulationSpec>
+    <SimulationSpec Name="BioNetGen - MM" Stochastic="false" UseConcentration="true" RuleBased="false" MassConservationModelReduction="true" InsufficientIterations="false" InsufficientMaxMolecules="false">
+      <NetworkConstraints RbmMaxIteration="10" RbmMaxMoleculesPerSpecies="10" RbmSpeciesLimit="800" RbmReactionsLimit="2500">
+        <MaxStoichiometry MolecularType="E" Integer="100" />
+        <MaxStoichiometry MolecularType="S" Integer="100" />
+      </NetworkConstraints>
+      <Annotation>(copied from BioNetGen app)</Annotation>
+      <Geometry Name="non-spatial2047926287" Dimension="0">
+        <Extent X="10.0" Y="10.0" Z="10.0" />
+        <Origin X="0.0" Y="0.0" Z="0.0" />
+        <SubVolume Name="Compartment" Handle="0" Type="Compartmental" KeyValue="95772633" />
+        <Version Name="non-spatial2047926287" KeyValue="95772629" BranchId="95772630" Archived="0" Date="17-Aug-2015 21:00:20" FromVersionable="false">
+          <Owner Name="BioNetGen" Identifier="95093638" />
+          <GroupAccess Type="1" />
+        </Version>
+      </Geometry>
+      <GeometryContext>
+        <FeatureMapping Feature="c0" GeometryClass="Compartment" SubVolume="Compartment" Size="50000.0">
+          <BoundariesTypes Xm="Flux" Xp="Flux" Ym="Flux" Yp="Flux" Zm="Flux" Zp="Flux" />
+        </FeatureMapping>
+      </GeometryContext>
+      <ReactionContext>
+        <LocalizedCompoundSpec LocalizedCompoundRef="E" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>0.01</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="S" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>0.01</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <ReactionRuleSpecs>
+          <ReactionRuleSpec ReactionRuleRef="ESbind" ReactionRuleMapping="excluded" />
+          <ReactionRuleSpec ReactionRuleRef="ESconvert" ReactionRuleMapping="excluded" />
+          <ReactionRuleSpec ReactionRuleRef="ES_MM" ReactionRuleMapping="included" />
+        </ReactionRuleSpecs>
+      </ReactionContext>
+      <MathDescription Name="Copy of BioNetGen app_generated">
+        <Constant Name="_F_">96480.0</Constant>
+        <Constant Name="_F_nmol_">9.648E-5</Constant>
+        <Constant Name="_K_GHK_">1.0E-9</Constant>
+        <Constant Name="_N_pmol_">6.02E11</Constant>
+        <Constant Name="_PI_">3.141592653589793</Constant>
+        <Constant Name="_R_">8314.0</Constant>
+        <Constant Name="_T_">300.0</Constant>
+        <Constant Name="E0">0.01</Constant>
+        <Constant Name="E_init_uM">0.01</Constant>
+        <Constant Name="k2">0.01</Constant>
+        <Constant Name="K_millivolts_per_volt">1000.0</Constant>
+        <Constant Name="kcat">0.01</Constant>
+        <Constant Name="kf">1.0</Constant>
+        <Constant Name="km1">0.1</Constant>
+        <Constant Name="KMOLE">(1.0 / 602.0)</Constant>
+        <Constant Name="kp1">1.0</Constant>
+        <Constant Name="kr">0.1</Constant>
+        <Constant Name="Kr">0.0</Constant>
+        <Constant Name="S0">1.0</Constant>
+        <Constant Name="s0_init_uM">0.0</Constant>
+        <Constant Name="S_init_uM">0.01</Constant>
+        <Constant Name="Size_c0">50000.0</Constant>
+        <Constant Name="V">1.0E-12</Constant>
+        <VolumeVariable Name="s0" Domain="Compartment" />
+        <Function Name="E" Domain="Compartment">(K_E_total / Size_c0)</Function>
+        <Function Name="J_ES_MM" Domain="Compartment">(((Kf * E) * S) - ((Kr * E) * s0))</Function>
+        <Function Name="K_E_total" Domain="Compartment">(Size_c0 * E_init_uM)</Function>
+        <Function Name="K_S_total" Domain="Compartment">((Size_c0 * S_init_uM) + (Size_c0 * s0_init_uM))</Function>
+        <Function Name="Kf" Domain="Compartment">MMrate</Function>
+        <Function Name="Km">((kcat + kr) / kf)</Function>
+        <Function Name="MMrate">(kcat / (Km + Su))</Function>
+        <Function Name="S" Domain="Compartment">((K_S_total - (Size_c0 * s0)) / Size_c0)</Function>
+        <Function Name="Sp">(1.0 * s0)</Function>
+        <Function Name="Su">(1.0 * S)</Function>
+        <CompartmentSubDomain Name="Compartment">
+          <BoundaryType Boundary="Xm" Type="Value" />
+          <BoundaryType Boundary="Xp" Type="Value" />
+          <BoundaryType Boundary="Ym" Type="Value" />
+          <BoundaryType Boundary="Yp" Type="Value" />
+          <BoundaryType Boundary="Zm" Type="Value" />
+          <BoundaryType Boundary="Zp" Type="Value" />
+          <OdeEquation Name="s0" SolutionType="Unknown">
+            <Rate>J_ES_MM</Rate>
+            <Initial>s0_init_uM</Initial>
+          </OdeEquation>
+        </CompartmentSubDomain>
+        <Version Name="Copy of BioNetGen app_generated" KeyValue="98151226" BranchId="97786633" Archived="0" Date="22-Jan-2016 11:20:01" FromVersionable="false">
+          <Owner Name="BioNetGen" Identifier="95093638" />
+          <GroupAccess Type="1" />
+        </Version>
+      </MathDescription>
+      <Simulation Name="Simulation0">
+        <SolverTaskDescription TaskType="Unsteady" UseSymbolicJacobian="false" Solver="Combined Stiff Solver (IDA/CVODE)">
+          <TimeBound StartTime="0.0" EndTime="10000.0" />
+          <TimeStep DefaultTime="0.1" MinTime="1.0E-8" MaxTime="1.0" />
+          <ErrorTolerance Absolut="1.0E-9" Relative="1.0E-9" />
+          <OutputOptions KeepEvery="10" KeepAtMost="1000" />
+          <NumberProcessors>1</NumberProcessors>
+        </SolverTaskDescription>
+        <MathOverrides />
+        <Version Name="Simulation0" KeyValue="98151238" BranchId="97786657" Archived="0" Date="22-Jan-2016 11:20:02" FromVersionable="false">
+          <Owner Name="BioNetGen" Identifier="95093638" />
+          <GroupAccess Type="1" />
+        </Version>
+      </Simulation>
+      <Version Name="BioNetGen - MM" KeyValue="98151233" BranchId="97786647" Archived="0" Date="22-Jan-2016 11:20:01" FromVersionable="false">
+        <Owner Name="BioNetGen" Identifier="95093638" />
+        <GroupAccess Type="1" />
+        <Annotation>(copied from BioNetGen app)</Annotation>
+      </Version>
+      <MicroscopeMeasurement Name="fluor">
+        <ConvolutionKernel Type="ProjectionZKernel" />
+      </MicroscopeMeasurement>
+    </SimulationSpec>
+    <Version Name="RB_EnzymeKinetics_MultipleApps" KeyValue="98151312" BranchId="98151241" Archived="0" Date="22-Jan-2016 11:21:44" FromVersionable="false">
+      <Owner Name="BioNetGen" Identifier="95093638" />
+      <GroupAccess Type="1" />
+    </Version>
+    <pathwayModel>
+      <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:bp="http://www.biopax.org/release/biopax-level3.owl#" version="3.0" />
+    </pathwayModel>
+    <relationshipModel>
+      <RMNS version="3.0" />
+    </relationshipModel>
+    <vcmetadata>
+      <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" />
+      <nonrdfAnnotationList />
+      <uriBindingList />
+    </vcmetadata>
+  </BioModel>
+</vcml>
+

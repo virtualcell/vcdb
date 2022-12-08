@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--This biomodel was generated in VCML Version Alpha_Version_7.4.0_build_87-->
+<vcml xmlns="http://sourceforge.net/projects/vcell/vcml" Version="Alpha_Version_7.4.0_build_87">
+  <BioModel Name="FRAP-tutorial">
+    <Model Name="unnamed">
+      <Compound Name="rf">
+        <Annotation>RAN-FITC</Annotation>
+      </Compound>
+      <Compound Name="rb">
+        <Annotation>RAN-Bound</Annotation>
+      </Compound>
+      <Compound Name="bs">
+        <Annotation>Binding-Sites</Annotation>
+      </Compound>
+      <Compound Name="rfb">
+        <Annotation>RAN-FITC-Bound</Annotation>
+      </Compound>
+      <Compound Name="Laser">
+        <Annotation>LIGHT</Annotation>
+      </Compound>
+      <Compound Name="r">
+        <Annotation>RAN</Annotation>
+      </Compound>
+      <Feature Name="Nucleus" KeyValue="2182698" />
+      <Feature Name="cytosol" KeyValue="2182696" />
+      <Membrane InsideFeature="Nucleus" OutsideFeature="cytosol" PositiveFeature="Nucleus" NegativeFeature="cytosol" MembraneVoltage="Voltage_Nuclear_Membrane" Name="Nuclear Membrane" KeyValue="2182697" />
+      <LocalizedCompound Name="rf_Nucleus" CompoundRef="rf" Structure="Nucleus" OverrideName="true" KeyValue="2182702" />
+      <LocalizedCompound Name="rb_Nucleus" CompoundRef="rb" Structure="Nucleus" OverrideName="true" KeyValue="2182703" />
+      <LocalizedCompound Name="bs_Nucleus" CompoundRef="bs" Structure="Nucleus" OverrideName="true" KeyValue="2182704" />
+      <LocalizedCompound Name="rfb_Nucleus" CompoundRef="rfb" Structure="Nucleus" OverrideName="true" KeyValue="2182705" />
+      <LocalizedCompound Name="Laser_Nucleus" CompoundRef="Laser" Structure="Nucleus" OverrideName="true" KeyValue="2182706" />
+      <LocalizedCompound Name="r_Nucleus" CompoundRef="r" Structure="Nucleus" OverrideName="true" KeyValue="2182707" />
+      <SimpleReaction Structure="Nucleus" Name="bleaching2" Reversible="true" FluxOption="MolecularOnly" KeyValue="2182716">
+        <Reactant LocalizedCompoundRef="rfb_Nucleus" Stoichiometry="1" KeyValue="2182717" />
+        <Product LocalizedCompoundRef="rb_Nucleus" Stoichiometry="1" KeyValue="2182719" />
+        <Modifier LocalizedCompoundRef="Laser_Nucleus" />
+        <Kinetics KineticsType="GeneralKinetics">
+          <Parameter Name="J" Role="reaction rate" Unit="uM.s-1">(Vmax2 * rfB_nucleus * Laser_Nucleus * ((t &gt; 10.0) &amp;&amp; (t &lt; 10.5)))</Parameter>
+          <Parameter Name="Vmax2" Role="user defined" Unit="tbd">50.0</Parameter>
+          <Parameter Name="rfB_nucleus" Role="user defined" Unit="tbd">0.0</Parameter>
+        </Kinetics>
+      </SimpleReaction>
+      <SimpleReaction Structure="Nucleus" Name="RAN-binding" Reversible="true" FluxOption="MolecularOnly" KeyValue="2182708">
+        <Reactant LocalizedCompoundRef="bs_Nucleus" Stoichiometry="1" KeyValue="2182709" />
+        <Reactant LocalizedCompoundRef="r_Nucleus" Stoichiometry="1" KeyValue="2182710" />
+        <Kinetics KineticsType="MassAction">
+          <Parameter Name="J" Role="reaction rate" Unit="uM.s-1">((Kf * bs_Nucleus) * r_Nucleus)</Parameter>
+          <Parameter Name="Kf" Role="forward rate constant" Unit="s-1.uM-1">0.02</Parameter>
+          <Parameter Name="Kr" Role="reverse rate constant" Unit="uM.s-1">0.1</Parameter>
+        </Kinetics>
+      </SimpleReaction>
+      <SimpleReaction Structure="Nucleus" Name="RAN-FITC-Binding" Reversible="true" FluxOption="MolecularOnly" KeyValue="2182720">
+        <Reactant LocalizedCompoundRef="bs_Nucleus" Stoichiometry="1" KeyValue="2182721" />
+        <Product LocalizedCompoundRef="rfb_Nucleus" Stoichiometry="1" KeyValue="2182723" />
+        <Kinetics KineticsType="MassAction">
+          <Parameter Name="J" Role="reaction rate" Unit="uM.s-1">((Kf * bs_Nucleus) - (Kr * rfb_Nucleus))</Parameter>
+          <Parameter Name="Kf" Role="forward rate constant" Unit="s-1">0.02</Parameter>
+          <Parameter Name="Kr" Role="reverse rate constant" Unit="s-1">0.1</Parameter>
+        </Kinetics>
+      </SimpleReaction>
+      <SimpleReaction Structure="Nucleus" Name="bleaching1" Reversible="true" FluxOption="MolecularOnly" KeyValue="2182712">
+        <Reactant LocalizedCompoundRef="rf_Nucleus" Stoichiometry="1" KeyValue="2182714" />
+        <Product LocalizedCompoundRef="r_Nucleus" Stoichiometry="1" KeyValue="2182713" />
+        <Kinetics KineticsType="GeneralKinetics">
+          <Parameter Name="J" Role="reaction rate" Unit="uM.s-1">(Vmax * rf_nucleus * Laser_nucleus * ((t &gt; 10.0) &amp;&amp; (t &lt; 10.5)))</Parameter>
+          <Parameter Name="Laser_nucleus" Role="user defined" Unit="tbd">0.0</Parameter>
+          <Parameter Name="Vmax" Role="user defined" Unit="tbd">50.0</Parameter>
+          <Parameter Name="rf_nucleus" Role="user defined" Unit="tbd">0.0</Parameter>
+        </Kinetics>
+      </SimpleReaction>
+      <Diagram Name="unnamed" Structure="cytosol" />
+      <Diagram Name="Membrane0" Structure="Nuclear Membrane" />
+      <Diagram Name="Feature0" Structure="Nucleus">
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="r_Nucleus" LocationX="91" LocationY="108" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="rf_Nucleus" LocationX="50" LocationY="239" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="rb_Nucleus" LocationX="329" LocationY="107" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="bs_Nucleus" LocationX="176" LocationY="172" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="rfb_Nucleus" LocationX="296" LocationY="237" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="Laser_Nucleus" LocationX="197" LocationY="34" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="full" SimpleReactionRef="RAN-binding" LocationX="176" LocationY="109" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="full" SimpleReactionRef="bleaching1" LocationX="45" LocationY="158" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="full" SimpleReactionRef="bleaching2" LocationX="288" LocationY="151" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="full" SimpleReactionRef="RAN-FITC-Binding" LocationX="172" LocationY="231" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="r_Nucleus" LocationX="91" LocationY="108" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="rf_Nucleus" LocationX="50" LocationY="239" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="rb_Nucleus" LocationX="329" LocationY="107" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="bs_Nucleus" LocationX="176" LocationY="172" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="rfb_Nucleus" LocationX="296" LocationY="237" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="Laser_Nucleus" LocationX="197" LocationY="34" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="molecule" SimpleReactionRef="RAN-binding" LocationX="176" LocationY="109" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="molecule" SimpleReactionRef="bleaching1" LocationX="45" LocationY="158" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="molecule" SimpleReactionRef="bleaching2" LocationX="288" LocationY="151" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="molecule" SimpleReactionRef="RAN-FITC-Binding" LocationX="172" LocationY="231" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="r_Nucleus" LocationX="91" LocationY="108" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="rf_Nucleus" LocationX="50" LocationY="239" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="rb_Nucleus" LocationX="329" LocationY="107" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="bs_Nucleus" LocationX="176" LocationY="172" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="rfb_Nucleus" LocationX="296" LocationY="237" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="Laser_Nucleus" LocationX="197" LocationY="34" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="rule" SimpleReactionRef="RAN-binding" LocationX="176" LocationY="109" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="rule" SimpleReactionRef="bleaching1" LocationX="45" LocationY="158" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="rule" SimpleReactionRef="bleaching2" LocationX="288" LocationY="151" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="rule" SimpleReactionRef="RAN-FITC-Binding" LocationX="172" LocationY="231" />
+      </Diagram>
+      <Version Name="unnamed" KeyValue="2182695" BranchId="2182186" Archived="1" Date="28-Aug-2001 10:56:28" FromVersionable="false">
+        <Owner Name="dfortin" Identifier="2182181" />
+        <GroupAccess Type="0" />
+      </Version>
+      <ModelUnitSystem VolumeSubstanceUnit="uM.um3" MembraneSubstanceUnit="molecules" LumpedReactionSubstanceUnit="molecules" VolumeUnit="um3" AreaUnit="um2" LengthUnit="um" TimeUnit="s" />
+    </Model>
+    <Version Name="FRAP-tutorial" KeyValue="2182727" BranchId="2182209" Archived="1" Date="28-Aug-2001 10:56:30" FromVersionable="false">
+      <Owner Name="dfortin" Identifier="2182181" />
+      <GroupAccess Type="0" />
+    </Version>
+    <pathwayModel>
+      <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:bp="http://www.biopax.org/release/biopax-level3.owl#" version="3.0" />
+    </pathwayModel>
+    <relationshipModel>
+      <RMNS version="3.0" />
+    </relationshipModel>
+    <vcmetadata>
+      <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" />
+      <nonrdfAnnotationList>
+        <nonrdfAnnotation vcid="Species(rb)">
+          <freetext>RAN-Bound</freetext>
+        </nonrdfAnnotation>
+        <nonrdfAnnotation vcid="Species(rfb)">
+          <freetext>RAN-FITC-Bound</freetext>
+        </nonrdfAnnotation>
+        <nonrdfAnnotation vcid="Species(r)">
+          <freetext>RAN</freetext>
+        </nonrdfAnnotation>
+        <nonrdfAnnotation vcid="Species(bs)">
+          <freetext>Binding-Sites</freetext>
+        </nonrdfAnnotation>
+        <nonrdfAnnotation vcid="Species(rf)">
+          <freetext>RAN-FITC</freetext>
+        </nonrdfAnnotation>
+        <nonrdfAnnotation vcid="Species(Laser)">
+          <freetext>LIGHT</freetext>
+        </nonrdfAnnotation>
+      </nonrdfAnnotationList>
+      <uriBindingList />
+    </vcmetadata>
+  </BioModel>
+</vcml>
+

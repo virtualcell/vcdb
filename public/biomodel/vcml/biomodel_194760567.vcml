@@ -1,0 +1,250 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--This biomodel was generated in VCML Version Alpha_Version_7.4.0_build_87-->
+<vcml xmlns="http://sourceforge.net/projects/vcell/vcml" Version="Alpha_Version_7.4.0_build_87">
+  <BioModel Name="ChannelSimple">
+    <Model Name="model">
+      <ModelParameters>
+        <Parameter Name="D" Role="user defined" Unit="tbd">1000.0</Parameter>
+        <Parameter Name="L" Role="user defined" Unit="tbd">0.0</Parameter>
+      </ModelParameters>
+      <Compound Name="s0" />
+      <Compound Name="s1" />
+      <Feature Name="Extracellular" KeyValue="194727649" />
+      <Feature Name="Cellular" KeyValue="194727651" />
+      <Membrane MembraneVoltage="Voltage_m0" Name="m0" KeyValue="194727653" />
+      <LocalizedCompound Name="Na" CompoundRef="s0" Structure="Extracellular" OverrideName="true" KeyValue="194727655" />
+      <LocalizedCompound Name="Na_c" CompoundRef="s1" Structure="Cellular" OverrideName="true" KeyValue="194727656" />
+      <SimpleReaction Structure="m0" Name="r0" Reversible="true" FluxOption="MolecularOnly" KeyValue="194727657">
+        <Reactant LocalizedCompoundRef="Na" Stoichiometry="1" KeyValue="194727658" />
+        <Product LocalizedCompoundRef="Na_c" Stoichiometry="1" KeyValue="194727659" />
+        <Kinetics KineticsType="MassAction">
+          <Parameter Name="J" Role="reaction rate" Unit="molecules.um-2.s-1">((Kf * Na) - (Kr * Na_c))</Parameter>
+          <Parameter Name="I" Role="inward current density" Unit="pA.um-2">0.0</Parameter>
+          <Parameter Name="netValence" Role="net charge valence" Unit="1">1.0</Parameter>
+          <Parameter Name="Kf" Role="forward rate constant" Unit="molecules.um-2.s-1.uM-1">(D / L)</Parameter>
+          <Parameter Name="Kr" Role="reverse rate constant" Unit="molecules.um-2.s-1.uM-1">(D / L)</Parameter>
+          <Parameter Name="L" Role="user defined" Unit="tbd">0.01</Parameter>
+        </Kinetics>
+      </SimpleReaction>
+      <Diagram Name="c0" Structure="Extracellular">
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="Na_c" LocationX="92" LocationY="126" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="full" SimpleReactionRef="r0" LocationX="86" LocationY="134" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="Na" LocationX="96" LocationY="117" />
+      </Diagram>
+      <Diagram Name="m0" Structure="m0">
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="Na_c" LocationX="92" LocationY="126" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="full" SimpleReactionRef="r0" LocationX="86" LocationY="134" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="Na" LocationX="96" LocationY="117" />
+      </Diagram>
+      <Diagram Name="c1" Structure="Cellular">
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="Na_c" LocationX="92" LocationY="126" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="full" SimpleReactionRef="r0" LocationX="86" LocationY="134" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="Na" LocationX="96" LocationY="117" />
+      </Diagram>
+      <Version Name="model" KeyValue="194727644" BranchId="194727645" Archived="0" Date="25-Nov-2020 07:03:10" FromVersionable="false">
+        <Owner Name="Vinitarii" Identifier="194725103" />
+        <GroupAccess Type="1" />
+      </Version>
+      <ModelUnitSystem VolumeSubstanceUnit="uM.um3" MembraneSubstanceUnit="molecules" LumpedReactionSubstanceUnit="molecules" VolumeUnit="um3" AreaUnit="um2" LengthUnit="um" TimeUnit="s" />
+    </Model>
+    <SimulationSpec Name="Application0" Stochastic="false" UseConcentration="true" RuleBased="false" MassConservationModelReduction="false" InsufficientIterations="false" InsufficientMaxMolecules="false" CharacteristicSize="0.10403160765672961">
+      <NetworkConstraints RbmMaxIteration="3" RbmMaxMoleculesPerSpecies="10" RbmSpeciesLimit="800" RbmReactionsLimit="2500" />
+      <Annotation />
+      <Geometry Name="Geometry2" Dimension="3">
+        <Extent X="10.0" Y="10.0" Z="10.0" />
+        <Origin X="0.0" Y="0.0" Z="0.0" />
+        <SubVolume Name="subdomain1" Handle="1" Type="Analytical" KeyValue="194760548">
+          <AnalyticExpression>(((((x - 5.0) ^ 2.0) / (1.0 ^ 2.0)) + (((y - 5.0) ^ 2.0) / (1.0 ^ 2.0)) + (((z - 5.0) ^ 2.0) / (5.0 ^ 2.0))) &lt;= 1.0)</AnalyticExpression>
+        </SubVolume>
+        <SubVolume Name="subdomain0" Handle="0" Type="Analytical" KeyValue="194760549">
+          <AnalyticExpression>1.0</AnalyticExpression>
+        </SubVolume>
+        <SurfaceClass Name="subdomain0_subdomain1_membrane" SubVolume1Ref="subdomain0" SubVolume2Ref="subdomain1" KeyValue="194760550" />
+        <SurfaceDescription NumSamplesX="101" NumSamplesY="101" NumSamplesZ="101" CutoffFrequency="0.3">
+          <VolumeRegion Name="subdomain00" RegionID="0" SubVolume="subdomain0" Size="979.176" Unit="um3" />
+          <VolumeRegion Name="subdomain11" RegionID="1" SubVolume="subdomain1" Size="20.823999999999998" Unit="um3" />
+          <MembraneRegion Name="membrane_subdomain00_subdomain11" VolumeRegion1="subdomain11" VolumeRegion2="subdomain00" Size="49.35145290405446" Unit="um2" />
+        </SurfaceDescription>
+        <Version Name="Geometry2" KeyValue="194760544" BranchId="194760545" Archived="0" Date="25-Nov-2020 18:27:08" FromVersionable="false">
+          <Owner Name="Vinitarii" Identifier="194725103" />
+          <GroupAccess Type="1" />
+        </Version>
+      </Geometry>
+      <GeometryContext>
+        <FeatureMapping Feature="Extracellular" GeometryClass="subdomain0" SubVolume="subdomain0" Size="50000.0" VolumePerUnitVolume="1.0">
+          <BoundariesTypes Xm="Flux" Xp="Flux" Ym="Flux" Yp="Flux" Zm="Flux" Zp="Flux" />
+        </FeatureMapping>
+        <FeatureMapping Feature="Cellular" GeometryClass="subdomain1" SubVolume="subdomain1" Size="50000.0" VolumePerUnitVolume="1.0">
+          <BoundariesTypes Xm="Flux" Xp="Flux" Ym="Flux" Yp="Flux" Zm="Flux" Zp="Flux" />
+        </FeatureMapping>
+        <MembraneMapping Membrane="m0" Size="6563.0" AreaPerUnitArea="1.0" CalculateVoltage="false" SpecificCapacitance="1.0" InitialVoltage="0.0" GeometryClass="subdomain0_subdomain1_membrane">
+          <BoundariesTypes Xm="Flux" Xp="Flux" Ym="Flux" Yp="Flux" Zm="Flux" Zp="Flux" />
+        </MembraneMapping>
+      </GeometryContext>
+      <ReactionContext>
+        <LocalizedCompoundSpec LocalizedCompoundRef="Na" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>150000.0</InitialConcentration>
+          <Diffusion>D</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="Na_c" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>30000.0</InitialConcentration>
+          <Diffusion>D</Diffusion>
+        </LocalizedCompoundSpec>
+        <ReactionSpec ReactionStepRef="r0" ReactionMapping="included" />
+      </ReactionContext>
+      <MathDescription Name="Application0_generated">
+        <Constant Name="_F_">96485.3321</Constant>
+        <Constant Name="_F_nmol_">9.64853321E-5</Constant>
+        <Constant Name="_K_GHK_">1.0E-9</Constant>
+        <Constant Name="_N_pmol_">6.02214179E11</Constant>
+        <Constant Name="_PI_">3.141592653589793</Constant>
+        <Constant Name="_R_">8314.46261815</Constant>
+        <Constant Name="_T_">300.0</Constant>
+        <Constant Name="AreaPerUnitArea_m0">1.0</Constant>
+        <Constant Name="D">1000.0</Constant>
+        <Constant Name="K_millivolts_per_volt">1000.0</Constant>
+        <Constant Name="KMOLE">0.001660538783162726</Constant>
+        <Constant Name="L">0.0</Constant>
+        <Constant Name="L_r0">0.01</Constant>
+        <Constant Name="Na_c_init_uM">30000.0</Constant>
+        <Constant Name="Na_init_uM">150000.0</Constant>
+        <Constant Name="netValence">1.0</Constant>
+        <Constant Name="Voltage_m0">0.0</Constant>
+        <Constant Name="VolumePerUnitVolume_Cellular">1.0</Constant>
+        <Constant Name="VolumePerUnitVolume_Extracellular">1.0</Constant>
+        <VolumeVariable Name="Na" Domain="subdomain0" />
+        <VolumeVariable Name="Na_c" Domain="subdomain1" />
+        <Function Name="J_r0" Domain="subdomain0_subdomain1_membrane">((Kf * Na) - (Kr * Na_c))</Function>
+        <Function Name="Kf" Domain="subdomain0_subdomain1_membrane">(D / L_r0)</Function>
+        <Function Name="KFlux_m0_Cellular" Domain="subdomain0_subdomain1_membrane">(AreaPerUnitArea_m0 / VolumePerUnitVolume_Cellular)</Function>
+        <Function Name="KFlux_m0_Extracellular" Domain="subdomain0_subdomain1_membrane">(AreaPerUnitArea_m0 / VolumePerUnitVolume_Extracellular)</Function>
+        <Function Name="Kr" Domain="subdomain0_subdomain1_membrane">(D / L_r0)</Function>
+        <Function Name="Na_c_diffusionRate" Domain="subdomain1">D</Function>
+        <Function Name="Na_diffusionRate" Domain="subdomain0">D</Function>
+        <Function Name="Size_Cellular" Domain="subdomain1">(VolumePerUnitVolume_Cellular * vcRegionVolume('subdomain1'))</Function>
+        <Function Name="Size_Extracellular" Domain="subdomain0">(VolumePerUnitVolume_Extracellular * vcRegionVolume('subdomain0'))</Function>
+        <Function Name="Size_m0" Domain="subdomain0_subdomain1_membrane">(AreaPerUnitArea_m0 * vcRegionArea('subdomain0_subdomain1_membrane'))</Function>
+        <Function Name="sobj_subdomain11_subdomain00_size" Domain="subdomain0_subdomain1_membrane">vcRegionArea('subdomain0_subdomain1_membrane')</Function>
+        <Function Name="UnitFactor_uM_um3_molecules_neg_1">(1000000.0 / 6.02214179E8)</Function>
+        <Function Name="vobj_subdomain00_size" Domain="subdomain0">vcRegionVolume('subdomain0')</Function>
+        <Function Name="vobj_subdomain11_size" Domain="subdomain1">vcRegionVolume('subdomain1')</Function>
+        <CompartmentSubDomain Name="subdomain1">
+          <BoundaryType Boundary="Xm" Type="Flux" />
+          <BoundaryType Boundary="Xp" Type="Flux" />
+          <BoundaryType Boundary="Ym" Type="Flux" />
+          <BoundaryType Boundary="Yp" Type="Flux" />
+          <BoundaryType Boundary="Zm" Type="Flux" />
+          <BoundaryType Boundary="Zp" Type="Flux" />
+          <PdeEquation Name="Na_c" SolutionType="Unknown">
+            <Rate>0.0</Rate>
+            <Diffusion>Na_c_diffusionRate</Diffusion>
+            <Initial>Na_c_init_uM</Initial>
+          </PdeEquation>
+        </CompartmentSubDomain>
+        <CompartmentSubDomain Name="subdomain0">
+          <BoundaryType Boundary="Xm" Type="Flux" />
+          <BoundaryType Boundary="Xp" Type="Flux" />
+          <BoundaryType Boundary="Ym" Type="Flux" />
+          <BoundaryType Boundary="Yp" Type="Flux" />
+          <BoundaryType Boundary="Zm" Type="Flux" />
+          <BoundaryType Boundary="Zp" Type="Flux" />
+          <PdeEquation Name="Na" SolutionType="Unknown">
+            <Rate>0.0</Rate>
+            <Diffusion>Na_diffusionRate</Diffusion>
+            <Initial>Na_init_uM</Initial>
+          </PdeEquation>
+        </CompartmentSubDomain>
+        <MembraneSubDomain Name="subdomain0_subdomain1_membrane" InsideCompartment="subdomain0" OutsideCompartment="subdomain1">
+          <BoundaryType Boundary="Xm" Type="Value" />
+          <BoundaryType Boundary="Xp" Type="Value" />
+          <BoundaryType Boundary="Ym" Type="Value" />
+          <BoundaryType Boundary="Yp" Type="Value" />
+          <BoundaryType Boundary="Zm" Type="Value" />
+          <BoundaryType Boundary="Zp" Type="Value" />
+          <JumpCondition Name="Na">
+            <InFlux>- (UnitFactor_uM_um3_molecules_neg_1 * KFlux_m0_Extracellular * J_r0)</InFlux>
+            <OutFlux>0.0</OutFlux>
+          </JumpCondition>
+          <JumpCondition Name="Na_c">
+            <InFlux>0.0</InFlux>
+            <OutFlux>(UnitFactor_uM_um3_molecules_neg_1 * KFlux_m0_Cellular * J_r0)</OutFlux>
+          </JumpCondition>
+        </MembraneSubDomain>
+        <Version Name="Application0_generated" KeyValue="194760555" BranchId="194727642" Archived="0" Date="25-Nov-2020 18:27:08" FromVersionable="false">
+          <Owner Name="Vinitarii" Identifier="194725103" />
+          <GroupAccess Type="1" />
+        </Version>
+      </MathDescription>
+      <Simulation Name="Simulation0">
+        <SolverTaskDescription TaskType="Unsteady" UseSymbolicJacobian="false" Solver="Sundials Stiff PDE Solver (Variable Time Step)">
+          <TimeBound StartTime="0.0" EndTime="1.0" />
+          <TimeStep DefaultTime="0.05" MinTime="0.0" MaxTime="0.1" />
+          <ErrorTolerance Absolut="1.0E-9" Relative="1.0E-7" />
+          <OutputOptions OutputTimeStep="0.05" />
+          <SundialsSolverOptions>
+            <maxOrderAdvection>2</maxOrderAdvection>
+          </SundialsSolverOptions>
+          <NumberProcessors>1</NumberProcessors>
+        </SolverTaskDescription>
+        <MathOverrides>
+          <Constant Name="D">100.0</Constant>
+        </MathOverrides>
+        <MeshSpecification>
+          <Size X="51" Y="51" Z="51" />
+        </MeshSpecification>
+        <Version Name="Simulation0" KeyValue="194760565" BranchId="194727674" Archived="0" Date="25-Nov-2020 18:27:08" FromVersionable="false">
+          <Owner Name="Vinitarii" Identifier="194725103" />
+          <GroupAccess Type="1" />
+        </Version>
+      </Simulation>
+      <SpatialObjects>
+        <SpatialObject Name="vobj_subdomain00" Type="Volume" subVolume="subdomain0" regionId="0">
+          <QuantityCategoryList>
+            <QuantityCategory Name="VolumeCentroid" Enabled="false" />
+            <QuantityCategory Name="InteriorVelocity" Enabled="false" />
+            <QuantityCategory Name="VolumeRegionSize" Enabled="true" />
+          </QuantityCategoryList>
+        </SpatialObject>
+        <SpatialObject Name="vobj_subdomain11" Type="Volume" subVolume="subdomain1" regionId="1">
+          <QuantityCategoryList>
+            <QuantityCategory Name="VolumeCentroid" Enabled="false" />
+            <QuantityCategory Name="InteriorVelocity" Enabled="false" />
+            <QuantityCategory Name="VolumeRegionSize" Enabled="true" />
+          </QuantityCategoryList>
+        </SpatialObject>
+        <SpatialObject Name="sobj_subdomain11_subdomain00" Type="Surface" subVolumeInside="subdomain1" regionIdInside="1" subVolumeOutside="subdomain0" regionIdOutside="0">
+          <QuantityCategoryList>
+            <QuantityCategory Name="SurfaceNormal" Enabled="false" />
+            <QuantityCategory Name="SurfaceVelocity" Enabled="false" />
+            <QuantityCategory Name="DistanceToSurface" Enabled="false" />
+            <QuantityCategory Name="DirectionToSurface" Enabled="false" />
+            <QuantityCategory Name="SurfaceSize" Enabled="true" />
+          </QuantityCategoryList>
+        </SpatialObject>
+      </SpatialObjects>
+      <Version Name="Application0" KeyValue="194760557" BranchId="194727665" Archived="0" Date="25-Nov-2020 18:27:08" FromVersionable="false">
+        <Owner Name="Vinitarii" Identifier="194725103" />
+        <GroupAccess Type="1" />
+      </Version>
+      <MicroscopeMeasurement Name="fluor">
+        <ConvolutionKernel Type="ProjectionZKernel" />
+      </MicroscopeMeasurement>
+    </SimulationSpec>
+    <Version Name="ChannelSimple" KeyValue="194760567" BranchId="194727677" Archived="0" Date="25-Nov-2020 18:27:08" FromVersionable="false">
+      <Owner Name="Vinitarii" Identifier="194725103" />
+      <GroupAccess Type="1" />
+    </Version>
+    <pathwayModel>
+      <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:bp="http://www.biopax.org/release/biopax-level3.owl#" version="3.0" />
+    </pathwayModel>
+    <relationshipModel>
+      <RMNS version="3.0" />
+    </relationshipModel>
+    <vcmetadata>
+      <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" />
+      <nonrdfAnnotationList />
+      <uriBindingList />
+    </vcmetadata>
+  </BioModel>
+</vcml>
+

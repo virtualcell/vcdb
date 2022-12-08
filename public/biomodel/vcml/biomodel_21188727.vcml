@@ -1,0 +1,174 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--This biomodel was generated in VCML Version Alpha_Version_7.4.0_build_87-->
+<vcml xmlns="http://sourceforge.net/projects/vcell/vcml" Version="Alpha_Version_7.4.0_build_87">
+  <BioModel Name="cylinder_mem_diff">
+    <Model Name="unnamed">
+      <Compound Name="protein" />
+      <Feature Name="ec" KeyValue="21188707" />
+      <Feature Name="cyt" KeyValue="21188710" />
+      <Membrane InsideFeature="cyt" OutsideFeature="ec" PositiveFeature="cyt" NegativeFeature="ec" MembraneVoltage="Voltage_plasmaMem" Name="pm" KeyValue="21188709" />
+      <LocalizedCompound Name="protein_pm" CompoundRef="protein" Structure="pm" OverrideName="true" KeyValue="21188713" />
+      <Diagram Name="Unnamed compartment" Structure="ec" />
+      <Diagram Name="plasmaMem" Structure="pm" />
+      <Diagram Name="cytosol" Structure="cyt" />
+      <Version Name="unnamed" KeyValue="21188703" BranchId="21188704" Archived="0" Date="27-Mar-2007 13:33:46" FromVersionable="false">
+        <Owner Name="schaff" Identifier="17" />
+        <GroupAccess Type="1" />
+      </Version>
+      <ModelUnitSystem VolumeSubstanceUnit="uM.um3" MembraneSubstanceUnit="molecules" LumpedReactionSubstanceUnit="molecules" VolumeUnit="um3" AreaUnit="um2" LengthUnit="um" TimeUnit="s" />
+    </Model>
+    <SimulationSpec Name="spatial" Stochastic="false" UseConcentration="true" RuleBased="false" MassConservationModelReduction="true" InsufficientIterations="false" InsufficientMaxMolecules="false" CharacteristicSize="0.12483792918807557">
+      <NetworkConstraints RbmMaxIteration="1" RbmMaxMoleculesPerSpecies="10" RbmSpeciesLimit="800" RbmReactionsLimit="2500" />
+      <Annotation />
+      <Geometry Name="cylinder_10_10_10" Dimension="3">
+        <Extent X="12.0" Y="12.0" Z="12.0" />
+        <Origin X="-1.0" Y="-1.0" Z="-1.0" />
+        <SubVolume Name="subVolume1" Handle="0" Type="Analytical" KeyValue="21188634">
+          <AnalyticExpression>((((( - 5.0 + x) ^ 2.0) + (( - 5.0 + y) ^ 2.0)) &lt; 25.0) &amp;&amp; (z &gt;= 0.0) &amp;&amp; (z &lt;= 10.0))</AnalyticExpression>
+        </SubVolume>
+        <SubVolume Name="subVolume0" Handle="1" Type="Analytical" KeyValue="21188635">
+          <AnalyticExpression>1.0</AnalyticExpression>
+        </SubVolume>
+        <SurfaceClass Name="subVolume0_subVolume1_membrane" SubVolume1Ref="subVolume0" SubVolume2Ref="subVolume1" />
+        <SurfaceDescription NumSamplesX="100" NumSamplesY="100" NumSamplesZ="100" CutoffFrequency="0.3">
+          <VolumeRegion Name="subVolume11" RegionID="1" SubVolume="subVolume1" Size="780.986281548265" Unit="um3" />
+          <VolumeRegion Name="subVolume00" RegionID="0" SubVolume="subVolume0" Size="947.0137184517349" Unit="um3" />
+          <MembraneRegion Name="membrane_subVolume00_subVolume11" VolumeRegion1="subVolume11" VolumeRegion2="subVolume00" Size="462.9177529754457" Unit="um2" />
+        </SurfaceDescription>
+        <Version Name="cylinder_10_10_10" KeyValue="21188631" BranchId="21188514" Archived="0" Date="27-Mar-2007 13:28:50" FromVersionable="false">
+          <Owner Name="schaff" Identifier="17" />
+          <GroupAccess Type="1" />
+        </Version>
+      </Geometry>
+      <GeometryContext>
+        <FeatureMapping Feature="ec" GeometryClass="subVolume0" SubVolume="subVolume0">
+          <BoundariesTypes Xm="Flux" Xp="Flux" Ym="Flux" Yp="Flux" Zm="Flux" Zp="Flux" />
+        </FeatureMapping>
+        <FeatureMapping Feature="cyt" GeometryClass="subVolume1" SubVolume="subVolume1">
+          <BoundariesTypes Xm="Flux" Xp="Flux" Ym="Flux" Yp="Flux" Zm="Flux" Zp="Flux" />
+        </FeatureMapping>
+        <MembraneMapping Membrane="pm" SurfaceToVolumeRatio="1.0" VolumeFraction="0.2" CalculateVoltage="false" SpecificCapacitance="1.0" InitialVoltage="0.0" GeometryClass="subVolume0_subVolume1_membrane">
+          <BoundariesTypes Xm="Flux" Xp="Flux" Ym="Flux" Yp="Flux" Zm="Flux" Zp="Flux" />
+        </MembraneMapping>
+      </GeometryContext>
+      <ReactionContext>
+        <LocalizedCompoundSpec LocalizedCompoundRef="protein_pm" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>((z &gt;= 8.0) &amp;&amp; (z &lt;= 9.0) &amp;&amp; (y &lt; 9.0))</InitialConcentration>
+          <Diffusion>((z &gt;= 8.0) &amp;&amp; (z &lt;= 9.0))</Diffusion>
+        </LocalizedCompoundSpec>
+      </ReactionContext>
+      <MathDescription Name="spatial_generated">
+        <Constant Name="_F_">96480.0</Constant>
+        <Constant Name="_F_nmol_">9.648E-5</Constant>
+        <Constant Name="_K_GHK_">1.0E-9</Constant>
+        <Constant Name="_N_pmol_">6.02E11</Constant>
+        <Constant Name="_R_">8314.0</Constant>
+        <Constant Name="_T_">300.0</Constant>
+        <Constant Name="K_millivolts_per_volt">1000.0</Constant>
+        <Constant Name="KMOLE">0.0016611295681063123</Constant>
+        <Constant Name="Voltage_plasmaMem">0.0</Constant>
+        <MembraneVariable Name="protein_pm" />
+        <Function Name="protein_pm_diffusionRate">((z &gt;= 8.0) &amp;&amp; (z &lt;= 9.0))</Function>
+        <Function Name="protein_pm_init">((z &gt;= 8.0) &amp;&amp; (z &lt;= 9.0) &amp;&amp; (y &lt; 9.0))</Function>
+        <CompartmentSubDomain Name="subVolume1">
+          <BoundaryType Boundary="Xm" Type="Flux" />
+          <BoundaryType Boundary="Xp" Type="Flux" />
+          <BoundaryType Boundary="Ym" Type="Flux" />
+          <BoundaryType Boundary="Yp" Type="Flux" />
+          <BoundaryType Boundary="Zm" Type="Flux" />
+          <BoundaryType Boundary="Zp" Type="Flux" />
+        </CompartmentSubDomain>
+        <CompartmentSubDomain Name="subVolume0">
+          <BoundaryType Boundary="Xm" Type="Flux" />
+          <BoundaryType Boundary="Xp" Type="Flux" />
+          <BoundaryType Boundary="Ym" Type="Flux" />
+          <BoundaryType Boundary="Yp" Type="Flux" />
+          <BoundaryType Boundary="Zm" Type="Flux" />
+          <BoundaryType Boundary="Zp" Type="Flux" />
+        </CompartmentSubDomain>
+        <MembraneSubDomain Name="subVolume0_subVolume1_membrane" InsideCompartment="subVolume1" OutsideCompartment="subVolume0">
+          <BoundaryType Boundary="Xm" Type="Value" />
+          <BoundaryType Boundary="Xp" Type="Value" />
+          <BoundaryType Boundary="Ym" Type="Value" />
+          <BoundaryType Boundary="Yp" Type="Value" />
+          <BoundaryType Boundary="Zm" Type="Value" />
+          <BoundaryType Boundary="Zp" Type="Value" />
+          <PdeEquation Name="protein_pm" SolutionType="Unknown">
+            <Rate>0.0</Rate>
+            <Diffusion>protein_pm_diffusionRate</Diffusion>
+            <Initial>protein_pm_init</Initial>
+          </PdeEquation>
+        </MembraneSubDomain>
+        <Version Name="spatial_generated" KeyValue="21188700" BranchId="21188701" Archived="0" Date="27-Mar-2007 13:33:46" FromVersionable="false">
+          <Owner Name="schaff" Identifier="17" />
+          <GroupAccess Type="1" />
+        </Version>
+      </MathDescription>
+      <Simulation Name="Simulation0">
+        <SolverTaskDescription TaskType="Unsteady" UseSymbolicJacobian="false" Solver="Finite Volume, Regular Grid">
+          <TimeBound StartTime="0.0" EndTime="10.0" />
+          <TimeStep DefaultTime="0.1" MinTime="1.0E-8" MaxTime="1.0" />
+          <ErrorTolerance Absolut="1.0E-9" Relative="1.0E-9" />
+          <OutputOptions KeepEvery="1" KeepAtMost="1000" />
+          <NumberProcessors>1</NumberProcessors>
+        </SolverTaskDescription>
+        <MathOverrides />
+        <MeshSpecification>
+          <Size X="51" Y="51" Z="51" />
+        </MeshSpecification>
+        <Version Name="Simulation0" KeyValue="21188724" BranchId="21188725" Archived="0" Date="27-Mar-2007 13:33:46" FromVersionable="false">
+          <Owner Name="schaff" Identifier="17" />
+          <GroupAccess Type="1" />
+        </Version>
+      </Simulation>
+      <SpatialObjects>
+        <SpatialObject Name="vobj_subVolume11" Type="Volume" subVolume="subVolume1" regionId="1">
+          <QuantityCategoryList>
+            <QuantityCategory Name="VolumeCentroid" Enabled="false" />
+            <QuantityCategory Name="InteriorVelocity" Enabled="false" />
+            <QuantityCategory Name="VolumeRegionSize" Enabled="true" />
+          </QuantityCategoryList>
+        </SpatialObject>
+        <SpatialObject Name="vobj_subVolume00" Type="Volume" subVolume="subVolume0" regionId="0">
+          <QuantityCategoryList>
+            <QuantityCategory Name="VolumeCentroid" Enabled="false" />
+            <QuantityCategory Name="InteriorVelocity" Enabled="false" />
+            <QuantityCategory Name="VolumeRegionSize" Enabled="true" />
+          </QuantityCategoryList>
+        </SpatialObject>
+        <SpatialObject Name="sobj_subVolume11_subVolume00" Type="Surface" subVolumeInside="subVolume1" regionIdInside="1" subVolumeOutside="subVolume0" regionIdOutside="0">
+          <QuantityCategoryList>
+            <QuantityCategory Name="SurfaceNormal" Enabled="false" />
+            <QuantityCategory Name="SurfaceVelocity" Enabled="false" />
+            <QuantityCategory Name="DistanceToSurface" Enabled="false" />
+            <QuantityCategory Name="DirectionToSurface" Enabled="false" />
+            <QuantityCategory Name="SurfaceSize" Enabled="true" />
+          </QuantityCategoryList>
+        </SpatialObject>
+      </SpatialObjects>
+      <Version Name="spatial" KeyValue="21188717" BranchId="21188718" Archived="0" Date="27-Mar-2007 13:33:46" FromVersionable="false">
+        <Owner Name="schaff" Identifier="17" />
+        <GroupAccess Type="1" />
+      </Version>
+      <MicroscopeMeasurement Name="fluor">
+        <ConvolutionKernel Type="ProjectionZKernel" />
+      </MicroscopeMeasurement>
+    </SimulationSpec>
+    <Version Name="cylinder_mem_diff" KeyValue="21188727" BranchId="21188728" Archived="0" Date="27-Mar-2007 13:33:46" FromVersionable="false">
+      <Owner Name="schaff" Identifier="17" />
+      <GroupAccess Type="0" />
+    </Version>
+    <pathwayModel>
+      <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:bp="http://www.biopax.org/release/biopax-level3.owl#" version="3.0" />
+    </pathwayModel>
+    <relationshipModel>
+      <RMNS version="3.0" />
+    </relationshipModel>
+    <vcmetadata>
+      <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" />
+      <nonrdfAnnotationList />
+      <uriBindingList />
+    </vcmetadata>
+  </BioModel>
+</vcml>
+

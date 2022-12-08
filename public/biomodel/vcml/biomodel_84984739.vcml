@@ -1,0 +1,1191 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--This biomodel was generated in VCML Version Alpha_Version_7.4.0_build_87-->
+<vcml xmlns="http://sourceforge.net/projects/vcell/vcml" Version="Alpha_Version_7.4.0_build_87">
+  <BioModel Name="PH-GFP-End_2011">
+    <Annotation>cloned from 'PH-GFP-Start_2011' owned by user ccb_spatial
+cloned from 'phgfp_full' owned by user schaff</Annotation>
+    <Model Name="unnamed">
+      <Annotation>cloned from 'unnamed' owned by user ccb_spatial
+cloned from 'unnamed' owned by user schaff</Annotation>
+      <ModelParameters>
+        <Parameter Name="Kd" Role="user defined" Unit="uM">2.0</Parameter>
+        <Parameter Name="Kf_PIP2PH" Role="user defined" Unit="uM-1.s-1">200.0</Parameter>
+        <Parameter Name="bleach_rate" Role="user defined" Unit="uM-1.s-1">1.0</Parameter>
+      </ModelParameters>
+      <Compound Name="hv" />
+      <Compound Name="PH_GFP" />
+      <Compound Name="PIP2" />
+      <Compound Name="PIP2_phgfp" />
+      <Compound Name="PIP2_phgfp_bl" />
+      <Compound Name="PH_GFP_bl" />
+      <Feature Name="cyt" KeyValue="58195882" />
+      <Feature Name="nuc" KeyValue="58195885" />
+      <Feature Name="ec" KeyValue="58195880" />
+      <Membrane InsideFeature="cyt" OutsideFeature="ec" PositiveFeature="cyt" NegativeFeature="ec" MembraneVoltage="Voltage_pm" Name="pm" KeyValue="58195881" />
+      <Membrane InsideFeature="nuc" OutsideFeature="cyt" PositiveFeature="nuc" NegativeFeature="cyt" MembraneVoltage="Voltage_nucMem" Name="nucMem" KeyValue="58195884" />
+      <LocalizedCompound Name="hv_cyt" CompoundRef="hv" Structure="cyt" OverrideName="true" KeyValue="58195890" />
+      <LocalizedCompound Name="PH_GFP_cyt" CompoundRef="PH_GFP" Structure="cyt" OverrideName="true" KeyValue="58195891" />
+      <LocalizedCompound Name="PIP2_pm" CompoundRef="PIP2" Structure="pm" OverrideName="true" KeyValue="58195892" />
+      <LocalizedCompound Name="PIP2_phgfp_pm" CompoundRef="PIP2_phgfp" Structure="pm" OverrideName="true" KeyValue="58195893" />
+      <LocalizedCompound Name="PIP2_phgfp_bl_pm" CompoundRef="PIP2_phgfp_bl" Structure="pm" OverrideName="true" KeyValue="58195894" />
+      <LocalizedCompound Name="PH_GFP_bl_cyt" CompoundRef="PH_GFP_bl" Structure="cyt" OverrideName="true" KeyValue="58195895" />
+      <SimpleReaction Structure="cyt" Name="bleach_cyt" Reversible="true" FluxOption="MolecularOnly" KeyValue="58195896">
+        <Reactant LocalizedCompoundRef="PH_GFP_cyt" Stoichiometry="1" KeyValue="58195897" />
+        <Product LocalizedCompoundRef="PH_GFP_bl_cyt" Stoichiometry="1" KeyValue="58195898" />
+        <Modifier LocalizedCompoundRef="hv_cyt" />
+        <Kinetics KineticsType="GeneralKinetics">
+          <Parameter Name="J" Role="reaction rate" Unit="uM.s-1">(k * PH_GFP_cyt)</Parameter>
+          <Parameter Name="k" Role="user defined" Unit="s-1">(bleach_rate * hv_cyt)</Parameter>
+        </Kinetics>
+      </SimpleReaction>
+      <SimpleReaction Structure="pm" Name="reaction1" Reversible="true" FluxOption="MolecularOnly" KeyValue="58195900">
+        <Reactant LocalizedCompoundRef="PIP2_pm" Stoichiometry="1" KeyValue="58195901" />
+        <Reactant LocalizedCompoundRef="PH_GFP_cyt" Stoichiometry="1" KeyValue="58195902" />
+        <Product LocalizedCompoundRef="PIP2_phgfp_pm" Stoichiometry="1" KeyValue="58195903" />
+        <Kinetics KineticsType="MassAction">
+          <Parameter Name="J" Role="reaction rate" Unit="molecules.um-2.s-1">(((Kf * PIP2_pm) * PH_GFP_cyt) - (Kr * PIP2_phgfp_pm))</Parameter>
+          <Parameter Name="I" Role="inward current density" Unit="pA.um-2">0.0</Parameter>
+          <Parameter Name="netValence" Role="net charge valence" Unit="1">0.0</Parameter>
+          <Parameter Name="Kf" Role="forward rate constant" Unit="s-1.uM-1">Kf_PIP2PH</Parameter>
+          <Parameter Name="Kr" Role="reverse rate constant" Unit="s-1">(Kf * Kd)</Parameter>
+        </Kinetics>
+      </SimpleReaction>
+      <SimpleReaction Structure="pm" Name="reaction2" Reversible="true" FluxOption="MolecularOnly" KeyValue="58195904">
+        <Reactant LocalizedCompoundRef="PIP2_pm" Stoichiometry="1" KeyValue="58195905" />
+        <Reactant LocalizedCompoundRef="PH_GFP_bl_cyt" Stoichiometry="1" KeyValue="58195906" />
+        <Product LocalizedCompoundRef="PIP2_phgfp_bl_pm" Stoichiometry="1" KeyValue="58195907" />
+        <Kinetics KineticsType="MassAction">
+          <Parameter Name="J" Role="reaction rate" Unit="molecules.um-2.s-1">(((Kf * PIP2_pm) * PH_GFP_bl_cyt) - (Kr * PIP2_phgfp_bl_pm))</Parameter>
+          <Parameter Name="I" Role="inward current density" Unit="pA.um-2">0.0</Parameter>
+          <Parameter Name="netValence" Role="net charge valence" Unit="1">0.0</Parameter>
+          <Parameter Name="Kf" Role="forward rate constant" Unit="s-1.uM-1">Kf_PIP2PH</Parameter>
+          <Parameter Name="Kr" Role="reverse rate constant" Unit="s-1">(Kf * Kd)</Parameter>
+        </Kinetics>
+      </SimpleReaction>
+      <Diagram Name="Unnamed compartment" Structure="ec">
+        <SimpleReactionShape NodeReferenceModeAttrTag="full" SimpleReactionRef="bleach_cyt" LocationX="69" LocationY="163" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="PIP2_phgfp_pm" LocationX="36" LocationY="261" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="PIP2_phgfp_bl_pm" LocationX="35" LocationY="72" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="PH_GFP_cyt" LocationX="70" LocationY="257" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="full" SimpleReactionRef="reaction1" LocationX="115" LocationY="268" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="full" SimpleReactionRef="reaction2" LocationX="61" LocationY="112" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="PH_GFP_bl_cyt" LocationX="38" LocationY="119" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="PIP2_pm" LocationX="39" LocationY="191" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="hv_cyt" LocationX="112" LocationY="123" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="molecule" SimpleReactionRef="bleach_cyt" LocationX="69" LocationY="163" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="PIP2_phgfp_pm" LocationX="36" LocationY="261" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="PIP2_phgfp_bl_pm" LocationX="35" LocationY="72" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="PH_GFP_cyt" LocationX="70" LocationY="257" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="molecule" SimpleReactionRef="reaction1" LocationX="115" LocationY="268" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="molecule" SimpleReactionRef="reaction2" LocationX="61" LocationY="112" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="PH_GFP_bl_cyt" LocationX="38" LocationY="119" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="PIP2_pm" LocationX="39" LocationY="191" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="hv_cyt" LocationX="112" LocationY="123" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="rule" SimpleReactionRef="bleach_cyt" LocationX="69" LocationY="163" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="PIP2_phgfp_pm" LocationX="36" LocationY="261" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="PIP2_phgfp_bl_pm" LocationX="35" LocationY="72" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="PH_GFP_cyt" LocationX="70" LocationY="257" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="rule" SimpleReactionRef="reaction1" LocationX="115" LocationY="268" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="rule" SimpleReactionRef="reaction2" LocationX="61" LocationY="112" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="PH_GFP_bl_cyt" LocationX="38" LocationY="119" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="PIP2_pm" LocationX="39" LocationY="191" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="hv_cyt" LocationX="112" LocationY="123" />
+      </Diagram>
+      <Diagram Name="pm" Structure="pm">
+        <SimpleReactionShape NodeReferenceModeAttrTag="full" SimpleReactionRef="bleach_cyt" LocationX="69" LocationY="163" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="PIP2_phgfp_pm" LocationX="36" LocationY="261" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="PIP2_phgfp_bl_pm" LocationX="35" LocationY="72" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="PH_GFP_cyt" LocationX="70" LocationY="257" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="full" SimpleReactionRef="reaction1" LocationX="115" LocationY="268" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="full" SimpleReactionRef="reaction2" LocationX="61" LocationY="112" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="PH_GFP_bl_cyt" LocationX="38" LocationY="119" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="PIP2_pm" LocationX="39" LocationY="191" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="hv_cyt" LocationX="112" LocationY="123" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="molecule" SimpleReactionRef="bleach_cyt" LocationX="69" LocationY="163" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="PIP2_phgfp_pm" LocationX="36" LocationY="261" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="PIP2_phgfp_bl_pm" LocationX="35" LocationY="72" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="PH_GFP_cyt" LocationX="70" LocationY="257" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="molecule" SimpleReactionRef="reaction1" LocationX="115" LocationY="268" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="molecule" SimpleReactionRef="reaction2" LocationX="61" LocationY="112" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="PH_GFP_bl_cyt" LocationX="38" LocationY="119" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="PIP2_pm" LocationX="39" LocationY="191" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="hv_cyt" LocationX="112" LocationY="123" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="rule" SimpleReactionRef="bleach_cyt" LocationX="69" LocationY="163" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="PIP2_phgfp_pm" LocationX="36" LocationY="261" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="PIP2_phgfp_bl_pm" LocationX="35" LocationY="72" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="PH_GFP_cyt" LocationX="70" LocationY="257" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="rule" SimpleReactionRef="reaction1" LocationX="115" LocationY="268" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="rule" SimpleReactionRef="reaction2" LocationX="61" LocationY="112" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="PH_GFP_bl_cyt" LocationX="38" LocationY="119" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="PIP2_pm" LocationX="39" LocationY="191" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="hv_cyt" LocationX="112" LocationY="123" />
+      </Diagram>
+      <Diagram Name="cyt" Structure="cyt">
+        <SimpleReactionShape NodeReferenceModeAttrTag="full" SimpleReactionRef="bleach_cyt" LocationX="69" LocationY="163" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="PIP2_phgfp_pm" LocationX="36" LocationY="261" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="PIP2_phgfp_bl_pm" LocationX="35" LocationY="72" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="PH_GFP_cyt" LocationX="70" LocationY="257" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="full" SimpleReactionRef="reaction1" LocationX="115" LocationY="268" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="full" SimpleReactionRef="reaction2" LocationX="61" LocationY="112" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="PH_GFP_bl_cyt" LocationX="38" LocationY="119" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="PIP2_pm" LocationX="39" LocationY="191" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="hv_cyt" LocationX="112" LocationY="123" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="molecule" SimpleReactionRef="bleach_cyt" LocationX="69" LocationY="163" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="PIP2_phgfp_pm" LocationX="36" LocationY="261" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="PIP2_phgfp_bl_pm" LocationX="35" LocationY="72" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="PH_GFP_cyt" LocationX="70" LocationY="257" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="molecule" SimpleReactionRef="reaction1" LocationX="115" LocationY="268" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="molecule" SimpleReactionRef="reaction2" LocationX="61" LocationY="112" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="PH_GFP_bl_cyt" LocationX="38" LocationY="119" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="PIP2_pm" LocationX="39" LocationY="191" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="hv_cyt" LocationX="112" LocationY="123" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="rule" SimpleReactionRef="bleach_cyt" LocationX="69" LocationY="163" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="PIP2_phgfp_pm" LocationX="36" LocationY="261" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="PIP2_phgfp_bl_pm" LocationX="35" LocationY="72" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="PH_GFP_cyt" LocationX="70" LocationY="257" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="rule" SimpleReactionRef="reaction1" LocationX="115" LocationY="268" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="rule" SimpleReactionRef="reaction2" LocationX="61" LocationY="112" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="PH_GFP_bl_cyt" LocationX="38" LocationY="119" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="PIP2_pm" LocationX="39" LocationY="191" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="hv_cyt" LocationX="112" LocationY="123" />
+      </Diagram>
+      <Diagram Name="nucMem" Structure="nucMem">
+        <SimpleReactionShape NodeReferenceModeAttrTag="full" SimpleReactionRef="bleach_cyt" LocationX="69" LocationY="163" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="PIP2_phgfp_pm" LocationX="36" LocationY="261" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="PIP2_phgfp_bl_pm" LocationX="35" LocationY="72" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="PH_GFP_cyt" LocationX="70" LocationY="257" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="full" SimpleReactionRef="reaction1" LocationX="115" LocationY="268" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="full" SimpleReactionRef="reaction2" LocationX="61" LocationY="112" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="PH_GFP_bl_cyt" LocationX="38" LocationY="119" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="PIP2_pm" LocationX="39" LocationY="191" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="hv_cyt" LocationX="112" LocationY="123" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="molecule" SimpleReactionRef="bleach_cyt" LocationX="69" LocationY="163" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="PIP2_phgfp_pm" LocationX="36" LocationY="261" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="PIP2_phgfp_bl_pm" LocationX="35" LocationY="72" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="PH_GFP_cyt" LocationX="70" LocationY="257" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="molecule" SimpleReactionRef="reaction1" LocationX="115" LocationY="268" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="molecule" SimpleReactionRef="reaction2" LocationX="61" LocationY="112" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="PH_GFP_bl_cyt" LocationX="38" LocationY="119" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="PIP2_pm" LocationX="39" LocationY="191" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="hv_cyt" LocationX="112" LocationY="123" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="rule" SimpleReactionRef="bleach_cyt" LocationX="69" LocationY="163" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="PIP2_phgfp_pm" LocationX="36" LocationY="261" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="PIP2_phgfp_bl_pm" LocationX="35" LocationY="72" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="PH_GFP_cyt" LocationX="70" LocationY="257" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="rule" SimpleReactionRef="reaction1" LocationX="115" LocationY="268" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="rule" SimpleReactionRef="reaction2" LocationX="61" LocationY="112" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="PH_GFP_bl_cyt" LocationX="38" LocationY="119" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="PIP2_pm" LocationX="39" LocationY="191" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="hv_cyt" LocationX="112" LocationY="123" />
+      </Diagram>
+      <Diagram Name="nuc" Structure="nuc">
+        <SimpleReactionShape NodeReferenceModeAttrTag="full" SimpleReactionRef="bleach_cyt" LocationX="69" LocationY="163" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="PIP2_phgfp_pm" LocationX="36" LocationY="261" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="PIP2_phgfp_bl_pm" LocationX="35" LocationY="72" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="PH_GFP_cyt" LocationX="70" LocationY="257" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="full" SimpleReactionRef="reaction1" LocationX="115" LocationY="268" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="full" SimpleReactionRef="reaction2" LocationX="61" LocationY="112" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="PH_GFP_bl_cyt" LocationX="38" LocationY="119" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="PIP2_pm" LocationX="39" LocationY="191" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="hv_cyt" LocationX="112" LocationY="123" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="molecule" SimpleReactionRef="bleach_cyt" LocationX="69" LocationY="163" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="PIP2_phgfp_pm" LocationX="36" LocationY="261" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="PIP2_phgfp_bl_pm" LocationX="35" LocationY="72" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="PH_GFP_cyt" LocationX="70" LocationY="257" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="molecule" SimpleReactionRef="reaction1" LocationX="115" LocationY="268" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="molecule" SimpleReactionRef="reaction2" LocationX="61" LocationY="112" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="PH_GFP_bl_cyt" LocationX="38" LocationY="119" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="PIP2_pm" LocationX="39" LocationY="191" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="hv_cyt" LocationX="112" LocationY="123" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="rule" SimpleReactionRef="bleach_cyt" LocationX="69" LocationY="163" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="PIP2_phgfp_pm" LocationX="36" LocationY="261" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="PIP2_phgfp_bl_pm" LocationX="35" LocationY="72" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="PH_GFP_cyt" LocationX="70" LocationY="257" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="rule" SimpleReactionRef="reaction1" LocationX="115" LocationY="268" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="rule" SimpleReactionRef="reaction2" LocationX="61" LocationY="112" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="PH_GFP_bl_cyt" LocationX="38" LocationY="119" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="PIP2_pm" LocationX="39" LocationY="191" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="hv_cyt" LocationX="112" LocationY="123" />
+      </Diagram>
+      <Version Name="unnamed" KeyValue="58195871" BranchId="58195872" Archived="0" Date="06-Jul-2011 01:06:58" FromVersionable="false">
+        <Owner Name="schaff" Identifier="17" />
+        <GroupAccess Type="1" />
+        <Annotation>cloned from 'unnamed' owned by user ccb_spatial
+cloned from 'unnamed' owned by user schaff</Annotation>
+      </Version>
+      <ModelUnitSystem VolumeSubstanceUnit="uM.um3" MembraneSubstanceUnit="molecules" LumpedReactionSubstanceUnit="molecules" VolumeUnit="um3" AreaUnit="um2" LengthUnit="um" TimeUnit="s" />
+    </Model>
+    <SimulationSpec Name="comp_ss" Stochastic="false" UseConcentration="true" RuleBased="false" MassConservationModelReduction="true" InsufficientIterations="false" InsufficientMaxMolecules="false">
+      <NetworkConstraints RbmMaxIteration="1" RbmMaxMoleculesPerSpecies="10" RbmSpeciesLimit="800" RbmReactionsLimit="2500" />
+      <Annotation>cloned from 'comp_ss' owned by user ccb_spatial
+cloned from 'comp_ss' owned by user schaff</Annotation>
+      <Geometry Name="non-spatial931162606" Dimension="0">
+        <Annotation>cloned from 'non-spatial1583096641' owned by user ccb_spatial
+cloned from 'non-spatial1583096641' owned by user schaff</Annotation>
+        <Extent X="10.0" Y="10.0" Z="10.0" />
+        <Origin X="0.0" Y="0.0" Z="0.0" />
+        <SubVolume Name="Compartment" Handle="0" Type="Compartmental" KeyValue="58195804" />
+        <Version Name="non-spatial931162606" KeyValue="58195800" BranchId="58195801" Archived="0" Date="06-Jul-2011 01:06:56" FromVersionable="false">
+          <Owner Name="schaff" Identifier="17" />
+          <GroupAccess Type="1" />
+          <Annotation>cloned from 'non-spatial1583096641' owned by user ccb_spatial
+cloned from 'non-spatial1583096641' owned by user schaff</Annotation>
+        </Version>
+      </Geometry>
+      <GeometryContext>
+        <FeatureMapping Feature="cyt" GeometryClass="Compartment" SubVolume="Compartment" Size="1316.0">
+          <BoundariesTypes Xm="Flux" Xp="Flux" Ym="Flux" Yp="Flux" Zm="Flux" Zp="Flux" />
+        </FeatureMapping>
+        <FeatureMapping Feature="nuc" GeometryClass="Compartment" SubVolume="Compartment" Size="326.0">
+          <BoundariesTypes Xm="Flux" Xp="Flux" Ym="Flux" Yp="Flux" Zm="Flux" Zp="Flux" />
+        </FeatureMapping>
+        <FeatureMapping Feature="ec" GeometryClass="Compartment" SubVolume="Compartment" Size="1814.0">
+          <BoundariesTypes Xm="Flux" Xp="Flux" Ym="Flux" Yp="Flux" Zm="Flux" Zp="Flux" />
+        </FeatureMapping>
+        <MembraneMapping Membrane="pm" SurfaceToVolumeRatio="6.090133982947625E-4" VolumeFraction="0.47511574074074076" Size="1.0" CalculateVoltage="false" SpecificCapacitance="1.0" InitialVoltage="0.0" GeometryClass="Compartment">
+          <BoundariesTypes Xm="Flux" Xp="Flux" Ym="Flux" Yp="Flux" Zm="Flux" Zp="Flux" />
+        </MembraneMapping>
+        <MembraneMapping Membrane="nucMem" SurfaceToVolumeRatio="0.003067484662576687" VolumeFraction="0.19853836784409257" Size="1.0" CalculateVoltage="false" SpecificCapacitance="1.0" InitialVoltage="0.0" GeometryClass="Compartment">
+          <BoundariesTypes Xm="Flux" Xp="Flux" Ym="Flux" Yp="Flux" Zm="Flux" Zp="Flux" />
+        </MembraneMapping>
+      </GeometryContext>
+      <ReactionContext>
+        <LocalizedCompoundSpec LocalizedCompoundRef="hv_cyt" ForceConstant="true" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>0.0</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="PH_GFP_cyt" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>1.0</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="PH_GFP_bl_cyt" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>9.999999999999911E-5</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="PIP2_pm" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>12000.0</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="PIP2_phgfp_pm" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>1.0</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="PIP2_phgfp_bl_pm" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>0.0</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <ReactionSpec ReactionStepRef="bleach_cyt" ReactionMapping="included" />
+        <ReactionSpec ReactionStepRef="reaction1" ReactionMapping="included" />
+        <ReactionSpec ReactionStepRef="reaction2" ReactionMapping="included" />
+      </ReactionContext>
+      <MathDescription Name="comp_ss_generated">
+        <Annotation>cloned from 'comp_ss_generated' owned by user ccb_spatial
+cloned from 'comp_ss_generated' owned by user schaff</Annotation>
+        <Constant Name="_F_">96480.0</Constant>
+        <Constant Name="_F_nmol_">9.648E-5</Constant>
+        <Constant Name="_K_GHK_">1.0E-9</Constant>
+        <Constant Name="_N_pmol_">6.02E11</Constant>
+        <Constant Name="_PI_">3.141592653589793</Constant>
+        <Constant Name="_R_">8314.0</Constant>
+        <Constant Name="_T_">300.0</Constant>
+        <Constant Name="bleach_rate">1.0</Constant>
+        <Constant Name="hv_cyt">0.0</Constant>
+        <Constant Name="hv_cyt_init_uM">0.0</Constant>
+        <Constant Name="K_millivolts_per_volt">1000.0</Constant>
+        <Constant Name="Kd">2.0</Constant>
+        <Constant Name="Kf_PIP2PH">200.0</Constant>
+        <Constant Name="KMOLE">0.0016611295681063123</Constant>
+        <Constant Name="PH_GFP_bl_cyt_init_uM">9.999999999999911E-5</Constant>
+        <Constant Name="PH_GFP_cyt_init_uM">1.0</Constant>
+        <Constant Name="PIP2_phgfp_bl_pm_init_molecules_per_um2">0.0</Constant>
+        <Constant Name="PIP2_phgfp_pm_init_molecules_per_um2">1.0</Constant>
+        <Constant Name="PIP2_pm_init_molecules_per_um2">12000.0</Constant>
+        <Constant Name="Size_cyt">1316.0</Constant>
+        <Constant Name="Size_ec">1814.0</Constant>
+        <Constant Name="Size_nuc">326.0</Constant>
+        <Constant Name="Size_nucMem">1.0</Constant>
+        <Constant Name="Size_pm">1.0</Constant>
+        <Constant Name="Voltage_nucMem">0.0</Constant>
+        <Constant Name="Voltage_pm">0.0</Constant>
+        <VolumeVariable Name="PH_GFP_bl_cyt" Domain="Compartment" />
+        <VolumeVariable Name="PIP2_phgfp_bl_pm" Domain="Compartment" />
+        <VolumeVariable Name="PIP2_phgfp_pm" Domain="Compartment" />
+        <Function Name="J_bleach_cyt" Domain="Compartment">(k * PH_GFP_cyt)</Function>
+        <Function Name="J_reaction1" Domain="Compartment">((PH_GFP_cyt * Kf_reaction1 * PIP2_pm) - (Kr_reaction1 * PIP2_phgfp_pm))</Function>
+        <Function Name="J_reaction2" Domain="Compartment">((PH_GFP_bl_cyt * Kf_reaction2 * PIP2_pm) - (Kr_reaction2 * PIP2_phgfp_bl_pm))</Function>
+        <Function Name="k" Domain="Compartment">(bleach_rate * hv_cyt)</Function>
+        <Function Name="K_PH_GFP_cyt_total" Domain="Compartment">((PIP2_phgfp_bl_pm_init_molecules_per_um2 * Size_pm * KMOLE) + (PIP2_phgfp_pm_init_molecules_per_um2 * Size_pm * KMOLE) + (Size_cyt * PH_GFP_cyt_init_uM) + (Size_cyt * PH_GFP_bl_cyt_init_uM))</Function>
+        <Function Name="K_PIP2_pm_total" Domain="Compartment">((PIP2_phgfp_bl_pm_init_molecules_per_um2 * Size_pm * KMOLE) + (PIP2_pm_init_molecules_per_um2 * Size_pm * KMOLE) + (PIP2_phgfp_pm_init_molecules_per_um2 * Size_pm * KMOLE))</Function>
+        <Function Name="Kf_reaction1" Domain="Compartment">Kf_PIP2PH</Function>
+        <Function Name="Kf_reaction2" Domain="Compartment">Kf_PIP2PH</Function>
+        <Function Name="KFlux_nucMem_cyt" Domain="Compartment">(Size_nucMem / Size_cyt)</Function>
+        <Function Name="KFlux_nucMem_nuc" Domain="Compartment">(Size_nucMem / Size_nuc)</Function>
+        <Function Name="KFlux_pm_cyt" Domain="Compartment">(Size_pm / Size_cyt)</Function>
+        <Function Name="KFlux_pm_ec" Domain="Compartment">(Size_pm / Size_ec)</Function>
+        <Function Name="Kr_reaction1" Domain="Compartment">(Kf_reaction1 * Kd)</Function>
+        <Function Name="Kr_reaction2" Domain="Compartment">(Kf_reaction2 * Kd)</Function>
+        <Function Name="PH_GFP_cyt" Domain="Compartment">(( - (PIP2_phgfp_bl_pm * Size_pm * KMOLE) - (PIP2_phgfp_pm * Size_pm * KMOLE) + K_PH_GFP_cyt_total - (Size_cyt * PH_GFP_bl_cyt)) / Size_cyt)</Function>
+        <Function Name="PIP2_pm" Domain="Compartment">(( - (PIP2_phgfp_bl_pm * Size_pm * KMOLE) + K_PIP2_pm_total - (PIP2_phgfp_pm * Size_pm * KMOLE)) / (Size_pm * KMOLE))</Function>
+        <CompartmentSubDomain Name="Compartment">
+          <BoundaryType Boundary="Xm" Type="Value" />
+          <BoundaryType Boundary="Xp" Type="Value" />
+          <BoundaryType Boundary="Ym" Type="Value" />
+          <BoundaryType Boundary="Yp" Type="Value" />
+          <BoundaryType Boundary="Zm" Type="Value" />
+          <BoundaryType Boundary="Zp" Type="Value" />
+          <OdeEquation Name="PH_GFP_bl_cyt" SolutionType="Unknown">
+            <Rate>(J_bleach_cyt - (KFlux_pm_cyt * KMOLE * J_reaction2))</Rate>
+            <Initial>PH_GFP_bl_cyt_init_uM</Initial>
+          </OdeEquation>
+          <OdeEquation Name="PIP2_phgfp_pm" SolutionType="Unknown">
+            <Rate>J_reaction1</Rate>
+            <Initial>PIP2_phgfp_pm_init_molecules_per_um2</Initial>
+          </OdeEquation>
+          <OdeEquation Name="PIP2_phgfp_bl_pm" SolutionType="Unknown">
+            <Rate>J_reaction2</Rate>
+            <Initial>PIP2_phgfp_bl_pm_init_molecules_per_um2</Initial>
+          </OdeEquation>
+        </CompartmentSubDomain>
+        <Version Name="comp_ss_generated" KeyValue="72863889" BranchId="58195857" Archived="0" Date="01-Aug-2012 19:41:28" FromVersionable="false">
+          <Owner Name="schaff" Identifier="17" />
+          <GroupAccess Type="1" />
+          <Annotation>cloned from 'comp_ss_generated' owned by user ccb_spatial
+cloned from 'comp_ss_generated' owned by user schaff</Annotation>
+        </Version>
+      </MathDescription>
+      <Simulation Name="Simulation0">
+        <Annotation>cloned from 'Simulation0' owned by user ccb_spatial
+cloned from 'Simulation0' owned by user schaff</Annotation>
+        <SolverTaskDescription TaskType="Unsteady" UseSymbolicJacobian="false" Solver="Combined Stiff Solver (IDA/CVODE)">
+          <TimeBound StartTime="0.0" EndTime="20.0" />
+          <TimeStep DefaultTime="0.0" MinTime="1.0E-8" MaxTime="1.0" />
+          <ErrorTolerance Absolut="1.0E-9" Relative="1.0E-9" />
+          <OutputOptions KeepEvery="1" KeepAtMost="1000" />
+          <NumberProcessors>1</NumberProcessors>
+        </SolverTaskDescription>
+        <MathOverrides />
+        <Version Name="Simulation0" KeyValue="84984719" BranchId="84984720" Archived="0" Date="02-Nov-2013 15:04:32" FromVersionable="false">
+          <Owner Name="schaff" Identifier="17" />
+          <GroupAccess Type="1" />
+          <Annotation>cloned from 'Simulation0' owned by user ccb_spatial
+cloned from 'Simulation0' owned by user schaff</Annotation>
+        </Version>
+      </Simulation>
+      <Version Name="comp_ss" KeyValue="72863897" BranchId="58195915" Archived="0" Date="01-Aug-2012 19:41:29" FromVersionable="false">
+        <Owner Name="schaff" Identifier="17" />
+        <GroupAccess Type="1" />
+        <Annotation>cloned from 'comp_ss' owned by user ccb_spatial
+cloned from 'comp_ss' owned by user schaff</Annotation>
+      </Version>
+      <MicroscopeMeasurement Name="fluor">
+        <ConvolutionKernel Type="ProjectionZKernel" />
+      </MicroscopeMeasurement>
+    </SimulationSpec>
+    <SimulationSpec Name="comp_frap" Stochastic="false" UseConcentration="true" RuleBased="false" MassConservationModelReduction="true" InsufficientIterations="false" InsufficientMaxMolecules="false">
+      <NetworkConstraints RbmMaxIteration="1" RbmMaxMoleculesPerSpecies="10" RbmSpeciesLimit="800" RbmReactionsLimit="2500" />
+      <Annotation>cloned from 'comp_frap' owned by user ccb_spatial
+cloned from 'comp_frap' owned by user schaff
+(copied from comp_ss)</Annotation>
+      <Geometry Name="non-spatial2085987604" Dimension="0">
+        <Annotation>cloned from 'non-spatial6187237' owned by user ccb_spatial
+cloned from 'non-spatial1583096641' owned by user schaff</Annotation>
+        <Extent X="10.0" Y="10.0" Z="10.0" />
+        <Origin X="0.0" Y="0.0" Z="0.0" />
+        <SubVolume Name="Compartment" Handle="0" Type="Compartmental" KeyValue="58195809" />
+        <Version Name="non-spatial2085987604" KeyValue="58195805" BranchId="58195806" Archived="0" Date="06-Jul-2011 01:06:56" FromVersionable="false">
+          <Owner Name="schaff" Identifier="17" />
+          <GroupAccess Type="1" />
+          <Annotation>cloned from 'non-spatial6187237' owned by user ccb_spatial
+cloned from 'non-spatial1583096641' owned by user schaff</Annotation>
+        </Version>
+      </Geometry>
+      <GeometryContext>
+        <FeatureMapping Feature="cyt" GeometryClass="Compartment" SubVolume="Compartment" Size="1.0">
+          <BoundariesTypes Xm="Flux" Xp="Flux" Ym="Flux" Yp="Flux" Zm="Flux" Zp="Flux" />
+        </FeatureMapping>
+        <FeatureMapping Feature="nuc" GeometryClass="Compartment" SubVolume="Compartment" Size="1.0">
+          <BoundariesTypes Xm="Flux" Xp="Flux" Ym="Flux" Yp="Flux" Zm="Flux" Zp="Flux" />
+        </FeatureMapping>
+        <FeatureMapping Feature="ec" GeometryClass="Compartment" SubVolume="Compartment" Size="1.0">
+          <BoundariesTypes Xm="Flux" Xp="Flux" Ym="Flux" Yp="Flux" Zm="Flux" Zp="Flux" />
+        </FeatureMapping>
+        <MembraneMapping Membrane="pm" SurfaceToVolumeRatio="0.5" VolumeFraction="0.6666666666666666" Size="1.0" CalculateVoltage="false" SpecificCapacitance="1.0" InitialVoltage="0.0" GeometryClass="Compartment">
+          <BoundariesTypes Xm="Flux" Xp="Flux" Ym="Flux" Yp="Flux" Zm="Flux" Zp="Flux" />
+        </MembraneMapping>
+        <MembraneMapping Membrane="nucMem" SurfaceToVolumeRatio="1.0" VolumeFraction="0.5" Size="1.0" CalculateVoltage="false" SpecificCapacitance="1.0" InitialVoltage="0.0" GeometryClass="Compartment">
+          <BoundariesTypes Xm="Flux" Xp="Flux" Ym="Flux" Yp="Flux" Zm="Flux" Zp="Flux" />
+        </MembraneMapping>
+      </GeometryContext>
+      <ReactionContext>
+        <LocalizedCompoundSpec LocalizedCompoundRef="hv_cyt" ForceConstant="true" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>(10.0 * ((t &gt; 0.2) &amp;&amp; (t &lt; 1.5)))</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="PH_GFP_cyt" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>0.9949689471138276</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="PH_GFP_bl_cyt" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>9.949676912093729E-5</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="PIP2_pm" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>8013.840234276138</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="PIP2_phgfp_pm" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>3986.76109011808</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="PIP2_phgfp_bl_pm" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>0.3986756057809255</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <ReactionSpec ReactionStepRef="bleach_cyt" ReactionMapping="included" />
+        <ReactionSpec ReactionStepRef="reaction1" ReactionMapping="included" />
+        <ReactionSpec ReactionStepRef="reaction2" ReactionMapping="included" />
+      </ReactionContext>
+      <MathDescription Name="comp_generated">
+        <Annotation>cloned from 'comp_generated' owned by user ccb_spatial
+cloned from 'comp_generated' owned by user schaff</Annotation>
+        <Constant Name="_F_">96480.0</Constant>
+        <Constant Name="_F_nmol_">9.648E-5</Constant>
+        <Constant Name="_K_GHK_">1.0E-9</Constant>
+        <Constant Name="_N_pmol_">6.02E11</Constant>
+        <Constant Name="_PI_">3.141592653589793</Constant>
+        <Constant Name="_R_">8314.0</Constant>
+        <Constant Name="_T_">300.0</Constant>
+        <Constant Name="bleach_rate">1.0</Constant>
+        <Constant Name="K_millivolts_per_volt">1000.0</Constant>
+        <Constant Name="Kd">2.0</Constant>
+        <Constant Name="Kf_PIP2PH">200.0</Constant>
+        <Constant Name="KMOLE">0.0016611295681063123</Constant>
+        <Constant Name="PH_GFP_bl_cyt_init_uM">9.949676912093729E-5</Constant>
+        <Constant Name="PH_GFP_cyt_init_uM">0.9949689471138276</Constant>
+        <Constant Name="PIP2_phgfp_bl_pm_init_molecules_per_um2">0.3986756057809255</Constant>
+        <Constant Name="PIP2_phgfp_pm_init_molecules_per_um2">3986.76109011808</Constant>
+        <Constant Name="PIP2_pm_init_molecules_per_um2">8013.840234276138</Constant>
+        <Constant Name="Size_cyt">1.0</Constant>
+        <Constant Name="Size_ec">1.0</Constant>
+        <Constant Name="Size_nuc">1.0</Constant>
+        <Constant Name="Size_nucMem">1.0</Constant>
+        <Constant Name="Size_pm">1.0</Constant>
+        <Constant Name="Voltage_nucMem">0.0</Constant>
+        <Constant Name="Voltage_pm">0.0</Constant>
+        <VolumeVariable Name="PH_GFP_bl_cyt" Domain="Compartment" />
+        <VolumeVariable Name="PIP2_phgfp_bl_pm" Domain="Compartment" />
+        <VolumeVariable Name="PIP2_phgfp_pm" Domain="Compartment" />
+        <Function Name="hv_cyt" Domain="Compartment">(10.0 * ((t &gt; 0.2) &amp;&amp; (t &lt; 1.5)))</Function>
+        <Function Name="hv_cyt_init_uM" Domain="Compartment">(10.0 * ((t &gt; 0.2) &amp;&amp; (t &lt; 1.5)))</Function>
+        <Function Name="J_bleach_cyt" Domain="Compartment">(k * PH_GFP_cyt)</Function>
+        <Function Name="J_reaction1" Domain="Compartment">((PH_GFP_cyt * Kf_reaction1 * PIP2_pm) - (Kr_reaction1 * PIP2_phgfp_pm))</Function>
+        <Function Name="J_reaction2" Domain="Compartment">((PH_GFP_bl_cyt * Kf_reaction2 * PIP2_pm) - (Kr_reaction2 * PIP2_phgfp_bl_pm))</Function>
+        <Function Name="k" Domain="Compartment">(bleach_rate * hv_cyt)</Function>
+        <Function Name="K_PH_GFP_cyt_total" Domain="Compartment">((PIP2_phgfp_bl_pm_init_molecules_per_um2 * Size_pm * KMOLE) + (PIP2_phgfp_pm_init_molecules_per_um2 * Size_pm * KMOLE) + (Size_cyt * PH_GFP_cyt_init_uM) + (Size_cyt * PH_GFP_bl_cyt_init_uM))</Function>
+        <Function Name="K_PIP2_pm_total" Domain="Compartment">((PIP2_phgfp_bl_pm_init_molecules_per_um2 * Size_pm * KMOLE) + (PIP2_pm_init_molecules_per_um2 * Size_pm * KMOLE) + (PIP2_phgfp_pm_init_molecules_per_um2 * Size_pm * KMOLE))</Function>
+        <Function Name="Kf_reaction1" Domain="Compartment">Kf_PIP2PH</Function>
+        <Function Name="Kf_reaction2" Domain="Compartment">Kf_PIP2PH</Function>
+        <Function Name="KFlux_nucMem_cyt" Domain="Compartment">(Size_nucMem / Size_cyt)</Function>
+        <Function Name="KFlux_nucMem_nuc" Domain="Compartment">(Size_nucMem / Size_nuc)</Function>
+        <Function Name="KFlux_pm_cyt" Domain="Compartment">(Size_pm / Size_cyt)</Function>
+        <Function Name="KFlux_pm_ec" Domain="Compartment">(Size_pm / Size_ec)</Function>
+        <Function Name="Kr_reaction1" Domain="Compartment">(Kf_reaction1 * Kd)</Function>
+        <Function Name="Kr_reaction2" Domain="Compartment">(Kf_reaction2 * Kd)</Function>
+        <Function Name="PH_GFP_cyt" Domain="Compartment">(( - (PIP2_phgfp_bl_pm * Size_pm * KMOLE) - (PIP2_phgfp_pm * Size_pm * KMOLE) + K_PH_GFP_cyt_total - (Size_cyt * PH_GFP_bl_cyt)) / Size_cyt)</Function>
+        <Function Name="PIP2_pm" Domain="Compartment">(( - (PIP2_phgfp_bl_pm * Size_pm * KMOLE) + K_PIP2_pm_total - (PIP2_phgfp_pm * Size_pm * KMOLE)) / (Size_pm * KMOLE))</Function>
+        <CompartmentSubDomain Name="Compartment">
+          <BoundaryType Boundary="Xm" Type="Value" />
+          <BoundaryType Boundary="Xp" Type="Value" />
+          <BoundaryType Boundary="Ym" Type="Value" />
+          <BoundaryType Boundary="Yp" Type="Value" />
+          <BoundaryType Boundary="Zm" Type="Value" />
+          <BoundaryType Boundary="Zp" Type="Value" />
+          <OdeEquation Name="PH_GFP_bl_cyt" SolutionType="Unknown">
+            <Rate>(J_bleach_cyt - (KFlux_pm_cyt * KMOLE * J_reaction2))</Rate>
+            <Initial>PH_GFP_bl_cyt_init_uM</Initial>
+          </OdeEquation>
+          <OdeEquation Name="PIP2_phgfp_pm" SolutionType="Unknown">
+            <Rate>J_reaction1</Rate>
+            <Initial>PIP2_phgfp_pm_init_molecules_per_um2</Initial>
+          </OdeEquation>
+          <OdeEquation Name="PIP2_phgfp_bl_pm" SolutionType="Unknown">
+            <Rate>J_reaction2</Rate>
+            <Initial>PIP2_phgfp_bl_pm_init_molecules_per_um2</Initial>
+          </OdeEquation>
+        </CompartmentSubDomain>
+        <Version Name="comp_generated" KeyValue="72863891" BranchId="58195860" Archived="0" Date="01-Aug-2012 19:41:28" FromVersionable="false">
+          <Owner Name="schaff" Identifier="17" />
+          <GroupAccess Type="1" />
+          <Annotation>cloned from 'comp_generated' owned by user ccb_spatial
+cloned from 'comp_generated' owned by user schaff</Annotation>
+        </Version>
+      </MathDescription>
+      <Simulation Name="Simulation1">
+        <Annotation>cloned from 'Simulation1' owned by user ccb_spatial
+cloned from 'Simulation1' owned by user schaff</Annotation>
+        <SolverTaskDescription TaskType="Unsteady" UseSymbolicJacobian="false" Solver="Combined Stiff Solver (IDA/CVODE)">
+          <TimeBound StartTime="0.0" EndTime="5.0" />
+          <TimeStep DefaultTime="0.1" MinTime="1.0E-8" MaxTime="1.0" />
+          <ErrorTolerance Absolut="1.0E-9" Relative="1.0E-9" />
+          <OutputOptions OutputTimeStep="0.05" />
+          <NumberProcessors>1</NumberProcessors>
+        </SolverTaskDescription>
+        <MathOverrides />
+        <Version Name="Simulation1" KeyValue="84984736" BranchId="84984737" Archived="0" Date="02-Nov-2013 15:05:36" FromVersionable="false">
+          <Owner Name="schaff" Identifier="17" />
+          <GroupAccess Type="1" />
+          <Annotation>cloned from 'Simulation1' owned by user ccb_spatial
+cloned from 'Simulation1' owned by user schaff</Annotation>
+        </Version>
+      </Simulation>
+      <Version Name="comp_frap" KeyValue="72863913" BranchId="58195932" Archived="0" Date="01-Aug-2012 19:41:30" FromVersionable="false">
+        <Owner Name="schaff" Identifier="17" />
+        <GroupAccess Type="1" />
+        <Annotation>cloned from 'comp_frap' owned by user ccb_spatial
+cloned from 'comp_frap' owned by user schaff
+(copied from comp_ss)</Annotation>
+      </Version>
+      <MicroscopeMeasurement Name="fluor">
+        <ConvolutionKernel Type="ProjectionZKernel" />
+      </MicroscopeMeasurement>
+    </SimulationSpec>
+    <SimulationSpec Name="spatial2D" Stochastic="false" UseConcentration="true" RuleBased="false" MassConservationModelReduction="true" InsufficientIterations="false" InsufficientMaxMolecules="false" CharacteristicSize="0.09247254013931522">
+      <NetworkConstraints RbmMaxIteration="1" RbmMaxMoleculesPerSpecies="10" RbmSpeciesLimit="800" RbmReactionsLimit="2500" />
+      <Annotation>cloned from 'spatial2D' owned by user ccb_spatial
+cloned from 'spatial2D' owned by user schaff
+(copied from comp_frap) (copied from comp_ss)</Annotation>
+      <Geometry Name="N1E_for_PIP1409613287" Dimension="2">
+        <Annotation>cloned from 'N1E_for_PIP2' owned by user ccb_spatial
+cloned from 'N1E_for_PIP2' owned by user les</Annotation>
+        <Extent X="48.54" Y="71.24" Z="1.0" />
+        <Origin X="0.0" Y="0.0" Z="0.0" />
+        <Image Name="N1E for PIP362268523">
+          <Annotation>cloned from 'N1E for PIP2' owned by user ccb_spatial
+cloned from 'N1E for PIP2' owned by user les
+NoName</Annotation>
+          <ImageData X="340" Y="499" Z="1" CompressedSize="2620">789CEDDDD976E24A104451FF797DBAEF35D00C42430D91754AAA380FBD6C1E9ACCBD300601F2CF8F73CECD515A899EE9ECAD995AB5AD7553B3B6B4696AD4FAB651AD5A9D4DF5D934209B0664D4808C1AD0F67DAA596BDB31356A6536D5B7676AD4BA6C1A905103326A40BBA82F5B33979483EADB6E6146D557686AD48C4A4D8D9A914DF5F9861A904D03326A40A5A8763DAEC2D4AA4755A15A75379B0664D3806C1A904D03B2A83E930664D3808CAAAFCCD4A839D934209BEAB3A93E9BEAB3A9BC32529BE664537985A4363DAA14D4A48799B4BE758D7251933EDBF03069755B22BE99D6B72152416AD4474B90C71755A436FD59F3787C55476AD325DCEBA25A529BD6C219753B9BCA8B20B5A94DD5D9549F4DE58590DAD4A6E2624CA7460D229DD9348AD4A6465566537D369567507551A21393FA075F5F1CE9A4A681A0B3A20693CEC6DA8173365393CAEB453A8D6937D079483B9AD29B76AB1FE934A61D49A740EDEA39076A7FD2AB9B02A217476544D3FD9D96F4F22161A20FD72B665379261507839AD4A487D19EB768046DB4E63D5A411A8DF968E343C1678CA65C447328A20DBFA241DAA305BFA3455AA3FDD6A24D1AA3F9DE7A4E439BB4C4122E7B8E04AB3445232E7ACE04B3B4441B2E7B0E05BB3444137EF59A0A96A90F165CE935146D5319AA7718AD531C0D9619CD54148D9519CD54126D951BED941D0D55104D9517AD54148D9517AD54148D95158D5416AD9517AD5416AD9517AD5418CD95136D541C0D96114D94DF690E4CB34C25FD9CE6E0140C95DB6B58962B27DAEAB8F7F7F3A633908E6F4A0395478B1D470B1547831D44F35444931DB598F5E704BFA360B1E33646E5C40E83A08A5A9D9465DB0D412A6E65521A6E2784A8B8954969B8ED10A1F25626A5E536237C2AFA1A75E4A7525108BFBFBFD2FFEF3CBFF343487F17455C07EDB653C0B64BD118541A6E27F1A62B9E31ACB4DB4ED23DB741F5A834DC66CA25F74125AAEF63936C7B353BBECA106D66A5B9729240169A36A0D25C5929481F48D9A4F5A8B456561AD29A4C2A06BD306A0366AB6825EAE02F42D782B66336A92E46FFFF1B1AF2D500A495AA5FD194F786F0BC18EA30A41A549AF3AFDAD96DBAD948A412541A74345281290D3A1CE9054C070395A09E52349454A07A42519B0690469B16A37EEEC3910EF26C5460FAB90F283AEA7D693D2A4D5A0BDA47B414F57DA5F399F6222D32FD58C9A412D3216EA7B5A4439BB2A8E38B16A27EAE7526D2BEA645A81FAFA09C897474D37FBB9D88B4AF689D29F391D3D390569AF6AF5AB43F6911AA41F5A826D59B52A897368558CF675A8CDA1BF77CA2D5C7FB4DAA37ED845A4D4A9AD60F3D36E9694C3F7634693BEA72CDA149CF61FABE683C67A3284B9A6DDAFBB16913A94DF5A4B06936EA894469D26C549316349C692B69A24587336D16B5E92549C7329D8A74F4E7F723919699C6D25E8534DB34853F2F5590269AF356E1CC638BDA3480740CD4214C65A26398E6A1C6BEB87735D22CD3E7E2A393265AF31E6DAA144D34E6A3AC59032C2F4CCA9A4A45134DF98C34D592269AF25995A9045A2C3A8E69E6B8AB1A839126DAF25905EADA6503908E839A3DF0B7844937CA9EF85B622CD1340EEABADEDAC4C2BF2721D77C44633E5AB3CBDC7A38D244633EDAA0CAD9C0A41B6D531DAE3016683A83E9F73B2305A691A489B6FCD736E9DA29655A4D43498741DD143D46198E34D198F70A491767EC1D8C34D19AF77A9A8693265AF35E37D378D0614C17A82538E391261AF35E3169DD51A93EA489D6BCB598A9046840D244732E3D0B9C4A4D7B919ED9B4F4A42836CD632A20B5A9BE6EA4F398F6239DC5B4A3E82CA673917631ED4A9A68D1DFDDC3D1E7344DB4680FD3CEA403A0869B7627C54D574632A99C546BDAD933F1A4BF6B4399B4ADB5A96C2A27559AF6E5BC4593FEAE0D756AD1C4A3AE8CA423B5E9B3B39BD2A86B239D9D744453116A5FC7F70624D5A0F6445C34A0A8C4B49FE0570382269BCA41FF3A3329857A34954DE5A4E7361D52D4A62392DAF4BB539BF647CD9AEADC37D4DEA87943D9542D7AF69FFDAEA619E30C7A428EB2C632FDD1FCF5C268B4FDC622551D3B8D56DB6F28519BEA456D6AD38DC6321591CE819A398CCCF4F28FA6F247B1A91834D9540E9A2E737F7A49D300A5B2C621BD8A699CE86FF12C2A52DA340CB57C1219E9454D2B06D191E2A8A3905EC93402B56A0EA5298D3A04E85F173215A3D6CFA134A55187004D360D203DFD6722DF1B43D4A6C3935E02B5790A9BAA454F7F768945B867BA1CE9FFA8B77F40D10B9ADE22452F6A8A8A5ED314053DFDA9CF36A238FF0A201DC2B400557ED511A667428DB8E6EB9A66A1865CF13CA6B787AD3D48AF6C9AD6E81EBC71A0E9DAA6297DE3C56ADE0A211D0CF5E0027D41A823B1762FCC7462D438D37955234D67450D359D133596744AD468529B5A555007D2D950BB90CE65DA87742E53A30664527D3695D787D4A6466DCBA6FA7A99CEA4DACF741ED48EA6D3A0F6349D04B52BE91CA67D49A730ED4C6A539BD6D49BD4A636ADA9BBE904A83695D79FD4A6362D0F30BD3A2A417A715486F4DAA836D547995E181523B5A9510BB2A93ED0F4AAA824E9455159D25B34813C1AF42FDA401DEDF9176DA08EF6BC452368A335EFD10AD268CC473483341AF35FB48332DAF2190D218CA67C454BE8A2255FD112BA68C9B7680A55B4E37BB4852ADAF13DDA4214CDF8118D218A66FC8CD69044232EA23924D188CB680F4134E177B4487BB4E077B4487BB4E04A34497334E04A34497334E04A34497334E04A34497334E04A34496334DF7AB44A5334DE56B44B4BB4DD56B44B4BB4DD56B44B4BB4DD56B44B4334DD66344C4334DD66344C7DB4DC76B44C7DB4DC76B44C7DB4DC4E344D6DB4DB5EB44D6DB4DB5EB44D6DB4DB6E344E6534DB7EB44E5534DA51B44F4DB4D951B44F4DB4594634517134584EB4516134575634526134577634544134557EB4547EB4547EB4547EB45441345576345449B45566345359B4565EB4526134575634526134575634526134574EB45169B4574EB45169B4574634517134D871B45079B4D871B45079B45846345179B4D871B45079B4D871B4505534DA41344F5DB4DA7EB44E6DB4DB6E344E7534DC4E344D4334DD66344C4BB4DD56B44B5334DE46344B5BB4DE6A344A6334DF5AB4497334E04A34497BB4E077B4487BB4E077B488209A7019ED218946FC8CD6104533BE475BC8A221DFA22974D192AF68096134E52B5A42184DF98A961046533EA32184D194CF680865B4E5331A42196DF98C8650465BBEA22584D194AF68096134E57BB4852ADAF1231A4315EDF81E6DA18A767C8FB6904543FE8B7650465BDEA211D4D9332093EA336940F6D467D2804C1A9051F5D934209BEAB36940360DC8A401D934209BEAB36840FFB635A9AEE7B636D5F5DCD6A821D934209BEA336944260DC8A401D93420A30614843A39AB510332AA3E9BEAB3A93E930664527D060DC8A4FA849A367DA4237D7B2DC1695CE925C6CBA601D934209BEAB3A83E930665D3806C1A9051F5D9549F4D23B2694036D567D2904C1A904D03B26940160DC8A401D934209B0664537D260DC8A40199342093C664D390D23A2C3DD605B26944AF9300C08338E79C73CE39E79C73CE3947F61F5D3DBA9D</ImageData>
+          <PixelClass Name="EC" ImagePixelValue="0" KeyValue="58195779" />
+          <PixelClass Name="Cyt" ImagePixelValue="127" KeyValue="58195780" />
+          <PixelClass Name="Nuc" ImagePixelValue="255" KeyValue="58195781" />
+          <Version Name="N1E for PIP362268523" KeyValue="58195773" BranchId="58195774" Archived="0" Date="06-Jul-2011 01:06:55" FromVersionable="false">
+            <Owner Name="schaff" Identifier="17" />
+            <GroupAccess Type="1" />
+            <Annotation>cloned from 'N1E for PIP2' owned by user ccb_spatial
+cloned from 'N1E for PIP2' owned by user les
+NoName</Annotation>
+          </Version>
+        </Image>
+        <SubVolume Name="EC" Handle="0" Type="Image" ImagePixelValue="0" KeyValue="58195813" />
+        <SubVolume Name="Cyt" Handle="1" Type="Image" ImagePixelValue="127" KeyValue="58195814" />
+        <SubVolume Name="Nuc" Handle="2" Type="Image" ImagePixelValue="255" KeyValue="58195815" />
+        <SurfaceClass Name="Cyt_EC_membrane" SubVolume1Ref="Cyt" SubVolume2Ref="EC" KeyValue="58195816" />
+        <SurfaceClass Name="Cyt_Nuc_membrane" SubVolume1Ref="Cyt" SubVolume2Ref="Nuc" KeyValue="58195817" />
+        <SurfaceDescription NumSamplesX="83" NumSamplesY="122" NumSamplesZ="1" CutoffFrequency="0.3">
+          <VolumeRegion Name="EC0" RegionID="0" SubVolume="EC" Size="1814.0330445474701" Unit="um2" />
+          <VolumeRegion Name="Cyt1" RegionID="1" SubVolume="Cyt" Size="1316.6987209030437" Unit="um2" />
+          <VolumeRegion Name="EC2" RegionID="2" SubVolume="EC" Size="0.34851739568635354" Unit="um2" />
+          <VolumeRegion Name="Cyt3" RegionID="3" SubVolume="Cyt" Size="0.34851739568635354" Unit="um2" />
+          <VolumeRegion Name="Nuc4" RegionID="4" SubVolume="Nuc" Size="326.56079975811326" Unit="um2" />
+          <MembraneRegion Name="membrane_EC0_Cyt1" VolumeRegion1="Cyt1" VolumeRegion2="EC0" Size="205.01741567879793" Unit="um" />
+          <MembraneRegion Name="membrane_Cyt1_EC2" VolumeRegion1="EC2" VolumeRegion2="Cyt1" Size="0.14279081069483723" Unit="um" />
+          <MembraneRegion Name="membrane_EC0_Cyt3" VolumeRegion1="Cyt3" VolumeRegion2="EC0" Size="0.5787644045211942" Unit="um" />
+          <MembraneRegion Name="membrane_Cyt1_Nuc4" VolumeRegion1="Nuc4" VolumeRegion2="Cyt1" Size="66.49365663784322" Unit="um" />
+        </SurfaceDescription>
+        <Version Name="N1E_for_PIP1409613287" KeyValue="58195810" BranchId="58195811" Archived="0" Date="06-Jul-2011 01:06:56" FromVersionable="false">
+          <Owner Name="schaff" Identifier="17" />
+          <GroupAccess Type="1" />
+          <Annotation>cloned from 'N1E_for_PIP2' owned by user ccb_spatial
+cloned from 'N1E_for_PIP2' owned by user les</Annotation>
+        </Version>
+      </Geometry>
+      <GeometryContext>
+        <FeatureMapping Feature="cyt" GeometryClass="Cyt" SubVolume="Cyt" VolumePerUnitVolume="1.0">
+          <BoundariesTypes Xm="Flux" Xp="Flux" Ym="Flux" Yp="Flux" Zm="Flux" Zp="Flux" />
+        </FeatureMapping>
+        <FeatureMapping Feature="nuc" GeometryClass="Nuc" SubVolume="Nuc" VolumePerUnitVolume="1.0">
+          <BoundariesTypes Xm="Flux" Xp="Flux" Ym="Flux" Yp="Flux" Zm="Flux" Zp="Flux" />
+        </FeatureMapping>
+        <FeatureMapping Feature="ec" GeometryClass="EC" SubVolume="EC" VolumePerUnitVolume="1.0">
+          <BoundariesTypes Xm="Flux" Xp="Flux" Ym="Flux" Yp="Flux" Zm="Flux" Zp="Flux" />
+        </FeatureMapping>
+        <MembraneMapping Membrane="pm" SurfaceToVolumeRatio="1.0" VolumeFraction="0.2" AreaPerUnitArea="1.0" CalculateVoltage="false" SpecificCapacitance="1.0" InitialVoltage="0.0" GeometryClass="Cyt_EC_membrane">
+          <BoundariesTypes Xm="Flux" Xp="Flux" Ym="Flux" Yp="Flux" Zm="Flux" Zp="Flux" />
+        </MembraneMapping>
+        <MembraneMapping Membrane="nucMem" SurfaceToVolumeRatio="1.0" VolumeFraction="0.2" AreaPerUnitArea="1.0" CalculateVoltage="false" SpecificCapacitance="1.0" InitialVoltage="0.0" GeometryClass="Cyt_Nuc_membrane">
+          <BoundariesTypes Xm="Flux" Xp="Flux" Ym="Flux" Yp="Flux" Zm="Flux" Zp="Flux" />
+        </MembraneMapping>
+      </GeometryContext>
+      <ReactionContext>
+        <LocalizedCompoundSpec LocalizedCompoundRef="hv_cyt" ForceConstant="true" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>((t &gt; 0.2) &amp;&amp; (t &lt; 1.5) &amp;&amp; (x &lt; 40.0))</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="PH_GFP_cyt" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>0.9949689471138276</InitialConcentration>
+          <Diffusion>50.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="PH_GFP_bl_cyt" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>9.949676912093729E-5</InitialConcentration>
+          <Diffusion>50.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="PIP2_pm" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>8013.840234276138</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="PIP2_phgfp_pm" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>3986.76109011808</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="PIP2_phgfp_bl_pm" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>0.3986756057809255</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <ReactionSpec ReactionStepRef="bleach_cyt" ReactionMapping="included" />
+        <ReactionSpec ReactionStepRef="reaction1" ReactionMapping="included" />
+        <ReactionSpec ReactionStepRef="reaction2" ReactionMapping="included" />
+      </ReactionContext>
+      <MathDescription Name="spatial2D_generated">
+        <Annotation>cloned from 'spatial2D_generated' owned by user ccb_spatial
+cloned from 'spatial2D_generated' owned by user schaff</Annotation>
+        <Constant Name="_F_">96480.0</Constant>
+        <Constant Name="_F_nmol_">9.648E-5</Constant>
+        <Constant Name="_K_GHK_">1.0E-9</Constant>
+        <Constant Name="_N_pmol_">6.02E11</Constant>
+        <Constant Name="_PI_">3.141592653589793</Constant>
+        <Constant Name="_R_">8314.0</Constant>
+        <Constant Name="_T_">300.0</Constant>
+        <Constant Name="AreaPerUnitArea_nucMem">1.0</Constant>
+        <Constant Name="AreaPerUnitArea_pm">1.0</Constant>
+        <Constant Name="bleach_rate">1.0</Constant>
+        <Constant Name="K_millivolts_per_volt">1000.0</Constant>
+        <Constant Name="Kd">2.0</Constant>
+        <Constant Name="Kf_PIP2PH">200.0</Constant>
+        <Constant Name="KMOLE">0.0016611295681063123</Constant>
+        <Constant Name="PH_GFP_bl_cyt_diffusionRate">50.0</Constant>
+        <Constant Name="PH_GFP_bl_cyt_init_uM">9.949676912093729E-5</Constant>
+        <Constant Name="PH_GFP_cyt_diffusionRate">50.0</Constant>
+        <Constant Name="PH_GFP_cyt_init_uM">0.9949689471138276</Constant>
+        <Constant Name="PIP2_phgfp_bl_pm_init_molecules_per_um2">0.3986756057809255</Constant>
+        <Constant Name="PIP2_phgfp_pm_init_molecules_per_um2">3986.76109011808</Constant>
+        <Constant Name="PIP2_pm_init_molecules_per_um2">8013.840234276138</Constant>
+        <Constant Name="Voltage_nucMem">0.0</Constant>
+        <Constant Name="Voltage_pm">0.0</Constant>
+        <Constant Name="VolumePerUnitVolume_cyt">1.0</Constant>
+        <Constant Name="VolumePerUnitVolume_ec">1.0</Constant>
+        <Constant Name="VolumePerUnitVolume_nuc">1.0</Constant>
+        <VolumeVariable Name="PH_GFP_bl_cyt" Domain="Cyt" />
+        <VolumeVariable Name="PH_GFP_cyt" Domain="Cyt" />
+        <MembraneVariable Name="PIP2_phgfp_bl_pm" Domain="Cyt_EC_membrane" />
+        <MembraneVariable Name="PIP2_phgfp_pm" Domain="Cyt_EC_membrane" />
+        <Function Name="hv_cyt" Domain="Cyt">((t &gt; 0.2) &amp;&amp; (t &lt; 1.5) &amp;&amp; (x &lt; 40.0))</Function>
+        <Function Name="hv_cyt_init_uM" Domain="Cyt">((t &gt; 0.2) &amp;&amp; (t &lt; 1.5) &amp;&amp; (x &lt; 40.0))</Function>
+        <Function Name="J_bleach_cyt" Domain="Cyt">(k * PH_GFP_cyt)</Function>
+        <Function Name="J_reaction1" Domain="Cyt_EC_membrane">((PH_GFP_cyt * Kf_reaction1 * PIP2_pm) - (Kr_reaction1 * PIP2_phgfp_pm))</Function>
+        <Function Name="J_reaction2" Domain="Cyt_EC_membrane">((PH_GFP_bl_cyt * Kf_reaction2 * PIP2_pm) - (Kr_reaction2 * PIP2_phgfp_bl_pm))</Function>
+        <Function Name="k" Domain="Cyt">(bleach_rate * hv_cyt)</Function>
+        <Function Name="K_PIP2_pm_total" Domain="Cyt_EC_membrane">((AreaPerUnitArea_pm * PIP2_phgfp_bl_pm_init_molecules_per_um2) + (AreaPerUnitArea_pm * PIP2_pm_init_molecules_per_um2) + (AreaPerUnitArea_pm * PIP2_phgfp_pm_init_molecules_per_um2))</Function>
+        <Function Name="Kf_reaction1" Domain="Cyt_EC_membrane">Kf_PIP2PH</Function>
+        <Function Name="Kf_reaction2" Domain="Cyt_EC_membrane">Kf_PIP2PH</Function>
+        <Function Name="Kr_reaction1" Domain="Cyt_EC_membrane">(Kf_reaction1 * Kd)</Function>
+        <Function Name="Kr_reaction2" Domain="Cyt_EC_membrane">(Kf_reaction2 * Kd)</Function>
+        <Function Name="PIP2_pm" Domain="Cyt_EC_membrane">(( - (AreaPerUnitArea_pm * PIP2_phgfp_bl_pm) + K_PIP2_pm_total - (AreaPerUnitArea_pm * PIP2_phgfp_pm)) / AreaPerUnitArea_pm)</Function>
+        <Function Name="Size_cyt" Domain="Cyt">(VolumePerUnitVolume_cyt * vcRegionVolume('Cyt'))</Function>
+        <Function Name="Size_ec" Domain="EC">(VolumePerUnitVolume_ec * vcRegionVolume('EC'))</Function>
+        <Function Name="Size_nuc" Domain="Nuc">(VolumePerUnitVolume_nuc * vcRegionVolume('Nuc'))</Function>
+        <Function Name="Size_nucMem" Domain="Cyt_Nuc_membrane">(AreaPerUnitArea_nucMem * vcRegionArea('Cyt_Nuc_membrane'))</Function>
+        <Function Name="Size_pm" Domain="Cyt_EC_membrane">(AreaPerUnitArea_pm * vcRegionArea('Cyt_EC_membrane'))</Function>
+        <CompartmentSubDomain Name="EC">
+          <BoundaryType Boundary="Xm" Type="Flux" />
+          <BoundaryType Boundary="Xp" Type="Flux" />
+          <BoundaryType Boundary="Ym" Type="Flux" />
+          <BoundaryType Boundary="Yp" Type="Flux" />
+          <BoundaryType Boundary="Zm" Type="Value" />
+          <BoundaryType Boundary="Zp" Type="Value" />
+        </CompartmentSubDomain>
+        <CompartmentSubDomain Name="Cyt">
+          <BoundaryType Boundary="Xm" Type="Flux" />
+          <BoundaryType Boundary="Xp" Type="Flux" />
+          <BoundaryType Boundary="Ym" Type="Flux" />
+          <BoundaryType Boundary="Yp" Type="Flux" />
+          <BoundaryType Boundary="Zm" Type="Value" />
+          <BoundaryType Boundary="Zp" Type="Value" />
+          <PdeEquation Name="PH_GFP_cyt" SolutionType="Unknown">
+            <Rate>- J_bleach_cyt</Rate>
+            <Diffusion>PH_GFP_cyt_diffusionRate</Diffusion>
+            <Initial>PH_GFP_cyt_init_uM</Initial>
+          </PdeEquation>
+          <PdeEquation Name="PH_GFP_bl_cyt" SolutionType="Unknown">
+            <Rate>J_bleach_cyt</Rate>
+            <Diffusion>PH_GFP_bl_cyt_diffusionRate</Diffusion>
+            <Initial>PH_GFP_bl_cyt_init_uM</Initial>
+          </PdeEquation>
+        </CompartmentSubDomain>
+        <CompartmentSubDomain Name="Nuc">
+          <BoundaryType Boundary="Xm" Type="Flux" />
+          <BoundaryType Boundary="Xp" Type="Flux" />
+          <BoundaryType Boundary="Ym" Type="Flux" />
+          <BoundaryType Boundary="Yp" Type="Flux" />
+          <BoundaryType Boundary="Zm" Type="Value" />
+          <BoundaryType Boundary="Zp" Type="Value" />
+        </CompartmentSubDomain>
+        <MembraneSubDomain Name="Cyt_EC_membrane" InsideCompartment="Cyt" OutsideCompartment="EC">
+          <BoundaryType Boundary="Xm" Type="Value" />
+          <BoundaryType Boundary="Xp" Type="Value" />
+          <BoundaryType Boundary="Ym" Type="Value" />
+          <BoundaryType Boundary="Yp" Type="Value" />
+          <BoundaryType Boundary="Zm" Type="Value" />
+          <BoundaryType Boundary="Zp" Type="Value" />
+          <OdeEquation Name="PIP2_phgfp_pm" SolutionType="Unknown">
+            <Rate>J_reaction1</Rate>
+            <Initial>PIP2_phgfp_pm_init_molecules_per_um2</Initial>
+          </OdeEquation>
+          <OdeEquation Name="PIP2_phgfp_bl_pm" SolutionType="Unknown">
+            <Rate>J_reaction2</Rate>
+            <Initial>PIP2_phgfp_bl_pm_init_molecules_per_um2</Initial>
+          </OdeEquation>
+          <JumpCondition Name="PH_GFP_cyt">
+            <InFlux>- (KMOLE * J_reaction1 / VolumePerUnitVolume_cyt)</InFlux>
+            <OutFlux>0.0</OutFlux>
+          </JumpCondition>
+          <JumpCondition Name="PH_GFP_bl_cyt">
+            <InFlux>- (KMOLE * J_reaction2 / VolumePerUnitVolume_cyt)</InFlux>
+            <OutFlux>0.0</OutFlux>
+          </JumpCondition>
+        </MembraneSubDomain>
+        <MembraneSubDomain Name="Cyt_Nuc_membrane" InsideCompartment="Nuc" OutsideCompartment="Cyt">
+          <BoundaryType Boundary="Xm" Type="Value" />
+          <BoundaryType Boundary="Xp" Type="Value" />
+          <BoundaryType Boundary="Ym" Type="Value" />
+          <BoundaryType Boundary="Yp" Type="Value" />
+          <BoundaryType Boundary="Zm" Type="Value" />
+          <BoundaryType Boundary="Zp" Type="Value" />
+          <JumpCondition Name="PH_GFP_cyt">
+            <InFlux>0.0</InFlux>
+            <OutFlux>0.0</OutFlux>
+          </JumpCondition>
+          <JumpCondition Name="PH_GFP_bl_cyt">
+            <InFlux>0.0</InFlux>
+            <OutFlux>0.0</OutFlux>
+          </JumpCondition>
+        </MembraneSubDomain>
+        <Version Name="spatial2D_generated" KeyValue="72863893" BranchId="58195863" Archived="0" Date="01-Aug-2012 19:41:28" FromVersionable="false">
+          <Owner Name="schaff" Identifier="17" />
+          <GroupAccess Type="1" />
+          <Annotation>cloned from 'spatial2D_generated' owned by user ccb_spatial
+cloned from 'spatial2D_generated' owned by user schaff</Annotation>
+        </Version>
+      </MathDescription>
+      <Simulation Name="Simulation2">
+        <Annotation>cloned from 'Simulation2' owned by user ccb_spatial</Annotation>
+        <SolverTaskDescription TaskType="Unsteady" UseSymbolicJacobian="false" Solver="Sundials Stiff PDE Solver (Variable Time Step)">
+          <TimeBound StartTime="0.0" EndTime="20.0" />
+          <TimeStep DefaultTime="0.1" MinTime="0.0" MaxTime="0.1" />
+          <ErrorTolerance Absolut="1.0E-9" Relative="1.0E-7" />
+          <OutputOptions OutputTimeStep="0.1" />
+          <SundialsSolverOptions>
+            <maxOrderAdvection>2</maxOrderAdvection>
+          </SundialsSolverOptions>
+          <NumberProcessors>1</NumberProcessors>
+        </SolverTaskDescription>
+        <MathOverrides />
+        <MeshSpecification>
+          <Size X="83" Y="122" Z="1" />
+        </MeshSpecification>
+        <Version Name="Simulation2" KeyValue="72863965" BranchId="58196006" Archived="0" Date="01-Aug-2012 19:41:30" FromVersionable="false">
+          <Owner Name="schaff" Identifier="17" />
+          <GroupAccess Type="1" />
+          <Annotation>cloned from 'Simulation2' owned by user ccb_spatial</Annotation>
+          <ParentSimRef KeyValue="58196005" />
+        </Version>
+      </Simulation>
+      <SpatialObjects>
+        <SpatialObject Name="vobj_EC0" Type="Volume" subVolume="EC" regionId="0">
+          <QuantityCategoryList>
+            <QuantityCategory Name="VolumeCentroid" Enabled="false" />
+            <QuantityCategory Name="InteriorVelocity" Enabled="false" />
+            <QuantityCategory Name="VolumeRegionSize" Enabled="true" />
+          </QuantityCategoryList>
+        </SpatialObject>
+        <SpatialObject Name="vobj_Cyt1" Type="Volume" subVolume="Cyt" regionId="1">
+          <QuantityCategoryList>
+            <QuantityCategory Name="VolumeCentroid" Enabled="false" />
+            <QuantityCategory Name="InteriorVelocity" Enabled="false" />
+            <QuantityCategory Name="VolumeRegionSize" Enabled="true" />
+          </QuantityCategoryList>
+        </SpatialObject>
+        <SpatialObject Name="vobj_EC2" Type="Volume" subVolume="EC" regionId="2">
+          <QuantityCategoryList>
+            <QuantityCategory Name="VolumeCentroid" Enabled="false" />
+            <QuantityCategory Name="InteriorVelocity" Enabled="false" />
+            <QuantityCategory Name="VolumeRegionSize" Enabled="true" />
+          </QuantityCategoryList>
+        </SpatialObject>
+        <SpatialObject Name="vobj_Cyt3" Type="Volume" subVolume="Cyt" regionId="3">
+          <QuantityCategoryList>
+            <QuantityCategory Name="VolumeCentroid" Enabled="false" />
+            <QuantityCategory Name="InteriorVelocity" Enabled="false" />
+            <QuantityCategory Name="VolumeRegionSize" Enabled="true" />
+          </QuantityCategoryList>
+        </SpatialObject>
+        <SpatialObject Name="vobj_Nuc4" Type="Volume" subVolume="Nuc" regionId="4">
+          <QuantityCategoryList>
+            <QuantityCategory Name="VolumeCentroid" Enabled="false" />
+            <QuantityCategory Name="InteriorVelocity" Enabled="false" />
+            <QuantityCategory Name="VolumeRegionSize" Enabled="true" />
+          </QuantityCategoryList>
+        </SpatialObject>
+        <SpatialObject Name="sobj_Cyt1_EC0" Type="Surface" subVolumeInside="Cyt" regionIdInside="1" subVolumeOutside="EC" regionIdOutside="0">
+          <QuantityCategoryList>
+            <QuantityCategory Name="SurfaceNormal" Enabled="false" />
+            <QuantityCategory Name="SurfaceVelocity" Enabled="false" />
+            <QuantityCategory Name="DistanceToSurface" Enabled="false" />
+            <QuantityCategory Name="DirectionToSurface" Enabled="false" />
+            <QuantityCategory Name="SurfaceSize" Enabled="true" />
+          </QuantityCategoryList>
+        </SpatialObject>
+        <SpatialObject Name="sobj_EC2_Cyt1" Type="Surface" subVolumeInside="EC" regionIdInside="2" subVolumeOutside="Cyt" regionIdOutside="1">
+          <QuantityCategoryList>
+            <QuantityCategory Name="SurfaceNormal" Enabled="false" />
+            <QuantityCategory Name="SurfaceVelocity" Enabled="false" />
+            <QuantityCategory Name="DistanceToSurface" Enabled="false" />
+            <QuantityCategory Name="DirectionToSurface" Enabled="false" />
+            <QuantityCategory Name="SurfaceSize" Enabled="true" />
+          </QuantityCategoryList>
+        </SpatialObject>
+        <SpatialObject Name="sobj_Cyt3_EC0" Type="Surface" subVolumeInside="Cyt" regionIdInside="3" subVolumeOutside="EC" regionIdOutside="0">
+          <QuantityCategoryList>
+            <QuantityCategory Name="SurfaceNormal" Enabled="false" />
+            <QuantityCategory Name="SurfaceVelocity" Enabled="false" />
+            <QuantityCategory Name="DistanceToSurface" Enabled="false" />
+            <QuantityCategory Name="DirectionToSurface" Enabled="false" />
+            <QuantityCategory Name="SurfaceSize" Enabled="true" />
+          </QuantityCategoryList>
+        </SpatialObject>
+        <SpatialObject Name="sobj_Nuc4_Cyt1" Type="Surface" subVolumeInside="Nuc" regionIdInside="4" subVolumeOutside="Cyt" regionIdOutside="1">
+          <QuantityCategoryList>
+            <QuantityCategory Name="SurfaceNormal" Enabled="false" />
+            <QuantityCategory Name="SurfaceVelocity" Enabled="false" />
+            <QuantityCategory Name="DistanceToSurface" Enabled="false" />
+            <QuantityCategory Name="DirectionToSurface" Enabled="false" />
+            <QuantityCategory Name="SurfaceSize" Enabled="true" />
+          </QuantityCategoryList>
+        </SpatialObject>
+      </SpatialObjects>
+      <Version Name="spatial2D" KeyValue="72863929" BranchId="58195949" Archived="0" Date="01-Aug-2012 19:41:30" FromVersionable="false">
+        <Owner Name="schaff" Identifier="17" />
+        <GroupAccess Type="1" />
+        <Annotation>cloned from 'spatial2D' owned by user ccb_spatial
+cloned from 'spatial2D' owned by user schaff
+(copied from comp_frap) (copied from comp_ss)</Annotation>
+      </Version>
+      <MicroscopeMeasurement Name="fluor">
+        <ConvolutionKernel Type="ProjectionZKernel" />
+      </MicroscopeMeasurement>
+    </SimulationSpec>
+    <SimulationSpec Name="spatial3D" Stochastic="false" UseConcentration="true" RuleBased="false" MassConservationModelReduction="true" InsufficientIterations="false" InsufficientMaxMolecules="false" CharacteristicSize="0.09247254013931522">
+      <NetworkConstraints RbmMaxIteration="1" RbmMaxMoleculesPerSpecies="10" RbmSpeciesLimit="800" RbmReactionsLimit="2500" />
+      <Annotation>(copied from spatial2D) cloned from 'spatial2D' owned by user schaff
+(copied from comp_frap) (copied from comp_ss)</Annotation>
+      <Geometry Name="PH-GFP-Start_spatial3D_20110705_232649" Dimension="3">
+        <Annotation>NoName</Annotation>
+        <Extent X="108.984375" Y="92.724609375" Z="18.0" />
+        <Origin X="0.0" Y="0.0" Z="0.0" />
+        <Image Name="img_20110705_232649">
+          <Annotation>NoName</Annotation>
+          <ImageData X="250" Y="213" Z="32" CompressedSize="13507">789CEDDDEB62DA3A16805138EFFFD033699B36802F922C5997BDD68F99D32458FBB39D1B01F378000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000B37B3E7B4FD0C7F3B7DE63DCEDF943EF59EEF47CD57B9CDB3C3FF49EE8169FD911C2B7AA4394EF852F5EBE9BBD7A79D4F0A3EEA5CB8FC3D72D3FE95EB6FCB47BD1F284EE35DB13C3D76B4F0F4F299F68EF6484A7C4CF539E19BECC199FDDBD4A7941F81AE945E10BD49777CF5C7EA57ADEF4CBD513B63F6B55CF525E3177AEF656E137A7E7AFD62EFCC6F2BF2BE6ACD9B0FCB6F4C235D70ACF5976B9F2E4A5570C4F1B60DDF29311A60F3F2E78EC7EBD6F163E48F9EE34EDC23B7C378F579E7BB778C3E89775EED7BA6CDCF29EF9633C48EEFEEC91840DBF35BD77EABBB8E5F7A5F70EDD10B7FCA6F4DE959BE296DF92DEBB714FDCF2857F51391538BD717BEFBA4371CB23A72F71D763B1B8E5BFC42DAF9FDE3B2859D870E501CB2BA7F7AEC951B77CA674E5CA952B57BE5E79DC6FE875C3672A8F7BCC95072CAF9ADEBB2553D8F0C0E5D5D27B771450AE5CF9F2E1CA95C7290F1BAE3C60BBF068E1CA83557F11AE3C4AB872E571C2DFD31FDF4F2B5D3FFCCB4E4480F2C74E4480F20B17A2B877CEFB840D3F4FEF3D5F4361C3CFAE55B3B4B8E5C5D7669A9FF278E507E9BD276B2D6C78E0975BDA4DEF3DD61D94C72BDF4EEF3DD42DE2966FA6F79EE91ECA958709DF4AEF3DD15DE296074E0F1B1EB8FCF525114295FF6CEF3DC9ED4246FF16B51B000000000000000000000000000000000000606C51AF93E77A98A1CA3FAF7A1BA27C233B44F976F7EAE57BD58B971F652F5D1EB5DB110F567E969D183EDBEE39CF5EB43C297CC5F2B4F0A4A6B9BE182486A7B4A79E1963480F3FAF9FAA3C33FC386DA6F2ECF0C3B689CA0BC28FE2E7292F0C9FBEBCB4FB30FDCE805217C28FE28777B17BD2F2CBD5F3A5D7499EA6BC6AEE3CE9CDB2474F6F1A7E5F7AC1824B94172DB94279D9A20B94172EBB6679D2DAD39717AF3E7D7952C1D61D9F379737D81985B3B4CCFE5CADC9EFE765D3344BFE586984F2EFD5DBD47E2CF33E64DFF29B286F5B3EE2AED89CAA7DF9003BE0B6C851DAFF2CDABBFB4B87F261EE5EBEBF7C1C61C30397DFD8DE3BF453DCF2BBD27B676E895B7E4F7BEFC66D71CBEF48EF9DB8276EF9A37D7CEFBE2371CBE3FEF1F84BDCF23F94870B571E2F5C79BC70E501D3952B8F53EE4B9C72E501CA2BA7F7AEC9A13C5E79B4E7EDFC1036BC6A7AEF945CCA958709AF97DEBB235BAD70E5F3501EAEBC5A78DCF2DE21D994872BAF163E5B79D8F0B8E5F5C295CF226AB7F270D98FC0E575C2672CDF48FFF3F6AC9DD2B7A1CC7EC4D77F2F1C7E76D5A575C3BF1C4EBF70F79940E51F35A1CA332E3BD36BCC063E7B22957FBE2542F9E3E3D25A71CA3F288F575E7EE9BDE9C52D3F48EF3D596B71CBF7D37B0FD69E72E5D20397AF9FAE3C5EF95E7AEFB16E10B55B79C0F0E2D7445840D8F0C0E55F77CA062DFF216CF82817AD0600000000000000000000000000000000EE11F6922361AF3213F7C24205C77C91FD5470CC9738479E85E593B6FF1DBCF80262DF379AAB7FEB0289B9E9335E736DBB3BBF60B6F4BDEE8280990EFB7E76D9F893A41F66174FFFDC7AF99F819C555F1B7ECCF294E6094ED86CC9DD87E133EE952AE5139E0FE9DD6B95E7741F874F559EF792B1476D27FB653479D9BFDB7602572FDFFF8164AEF2FCF0E7EE8FE1539517847FEC87976DF54BC914B6FC7AF88FD878E5DFC13395570B7FDD05C36BD03D477993F009CADB740F5F1E323AC8A7F7CB644D8A87CC6ED97A7F78D6420B85672EB544F9FBE76994F2C2F516282F7D99BF55CB0F577DFF63FF72E5BB0B3FCF6F3843787240F10D2F785BAE57FAFBCACD7A3717FC5CFFCEF29787E2B4697D5FEE65B59EE5DF03D44EDC5F69A8F2FBBCCD1830BCD16362FBD61D51DEB2FCFBBF46DA179F87A776F9D11E1925FC71F32307460ABFFBD122E374DF2F6C7897F4DEC9DFE296DFDEDE3BF7A71BAB474BBFAD7DC08708C42DBFEBCED6C0E5E33DB2F79EF25FED83B9AD7C3877958FD7AE3C5EF98FEF37C1C25FEF1A78B6EBEF17982C6C788C87806D52AE5CF9F2E1CAEB964FD1DEA67C86F426E553885BDE3C7DDC5D714378CCF2468F94A8A175F9C047BD7178E0F281AF2E1136BC76FAD6A63B859D6B5DDE292B41DCF2AAE99F5BEDD775AE41F8C69E1851FDF2E1937FAB18FEAFBC6B51AAFAE5938437F8863E4979DDF0399A7F531EADBBE58FED63AB1B3E5179E5F07FDFD0BB56A568563EFAE1AF1EFEFAD4A9BE71871A970F9CAEBC6EF7BF2DF72B3BD1ACFB7BDB9DBA12342C1F5BD4EEB847BCF19DAE9DA292B40ADFD81563A9193E5579CDECD74744C5297FFFE63D59F8853DF1D13A41F9C69B0A76C7E8A9AF36C23FD2BFDE927C2A746828B333ED67CA62E1FBE37EBE234AF9FE072F519E3BED62E5B91FBF4479F6DFFC162ACF14B7FC38BDF7704D053DE05FE2A62B8F571E385DB972E5CAD71536FCB0BCF76C6D45ED8E1BAE3C5C77DCF0BFF7D6862C7F792C6B98F04F61C31FD33C59050000000000000000000000000000A0A3A8CF490F7E1D8288E92597DD58633F1594AF718E945C6A658D4F8FB0E545D7D799F9823CDF73975D5868DEAB11BD5F4CE94AFA54F13BE1E517C56F3669557BD99901D3A51F74E7060CDDFE3AD17175C1F8C3A67F8F745E7C36FDDE3B464D4F2F3E19FEA06AC8F26AE1E7BF9F8C559E1F7E704EA7AC36CA0B6917845F291FE47E9D92EAFDF2837DF2F18115234A9486EF0C9E5CDEBFBDBC7C6BF283B3613C97D2B75E213A4AF94B69B4F27FADF1CA9F2F9BEADB93AC4AF8F3E53E9BDE49896A95BFED84F135089FA3BC45F814E54DC267286F133E4AF9EE288DB28729DF9BA65DF720E56FF3B4EC1D2BFC9ED41B9393D7582A3B6B9DF9CB9FDFF768E6AD347FF8764388F09D8831AA4F266993BEBFEA6DCD0733342FDF5AF89EDE8301EE2AFF5EFDE5FFEFF432E7EDE5DB1355CC3B5CE7C79475CBCB0ACA7759FE428395578C3B5EE8E78C2394DFE57544E5CA572E8FFE79AEBC72F9E64F471D637F7A9BA776F9C10EE9EC7D9C9BCA7BC76F0C13A2FCBE48E58394770EEF98DE3BFC4BE0F42F71CB97BAFF2D9772E5C2570F57AE5C79A4F2977F042AFFF1EF96FD1D4337DC78675D8FBC2C61C3177F74EB11E5F1D2C396B70A1F3F5D79B3F461F742C3F28DDD3014E5F1D295C74B8F5BDEF6FBDAD0E52D7F437FFDD7809AB58F1E7E4B7AEFC41D61C363DD0FFB226C78EBF2DE79072236FF12B53BF0FDAF8DC2958FAB55B8F261350B1FBDBD65F8D0E54DC387ADBFE999A9BD333FDD513D68FACD4FC21E4AABD4B74FA3DE991B5A953F86BFF3B151F9FBD50C7A676E6855FEB92346A33C5C79D8F0B8DFCE63567F69151B33FC65D37DFBF6B50BBFF9C20AB95A860FAD45F814E5C921AB856F05BDBF75FF23672E3F9879F72D6BA49F4CFCFE8675CAF3E75DA3BC64D415CA0B27543E71F9C6F314136F367D79A1B8E509E9BD276C45B972E5CA95AF276CB872E161C24FCA7B4FD750D4EEE3F2DEB3B51536FCA0BCF764AD850D571E2F7CEBCF3251CA3F1FD518A47B8287BFB416B73CFDF55801000000000000000000000000804C619FBD19F789AB619FB35BF084FC357654C9A508D638470ACA17F9ECB8503E67FA8F8B2F149FED53B67FCFFDBC583E5DFD735BE9ED1B4E5AD94E784641F92D3BDACBBE963E58FBE74C47D979E35FBA716B2F439D34170C3F6E79526BDAF03BEF1835BD5EF9C12E1931BD203CBF7CC4F492F0FD933A75ADFA1D798AAA77074F291AE4B817876F4E9D9833427B79F8E6D4A93103A45F2AFF183CA3A57BFBE5F28DD7ECCA5FB9495ACE0057DBB33B7A96D7087F7F89BAFC09AA67A52E5CA9FE6D3F648CD022EC7CD5FA7A74E41BA9FCD69DD622FC4AF96DED4DC2AF95DF13DF26BC7CF2EB5BC85D6894F29A877D7F43ADB22F8E5D69335BBF0C67BF20F0BDE5B57EA86D5BD8A4FC65EAF2EB2CCF57BD31F9EBDB062CAFD5BC979EB5CEC4E147E38F15DEE65B70D15AB7669F4E5339FD60D91B52CF46B829FD99FBF1B5350A4F4AE9F4CDFB7BF51F73DE5DDED7CF31AB960F9FFE73C878E53FFF3B4CFACB88E1CA5FFEA17CF5F0C0E50DBFC2F5AC4A11B6FC65C6BAE5FF7E3CFA5CA9BF8F216BB7EFED8FEE5EE7A95EBEB73FBA7B1F2748F9C6403795774EBFAB72B8F29EE17DD3FB96074E8F5BFEFD5D3460F93FCA9587098F5B7E77B8F2FE94C72B8FFB15EEE59EDF50E15B7702C608DFBC232C46F88666E1CA87A53C5C7AC3F09F0F0BEADAB8AD79F9EB5E1848CBF2CFDD3092B8E581D36F2B1FAE5DB9F238E537A6F72E7D1736FC4BDCF27BD27B476E531EAD5B79BCEED6E1BDF30EC4AC7E040EF7C78670E5EDC2072F6F183E767AD3F051D31B470F1C7F53F978EDB7850F977E63F960E971CB039FEE81EF768DFBD55DB9F238E5B785C72DEF1DFAEEB6F0B0E5BD3B3F350B1DBAFAD12AFC75DB7D0B77B409FF794D899E75071A878FAB51F832E5E91F394D78524FC687CE939E17B14EF9FECC3B098B94978CBC44F9E7A429F32E545E78B3F9CB4B6F377B79E9EDE62E2FA63C5E794A7AEF111B51AE3C4C7942B8F2C528171E25FCBCBCF780AD840D3F2DEF3D5F3BC283759F94F71EAE29E5E1C203971FA4F79EACB98FE028E11B7F9C09D2FD784BEF3DCCFDC2863F229DE400000000000000000000000000FD857D4E57D827F2857DF266C1D35617D95105CFD85DE31C2978AEF2E49F1EEFAF5150523E65FAF7D845CF4F9F39FDE72508AE944F97FFDC567AFB869356B6139E5170E1A6FDEC655F4C1FACFD63A0A3ECBCE9C74EFF37D34971C9F023A727E696CE3E6E797EF8DEEC07EF1831BD203CBBFCF3F24CFD9574EF0D7E5C34547B59F6DED8093DA3B41787179797FE185C5979F8E6D4892923A45F2C7F9B3BB96480F4EBE59FAF5C55B06EABBCF409AEB56765F44EAF53FE7ACF45D1F26DF29296AEA774823685E7EBF62A2FB973AF8216E165E3DFDCDE24BC70F88B372F5C6CA8F23BDA872AAFDE7EB09146E1E563D7D9CACF6D9D2D324A79C59FECF636D2B2FBDAD1AAB5ADB6857BAE941FDE6397B1F1DBA3DF46AD53FFF6C6F1CAFFAE79BD7CE38BDDC73AC384FF5BB446F8E1EC0355BF8C53EDE790B3B59EDBFBE0B6E2D769EA3E662C63DD6EDD2F5F85AA95A775746BFEB9FCCB28F7B577F5734CE531D27F0E59B57CF8F49F23862A7F19B16EF9E0E9A1CB5FFE1126BCE531EF589544F99FFF8E53FE32639BF24177C1CB9475CBB77FFFEB19FBD3EB40B5CB7777477F6F030529DF98E896F2EEE9F7540E98DE315CB9F448E57DD3BB96FFBDFB2B5EF93FCAC3852B57AE5CB972E52B96BFFD73FDF2CDFBC122743FB61E9315247C8372E561D21B8637790C5C3DCDCB5FF7C2405A967FEE8691DC562E7D1CF7958F961EB6FCC670E583885B1EF7F3FC4BD8F0C74DEDBD2337C52DBF23BD77E20EE1D1C2DB97F70EDC1332FA17E1D1C2DDFD1AADBC65F7D0E98DC3076D6F5F3D68FC6DE1C3A52B8F971EB73CF0E91E383D6CB872E5CA95AF5B1E36DCEF6AF53B47AEFED22CFCE7B63B376E6A19DEEA921255B40D1F58A370E5E3CA0889599EF3B11394E7672C529E34F2FB9B962D2FBAD1B4E565B79ABFBCF066F39797DE6EEAF262CA95870957AE5CB972E50B0A5B2E3C5A784A79EF111B099A1D38FCACBCF7780D850D3F2EEF3D5C5361C303971FA4F79EACB9B8E5EFE9E35E17A9BEF7431DA5FB4BA873FC53D8F0FF8BDA0D00000000000000000000000070BBB84F660BFB0CC6FC276FAEB2A74ACBA74FCF7FC2EE2ACFF02D78AAF21AE5254FD29EF979DDDF53BF3F313FFDD6B33EADFDB9A9F8E60D27AD6BBB3B27E0C24D3BDAEBBE963E7AFB4175E6F483A7BF0E74929D39FCD0E97F273A6F2E997DDCF4D4DEF3D1F7DE31687A7EF87E60EA226D4A321584EF0C7E5C34DC712F092F2AFF5CAB7E4CB26759F77E78EE4BA054EE495696BD3B715A4AD24E6CAC3C7C73EAD49001D22F97BF0E9EDCD13FBD4AF9DB2B5795ACDCAA2F7980AAFB216BED8689E78BDF5EFEBE7EABC8F3953B94773BEB5B84174CDFA17D90F2D7492A379E2DD7BBFCDEE3DE26BC74EE1ADB2859AA7F79ED9F6E0E7EB318ADBCEAFD363B9B68D95D65DEEB1B7BDB48DBE20AE55B13BEBDB3783B37B852BE39F4EBDB872BFFB7DEC5F2ADC173BFDFDFD4FC779CF4C9AECD3E52F7F3E78A55CA8BD36F88FD982565AE5AED2F0BF70C6F529E9AD129F9DFEA6F93DC98DED5CF312B968F9FFE3265CDF2E1D35F66AC5A3E7A7AC3F2C1D34397BFFC234CF9EB8091CA7D85FBF70FE5AB97BFCE58B73CFF415B377A1BB272F9C69D50AD42FEFB2DF9E30F876CA4617772FAE7447794D74FFFEFA7ECEEDF33CD58FEDF7F99E5B744DE90FE5F6E79C7F09AE5EFDD8397D74BFF0C1FFB6CAF56BE119EB0077A96574A3F0A3F489FBFFC387C3FBD6BF98F8717B72BDF4BEF1BFE53ABF0BDF4DEBDFFDC5CDE3BF79F76E16B96A7842B1F35BD5DB8F209CA9377435AF8E8E55B77020629DFBA37A8617997C464ED8E79EFB233CA952BBF5EFEF3696A3D0B779C855F2F1FF6046858FEF2E352EFCE4F750EFAE956662C2FFFF57CF0F48499CFFB93B6D0BBF4438DF4B42DF42E7D975A7E109F78F3DEA5EF32CA77EA536FDABBF45D6679C19F5497292FD6BB7443D8F09BD27B476E0B1B7E4379EFC23D61CBC386372FEFDDB72B66F597A8DD81CB85474B6F1A3E707AE3EE41DB6FA81E34FDAEF2E1D26F0B1F2EFDC6F2C1D2E3963BDD0396074E57AE5CF9F2E171CBC386B72AFFD870EFCE0FCDC25F37DD3B7343BBF076170CAAA26578E52B1FD6D5267CC8D45761C395C72BCF6859A9FC60E85F57727BBCBD7599F4A4895FDFBA46F9CB9CA9E3AE545E76AB05CA0B6F367F79E9EDA62E2F15363C2DBDF78C6D2857AE7CF970E5CA95AF5F1EB53BA1BCF780AD44ED3E2DEF3D5E43C2A3851F97F71EAE29E5E1C28FD27B4FD65ADCF2DDF4DE73DDE023384AF863F807FE341636FC11EA247F17B51B000000000000000000000000801BC57D325BF613185779C663F6B35697799A6BF61376D779866F61F9FCE9D9216B3CA1BDE499F9335FBAE1E2E5274A6FD7DF7678FE97F7C9DA77B2AFA58FDF7E909D39FE54E9C7D9B9D3CF927E5A5D30FCB8E97FC6498A2E1A7DD0F4E4E02B938FD89E1F5E3AF768F135C3CF72864AAF79C8136AC639EE75C3B35FFDA562498E82EA93F09492D4CDB574A17C63ECE48E01D28BCBB706CFC9E8DE5E5A7EBC5B0AD66ED898B07A1DC5CBB76A3C5FB94379B7B3BE4578C1F01DD207297F9DA472E3D972BDCBEF3DEE6DC2ABFC2E53B5F378A9FEE5377DAD6B557D69E47A5B4A5F628CF2ADB92E6FEB9EE6ABE5DBF3BDBEF3C2869AD57E4C5A2BFEF5ED0396D7FB8371C25A238657F9BA74BEDA18E1AFAFAE5CA3FCCA0B4734AF7D9F2471AE2AE9FB8B342EDD1CE374A8DAF11F8BB50B3C5E7E7398F6E97F566C1396B272A38785740A4AD6AE7CF0F4B719AB96DF91FEDFBBE45B4E5EFE119EBE079A96374FDF0F3F4F7F1B70AEF2A3F0D3F499CB8FC393CAE7FC3C3F095FB7FC2CFC2C7DDAF2F3F093F6B721EB96FFDB6A9FF0A3F4F7292B976F3C0C6388F28D99AA976FEE8CDBC277D2B786BAA3BC427A72F866F92D916DD2D3C3B7D23B865F2DCF09FF2CEF197EB13C2BFC337DDEF2CCF08FF4AEE597D2B3CBDFD2A72DCF0F5FE5A017948F955EDA5E123ED6F9FECF1DE5AFE9BD8BFFBA217CFE835E1A3EE841BFA57CC8F45BC20397BFA4F74EFEE3E744F7848F52FEF9808D58E51B6F6A573E4CFA06E5CA952B5FB67C2B5C7985F2DF6B746EDCD6BC7CD823BF595EF1379671CFFAEDF26ABFA5BE9EF643D9292F4FDFDB60EFD00FB5CBF7B6374FBAF28BE1ED1E0D76DDDE21AA54FE6F85DEA19F6A966F9DE2C31EF347C5EFE91BE1E39EECBF544ADF397B060EAF943E6378952F7347E1C3961F8CBC76F8E99F20C29DEB39EDF3557F49283F8B9FB23BE3EF6DD9E5BDCBCE2497EFA62F1FBE57BFF7A1BDCB4E64866FC4EF7F60EFB64305E1397AE7ED6B1C3E6E7BFBF021D3EFC81EB2FCA6F001D36F2B1F2E3D6E79CBAB810D9EDEB0FCD6EBB9156859FEF87CCB40DA956FEE8B81342ADFDC1763095B7E5B7890F2DD6BD78DA351F8E7767B877E6814FEB1E5CE991B9A853F3EDE309616E18DAF295147D3F0811F06D7ECCBDBF8842BAF722D9ADE55098E665EB93C61E21FEF59A73C71DE7FEF59A5BC64C895CA8B6EB44279D9AD16282FBCD9E4E5A5E296A7A4F71EB111E5E1C2952B57AE7CDDF0B8E551BBCFCA7B4FD79270E541BA95070C3F28EF3D596B71CB77D37BCFD55ED8F08D07B246097FFCBA0A52A443FD216C78E0F2412FFD050000000000000000000000000010C33ACF727DE63D6F75A1E7746796ACF374F6DC92759EC99F5D32F3152B5EA6CEEF98F6821D15AE393263FA4EF685F229DAB78B4BE6BFB0D7EEB77BACCBA69F257DFF247F967E839E22FDA0FBFBB54DAE6FB6F6D0D71D667F97D7D87AC5996B38EBFEFD32269556A8347305E7D935E61DEE9C4FCB4E18F6BC66A4F6E4ECF359535AEA9E445764851F8F9A56324A7A66F8C1A4E92103B4E766FF98F363EA9C8CEEE905E1CFF79BBE6DA768ED166DE9AB97966FBF3B77F90671892B67A7D728EF77D69795BF9FDF57A7EFD05E187EBE5BAE4C52B9F16CB9DEE5F7A657C9AC557EE7295F23FCF97279DC6B63D7D94AEE3A17CA3FB6576DA41A99274BD488AF31F0FE7E2DDE609BE4D7F1AA8CBBBFF947EEDD604D5ADB956F4EFCFAF661BAAB979F8E3D4C78C5CFF3C4C947096F527EED55525A17BFCE913E5785F4A33B476EEB6E565EF4B2670D3377D73F9AA75DFB33EFA3EBFA58B662F9ED31599A960F9DDEB67CE474E5EF6F583F3D6CF9E780D1CA5B3DE2AF63DA09E5CD5EACAA67DC918D215B940FB8132A6766EC8CBEBA748FD0DE2DBC777AC7F0BAE5FFBD1B38BC66FA47F7597CDFF07AE5DBE147F19DCBFF7CB76B18BEDDDE3BFB51EBA01F866FA5F7CE7E542A3F09DF8AEFDDFDF8F367B6E6E11BC7BD77F8E3FB21B6ADCB874CFFAB69F97B7AEFD8174DC3DFD27BB7BE695BFE92DE3BF555E370E52397E7EC84C2F2B1D25F678A54BEF15C8A28E51B5A95F7EE3AD7A6BC77550AE5F1CA4FD395E7844F515EF16C9F2B5CB9F22BE9CB95E7DF27F3B9429FB66309E5D977416EACD027EE58ADF435CB13D277C3DB3C52A286A4F2D3F49F1FBBB9428FB43369E9C7F12F1FB8B94287B053A9E5C93657E81096A071F9B8E16DD33777C6301A968F1DDEE489A83F36DDA92A45C3F2C7B50B68B5D6B47C646DC267D80375CBFF3E52A173558AB0E595C39FDFDBECDD75AE5179EFAC73B5C3FF3D22A973D899EAE13F1E8BD539ED58FDF07F9FE863C7B72E1FB6BD45F8F36DBBBD1B3735097F2F1F31BD5978E0F2976DF78DDCD4303C70F9D85FDD1B76FFDC7AB7BE5D8DC307FE69A66DF8F69BC7D0B07C77878CA15DF9DE0E1944FDF09D071377ADDCD2AE7CF41FE1EE29EF59B8A341F8E757B88E7DFB5A868FFB408947E3433EB2B0E11F5F7DC3946F8E1CADFCF8BDEB869F7C40CE4EB8B5A0D4F9B47FDFBB5679D6900BA5678FB84A79C1848B9497885B9ED6DE7BC646C28627A4F71EB099B0E1CA952B571EB6BCF7742D298FD61D37FCA8BCF7686D850D571E2F7CBFBCF760ED850DFF78044898F09F7F9DF8F777B8AE03DD28D061060000000000000000000000000000004816F68A0C25D7A258634F155C8663D2B3E43DB4E402247F2F505375B2B63EAF275474B64F7749A2ED4B2915CD3F4F7BF58B48CD712DAACDECAB234F90BED77D7DE2B1DBF7BBABCC3B6CFA51779D71074D3F0EAF336DEDED5570925D6FD2C1DACFBBEBCDD9629B3566B9549E96324C7A5A77C290C92583A4A7869F0D9917D2BF3CBDFB70C89290BEE939E19B53E69D171B37AE14922B33FC63D0947D9338C9D594BCD54A9C6CE1D224159A7296AB9B7E7596EB59198B5D8AAF5D7E43FA85F0E7C176AE8F733D2D71A1CBE9AF5BAB31D1B5B4D455AAB45799FA68D7D65121FB7DB63A231FEDDB4B6ABD3EF271FAB5118FD7C8DC5693D7C56E54BE11FFF6E6D2CD344BAF575EE52EB1B6DD2F53644E7665F0A5CBAFDE05DCBAFBC7105973B56F6F5CFD3242FA5455D2D3EE2A68A96579C1BDC1EDBE8FEDAFBC3B4CE3F45EB666AC593E6E7AD4F2ED19AB960F9AAE3C7879A33F0FF7EC3BB03964C0F23F834628AFDB3853FA2DE523EE870EE163E4770BEFDDDE33BC72FA7F7F4C515E31FDBF7FC6CFFEF26B8ABAE109BBA077F597DF63B409DF4FEF5DFDE5CF186DC277D37B577FF93347A3F091CB1F158EF97EF8D0E57F1E58537EE00FBA072FFFA17AF834E505E9C7E10BA79F85EFA5F7EEFC503F7C27BD77E8A7CCBFAEA494CF92FE47DCF2B4F6A4F0E9CA1F09F1CB967F6954DE3B2B85F2AAE5BDA39228AF59DEBB2951D8F2B8C75C79BCF2B89FE70DCA7B17A5525E9CBE6479D19D32BD83921D9697DC13D73B28DD49FA69FDCAE5597F66E99D9323257D771F7C7C40EF9A2C59E9AFF59FEFEC1D9325B7FC50EF983CCA952B5FBEBC66B8F229540D573E85B0E575C3272AAF1CAE7C7C0DC3C7DE11B5C33F9F83DBAFED50F5F08D671FF7AB3BD230FCDECB9A656BD7FD18FCA0872D6F1A3EF4D7B8CAE59F8D8376DFF183EBA0E9EDC343946F5E8F756F87F4D6B2FCC73BC653357CE73BDA90E14DEF7E9BBF3CF1C366FA569E1C9EF4819B5BBFB9275DDBF281A58427A7776EC9F273EAC3E7A8977D9E0F6C73E2E4B3FB73F77448287376AC72CBE79130F2EF63B95C7AEABCEB95A70B1B9EF3DD6F3981D3CFDB7B0FD850E0F4B3F6DEE33514363C72BA72E571CA8FD37B0FD79472E141BA8FEEA95B9DF270E171CBC386072EFF774775B0EE6FBFCA07FF2B310000000000000000000000000000000000C0AE9857518A76C9B03F425E2EEDB173B1B8DE43DD20EC35F29A5F1D70D07DB8D75DB37CC4F4FDEEAAE5C37DEE1C75D71C75B8AF1B87E175271D28FDA43A79CEF49E31E2CFBBD3A6CC8B19203D29FC7CC8EC4F8ADEE569DDE753667D568C2039FC242AF9D4184446F75ED5AF77249F19A3C80BDFEECA393186911DBEF372B935CA6FDD6D05E17BC3552ABFA7BDA87B6FB66AE5EDD34BBB7786BB5EFEB8BE85AC552AA51FEF96DCA12E8425AE50AFBD4A79D3570B487F55DCBCF45A231FEFDF0A5BAC9E5E73DACD55CAB6DE20BB65F947FCC1BA77477F8E50B9FCFABD432DC3F70E7A95F2CB2FFDD5B47CE7A0572ABF96DE36BC71F9A53B82272FBFF0A296F78537FAFDBC749A50E52F0B572EDD5FE865B19AE5AD3F5FCBDC523E64FAF690B5FF50DA3972CBEEA861CB2BEB9DB94179BCF4BBCAFFFD75B677F1B7DBCADFF743BCE601F27B77FF16B7FC4B9D9EFFBE4D545E25FDBFFF92D37BE7BEA8D81D2AFDBF6D53845F4ADF09DF4DEF9DFAA17AF83CE965ED07E1F39497A41F852B9FA03CBFFD307CAAF2CCF4E3F059BEAF7D8B5BFEA54EF88CE589ED4B9627B52F5AFE388F2F2CEF9D954479BCF2E374E579E5BD931229571EA7FC30BD283C40F9E4E1E5E57B37EA1D94ACB07CFF46BD83921D9567DFE13C5378D1CFAF47B7E8DD93EEB87CABFDF8E37BF7A43B2BFF883FF9E0DE3D1912D273F4CEC91136BC6E7AEF963CCAC385072EAF98DEBB2453BD70E5B350AE3C4C79C5F0B9CA6B86C72DEFDD92A566B8F229840D6FFA593EF69E68D7FDD87CE330EA85C72DDFDEFADD3DC9EA85EF5D1BEDE6A0648DC30716B63C6C78BDF2DE21D994870B57FE96F15A1427FC47F9D1474D5FFE715DC1C7E72515972BFF3BF4EFFC1FBF53BEF72C5B7EFEAEB5CA0F677E7BD77AE5191FBA5679FA472E559EEC345CF97AC286072EBF725DD5F9C52D3F6AEF3D596B710F7ADC72A7BB72E501CA77D37BCFD59EF268DDCA03866FA7F79EE92E71CBDFDB7B4F73ABB8E5833FCC0D000000000000000000000000000000000000F825E2C5D21E3F2F15D77B925B05BD3860D4EB4186BD06E8567884F2CDEE00E53BDDABA7EF67AF5D7ED8BD6EF9497672F974BBE83C3C2D68B69323A13B2D68B64F8BA4F084A2AC4F8B1124869F25E57D5A0C20B9FBAC69B6F29CF0C3A8D453630C79D9C759539517841FBEF6EC34E545E17B5D29A745C248176E9BBE48B1B3CD5D1BEBD2AD4FB77ED5F1369BCE7EC5E5EECDB8B1CB6B34EFE5352F2FDF76CDEC8D19EA97FFD8DCF14EBFB3FAD6F2D3A56FCDFE5CBF7EF9D5F456DD0707BD56F9C5F499CB2FBD846BBBF03BCAAFDC253A7979F98B74370C1FA1FC60A2CAB17BCBBCAE55B3BC34BD76EDF62AEFABF52BBF45D5BCA9D26F2B1F2EFDBEF2D1D26F2C1F2BFDCEF091E2EFEE1EA6BF5778FFFECEE55FE2963FFAC4F76EFE2B6EF9E3EEF8DEB5AFAA24FDF7DB5CE535DAFFFB2F2DBD77E9A75AE167FDBD3B37540DDF6FEF9DB9A56EF85E7BEFCA4D95C337D37B37EEA91B3E557A51FB1AE505EDFBE1939567A7AF539EDBBE52795EFB5AE55FE296A7A62F589E98AE7CA5F2B4F4ACF2DE45A99497A64F1B7EF5ABFBBC873CFD079AC5BEBE3D727E964B0A5FB23C4DEF9E7461C30397574EEF5D934379B870E501CB6BA6F74EC914B7BC627AEF925C71CBABA5F7EEC817B6BC56B8F27928571EA6BC5AB8F259840D8F5B1EB53BF04FAECA8587098F5B1E365C79BCF2B0E195CA7B5794D80E8950FE11F9FAD68A17361ECECB01FEF1E67FFF5E34FCCB56C0CF372C1BFEF8D576F2EE55CBCF288F577EE53A6C930B1B1EB8FCD21517E7A63C5E79852BEA4E2B6EF96E7AEFB9DA531EAF7C2FBDF75837885BBE93DE7BAA3B28571EA5FBB199DE7BA4BB840DDFF9BB440861C31FAFEDBD67B959D8F07FE2960300000000000000000000000000000000000000FD84BC2264D08B8086BDE26DD0AB1C6F5CD73A44F9567784F2EDEED5CBF7AA572F3FEACE499F6E2F9D84A7E6CC777E9C8527E64CF79971DA9DDA3359794A775A4FD627467769DD694133952777A714659C1DFDE5949F25659C1CDD65759F25A59F1BFD65861F47259F1ADDE5671F56259F1ADD9585EF77CD515E5C7D50367EF9C5EADDB4F6E557365DA3BA4FF9D9EAA9B76D9C7E3DF478F44B376E90DEA43C7DC7E7DC7EDEF29C3B0B6E486F527EE97EC126E1DDCBD37F7F6A1E7E7BF9D9426DC2EF2B3F09B83DFCF8DBDA8DE5BB0BDE19FE7BC1AAD5050D6DBBEFFDC1BC5945895BCB876ABFB97CA4F6DBD38769BFBF7C8CF82EDD43F4772DEF9ADFBBFB8FB8E51DD27B17BF8A5B7E677BEFD20F71CB6F4BEFDDB9256EF9E38EF8DE85BBE296376FEF9D77246E79DBF4DE71C702A7B76CEF9D762A6CF89D7F5F1950DCF216E9BD9352298F575E3FBD7750B2B0E1CA0396D74EEF9D93216CB872E581CAABA6F76EC9A33C5E79C5F4DE25B9E296D74BEF1D924DB972E5CA970DAF55DE3BA38072E561C2E31EF3B0E14E76E571C26B94F74E2853213C6E79EF8442CA9587098F5B7E3D5CF974C2863F363262846F5DF0E4EB3F7FFD6BF1F2C7E391761DC315CB0F840D3F4DEF3D5E4B71CB2F5C976A7A61C32F5D876D7261C3AF5D76706ECAE3955FBCC0E8D494C74B0F1B1EB87CB3BDF74837895BBE91DE7BA2BB840DBF7879FCA9C52D7F44EDBEF62218B3FBDB1DAEFCF13BBEF70C0000000000000000000000000000000000000000002C20E4258EBFC4BCBE73D46B9907BD8AFBE76B354428DFA88E90BE97BD7CF941F8DAE987E159E573EDA6E3EEBCF4A8E5737D6A9C7667E44C559E12BE607952764EFC24E519DDF31CCC1479E127E513ED99CCEEB3F6694E8B82EEC3B094D3A2BBA2E8B4F2B1DBCBC30FBAD2764F5757BA8FAA1A975FDBF8B5E893B55B9627EEFCA49B4F559E3640E2ADEBC7B72B4FDDF729376D10DEAE3C7580B49B36286F76FF7CC60829B79CA73C6B86B6DD63949FADD2A27B7FD15FEFBBE76C3F8BBF37BC99FC69DA8477F8E93461A297B91A85F7F8B93C6BB656DD9D7E21699693A14FF908EDBDCAFBEF81DEE55F9E3DFA7B47FF14B7FC4BDCF2C76DF1BD3337840DBF29BD77E48EB8E58FF6F1BDFB0EC42D971EB1BC6D7AEFB86371CB5BA6F74E3B15B77CA1FB1F0BC42D6FD2DE3B2955DCF2BBFE903AA0B8E5B5D37BE764885B5E39BD774D8EB0E1CA95C709AF9ADE3B259372E561C22BA6F70EC916B7BC567AEF8C02CAE395D749EF1D51A24AF894E5718F7995F2DE0D65942B0F13AE5C799CF2B0E115CA7B179412AE3C4AF8F5F4DEF3970B5B1E365CB9F230DD5FBEAE0550BA037ACF5ECFF3FBF29CD1C27F8A5B9E92DE7BC466E2963F025FD1F938BDF76C8DC52DDF4FEF3D587371CBF7DA7B4F7587B8E5172E40373BE5F1CA37D37BCF7413E5CAE3945FB998EEEC94C72B7F840DBF7AA1F499C52B06000000000000000000000000000000000000000000006057DC2BD8077CC5825FE2BD56C3E7CB27F79EE826415F8168233B42FA4EF6F2E907DD4BA71F77472E5F36FD347CD5F2F3F035CB13BA972C4FEA5EB13D397CADF69CEC95D273BBD728CFAF4E691F7FD79476F72EBF78DA95679F97FFFA8846FD89339CDEBC45FAC5D992072FB8F5F5F0C365472DAF50DDAF3C7986935BCE5E9EB140BDF0F3F2CB95090185376B9A5EA132A1A1E8464DD3DB2998A17677A79FD3F287A81EDEEB27D4CC21EA77F7FBB5256B8895C2BF6ABEBF7B9C0DD1A27BF8DF549F757E529DABFCD9AC79FCF2B67AF7ED687DC0950F296C78E0F2C6EDBDE30EC52D6FDBDEBBED58DCF296EDBDCBCEC42D6F97DE3BEC5CD8F0A0BF9EFF16B7FCB1D0FD8F05A42B0F547EDF5FD5C613373D6C78DDF4DE2D79942B0F137ED3E38386A43C5EF90D8F021C95F278E575D27B471451AE5CF9FAE555D27B379451AE3C4A77E4F2ABE9BDC7BFE06AF9BCED17CB273EEA51BB039747ED7E5C4BEF3DFB35CAE3955F49EF3DFA45CAC385975F6CA1F7DC35C42D2F6AEF3D721B61C3035F0C30F005201FA7EDBDC76B2A6E79D8ABFB3E0ED27B0FD69EF278E57BEDBDA7BA43DCF2A817EBFF12B7FC33BDF740F779EB0E547EF5129B538B5BFEEFDEBADE83DCEEF97D399EDE83F411B7BCE5553C8716F890030000000000000000000000000000000000000000000000002CE3CF0BAC857A419AA82FAC17F6652437C203A46F564728DF0D5FBD7C3F7CEDF4A3EEA5CB8FC3172E3F095F37FD347CD5F2F3F035DB93BA178B7F3E33B29729CF4A5EA8BCA47B84F6CB339486F74EBF3A4479F7F9A22D77CED5FD7FA57BDEF26BD5298B8E585EA17A98F2BC35EE296FA9708A4AE183A417DD285879BDF0AEDFD1B387A8D8DDFB67995F9287A81A3E4279A2BADDF394D7EE9EA4BC7EF624E54DC2C72FCFBDBF6595EE56077C8674E5CAE394B74AEF9D954479BCF2A8DFD0BFC42D0F7DD4EBC7F74E4A16363CEE5D328FF5EE86CBA03C5EF92A77B717A8581E37BD7749AEB8E54BFC29B54CD46EE511CB2BA5F7AE2812B6BC4AF894E555D27B3794895B7E3DBD7740A9B0473CF031571E2FFC727AEFF12F081B7EADBCF7F09728571EA7FC4A7AEFD12F52AE3C4CB8F280E5A5E9BDC7AEA0F0F142BDC7AE206E79DC8B2CFC1236FC917BD2F79EB6AEAFE7F724E6F71EB50DE5E1C27F0B1BFE087C19C4C0E58FAFC2A0E9BF288F571EF7C2C65BE9BD27BA4BD4EE5F5FE383963F5E7F8FEB3DCBBDE2967F79FEFED1A6F7185D3CA3860300000000000000000000000000000000000000000000000000000037FBFDC299015F4831E6EBE4467D65E4B02F86BD111E217D333B40F95EF7FAE907E52BE79F652F9B5E337CA23D94929D9E3EC7B9F17BC89ADDBFB6D66CDE7A528F7666F9E8E939D93935EDD3AF6D3EB33B23BE75F9A5CD97642707352ECF3B01376FDD2AFD86F0D2058ABB53D30BE7CA18BEF47697D48F294828BAD1E4E145E535C2FB97977C36AD529E4F79B0F22AD9A1CB674BAFD63D5979C5EEA9CAAB762B9F40E56EE5E3AB1EAE7C7871CBE37E9E4B8F185E3BBD774D9EB8E5617F57AB59DEBB249BF278E5B5DA7B579450AE3C4E7AD8F0C0C7DC418F17BEC403264A298F577E3DBD7740B1B8E597D37BCF5F2E6CF8C5F2DED35FA23C5EF9A5F6DEA35F14365C79BCF0B6CFE4185BD4EEC8E50D9FB035BAB0E181CB0BDA7B0F5C4DDCF266CFC61D9F72E571CA7FD11D2AFBAFB8E567EDBDA76B2D6EF9417BEFC16E1036FC4BE0F2B7F8DEF3DC4B79C0ABBDFE3ED611CB7F0B5D1EEDF3FC87B8E500000000000000000000000000000000000000000000000000000000004086E7F7AB8107F3FC531EEB95C09F3F5FF63E52F79B4798F8F7F220C77D2B3B44FC7E7866FB743BAA5AF844E7C8F3FD4BFA95F2A93E3D0ECFF3E7EFAFF0C9357394FF9EF02CFCCF0F36A9DB1CBFFC799E5C72B63F2628CF94B1DD96635F96DB3D784E9A67CE79BE527949F5F4E9C5D1B3975F0B573E23E5CAE3A4072D3FF93D74E1F0B21FDCE66F7F462DBF1E3D6978ADF429E343667F4D5C237CBABFB23DAB953F273CEC61CB6B752B9F478D9F627E75C72D9F4EDCF247AD6FE85352AE3C4C788DF4DE05A5944B57AE7CDDF0B07F69785C2CEF3DFC4561CB1DF380E9CA03A65F68EF3DF96561C395C70B2F4CEF3D7415CAE395077D6CFB2F61CBF3C3954F2F6A78E043DEEE095B13885BDEE8E9897388DA9D5CBE647B4A7CEF111B895B9EF2D4F3653D4F9EEBD07BBE1B28571E26FCF301A28B7E27DFF1F7CB5DEF417A88593DE1259F00000000000000000000000000000000000000000000000000000000000000004A3D7B0FD0CBF31931FEF9CF2352FFF345A0F26795F2DFA7CB5C9E1F4AB7527BB2B63EBBCB02A62BDF087F3E0A1ACA77D9DD9E7FFE77ABBCA86192F27F07B76679FD392BDBCD7D4DCF2D5924BCEC937D6C89E165A7FCA80E3EAF572DCF4D5EA6BC287B85F2D2F0F9D3952B8F531E37BD3C7CF6F4B0E557C2E74E8F5B1EF56CBF76C4272E0F1B1EB6BCF0B7D3F9DB8FEE625CBB3CEE310F5C7EF92B5CE4F269D3E3964B8F587E39BDF7FCE5A2763FC2FE96FA501E305C79C0F20BEDBD07BF2C6CF823727BD8F0A88F1679288F585E94DE7BE63AA2763F0AD27B0F5C8D72E561C223A7870D0F5C1EEFC1ED3F280F179E91DE7BD0EA94C7AAFE12F4807F79263C5EAAF78C2D3D8F8E7EEFE1DADBCE8E5ADE7BA67B7C1FE21FFF17C9DFF23847FC87EFAF77BDE7E8246A37000000000000000000000000000000000000000000000000000000000000000000C0349EBD07E8E2F9A5F7105D3C03A6FF0EFE531EAAFDF9ADF720B77B064D7FBE87C7D805CF17DF6F5BF493FD5FD5F3D3EF372F59FE5DB851FD79F4977252BC687962F552E519CD6BA5E787AF921E363CEEC91EF9A03BEA11DB0BCA17492F295F235D79B0F2A2EC25D28BCBA74F171EADBC3C7CF6F4A8DDE5E5BDE7BE2EEC2157AE5CB9F4A5D3CBBFB14DDF1EF6902B8F171EB83CEA9D515FC28607BEBF3DF0DF97942B8F53FEC88EEF3D6E4D61C3B3CA7BCF5A57D8F09CF4DE93D616343BFD90F79EB385B0E569D92B96FFA2FCA87CD1F8F3F2253FD5138EF9B287FC7114BF70F46F47073C80A8DD5F029DE5EF22360300000000000000000000000000000000000000000000000000000000000000000000000034F0EC3D0077783E7F1CE848C7FCF9CBAFFFFBFA47A0F6E7A6DE53B5F6FB3007687F0DDB4B5EBDFC5CEF696B52AE3C4E795E7AEF61AB0A5C1EB65D79BCF2DCCFF495DAC39667853F9739DF73B3D7292F48EF3D712DCAE3A5870D2F48EF3D7025F9877C95F2B8C73C7279D49FE11ECA952B0F10AE5C799CF0D0F7B82B971E263C2BBDF7A895850D7F24B7F71EB381B0E189E9BD876C236E794A7AEF111B511E2CFBA17CB77BE9F4C7DF47B4BF27AF9CFDC79FB3FAA5BCF74CF7F8131AE5337CC3AF3DF0E70163BD67B9D7F3EFFF472BFFF68CF5D4A51F82660300000000000000000000000000000000000000000000000000000000000000000000000000C0A667EF01BA797EE93D445BCFAFC3FBFC38C64B877FE53EFFF82EFFFEBF9743BEDA2E78FEEBFEF99F3FDFF8FD913DC76CE079EAEF47F61CB385F3F43FF1CB953F52E3C396AFF8453E25FCEF39BF94B8E5BFBEB3657C915F88F288E5697ACF595FD8F0B8C73C6C7872F982ED61CBE31E73E501D313DB7B4FD9426AF972F1A9A7FAF3F36EE9C965942F467942FC62D2CB974BF74B4BC0F4B0E1A7E9FFFEDABA9CA8873CE59ED7D0E5BDC76CE32C3A7479EF11DB39EAEE3D5B5BD13EC1FF89DAFDD84DEF3DD60DB6BFB085487FFC0D7E3CFFDCFB14A5FCB7EFF2C7EFBB6122953F1F6B7FFFDEF77C2C789F5B92E8E531DB01000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000A0B2FF016738F9A7</ImageData>
+          <PixelClass Name="background" ImagePixelValue="0" KeyValue="58195788" />
+          <PixelClass Name="roi_1" ImagePixelValue="1" KeyValue="58195789" />
+          <PixelClass Name="roi_2" ImagePixelValue="2" KeyValue="58195790" />
+          <Version Name="img_20110705_232649" KeyValue="58195782" BranchId="58195783" Archived="0" Date="06-Jul-2011 01:06:56" FromVersionable="false">
+            <Owner Name="schaff" Identifier="17" />
+            <GroupAccess Type="1" />
+            <Annotation>NoName</Annotation>
+          </Version>
+        </Image>
+        <SubVolume Name="background" Handle="0" Type="Image" ImagePixelValue="0" KeyValue="58195831" />
+        <SubVolume Name="cell" Handle="1" Type="Image" ImagePixelValue="1" KeyValue="58195832" />
+        <SubVolume Name="nuc" Handle="2" Type="Image" ImagePixelValue="2" KeyValue="58195833" />
+        <SurfaceClass Name="background_cell_membrane" SubVolume1Ref="background" SubVolume2Ref="cell" KeyValue="58195834" />
+        <SurfaceClass Name="cell_nuc_membrane" SubVolume1Ref="cell" SubVolume2Ref="nuc" KeyValue="58195835" />
+        <SurfaceDescription NumSamplesX="250" NumSamplesY="213" NumSamplesZ="32" CutoffFrequency="0.3">
+          <VolumeRegion Name="background0" RegionID="0" SubVolume="background" Size="161048.86900703862" Unit="um3" />
+          <VolumeRegion Name="cell1" RegionID="1" SubVolume="cell" Size="20031.29009117617" Unit="um3" />
+          <VolumeRegion Name="nuc2" RegionID="2" SubVolume="nuc" Size="819.4456991484882" Unit="um3" />
+          <MembraneRegion Name="membrane_background0_cell1" VolumeRegion1="cell1" VolumeRegion2="background0" Size="6952.45624242626" Unit="um2" />
+          <MembraneRegion Name="membrane_cell1_nuc2" VolumeRegion1="nuc2" VolumeRegion2="cell1" Size="1076.3399774740967" Unit="um2" />
+        </SurfaceDescription>
+        <Version Name="PH-GFP-Start_spatial3D_20110705_232649" KeyValue="58195828" BranchId="58195829" Archived="0" Date="06-Jul-2011 01:06:57" FromVersionable="false">
+          <Owner Name="schaff" Identifier="17" />
+          <GroupAccess Type="1" />
+          <Annotation>NoName</Annotation>
+        </Version>
+      </Geometry>
+      <GeometryContext>
+        <FeatureMapping Feature="cyt" GeometryClass="cell" SubVolume="cell" Size="5000.0" VolumePerUnitVolume="1.0">
+          <BoundariesTypes Xm="Flux" Xp="Flux" Ym="Flux" Yp="Flux" Zm="Flux" Zp="Flux" />
+        </FeatureMapping>
+        <FeatureMapping Feature="nuc" GeometryClass="nuc" SubVolume="nuc" Size="500.0" VolumePerUnitVolume="1.0">
+          <BoundariesTypes Xm="Flux" Xp="Flux" Ym="Flux" Yp="Flux" Zm="Flux" Zp="Flux" />
+        </FeatureMapping>
+        <FeatureMapping Feature="ec" GeometryClass="background" SubVolume="background" Size="50000.0" VolumePerUnitVolume="1.0">
+          <BoundariesTypes Xm="Flux" Xp="Flux" Ym="Flux" Yp="Flux" Zm="Flux" Zp="Flux" />
+        </FeatureMapping>
+        <MembraneMapping Membrane="pm" Size="1414.0" AreaPerUnitArea="1.0" CalculateVoltage="false" SpecificCapacitance="1.0" InitialVoltage="0.0" GeometryClass="background_cell_membrane">
+          <BoundariesTypes Xm="Flux" Xp="Flux" Ym="Flux" Yp="Flux" Zm="Flux" Zp="Flux" />
+        </MembraneMapping>
+        <MembraneMapping Membrane="nucMem" Size="304.6" AreaPerUnitArea="1.0" AreaPerUnitVolume="1.0" CalculateVoltage="false" SpecificCapacitance="1.0" InitialVoltage="0.0" GeometryClass="cell_nuc_membrane">
+          <BoundariesTypes Xm="Flux" Xp="Flux" Ym="Flux" Yp="Flux" Zm="Flux" Zp="Flux" />
+        </MembraneMapping>
+      </GeometryContext>
+      <ReactionContext>
+        <LocalizedCompoundSpec LocalizedCompoundRef="hv_cyt" ForceConstant="true" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>((t &gt; 0.2) &amp;&amp; (t &lt; 1.5) &amp;&amp; (x &lt; 80.0))</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="PH_GFP_cyt" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>0.9949689471138276</InitialConcentration>
+          <Diffusion>50.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="PH_GFP_bl_cyt" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>9.949676912093729E-5</InitialConcentration>
+          <Diffusion>50.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="PIP2_pm" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>8013.840234276138</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="PIP2_phgfp_pm" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>3986.76109011808</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="PIP2_phgfp_bl_pm" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>0.3986756057809255</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <ReactionSpec ReactionStepRef="bleach_cyt" ReactionMapping="included" />
+        <ReactionSpec ReactionStepRef="reaction1" ReactionMapping="included" />
+        <ReactionSpec ReactionStepRef="reaction2" ReactionMapping="included" />
+      </ReactionContext>
+      <MathDescription Name="Copy of spatial2D_generated">
+        <Constant Name="_F_">96480.0</Constant>
+        <Constant Name="_F_nmol_">9.648E-5</Constant>
+        <Constant Name="_K_GHK_">1.0E-9</Constant>
+        <Constant Name="_N_pmol_">6.02E11</Constant>
+        <Constant Name="_PI_">3.141592653589793</Constant>
+        <Constant Name="_R_">8314.0</Constant>
+        <Constant Name="_T_">300.0</Constant>
+        <Constant Name="AreaPerUnitArea_nucMem">1.0</Constant>
+        <Constant Name="AreaPerUnitArea_pm">1.0</Constant>
+        <Constant Name="bleach_rate">1.0</Constant>
+        <Constant Name="K_millivolts_per_volt">1000.0</Constant>
+        <Constant Name="Kd">2.0</Constant>
+        <Constant Name="Kf_PIP2PH">200.0</Constant>
+        <Constant Name="KMOLE">0.0016611295681063123</Constant>
+        <Constant Name="PH_GFP_bl_cyt_diffusionRate">50.0</Constant>
+        <Constant Name="PH_GFP_bl_cyt_init_uM">9.949676912093729E-5</Constant>
+        <Constant Name="PH_GFP_cyt_diffusionRate">50.0</Constant>
+        <Constant Name="PH_GFP_cyt_init_uM">0.9949689471138276</Constant>
+        <Constant Name="PIP2_phgfp_bl_pm_init_molecules_per_um2">0.3986756057809255</Constant>
+        <Constant Name="PIP2_phgfp_pm_init_molecules_per_um2">3986.76109011808</Constant>
+        <Constant Name="PIP2_pm_init_molecules_per_um2">8013.840234276138</Constant>
+        <Constant Name="Voltage_nucMem">0.0</Constant>
+        <Constant Name="Voltage_pm">0.0</Constant>
+        <Constant Name="VolumePerUnitVolume_cyt">1.0</Constant>
+        <Constant Name="VolumePerUnitVolume_ec">1.0</Constant>
+        <Constant Name="VolumePerUnitVolume_nuc">1.0</Constant>
+        <VolumeVariable Name="PH_GFP_bl_cyt" Domain="cell" />
+        <VolumeVariable Name="PH_GFP_cyt" Domain="cell" />
+        <MembraneVariable Name="PIP2_phgfp_bl_pm" Domain="background_cell_membrane" />
+        <MembraneVariable Name="PIP2_phgfp_pm" Domain="background_cell_membrane" />
+        <Function Name="hv_cyt" Domain="cell">((t &gt; 0.2) &amp;&amp; (t &lt; 1.5) &amp;&amp; (x &lt; 80.0))</Function>
+        <Function Name="hv_cyt_init_uM" Domain="cell">((t &gt; 0.2) &amp;&amp; (t &lt; 1.5) &amp;&amp; (x &lt; 80.0))</Function>
+        <Function Name="J_bleach_cyt" Domain="cell">(k * PH_GFP_cyt)</Function>
+        <Function Name="J_reaction1" Domain="background_cell_membrane">((PH_GFP_cyt * Kf_reaction1 * PIP2_pm) - (Kr_reaction1 * PIP2_phgfp_pm))</Function>
+        <Function Name="J_reaction2" Domain="background_cell_membrane">((PH_GFP_bl_cyt * Kf_reaction2 * PIP2_pm) - (Kr_reaction2 * PIP2_phgfp_bl_pm))</Function>
+        <Function Name="k" Domain="cell">(bleach_rate * hv_cyt)</Function>
+        <Function Name="K_PIP2_pm_total" Domain="background_cell_membrane">((AreaPerUnitArea_pm * PIP2_phgfp_bl_pm_init_molecules_per_um2) + (AreaPerUnitArea_pm * PIP2_pm_init_molecules_per_um2) + (AreaPerUnitArea_pm * PIP2_phgfp_pm_init_molecules_per_um2))</Function>
+        <Function Name="Kf_reaction1" Domain="background_cell_membrane">Kf_PIP2PH</Function>
+        <Function Name="Kf_reaction2" Domain="background_cell_membrane">Kf_PIP2PH</Function>
+        <Function Name="Kr_reaction1" Domain="background_cell_membrane">(Kf_reaction1 * Kd)</Function>
+        <Function Name="Kr_reaction2" Domain="background_cell_membrane">(Kf_reaction2 * Kd)</Function>
+        <Function Name="PIP2_pm" Domain="background_cell_membrane">(( - (AreaPerUnitArea_pm * PIP2_phgfp_bl_pm) + K_PIP2_pm_total - (AreaPerUnitArea_pm * PIP2_phgfp_pm)) / AreaPerUnitArea_pm)</Function>
+        <Function Name="Size_cyt" Domain="cell">(VolumePerUnitVolume_cyt * vcRegionVolume('cell'))</Function>
+        <Function Name="Size_ec" Domain="background">(VolumePerUnitVolume_ec * vcRegionVolume('background'))</Function>
+        <Function Name="Size_nuc" Domain="nuc">(VolumePerUnitVolume_nuc * vcRegionVolume('nuc'))</Function>
+        <Function Name="Size_nucMem" Domain="cell_nuc_membrane">(AreaPerUnitArea_nucMem * vcRegionArea('cell_nuc_membrane'))</Function>
+        <Function Name="Size_pm" Domain="background_cell_membrane">(AreaPerUnitArea_pm * vcRegionArea('background_cell_membrane'))</Function>
+        <CompartmentSubDomain Name="background">
+          <BoundaryType Boundary="Xm" Type="Flux" />
+          <BoundaryType Boundary="Xp" Type="Flux" />
+          <BoundaryType Boundary="Ym" Type="Flux" />
+          <BoundaryType Boundary="Yp" Type="Flux" />
+          <BoundaryType Boundary="Zm" Type="Flux" />
+          <BoundaryType Boundary="Zp" Type="Flux" />
+        </CompartmentSubDomain>
+        <CompartmentSubDomain Name="cell">
+          <BoundaryType Boundary="Xm" Type="Flux" />
+          <BoundaryType Boundary="Xp" Type="Flux" />
+          <BoundaryType Boundary="Ym" Type="Flux" />
+          <BoundaryType Boundary="Yp" Type="Flux" />
+          <BoundaryType Boundary="Zm" Type="Flux" />
+          <BoundaryType Boundary="Zp" Type="Flux" />
+          <PdeEquation Name="PH_GFP_cyt" SolutionType="Unknown">
+            <Rate>- J_bleach_cyt</Rate>
+            <Diffusion>PH_GFP_cyt_diffusionRate</Diffusion>
+            <Initial>PH_GFP_cyt_init_uM</Initial>
+          </PdeEquation>
+          <PdeEquation Name="PH_GFP_bl_cyt" SolutionType="Unknown">
+            <Rate>J_bleach_cyt</Rate>
+            <Diffusion>PH_GFP_bl_cyt_diffusionRate</Diffusion>
+            <Initial>PH_GFP_bl_cyt_init_uM</Initial>
+          </PdeEquation>
+        </CompartmentSubDomain>
+        <CompartmentSubDomain Name="nuc">
+          <BoundaryType Boundary="Xm" Type="Flux" />
+          <BoundaryType Boundary="Xp" Type="Flux" />
+          <BoundaryType Boundary="Ym" Type="Flux" />
+          <BoundaryType Boundary="Yp" Type="Flux" />
+          <BoundaryType Boundary="Zm" Type="Flux" />
+          <BoundaryType Boundary="Zp" Type="Flux" />
+        </CompartmentSubDomain>
+        <MembraneSubDomain Name="background_cell_membrane" InsideCompartment="cell" OutsideCompartment="background">
+          <BoundaryType Boundary="Xm" Type="Value" />
+          <BoundaryType Boundary="Xp" Type="Value" />
+          <BoundaryType Boundary="Ym" Type="Value" />
+          <BoundaryType Boundary="Yp" Type="Value" />
+          <BoundaryType Boundary="Zm" Type="Value" />
+          <BoundaryType Boundary="Zp" Type="Value" />
+          <OdeEquation Name="PIP2_phgfp_pm" SolutionType="Unknown">
+            <Rate>J_reaction1</Rate>
+            <Initial>PIP2_phgfp_pm_init_molecules_per_um2</Initial>
+          </OdeEquation>
+          <OdeEquation Name="PIP2_phgfp_bl_pm" SolutionType="Unknown">
+            <Rate>J_reaction2</Rate>
+            <Initial>PIP2_phgfp_bl_pm_init_molecules_per_um2</Initial>
+          </OdeEquation>
+          <JumpCondition Name="PH_GFP_cyt">
+            <InFlux>- (KMOLE * J_reaction1 / VolumePerUnitVolume_cyt)</InFlux>
+            <OutFlux>0.0</OutFlux>
+          </JumpCondition>
+          <JumpCondition Name="PH_GFP_bl_cyt">
+            <InFlux>- (KMOLE * J_reaction2 / VolumePerUnitVolume_cyt)</InFlux>
+            <OutFlux>0.0</OutFlux>
+          </JumpCondition>
+        </MembraneSubDomain>
+        <MembraneSubDomain Name="cell_nuc_membrane" InsideCompartment="nuc" OutsideCompartment="cell">
+          <BoundaryType Boundary="Xm" Type="Value" />
+          <BoundaryType Boundary="Xp" Type="Value" />
+          <BoundaryType Boundary="Ym" Type="Value" />
+          <BoundaryType Boundary="Yp" Type="Value" />
+          <BoundaryType Boundary="Zm" Type="Value" />
+          <BoundaryType Boundary="Zp" Type="Value" />
+          <JumpCondition Name="PH_GFP_cyt">
+            <InFlux>0.0</InFlux>
+            <OutFlux>0.0</OutFlux>
+          </JumpCondition>
+          <JumpCondition Name="PH_GFP_bl_cyt">
+            <InFlux>0.0</InFlux>
+            <OutFlux>0.0</OutFlux>
+          </JumpCondition>
+        </MembraneSubDomain>
+        <Version Name="Copy of spatial2D_generated" KeyValue="72863895" BranchId="58195866" Archived="0" Date="01-Aug-2012 19:41:29" FromVersionable="false">
+          <Owner Name="schaff" Identifier="17" />
+          <GroupAccess Type="1" />
+        </Version>
+      </MathDescription>
+      <Simulation Name="Simulation3">
+        <SolverTaskDescription TaskType="Unsteady" UseSymbolicJacobian="false" Solver="Sundials Stiff PDE Solver (Variable Time Step)">
+          <TimeBound StartTime="0.0" EndTime="20.0" />
+          <TimeStep DefaultTime="0.1" MinTime="0.0" MaxTime="0.1" />
+          <ErrorTolerance Absolut="1.0E-9" Relative="1.0E-7" />
+          <OutputOptions OutputTimeStep="0.1" />
+          <SundialsSolverOptions>
+            <maxOrderAdvection>2</maxOrderAdvection>
+          </SundialsSolverOptions>
+          <NumberProcessors>1</NumberProcessors>
+        </SolverTaskDescription>
+        <MathOverrides />
+        <MeshSpecification>
+          <Size X="97" Y="82" Z="16" />
+        </MeshSpecification>
+        <Version Name="Simulation3" KeyValue="72863967" BranchId="58196009" Archived="0" Date="01-Aug-2012 19:41:30" FromVersionable="false">
+          <Owner Name="schaff" Identifier="17" />
+          <GroupAccess Type="1" />
+          <ParentSimRef KeyValue="58196450" />
+        </Version>
+      </Simulation>
+      <SpatialObjects>
+        <SpatialObject Name="vobj_background0" Type="Volume" subVolume="background" regionId="0">
+          <QuantityCategoryList>
+            <QuantityCategory Name="VolumeCentroid" Enabled="false" />
+            <QuantityCategory Name="InteriorVelocity" Enabled="false" />
+            <QuantityCategory Name="VolumeRegionSize" Enabled="true" />
+          </QuantityCategoryList>
+        </SpatialObject>
+        <SpatialObject Name="vobj_cell1" Type="Volume" subVolume="cell" regionId="1">
+          <QuantityCategoryList>
+            <QuantityCategory Name="VolumeCentroid" Enabled="false" />
+            <QuantityCategory Name="InteriorVelocity" Enabled="false" />
+            <QuantityCategory Name="VolumeRegionSize" Enabled="true" />
+          </QuantityCategoryList>
+        </SpatialObject>
+        <SpatialObject Name="vobj_nuc2" Type="Volume" subVolume="nuc" regionId="2">
+          <QuantityCategoryList>
+            <QuantityCategory Name="VolumeCentroid" Enabled="false" />
+            <QuantityCategory Name="InteriorVelocity" Enabled="false" />
+            <QuantityCategory Name="VolumeRegionSize" Enabled="true" />
+          </QuantityCategoryList>
+        </SpatialObject>
+        <SpatialObject Name="sobj_cell1_background0" Type="Surface" subVolumeInside="cell" regionIdInside="1" subVolumeOutside="background" regionIdOutside="0">
+          <QuantityCategoryList>
+            <QuantityCategory Name="SurfaceNormal" Enabled="false" />
+            <QuantityCategory Name="SurfaceVelocity" Enabled="false" />
+            <QuantityCategory Name="DistanceToSurface" Enabled="false" />
+            <QuantityCategory Name="DirectionToSurface" Enabled="false" />
+            <QuantityCategory Name="SurfaceSize" Enabled="true" />
+          </QuantityCategoryList>
+        </SpatialObject>
+        <SpatialObject Name="sobj_nuc2_cell1" Type="Surface" subVolumeInside="nuc" regionIdInside="2" subVolumeOutside="cell" regionIdOutside="1">
+          <QuantityCategoryList>
+            <QuantityCategory Name="SurfaceNormal" Enabled="false" />
+            <QuantityCategory Name="SurfaceVelocity" Enabled="false" />
+            <QuantityCategory Name="DistanceToSurface" Enabled="false" />
+            <QuantityCategory Name="DirectionToSurface" Enabled="false" />
+            <QuantityCategory Name="SurfaceSize" Enabled="true" />
+          </QuantityCategoryList>
+        </SpatialObject>
+      </SpatialObjects>
+      <Version Name="spatial3D" KeyValue="72863945" BranchId="58195966" Archived="0" Date="01-Aug-2012 19:41:30" FromVersionable="false">
+        <Owner Name="schaff" Identifier="17" />
+        <GroupAccess Type="1" />
+        <Annotation>(copied from spatial2D) cloned from 'spatial2D' owned by user schaff
+(copied from comp_frap) (copied from comp_ss)</Annotation>
+      </Version>
+      <MicroscopeMeasurement Name="fluor">
+        <ConvolutionKernel Type="ProjectionZKernel" />
+      </MicroscopeMeasurement>
+    </SimulationSpec>
+    <Version Name="PH-GFP-End_2011" KeyValue="84984739" BranchId="58196381" Archived="0" Date="02-Nov-2013 15:05:36" FromVersionable="false">
+      <Owner Name="schaff" Identifier="17" />
+      <GroupAccess Type="0" />
+      <Annotation>cloned from 'PH-GFP-Start_2011' owned by user ccb_spatial
+cloned from 'phgfp_full' owned by user schaff</Annotation>
+    </Version>
+    <pathwayModel>
+      <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:bp="http://www.biopax.org/release/biopax-level3.owl#" version="3.0" />
+    </pathwayModel>
+    <relationshipModel>
+      <RMNS version="3.0" />
+    </relationshipModel>
+    <vcmetadata>
+      <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" />
+      <nonrdfAnnotationList>
+        <nonrdfAnnotation vcid="BioModel(PH-GFP-End_2011)">
+          <freetext>cloned from 'phgfp_full' owned by user schaff</freetext>
+        </nonrdfAnnotation>
+      </nonrdfAnnotationList>
+      <uriBindingList />
+    </vcmetadata>
+  </BioModel>
+</vcml>
+

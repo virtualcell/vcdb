@@ -1,0 +1,690 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--This biomodel was generated in VCML Version Alpha_Version_7.4.0_build_87-->
+<vcml xmlns="http://sourceforge.net/projects/vcell/vcml" Version="Alpha_Version_7.4.0_build_87">
+  <BioModel Name="RB_simple_system">
+    <Model Name="model">
+      <ModelParameters>
+        <Parameter Name="kon" Role="user defined" Unit="1">10.0</Parameter>
+        <Parameter Name="koff" Role="user defined" Unit="1">5.0</Parameter>
+        <Parameter Name="kcat" Role="user defined" Unit="1">0.7</Parameter>
+        <Parameter Name="dephos" Role="user defined" Unit="1">0.5</Parameter>
+      </ModelParameters>
+      <Compound Name="X_y_p0" />
+      <Compound Name="X_y_p1" />
+      <Compound Name="Y_x" />
+      <Feature Name="c0" KeyValue="95198900" />
+      <LocalizedCompound Name="X_y_p0" CompoundRef="X_y_p0" Structure="c0" OverrideName="true" KeyValue="95198902">
+        <SpeciesPattern>
+          <MolecularTypePattern Index="1">
+            <MolecularType Name="X" />
+            <ComponentPattern MolecularComponent="y" BondType="-" />
+            <ComponentPattern MolecularComponent="p" ComponentStatePattern="0" BondType="-" />
+          </MolecularTypePattern>
+        </SpeciesPattern>
+      </LocalizedCompound>
+      <LocalizedCompound Name="X_y_p1" CompoundRef="X_y_p1" Structure="c0" OverrideName="true" KeyValue="95198903">
+        <SpeciesPattern>
+          <MolecularTypePattern Index="1">
+            <MolecularType Name="X" />
+            <ComponentPattern MolecularComponent="y" BondType="-" />
+            <ComponentPattern MolecularComponent="p" ComponentStatePattern="1" BondType="-" />
+          </MolecularTypePattern>
+        </SpeciesPattern>
+      </LocalizedCompound>
+      <LocalizedCompound Name="Y_x" CompoundRef="Y_x" Structure="c0" OverrideName="true" KeyValue="95198904">
+        <SpeciesPattern>
+          <MolecularTypePattern Index="1">
+            <MolecularType Name="Y" />
+            <ComponentPattern MolecularComponent="x" BondType="-" />
+          </MolecularTypePattern>
+        </SpeciesPattern>
+      </LocalizedCompound>
+      <RbmModelContainer>
+        <MolecularTypeList>
+          <MolecularType Name="X" AnchorAll="true">
+            <MolecularComponent Name="y" Index="1" />
+            <MolecularComponent Name="p" Index="2">
+              <AllowableState Name="0" />
+              <AllowableState Name="1" />
+            </MolecularComponent>
+          </MolecularType>
+          <MolecularType Name="Y" AnchorAll="true">
+            <MolecularComponent Name="x" Index="1" />
+          </MolecularType>
+        </MolecularTypeList>
+        <RbmObservableList>
+          <Observable Name="X_free" ObservableType="Molecules" Sequence="Multimolecular" LengthEqual="2" LengthGreater="1" Structure="c0">
+            <SpeciesPattern>
+              <MolecularTypePattern Index="1">
+                <MolecularType Name="X" />
+                <ComponentPattern MolecularComponent="y" BondType="-" />
+                <ComponentPattern MolecularComponent="p" ComponentStatePattern="0" BondType="-" />
+              </MolecularTypePattern>
+            </SpeciesPattern>
+          </Observable>
+          <Observable Name="X_p_total" ObservableType="Molecules" Sequence="Multimolecular" LengthEqual="2" LengthGreater="1" Structure="c0">
+            <SpeciesPattern>
+              <MolecularTypePattern Index="1">
+                <MolecularType Name="X" />
+                <ComponentPattern MolecularComponent="y" BondType="?" />
+                <ComponentPattern MolecularComponent="p" ComponentStatePattern="1" BondType="-" />
+              </MolecularTypePattern>
+            </SpeciesPattern>
+          </Observable>
+          <Observable Name="Xp_free" ObservableType="Molecules" Sequence="Multimolecular" LengthEqual="2" LengthGreater="1" Structure="c0">
+            <SpeciesPattern>
+              <MolecularTypePattern Index="1">
+                <MolecularType Name="X" />
+                <ComponentPattern MolecularComponent="y" BondType="-" />
+                <ComponentPattern MolecularComponent="p" ComponentStatePattern="1" BondType="-" />
+              </MolecularTypePattern>
+            </SpeciesPattern>
+          </Observable>
+          <Observable Name="XY" ObservableType="Molecules" Sequence="Multimolecular" LengthEqual="2" LengthGreater="1" Structure="c0">
+            <SpeciesPattern>
+              <MolecularTypePattern Index="1">
+                <MolecularType Name="X" />
+                <ComponentPattern MolecularComponent="y" BondType="1">
+                  <Bond MolecularTypePattern="Y" ComponentPattern="x" />
+                </ComponentPattern>
+                <ComponentPattern MolecularComponent="p" Any="true" BondType="?" />
+              </MolecularTypePattern>
+              <MolecularTypePattern Index="2">
+                <MolecularType Name="Y" />
+                <ComponentPattern MolecularComponent="x" BondType="1">
+                  <Bond MolecularTypePattern="X" ComponentPattern="y" />
+                </ComponentPattern>
+              </MolecularTypePattern>
+            </SpeciesPattern>
+          </Observable>
+          <Observable Name="Ytotal" ObservableType="Molecules" Sequence="Multimolecular" LengthEqual="2" LengthGreater="1" Structure="c0">
+            <SpeciesPattern>
+              <MolecularTypePattern Index="1">
+                <MolecularType Name="Y" />
+                <ComponentPattern MolecularComponent="x" BondType="?" />
+              </MolecularTypePattern>
+            </SpeciesPattern>
+          </Observable>
+          <Observable Name="Xtotal" ObservableType="Molecules" Sequence="Multimolecular" LengthEqual="2" LengthGreater="1" Structure="c0">
+            <SpeciesPattern>
+              <MolecularTypePattern Index="1">
+                <MolecularType Name="X" />
+                <ComponentPattern MolecularComponent="y" BondType="?" />
+                <ComponentPattern MolecularComponent="p" Any="true" BondType="?" />
+              </MolecularTypePattern>
+            </SpeciesPattern>
+          </Observable>
+        </RbmObservableList>
+        <ReactionRuleList>
+          <ReactionRule Name="r0" Structure="c0" ReactionRuleLabel="r0" ReactionRuleReversible="false">
+            <ReactantPatternsList>
+              <ReactantPattern Structure="c0">
+                <SpeciesPattern>
+                  <MolecularTypePattern Index="1">
+                    <MolecularType Name="X" />
+                    <ComponentPattern MolecularComponent="y" BondType="-" />
+                    <ComponentPattern MolecularComponent="p" ComponentStatePattern="0" BondType="-" />
+                  </MolecularTypePattern>
+                </SpeciesPattern>
+              </ReactantPattern>
+              <ReactantPattern Structure="c0">
+                <SpeciesPattern>
+                  <MolecularTypePattern Index="1">
+                    <MolecularType Name="Y" />
+                    <ComponentPattern MolecularComponent="x" BondType="-" />
+                  </MolecularTypePattern>
+                </SpeciesPattern>
+              </ReactantPattern>
+            </ReactantPatternsList>
+            <ProductPatternsList>
+              <ProductPattern Structure="c0">
+                <SpeciesPattern>
+                  <MolecularTypePattern Index="1">
+                    <MolecularType Name="X" />
+                    <ComponentPattern MolecularComponent="y" BondType="1">
+                      <Bond MolecularTypePattern="Y" ComponentPattern="x" />
+                    </ComponentPattern>
+                    <ComponentPattern MolecularComponent="p" ComponentStatePattern="0" BondType="-" />
+                  </MolecularTypePattern>
+                  <MolecularTypePattern Index="2">
+                    <MolecularType Name="Y" />
+                    <ComponentPattern MolecularComponent="x" BondType="1">
+                      <Bond MolecularTypePattern="X" ComponentPattern="y" />
+                    </ComponentPattern>
+                  </MolecularTypePattern>
+                </SpeciesPattern>
+              </ProductPattern>
+            </ProductPatternsList>
+            <Kinetics KineticsType="MassAction">
+              <Parameter Name="ruleRate" Role="RuleRate" Unit="molecules.um-3.s-1" />
+              <Parameter Name="Kf" Role="MassActionKf" Unit="um3.s-1.molecules-1">kon</Parameter>
+              <Parameter Name="Kr" Role="MassActionKr" Unit="s-1">0.0</Parameter>
+            </Kinetics>
+          </ReactionRule>
+          <ReactionRule Name="r1" Structure="c0" ReactionRuleLabel="r1" ReactionRuleReversible="false">
+            <ReactantPatternsList>
+              <ReactantPattern Structure="c0">
+                <SpeciesPattern>
+                  <MolecularTypePattern Index="1">
+                    <MolecularType Name="X" />
+                    <ComponentPattern MolecularComponent="y" BondType="1">
+                      <Bond MolecularTypePattern="Y" ComponentPattern="x" />
+                    </ComponentPattern>
+                    <ComponentPattern MolecularComponent="p" ComponentStatePattern="0" BondType="-" />
+                  </MolecularTypePattern>
+                  <MolecularTypePattern Index="2">
+                    <MolecularType Name="Y" />
+                    <ComponentPattern MolecularComponent="x" BondType="1">
+                      <Bond MolecularTypePattern="X" ComponentPattern="y" />
+                    </ComponentPattern>
+                  </MolecularTypePattern>
+                </SpeciesPattern>
+              </ReactantPattern>
+            </ReactantPatternsList>
+            <ProductPatternsList>
+              <ProductPattern Structure="c0">
+                <SpeciesPattern>
+                  <MolecularTypePattern Index="1">
+                    <MolecularType Name="X" />
+                    <ComponentPattern MolecularComponent="y" BondType="-" />
+                    <ComponentPattern MolecularComponent="p" ComponentStatePattern="0" BondType="-" />
+                  </MolecularTypePattern>
+                </SpeciesPattern>
+              </ProductPattern>
+              <ProductPattern Structure="c0">
+                <SpeciesPattern>
+                  <MolecularTypePattern Index="1">
+                    <MolecularType Name="Y" />
+                    <ComponentPattern MolecularComponent="x" BondType="-" />
+                  </MolecularTypePattern>
+                </SpeciesPattern>
+              </ProductPattern>
+            </ProductPatternsList>
+            <Kinetics KineticsType="MassAction">
+              <Parameter Name="ruleRate" Role="RuleRate" Unit="molecules.um-3.s-1" />
+              <Parameter Name="Kf" Role="MassActionKf" Unit="s-1">koff</Parameter>
+              <Parameter Name="Kr" Role="MassActionKr" Unit="um3.s-1.molecules-1">0.0</Parameter>
+            </Kinetics>
+          </ReactionRule>
+          <ReactionRule Name="r2" Structure="c0" ReactionRuleLabel="r2" ReactionRuleReversible="false">
+            <ReactantPatternsList>
+              <ReactantPattern Structure="c0">
+                <SpeciesPattern>
+                  <MolecularTypePattern Index="1">
+                    <MolecularType Name="X" />
+                    <ComponentPattern MolecularComponent="y" BondType="1">
+                      <Bond MolecularTypePattern="Y" ComponentPattern="x" />
+                    </ComponentPattern>
+                    <ComponentPattern MolecularComponent="p" ComponentStatePattern="0" BondType="-" />
+                  </MolecularTypePattern>
+                  <MolecularTypePattern Index="2">
+                    <MolecularType Name="Y" />
+                    <ComponentPattern MolecularComponent="x" BondType="1">
+                      <Bond MolecularTypePattern="X" ComponentPattern="y" />
+                    </ComponentPattern>
+                  </MolecularTypePattern>
+                </SpeciesPattern>
+              </ReactantPattern>
+            </ReactantPatternsList>
+            <ProductPatternsList>
+              <ProductPattern Structure="c0">
+                <SpeciesPattern>
+                  <MolecularTypePattern Index="1">
+                    <MolecularType Name="X" />
+                    <ComponentPattern MolecularComponent="y" BondType="-" />
+                    <ComponentPattern MolecularComponent="p" ComponentStatePattern="1" BondType="-" />
+                  </MolecularTypePattern>
+                </SpeciesPattern>
+              </ProductPattern>
+              <ProductPattern Structure="c0">
+                <SpeciesPattern>
+                  <MolecularTypePattern Index="1">
+                    <MolecularType Name="Y" />
+                    <ComponentPattern MolecularComponent="x" BondType="-" />
+                  </MolecularTypePattern>
+                </SpeciesPattern>
+              </ProductPattern>
+            </ProductPatternsList>
+            <Kinetics KineticsType="MassAction">
+              <Parameter Name="ruleRate" Role="RuleRate" Unit="molecules.um-3.s-1" />
+              <Parameter Name="Kf" Role="MassActionKf" Unit="s-1">kcat</Parameter>
+              <Parameter Name="Kr" Role="MassActionKr" Unit="um3.s-1.molecules-1">0.0</Parameter>
+            </Kinetics>
+          </ReactionRule>
+          <ReactionRule Name="r3" Structure="c0" ReactionRuleLabel="r3" ReactionRuleReversible="false">
+            <ReactantPatternsList>
+              <ReactantPattern Structure="c0">
+                <SpeciesPattern>
+                  <MolecularTypePattern Index="1">
+                    <MolecularType Name="X" />
+                    <ComponentPattern MolecularComponent="y" BondType="?" />
+                    <ComponentPattern MolecularComponent="p" ComponentStatePattern="1" BondType="-" />
+                  </MolecularTypePattern>
+                </SpeciesPattern>
+              </ReactantPattern>
+            </ReactantPatternsList>
+            <ProductPatternsList>
+              <ProductPattern Structure="c0">
+                <SpeciesPattern>
+                  <MolecularTypePattern Index="1">
+                    <MolecularType Name="X" />
+                    <ComponentPattern MolecularComponent="y" BondType="?" />
+                    <ComponentPattern MolecularComponent="p" ComponentStatePattern="0" BondType="-" />
+                  </MolecularTypePattern>
+                </SpeciesPattern>
+              </ProductPattern>
+            </ProductPatternsList>
+            <Kinetics KineticsType="MassAction">
+              <Parameter Name="ruleRate" Role="RuleRate" Unit="molecules.um-3.s-1" />
+              <Parameter Name="Kf" Role="MassActionKf" Unit="s-1">dephos</Parameter>
+              <Parameter Name="Kr" Role="MassActionKr" Unit="s-1">0.0</Parameter>
+            </Kinetics>
+          </ReactionRule>
+        </ReactionRuleList>
+      </RbmModelContainer>
+      <Diagram Name="c0" Structure="c0" />
+      <Version Name="model" KeyValue="95198895" BranchId="94472241" Archived="0" Date="22-Jun-2015 09:22:45" FromVersionable="false">
+        <Owner Name="mblinov" Identifier="12487253" />
+        <GroupAccess Type="1" />
+      </Version>
+      <ModelUnitSystem VolumeSubstanceUnit="molecules" MembraneSubstanceUnit="molecules" LumpedReactionSubstanceUnit="molecules" VolumeUnit="um3" AreaUnit="um2" LengthUnit="um" TimeUnit="s" />
+    </Model>
+    <SimulationSpec Name="rulebased app" Stochastic="false" UseConcentration="true" RuleBased="true" RandomizeInitCondition="false" MassConservationModelReduction="true" InsufficientIterations="false" InsufficientMaxMolecules="false">
+      <NetworkConstraints RbmMaxIteration="10" RbmMaxMoleculesPerSpecies="10" RbmSpeciesLimit="800" RbmReactionsLimit="2500">
+        <MaxStoichiometry MolecularType="X" Integer="100" />
+        <MaxStoichiometry MolecularType="Y" Integer="100" />
+      </NetworkConstraints>
+      <Annotation />
+      <Geometry Name="non-spatial100109402" Dimension="0">
+        <Extent X="10.0" Y="10.0" Z="10.0" />
+        <Origin X="0.0" Y="0.0" Z="0.0" />
+        <SubVolume Name="Compartment" Handle="0" Type="Compartmental" KeyValue="94472228" />
+        <Version Name="non-spatial100109402" KeyValue="94472224" BranchId="94472225" Archived="0" Date="20-Apr-2015 11:45:36" FromVersionable="false">
+          <Owner Name="mblinov" Identifier="12487253" />
+          <GroupAccess Type="1" />
+        </Version>
+      </Geometry>
+      <GeometryContext>
+        <FeatureMapping Feature="c0" GeometryClass="Compartment" SubVolume="Compartment" Size="1.0">
+          <BoundariesTypes Xm="Flux" Xp="Flux" Ym="Flux" Yp="Flux" Zm="Flux" Zp="Flux" />
+        </FeatureMapping>
+      </GeometryContext>
+      <ReactionContext>
+        <LocalizedCompoundSpec LocalizedCompoundRef="X_y_p0" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialCount>5000.0</InitialCount>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="X_y_p1" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialCount>0.0</InitialCount>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="Y_x" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialCount>500.0</InitialCount>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <ReactionRuleSpecs>
+          <ReactionRuleSpec ReactionRuleRef="r0" ReactionRuleMapping="included" />
+          <ReactionRuleSpec ReactionRuleRef="r1" ReactionRuleMapping="included" />
+          <ReactionRuleSpec ReactionRuleRef="r2" ReactionRuleMapping="included" />
+          <ReactionRuleSpec ReactionRuleRef="r3" ReactionRuleMapping="included" />
+        </ReactionRuleSpecs>
+      </ReactionContext>
+      <MathDescription Name="rulebased app_generated">
+        <ParticleMolecularType Name="X">
+          <Component Name="y" />
+          <Component Name="p">
+            <AllowableState Name="0" />
+            <AllowableState Name="1" />
+          </Component>
+        </ParticleMolecularType>
+        <ParticleMolecularType Name="Y">
+          <Component Name="x" />
+        </ParticleMolecularType>
+        <Constant Name="_F_">96480.0</Constant>
+        <Constant Name="_F_nmol_">9.648E-5</Constant>
+        <Constant Name="_PI_">3.141592653589793</Constant>
+        <Constant Name="_R_">8314.0</Constant>
+        <Constant Name="_T_">300.0</Constant>
+        <Constant Name="dephos">0.5</Constant>
+        <Constant Name="kcat">0.7</Constant>
+        <Constant Name="koff">5.0</Constant>
+        <Constant Name="kon">10.0</Constant>
+        <Constant Name="r0.kr">0.0</Constant>
+        <Constant Name="r1.kr">0.0</Constant>
+        <Constant Name="r2.kr">0.0</Constant>
+        <Constant Name="r3.kr">0.0</Constant>
+        <VolumeParticleSpeciesPattern Name="speciesPattern0" Domain="Compartment">
+          <MolecularType Name="X" MatchLabel="*">
+            <Component Name="y" State="*" Bond="-" />
+            <Component Name="p" State="0" Bond="-" />
+          </MolecularType>
+        </VolumeParticleSpeciesPattern>
+        <VolumeParticleSpeciesPattern Name="speciesPattern1" Domain="Compartment">
+          <MolecularType Name="X" MatchLabel="*">
+            <Component Name="y" State="*" Bond="?" />
+            <Component Name="p" State="1" Bond="-" />
+          </MolecularType>
+        </VolumeParticleSpeciesPattern>
+        <VolumeParticleSpeciesPattern Name="speciesPattern2" Domain="Compartment">
+          <MolecularType Name="X" MatchLabel="*">
+            <Component Name="y" State="*" Bond="-" />
+            <Component Name="p" State="1" Bond="-" />
+          </MolecularType>
+        </VolumeParticleSpeciesPattern>
+        <VolumeParticleSpeciesPattern Name="speciesPattern3" Domain="Compartment">
+          <MolecularType Name="X" MatchLabel="*">
+            <Component Name="y" State="*" Bond="1" />
+            <Component Name="p" State="*" Bond="?" />
+          </MolecularType>
+          <MolecularType Name="Y" MatchLabel="*">
+            <Component Name="x" State="*" Bond="1" />
+          </MolecularType>
+        </VolumeParticleSpeciesPattern>
+        <VolumeParticleSpeciesPattern Name="speciesPattern4" Domain="Compartment">
+          <MolecularType Name="Y" MatchLabel="*">
+            <Component Name="x" State="*" Bond="?" />
+          </MolecularType>
+        </VolumeParticleSpeciesPattern>
+        <VolumeParticleSpeciesPattern Name="speciesPattern5" Domain="Compartment">
+          <MolecularType Name="X" MatchLabel="*">
+            <Component Name="p" State="*" Bond="?" />
+            <Component Name="y" State="*" Bond="?" />
+          </MolecularType>
+        </VolumeParticleSpeciesPattern>
+        <VolumeParticleSpeciesPattern Name="speciesPattern6" Domain="Compartment">
+          <MolecularType Name="Y" MatchLabel="*">
+            <Component Name="x" State="*" Bond="-" />
+          </MolecularType>
+        </VolumeParticleSpeciesPattern>
+        <VolumeParticleSpeciesPattern Name="speciesPattern7" Domain="Compartment">
+          <MolecularType Name="X" MatchLabel="*">
+            <Component Name="y" State="*" Bond="1" />
+            <Component Name="p" State="0" Bond="-" />
+          </MolecularType>
+          <MolecularType Name="Y" MatchLabel="*">
+            <Component Name="x" State="*" Bond="1" />
+          </MolecularType>
+        </VolumeParticleSpeciesPattern>
+        <VolumeParticleSpeciesPattern Name="speciesPattern8" Domain="Compartment">
+          <MolecularType Name="X" MatchLabel="*">
+            <Component Name="y" State="*" Bond="?" />
+            <Component Name="p" State="0" Bond="-" />
+          </MolecularType>
+        </VolumeParticleSpeciesPattern>
+        <VolumeParticleObservable Name="X_free" Domain="Compartment" MolecularType="Molecules" SequenceType="Multimolecular">
+          <VolumeParticleSpeciesPatterns>
+            <VolumeParticleSpeciesPattern Name="speciesPattern0" />
+          </VolumeParticleSpeciesPatterns>
+        </VolumeParticleObservable>
+        <VolumeParticleObservable Name="X_p_total" Domain="Compartment" MolecularType="Molecules" SequenceType="Multimolecular">
+          <VolumeParticleSpeciesPatterns>
+            <VolumeParticleSpeciesPattern Name="speciesPattern1" />
+          </VolumeParticleSpeciesPatterns>
+        </VolumeParticleObservable>
+        <VolumeParticleObservable Name="Xp_free" Domain="Compartment" MolecularType="Molecules" SequenceType="Multimolecular">
+          <VolumeParticleSpeciesPatterns>
+            <VolumeParticleSpeciesPattern Name="speciesPattern2" />
+          </VolumeParticleSpeciesPatterns>
+        </VolumeParticleObservable>
+        <VolumeParticleObservable Name="Xtotal" Domain="Compartment" MolecularType="Molecules" SequenceType="Multimolecular">
+          <VolumeParticleSpeciesPatterns>
+            <VolumeParticleSpeciesPattern Name="speciesPattern5" />
+          </VolumeParticleSpeciesPatterns>
+        </VolumeParticleObservable>
+        <VolumeParticleObservable Name="XY" Domain="Compartment" MolecularType="Molecules" SequenceType="Multimolecular">
+          <VolumeParticleSpeciesPatterns>
+            <VolumeParticleSpeciesPattern Name="speciesPattern3" />
+          </VolumeParticleSpeciesPatterns>
+        </VolumeParticleObservable>
+        <VolumeParticleObservable Name="Ytotal" Domain="Compartment" MolecularType="Molecules" SequenceType="Multimolecular">
+          <VolumeParticleSpeciesPatterns>
+            <VolumeParticleSpeciesPattern Name="speciesPattern4" />
+          </VolumeParticleSpeciesPatterns>
+        </VolumeParticleObservable>
+        <Function Name="r0.kf" Domain="Compartment">kon</Function>
+        <Function Name="r1.kf" Domain="Compartment">koff</Function>
+        <Function Name="r2.kf" Domain="Compartment">kcat</Function>
+        <Function Name="r3.kf" Domain="Compartment">dephos</Function>
+        <CompartmentSubDomain Name="Compartment">
+          <BoundaryType Boundary="Xm" Type="Value" />
+          <BoundaryType Boundary="Xp" Type="Value" />
+          <BoundaryType Boundary="Ym" Type="Value" />
+          <BoundaryType Boundary="Yp" Type="Value" />
+          <BoundaryType Boundary="Zm" Type="Value" />
+          <BoundaryType Boundary="Zp" Type="Value" />
+          <ParticleJumpProcess Name="r0_forward">
+            <SelectedParticle Name="speciesPattern0" />
+            <SelectedParticle Name="speciesPattern6" />
+            <MacroscopicRateConstant>kon</MacroscopicRateConstant>
+            <Effect VarName="speciesPattern0" Operation="destroy" />
+            <Effect VarName="speciesPattern6" Operation="destroy" />
+            <Effect VarName="speciesPattern7" Operation="create" />
+          </ParticleJumpProcess>
+          <ParticleJumpProcess Name="r1_forward">
+            <SelectedParticle Name="speciesPattern7" />
+            <MacroscopicRateConstant>koff</MacroscopicRateConstant>
+            <Effect VarName="speciesPattern7" Operation="destroy" />
+            <Effect VarName="speciesPattern0" Operation="create" />
+            <Effect VarName="speciesPattern6" Operation="create" />
+          </ParticleJumpProcess>
+          <ParticleJumpProcess Name="r2_forward">
+            <SelectedParticle Name="speciesPattern7" />
+            <MacroscopicRateConstant>kcat</MacroscopicRateConstant>
+            <Effect VarName="speciesPattern7" Operation="destroy" />
+            <Effect VarName="speciesPattern2" Operation="create" />
+            <Effect VarName="speciesPattern6" Operation="create" />
+          </ParticleJumpProcess>
+          <ParticleJumpProcess Name="r3_forward">
+            <SelectedParticle Name="speciesPattern1" />
+            <MacroscopicRateConstant>dephos</MacroscopicRateConstant>
+            <Effect VarName="speciesPattern1" Operation="destroy" />
+            <Effect VarName="speciesPattern8" Operation="create" />
+          </ParticleJumpProcess>
+          <ParticleProperties Name="speciesPattern0">
+            <ParticleInitialConcentration>
+              <ParticleDistribution>5000.0</ParticleDistribution>
+            </ParticleInitialConcentration>
+            <ParticleDiffusion>0.0</ParticleDiffusion>
+            <ParticleDriftX>0.0</ParticleDriftX>
+            <ParticleDriftY>0.0</ParticleDriftY>
+            <ParticleDriftZ>0.0</ParticleDriftZ>
+          </ParticleProperties>
+          <ParticleProperties Name="speciesPattern2">
+            <ParticleInitialConcentration>
+              <ParticleDistribution>0.0</ParticleDistribution>
+            </ParticleInitialConcentration>
+            <ParticleDiffusion>0.0</ParticleDiffusion>
+            <ParticleDriftX>0.0</ParticleDriftX>
+            <ParticleDriftY>0.0</ParticleDriftY>
+            <ParticleDriftZ>0.0</ParticleDriftZ>
+          </ParticleProperties>
+          <ParticleProperties Name="speciesPattern6">
+            <ParticleInitialConcentration>
+              <ParticleDistribution>500.0</ParticleDistribution>
+            </ParticleInitialConcentration>
+            <ParticleDiffusion>0.0</ParticleDiffusion>
+            <ParticleDriftX>0.0</ParticleDriftX>
+            <ParticleDriftY>0.0</ParticleDriftY>
+            <ParticleDriftZ>0.0</ParticleDriftZ>
+          </ParticleProperties>
+        </CompartmentSubDomain>
+        <Version Name="rulebased app_generated" KeyValue="95198891" BranchId="94472235" Archived="0" Date="22-Jun-2015 09:22:44" FromVersionable="false">
+          <Owner Name="mblinov" Identifier="12487253" />
+          <GroupAccess Type="1" />
+        </Version>
+      </MathDescription>
+      <Simulation Name="Simulation0">
+        <SolverTaskDescription TaskType="Unsteady" UseSymbolicJacobian="false" Solver="NFSim">
+          <TimeBound StartTime="0.0" EndTime="100.0" />
+          <TimeStep DefaultTime="0.1" MinTime="1.0E-8" MaxTime="1.0" />
+          <ErrorTolerance Absolut="1.0E-9" Relative="1.0E-9" />
+          <OutputOptions KeepEvery="1" KeepAtMost="1000" />
+          <NFSimSimulationOptions>
+            <ObservableComputationOff>true</ObservableComputationOff>
+            <PreventIntraBonds>false</PreventIntraBonds>
+            <AggregateBookkeeping>true</AggregateBookkeeping>
+            <MatchComplexes>true</MatchComplexes>
+            <MoleculeDistance>1000</MoleculeDistance>
+            <NumOfTrials>1</NumOfTrials>
+          </NFSimSimulationOptions>
+          <NumberProcessors>1</NumberProcessors>
+        </SolverTaskDescription>
+        <MathOverrides />
+        <Version Name="Simulation0" KeyValue="95198919" BranchId="94472268" Archived="0" Date="22-Jun-2015 09:22:45" FromVersionable="false">
+          <Owner Name="mblinov" Identifier="12487253" />
+          <GroupAccess Type="1" />
+        </Version>
+      </Simulation>
+      <Version Name="rulebased app" KeyValue="95198907" BranchId="94472254" Archived="0" Date="22-Jun-2015 09:22:45" FromVersionable="false">
+        <Owner Name="mblinov" Identifier="12487253" />
+        <GroupAccess Type="1" />
+      </Version>
+      <MicroscopeMeasurement Name="fluor">
+        <ConvolutionKernel Type="ProjectionZKernel" />
+      </MicroscopeMeasurement>
+    </SimulationSpec>
+    <SimulationSpec Name="Copy of rulebased app" Stochastic="false" UseConcentration="true" RuleBased="false" MassConservationModelReduction="true" InsufficientIterations="false" InsufficientMaxMolecules="false">
+      <NetworkConstraints RbmMaxIteration="10" RbmMaxMoleculesPerSpecies="10" RbmSpeciesLimit="800" RbmReactionsLimit="2500">
+        <MaxStoichiometry MolecularType="X" Integer="100" />
+        <MaxStoichiometry MolecularType="Y" Integer="100" />
+      </NetworkConstraints>
+      <Annotation>(copied from rulebased app)</Annotation>
+      <Geometry Name="non-spatial1435286158" Dimension="0">
+        <Extent X="10.0" Y="10.0" Z="10.0" />
+        <Origin X="0.0" Y="0.0" Z="0.0" />
+        <SubVolume Name="Compartment" Handle="0" Type="Compartmental" KeyValue="94472233" />
+        <Version Name="non-spatial1435286158" KeyValue="94472229" BranchId="94472230" Archived="0" Date="20-Apr-2015 11:45:36" FromVersionable="false">
+          <Owner Name="mblinov" Identifier="12487253" />
+          <GroupAccess Type="1" />
+        </Version>
+      </Geometry>
+      <GeometryContext>
+        <FeatureMapping Feature="c0" GeometryClass="Compartment" SubVolume="Compartment" Size="1.0">
+          <BoundariesTypes Xm="Flux" Xp="Flux" Ym="Flux" Yp="Flux" Zm="Flux" Zp="Flux" />
+        </FeatureMapping>
+      </GeometryContext>
+      <ReactionContext>
+        <LocalizedCompoundSpec LocalizedCompoundRef="X_y_p0" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>5000.0</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="X_y_p1" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>0.0</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="Y_x" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>500.0</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <ReactionRuleSpecs>
+          <ReactionRuleSpec ReactionRuleRef="r0" ReactionRuleMapping="included" />
+          <ReactionRuleSpec ReactionRuleRef="r1" ReactionRuleMapping="included" />
+          <ReactionRuleSpec ReactionRuleRef="r2" ReactionRuleMapping="included" />
+          <ReactionRuleSpec ReactionRuleRef="r3" ReactionRuleMapping="included" />
+        </ReactionRuleSpecs>
+      </ReactionContext>
+      <MathDescription Name="Copy of rulebased app_generated">
+        <Constant Name="_F_">96480.0</Constant>
+        <Constant Name="_F_nmol_">9.648E-5</Constant>
+        <Constant Name="_K_GHK_">1.0E-9</Constant>
+        <Constant Name="_N_pmol_">6.02E11</Constant>
+        <Constant Name="_PI_">3.141592653589793</Constant>
+        <Constant Name="_R_">8314.0</Constant>
+        <Constant Name="_T_">300.0</Constant>
+        <Constant Name="dephos">0.5</Constant>
+        <Constant Name="K_millivolts_per_volt">1000.0</Constant>
+        <Constant Name="kcat">0.7</Constant>
+        <Constant Name="KMOLE">(1.0 / 602.0)</Constant>
+        <Constant Name="koff">5.0</Constant>
+        <Constant Name="kon">10.0</Constant>
+        <Constant Name="Kr_r0">0.0</Constant>
+        <Constant Name="Kr_r1">0.0</Constant>
+        <Constant Name="Kr_r2">0.0</Constant>
+        <Constant Name="Kr_r3">0.0</Constant>
+        <Constant Name="Size_c0">1.0</Constant>
+        <Constant Name="X_p0_y1__Y_x1_init_molecules_um_3">0.0</Constant>
+        <Constant Name="X_y_p0_init_molecules_um_3">5000.0</Constant>
+        <Constant Name="X_y_p1_init_molecules_um_3">0.0</Constant>
+        <Constant Name="Y_x_init_molecules_um_3">500.0</Constant>
+        <VolumeVariable Name="X_p0_y1__Y_x1" Domain="Compartment" />
+        <VolumeVariable Name="X_y_p1" Domain="Compartment" />
+        <Function Name="J_r0" Domain="Compartment">(((Kf_r0 * X_y_p0) * Y_x) - (Kr_r0 * X_p0_y1__Y_x1))</Function>
+        <Function Name="J_r1" Domain="Compartment">((Kf_r1 * X_y_p1) - (Kr_r1 * X_y_p0))</Function>
+        <Function Name="J_r2" Domain="Compartment">((Kf_r2 * X_p0_y1__Y_x1) - ((Kr_r2 * X_y_p0) * Y_x))</Function>
+        <Function Name="J_r3" Domain="Compartment">((Kf_r3 * X_p0_y1__Y_x1) - ((Kr_r3 * X_y_p1) * Y_x))</Function>
+        <Function Name="K_X_y_p0_total" Domain="Compartment">((Size_c0 * X_y_p0_init_molecules_um_3) + (Size_c0 * X_y_p1_init_molecules_um_3) + (Size_c0 * X_p0_y1__Y_x1_init_molecules_um_3))</Function>
+        <Function Name="K_Y_x_total" Domain="Compartment">((Size_c0 * Y_x_init_molecules_um_3) + (Size_c0 * X_p0_y1__Y_x1_init_molecules_um_3))</Function>
+        <Function Name="Kf_r0" Domain="Compartment">kon</Function>
+        <Function Name="Kf_r1" Domain="Compartment">dephos</Function>
+        <Function Name="Kf_r2" Domain="Compartment">koff</Function>
+        <Function Name="Kf_r3" Domain="Compartment">kcat</Function>
+        <Function Name="X_free">(1.0 * X_y_p0)</Function>
+        <Function Name="X_p_total">(1.0 * X_y_p1)</Function>
+        <Function Name="X_y_p0" Domain="Compartment">((K_X_y_p0_total - (Size_c0 * X_y_p1) - (Size_c0 * X_p0_y1__Y_x1)) / Size_c0)</Function>
+        <Function Name="Xp_free">(1.0 * X_y_p1)</Function>
+        <Function Name="Xtotal">(((1.0 * X_y_p0) + (1.0 * X_y_p1)) + (1.0 * X_p0_y1__Y_x1))</Function>
+        <Function Name="XY">(1.0 * X_p0_y1__Y_x1)</Function>
+        <Function Name="Y_x" Domain="Compartment">((K_Y_x_total - (Size_c0 * X_p0_y1__Y_x1)) / Size_c0)</Function>
+        <Function Name="Ytotal">((1.0 * Y_x) + (1.0 * X_p0_y1__Y_x1))</Function>
+        <CompartmentSubDomain Name="Compartment">
+          <BoundaryType Boundary="Xm" Type="Value" />
+          <BoundaryType Boundary="Xp" Type="Value" />
+          <BoundaryType Boundary="Ym" Type="Value" />
+          <BoundaryType Boundary="Yp" Type="Value" />
+          <BoundaryType Boundary="Zm" Type="Value" />
+          <BoundaryType Boundary="Zp" Type="Value" />
+          <OdeEquation Name="X_y_p1" SolutionType="Unknown">
+            <Rate>(J_r3 - J_r1)</Rate>
+            <Initial>X_y_p1_init_molecules_um_3</Initial>
+          </OdeEquation>
+          <OdeEquation Name="X_p0_y1__Y_x1" SolutionType="Unknown">
+            <Rate>( - J_r2 - J_r3 + J_r0)</Rate>
+            <Initial>X_p0_y1__Y_x1_init_molecules_um_3</Initial>
+          </OdeEquation>
+        </CompartmentSubDomain>
+        <Version Name="Copy of rulebased app_generated" KeyValue="95198893" BranchId="94472238" Archived="0" Date="22-Jun-2015 09:22:45" FromVersionable="false">
+          <Owner Name="mblinov" Identifier="12487253" />
+          <GroupAccess Type="1" />
+        </Version>
+      </MathDescription>
+      <Simulation Name="Simulation1">
+        <SolverTaskDescription TaskType="Unsteady" UseSymbolicJacobian="false" Solver="Combined Stiff Solver (IDA/CVODE)">
+          <TimeBound StartTime="0.0" EndTime="100.0" />
+          <TimeStep DefaultTime="0.1" MinTime="1.0E-8" MaxTime="1.0" />
+          <ErrorTolerance Absolut="1.0E-9" Relative="1.0E-9" />
+          <OutputOptions KeepEvery="1" KeepAtMost="1000" />
+          <NumberProcessors>1</NumberProcessors>
+        </SolverTaskDescription>
+        <MathOverrides />
+        <Version Name="Simulation1" KeyValue="95198921" BranchId="94472271" Archived="0" Date="22-Jun-2015 09:22:45" FromVersionable="false">
+          <Owner Name="mblinov" Identifier="12487253" />
+          <GroupAccess Type="1" />
+        </Version>
+      </Simulation>
+      <Version Name="Copy of rulebased app" KeyValue="95198913" BranchId="94472261" Archived="0" Date="22-Jun-2015 09:22:45" FromVersionable="false">
+        <Owner Name="mblinov" Identifier="12487253" />
+        <GroupAccess Type="1" />
+        <Annotation>(copied from rulebased app)</Annotation>
+      </Version>
+      <MicroscopeMeasurement Name="fluor">
+        <ConvolutionKernel Type="ProjectionZKernel" />
+      </MicroscopeMeasurement>
+    </SimulationSpec>
+    <Version Name="RB_simple_system" KeyValue="95198923" BranchId="94472274" Archived="0" Date="22-Jun-2015 09:22:45" FromVersionable="false">
+      <Owner Name="mblinov" Identifier="12487253" />
+      <GroupAccess Type="0" />
+    </Version>
+    <pathwayModel>
+      <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:bp="http://www.biopax.org/release/biopax-level3.owl#" version="3.0" />
+    </pathwayModel>
+    <relationshipModel>
+      <RMNS version="3.0" />
+    </relationshipModel>
+    <vcmetadata>
+      <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" />
+      <nonrdfAnnotationList />
+      <uriBindingList />
+    </vcmetadata>
+  </BioModel>
+</vcml>
+

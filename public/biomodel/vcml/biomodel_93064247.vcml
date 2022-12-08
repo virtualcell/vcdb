@@ -1,0 +1,507 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--This biomodel was generated in VCML Version Alpha_Version_7.4.0_build_87-->
+<vcml xmlns="http://sourceforge.net/projects/vcell/vcml" Version="Alpha_Version_7.4.0_build_87">
+  <BioModel Name="assb_Blanck_Talide">
+    <Model Name="unnamed">
+      <Compound Name="ss1" />
+      <Compound Name="ss0" />
+      <Compound Name="s3" />
+      <Feature Name="AHL_receiving_cell" KeyValue="93064079" />
+      <Feature Name="AHL_producing_cell" KeyValue="93064082" />
+      <Feature Name="extra_cellular" KeyValue="93064076" />
+      <Membrane InsideFeature="AHL_receiving_cell" OutsideFeature="extra_cellular" PositiveFeature="AHL_receiving_cell" NegativeFeature="extra_cellular" MembraneVoltage="Voltage_PM2" Name="PM2" KeyValue="93064078" />
+      <Membrane InsideFeature="AHL_producing_cell" OutsideFeature="extra_cellular" PositiveFeature="AHL_producing_cell" NegativeFeature="extra_cellular" MembraneVoltage="Voltage_PM1" Name="PM1" KeyValue="93064081" />
+      <LocalizedCompound Name="AHL_3" CompoundRef="ss1" Structure="AHL_receiving_cell" OverrideName="true" KeyValue="93064088" />
+      <LocalizedCompound Name="AHL_1" CompoundRef="ss0" Structure="AHL_producing_cell" OverrideName="true" KeyValue="93064089" />
+      <LocalizedCompound Name="AHL_22" CompoundRef="ss1" Structure="extra_cellular" OverrideName="true" KeyValue="93064090" />
+      <LocalizedCompound Name="pump" CompoundRef="s3" Structure="AHL_receiving_cell" OverrideName="true" KeyValue="93064086" />
+      <LocalizedCompound Name="AHL_2" CompoundRef="ss0" Structure="extra_cellular" OverrideName="true" KeyValue="93064087" />
+      <SimpleReaction Structure="extra_cellular" Name="r7" Reversible="true" FluxOption="MolecularOnly" KeyValue="93064098">
+        <Reactant LocalizedCompoundRef="AHL_2" Stoichiometry="1" KeyValue="93064099" />
+        <Product LocalizedCompoundRef="AHL_22" Stoichiometry="1" KeyValue="93064100" />
+        <Kinetics KineticsType="GeneralKinetics">
+          <Parameter Name="J" Role="reaction rate" Unit="uM.s-1">(gamma * (AHL_2 - AHL_22) / e)</Parameter>
+          <Parameter Name="e" Role="user defined" Unit="um">10000.0</Parameter>
+          <Parameter Name="gamma" Role="user defined" Unit="um.min-1">5.0</Parameter>
+        </Kinetics>
+      </SimpleReaction>
+      <SimpleReaction Structure="extra_cellular" Name="r2" Reversible="true" FluxOption="MolecularOnly" KeyValue="93064101">
+        <Reactant LocalizedCompoundRef="AHL_2" Stoichiometry="1" KeyValue="93064102" />
+        <Kinetics KineticsType="GeneralKinetics">
+          <Parameter Name="J" Role="reaction rate" Unit="uM.s-1">((dAHL * AHL_2) + (D * AHL_2))</Parameter>
+          <Parameter Name="D" Role="user defined" Unit="min-1">0.005</Parameter>
+          <Parameter Name="dAHL" Role="user defined" Unit="min-1">0.0018333</Parameter>
+        </Kinetics>
+      </SimpleReaction>
+      <SimpleReaction Structure="AHL_receiving_cell" Name="r3" Reversible="true" FluxOption="MolecularOnly" KeyValue="93064103">
+        <Reactant LocalizedCompoundRef="AHL_3" Stoichiometry="1" KeyValue="93064104" />
+        <Kinetics KineticsType="GeneralKinetics">
+          <Parameter Name="J" Role="reaction rate" Unit="uM.s-1">(dAHL * AHL_3)</Parameter>
+          <Parameter Name="dAHL" Role="user defined" Unit="min-1">0.0018333</Parameter>
+        </Kinetics>
+      </SimpleReaction>
+      <SimpleReaction Structure="extra_cellular" Name="r0" Reversible="true" FluxOption="MolecularOnly" KeyValue="93064091">
+        <Reactant LocalizedCompoundRef="AHL_22" Stoichiometry="1" KeyValue="93064092" />
+        <Kinetics KineticsType="GeneralKinetics">
+          <Parameter Name="J" Role="reaction rate" Unit="uM.s-1">(dAHL * AHL_22)</Parameter>
+          <Parameter Name="dAHL" Role="user defined" Unit="s-1">0.00183333</Parameter>
+        </Kinetics>
+      </SimpleReaction>
+      <SimpleReaction Structure="AHL_receiving_cell" Name="r4" Reversible="true" FluxOption="MolecularOnly" KeyValue="93064093">
+        <Product LocalizedCompoundRef="pump" Stoichiometry="1" KeyValue="93064094" />
+        <Modifier LocalizedCompoundRef="AHL_3" />
+        <Kinetics KineticsType="GeneralKinetics">
+          <Parameter Name="J" Role="reaction rate" Unit="uM.s-1">(leak + (a10 * (AHL_3 ^ b10) / ((m10 ^ b10) + (AHL_3 ^ b10))) - (dLac_I * pump))</Parameter>
+          <Parameter Name="b10" Role="user defined" Unit="1">2.0</Parameter>
+          <Parameter Name="leak" Role="user defined" Unit="nM.min-1">0.083333</Parameter>
+          <Parameter Name="a10" Role="user defined" Unit="nM.min-1">40.0</Parameter>
+          <Parameter Name="dLac_I" Role="user defined" Unit="min-1">0.00183333</Parameter>
+          <Parameter Name="m10" Role="user defined" Unit="nM">12.0</Parameter>
+        </Kinetics>
+      </SimpleReaction>
+      <SimpleReaction Structure="AHL_producing_cell" Name="r1" Reversible="true" FluxOption="MolecularOnly" KeyValue="93064096">
+        <Product LocalizedCompoundRef="AHL_1" Stoichiometry="1" KeyValue="93064097" />
+        <Kinetics KineticsType="GeneralKinetics">
+          <Parameter Name="J" Role="reaction rate" Unit="uM.s-1">(alpha - (dAHL * AHL_1))</Parameter>
+          <Parameter Name="alpha" Role="user defined" Unit="nM.min-1">0.05</Parameter>
+          <Parameter Name="dAHL" Role="user defined" Unit="min-1">0.0018333</Parameter>
+        </Kinetics>
+      </SimpleReaction>
+      <FluxStep Name="flux0" Structure="PM1" Reversible="true" FluxOption="MolecularOnly" KeyValue="93064105">
+        <Reactant LocalizedCompoundRef="AHL_2" Stoichiometry="1" />
+        <Product LocalizedCompoundRef="AHL_1" Stoichiometry="1" />
+        <Kinetics KineticsType="GeneralKinetics">
+          <Parameter Name="J" Role="reaction rate" Unit="uM.um.s-1">(P * S * (AHL_1 - AHL_2))</Parameter>
+          <Parameter Name="I" Role="inward current density" Unit="pA.um-2">0.0</Parameter>
+          <Parameter Name="netValence" Role="net charge valence" Unit="1">0.0</Parameter>
+          <Parameter Name="P" Role="user defined" Unit="min-1">-0.5</Parameter>
+          <Parameter Name="S" Role="user defined" Unit="um2">4.83</Parameter>
+        </Kinetics>
+      </FluxStep>
+      <FluxStep Name="flux1" Structure="PM2" Reversible="true" FluxOption="MolecularOnly" KeyValue="93064108">
+        <Reactant LocalizedCompoundRef="AHL_22" Stoichiometry="1" />
+        <Product LocalizedCompoundRef="AHL_3" Stoichiometry="1" />
+        <Modifier LocalizedCompoundRef="pump" />
+        <Kinetics KineticsType="GeneralKinetics">
+          <Parameter Name="J" Role="reaction rate" Unit="uM.um.s-1">((P * S * (AHL_22 - AHL_3)) - ((AHL_3 &gt; rest) * Vmax * pump * ((AHL_3 / (AHL_3 + kP)) - (rest / (rest + kP)))))</Parameter>
+          <Parameter Name="I" Role="inward current density" Unit="pA.um-2">0.0</Parameter>
+          <Parameter Name="netValence" Role="net charge valence" Unit="1">0.0</Parameter>
+          <Parameter Name="P" Role="user defined" Unit="min-1">0.5</Parameter>
+          <Parameter Name="rest" Role="user defined" Unit="nM">0.0</Parameter>
+          <Parameter Name="S" Role="user defined" Unit="um2">4.83</Parameter>
+          <Parameter Name="kP" Role="user defined" Unit="min-1">0.25</Parameter>
+          <Parameter Name="Vmax" Role="user defined" Unit="nM.min-1">4000.0</Parameter>
+        </Kinetics>
+      </FluxStep>
+      <Diagram Name="c0" Structure="extra_cellular">
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="pump" LocationX="93" LocationY="89" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="AHL_1" LocationX="29" LocationY="216" />
+        <FluxReactionShape NodeReferenceModeAttrTag="full" FluxReactionRef="flux1" LocationX="41" LocationY="128" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="AHL_22" LocationX="136" LocationY="132" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="AHL_2" LocationX="136" LocationY="216" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="full" SimpleReactionRef="r2" LocationX="89" LocationY="218" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="full" SimpleReactionRef="r4" LocationX="96" LocationY="155" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="full" SimpleReactionRef="r3" LocationX="14" LocationY="187" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="AHL_3" LocationX="12" LocationY="132" />
+        <FluxReactionShape NodeReferenceModeAttrTag="full" FluxReactionRef="flux0" LocationX="39" LocationY="212" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="full" SimpleReactionRef="r7" LocationX="138" LocationY="174" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="full" SimpleReactionRef="r0" LocationX="138" LocationY="83" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="full" SimpleReactionRef="r1" LocationX="74" LocationY="218" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="pump" LocationX="93" LocationY="89" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="AHL_1" LocationX="29" LocationY="216" />
+        <FluxReactionShape NodeReferenceModeAttrTag="molecule" FluxReactionRef="flux1" LocationX="41" LocationY="128" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="AHL_22" LocationX="136" LocationY="132" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="AHL_2" LocationX="136" LocationY="216" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="molecule" SimpleReactionRef="r2" LocationX="89" LocationY="218" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="molecule" SimpleReactionRef="r4" LocationX="96" LocationY="155" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="molecule" SimpleReactionRef="r3" LocationX="14" LocationY="187" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="AHL_3" LocationX="12" LocationY="132" />
+        <FluxReactionShape NodeReferenceModeAttrTag="molecule" FluxReactionRef="flux0" LocationX="39" LocationY="212" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="molecule" SimpleReactionRef="r7" LocationX="138" LocationY="174" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="molecule" SimpleReactionRef="r0" LocationX="138" LocationY="83" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="molecule" SimpleReactionRef="r1" LocationX="74" LocationY="218" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="pump" LocationX="93" LocationY="89" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="AHL_1" LocationX="29" LocationY="216" />
+        <FluxReactionShape NodeReferenceModeAttrTag="rule" FluxReactionRef="flux1" LocationX="41" LocationY="128" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="AHL_22" LocationX="136" LocationY="132" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="AHL_2" LocationX="136" LocationY="216" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="rule" SimpleReactionRef="r2" LocationX="89" LocationY="218" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="rule" SimpleReactionRef="r4" LocationX="96" LocationY="155" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="rule" SimpleReactionRef="r3" LocationX="14" LocationY="187" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="AHL_3" LocationX="12" LocationY="132" />
+        <FluxReactionShape NodeReferenceModeAttrTag="rule" FluxReactionRef="flux0" LocationX="39" LocationY="212" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="rule" SimpleReactionRef="r7" LocationX="138" LocationY="174" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="rule" SimpleReactionRef="r0" LocationX="138" LocationY="83" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="rule" SimpleReactionRef="r1" LocationX="74" LocationY="218" />
+      </Diagram>
+      <Diagram Name="Membrane0" Structure="PM2">
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="pump" LocationX="93" LocationY="89" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="AHL_1" LocationX="29" LocationY="216" />
+        <FluxReactionShape NodeReferenceModeAttrTag="full" FluxReactionRef="flux1" LocationX="41" LocationY="128" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="AHL_22" LocationX="136" LocationY="132" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="AHL_2" LocationX="136" LocationY="216" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="full" SimpleReactionRef="r2" LocationX="89" LocationY="218" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="full" SimpleReactionRef="r4" LocationX="96" LocationY="155" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="full" SimpleReactionRef="r3" LocationX="14" LocationY="187" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="AHL_3" LocationX="12" LocationY="132" />
+        <FluxReactionShape NodeReferenceModeAttrTag="full" FluxReactionRef="flux0" LocationX="39" LocationY="212" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="full" SimpleReactionRef="r7" LocationX="138" LocationY="174" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="full" SimpleReactionRef="r0" LocationX="138" LocationY="83" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="full" SimpleReactionRef="r1" LocationX="74" LocationY="218" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="pump" LocationX="93" LocationY="89" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="AHL_1" LocationX="29" LocationY="216" />
+        <FluxReactionShape NodeReferenceModeAttrTag="molecule" FluxReactionRef="flux1" LocationX="41" LocationY="128" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="AHL_22" LocationX="136" LocationY="132" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="AHL_2" LocationX="136" LocationY="216" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="molecule" SimpleReactionRef="r2" LocationX="89" LocationY="218" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="molecule" SimpleReactionRef="r4" LocationX="96" LocationY="155" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="molecule" SimpleReactionRef="r3" LocationX="14" LocationY="187" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="AHL_3" LocationX="12" LocationY="132" />
+        <FluxReactionShape NodeReferenceModeAttrTag="molecule" FluxReactionRef="flux0" LocationX="39" LocationY="212" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="molecule" SimpleReactionRef="r7" LocationX="138" LocationY="174" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="molecule" SimpleReactionRef="r0" LocationX="138" LocationY="83" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="molecule" SimpleReactionRef="r1" LocationX="74" LocationY="218" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="pump" LocationX="93" LocationY="89" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="AHL_1" LocationX="29" LocationY="216" />
+        <FluxReactionShape NodeReferenceModeAttrTag="rule" FluxReactionRef="flux1" LocationX="41" LocationY="128" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="AHL_22" LocationX="136" LocationY="132" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="AHL_2" LocationX="136" LocationY="216" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="rule" SimpleReactionRef="r2" LocationX="89" LocationY="218" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="rule" SimpleReactionRef="r4" LocationX="96" LocationY="155" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="rule" SimpleReactionRef="r3" LocationX="14" LocationY="187" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="AHL_3" LocationX="12" LocationY="132" />
+        <FluxReactionShape NodeReferenceModeAttrTag="rule" FluxReactionRef="flux0" LocationX="39" LocationY="212" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="rule" SimpleReactionRef="r7" LocationX="138" LocationY="174" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="rule" SimpleReactionRef="r0" LocationX="138" LocationY="83" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="rule" SimpleReactionRef="r1" LocationX="74" LocationY="218" />
+      </Diagram>
+      <Diagram Name="Membrane1" Structure="PM1">
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="pump" LocationX="93" LocationY="89" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="AHL_1" LocationX="29" LocationY="216" />
+        <FluxReactionShape NodeReferenceModeAttrTag="full" FluxReactionRef="flux1" LocationX="41" LocationY="128" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="AHL_22" LocationX="136" LocationY="132" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="AHL_2" LocationX="136" LocationY="216" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="full" SimpleReactionRef="r2" LocationX="89" LocationY="218" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="full" SimpleReactionRef="r4" LocationX="96" LocationY="155" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="full" SimpleReactionRef="r3" LocationX="14" LocationY="187" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="AHL_3" LocationX="12" LocationY="132" />
+        <FluxReactionShape NodeReferenceModeAttrTag="full" FluxReactionRef="flux0" LocationX="39" LocationY="212" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="full" SimpleReactionRef="r7" LocationX="138" LocationY="174" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="full" SimpleReactionRef="r0" LocationX="138" LocationY="83" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="full" SimpleReactionRef="r1" LocationX="74" LocationY="218" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="pump" LocationX="93" LocationY="89" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="AHL_1" LocationX="29" LocationY="216" />
+        <FluxReactionShape NodeReferenceModeAttrTag="molecule" FluxReactionRef="flux1" LocationX="41" LocationY="128" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="AHL_22" LocationX="136" LocationY="132" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="AHL_2" LocationX="136" LocationY="216" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="molecule" SimpleReactionRef="r2" LocationX="89" LocationY="218" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="molecule" SimpleReactionRef="r4" LocationX="96" LocationY="155" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="molecule" SimpleReactionRef="r3" LocationX="14" LocationY="187" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="AHL_3" LocationX="12" LocationY="132" />
+        <FluxReactionShape NodeReferenceModeAttrTag="molecule" FluxReactionRef="flux0" LocationX="39" LocationY="212" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="molecule" SimpleReactionRef="r7" LocationX="138" LocationY="174" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="molecule" SimpleReactionRef="r0" LocationX="138" LocationY="83" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="molecule" SimpleReactionRef="r1" LocationX="74" LocationY="218" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="pump" LocationX="93" LocationY="89" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="AHL_1" LocationX="29" LocationY="216" />
+        <FluxReactionShape NodeReferenceModeAttrTag="rule" FluxReactionRef="flux1" LocationX="41" LocationY="128" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="AHL_22" LocationX="136" LocationY="132" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="AHL_2" LocationX="136" LocationY="216" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="rule" SimpleReactionRef="r2" LocationX="89" LocationY="218" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="rule" SimpleReactionRef="r4" LocationX="96" LocationY="155" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="rule" SimpleReactionRef="r3" LocationX="14" LocationY="187" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="AHL_3" LocationX="12" LocationY="132" />
+        <FluxReactionShape NodeReferenceModeAttrTag="rule" FluxReactionRef="flux0" LocationX="39" LocationY="212" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="rule" SimpleReactionRef="r7" LocationX="138" LocationY="174" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="rule" SimpleReactionRef="r0" LocationX="138" LocationY="83" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="rule" SimpleReactionRef="r1" LocationX="74" LocationY="218" />
+      </Diagram>
+      <Diagram Name="c1" Structure="AHL_receiving_cell">
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="pump" LocationX="93" LocationY="89" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="AHL_1" LocationX="29" LocationY="216" />
+        <FluxReactionShape NodeReferenceModeAttrTag="full" FluxReactionRef="flux1" LocationX="41" LocationY="128" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="AHL_22" LocationX="136" LocationY="132" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="AHL_2" LocationX="136" LocationY="216" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="full" SimpleReactionRef="r2" LocationX="89" LocationY="218" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="full" SimpleReactionRef="r4" LocationX="96" LocationY="155" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="full" SimpleReactionRef="r3" LocationX="14" LocationY="187" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="AHL_3" LocationX="12" LocationY="132" />
+        <FluxReactionShape NodeReferenceModeAttrTag="full" FluxReactionRef="flux0" LocationX="39" LocationY="212" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="full" SimpleReactionRef="r7" LocationX="138" LocationY="174" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="full" SimpleReactionRef="r0" LocationX="138" LocationY="83" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="full" SimpleReactionRef="r1" LocationX="74" LocationY="218" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="pump" LocationX="93" LocationY="89" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="AHL_1" LocationX="29" LocationY="216" />
+        <FluxReactionShape NodeReferenceModeAttrTag="molecule" FluxReactionRef="flux1" LocationX="41" LocationY="128" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="AHL_22" LocationX="136" LocationY="132" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="AHL_2" LocationX="136" LocationY="216" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="molecule" SimpleReactionRef="r2" LocationX="89" LocationY="218" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="molecule" SimpleReactionRef="r4" LocationX="96" LocationY="155" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="molecule" SimpleReactionRef="r3" LocationX="14" LocationY="187" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="AHL_3" LocationX="12" LocationY="132" />
+        <FluxReactionShape NodeReferenceModeAttrTag="molecule" FluxReactionRef="flux0" LocationX="39" LocationY="212" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="molecule" SimpleReactionRef="r7" LocationX="138" LocationY="174" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="molecule" SimpleReactionRef="r0" LocationX="138" LocationY="83" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="molecule" SimpleReactionRef="r1" LocationX="74" LocationY="218" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="pump" LocationX="93" LocationY="89" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="AHL_1" LocationX="29" LocationY="216" />
+        <FluxReactionShape NodeReferenceModeAttrTag="rule" FluxReactionRef="flux1" LocationX="41" LocationY="128" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="AHL_22" LocationX="136" LocationY="132" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="AHL_2" LocationX="136" LocationY="216" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="rule" SimpleReactionRef="r2" LocationX="89" LocationY="218" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="rule" SimpleReactionRef="r4" LocationX="96" LocationY="155" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="rule" SimpleReactionRef="r3" LocationX="14" LocationY="187" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="AHL_3" LocationX="12" LocationY="132" />
+        <FluxReactionShape NodeReferenceModeAttrTag="rule" FluxReactionRef="flux0" LocationX="39" LocationY="212" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="rule" SimpleReactionRef="r7" LocationX="138" LocationY="174" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="rule" SimpleReactionRef="r0" LocationX="138" LocationY="83" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="rule" SimpleReactionRef="r1" LocationX="74" LocationY="218" />
+      </Diagram>
+      <Diagram Name="c2" Structure="AHL_producing_cell">
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="pump" LocationX="93" LocationY="89" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="AHL_1" LocationX="29" LocationY="216" />
+        <FluxReactionShape NodeReferenceModeAttrTag="full" FluxReactionRef="flux1" LocationX="41" LocationY="128" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="AHL_22" LocationX="136" LocationY="132" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="AHL_2" LocationX="136" LocationY="216" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="full" SimpleReactionRef="r2" LocationX="89" LocationY="218" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="full" SimpleReactionRef="r4" LocationX="96" LocationY="155" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="full" SimpleReactionRef="r3" LocationX="14" LocationY="187" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="AHL_3" LocationX="12" LocationY="132" />
+        <FluxReactionShape NodeReferenceModeAttrTag="full" FluxReactionRef="flux0" LocationX="39" LocationY="212" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="full" SimpleReactionRef="r7" LocationX="138" LocationY="174" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="full" SimpleReactionRef="r0" LocationX="138" LocationY="83" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="full" SimpleReactionRef="r1" LocationX="74" LocationY="218" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="pump" LocationX="93" LocationY="89" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="AHL_1" LocationX="29" LocationY="216" />
+        <FluxReactionShape NodeReferenceModeAttrTag="molecule" FluxReactionRef="flux1" LocationX="41" LocationY="128" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="AHL_22" LocationX="136" LocationY="132" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="AHL_2" LocationX="136" LocationY="216" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="molecule" SimpleReactionRef="r2" LocationX="89" LocationY="218" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="molecule" SimpleReactionRef="r4" LocationX="96" LocationY="155" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="molecule" SimpleReactionRef="r3" LocationX="14" LocationY="187" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="AHL_3" LocationX="12" LocationY="132" />
+        <FluxReactionShape NodeReferenceModeAttrTag="molecule" FluxReactionRef="flux0" LocationX="39" LocationY="212" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="molecule" SimpleReactionRef="r7" LocationX="138" LocationY="174" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="molecule" SimpleReactionRef="r0" LocationX="138" LocationY="83" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="molecule" SimpleReactionRef="r1" LocationX="74" LocationY="218" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="pump" LocationX="93" LocationY="89" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="AHL_1" LocationX="29" LocationY="216" />
+        <FluxReactionShape NodeReferenceModeAttrTag="rule" FluxReactionRef="flux1" LocationX="41" LocationY="128" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="AHL_22" LocationX="136" LocationY="132" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="AHL_2" LocationX="136" LocationY="216" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="rule" SimpleReactionRef="r2" LocationX="89" LocationY="218" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="rule" SimpleReactionRef="r4" LocationX="96" LocationY="155" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="rule" SimpleReactionRef="r3" LocationX="14" LocationY="187" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="AHL_3" LocationX="12" LocationY="132" />
+        <FluxReactionShape NodeReferenceModeAttrTag="rule" FluxReactionRef="flux0" LocationX="39" LocationY="212" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="rule" SimpleReactionRef="r7" LocationX="138" LocationY="174" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="rule" SimpleReactionRef="r0" LocationX="138" LocationY="83" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="rule" SimpleReactionRef="r1" LocationX="74" LocationY="218" />
+      </Diagram>
+      <Version Name="unnamed" KeyValue="93064071" BranchId="92644755" Archived="0" Date="17-Dec-2014 16:02:02" FromVersionable="false">
+        <Owner Name="talide" Identifier="92424481" />
+        <GroupAccess Type="1" />
+      </Version>
+      <ModelUnitSystem VolumeSubstanceUnit="uM.um3" MembraneSubstanceUnit="molecules" LumpedReactionSubstanceUnit="molecules" VolumeUnit="um3" AreaUnit="um2" LengthUnit="um" TimeUnit="s" />
+    </Model>
+    <SimulationSpec Name="Application0" Stochastic="false" UseConcentration="true" RuleBased="false" MassConservationModelReduction="true" InsufficientIterations="false" InsufficientMaxMolecules="false">
+      <NetworkConstraints RbmMaxIteration="1" RbmMaxMoleculesPerSpecies="10" RbmSpeciesLimit="800" RbmReactionsLimit="2500" />
+      <Annotation />
+      <Geometry Name="non-spatial2014866412" Dimension="0">
+        <Extent X="10.0" Y="10.0" Z="10.0" />
+        <Origin X="0.0" Y="0.0" Z="0.0" />
+        <SubVolume Name="Compartment" Handle="0" Type="Compartmental" KeyValue="92648314" />
+        <Version Name="non-spatial2014866412" KeyValue="92648310" BranchId="92648311" Archived="0" Date="21-Nov-2014 06:03:49" FromVersionable="false">
+          <Owner Name="talide" Identifier="92424481" />
+          <GroupAccess Type="1" />
+        </Version>
+      </Geometry>
+      <GeometryContext>
+        <FeatureMapping Feature="AHL_receiving_cell" GeometryClass="Compartment" SubVolume="Compartment" Size="1.0">
+          <BoundariesTypes Xm="Flux" Xp="Flux" Ym="Flux" Yp="Flux" Zm="Flux" Zp="Flux" />
+        </FeatureMapping>
+        <FeatureMapping Feature="AHL_producing_cell" GeometryClass="Compartment" SubVolume="Compartment" Size="1.0">
+          <BoundariesTypes Xm="Flux" Xp="Flux" Ym="Flux" Yp="Flux" Zm="Flux" Zp="Flux" />
+        </FeatureMapping>
+        <FeatureMapping Feature="extra_cellular" GeometryClass="Compartment" SubVolume="Compartment" Size="500.0">
+          <BoundariesTypes Xm="Flux" Xp="Flux" Ym="Flux" Yp="Flux" Zm="Flux" Zp="Flux" />
+        </FeatureMapping>
+        <MembraneMapping Membrane="PM2" SurfaceToVolumeRatio="4.83" VolumeFraction="0.00199203187250996" Size="4.83" CalculateVoltage="false" SpecificCapacitance="1.0" InitialVoltage="0.0" GeometryClass="Compartment">
+          <BoundariesTypes Xm="Flux" Xp="Flux" Ym="Flux" Yp="Flux" Zm="Flux" Zp="Flux" />
+        </MembraneMapping>
+        <MembraneMapping Membrane="PM1" SurfaceToVolumeRatio="4.83" VolumeFraction="0.00199203187250996" Size="4.83" CalculateVoltage="false" SpecificCapacitance="1.0" InitialVoltage="0.0" GeometryClass="Compartment">
+          <BoundariesTypes Xm="Flux" Xp="Flux" Ym="Flux" Yp="Flux" Zm="Flux" Zp="Flux" />
+        </MembraneMapping>
+      </GeometryContext>
+      <ReactionContext>
+        <LocalizedCompoundSpec LocalizedCompoundRef="AHL_3" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>0.0</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="pump" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>0.0</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="AHL_1" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>0.0</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="AHL_22" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>0.0</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="AHL_2" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>0.0</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <ReactionSpec ReactionStepRef="r7" ReactionMapping="included" />
+        <ReactionSpec ReactionStepRef="r2" ReactionMapping="included" />
+        <ReactionSpec ReactionStepRef="r3" ReactionMapping="included" />
+        <ReactionSpec ReactionStepRef="flux0" ReactionMapping="included" />
+        <ReactionSpec ReactionStepRef="flux1" ReactionMapping="included" />
+        <ReactionSpec ReactionStepRef="r0" ReactionMapping="included" />
+        <ReactionSpec ReactionStepRef="r4" ReactionMapping="included" />
+        <ReactionSpec ReactionStepRef="r1" ReactionMapping="included" />
+      </ReactionContext>
+      <MathDescription Name="Application0_generated">
+        <Constant Name="_F_">96480.0</Constant>
+        <Constant Name="_F_nmol_">9.648E-5</Constant>
+        <Constant Name="_K_GHK_">1.0E-9</Constant>
+        <Constant Name="_N_pmol_">6.02E11</Constant>
+        <Constant Name="_PI_">3.141592653589793</Constant>
+        <Constant Name="_R_">8314.0</Constant>
+        <Constant Name="_T_">300.0</Constant>
+        <Constant Name="a10">40.0</Constant>
+        <Constant Name="AHL_1_init_uM">0.0</Constant>
+        <Constant Name="AHL_22_init_uM">0.0</Constant>
+        <Constant Name="AHL_2_init_uM">0.0</Constant>
+        <Constant Name="AHL_3_init_uM">0.0</Constant>
+        <Constant Name="alpha">0.05</Constant>
+        <Constant Name="b10">2.0</Constant>
+        <Constant Name="D">0.005</Constant>
+        <Constant Name="dAHL_r0">0.00183333</Constant>
+        <Constant Name="dAHL_r1">0.0018333</Constant>
+        <Constant Name="dAHL_r2">0.0018333</Constant>
+        <Constant Name="dAHL_r3">0.0018333</Constant>
+        <Constant Name="dLac_I">0.00183333</Constant>
+        <Constant Name="e">10000.0</Constant>
+        <Constant Name="gamma">5.0</Constant>
+        <Constant Name="K_millivolts_per_volt">1000.0</Constant>
+        <Constant Name="KMOLE">0.0016611295681063123</Constant>
+        <Constant Name="kP">0.25</Constant>
+        <Constant Name="leak">0.083333</Constant>
+        <Constant Name="m10">12.0</Constant>
+        <Constant Name="P_flux0">-0.5</Constant>
+        <Constant Name="P_flux1">0.5</Constant>
+        <Constant Name="pump_init_uM">0.0</Constant>
+        <Constant Name="rest">0.0</Constant>
+        <Constant Name="S_flux0">4.83</Constant>
+        <Constant Name="S_flux1">4.83</Constant>
+        <Constant Name="Size_AHL_producing_cell">1.0</Constant>
+        <Constant Name="Size_AHL_receiving_cell">1.0</Constant>
+        <Constant Name="Size_extra_cellular">500.0</Constant>
+        <Constant Name="Size_PM1">4.83</Constant>
+        <Constant Name="Size_PM2">4.83</Constant>
+        <Constant Name="Vmax">4000.0</Constant>
+        <Constant Name="Voltage_PM1">0.0</Constant>
+        <Constant Name="Voltage_PM2">0.0</Constant>
+        <VolumeVariable Name="AHL_1" Domain="Compartment" />
+        <VolumeVariable Name="AHL_2" Domain="Compartment" />
+        <VolumeVariable Name="AHL_22" Domain="Compartment" />
+        <VolumeVariable Name="AHL_3" Domain="Compartment" />
+        <VolumeVariable Name="pump" Domain="Compartment" />
+        <Function Name="J_flux0" Domain="Compartment">(P_flux0 * S_flux0 * (AHL_1 - AHL_2))</Function>
+        <Function Name="J_flux1" Domain="Compartment">((P_flux1 * S_flux1 * (AHL_22 - AHL_3)) - ((AHL_3 &gt; rest) * Vmax * pump * ((AHL_3 / (AHL_3 + kP)) - (rest / (rest + kP)))))</Function>
+        <Function Name="J_r0" Domain="Compartment">(dAHL_r0 * AHL_22)</Function>
+        <Function Name="J_r1" Domain="Compartment">(alpha - (dAHL_r1 * AHL_1))</Function>
+        <Function Name="J_r2" Domain="Compartment">((dAHL_r2 * AHL_2) + (D * AHL_2))</Function>
+        <Function Name="J_r3" Domain="Compartment">(dAHL_r3 * AHL_3)</Function>
+        <Function Name="J_r4" Domain="Compartment">(leak + (a10 * (AHL_3 ^ b10) / ((m10 ^ b10) + (AHL_3 ^ b10))) - (dLac_I * pump))</Function>
+        <Function Name="J_r7" Domain="Compartment">(gamma * (AHL_2 - AHL_22) / e)</Function>
+        <Function Name="KFlux_PM1_AHL_producing_cell" Domain="Compartment">(Size_PM1 / Size_AHL_producing_cell)</Function>
+        <Function Name="KFlux_PM1_extra_cellular" Domain="Compartment">(Size_PM1 / Size_extra_cellular)</Function>
+        <Function Name="KFlux_PM2_AHL_receiving_cell" Domain="Compartment">(Size_PM2 / Size_AHL_receiving_cell)</Function>
+        <Function Name="KFlux_PM2_extra_cellular" Domain="Compartment">(Size_PM2 / Size_extra_cellular)</Function>
+        <CompartmentSubDomain Name="Compartment">
+          <BoundaryType Boundary="Xm" Type="Value" />
+          <BoundaryType Boundary="Xp" Type="Value" />
+          <BoundaryType Boundary="Ym" Type="Value" />
+          <BoundaryType Boundary="Yp" Type="Value" />
+          <BoundaryType Boundary="Zm" Type="Value" />
+          <BoundaryType Boundary="Zp" Type="Value" />
+          <OdeEquation Name="AHL_3" SolutionType="Unknown">
+            <Rate>( - J_r3 + (KFlux_PM2_AHL_receiving_cell * J_flux1))</Rate>
+            <Initial>AHL_3_init_uM</Initial>
+          </OdeEquation>
+          <OdeEquation Name="pump" SolutionType="Unknown">
+            <Rate>J_r4</Rate>
+            <Initial>pump_init_uM</Initial>
+          </OdeEquation>
+          <OdeEquation Name="AHL_1" SolutionType="Unknown">
+            <Rate>((KFlux_PM1_AHL_producing_cell * J_flux0) + J_r1)</Rate>
+            <Initial>AHL_1_init_uM</Initial>
+          </OdeEquation>
+          <OdeEquation Name="AHL_22" SolutionType="Unknown">
+            <Rate>( - J_r0 + J_r7 - (KFlux_PM2_extra_cellular * J_flux1))</Rate>
+            <Initial>AHL_22_init_uM</Initial>
+          </OdeEquation>
+          <OdeEquation Name="AHL_2" SolutionType="Unknown">
+            <Rate>( - (KFlux_PM1_extra_cellular * J_flux0) - J_r7 - J_r2)</Rate>
+            <Initial>AHL_2_init_uM</Initial>
+          </OdeEquation>
+        </CompartmentSubDomain>
+        <Version Name="Application0_generated" KeyValue="93064223" BranchId="92648316" Archived="0" Date="17-Dec-2014 16:05:30" FromVersionable="false">
+          <Owner Name="talide" Identifier="92424481" />
+          <GroupAccess Type="1" />
+        </Version>
+      </MathDescription>
+      <Simulation Name="Simulation0">
+        <SolverTaskDescription TaskType="Unsteady" UseSymbolicJacobian="false" Solver="Combined Stiff Solver (IDA/CVODE)">
+          <TimeBound StartTime="0.0" EndTime="1000.0" />
+          <TimeStep DefaultTime="0.1" MinTime="1.0E-8" MaxTime="1.0" />
+          <ErrorTolerance Absolut="1.0E-9" Relative="1.0E-9" />
+          <OutputOptions KeepEvery="1" KeepAtMost="5000" />
+          <NumberProcessors>1</NumberProcessors>
+        </SolverTaskDescription>
+        <MathOverrides />
+        <Version Name="Simulation0" KeyValue="93064245" BranchId="92648384" Archived="0" Date="17-Dec-2014 16:05:30" FromVersionable="false">
+          <Owner Name="talide" Identifier="92424481" />
+          <GroupAccess Type="1" />
+        </Version>
+      </Simulation>
+      <Version Name="Application0" KeyValue="93064225" BranchId="92648364" Archived="0" Date="17-Dec-2014 16:05:30" FromVersionable="false">
+        <Owner Name="talide" Identifier="92424481" />
+        <GroupAccess Type="1" />
+      </Version>
+      <MicroscopeMeasurement Name="fluor">
+        <ConvolutionKernel Type="ProjectionZKernel" />
+      </MicroscopeMeasurement>
+    </SimulationSpec>
+    <Version Name="assb_Blanck_Talide" KeyValue="93064247" BranchId="93064248" Archived="0" Date="17-Dec-2014 16:05:30" FromVersionable="false">
+      <Owner Name="talide" Identifier="92424481" />
+      <GroupAccess Type="1" />
+    </Version>
+    <pathwayModel>
+      <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:bp="http://www.biopax.org/release/biopax-level3.owl#" version="3.0" />
+    </pathwayModel>
+    <relationshipModel>
+      <RMNS version="3.0" />
+    </relationshipModel>
+    <vcmetadata>
+      <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" />
+      <nonrdfAnnotationList>
+        <nonrdfAnnotation vcid="ReactionStep(r1)">
+          <freetext>Production et degradation naturelle d'AHL dans la cellule secretrice.</freetext>
+        </nonrdfAnnotation>
+        <nonrdfAnnotation vcid="ReactionStep(r2)">
+          <freetext>Degradation et dilution d'AHL dans le milieu EC.</freetext>
+        </nonrdfAnnotation>
+        <nonrdfAnnotation vcid="ReactionStep(flux0)">
+          <freetext>Diffusion uniquement passive d'AHL a travers la membrane de la cellule secretrice.</freetext>
+        </nonrdfAnnotation>
+      </nonrdfAnnotationList>
+      <uriBindingList />
+    </vcmetadata>
+  </BioModel>
+</vcml>
+

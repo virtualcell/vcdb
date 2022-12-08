@@ -1,0 +1,275 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--This biomodel was generated in VCML Version Alpha_Version_7.4.0_build_87-->
+<vcml xmlns="http://sourceforge.net/projects/vcell/vcml" Version="Alpha_Version_7.4.0_build_87">
+  <BioModel Name="CSHL CCB VCell Example 6">
+    <Model Name="unnamed">
+      <ModelParameters>
+        <Parameter Name="milliconverter" Role="user defined" Unit="s-1">1000.0</Parameter>
+        <Parameter Name="Kd" Role="user defined" Unit="uM">0.23</Parameter>
+        <Parameter Name="n" Role="user defined" Unit="1">3.8</Parameter>
+        <Parameter Name="krel1raw" Role="user defined" Unit="1">1.39</Parameter>
+        <Parameter Name="krel0raw" Role="user defined" Unit="1">0.03</Parameter>
+        <Parameter Name="kpmcaraw" Role="user defined" Unit="1">0.14</Parameter>
+        <Parameter Name="ksercaraw" Role="user defined" Unit="1">1.06</Parameter>
+      </ModelParameters>
+      <Compound Name="Ca" />
+      <Feature Name="Extracellular" KeyValue="34211948" />
+      <Feature Name="cytosol" KeyValue="34211951" />
+      <Feature Name="ER" KeyValue="34211954" />
+      <Membrane InsideFeature="cytosol" OutsideFeature="Extracellular" PositiveFeature="cytosol" NegativeFeature="Extracellular" MembraneVoltage="Voltage_PM" Name="PM" KeyValue="34211950" />
+      <Membrane InsideFeature="ER" OutsideFeature="cytosol" PositiveFeature="ER" NegativeFeature="cytosol" MembraneVoltage="Voltage_ERM" Name="ERM" KeyValue="34211953" />
+      <LocalizedCompound Name="Ca_cytosol" CompoundRef="Ca" Structure="cytosol" OverrideName="true" KeyValue="34211958" />
+      <LocalizedCompound Name="Ca_ER" CompoundRef="Ca" Structure="ER" OverrideName="true" KeyValue="34211959" />
+      <LocalizedCompound Name="Ca_Extracellular" CompoundRef="Ca" Structure="Extracellular" OverrideName="true" KeyValue="34211960" />
+      <SimpleReaction Structure="ER" Name="Calcium Rate ER" Reversible="true" FluxOption="MolecularOnly" KeyValue="34211961">
+        <Product LocalizedCompoundRef="Ca_ER" Stoichiometry="1" KeyValue="34211962" />
+        <Modifier LocalizedCompoundRef="Ca_cytosol" />
+        <Kinetics KineticsType="GeneralKinetics">
+          <Parameter Name="J" Role="reaction rate" Unit="uM.s-1">(Jrel + Jserca)</Parameter>
+          <Parameter Name="Jrel" Role="user defined" Unit="uM.s-1">(krel * (Ca_cytosol - Ca_ER))</Parameter>
+          <Parameter Name="Jserca" Role="user defined" Unit="uM.s-1">(kserca * Ca_cytosol)</Parameter>
+          <Parameter Name="kserca" Role="user defined" Unit="s-1">(ksercaraw * milliconverter)</Parameter>
+          <Parameter Name="krel" Role="user defined" Unit="s-1">(krel0 + (krel1 / (1.0 + ((Kd / Ca_cytosol) ^ n))))</Parameter>
+          <Parameter Name="krel1" Role="user defined" Unit="s-1">(krel1raw * milliconverter)</Parameter>
+          <Parameter Name="krel0" Role="user defined" Unit="s-1">(krel0raw * milliconverter)</Parameter>
+        </Kinetics>
+      </SimpleReaction>
+      <SimpleReaction Structure="cytosol" Name="Calcium Rate" Reversible="true" FluxOption="MolecularOnly" KeyValue="34211963">
+        <Product LocalizedCompoundRef="Ca_cytosol" Stoichiometry="1" KeyValue="34211964" />
+        <Modifier LocalizedCompoundRef="Ca_ER" />
+        <Modifier LocalizedCompoundRef="Ca_Extracellular" />
+        <Kinetics KineticsType="GeneralKinetics">
+          <Parameter Name="J" Role="reaction rate" Unit="uM.s-1">- (Jin + Jpmca + (gamma * (Jrel + Jserca)))</Parameter>
+          <Parameter Name="Jpmca" Role="user defined" Unit="uM.s-1">(kpmca * Ca_cytosol)</Parameter>
+          <Parameter Name="Jrel" Role="user defined" Unit="uM.s-1">(krel * (Ca_cytosol - Ca_ER))</Parameter>
+          <Parameter Name="Jin" Role="user defined" Unit="uM.s-1">(kin * (Ca_cytosol - Ca_Extracellular))</Parameter>
+          <Parameter Name="gamma" Role="user defined" Unit="1">0.24</Parameter>
+          <Parameter Name="Jserca" Role="user defined" Unit="uM.s-1">(kserca * Ca_cytosol)</Parameter>
+          <Parameter Name="kserca" Role="user defined" Unit="s-1">(ksercaraw * milliconverter)</Parameter>
+          <Parameter Name="kin" Role="user defined" Unit="s-1">(kinraw * milliconverter)</Parameter>
+          <Parameter Name="kinraw" Role="user defined" Unit="1">8.7E-6</Parameter>
+          <Parameter Name="kpmca" Role="user defined" Unit="s-1">(kpmcaraw * milliconverter)</Parameter>
+          <Parameter Name="krel" Role="user defined" Unit="s-1">(krel0 + (krel1 / (1.0 + ((Kd / Ca_cytosol) ^ n))))</Parameter>
+          <Parameter Name="krel1" Role="user defined" Unit="s-1">(krel1raw * milliconverter)</Parameter>
+          <Parameter Name="krel0" Role="user defined" Unit="s-1">(krel0raw * milliconverter)</Parameter>
+        </Kinetics>
+      </SimpleReaction>
+      <Diagram Name="Unnamed compartment" Structure="Extracellular" />
+      <Diagram Name="PM" Structure="PM" />
+      <Diagram Name="cytosol" Structure="cytosol">
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="Ca_cytosol" LocationX="264" LocationY="226" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="full" SimpleReactionRef="Calcium Rate" LocationX="193" LocationY="150" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="Ca_cytosol" LocationX="264" LocationY="226" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="molecule" SimpleReactionRef="Calcium Rate" LocationX="193" LocationY="150" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="Ca_cytosol" LocationX="264" LocationY="226" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="rule" SimpleReactionRef="Calcium Rate" LocationX="193" LocationY="150" />
+      </Diagram>
+      <Diagram Name="ERM" Structure="ERM" />
+      <Diagram Name="ER" Structure="ER">
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="Ca_ER" LocationX="254" LocationY="198" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="full" SimpleReactionRef="Calcium Rate ER" LocationX="191" LocationY="121" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="Ca_ER" LocationX="254" LocationY="198" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="molecule" SimpleReactionRef="Calcium Rate ER" LocationX="191" LocationY="121" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="Ca_ER" LocationX="254" LocationY="198" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="rule" SimpleReactionRef="Calcium Rate ER" LocationX="191" LocationY="121" />
+      </Diagram>
+      <Version Name="unnamed" KeyValue="34211945" BranchId="34195058" Archived="0" Date="30-Jun-2009 20:13:19" FromVersionable="false">
+        <Owner Name="Brown" Identifier="26331356" />
+        <GroupAccess Type="1" />
+      </Version>
+      <ModelUnitSystem VolumeSubstanceUnit="uM.um3" MembraneSubstanceUnit="molecules" LumpedReactionSubstanceUnit="molecules" VolumeUnit="um3" AreaUnit="um2" LengthUnit="um" TimeUnit="s" />
+    </Model>
+    <SimulationSpec Name="Sherman Exercise 2" Stochastic="false" UseConcentration="true" RuleBased="false" MassConservationModelReduction="true" InsufficientIterations="false" InsufficientMaxMolecules="false">
+      <NetworkConstraints RbmMaxIteration="1" RbmMaxMoleculesPerSpecies="10" RbmSpeciesLimit="800" RbmReactionsLimit="2500" />
+      <Annotation />
+      <Geometry Name="non-spatial1779731554" Dimension="0">
+        <Extent X="10.0" Y="10.0" Z="10.0" />
+        <Origin X="0.0" Y="0.0" Z="0.0" />
+        <SubVolume Name="Compartment" Handle="0" Type="Compartmental" KeyValue="34196150" />
+        <Version Name="non-spatial1779731554" KeyValue="34196146" BranchId="34196147" Archived="0" Date="30-Jun-2009 19:03:11" FromVersionable="false">
+          <Owner Name="Brown" Identifier="26331356" />
+          <GroupAccess Type="1" />
+        </Version>
+      </Geometry>
+      <GeometryContext>
+        <FeatureMapping Feature="Extracellular" GeometryClass="Compartment" SubVolume="Compartment" Size="1.0">
+          <BoundariesTypes Xm="Flux" Xp="Flux" Ym="Flux" Yp="Flux" Zm="Flux" Zp="Flux" />
+        </FeatureMapping>
+        <FeatureMapping Feature="cytosol" GeometryClass="Compartment" SubVolume="Compartment" Size="1.0">
+          <BoundariesTypes Xm="Flux" Xp="Flux" Ym="Flux" Yp="Flux" Zm="Flux" Zp="Flux" />
+        </FeatureMapping>
+        <FeatureMapping Feature="ER" GeometryClass="Compartment" SubVolume="Compartment" Size="1.0">
+          <BoundariesTypes Xm="Flux" Xp="Flux" Ym="Flux" Yp="Flux" Zm="Flux" Zp="Flux" />
+        </FeatureMapping>
+        <MembraneMapping Membrane="PM" SurfaceToVolumeRatio="0.5" VolumeFraction="0.6666666666666666" Size="1.0" CalculateVoltage="false" SpecificCapacitance="1.0" InitialVoltage="0.0" GeometryClass="Compartment">
+          <BoundariesTypes Xm="Flux" Xp="Flux" Ym="Flux" Yp="Flux" Zm="Flux" Zp="Flux" />
+        </MembraneMapping>
+        <MembraneMapping Membrane="ERM" SurfaceToVolumeRatio="1.0" VolumeFraction="0.5" Size="1.0" CalculateVoltage="false" SpecificCapacitance="1.0" InitialVoltage="0.0" GeometryClass="Compartment">
+          <BoundariesTypes Xm="Flux" Xp="Flux" Ym="Flux" Yp="Flux" Zm="Flux" Zp="Flux" />
+        </MembraneMapping>
+      </GeometryContext>
+      <ReactionContext>
+        <LocalizedCompoundSpec LocalizedCompoundRef="Ca_Extracellular" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>1500.0</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="Ca_cytosol" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>0.07913661774097037</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="Ca_ER" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>1.567192693069301</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <ReactionSpec ReactionStepRef="Calcium Rate ER" ReactionMapping="included" />
+        <ReactionSpec ReactionStepRef="Calcium Rate" ReactionMapping="included" />
+      </ReactionContext>
+      <MathDescription Name="Sherman Exercise 2_generated">
+        <Constant Name="_F_">96480.0</Constant>
+        <Constant Name="_F_nmol_">9.648E-5</Constant>
+        <Constant Name="_K_GHK_">1.0E-9</Constant>
+        <Constant Name="_N_pmol_">6.02E11</Constant>
+        <Constant Name="_R_">8314.0</Constant>
+        <Constant Name="_T_">300.0</Constant>
+        <Constant Name="Ca_cytosol_init">0.07913661774097037</Constant>
+        <Constant Name="Ca_ER_init">1.567192693069301</Constant>
+        <Constant Name="Ca_Extracellular_init">1500.0</Constant>
+        <Constant Name="gamma">0.24</Constant>
+        <Constant Name="K_millivolts_per_volt">1000.0</Constant>
+        <Constant Name="Kd">0.23</Constant>
+        <Constant Name="kinraw">8.7E-6</Constant>
+        <Constant Name="KMOLE">0.0016611295681063123</Constant>
+        <Constant Name="kpmcaraw">0.14</Constant>
+        <Constant Name="krel0raw">0.03</Constant>
+        <Constant Name="krel1raw">1.39</Constant>
+        <Constant Name="ksercaraw">1.06</Constant>
+        <Constant Name="milliconverter">1000.0</Constant>
+        <Constant Name="n">3.8</Constant>
+        <Constant Name="Size_cytosol">1.0</Constant>
+        <Constant Name="Size_ER">1.0</Constant>
+        <Constant Name="Size_ERM">1.0</Constant>
+        <Constant Name="Size_Extracellular">1.0</Constant>
+        <Constant Name="Size_PM">1.0</Constant>
+        <Constant Name="SurfToVol_ERM">1.0</Constant>
+        <Constant Name="SurfToVol_PM">0.5</Constant>
+        <Constant Name="VolFract_cytosol">0.6666666666666666</Constant>
+        <Constant Name="VolFract_ER">0.5</Constant>
+        <Constant Name="Voltage_ERM">0.0</Constant>
+        <Constant Name="Voltage_PM">0.0</Constant>
+        <VolumeVariable Name="Ca_cytosol" />
+        <VolumeVariable Name="Ca_ER" />
+        <Function Name="Ca_Extracellular">(K_Ca_Extracellular_total / (1.0 - VolFract_cytosol))</Function>
+        <Function Name="J_Calcium_Rate">- (Jin + Jpmca + (gamma * (Jrel_Calcium_Rate + Jserca_Calcium_Rate)))</Function>
+        <Function Name="J_Calcium_Rate_ER">(Jrel_Calcium_Rate_ER + Jserca_Calcium_Rate_ER)</Function>
+        <Function Name="Jin">(kin * (Ca_cytosol - Ca_Extracellular))</Function>
+        <Function Name="Jpmca">(kpmca * Ca_cytosol)</Function>
+        <Function Name="Jrel_Calcium_Rate">(krel_Calcium_Rate * (Ca_cytosol - Ca_ER))</Function>
+        <Function Name="Jrel_Calcium_Rate_ER">(krel_Calcium_Rate_ER * (Ca_cytosol - Ca_ER))</Function>
+        <Function Name="Jserca_Calcium_Rate">(kserca_Calcium_Rate * Ca_cytosol)</Function>
+        <Function Name="Jserca_Calcium_Rate_ER">(kserca_Calcium_Rate_ER * Ca_cytosol)</Function>
+        <Function Name="K_Ca_Extracellular_total">((1.0 - VolFract_cytosol) * Ca_Extracellular_init)</Function>
+        <Function Name="KFlux_ERM_mapping_cytosol">(SurfToVol_ERM * VolFract_ER / (1.0 - VolFract_ER))</Function>
+        <Function Name="KFlux_ERM_mapping_ER">SurfToVol_ERM</Function>
+        <Function Name="KFlux_PM_mapping_cytosol">(SurfToVol_PM / (1.0 - VolFract_ER))</Function>
+        <Function Name="KFlux_PM_mapping_Extracellular">(SurfToVol_PM * VolFract_cytosol / (1.0 - VolFract_cytosol))</Function>
+        <Function Name="kin">(kinraw * milliconverter)</Function>
+        <Function Name="kpmca">(kpmcaraw * milliconverter)</Function>
+        <Function Name="krel0_Calcium_Rate">(krel0raw * milliconverter)</Function>
+        <Function Name="krel0_Calcium_Rate_ER">(krel0raw * milliconverter)</Function>
+        <Function Name="krel1_Calcium_Rate">(krel1raw * milliconverter)</Function>
+        <Function Name="krel1_Calcium_Rate_ER">(krel1raw * milliconverter)</Function>
+        <Function Name="krel_Calcium_Rate">(krel0_Calcium_Rate + (krel1_Calcium_Rate / (1.0 + ((Kd / Ca_cytosol) ^ n))))</Function>
+        <Function Name="krel_Calcium_Rate_ER">(krel0_Calcium_Rate_ER + (krel1_Calcium_Rate_ER / (1.0 + ((Kd / Ca_cytosol) ^ n))))</Function>
+        <Function Name="kserca_Calcium_Rate">(ksercaraw * milliconverter)</Function>
+        <Function Name="kserca_Calcium_Rate_ER">(ksercaraw * milliconverter)</Function>
+        <CompartmentSubDomain Name="Compartment">
+          <BoundaryType Boundary="Xm" Type="Value" />
+          <BoundaryType Boundary="Xp" Type="Value" />
+          <BoundaryType Boundary="Ym" Type="Value" />
+          <BoundaryType Boundary="Yp" Type="Value" />
+          <BoundaryType Boundary="Zm" Type="Value" />
+          <BoundaryType Boundary="Zp" Type="Value" />
+          <OdeEquation Name="Ca_cytosol" SolutionType="Unknown">
+            <Rate>J_Calcium_Rate</Rate>
+            <Initial>Ca_cytosol_init</Initial>
+          </OdeEquation>
+          <OdeEquation Name="Ca_ER" SolutionType="Unknown">
+            <Rate>J_Calcium_Rate_ER</Rate>
+            <Initial>Ca_ER_init</Initial>
+          </OdeEquation>
+        </CompartmentSubDomain>
+        <Version Name="Sherman Exercise 2_generated" KeyValue="34211943" BranchId="34196152" Archived="0" Date="30-Jun-2009 20:13:19" FromVersionable="false">
+          <Owner Name="Brown" Identifier="26331356" />
+          <GroupAccess Type="1" />
+        </Version>
+      </MathDescription>
+      <Simulation Name="Run for 1s">
+        <SolverTaskDescription TaskType="Unsteady" UseSymbolicJacobian="false" Solver="CVODE (Variable Order, Variable Time Step)">
+          <TimeBound StartTime="0.0" EndTime="1.0" />
+          <TimeStep DefaultTime="0.1" MinTime="1.0E-8" MaxTime="1.0" />
+          <ErrorTolerance Absolut="1.0E-9" Relative="1.0E-9" />
+          <OutputOptions KeepEvery="1" KeepAtMost="50000" />
+          <NumberProcessors>1</NumberProcessors>
+        </SolverTaskDescription>
+        <MathOverrides />
+        <Version Name="Run for 1s" KeyValue="34211983" BranchId="34211984" Archived="0" Date="30-Jun-2009 20:13:25" FromVersionable="false">
+          <Owner Name="Brown" Identifier="26331356" />
+          <GroupAccess Type="1" />
+        </Version>
+      </Simulation>
+      <Simulation Name="Also run for 1s - with higher Ca_ER_init etc">
+        <SolverTaskDescription TaskType="Unsteady" UseSymbolicJacobian="false" Solver="CVODE (Variable Order, Variable Time Step)">
+          <TimeBound StartTime="0.0" EndTime="1.0" />
+          <TimeStep DefaultTime="0.1" MinTime="1.0E-8" MaxTime="1.0" />
+          <ErrorTolerance Absolut="1.0E-9" Relative="1.0E-9" />
+          <OutputOptions KeepEvery="1" KeepAtMost="50000" />
+          <NumberProcessors>1</NumberProcessors>
+        </SolverTaskDescription>
+        <MathOverrides>
+          <Constant Name="Ca_cytosol_init">0.03553460909902435</Constant>
+          <Constant Name="kinraw">9.0E-4</Constant>
+          <Constant Name="ksercaraw">320.0</Constant>
+          <Constant Name="gamma">0.1</Constant>
+          <Constant Name="kpmcaraw">16.8</Constant>
+          <Constant Name="Kd">0.2</Constant>
+          <Constant Name="Ca_ER_init">104.6218213281926</Constant>
+        </MathOverrides>
+        <Version Name="Also run for 1s - with higher Ca_ER_init etc" KeyValue="34212336" BranchId="34211314" Archived="0" Date="30-Jun-2009 20:14:35" FromVersionable="false">
+          <Owner Name="Brown" Identifier="26331356" />
+          <GroupAccess Type="1" />
+        </Version>
+      </Simulation>
+      <Version Name="Sherman Exercise 2" KeyValue="34211971" BranchId="34196181" Archived="0" Date="30-Jun-2009 20:13:24" FromVersionable="false">
+        <Owner Name="Brown" Identifier="26331356" />
+        <GroupAccess Type="1" />
+      </Version>
+      <MicroscopeMeasurement Name="fluor">
+        <ConvolutionKernel Type="ProjectionZKernel" />
+      </MicroscopeMeasurement>
+    </SimulationSpec>
+    <Version Name="CSHL CCB VCell Example 6" KeyValue="46225191" BranchId="34195083" Archived="0" Date="03-Jul-2010 16:04:09" FromVersionable="false">
+      <Owner Name="Brown" Identifier="26331356" />
+      <GroupAccess Type="0" />
+    </Version>
+    <pathwayModel>
+      <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:bp="http://www.biopax.org/release/biopax-level3.owl#" version="3.0" />
+    </pathwayModel>
+    <relationshipModel>
+      <RMNS version="3.0" />
+    </relationshipModel>
+    <vcmetadata>
+      <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" />
+      <nonrdfAnnotationList>
+        <nonrdfAnnotation vcid="BioModel(CSHL CCB VCell Example 6)">
+          <freetext>Created by Sherry-Ann Brown, as a graduate student for Dr. Leslie M. Loew, Director, Center for Cell Analysis &amp; Modeling, University of Connecticut Health Center. les@volt.uchc.edu
+
+Created by Sherry-Ann Brown, as a graduate student for Dr. Leslie M. Loew, Director, Center for Cell Analysis &amp; Modeling, University of Connecticut Health Center. les@volt.uchc.edu
+
+Based on Dr. Arthur Sherman's lectures in the Computational Cell Biology Course 2009 at Cold Spring Harbor Laboratory in Long Island, New York, USA:</freetext>
+        </nonrdfAnnotation>
+      </nonrdfAnnotationList>
+      <uriBindingList />
+    </vcmetadata>
+  </BioModel>
+</vcml>
+

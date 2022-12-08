@@ -1,0 +1,332 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--This biomodel was generated in VCML Version Alpha_Version_7.4.0_build_87-->
+<vcml xmlns="http://sourceforge.net/projects/vcell/vcml" Version="Alpha_Version_7.4.0_build_87">
+  <BioModel Name="PI3K Activin Feedback">
+    <Model Name="unnamed">
+      <Compound Name="act-RIIB complex" />
+      <Compound Name="PIP2" />
+      <Compound Name="act-RIIB-PI3K complex" />
+      <Compound Name="act-RIIB-PI3K-PIP3 complex" />
+      <Compound Name="RIIB" />
+      <Compound Name="PIP3" />
+      <Compound Name="PI3K" />
+      <Compound Name="activin" />
+      <Compound Name="non-local RIIB" />
+      <Feature Name="Cytosol" KeyValue="51826125" />
+      <Feature Name="Extracellular Medium" KeyValue="51826123" />
+      <Membrane InsideFeature="Cytosol" OutsideFeature="Extracellular Medium" PositiveFeature="Cytosol" NegativeFeature="Extracellular Medium" MembraneVoltage="Voltage_Plasma_Membrane" Name="Plasma Membrane" KeyValue="51826124" />
+      <LocalizedCompound Name="act_RIIB_complex_Plasma_Membrane" CompoundRef="act-RIIB complex" Structure="Plasma Membrane" OverrideName="true" KeyValue="51826129" />
+      <LocalizedCompound Name="PIP2_Cytosol" CompoundRef="PIP2" Structure="Cytosol" OverrideName="true" KeyValue="51826130" />
+      <LocalizedCompound Name="act_RIIB_PI3K_complex_Plasma_Membrane" CompoundRef="act-RIIB-PI3K complex" Structure="Plasma Membrane" OverrideName="true" KeyValue="51826131" />
+      <LocalizedCompound Name="act_RIIB_PI3K_PIP3_complex_Plasma_Membrane" CompoundRef="act-RIIB-PI3K-PIP3 complex" Structure="Plasma Membrane" OverrideName="true" KeyValue="51826132" />
+      <LocalizedCompound Name="RIIB_Plasma_Membrane" CompoundRef="RIIB" Structure="Plasma Membrane" OverrideName="true" KeyValue="51826133" />
+      <LocalizedCompound Name="PIP3_Plasma_Membrane" CompoundRef="PIP3" Structure="Plasma Membrane" OverrideName="true" KeyValue="51826134" />
+      <LocalizedCompound Name="PI3K_Cytosol" CompoundRef="PI3K" Structure="Cytosol" OverrideName="true" KeyValue="51826135" />
+      <LocalizedCompound Name="activin_Extracellular_Medium" CompoundRef="activin" Structure="Extracellular Medium" OverrideName="true" KeyValue="51826136" />
+      <LocalizedCompound Name="non_local_RIIB_Plasma_Membrane" CompoundRef="non-local RIIB" Structure="Plasma Membrane" OverrideName="true" KeyValue="51826137" />
+      <SimpleReaction Structure="Plasma Membrane" Name="receptor ligand binding" Reversible="true" FluxOption="MolecularOnly" KeyValue="51826138">
+        <Reactant LocalizedCompoundRef="RIIB_Plasma_Membrane" Stoichiometry="1" KeyValue="51826139" />
+        <Reactant LocalizedCompoundRef="activin_Extracellular_Medium" Stoichiometry="1" KeyValue="51826140" />
+        <Product LocalizedCompoundRef="act_RIIB_complex_Plasma_Membrane" Stoichiometry="1" KeyValue="51826141" />
+        <Kinetics KineticsType="MassAction">
+          <Parameter Name="J" Role="reaction rate" Unit="molecules.um-2.s-1">(((Kf * RIIB_Plasma_Membrane) * activin_Extracellular_Medium) - (Kr * act_RIIB_complex_Plasma_Membrane))</Parameter>
+          <Parameter Name="I" Role="inward current density" Unit="pA.um-2">0.0</Parameter>
+          <Parameter Name="netValence" Role="net charge valence" Unit="1">0.0</Parameter>
+          <Parameter Name="Kf" Role="forward rate constant" Unit="s-1.uM-1">74.2356</Parameter>
+          <Parameter Name="Kr" Role="reverse rate constant" Unit="s-1">0.0</Parameter>
+        </Kinetics>
+      </SimpleReaction>
+      <SimpleReaction Structure="Plasma Membrane" Name="Phosphorylation of PIP2" Reversible="true" FluxOption="MolecularOnly" KeyValue="51826142">
+        <Reactant LocalizedCompoundRef="PIP2_Cytosol" Stoichiometry="1" KeyValue="51826143" />
+        <Product LocalizedCompoundRef="PIP3_Plasma_Membrane" Stoichiometry="1" KeyValue="51826144" />
+        <Kinetics KineticsType="MassAction">
+          <Parameter Name="J" Role="reaction rate" Unit="molecules.um-2.s-1">((Kf * PIP2_Cytosol) - (Kr * PIP3_Plasma_Membrane))</Parameter>
+          <Parameter Name="I" Role="inward current density" Unit="pA.um-2">0.0</Parameter>
+          <Parameter Name="netValence" Role="net charge valence" Unit="1">0.0</Parameter>
+          <Parameter Name="Kf" Role="forward rate constant" Unit="molecules.um-2.s-1.uM-1">3.0E-9</Parameter>
+          <Parameter Name="Kr" Role="reverse rate constant" Unit="s-1">0.0</Parameter>
+        </Kinetics>
+      </SimpleReaction>
+      <SimpleReaction Structure="Plasma Membrane" Name="activin-RIIB and PI3K complex formation" Reversible="true" FluxOption="MolecularOnly" KeyValue="51826146">
+        <Reactant LocalizedCompoundRef="PI3K_Cytosol" Stoichiometry="1" KeyValue="51826147" />
+        <Reactant LocalizedCompoundRef="act_RIIB_complex_Plasma_Membrane" Stoichiometry="1" KeyValue="51826148" />
+        <Product LocalizedCompoundRef="act_RIIB_PI3K_complex_Plasma_Membrane" Stoichiometry="1" KeyValue="51826149" />
+        <Kinetics KineticsType="MassAction">
+          <Parameter Name="J" Role="reaction rate" Unit="molecules.um-2.s-1">(((Kf * PI3K_Cytosol) * act_RIIB_complex_Plasma_Membrane) - (Kr * act_RIIB_PI3K_complex_Plasma_Membrane))</Parameter>
+          <Parameter Name="I" Role="inward current density" Unit="pA.um-2">0.0</Parameter>
+          <Parameter Name="netValence" Role="net charge valence" Unit="1">0.0</Parameter>
+          <Parameter Name="Kf" Role="forward rate constant" Unit="s-1.uM-1">10.0</Parameter>
+          <Parameter Name="Kr" Role="reverse rate constant" Unit="s-1">0.0</Parameter>
+        </Kinetics>
+      </SimpleReaction>
+      <SimpleReaction Structure="Plasma Membrane" Name="act-RIIB-PI3K-PIP3 complex formation" Reversible="true" FluxOption="MolecularOnly" KeyValue="51826150">
+        <Reactant LocalizedCompoundRef="act_RIIB_complex_Plasma_Membrane" Stoichiometry="1" KeyValue="51826151" />
+        <Reactant LocalizedCompoundRef="PIP3_Plasma_Membrane" Stoichiometry="1" KeyValue="51826152" />
+        <Reactant LocalizedCompoundRef="PI3K_Cytosol" Stoichiometry="1" KeyValue="51826153" />
+        <Product LocalizedCompoundRef="act_RIIB_PI3K_PIP3_complex_Plasma_Membrane" Stoichiometry="1" KeyValue="51826154" />
+        <Kinetics KineticsType="MassAction">
+          <Parameter Name="J" Role="reaction rate" Unit="molecules.um-2.s-1">((((Kf * act_RIIB_complex_Plasma_Membrane) * PIP3_Plasma_Membrane) * PI3K_Cytosol) - (Kr * act_RIIB_PI3K_PIP3_complex_Plasma_Membrane))</Parameter>
+          <Parameter Name="I" Role="inward current density" Unit="pA.um-2">0.0</Parameter>
+          <Parameter Name="netValence" Role="net charge valence" Unit="1">0.0</Parameter>
+          <Parameter Name="Kf" Role="forward rate constant" Unit="um2.s-1.molecules-1.uM-1">1.0E-4</Parameter>
+          <Parameter Name="Kr" Role="reverse rate constant" Unit="s-1">0.0</Parameter>
+        </Kinetics>
+      </SimpleReaction>
+      <SimpleReaction Structure="Plasma Membrane" Name="PIP3-RIIB complex" Reversible="true" FluxOption="MolecularOnly" KeyValue="51826155">
+        <Reactant LocalizedCompoundRef="PIP3_Plasma_Membrane" Stoichiometry="1" KeyValue="51826156" />
+        <Reactant LocalizedCompoundRef="non_local_RIIB_Plasma_Membrane" Stoichiometry="1" KeyValue="51826157" />
+        <Product LocalizedCompoundRef="RIIB_Plasma_Membrane" Stoichiometry="1" KeyValue="51826158" />
+        <Kinetics KineticsType="MassAction">
+          <Parameter Name="J" Role="reaction rate" Unit="molecules.um-2.s-1">(((Kf * PIP3_Plasma_Membrane) * non_local_RIIB_Plasma_Membrane) - (Kr * RIIB_Plasma_Membrane))</Parameter>
+          <Parameter Name="I" Role="inward current density" Unit="pA.um-2">0.0</Parameter>
+          <Parameter Name="netValence" Role="net charge valence" Unit="1">0.0</Parameter>
+          <Parameter Name="Kf" Role="forward rate constant" Unit="um2.s-1.molecules-1">0.01</Parameter>
+          <Parameter Name="Kr" Role="reverse rate constant" Unit="s-1">0.0</Parameter>
+        </Kinetics>
+      </SimpleReaction>
+      <Diagram Name="Unnamed compartment" Structure="Extracellular Medium" />
+      <Diagram Name="Plasma Membrane" Structure="Plasma Membrane">
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="act_RIIB_complex_Plasma_Membrane" LocationX="187" LocationY="108" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="act_RIIB_PI3K_complex_Plasma_Membrane" LocationX="308" LocationY="45" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="act_RIIB_PI3K_PIP3_complex_Plasma_Membrane" LocationX="276" LocationY="351" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="RIIB_Plasma_Membrane" LocationX="16" LocationY="250" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="PIP3_Plasma_Membrane" LocationX="466" LocationY="219" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="PIP2_Cytosol" LocationX="34" LocationY="144" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="PI3K_Cytosol" LocationX="37" LocationY="42" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="activin_Extracellular_Medium" LocationX="58" LocationY="130" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="non_local_RIIB_Extracellular_Medium" LocationX="48" LocationY="351" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="full" SimpleReactionRef="receptor ligand binding" LocationX="33" LocationY="102" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="full" SimpleReactionRef="Phosphorylation of PIP2" LocationX="600" LocationY="214" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="full" SimpleReactionRef="activin-RIIB and PI3K complex formation" LocationX="308" LocationY="95" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="full" SimpleReactionRef="act-RIIB-PI3K-PIP3 complex formation" LocationX="285" LocationY="195" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="full" SimpleReactionRef="PIP3-RIIB complex" LocationX="44" LocationY="349" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="act_RIIB_complex_Plasma_Membrane" LocationX="187" LocationY="108" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="act_RIIB_PI3K_complex_Plasma_Membrane" LocationX="308" LocationY="45" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="act_RIIB_PI3K_PIP3_complex_Plasma_Membrane" LocationX="276" LocationY="351" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="RIIB_Plasma_Membrane" LocationX="16" LocationY="250" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="PIP3_Plasma_Membrane" LocationX="466" LocationY="219" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="PIP2_Cytosol" LocationX="34" LocationY="144" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="PI3K_Cytosol" LocationX="37" LocationY="42" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="activin_Extracellular_Medium" LocationX="58" LocationY="130" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="non_local_RIIB_Extracellular_Medium" LocationX="48" LocationY="351" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="molecule" SimpleReactionRef="receptor ligand binding" LocationX="33" LocationY="102" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="molecule" SimpleReactionRef="Phosphorylation of PIP2" LocationX="600" LocationY="214" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="molecule" SimpleReactionRef="activin-RIIB and PI3K complex formation" LocationX="308" LocationY="95" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="molecule" SimpleReactionRef="act-RIIB-PI3K-PIP3 complex formation" LocationX="285" LocationY="195" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="molecule" SimpleReactionRef="PIP3-RIIB complex" LocationX="44" LocationY="349" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="act_RIIB_complex_Plasma_Membrane" LocationX="187" LocationY="108" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="act_RIIB_PI3K_complex_Plasma_Membrane" LocationX="308" LocationY="45" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="act_RIIB_PI3K_PIP3_complex_Plasma_Membrane" LocationX="276" LocationY="351" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="RIIB_Plasma_Membrane" LocationX="16" LocationY="250" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="PIP3_Plasma_Membrane" LocationX="466" LocationY="219" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="PIP2_Cytosol" LocationX="34" LocationY="144" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="PI3K_Cytosol" LocationX="37" LocationY="42" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="activin_Extracellular_Medium" LocationX="58" LocationY="130" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="non_local_RIIB_Extracellular_Medium" LocationX="48" LocationY="351" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="rule" SimpleReactionRef="receptor ligand binding" LocationX="33" LocationY="102" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="rule" SimpleReactionRef="Phosphorylation of PIP2" LocationX="600" LocationY="214" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="rule" SimpleReactionRef="activin-RIIB and PI3K complex formation" LocationX="308" LocationY="95" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="rule" SimpleReactionRef="act-RIIB-PI3K-PIP3 complex formation" LocationX="285" LocationY="195" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="rule" SimpleReactionRef="PIP3-RIIB complex" LocationX="44" LocationY="349" />
+      </Diagram>
+      <Diagram Name="Membrane" Structure="Cytosol" />
+      <Version Name="unnamed" KeyValue="51826112" BranchId="50626533" Archived="0" Date="16-Nov-2010 21:30:57" FromVersionable="false">
+        <Owner Name="kfrench6" Identifier="48879728" />
+        <GroupAccess Type="1" />
+      </Version>
+      <ModelUnitSystem VolumeSubstanceUnit="uM.um3" MembraneSubstanceUnit="molecules" LumpedReactionSubstanceUnit="molecules" VolumeUnit="um3" AreaUnit="um2" LengthUnit="um" TimeUnit="s" />
+    </Model>
+    <SimulationSpec Name="PIP3 Included" Stochastic="false" UseConcentration="true" RuleBased="false" MassConservationModelReduction="true" InsufficientIterations="false" InsufficientMaxMolecules="false">
+      <NetworkConstraints RbmMaxIteration="1" RbmMaxMoleculesPerSpecies="10" RbmSpeciesLimit="800" RbmReactionsLimit="2500" />
+      <Annotation />
+      <Geometry Name="non-spatial2122005239" Dimension="0">
+        <Extent X="10.0" Y="10.0" Z="10.0" />
+        <Origin X="0.0" Y="0.0" Z="0.0" />
+        <SubVolume Name="Compartment" Handle="0" Type="Compartmental" KeyValue="50920164" />
+        <Version Name="non-spatial2122005239" KeyValue="50920160" BranchId="50920161" Archived="0" Date="02-Nov-2010 20:50:59" FromVersionable="false">
+          <Owner Name="kfrench6" Identifier="48879728" />
+          <GroupAccess Type="1" />
+        </Version>
+      </Geometry>
+      <GeometryContext>
+        <FeatureMapping Feature="Cytosol" GeometryClass="Compartment" SubVolume="Compartment" Size="1000.0">
+          <BoundariesTypes Xm="Flux" Xp="Flux" Ym="Flux" Yp="Flux" Zm="Flux" Zp="Flux" />
+        </FeatureMapping>
+        <FeatureMapping Feature="Extracellular Medium" GeometryClass="Compartment" SubVolume="Compartment" Size="200.0">
+          <BoundariesTypes Xm="Flux" Xp="Flux" Ym="Flux" Yp="Flux" Zm="Flux" Zp="Flux" />
+        </FeatureMapping>
+        <MembraneMapping Membrane="Plasma Membrane" SurfaceToVolumeRatio="0.112" VolumeFraction="0.8333333333333334" Size="112.0" CalculateVoltage="false" SpecificCapacitance="1.0" InitialVoltage="0.0" GeometryClass="Compartment">
+          <BoundariesTypes Xm="Flux" Xp="Flux" Ym="Flux" Yp="Flux" Zm="Flux" Zp="Flux" />
+        </MembraneMapping>
+      </GeometryContext>
+      <ReactionContext>
+        <LocalizedCompoundSpec LocalizedCompoundRef="PIP2_Cytosol" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>1.0E-5</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="PI3K_Cytosol" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>500.0</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="activin_Extracellular_Medium" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>30.0</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="act_RIIB_complex_Plasma_Membrane" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>0.0</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="act_RIIB_PI3K_complex_Plasma_Membrane" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>0.0</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="act_RIIB_PI3K_PIP3_complex_Plasma_Membrane" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>0.0</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="RIIB_Plasma_Membrane" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>3.2E-5</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="PIP3_Plasma_Membrane" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>40.0</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="non_local_RIIB_Plasma_Membrane" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>3.2E-5</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <ReactionSpec ReactionStepRef="receptor ligand binding" ReactionMapping="included" />
+        <ReactionSpec ReactionStepRef="Phosphorylation of PIP2" ReactionMapping="included" />
+        <ReactionSpec ReactionStepRef="activin-RIIB and PI3K complex formation" ReactionMapping="excluded" />
+        <ReactionSpec ReactionStepRef="act-RIIB-PI3K-PIP3 complex formation" ReactionMapping="included" />
+        <ReactionSpec ReactionStepRef="PIP3-RIIB complex" ReactionMapping="included" />
+      </ReactionContext>
+      <MathDescription Name="PIP3 Included_generated">
+        <Constant Name="_F_">96480.0</Constant>
+        <Constant Name="_F_nmol_">9.648E-5</Constant>
+        <Constant Name="_K_GHK_">1.0E-9</Constant>
+        <Constant Name="_N_pmol_">6.02E11</Constant>
+        <Constant Name="_R_">8314.0</Constant>
+        <Constant Name="_T_">300.0</Constant>
+        <Constant Name="act_RIIB_complex_Plasma_Membrane_init">0.0</Constant>
+        <Constant Name="act_RIIB_PI3K_complex_Plasma_Membrane_init">0.0</Constant>
+        <Constant Name="act_RIIB_PI3K_PIP3_complex_Plasma_Membrane_init">0.0</Constant>
+        <Constant Name="activin_Extracellular_Medium_init">30.0</Constant>
+        <Constant Name="K_millivolts_per_volt">1000.0</Constant>
+        <Constant Name="Kf_act_RIIB_PI3K_PIP3_complex_formation">1.0E-4</Constant>
+        <Constant Name="Kf_Phosphorylation_of_PIP2">3.0E-9</Constant>
+        <Constant Name="Kf_PIP3_RIIB_complex">0.01</Constant>
+        <Constant Name="Kf_receptor_ligand_binding">74.2356</Constant>
+        <Constant Name="KMOLE">0.0016611295681063123</Constant>
+        <Constant Name="Kr_act_RIIB_PI3K_PIP3_complex_formation">0.0</Constant>
+        <Constant Name="Kr_Phosphorylation_of_PIP2">0.0</Constant>
+        <Constant Name="Kr_PIP3_RIIB_complex">0.0</Constant>
+        <Constant Name="Kr_receptor_ligand_binding">0.0</Constant>
+        <Constant Name="non_local_RIIB_Plasma_Membrane_init">3.2E-5</Constant>
+        <Constant Name="PI3K_Cytosol_init">500.0</Constant>
+        <Constant Name="PIP2_Cytosol_init">1.0E-5</Constant>
+        <Constant Name="PIP3_Plasma_Membrane_init">40.0</Constant>
+        <Constant Name="RIIB_Plasma_Membrane_init">3.2E-5</Constant>
+        <Constant Name="Size_Cytosol">1000.0</Constant>
+        <Constant Name="Size_Extracellular_Medium">200.0</Constant>
+        <Constant Name="Size_Plasma_Membrane">112.0</Constant>
+        <Constant Name="SurfToVol_Plasma_Membrane">0.112</Constant>
+        <Constant Name="VolFract_Cytosol">0.8333333333333334</Constant>
+        <Constant Name="Voltage_Plasma_Membrane">0.0</Constant>
+        <VolumeVariable Name="act_RIIB_PI3K_PIP3_complex_Plasma_Membrane" />
+        <VolumeVariable Name="non_local_RIIB_Plasma_Membrane" />
+        <VolumeVariable Name="PIP3_Plasma_Membrane" />
+        <VolumeVariable Name="RIIB_Plasma_Membrane" />
+        <Function Name="act_RIIB_complex_Plasma_Membrane">(( - (non_local_RIIB_Plasma_Membrane * SurfToVol_Plasma_Membrane * VolFract_Cytosol * KMOLE) - (RIIB_Plasma_Membrane * SurfToVol_Plasma_Membrane * VolFract_Cytosol * KMOLE) + K_act_RIIB_complex_Plasma_Membrane_total - (act_RIIB_PI3K_PIP3_complex_Plasma_Membrane * SurfToVol_Plasma_Membrane * VolFract_Cytosol * KMOLE)) / (SurfToVol_Plasma_Membrane * VolFract_Cytosol * KMOLE))</Function>
+        <Function Name="act_RIIB_PI3K_complex_Plasma_Membrane">(K_act_RIIB_PI3K_complex_Plasma_Membrane_total / (SurfToVol_Plasma_Membrane * VolFract_Cytosol * KMOLE))</Function>
+        <Function Name="activin_Extracellular_Medium">(((non_local_RIIB_Plasma_Membrane * SurfToVol_Plasma_Membrane * VolFract_Cytosol * KMOLE) + K_activin_Extracellular_Medium_total + (RIIB_Plasma_Membrane * SurfToVol_Plasma_Membrane * VolFract_Cytosol * KMOLE)) / (1.0 - VolFract_Cytosol))</Function>
+        <Function Name="J_act_RIIB_PI3K_PIP3_complex_formation">((PI3K_Cytosol * PIP3_Plasma_Membrane * Kf_act_RIIB_PI3K_PIP3_complex_formation * act_RIIB_complex_Plasma_Membrane) - (Kr_act_RIIB_PI3K_PIP3_complex_formation * act_RIIB_PI3K_PIP3_complex_Plasma_Membrane))</Function>
+        <Function Name="J_Phosphorylation_of_PIP2">((Kf_Phosphorylation_of_PIP2 * PIP2_Cytosol) - (Kr_Phosphorylation_of_PIP2 * PIP3_Plasma_Membrane))</Function>
+        <Function Name="J_PIP3_RIIB_complex">((non_local_RIIB_Plasma_Membrane * Kf_PIP3_RIIB_complex * PIP3_Plasma_Membrane) - (Kr_PIP3_RIIB_complex * RIIB_Plasma_Membrane))</Function>
+        <Function Name="J_receptor_ligand_binding">((activin_Extracellular_Medium * Kf_receptor_ligand_binding * RIIB_Plasma_Membrane) - (Kr_receptor_ligand_binding * act_RIIB_complex_Plasma_Membrane))</Function>
+        <Function Name="K_act_RIIB_complex_Plasma_Membrane_total">((non_local_RIIB_Plasma_Membrane_init * SurfToVol_Plasma_Membrane * VolFract_Cytosol * KMOLE) + (RIIB_Plasma_Membrane_init * SurfToVol_Plasma_Membrane * VolFract_Cytosol * KMOLE) + (act_RIIB_complex_Plasma_Membrane_init * SurfToVol_Plasma_Membrane * VolFract_Cytosol * KMOLE) + (act_RIIB_PI3K_PIP3_complex_Plasma_Membrane_init * SurfToVol_Plasma_Membrane * VolFract_Cytosol * KMOLE))</Function>
+        <Function Name="K_act_RIIB_PI3K_complex_Plasma_Membrane_total">(act_RIIB_PI3K_complex_Plasma_Membrane_init * SurfToVol_Plasma_Membrane * VolFract_Cytosol * KMOLE)</Function>
+        <Function Name="K_activin_Extracellular_Medium_total">( - (non_local_RIIB_Plasma_Membrane_init * SurfToVol_Plasma_Membrane * VolFract_Cytosol * KMOLE) + ((1.0 - VolFract_Cytosol) * activin_Extracellular_Medium_init) - (RIIB_Plasma_Membrane_init * SurfToVol_Plasma_Membrane * VolFract_Cytosol * KMOLE))</Function>
+        <Function Name="K_PI3K_Cytosol_total">((VolFract_Cytosol * PI3K_Cytosol_init) + (act_RIIB_PI3K_PIP3_complex_Plasma_Membrane_init * SurfToVol_Plasma_Membrane * VolFract_Cytosol * KMOLE))</Function>
+        <Function Name="K_PIP2_Cytosol_total">( - (non_local_RIIB_Plasma_Membrane_init * SurfToVol_Plasma_Membrane * VolFract_Cytosol * KMOLE) + (PIP3_Plasma_Membrane_init * SurfToVol_Plasma_Membrane * VolFract_Cytosol * KMOLE) + (VolFract_Cytosol * PIP2_Cytosol_init) + (act_RIIB_PI3K_PIP3_complex_Plasma_Membrane_init * SurfToVol_Plasma_Membrane * VolFract_Cytosol * KMOLE))</Function>
+        <Function Name="KFlux_Plasma_Membrane_mapping_Cytosol">SurfToVol_Plasma_Membrane</Function>
+        <Function Name="KFlux_Plasma_Membrane_mapping_Extracellular_Medium">(SurfToVol_Plasma_Membrane * VolFract_Cytosol / (1.0 - VolFract_Cytosol))</Function>
+        <Function Name="PI3K_Cytosol">((K_PI3K_Cytosol_total - (act_RIIB_PI3K_PIP3_complex_Plasma_Membrane * SurfToVol_Plasma_Membrane * VolFract_Cytosol * KMOLE)) / VolFract_Cytosol)</Function>
+        <Function Name="PIP2_Cytosol">(((non_local_RIIB_Plasma_Membrane * SurfToVol_Plasma_Membrane * VolFract_Cytosol * KMOLE) - (PIP3_Plasma_Membrane * SurfToVol_Plasma_Membrane * VolFract_Cytosol * KMOLE) + K_PIP2_Cytosol_total - (act_RIIB_PI3K_PIP3_complex_Plasma_Membrane * SurfToVol_Plasma_Membrane * VolFract_Cytosol * KMOLE)) / VolFract_Cytosol)</Function>
+        <CompartmentSubDomain Name="Compartment">
+          <BoundaryType Boundary="Xm" Type="Value" />
+          <BoundaryType Boundary="Xp" Type="Value" />
+          <BoundaryType Boundary="Ym" Type="Value" />
+          <BoundaryType Boundary="Yp" Type="Value" />
+          <BoundaryType Boundary="Zm" Type="Value" />
+          <BoundaryType Boundary="Zp" Type="Value" />
+          <OdeEquation Name="act_RIIB_PI3K_PIP3_complex_Plasma_Membrane" SolutionType="Unknown">
+            <Rate>J_act_RIIB_PI3K_PIP3_complex_formation</Rate>
+            <Initial>act_RIIB_PI3K_PIP3_complex_Plasma_Membrane_init</Initial>
+          </OdeEquation>
+          <OdeEquation Name="RIIB_Plasma_Membrane" SolutionType="Unknown">
+            <Rate>( - J_receptor_ligand_binding + J_PIP3_RIIB_complex)</Rate>
+            <Initial>RIIB_Plasma_Membrane_init</Initial>
+          </OdeEquation>
+          <OdeEquation Name="PIP3_Plasma_Membrane" SolutionType="Unknown">
+            <Rate>( - J_PIP3_RIIB_complex + J_Phosphorylation_of_PIP2 - J_act_RIIB_PI3K_PIP3_complex_formation)</Rate>
+            <Initial>PIP3_Plasma_Membrane_init</Initial>
+          </OdeEquation>
+          <OdeEquation Name="non_local_RIIB_Plasma_Membrane" SolutionType="Unknown">
+            <Rate>- J_PIP3_RIIB_complex</Rate>
+            <Initial>non_local_RIIB_Plasma_Membrane_init</Initial>
+          </OdeEquation>
+        </CompartmentSubDomain>
+        <Version Name="PIP3 Included_generated" KeyValue="51826192" BranchId="50920166" Archived="0" Date="16-Nov-2010 21:32:08" FromVersionable="false">
+          <Owner Name="kfrench6" Identifier="48879728" />
+          <GroupAccess Type="1" />
+        </Version>
+      </MathDescription>
+      <Simulation Name="Simulation2">
+        <SolverTaskDescription TaskType="Unsteady" UseSymbolicJacobian="false" Solver="Runge-Kutta-Fehlberg (Fifth Order, Variable Time Step)">
+          <TimeBound StartTime="0.0" EndTime="10800.0" />
+          <TimeStep DefaultTime="0.1" MinTime="1.0E-8" MaxTime="1.0" />
+          <ErrorTolerance Absolut="1.0E-9" Relative="1.0E-9" />
+          <OutputOptions KeepEvery="10" KeepAtMost="1000" />
+          <NumberProcessors>1</NumberProcessors>
+        </SolverTaskDescription>
+        <MathOverrides />
+        <Version Name="Simulation2" KeyValue="51826223" BranchId="51826182" Archived="0" Date="16-Nov-2010 21:33:16" FromVersionable="false">
+          <Owner Name="kfrench6" Identifier="48879728" />
+          <GroupAccess Type="1" />
+        </Version>
+      </Simulation>
+      <Version Name="PIP3 Included" KeyValue="51826194" BranchId="50920226" Archived="0" Date="16-Nov-2010 21:32:08" FromVersionable="false">
+        <Owner Name="kfrench6" Identifier="48879728" />
+        <GroupAccess Type="1" />
+      </Version>
+      <MicroscopeMeasurement Name="fluor">
+        <ConvolutionKernel Type="ProjectionZKernel" />
+      </MicroscopeMeasurement>
+    </SimulationSpec>
+    <Version Name="PI3K Activin Feedback" KeyValue="51826225" BranchId="51809711" Archived="0" Date="16-Nov-2010 21:33:16" FromVersionable="false">
+      <Owner Name="kfrench6" Identifier="48879728" />
+      <GroupAccess Type="1" />
+    </Version>
+    <pathwayModel>
+      <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:bp="http://www.biopax.org/release/biopax-level3.owl#" version="3.0" />
+    </pathwayModel>
+    <relationshipModel>
+      <RMNS version="3.0" />
+    </relationshipModel>
+    <vcmetadata>
+      <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" />
+      <nonrdfAnnotationList>
+        <nonrdfAnnotation vcid="ReactionStep(PIP3-RIIB complex)">
+          <freetext>feedback loop</freetext>
+        </nonrdfAnnotation>
+        <nonrdfAnnotation vcid="Species(non-local RIIB)">
+          <freetext>feedback loop</freetext>
+        </nonrdfAnnotation>
+      </nonrdfAnnotationList>
+      <uriBindingList />
+    </vcmetadata>
+  </BioModel>
+</vcml>
+

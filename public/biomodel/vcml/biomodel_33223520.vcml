@@ -1,0 +1,420 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--This biomodel was generated in VCML Version Alpha_Version_7.4.0_build_87-->
+<vcml xmlns="http://sourceforge.net/projects/vcell/vcml" Version="Alpha_Version_7.4.0_build_87">
+  <BioModel Name="ModelingInBiologyBoris_Ring">
+    <Annotation>cloned from 'ModelingInBiologyBoris_Ring' owned by user satarupa
+cloned from 'boris_ring' owned by user boris
+cloned from 'saratupa' owned by user satarupa</Annotation>
+    <Model Name="unnamed">
+      <Annotation>cloned from 'unnamed' owned by user satarupa
+cloned from 'unnamed' owned by user boris
+cloned from 'unnamed' owned by user satarupa</Annotation>
+      <Compound Name="c" />
+      <Feature Name="ECM" KeyValue="33223471" />
+      <Feature Name="cell" KeyValue="33223474" />
+      <Feature Name="n" KeyValue="33223477" />
+      <Membrane InsideFeature="cell" OutsideFeature="ECM" PositiveFeature="cell" NegativeFeature="ECM" MembraneVoltage="Voltage_pm" Name="pm" KeyValue="33223473" />
+      <Membrane InsideFeature="n" OutsideFeature="cell" PositiveFeature="n" NegativeFeature="cell" MembraneVoltage="Voltage_nm" Name="nm" KeyValue="33223476" />
+      <LocalizedCompound Name="c_cell" CompoundRef="c" Structure="cell" OverrideName="true" KeyValue="33223481" />
+      <LocalizedCompound Name="c_ECM" CompoundRef="c" Structure="ECM" OverrideName="true" KeyValue="33223482" />
+      <LocalizedCompound Name="c_n" CompoundRef="c" Structure="n" OverrideName="true" KeyValue="33223483" />
+      <SimpleReaction Structure="n" Name="reaction0" Reversible="true" FluxOption="MolecularOnly" KeyValue="33223484">
+        <Reactant LocalizedCompoundRef="c_n" Stoichiometry="1" KeyValue="33223485" />
+        <Kinetics KineticsType="GeneralKinetics">
+          <Parameter Name="J" Role="reaction rate" Unit="uM.s-1">(k * c_n)</Parameter>
+          <Parameter Name="k" Role="user defined" Unit="s-1">10.0</Parameter>
+        </Kinetics>
+      </SimpleReaction>
+      <FluxStep Name="flux0" Structure="pm" Reversible="true" FluxOption="MolecularOnly" KeyValue="33223486">
+        <Reactant LocalizedCompoundRef="c_ECM" Stoichiometry="1" />
+        <Product LocalizedCompoundRef="c_cell" Stoichiometry="1" />
+        <Kinetics KineticsType="GeneralKinetics">
+          <Parameter Name="J" Role="reaction rate" Unit="uM.um.s-1">(P0 * (c_ECM - c_cell))</Parameter>
+          <Parameter Name="I" Role="inward current density" Unit="pA.um-2">0.0</Parameter>
+          <Parameter Name="netValence" Role="net charge valence" Unit="1">0.0</Parameter>
+          <Parameter Name="P0" Role="user defined" Unit="um.s-1">10.0</Parameter>
+        </Kinetics>
+      </FluxStep>
+      <FluxStep Name="flux1" Structure="nm" Reversible="true" FluxOption="MolecularOnly" KeyValue="33223489">
+        <Reactant LocalizedCompoundRef="c_cell" Stoichiometry="1" />
+        <Product LocalizedCompoundRef="c_n" Stoichiometry="1" />
+        <Kinetics KineticsType="GeneralKinetics">
+          <Parameter Name="J" Role="reaction rate" Unit="uM.um.s-1">(P1 * (c_cell - c_n))</Parameter>
+          <Parameter Name="I" Role="inward current density" Unit="pA.um-2">0.0</Parameter>
+          <Parameter Name="netValence" Role="net charge valence" Unit="1">0.0</Parameter>
+          <Parameter Name="P1" Role="user defined" Unit="um.s-1">10.0</Parameter>
+        </Kinetics>
+      </FluxStep>
+      <Diagram Name="Unnamed compartment" Structure="ECM" />
+      <Diagram Name="pm" Structure="pm">
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="c_cell" LocationX="53" LocationY="51" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="c_ECM" LocationX="40" LocationY="49" />
+        <FluxReactionShape NodeReferenceModeAttrTag="full" FluxReactionRef="flux0" LocationX="128" LocationY="56" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="c_cell" LocationX="53" LocationY="51" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="c_ECM" LocationX="40" LocationY="49" />
+        <FluxReactionShape NodeReferenceModeAttrTag="molecule" FluxReactionRef="flux0" LocationX="128" LocationY="56" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="c_cell" LocationX="53" LocationY="51" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="c_ECM" LocationX="40" LocationY="49" />
+        <FluxReactionShape NodeReferenceModeAttrTag="rule" FluxReactionRef="flux0" LocationX="128" LocationY="56" />
+      </Diagram>
+      <Diagram Name="cell" Structure="cell" />
+      <Diagram Name="nm" Structure="nm">
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="c_n" LocationX="63" LocationY="52" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="c_cell" LocationX="63" LocationY="42" />
+        <FluxReactionShape NodeReferenceModeAttrTag="full" FluxReactionRef="flux1" LocationX="142" LocationY="56" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="c_n" LocationX="63" LocationY="52" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="c_cell" LocationX="63" LocationY="42" />
+        <FluxReactionShape NodeReferenceModeAttrTag="molecule" FluxReactionRef="flux1" LocationX="142" LocationY="56" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="c_n" LocationX="63" LocationY="52" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="c_cell" LocationX="63" LocationY="42" />
+        <FluxReactionShape NodeReferenceModeAttrTag="rule" FluxReactionRef="flux1" LocationX="142" LocationY="56" />
+      </Diagram>
+      <Diagram Name="n" Structure="n">
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="c_n" LocationX="65" LocationY="49" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="full" SimpleReactionRef="reaction0" LocationX="145" LocationY="46" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="c_n" LocationX="65" LocationY="49" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="molecule" SimpleReactionRef="reaction0" LocationX="145" LocationY="46" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="c_n" LocationX="65" LocationY="49" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="rule" SimpleReactionRef="reaction0" LocationX="145" LocationY="46" />
+      </Diagram>
+      <Version Name="unnamed" KeyValue="33223467" BranchId="33223468" Archived="0" Date="15-May-2009 13:26:17" FromVersionable="false">
+        <Owner Name="Education" Identifier="30625624" />
+        <GroupAccess Type="1" />
+        <Annotation>cloned from 'unnamed' owned by user satarupa
+cloned from 'unnamed' owned by user boris
+cloned from 'unnamed' owned by user satarupa</Annotation>
+      </Version>
+      <ModelUnitSystem VolumeSubstanceUnit="uM.um3" MembraneSubstanceUnit="molecules" LumpedReactionSubstanceUnit="molecules" VolumeUnit="um3" AreaUnit="um2" LengthUnit="um" TimeUnit="s" />
+    </Model>
+    <SimulationSpec Name="p" Stochastic="false" UseConcentration="true" RuleBased="false" MassConservationModelReduction="true" InsufficientIterations="false" InsufficientMaxMolecules="false" CharacteristicSize="0.02">
+      <NetworkConstraints RbmMaxIteration="1" RbmMaxMoleculesPerSpecies="10" RbmSpeciesLimit="800" RbmReactionsLimit="2500" />
+      <Annotation>cloned from 'p' owned by user satarupa
+cloned from 'p' owned by user boris
+cloned from 'p' owned by user satarupa</Annotation>
+      <Geometry Name="ring_new134036254" Dimension="2">
+        <Annotation>cloned from 'ring_new134036254' owned by user satarupa
+cloned from 'ring_new' owned by user boris
+cloned from 'ring_new' owned by user satarupa</Annotation>
+        <Extent X="10.0" Y="10.0" Z="10.0" />
+        <Origin X="0.0" Y="0.0" Z="0.0" />
+        <SubVolume Name="subVolume2" Handle="2" Type="Analytical" KeyValue="33223455">
+          <AnalyticExpression>(((( - 5.0 + x) ^ 2.0) + (( - 5.0 + y) ^ 2.0)) &lt; 4.0)</AnalyticExpression>
+        </SubVolume>
+        <SubVolume Name="subVolume0" Handle="1" Type="Analytical" KeyValue="33223456">
+          <AnalyticExpression>(((( - 5.0 + x) ^ 2.0) + (( - 5.0 + y) ^ 2.0)) &lt; 16.0)</AnalyticExpression>
+        </SubVolume>
+        <SubVolume Name="subVolume1" Handle="0" Type="Analytical" KeyValue="33223457">
+          <AnalyticExpression>1.0</AnalyticExpression>
+        </SubVolume>
+        <SurfaceClass Name="subVolume0_subVolume1_membrane" SubVolume1Ref="subVolume0" SubVolume2Ref="subVolume1" />
+        <SurfaceClass Name="subVolume0_subVolume2_membrane" SubVolume1Ref="subVolume0" SubVolume2Ref="subVolume2" />
+        <SurfaceDescription NumSamplesX="101" NumSamplesY="101" NumSamplesZ="1" CutoffFrequency="0.3">
+          <VolumeRegion Name="subVolume01" RegionID="1" SubVolume="subVolume0" Size="37.68" Unit="um2" />
+          <VolumeRegion Name="subVolume22" RegionID="2" SubVolume="subVolume2" Size="12.49" Unit="um2" />
+          <VolumeRegion Name="subVolume10" RegionID="0" SubVolume="subVolume1" Size="49.830000000000005" Unit="um2" />
+          <MembraneRegion Name="membrane_subVolume10_subVolume01" VolumeRegion1="subVolume01" VolumeRegion2="subVolume10" Size="25.160406366559634" Unit="um" />
+          <MembraneRegion Name="membrane_subVolume01_subVolume22" VolumeRegion1="subVolume22" VolumeRegion2="subVolume01" Size="12.556444596202926" Unit="um" />
+        </SurfaceDescription>
+        <Version Name="ring_new134036254" KeyValue="33223451" BranchId="33223452" Archived="0" Date="15-May-2009 13:26:17" FromVersionable="false">
+          <Owner Name="Education" Identifier="30625624" />
+          <GroupAccess Type="1" />
+          <Annotation>cloned from 'ring_new134036254' owned by user satarupa
+cloned from 'ring_new' owned by user boris
+cloned from 'ring_new' owned by user satarupa</Annotation>
+        </Version>
+      </Geometry>
+      <GeometryContext>
+        <FeatureMapping Feature="ECM" GeometryClass="subVolume1" SubVolume="subVolume1">
+          <BoundariesTypes Xm="Value" Xp="Value" Ym="Value" Yp="Value" Zm="Flux" Zp="Flux" />
+        </FeatureMapping>
+        <FeatureMapping Feature="cell" GeometryClass="subVolume0" SubVolume="subVolume0">
+          <BoundariesTypes Xm="Value" Xp="Value" Ym="Value" Yp="Value" Zm="Flux" Zp="Flux" />
+        </FeatureMapping>
+        <FeatureMapping Feature="n" GeometryClass="subVolume2" SubVolume="subVolume2">
+          <BoundariesTypes Xm="Value" Xp="Value" Ym="Value" Yp="Value" Zm="Flux" Zp="Flux" />
+        </FeatureMapping>
+        <MembraneMapping Membrane="pm" SurfaceToVolumeRatio="1.0" VolumeFraction="0.2" CalculateVoltage="false" SpecificCapacitance="1.0" InitialVoltage="0.0" GeometryClass="subVolume0_subVolume1_membrane">
+          <BoundariesTypes Xm="Value" Xp="Value" Ym="Value" Yp="Value" Zm="Flux" Zp="Flux" />
+        </MembraneMapping>
+        <MembraneMapping Membrane="nm" SurfaceToVolumeRatio="1.0" VolumeFraction="0.2" CalculateVoltage="false" SpecificCapacitance="1.0" InitialVoltage="0.0" GeometryClass="subVolume0_subVolume2_membrane">
+          <BoundariesTypes Xm="Value" Xp="Value" Ym="Value" Yp="Value" Zm="Flux" Zp="Flux" />
+        </MembraneMapping>
+      </GeometryContext>
+      <ReactionContext>
+        <LocalizedCompoundSpec LocalizedCompoundRef="c_ECM" ForceConstant="true" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>1.0</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+          <Boundaries Xm="0.0" Xp="0.0" Ym="0.0" Yp="0.0" />
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="c_cell" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>0.5</InitialConcentration>
+          <Diffusion>10.0</Diffusion>
+          <Boundaries Xm="0.0" Xp="1.0" Ym="0.0" Yp="1.0" />
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="c_n" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>0.0</InitialConcentration>
+          <Diffusion>100.0</Diffusion>
+          <Boundaries Xm="0.0" Xp="0.0" Ym="0.0" Yp="0.0" />
+        </LocalizedCompoundSpec>
+        <ReactionSpec ReactionStepRef="flux0" ReactionMapping="included" />
+        <ReactionSpec ReactionStepRef="flux1" ReactionMapping="included" />
+        <ReactionSpec ReactionStepRef="reaction0" ReactionMapping="fast" />
+      </ReactionContext>
+      <MathDescription Name="p_generated">
+        <Annotation>cloned from 'p_generated' owned by user satarupa
+cloned from 'p_generated' owned by user boris
+cloned from 'p_generated' owned by user satarupa</Annotation>
+        <Constant Name="_F_">96480.0</Constant>
+        <Constant Name="_F_nmol_">9.648E-5</Constant>
+        <Constant Name="_K_GHK_">1.0E-9</Constant>
+        <Constant Name="_N_pmol_">6.02E11</Constant>
+        <Constant Name="_R_">8314.0</Constant>
+        <Constant Name="_T_">300.0</Constant>
+        <Constant Name="c_cell_diffusionRate">10.0</Constant>
+        <Constant Name="c_cell_init">0.5</Constant>
+        <Constant Name="c_ECM">1.0</Constant>
+        <Constant Name="c_ECM_diffusionRate">0.0</Constant>
+        <Constant Name="c_ECM_init">1.0</Constant>
+        <Constant Name="c_n_diffusionRate">100.0</Constant>
+        <Constant Name="c_n_init">0.0</Constant>
+        <Constant Name="k">10.0</Constant>
+        <Constant Name="K_millivolts_per_volt">1000.0</Constant>
+        <Constant Name="KMOLE">0.0016611295681063123</Constant>
+        <Constant Name="P0">10.0</Constant>
+        <Constant Name="P1">10.0</Constant>
+        <Constant Name="Voltage_nm">0.0</Constant>
+        <Constant Name="Voltage_pm">0.0</Constant>
+        <VolumeVariable Name="c" />
+        <Function Name="J_flux0">(P0 * (c_ECM - c_INSIDE))</Function>
+        <Function Name="J_flux1">(P1 * (c_OUTSIDE - c_INSIDE))</Function>
+        <Function Name="J_reaction0">(k * c)</Function>
+        <CompartmentSubDomain Name="subVolume2">
+          <BoundaryType Boundary="Xm" Type="Value" />
+          <BoundaryType Boundary="Xp" Type="Value" />
+          <BoundaryType Boundary="Ym" Type="Value" />
+          <BoundaryType Boundary="Yp" Type="Value" />
+          <BoundaryType Boundary="Zm" Type="Value" />
+          <BoundaryType Boundary="Zp" Type="Value" />
+          <PdeEquation Name="c" SolutionType="Unknown">
+            <Boundaries Xm="0.0" Xp="0.0" Ym="0.0" Yp="0.0" />
+            <Rate>0.0</Rate>
+            <Diffusion>c_n_diffusionRate</Diffusion>
+            <Initial>c_n_init</Initial>
+          </PdeEquation>
+          <FastSystem>
+            <FastRate>- J_reaction0</FastRate>
+          </FastSystem>
+        </CompartmentSubDomain>
+        <CompartmentSubDomain Name="subVolume0">
+          <BoundaryType Boundary="Xm" Type="Value" />
+          <BoundaryType Boundary="Xp" Type="Value" />
+          <BoundaryType Boundary="Ym" Type="Value" />
+          <BoundaryType Boundary="Yp" Type="Value" />
+          <BoundaryType Boundary="Zm" Type="Value" />
+          <BoundaryType Boundary="Zp" Type="Value" />
+          <PdeEquation Name="c" SolutionType="Unknown">
+            <Boundaries Xm="0.0" Xp="1.0" Ym="0.0" Yp="1.0" />
+            <Rate>0.0</Rate>
+            <Diffusion>c_cell_diffusionRate</Diffusion>
+            <Initial>c_cell_init</Initial>
+          </PdeEquation>
+        </CompartmentSubDomain>
+        <CompartmentSubDomain Name="subVolume1">
+          <BoundaryType Boundary="Xm" Type="Value" />
+          <BoundaryType Boundary="Xp" Type="Value" />
+          <BoundaryType Boundary="Ym" Type="Value" />
+          <BoundaryType Boundary="Yp" Type="Value" />
+          <BoundaryType Boundary="Zm" Type="Value" />
+          <BoundaryType Boundary="Zp" Type="Value" />
+          <PdeEquation Name="c" SolutionType="Unknown">
+            <Rate>0.0</Rate>
+            <Diffusion>c_cell_diffusionRate</Diffusion>
+            <Initial>0.0</Initial>
+          </PdeEquation>
+        </CompartmentSubDomain>
+        <MembraneSubDomain Name="subVolume0_subVolume2_membrane" InsideCompartment="subVolume2" OutsideCompartment="subVolume0">
+          <BoundaryType Boundary="Xm" Type="Value" />
+          <BoundaryType Boundary="Xp" Type="Value" />
+          <BoundaryType Boundary="Ym" Type="Value" />
+          <BoundaryType Boundary="Yp" Type="Value" />
+          <BoundaryType Boundary="Zm" Type="Value" />
+          <BoundaryType Boundary="Zp" Type="Value" />
+          <JumpCondition Name="c">
+            <InFlux>J_flux1</InFlux>
+            <OutFlux>- J_flux1</OutFlux>
+          </JumpCondition>
+        </MembraneSubDomain>
+        <MembraneSubDomain Name="subVolume0_subVolume1_membrane" InsideCompartment="subVolume0" OutsideCompartment="subVolume1">
+          <BoundaryType Boundary="Xm" Type="Value" />
+          <BoundaryType Boundary="Xp" Type="Value" />
+          <BoundaryType Boundary="Ym" Type="Value" />
+          <BoundaryType Boundary="Yp" Type="Value" />
+          <BoundaryType Boundary="Zm" Type="Value" />
+          <BoundaryType Boundary="Zp" Type="Value" />
+          <JumpCondition Name="c">
+            <InFlux>J_flux0</InFlux>
+            <OutFlux>0.0</OutFlux>
+          </JumpCondition>
+        </MembraneSubDomain>
+        <Version Name="p_generated" KeyValue="33223464" BranchId="33223465" Archived="0" Date="15-May-2009 13:26:17" FromVersionable="false">
+          <Owner Name="Education" Identifier="30625624" />
+          <GroupAccess Type="1" />
+          <Annotation>cloned from 'p_generated' owned by user satarupa
+cloned from 'p_generated' owned by user boris
+cloned from 'p_generated' owned by user satarupa</Annotation>
+        </Version>
+      </MathDescription>
+      <Simulation Name="Simulation0">
+        <Annotation>cloned from 'Simulation0' owned by user satarupa
+cloned from 'Simulation0' owned by user boris
+cloned from 'Simulation0' owned by user satarupa</Annotation>
+        <SolverTaskDescription TaskType="Unsteady" UseSymbolicJacobian="false" Solver="Finite Volume, Regular Grid">
+          <TimeBound StartTime="0.0" EndTime="2.0" />
+          <TimeStep DefaultTime="0.01" MinTime="1.0E-8" MaxTime="1.0" />
+          <ErrorTolerance Absolut="1.0E-9" Relative="1.0E-9" />
+          <OutputOptions KeepEvery="10" KeepAtMost="1000" />
+          <NumberProcessors>1</NumberProcessors>
+        </SolverTaskDescription>
+        <MathOverrides />
+        <MeshSpecification>
+          <Size X="101" Y="101" Z="1" />
+        </MeshSpecification>
+        <Version Name="Simulation0" KeyValue="33223511" BranchId="33223512" Archived="0" Date="15-May-2009 13:26:18" FromVersionable="false">
+          <Owner Name="Education" Identifier="30625624" />
+          <GroupAccess Type="1" />
+          <Annotation>cloned from 'Simulation0' owned by user satarupa
+cloned from 'Simulation0' owned by user boris
+cloned from 'Simulation0' owned by user satarupa</Annotation>
+        </Version>
+      </Simulation>
+      <Simulation Name="Copy of Simulation0">
+        <Annotation>cloned from 'Copy of Simulation0' owned by user satarupa
+cloned from 'Copy of Simulation0' owned by user boris
+cloned from 'Simulation0' owned by user satarupa</Annotation>
+        <SolverTaskDescription TaskType="Unsteady" UseSymbolicJacobian="false" Solver="Finite Volume, Regular Grid">
+          <TimeBound StartTime="0.0" EndTime="1.0" />
+          <TimeStep DefaultTime="0.001" MinTime="1.0E-8" MaxTime="1.0" />
+          <ErrorTolerance Absolut="1.0E-9" Relative="1.0E-9" />
+          <OutputOptions KeepEvery="100" KeepAtMost="1000" />
+          <NumberProcessors>1</NumberProcessors>
+        </SolverTaskDescription>
+        <MathOverrides>
+          <Constant Name="P1">100.0</Constant>
+          <Constant Name="P0">100.0</Constant>
+        </MathOverrides>
+        <MeshSpecification>
+          <Size X="101" Y="101" Z="1" />
+        </MeshSpecification>
+        <Version Name="Copy of Simulation0" KeyValue="33223514" BranchId="33223515" Archived="0" Date="15-May-2009 13:26:18" FromVersionable="false">
+          <Owner Name="Education" Identifier="30625624" />
+          <GroupAccess Type="1" />
+          <Annotation>cloned from 'Copy of Simulation0' owned by user satarupa
+cloned from 'Copy of Simulation0' owned by user boris
+cloned from 'Simulation0' owned by user satarupa</Annotation>
+        </Version>
+      </Simulation>
+      <Simulation Name="Copy of Copy of Simulation0">
+        <Annotation>cloned from 'Copy of Copy of Simulation0' owned by user satarupa
+cloned from 'Copy of Copy of Simulation0' owned by user boris
+cloned from 'Simulation0' owned by user satarupa</Annotation>
+        <SolverTaskDescription TaskType="Unsteady" UseSymbolicJacobian="false" Solver="Finite Volume, Regular Grid">
+          <TimeBound StartTime="0.0" EndTime="0.2" />
+          <TimeStep DefaultTime="1.0E-4" MinTime="1.0E-8" MaxTime="1.0" />
+          <ErrorTolerance Absolut="1.0E-9" Relative="1.0E-9" />
+          <OutputOptions KeepEvery="100" KeepAtMost="1000" />
+          <NumberProcessors>1</NumberProcessors>
+        </SolverTaskDescription>
+        <MathOverrides>
+          <Constant Name="P1">1000.0</Constant>
+          <Constant Name="P0">1000.0</Constant>
+        </MathOverrides>
+        <MeshSpecification>
+          <Size X="101" Y="101" Z="1" />
+        </MeshSpecification>
+        <Version Name="Copy of Copy of Simulation0" KeyValue="33223517" BranchId="33223518" Archived="0" Date="15-May-2009 13:26:18" FromVersionable="false">
+          <Owner Name="Education" Identifier="30625624" />
+          <GroupAccess Type="1" />
+          <Annotation>cloned from 'Copy of Copy of Simulation0' owned by user satarupa
+cloned from 'Copy of Copy of Simulation0' owned by user boris
+cloned from 'Simulation0' owned by user satarupa</Annotation>
+        </Version>
+      </Simulation>
+      <SpatialObjects>
+        <SpatialObject Name="vobj_subVolume01" Type="Volume" subVolume="subVolume0" regionId="1">
+          <QuantityCategoryList>
+            <QuantityCategory Name="VolumeCentroid" Enabled="false" />
+            <QuantityCategory Name="InteriorVelocity" Enabled="false" />
+            <QuantityCategory Name="VolumeRegionSize" Enabled="true" />
+          </QuantityCategoryList>
+        </SpatialObject>
+        <SpatialObject Name="vobj_subVolume22" Type="Volume" subVolume="subVolume2" regionId="2">
+          <QuantityCategoryList>
+            <QuantityCategory Name="VolumeCentroid" Enabled="false" />
+            <QuantityCategory Name="InteriorVelocity" Enabled="false" />
+            <QuantityCategory Name="VolumeRegionSize" Enabled="true" />
+          </QuantityCategoryList>
+        </SpatialObject>
+        <SpatialObject Name="vobj_subVolume10" Type="Volume" subVolume="subVolume1" regionId="0">
+          <QuantityCategoryList>
+            <QuantityCategory Name="VolumeCentroid" Enabled="false" />
+            <QuantityCategory Name="InteriorVelocity" Enabled="false" />
+            <QuantityCategory Name="VolumeRegionSize" Enabled="true" />
+          </QuantityCategoryList>
+        </SpatialObject>
+        <SpatialObject Name="sobj_subVolume01_subVolume10" Type="Surface" subVolumeInside="subVolume0" regionIdInside="1" subVolumeOutside="subVolume1" regionIdOutside="0">
+          <QuantityCategoryList>
+            <QuantityCategory Name="SurfaceNormal" Enabled="false" />
+            <QuantityCategory Name="SurfaceVelocity" Enabled="false" />
+            <QuantityCategory Name="DistanceToSurface" Enabled="false" />
+            <QuantityCategory Name="DirectionToSurface" Enabled="false" />
+            <QuantityCategory Name="SurfaceSize" Enabled="true" />
+          </QuantityCategoryList>
+        </SpatialObject>
+        <SpatialObject Name="sobj_subVolume22_subVolume01" Type="Surface" subVolumeInside="subVolume2" regionIdInside="2" subVolumeOutside="subVolume0" regionIdOutside="1">
+          <QuantityCategoryList>
+            <QuantityCategory Name="SurfaceNormal" Enabled="false" />
+            <QuantityCategory Name="SurfaceVelocity" Enabled="false" />
+            <QuantityCategory Name="DistanceToSurface" Enabled="false" />
+            <QuantityCategory Name="DirectionToSurface" Enabled="false" />
+            <QuantityCategory Name="SurfaceSize" Enabled="true" />
+          </QuantityCategoryList>
+        </SpatialObject>
+      </SpatialObjects>
+      <Version Name="p" KeyValue="33223497" BranchId="33223498" Archived="0" Date="15-May-2009 13:26:18" FromVersionable="false">
+        <Owner Name="Education" Identifier="30625624" />
+        <GroupAccess Type="1" />
+        <Annotation>cloned from 'p' owned by user satarupa
+cloned from 'p' owned by user boris
+cloned from 'p' owned by user satarupa</Annotation>
+      </Version>
+      <MicroscopeMeasurement Name="fluor">
+        <ConvolutionKernel Type="ProjectionZKernel" />
+      </MicroscopeMeasurement>
+    </SimulationSpec>
+    <Version Name="ModelingInBiologyBoris_Ring" KeyValue="33223520" BranchId="33223521" Archived="0" Date="15-May-2009 13:26:18" FromVersionable="false">
+      <Owner Name="Education" Identifier="30625624" />
+      <GroupAccess Type="1" />
+      <Annotation>cloned from 'ModelingInBiologyBoris_Ring' owned by user satarupa
+cloned from 'boris_ring' owned by user boris
+cloned from 'saratupa' owned by user satarupa</Annotation>
+    </Version>
+    <pathwayModel>
+      <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:bp="http://www.biopax.org/release/biopax-level3.owl#" version="3.0" />
+    </pathwayModel>
+    <relationshipModel>
+      <RMNS version="3.0" />
+    </relationshipModel>
+    <vcmetadata>
+      <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" />
+      <nonrdfAnnotationList>
+        <nonrdfAnnotation vcid="BioModel(ModelingInBiologyBoris_Ring)">
+          <freetext>cloned from 'ModelingInBiologyBoris_Ring' owned by user satarupa
+cloned from 'boris_ring' owned by user boris
+cloned from 'saratupa' owned by user satarupa</freetext>
+        </nonrdfAnnotation>
+      </nonrdfAnnotationList>
+      <uriBindingList />
+    </vcmetadata>
+  </BioModel>
+</vcml>
+

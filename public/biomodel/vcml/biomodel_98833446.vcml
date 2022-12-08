@@ -1,0 +1,1093 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--This biomodel was generated in VCML Version Alpha_Version_7.4.0_build_87-->
+<vcml xmlns="http://sourceforge.net/projects/vcell/vcml" Version="Alpha_Version_7.4.0_build_87">
+  <BioModel Name="TrIP3RSERCASpaDyn">
+    <Model Name="unnamed">
+      <ModelParameters>
+        <Parameter Name="L3" Role="user defined" Unit="uM">0.025</Parameter>
+        <Parameter Name="L1" Role="user defined" Unit="uM">0.12</Parameter>
+        <Parameter Name="L5" Role="user defined" Unit="uM">54.7</Parameter>
+        <Parameter Name="NIP3R" Role="user defined" Unit="molecules.um-2">(Ip3Ra + Ip3Ro + Ip3Ri + IP3Ri2 + Ip3Rn + IP3Rs)</Parameter>
+      </ModelParameters>
+      <Compound Name="s2" />
+      <Compound Name="s0" />
+      <Compound Name="s3" />
+      <Compound Name="s1" />
+      <Compound Name="s4" />
+      <Compound Name="s5" />
+      <Compound Name="s6" />
+      <Compound Name="s7" />
+      <Compound Name="s8" />
+      <Compound Name="s9" />
+      <Compound Name="s10" />
+      <Compound Name="s11" />
+      <Feature Name="OUT" KeyValue="98833247" />
+      <Feature Name="CYT" KeyValue="98833249" />
+      <Feature Name="DTS" KeyValue="98833251" />
+      <Membrane MembraneVoltage="Voltage_DTS_CYT" Name="DTS_CYT" KeyValue="98833253" />
+      <Membrane MembraneVoltage="Voltage_CYT_OUT" Name="CYT_OUT" KeyValue="98833255" />
+      <LocalizedCompound Name="Caout" CompoundRef="s2" Structure="CYT" OverrideName="true" KeyValue="98833257" />
+      <LocalizedCompound Name="cain" CompoundRef="s0" Structure="DTS" OverrideName="true" KeyValue="98833258" />
+      <LocalizedCompound Name="Ip3Ra" CompoundRef="s3" Structure="DTS_CYT" OverrideName="true" KeyValue="98833259" />
+      <LocalizedCompound Name="SERCA2" CompoundRef="s1" Structure="DTS_CYT" OverrideName="true" KeyValue="98833260" />
+      <LocalizedCompound Name="SERCA3" CompoundRef="s4" Structure="DTS_CYT" OverrideName="true" KeyValue="98833261" />
+      <LocalizedCompound Name="IP3Ri2" CompoundRef="s5" Structure="DTS_CYT" OverrideName="true" KeyValue="98833262" />
+      <LocalizedCompound Name="Ip3Ro" CompoundRef="s6" Structure="DTS_CYT" OverrideName="true" KeyValue="98833263" />
+      <LocalizedCompound Name="Ip3Rn" CompoundRef="s7" Structure="DTS_CYT" OverrideName="true" KeyValue="98833264" />
+      <LocalizedCompound Name="IP3" CompoundRef="s8" Structure="CYT" OverrideName="true" KeyValue="98833265" />
+      <LocalizedCompound Name="Ip3Ri" CompoundRef="s9" Structure="DTS_CYT" OverrideName="true" KeyValue="98833266" />
+      <LocalizedCompound Name="IP3Rs" CompoundRef="s10" Structure="DTS_CYT" OverrideName="true" KeyValue="98833267" />
+      <LocalizedCompound Name="Caex" CompoundRef="s11" Structure="OUT" OverrideName="true" KeyValue="98833268" />
+      <SimpleReaction Structure="DTS_CYT" Name="ip3rflux" Reversible="true" FluxOption="MolecularOnly" KeyValue="98833269">
+        <Reactant LocalizedCompoundRef="cain" Stoichiometry="1" KeyValue="98833270" />
+        <Product LocalizedCompoundRef="Caout" Stoichiometry="1" KeyValue="98833271" />
+        <Modifier LocalizedCompoundRef="Ip3Ra" />
+        <Modifier LocalizedCompoundRef="Ip3Ro" />
+        <Kinetics KineticsType="GeneralKinetics">
+          <Parameter Name="J" Role="reaction rate" Unit="molecules.um-2.s-1">(gamma * log((cain / Caout)) * P * NIP3R)</Parameter>
+          <Parameter Name="I" Role="inward current density" Unit="pA.um-2">0.0</Parameter>
+          <Parameter Name="netValence" Role="net charge valence" Unit="1">1.0</Parameter>
+          <Parameter Name="P" Role="user defined" Unit="1">((((0.9 * Ip3Ra) + (0.1 * Ip3Ro)) / NIP3R) ^ 4.0)</Parameter>
+          <Parameter Name="gamma" Role="user defined" Unit="s-1">420000.0</Parameter>
+        </Kinetics>
+      </SimpleReaction>
+      <SimpleReaction Structure="DTS_CYT" Name="Serca2flux" Reversible="true" FluxOption="MolecularOnly" KeyValue="98833274">
+        <Reactant LocalizedCompoundRef="Caout" Stoichiometry="1" KeyValue="98833275" />
+        <Product LocalizedCompoundRef="cain" Stoichiometry="1" KeyValue="98833276" />
+        <Modifier LocalizedCompoundRef="SERCA2" />
+        <Kinetics KineticsType="GeneralKinetics">
+          <Parameter Name="J" Role="reaction rate" Unit="molecules.um-2.s-1">((Caout ^ 1.7) * V * SERCA2 / ((K ^ 1.7) + (Caout ^ 1.7)))</Parameter>
+          <Parameter Name="I" Role="inward current density" Unit="pA.um-2">0.0</Parameter>
+          <Parameter Name="netValence" Role="net charge valence" Unit="1">1.0</Parameter>
+          <Parameter Name="V" Role="user defined" Unit="s-1">(60.0 * 6.0 * (10.0 ^ 23.0) * (10.0 ^  - 3.0) * 4.5 * (10.0 ^  - 15.0) / 9000.0)</Parameter>
+          <Parameter Name="K" Role="user defined" Unit="uM">0.27</Parameter>
+        </Kinetics>
+      </SimpleReaction>
+      <SimpleReaction Structure="DTS_CYT" Name="serca3flux" Reversible="true" FluxOption="MolecularOnly" KeyValue="98833278">
+        <Reactant LocalizedCompoundRef="Caout" Stoichiometry="1" KeyValue="98833279" />
+        <Product LocalizedCompoundRef="cain" Stoichiometry="1" KeyValue="98833280" />
+        <Modifier LocalizedCompoundRef="SERCA3" />
+        <Kinetics KineticsType="GeneralKinetics">
+          <Parameter Name="J" Role="reaction rate" Unit="molecules.um-2.s-1">((Caout ^ 1.8) * V * SERCA3 / ((K ^ 1.8) + (Caout ^ 1.8)))</Parameter>
+          <Parameter Name="I" Role="inward current density" Unit="pA.um-2">0.0</Parameter>
+          <Parameter Name="netValence" Role="net charge valence" Unit="1">1.0</Parameter>
+          <Parameter Name="V" Role="user defined" Unit="s-1">(60.0 * 6.0 * (10.0 ^ 23.0) * (10.0 ^  - 3.0) * 4.5 * (10.0 ^  - 15.0) / 16300.0)</Parameter>
+          <Parameter Name="K" Role="user defined" Unit="uM">1.1</Parameter>
+        </Kinetics>
+      </SimpleReaction>
+      <SimpleReaction Structure="DTS_CYT" Name="to ri2" Reversible="true" FluxOption="MolecularOnly" KeyValue="98833282">
+        <Reactant LocalizedCompoundRef="Ip3Ra" Stoichiometry="1" KeyValue="98833283" />
+        <Reactant LocalizedCompoundRef="Caout" Stoichiometry="1" KeyValue="98833284" />
+        <Product LocalizedCompoundRef="IP3Ri2" Stoichiometry="1" KeyValue="98833285" />
+        <Kinetics KineticsType="MassAction">
+          <Parameter Name="J" Role="reaction rate" Unit="molecules.um-2.s-1">(((Kf * Ip3Ra) * Caout) - (Kr * IP3Ri2))</Parameter>
+          <Parameter Name="I" Role="inward current density" Unit="pA.um-2">0.0</Parameter>
+          <Parameter Name="netValence" Role="net charge valence" Unit="1">1.0</Parameter>
+          <Parameter Name="Kf" Role="forward rate constant" Unit="s-1.uM-1">(k2 / (L1 + Caout))</Parameter>
+          <Parameter Name="Kr" Role="reverse rate constant" Unit="s-1">km2</Parameter>
+          <Parameter Name="k2" Role="user defined" Unit="s-1">1.78</Parameter>
+          <Parameter Name="km2" Role="user defined" Unit="s-1">0.84</Parameter>
+        </Kinetics>
+      </SimpleReaction>
+      <SimpleReaction Structure="DTS_CYT" Name="from ra" Reversible="true" FluxOption="MolecularOnly" KeyValue="98833286">
+        <Reactant LocalizedCompoundRef="Ip3Ra" Stoichiometry="1" KeyValue="98833287" />
+        <Product LocalizedCompoundRef="Ip3Ro" Stoichiometry="1" KeyValue="98833288" />
+        <Product LocalizedCompoundRef="Caout" Stoichiometry="1" KeyValue="98833289" />
+        <Kinetics KineticsType="MassAction">
+          <Parameter Name="J" Role="reaction rate" Unit="molecules.um-2.s-1">((Kf * Ip3Ra) - ((Kr * Ip3Ro) * Caout))</Parameter>
+          <Parameter Name="I" Role="inward current density" Unit="pA.um-2">0.0</Parameter>
+          <Parameter Name="netValence" Role="net charge valence" Unit="1">1.0</Parameter>
+          <Parameter Name="Kf" Role="forward rate constant" Unit="s-1">(k1 * L1 / (L1 + Caout))</Parameter>
+          <Parameter Name="Kr" Role="reverse rate constant" Unit="s-1.uM-1">(((k5 * L5) + K5) / (L5 + Caout))</Parameter>
+          <Parameter Name="k1" Role="user defined" Unit="s-1">11.94</Parameter>
+          <Parameter Name="k5" Role="user defined" Unit="s-1.uM-1">4.0</Parameter>
+          <Parameter Name="K5" Role="user defined" Unit="s-1">4707.0</Parameter>
+        </Kinetics>
+      </SimpleReaction>
+      <SimpleReaction Structure="DTS_CYT" Name="to ri1" Reversible="true" FluxOption="MolecularOnly" KeyValue="98833290">
+        <Reactant LocalizedCompoundRef="Ip3Rn" Stoichiometry="1" KeyValue="98833291" />
+        <Reactant LocalizedCompoundRef="Caout" Stoichiometry="1" KeyValue="98833292" />
+        <Product LocalizedCompoundRef="Ip3Ri" Stoichiometry="1" KeyValue="98833293" />
+        <Kinetics KineticsType="MassAction">
+          <Parameter Name="J" Role="reaction rate" Unit="molecules.um-2.s-1">(((Kf * Ip3Rn) * Caout) - (Kr * Ip3Ri))</Parameter>
+          <Parameter Name="I" Role="inward current density" Unit="pA.um-2">0.0</Parameter>
+          <Parameter Name="netValence" Role="net charge valence" Unit="1">1.0</Parameter>
+          <Parameter Name="Kf" Role="forward rate constant" Unit="s-1.uM-1">(k2 / (L3 + (Caout * (1.0 + (L1 / L3)))))</Parameter>
+          <Parameter Name="Kr" Role="reverse rate constant" Unit="s-1">km2</Parameter>
+          <Parameter Name="k2" Role="user defined" Unit="s-1">1.78</Parameter>
+          <Parameter Name="km2" Role="user defined" Unit="s-1">0.84</Parameter>
+        </Kinetics>
+      </SimpleReaction>
+      <SimpleReaction Structure="DTS_CYT" Name="to ro" Reversible="true" FluxOption="MolecularOnly" KeyValue="98833294">
+        <Reactant LocalizedCompoundRef="Ip3Rn" Stoichiometry="1" KeyValue="98833295" />
+        <Reactant LocalizedCompoundRef="IP3" Stoichiometry="1" KeyValue="98833296" />
+        <Product LocalizedCompoundRef="Ip3Ro" Stoichiometry="1" KeyValue="98833297" />
+        <Modifier LocalizedCompoundRef="Caout" />
+        <Kinetics KineticsType="MassAction">
+          <Parameter Name="J" Role="reaction rate" Unit="molecules.um-2.s-1">(((Kf * Ip3Rn) * IP3) - (Kr * Ip3Ro))</Parameter>
+          <Parameter Name="I" Role="inward current density" Unit="pA.um-2">0.0</Parameter>
+          <Parameter Name="netValence" Role="net charge valence" Unit="1">1.0</Parameter>
+          <Parameter Name="Kf" Role="forward rate constant" Unit="s-1.uM-1">(((k3 * L3) + (kc3 * Caout)) / (L3 + (Caout * (1.0 + (L3 / L1)))))</Parameter>
+          <Parameter Name="Kr" Role="reverse rate constant" Unit="s-1">((K3 + (km3 * Caout)) * L5 / (L5 + Caout))</Parameter>
+          <Parameter Name="k3" Role="user defined" Unit="s-1.uM-1">37.4</Parameter>
+          <Parameter Name="kc3" Role="user defined" Unit="s-1.uM-1">1.7</Parameter>
+          <Parameter Name="km3" Role="user defined" Unit="s-1.uM-1">2.5</Parameter>
+          <Parameter Name="K3" Role="user defined" Unit="s-1">1.4</Parameter>
+        </Kinetics>
+      </SimpleReaction>
+      <SimpleReaction Structure="DTS_CYT" Name="to rs" Reversible="true" FluxOption="MolecularOnly" KeyValue="98833299">
+        <Reactant LocalizedCompoundRef="Ip3Ro" Stoichiometry="1" KeyValue="98833300" />
+        <Product LocalizedCompoundRef="IP3Rs" Stoichiometry="1" KeyValue="98833301" />
+        <Modifier LocalizedCompoundRef="Caout" />
+        <Kinetics KineticsType="MassAction">
+          <Parameter Name="J" Role="reaction rate" Unit="molecules.um-2.s-1">((Kf * Ip3Ro) - (Kr * IP3Rs))</Parameter>
+          <Parameter Name="I" Role="inward current density" Unit="pA.um-2">0.0</Parameter>
+          <Parameter Name="netValence" Role="net charge valence" Unit="1">1.0</Parameter>
+          <Parameter Name="Kf" Role="forward rate constant" Unit="s-1">(k4 * L5 / (L5 + Caout))</Parameter>
+          <Parameter Name="Kr" Role="reverse rate constant" Unit="s-1">km4</Parameter>
+          <Parameter Name="k4" Role="user defined" Unit="s-1">0.11</Parameter>
+          <Parameter Name="km4" Role="user defined" Unit="s-1">29.8</Parameter>
+        </Kinetics>
+      </SimpleReaction>
+      <SimpleReaction Structure="DTS_CYT" Name="leak" Reversible="true" FluxOption="MolecularOnly" KeyValue="98833303">
+        <Reactant LocalizedCompoundRef="cain" Stoichiometry="1" KeyValue="98833304" />
+        <Product LocalizedCompoundRef="Caout" Stoichiometry="1" KeyValue="98833305" />
+        <Kinetics KineticsType="GeneralKinetics">
+          <Parameter Name="J" Role="reaction rate" Unit="molecules.um-2.s-1">(g * log((cain / Caout)))</Parameter>
+          <Parameter Name="I" Role="inward current density" Unit="pA.um-2">0.0</Parameter>
+          <Parameter Name="netValence" Role="net charge valence" Unit="1">1.0</Parameter>
+          <Parameter Name="g" Role="user defined" Unit="molecules.s-1">(21.0 * (10.0 ^  - 6.0) * 6.02 * (10.0 ^ 23.0) * 4.5 * (10.0 ^  - 15.0) / k)</Parameter>
+          <Parameter Name="k" Role="user defined" Unit="um2">2.0</Parameter>
+        </Kinetics>
+      </SimpleReaction>
+      <SimpleReaction Structure="CYT_OUT" Name="exleak" Reversible="true" FluxOption="MolecularOnly" KeyValue="98833306">
+        <Reactant LocalizedCompoundRef="Caex" Stoichiometry="1" KeyValue="98833307" />
+        <Product LocalizedCompoundRef="Caout" Stoichiometry="1" KeyValue="98833308" />
+        <Kinetics KineticsType="GeneralKinetics">
+          <Parameter Name="J" Role="reaction rate" Unit="molecules.um-2.s-1">(gam * log((Caex / Caout)))</Parameter>
+          <Parameter Name="I" Role="inward current density" Unit="pA.um-2">0.0</Parameter>
+          <Parameter Name="netValence" Role="net charge valence" Unit="1">1.0</Parameter>
+          <Parameter Name="gam" Role="user defined" Unit="molecules.um-2.s-1">(11.3 * (10.0 ^  - 9.0) * 6.02 * (10.0 ^ 23.0) * 4.5 * (10.0 ^  - 15.0) / 16.35)</Parameter>
+        </Kinetics>
+      </SimpleReaction>
+      <Diagram Name="c0" Structure="DTS">
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="SERCA3" LocationX="176" LocationY="361" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="full" SimpleReactionRef="exleak" LocationX="49" LocationY="150" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="full" SimpleReactionRef="to rs" LocationX="119" LocationY="134" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="Ip3Ra" LocationX="155" LocationY="136" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="SERCA2" LocationX="80" LocationY="345" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="IP3Rs" LocationX="90" LocationY="127" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="full" SimpleReactionRef="ip3rflux" LocationX="111" LocationY="331" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="full" SimpleReactionRef="leak" LocationX="104" LocationY="298" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="full" SimpleReactionRef="to ri2" LocationX="99" LocationY="39" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="full" SimpleReactionRef="to ro" LocationX="101" LocationY="204" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="Caout" LocationX="114" LocationY="97" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="Caex" LocationX="92" LocationY="138" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="Ip3Ri" LocationX="58" LocationY="75" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="full" SimpleReactionRef="serca3flux" LocationX="104" LocationY="451" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="full" SimpleReactionRef="to ri1" LocationX="38" LocationY="93" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="IP3" LocationX="108" LocationY="251" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="full" SimpleReactionRef="Serca2flux" LocationX="102" LocationY="415" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="cain" LocationX="128" LocationY="72" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="IP3Ri2" LocationX="42" LocationY="67" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="full" SimpleReactionRef="from ra" LocationX="189" LocationY="131" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="Ip3Ro" LocationX="163" LocationY="177" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="Ip3Rn" LocationX="28" LocationY="126" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="SERCA3" LocationX="176" LocationY="361" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="molecule" SimpleReactionRef="exleak" LocationX="49" LocationY="150" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="molecule" SimpleReactionRef="to rs" LocationX="119" LocationY="134" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="Ip3Ra" LocationX="155" LocationY="136" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="SERCA2" LocationX="80" LocationY="345" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="IP3Rs" LocationX="90" LocationY="127" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="molecule" SimpleReactionRef="ip3rflux" LocationX="111" LocationY="331" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="molecule" SimpleReactionRef="leak" LocationX="104" LocationY="298" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="molecule" SimpleReactionRef="to ri2" LocationX="99" LocationY="39" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="molecule" SimpleReactionRef="to ro" LocationX="101" LocationY="204" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="Caout" LocationX="114" LocationY="97" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="Caex" LocationX="92" LocationY="138" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="Ip3Ri" LocationX="58" LocationY="75" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="molecule" SimpleReactionRef="serca3flux" LocationX="104" LocationY="451" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="molecule" SimpleReactionRef="to ri1" LocationX="38" LocationY="93" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="IP3" LocationX="108" LocationY="251" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="molecule" SimpleReactionRef="Serca2flux" LocationX="102" LocationY="415" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="cain" LocationX="128" LocationY="72" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="IP3Ri2" LocationX="42" LocationY="67" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="molecule" SimpleReactionRef="from ra" LocationX="189" LocationY="131" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="Ip3Ro" LocationX="163" LocationY="177" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="Ip3Rn" LocationX="28" LocationY="126" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="SERCA3" LocationX="176" LocationY="361" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="rule" SimpleReactionRef="exleak" LocationX="49" LocationY="150" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="rule" SimpleReactionRef="to rs" LocationX="119" LocationY="134" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="Ip3Ra" LocationX="155" LocationY="136" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="SERCA2" LocationX="80" LocationY="345" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="IP3Rs" LocationX="90" LocationY="127" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="rule" SimpleReactionRef="ip3rflux" LocationX="111" LocationY="331" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="rule" SimpleReactionRef="leak" LocationX="104" LocationY="298" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="rule" SimpleReactionRef="to ri2" LocationX="99" LocationY="39" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="rule" SimpleReactionRef="to ro" LocationX="101" LocationY="204" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="Caout" LocationX="114" LocationY="97" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="Caex" LocationX="92" LocationY="138" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="Ip3Ri" LocationX="58" LocationY="75" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="rule" SimpleReactionRef="serca3flux" LocationX="104" LocationY="451" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="rule" SimpleReactionRef="to ri1" LocationX="38" LocationY="93" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="IP3" LocationX="108" LocationY="251" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="rule" SimpleReactionRef="Serca2flux" LocationX="102" LocationY="415" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="cain" LocationX="128" LocationY="72" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="IP3Ri2" LocationX="42" LocationY="67" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="rule" SimpleReactionRef="from ra" LocationX="189" LocationY="131" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="Ip3Ro" LocationX="163" LocationY="177" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="Ip3Rn" LocationX="28" LocationY="126" />
+      </Diagram>
+      <Diagram Name="m0" Structure="DTS_CYT">
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="SERCA3" LocationX="176" LocationY="361" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="full" SimpleReactionRef="exleak" LocationX="49" LocationY="150" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="full" SimpleReactionRef="to rs" LocationX="119" LocationY="134" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="Ip3Ra" LocationX="155" LocationY="136" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="SERCA2" LocationX="80" LocationY="345" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="IP3Rs" LocationX="90" LocationY="127" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="full" SimpleReactionRef="ip3rflux" LocationX="111" LocationY="331" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="full" SimpleReactionRef="leak" LocationX="104" LocationY="298" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="full" SimpleReactionRef="to ri2" LocationX="99" LocationY="39" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="full" SimpleReactionRef="to ro" LocationX="101" LocationY="204" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="Caout" LocationX="114" LocationY="97" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="Caex" LocationX="92" LocationY="138" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="Ip3Ri" LocationX="58" LocationY="75" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="full" SimpleReactionRef="serca3flux" LocationX="104" LocationY="451" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="full" SimpleReactionRef="to ri1" LocationX="38" LocationY="93" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="IP3" LocationX="108" LocationY="251" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="full" SimpleReactionRef="Serca2flux" LocationX="102" LocationY="415" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="cain" LocationX="128" LocationY="72" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="IP3Ri2" LocationX="42" LocationY="67" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="full" SimpleReactionRef="from ra" LocationX="189" LocationY="131" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="Ip3Ro" LocationX="163" LocationY="177" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="Ip3Rn" LocationX="28" LocationY="126" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="SERCA3" LocationX="176" LocationY="361" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="molecule" SimpleReactionRef="exleak" LocationX="49" LocationY="150" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="molecule" SimpleReactionRef="to rs" LocationX="119" LocationY="134" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="Ip3Ra" LocationX="155" LocationY="136" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="SERCA2" LocationX="80" LocationY="345" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="IP3Rs" LocationX="90" LocationY="127" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="molecule" SimpleReactionRef="ip3rflux" LocationX="111" LocationY="331" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="molecule" SimpleReactionRef="leak" LocationX="104" LocationY="298" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="molecule" SimpleReactionRef="to ri2" LocationX="99" LocationY="39" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="molecule" SimpleReactionRef="to ro" LocationX="101" LocationY="204" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="Caout" LocationX="114" LocationY="97" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="Caex" LocationX="92" LocationY="138" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="Ip3Ri" LocationX="58" LocationY="75" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="molecule" SimpleReactionRef="serca3flux" LocationX="104" LocationY="451" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="molecule" SimpleReactionRef="to ri1" LocationX="38" LocationY="93" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="IP3" LocationX="108" LocationY="251" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="molecule" SimpleReactionRef="Serca2flux" LocationX="102" LocationY="415" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="cain" LocationX="128" LocationY="72" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="IP3Ri2" LocationX="42" LocationY="67" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="molecule" SimpleReactionRef="from ra" LocationX="189" LocationY="131" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="Ip3Ro" LocationX="163" LocationY="177" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="Ip3Rn" LocationX="28" LocationY="126" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="SERCA3" LocationX="176" LocationY="361" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="rule" SimpleReactionRef="exleak" LocationX="49" LocationY="150" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="rule" SimpleReactionRef="to rs" LocationX="119" LocationY="134" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="Ip3Ra" LocationX="155" LocationY="136" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="SERCA2" LocationX="80" LocationY="345" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="IP3Rs" LocationX="90" LocationY="127" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="rule" SimpleReactionRef="ip3rflux" LocationX="111" LocationY="331" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="rule" SimpleReactionRef="leak" LocationX="104" LocationY="298" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="rule" SimpleReactionRef="to ri2" LocationX="99" LocationY="39" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="rule" SimpleReactionRef="to ro" LocationX="101" LocationY="204" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="Caout" LocationX="114" LocationY="97" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="Caex" LocationX="92" LocationY="138" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="Ip3Ri" LocationX="58" LocationY="75" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="rule" SimpleReactionRef="serca3flux" LocationX="104" LocationY="451" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="rule" SimpleReactionRef="to ri1" LocationX="38" LocationY="93" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="IP3" LocationX="108" LocationY="251" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="rule" SimpleReactionRef="Serca2flux" LocationX="102" LocationY="415" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="cain" LocationX="128" LocationY="72" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="IP3Ri2" LocationX="42" LocationY="67" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="rule" SimpleReactionRef="from ra" LocationX="189" LocationY="131" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="Ip3Ro" LocationX="163" LocationY="177" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="Ip3Rn" LocationX="28" LocationY="126" />
+      </Diagram>
+      <Diagram Name="c0" Structure="CYT">
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="SERCA3" LocationX="176" LocationY="361" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="full" SimpleReactionRef="exleak" LocationX="49" LocationY="150" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="full" SimpleReactionRef="to rs" LocationX="119" LocationY="134" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="Ip3Ra" LocationX="155" LocationY="136" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="SERCA2" LocationX="80" LocationY="345" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="IP3Rs" LocationX="90" LocationY="127" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="full" SimpleReactionRef="ip3rflux" LocationX="111" LocationY="331" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="full" SimpleReactionRef="leak" LocationX="104" LocationY="298" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="full" SimpleReactionRef="to ri2" LocationX="99" LocationY="39" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="full" SimpleReactionRef="to ro" LocationX="101" LocationY="204" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="Caout" LocationX="114" LocationY="97" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="Caex" LocationX="92" LocationY="138" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="Ip3Ri" LocationX="58" LocationY="75" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="full" SimpleReactionRef="serca3flux" LocationX="104" LocationY="451" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="full" SimpleReactionRef="to ri1" LocationX="38" LocationY="93" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="IP3" LocationX="108" LocationY="251" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="full" SimpleReactionRef="Serca2flux" LocationX="102" LocationY="415" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="cain" LocationX="128" LocationY="72" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="IP3Ri2" LocationX="42" LocationY="67" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="full" SimpleReactionRef="from ra" LocationX="189" LocationY="131" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="Ip3Ro" LocationX="163" LocationY="177" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="Ip3Rn" LocationX="28" LocationY="126" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="SERCA3" LocationX="176" LocationY="361" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="molecule" SimpleReactionRef="exleak" LocationX="49" LocationY="150" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="molecule" SimpleReactionRef="to rs" LocationX="119" LocationY="134" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="Ip3Ra" LocationX="155" LocationY="136" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="SERCA2" LocationX="80" LocationY="345" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="IP3Rs" LocationX="90" LocationY="127" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="molecule" SimpleReactionRef="ip3rflux" LocationX="111" LocationY="331" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="molecule" SimpleReactionRef="leak" LocationX="104" LocationY="298" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="molecule" SimpleReactionRef="to ri2" LocationX="99" LocationY="39" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="molecule" SimpleReactionRef="to ro" LocationX="101" LocationY="204" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="Caout" LocationX="114" LocationY="97" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="Caex" LocationX="92" LocationY="138" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="Ip3Ri" LocationX="58" LocationY="75" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="molecule" SimpleReactionRef="serca3flux" LocationX="104" LocationY="451" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="molecule" SimpleReactionRef="to ri1" LocationX="38" LocationY="93" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="IP3" LocationX="108" LocationY="251" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="molecule" SimpleReactionRef="Serca2flux" LocationX="102" LocationY="415" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="cain" LocationX="128" LocationY="72" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="IP3Ri2" LocationX="42" LocationY="67" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="molecule" SimpleReactionRef="from ra" LocationX="189" LocationY="131" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="Ip3Ro" LocationX="163" LocationY="177" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="Ip3Rn" LocationX="28" LocationY="126" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="SERCA3" LocationX="176" LocationY="361" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="rule" SimpleReactionRef="exleak" LocationX="49" LocationY="150" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="rule" SimpleReactionRef="to rs" LocationX="119" LocationY="134" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="Ip3Ra" LocationX="155" LocationY="136" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="SERCA2" LocationX="80" LocationY="345" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="IP3Rs" LocationX="90" LocationY="127" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="rule" SimpleReactionRef="ip3rflux" LocationX="111" LocationY="331" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="rule" SimpleReactionRef="leak" LocationX="104" LocationY="298" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="rule" SimpleReactionRef="to ri2" LocationX="99" LocationY="39" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="rule" SimpleReactionRef="to ro" LocationX="101" LocationY="204" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="Caout" LocationX="114" LocationY="97" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="Caex" LocationX="92" LocationY="138" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="Ip3Ri" LocationX="58" LocationY="75" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="rule" SimpleReactionRef="serca3flux" LocationX="104" LocationY="451" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="rule" SimpleReactionRef="to ri1" LocationX="38" LocationY="93" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="IP3" LocationX="108" LocationY="251" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="rule" SimpleReactionRef="Serca2flux" LocationX="102" LocationY="415" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="cain" LocationX="128" LocationY="72" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="IP3Ri2" LocationX="42" LocationY="67" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="rule" SimpleReactionRef="from ra" LocationX="189" LocationY="131" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="Ip3Ro" LocationX="163" LocationY="177" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="Ip3Rn" LocationX="28" LocationY="126" />
+      </Diagram>
+      <Diagram Name="m0" Structure="CYT_OUT">
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="SERCA3" LocationX="176" LocationY="361" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="full" SimpleReactionRef="exleak" LocationX="49" LocationY="150" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="full" SimpleReactionRef="to rs" LocationX="119" LocationY="134" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="Ip3Ra" LocationX="155" LocationY="136" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="SERCA2" LocationX="80" LocationY="345" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="IP3Rs" LocationX="90" LocationY="127" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="full" SimpleReactionRef="ip3rflux" LocationX="111" LocationY="331" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="full" SimpleReactionRef="leak" LocationX="104" LocationY="298" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="full" SimpleReactionRef="to ri2" LocationX="99" LocationY="39" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="full" SimpleReactionRef="to ro" LocationX="101" LocationY="204" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="Caout" LocationX="114" LocationY="97" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="Caex" LocationX="92" LocationY="138" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="Ip3Ri" LocationX="58" LocationY="75" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="full" SimpleReactionRef="serca3flux" LocationX="104" LocationY="451" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="full" SimpleReactionRef="to ri1" LocationX="38" LocationY="93" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="IP3" LocationX="108" LocationY="251" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="full" SimpleReactionRef="Serca2flux" LocationX="102" LocationY="415" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="cain" LocationX="128" LocationY="72" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="IP3Ri2" LocationX="42" LocationY="67" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="full" SimpleReactionRef="from ra" LocationX="189" LocationY="131" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="Ip3Ro" LocationX="163" LocationY="177" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="Ip3Rn" LocationX="28" LocationY="126" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="SERCA3" LocationX="176" LocationY="361" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="molecule" SimpleReactionRef="exleak" LocationX="49" LocationY="150" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="molecule" SimpleReactionRef="to rs" LocationX="119" LocationY="134" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="Ip3Ra" LocationX="155" LocationY="136" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="SERCA2" LocationX="80" LocationY="345" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="IP3Rs" LocationX="90" LocationY="127" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="molecule" SimpleReactionRef="ip3rflux" LocationX="111" LocationY="331" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="molecule" SimpleReactionRef="leak" LocationX="104" LocationY="298" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="molecule" SimpleReactionRef="to ri2" LocationX="99" LocationY="39" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="molecule" SimpleReactionRef="to ro" LocationX="101" LocationY="204" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="Caout" LocationX="114" LocationY="97" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="Caex" LocationX="92" LocationY="138" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="Ip3Ri" LocationX="58" LocationY="75" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="molecule" SimpleReactionRef="serca3flux" LocationX="104" LocationY="451" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="molecule" SimpleReactionRef="to ri1" LocationX="38" LocationY="93" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="IP3" LocationX="108" LocationY="251" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="molecule" SimpleReactionRef="Serca2flux" LocationX="102" LocationY="415" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="cain" LocationX="128" LocationY="72" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="IP3Ri2" LocationX="42" LocationY="67" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="molecule" SimpleReactionRef="from ra" LocationX="189" LocationY="131" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="Ip3Ro" LocationX="163" LocationY="177" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="Ip3Rn" LocationX="28" LocationY="126" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="SERCA3" LocationX="176" LocationY="361" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="rule" SimpleReactionRef="exleak" LocationX="49" LocationY="150" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="rule" SimpleReactionRef="to rs" LocationX="119" LocationY="134" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="Ip3Ra" LocationX="155" LocationY="136" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="SERCA2" LocationX="80" LocationY="345" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="IP3Rs" LocationX="90" LocationY="127" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="rule" SimpleReactionRef="ip3rflux" LocationX="111" LocationY="331" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="rule" SimpleReactionRef="leak" LocationX="104" LocationY="298" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="rule" SimpleReactionRef="to ri2" LocationX="99" LocationY="39" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="rule" SimpleReactionRef="to ro" LocationX="101" LocationY="204" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="Caout" LocationX="114" LocationY="97" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="Caex" LocationX="92" LocationY="138" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="Ip3Ri" LocationX="58" LocationY="75" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="rule" SimpleReactionRef="serca3flux" LocationX="104" LocationY="451" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="rule" SimpleReactionRef="to ri1" LocationX="38" LocationY="93" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="IP3" LocationX="108" LocationY="251" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="rule" SimpleReactionRef="Serca2flux" LocationX="102" LocationY="415" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="cain" LocationX="128" LocationY="72" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="IP3Ri2" LocationX="42" LocationY="67" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="rule" SimpleReactionRef="from ra" LocationX="189" LocationY="131" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="Ip3Ro" LocationX="163" LocationY="177" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="Ip3Rn" LocationX="28" LocationY="126" />
+      </Diagram>
+      <Diagram Name="c1" Structure="OUT">
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="SERCA3" LocationX="176" LocationY="361" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="full" SimpleReactionRef="exleak" LocationX="49" LocationY="150" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="full" SimpleReactionRef="to rs" LocationX="119" LocationY="134" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="Ip3Ra" LocationX="155" LocationY="136" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="SERCA2" LocationX="80" LocationY="345" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="IP3Rs" LocationX="90" LocationY="127" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="full" SimpleReactionRef="ip3rflux" LocationX="111" LocationY="331" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="full" SimpleReactionRef="leak" LocationX="104" LocationY="298" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="full" SimpleReactionRef="to ri2" LocationX="99" LocationY="39" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="full" SimpleReactionRef="to ro" LocationX="101" LocationY="204" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="Caout" LocationX="114" LocationY="97" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="Caex" LocationX="92" LocationY="138" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="Ip3Ri" LocationX="58" LocationY="75" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="full" SimpleReactionRef="serca3flux" LocationX="104" LocationY="451" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="full" SimpleReactionRef="to ri1" LocationX="38" LocationY="93" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="IP3" LocationX="108" LocationY="251" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="full" SimpleReactionRef="Serca2flux" LocationX="102" LocationY="415" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="cain" LocationX="128" LocationY="72" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="IP3Ri2" LocationX="42" LocationY="67" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="full" SimpleReactionRef="from ra" LocationX="189" LocationY="131" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="Ip3Ro" LocationX="163" LocationY="177" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="Ip3Rn" LocationX="28" LocationY="126" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="SERCA3" LocationX="176" LocationY="361" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="molecule" SimpleReactionRef="exleak" LocationX="49" LocationY="150" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="molecule" SimpleReactionRef="to rs" LocationX="119" LocationY="134" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="Ip3Ra" LocationX="155" LocationY="136" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="SERCA2" LocationX="80" LocationY="345" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="IP3Rs" LocationX="90" LocationY="127" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="molecule" SimpleReactionRef="ip3rflux" LocationX="111" LocationY="331" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="molecule" SimpleReactionRef="leak" LocationX="104" LocationY="298" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="molecule" SimpleReactionRef="to ri2" LocationX="99" LocationY="39" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="molecule" SimpleReactionRef="to ro" LocationX="101" LocationY="204" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="Caout" LocationX="114" LocationY="97" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="Caex" LocationX="92" LocationY="138" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="Ip3Ri" LocationX="58" LocationY="75" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="molecule" SimpleReactionRef="serca3flux" LocationX="104" LocationY="451" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="molecule" SimpleReactionRef="to ri1" LocationX="38" LocationY="93" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="IP3" LocationX="108" LocationY="251" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="molecule" SimpleReactionRef="Serca2flux" LocationX="102" LocationY="415" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="cain" LocationX="128" LocationY="72" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="IP3Ri2" LocationX="42" LocationY="67" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="molecule" SimpleReactionRef="from ra" LocationX="189" LocationY="131" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="Ip3Ro" LocationX="163" LocationY="177" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="Ip3Rn" LocationX="28" LocationY="126" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="SERCA3" LocationX="176" LocationY="361" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="rule" SimpleReactionRef="exleak" LocationX="49" LocationY="150" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="rule" SimpleReactionRef="to rs" LocationX="119" LocationY="134" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="Ip3Ra" LocationX="155" LocationY="136" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="SERCA2" LocationX="80" LocationY="345" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="IP3Rs" LocationX="90" LocationY="127" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="rule" SimpleReactionRef="ip3rflux" LocationX="111" LocationY="331" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="rule" SimpleReactionRef="leak" LocationX="104" LocationY="298" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="rule" SimpleReactionRef="to ri2" LocationX="99" LocationY="39" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="rule" SimpleReactionRef="to ro" LocationX="101" LocationY="204" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="Caout" LocationX="114" LocationY="97" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="Caex" LocationX="92" LocationY="138" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="Ip3Ri" LocationX="58" LocationY="75" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="rule" SimpleReactionRef="serca3flux" LocationX="104" LocationY="451" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="rule" SimpleReactionRef="to ri1" LocationX="38" LocationY="93" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="IP3" LocationX="108" LocationY="251" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="rule" SimpleReactionRef="Serca2flux" LocationX="102" LocationY="415" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="cain" LocationX="128" LocationY="72" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="IP3Ri2" LocationX="42" LocationY="67" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="rule" SimpleReactionRef="from ra" LocationX="189" LocationY="131" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="Ip3Ro" LocationX="163" LocationY="177" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="Ip3Rn" LocationX="28" LocationY="126" />
+      </Diagram>
+      <Version Name="unnamed" KeyValue="98833233" BranchId="97917948" Archived="0" Date="27-Mar-2016 03:31:55" FromVersionable="false">
+        <Owner Name="kobasabu" Identifier="97576374" />
+        <GroupAccess Type="1" />
+      </Version>
+      <ModelUnitSystem VolumeSubstanceUnit="uM.um3" MembraneSubstanceUnit="molecules" LumpedReactionSubstanceUnit="molecules" VolumeUnit="um3" AreaUnit="um2" LengthUnit="um" TimeUnit="s" />
+    </Model>
+    <SimulationSpec Name="Application0" Stochastic="false" UseConcentration="true" RuleBased="false" MassConservationModelReduction="true" InsufficientIterations="false" InsufficientMaxMolecules="false" CharacteristicSize="0.022218469330592554">
+      <NetworkConstraints RbmMaxIteration="3" RbmMaxMoleculesPerSpecies="10" RbmSpeciesLimit="800" RbmReactionsLimit="2500" />
+      <Annotation />
+      <Geometry Name="Geometry1276937380" Dimension="3">
+        <Extent X="1.5" Y="4.5" Z="1.5" />
+        <Origin X="0.0" Y="0.0" Z="0.0" />
+        <SubVolume Name="DTS" Handle="2" Type="Analytical" KeyValue="97937206">
+          <AnalyticExpression>((y &gt;= 0.25) &amp;&amp; (y &lt;= 4.25) &amp;&amp; (x &gt;= 0.69) &amp;&amp; (x &lt;= 0.81) &amp;&amp; (z &gt;= 0.69) &amp;&amp; (z &lt;= 0.81))</AnalyticExpression>
+        </SubVolume>
+        <SubVolume Name="cyt" Handle="1" Type="Analytical" KeyValue="97937207">
+          <AnalyticExpression>(((((x - 0.75) ^ 2.0) / (0.75 ^ 2.0)) + (((y - 2.25) ^ 2.0) / (2.0 ^ 2.15)) + (((z - 0.75) ^ 2.0) / (0.75 ^ 2.0))) &lt;= 1.0)</AnalyticExpression>
+        </SubVolume>
+        <SubVolume Name="subdomain0" Handle="0" Type="Analytical" KeyValue="97937208">
+          <AnalyticExpression>1.0</AnalyticExpression>
+        </SubVolume>
+        <SurfaceClass Name="cyt_subdomain0_membrane" SubVolume1Ref="cyt" SubVolume2Ref="subdomain0" KeyValue="97937209" />
+        <SurfaceClass Name="DTS_cyt_membrane" SubVolume1Ref="DTS" SubVolume2Ref="cyt" KeyValue="97937210" />
+        <SurfaceDescription NumSamplesX="101" NumSamplesY="101" NumSamplesZ="101" CutoffFrequency="0.3">
+          <VolumeRegion Name="subdomain00" RegionID="0" SubVolume="subdomain0" Size="5.162747624999999" Unit="um3" />
+          <VolumeRegion Name="cyt1" RegionID="1" SubVolume="cyt" Size="4.889261249999999" Unit="um3" />
+          <VolumeRegion Name="DTS2" RegionID="2" SubVolume="DTS" Size="0.07299112499999999" Unit="um3" />
+          <MembraneRegion Name="membrane_subdomain00_cyt1" VolumeRegion1="cyt1" VolumeRegion2="subdomain00" Size="16.352455854409524" Unit="um2" />
+          <MembraneRegion Name="membrane_cyt1_DTS2" VolumeRegion1="DTS2" VolumeRegion2="cyt1" Size="1.9487029213884268" Unit="um2" />
+        </SurfaceDescription>
+        <Version Name="Geometry1276937380" KeyValue="97937203" BranchId="97936490" Archived="0" Date="23-Dec-2015 17:41:17" FromVersionable="false">
+          <Owner Name="kobasabu" Identifier="97576374" />
+          <GroupAccess Type="1" />
+        </Version>
+      </Geometry>
+      <GeometryContext>
+        <FeatureMapping Feature="OUT" GeometryClass="subdomain0" SubVolume="subdomain0" Size="50000.0" VolumePerUnitVolume="1.0">
+          <BoundariesTypes Xm="Flux" Xp="Flux" Ym="Flux" Yp="Flux" Zm="Flux" Zp="Flux" />
+        </FeatureMapping>
+        <FeatureMapping Feature="CYT" GeometryClass="cyt" SubVolume="cyt" Size="50000.0" VolumePerUnitVolume="1.0">
+          <BoundariesTypes Xm="Flux" Xp="Flux" Ym="Flux" Yp="Flux" Zm="Flux" Zp="Flux" />
+        </FeatureMapping>
+        <FeatureMapping Feature="DTS" GeometryClass="DTS" SubVolume="DTS" Size="50000.0" VolumePerUnitVolume="1.0">
+          <BoundariesTypes Xm="Flux" Xp="Flux" Ym="Flux" Yp="Flux" Zm="Flux" Zp="Flux" />
+        </FeatureMapping>
+        <MembraneMapping Membrane="DTS_CYT" Size="6563.0" AreaPerUnitArea="1.0" CalculateVoltage="false" SpecificCapacitance="1.0" InitialVoltage="0.0" GeometryClass="DTS_cyt_membrane">
+          <BoundariesTypes Xm="Flux" Xp="Flux" Ym="Flux" Yp="Flux" Zm="Flux" Zp="Flux" />
+        </MembraneMapping>
+        <MembraneMapping Membrane="CYT_OUT" Size="6563.0" AreaPerUnitArea="1.0" CalculateVoltage="false" SpecificCapacitance="1.0" InitialVoltage="0.0" GeometryClass="cyt_subdomain0_membrane">
+          <BoundariesTypes Xm="Flux" Xp="Flux" Ym="Flux" Yp="Flux" Zm="Flux" Zp="Flux" />
+        </MembraneMapping>
+      </GeometryContext>
+      <ReactionContext>
+        <LocalizedCompoundSpec LocalizedCompoundRef="Caex" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>2500.0</InitialConcentration>
+          <Diffusion>2000.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="Caout" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>0.05</InitialConcentration>
+          <Diffusion>20.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="IP3" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>0.2</InitialConcentration>
+          <Diffusion>283.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="cain" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>1000.0</InitialConcentration>
+          <Diffusion>20.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="Ip3Ra" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>15.0</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="SERCA2" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>(9000.0 / 2.0)</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="SERCA3" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>(16300.0 / 2.0)</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="IP3Ri2" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>2.0</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="Ip3Ro" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>168.0</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="Ip3Rn" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>328.0</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="Ip3Ri" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>37.0</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="IP3Rs" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>1.0</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <ReactionSpec ReactionStepRef="ip3rflux" ReactionMapping="included" />
+        <ReactionSpec ReactionStepRef="Serca2flux" ReactionMapping="included" />
+        <ReactionSpec ReactionStepRef="serca3flux" ReactionMapping="included" />
+        <ReactionSpec ReactionStepRef="to ri2" ReactionMapping="included" />
+        <ReactionSpec ReactionStepRef="from ra" ReactionMapping="included" />
+        <ReactionSpec ReactionStepRef="to ri1" ReactionMapping="included" />
+        <ReactionSpec ReactionStepRef="to ro" ReactionMapping="included" />
+        <ReactionSpec ReactionStepRef="to rs" ReactionMapping="included" />
+        <ReactionSpec ReactionStepRef="leak" ReactionMapping="included" />
+        <ReactionSpec ReactionStepRef="exleak" ReactionMapping="included" />
+      </ReactionContext>
+      <MathDescription Name="Application0_generated">
+        <Constant Name="_F_">96480.0</Constant>
+        <Constant Name="_F_nmol_">9.648E-5</Constant>
+        <Constant Name="_K_GHK_">1.0E-9</Constant>
+        <Constant Name="_N_pmol_">6.02E11</Constant>
+        <Constant Name="_PI_">3.141592653589793</Constant>
+        <Constant Name="_R_">8314.0</Constant>
+        <Constant Name="_T_">300.0</Constant>
+        <Constant Name="AreaPerUnitArea_CYT_OUT">1.0</Constant>
+        <Constant Name="AreaPerUnitArea_DTS_CYT">1.0</Constant>
+        <Constant Name="Caex_diffusionRate">2000.0</Constant>
+        <Constant Name="Caex_init_uM">2500.0</Constant>
+        <Constant Name="cain_diffusionRate">20.0</Constant>
+        <Constant Name="cain_init_uM">1000.0</Constant>
+        <Constant Name="Caout_diffusionRate">20.0</Constant>
+        <Constant Name="Caout_init_uM">0.05</Constant>
+        <Constant Name="gamma">420000.0</Constant>
+        <Constant Name="IP3_diffusionRate">283.0</Constant>
+        <Constant Name="IP3_init_uM">0.2</Constant>
+        <Constant Name="Ip3Ra_init_molecules_um_2">15.0</Constant>
+        <Constant Name="IP3Ri2_init_molecules_um_2">2.0</Constant>
+        <Constant Name="Ip3Ri_init_molecules_um_2">37.0</Constant>
+        <Constant Name="Ip3Rn_init_molecules_um_2">328.0</Constant>
+        <Constant Name="Ip3Ro_init_molecules_um_2">168.0</Constant>
+        <Constant Name="IP3Rs_init_molecules_um_2">1.0</Constant>
+        <Constant Name="k">2.0</Constant>
+        <Constant Name="k1">11.94</Constant>
+        <Constant Name="k2_to_ri1">1.78</Constant>
+        <Constant Name="k2_to_ri2">1.78</Constant>
+        <Constant Name="k3">37.4</Constant>
+        <Constant Name="K3">1.4</Constant>
+        <Constant Name="k4">0.11</Constant>
+        <Constant Name="k5">4.0</Constant>
+        <Constant Name="K5">4707.0</Constant>
+        <Constant Name="K_millivolts_per_volt">1000.0</Constant>
+        <Constant Name="K_Serca2flux">0.27</Constant>
+        <Constant Name="K_serca3flux">1.1</Constant>
+        <Constant Name="kc3">1.7</Constant>
+        <Constant Name="km2_to_ri1">0.84</Constant>
+        <Constant Name="km2_to_ri2">0.84</Constant>
+        <Constant Name="km3">2.5</Constant>
+        <Constant Name="km4">29.8</Constant>
+        <Constant Name="KMOLE">(1.0 / 602.0)</Constant>
+        <Constant Name="L1">0.12</Constant>
+        <Constant Name="L3">0.025</Constant>
+        <Constant Name="L5">54.7</Constant>
+        <Constant Name="netValence_exleak">1.0</Constant>
+        <Constant Name="netValence_from_ra">1.0</Constant>
+        <Constant Name="netValence_ip3rflux">1.0</Constant>
+        <Constant Name="netValence_leak">1.0</Constant>
+        <Constant Name="netValence_Serca2flux">1.0</Constant>
+        <Constant Name="netValence_serca3flux">1.0</Constant>
+        <Constant Name="netValence_to_ri1">1.0</Constant>
+        <Constant Name="netValence_to_ri2">1.0</Constant>
+        <Constant Name="netValence_to_ro">1.0</Constant>
+        <Constant Name="netValence_to_rs">1.0</Constant>
+        <Constant Name="Voltage_CYT_OUT">0.0</Constant>
+        <Constant Name="Voltage_DTS_CYT">0.0</Constant>
+        <Constant Name="VolumePerUnitVolume_CYT">1.0</Constant>
+        <Constant Name="VolumePerUnitVolume_DTS">1.0</Constant>
+        <Constant Name="VolumePerUnitVolume_OUT">1.0</Constant>
+        <VolumeVariable Name="Caex" Domain="subdomain0" />
+        <VolumeVariable Name="cain" Domain="DTS" />
+        <VolumeVariable Name="Caout" Domain="cyt" />
+        <VolumeVariable Name="IP3" Domain="cyt" />
+        <MembraneVariable Name="Ip3Ri" Domain="DTS_cyt_membrane" />
+        <MembraneVariable Name="IP3Ri2" Domain="DTS_cyt_membrane" />
+        <MembraneVariable Name="Ip3Rn" Domain="DTS_cyt_membrane" />
+        <MembraneVariable Name="Ip3Ro" Domain="DTS_cyt_membrane" />
+        <MembraneVariable Name="IP3Rs" Domain="DTS_cyt_membrane" />
+        <Function Name="g" Domain="DTS_cyt_membrane">(21.0 * (10.0 ^  - 6.0) * 6.02 * (10.0 ^ 23.0) * 4.5 * (10.0 ^  - 15.0) / k)</Function>
+        <Function Name="gam" Domain="cyt_subdomain0_membrane">(11.3 * (10.0 ^  - 9.0) * 6.02 * (10.0 ^ 23.0) * 4.5 * (10.0 ^  - 15.0) / 16.35)</Function>
+        <Function Name="Ip3Ra" Domain="DTS_cyt_membrane">((K_Ip3Ra_total - (AreaPerUnitArea_DTS_CYT * IP3Ri2) - (AreaPerUnitArea_DTS_CYT * Ip3Ro) - (AreaPerUnitArea_DTS_CYT * Ip3Rn) - (AreaPerUnitArea_DTS_CYT * Ip3Ri) - (AreaPerUnitArea_DTS_CYT * IP3Rs)) / AreaPerUnitArea_DTS_CYT)</Function>
+        <Function Name="J_exleak" Domain="cyt_subdomain0_membrane">(gam * log((Caex / Caout)))</Function>
+        <Function Name="J_from_ra" Domain="DTS_cyt_membrane">((Kf_from_ra * Ip3Ra) - ((Kr_from_ra * Ip3Ro) * Caout))</Function>
+        <Function Name="J_ip3rflux" Domain="DTS_cyt_membrane">(gamma * log((cain / Caout)) * P * NIP3R)</Function>
+        <Function Name="J_leak" Domain="DTS_cyt_membrane">(g * log((cain / Caout)))</Function>
+        <Function Name="J_Serca2flux" Domain="DTS_cyt_membrane">((Caout ^ 1.7) * V_Serca2flux * SERCA2 / ((K_Serca2flux ^ 1.7) + (Caout ^ 1.7)))</Function>
+        <Function Name="J_serca3flux" Domain="DTS_cyt_membrane">((Caout ^ 1.8) * V_serca3flux * SERCA3 / ((K_serca3flux ^ 1.8) + (Caout ^ 1.8)))</Function>
+        <Function Name="J_to_ri1" Domain="DTS_cyt_membrane">(((Kf_to_ri1 * Ip3Rn) * Caout) - (Kr_to_ri1 * Ip3Ri))</Function>
+        <Function Name="J_to_ri2" Domain="DTS_cyt_membrane">(((Kf_to_ri2 * Ip3Ra) * Caout) - (Kr_to_ri2 * IP3Ri2))</Function>
+        <Function Name="J_to_ro" Domain="DTS_cyt_membrane">(((Kf_to_ro * Ip3Rn) * IP3) - (Kr_to_ro * Ip3Ro))</Function>
+        <Function Name="J_to_rs" Domain="DTS_cyt_membrane">((Kf_to_rs * Ip3Ro) - (Kr_to_rs * IP3Rs))</Function>
+        <Function Name="K_Ip3Ra_total" Domain="DTS_cyt_membrane">((AreaPerUnitArea_DTS_CYT * Ip3Ra_init_molecules_um_2) + (AreaPerUnitArea_DTS_CYT * IP3Ri2_init_molecules_um_2) + (AreaPerUnitArea_DTS_CYT * Ip3Ro_init_molecules_um_2) + (AreaPerUnitArea_DTS_CYT * Ip3Rn_init_molecules_um_2) + (AreaPerUnitArea_DTS_CYT * Ip3Ri_init_molecules_um_2) + (AreaPerUnitArea_DTS_CYT * IP3Rs_init_molecules_um_2))</Function>
+        <Function Name="K_SERCA2_total" Domain="DTS_cyt_membrane">(AreaPerUnitArea_DTS_CYT * SERCA2_init_molecules_um_2)</Function>
+        <Function Name="K_SERCA3_total" Domain="DTS_cyt_membrane">(AreaPerUnitArea_DTS_CYT * SERCA3_init_molecules_um_2)</Function>
+        <Function Name="Kf_from_ra" Domain="DTS_cyt_membrane">(k1 * L1 / (L1 + Caout))</Function>
+        <Function Name="Kf_to_ri1" Domain="DTS_cyt_membrane">(k2_to_ri1 / (L3 + (Caout * (1.0 + (L1 / L3)))))</Function>
+        <Function Name="Kf_to_ri2" Domain="DTS_cyt_membrane">(k2_to_ri2 / (L1 + Caout))</Function>
+        <Function Name="Kf_to_ro" Domain="DTS_cyt_membrane">(((k3 * L3) + (kc3 * Caout)) / (L3 + (Caout * (1.0 + (L3 / L1)))))</Function>
+        <Function Name="Kf_to_rs" Domain="DTS_cyt_membrane">(k4 * L5 / (L5 + Caout))</Function>
+        <Function Name="KFlux_CYT_OUT_CYT" Domain="cyt_subdomain0_membrane">(AreaPerUnitArea_CYT_OUT / VolumePerUnitVolume_CYT)</Function>
+        <Function Name="KFlux_CYT_OUT_OUT" Domain="cyt_subdomain0_membrane">(AreaPerUnitArea_CYT_OUT / VolumePerUnitVolume_OUT)</Function>
+        <Function Name="KFlux_DTS_CYT_CYT" Domain="DTS_cyt_membrane">(AreaPerUnitArea_DTS_CYT / VolumePerUnitVolume_CYT)</Function>
+        <Function Name="KFlux_DTS_CYT_DTS" Domain="DTS_cyt_membrane">(AreaPerUnitArea_DTS_CYT / VolumePerUnitVolume_DTS)</Function>
+        <Function Name="Kr_from_ra" Domain="DTS_cyt_membrane">(((k5 * L5) + K5) / (L5 + Caout))</Function>
+        <Function Name="Kr_to_ri1" Domain="DTS_cyt_membrane">km2_to_ri1</Function>
+        <Function Name="Kr_to_ri2" Domain="DTS_cyt_membrane">km2_to_ri2</Function>
+        <Function Name="Kr_to_ro" Domain="DTS_cyt_membrane">((K3 + (km3 * Caout)) * L5 / (L5 + Caout))</Function>
+        <Function Name="Kr_to_rs" Domain="DTS_cyt_membrane">km4</Function>
+        <Function Name="NIP3R" Domain="DTS_cyt_membrane">(Ip3Ra + Ip3Ro + Ip3Ri + IP3Ri2 + Ip3Rn + IP3Rs)</Function>
+        <Function Name="P" Domain="DTS_cyt_membrane">((((0.9 * Ip3Ra) + (0.1 * Ip3Ro)) / NIP3R) ^ 4.0)</Function>
+        <Function Name="SERCA2" Domain="DTS_cyt_membrane">(K_SERCA2_total / AreaPerUnitArea_DTS_CYT)</Function>
+        <Function Name="SERCA2_init_molecules_um_2" Domain="DTS_cyt_membrane">(9000.0 / 2.0)</Function>
+        <Function Name="SERCA3" Domain="DTS_cyt_membrane">(K_SERCA3_total / AreaPerUnitArea_DTS_CYT)</Function>
+        <Function Name="SERCA3_init_molecules_um_2" Domain="DTS_cyt_membrane">(16300.0 / 2.0)</Function>
+        <Function Name="Size_CYT" Domain="cyt">(VolumePerUnitVolume_CYT * vcRegionVolume('cyt'))</Function>
+        <Function Name="Size_CYT_OUT" Domain="cyt_subdomain0_membrane">(AreaPerUnitArea_CYT_OUT * vcRegionArea('cyt_subdomain0_membrane'))</Function>
+        <Function Name="Size_DTS" Domain="DTS">(VolumePerUnitVolume_DTS * vcRegionVolume('DTS'))</Function>
+        <Function Name="Size_DTS_CYT" Domain="DTS_cyt_membrane">(AreaPerUnitArea_DTS_CYT * vcRegionArea('DTS_cyt_membrane'))</Function>
+        <Function Name="Size_OUT" Domain="subdomain0">(VolumePerUnitVolume_OUT * vcRegionVolume('subdomain0'))</Function>
+        <Function Name="UnitFactor_uM_um3_molecules_neg_1">(1.0 / 602.0)</Function>
+        <Function Name="V_Serca2flux" Domain="DTS_cyt_membrane">(60.0 * 6.0 * (10.0 ^ 23.0) * (10.0 ^  - 3.0) * 4.5 * (10.0 ^  - 15.0) / 9000.0)</Function>
+        <Function Name="V_serca3flux" Domain="DTS_cyt_membrane">(60.0 * 6.0 * (10.0 ^ 23.0) * (10.0 ^  - 3.0) * 4.5 * (10.0 ^  - 15.0) / 16300.0)</Function>
+        <CompartmentSubDomain Name="DTS">
+          <BoundaryType Boundary="Xm" Type="Flux" />
+          <BoundaryType Boundary="Xp" Type="Flux" />
+          <BoundaryType Boundary="Ym" Type="Flux" />
+          <BoundaryType Boundary="Yp" Type="Flux" />
+          <BoundaryType Boundary="Zm" Type="Flux" />
+          <BoundaryType Boundary="Zp" Type="Flux" />
+          <PdeEquation Name="cain" SolutionType="Unknown">
+            <Rate>0.0</Rate>
+            <Diffusion>cain_diffusionRate</Diffusion>
+            <Initial>cain_init_uM</Initial>
+          </PdeEquation>
+        </CompartmentSubDomain>
+        <CompartmentSubDomain Name="cyt">
+          <BoundaryType Boundary="Xm" Type="Flux" />
+          <BoundaryType Boundary="Xp" Type="Flux" />
+          <BoundaryType Boundary="Ym" Type="Flux" />
+          <BoundaryType Boundary="Yp" Type="Flux" />
+          <BoundaryType Boundary="Zm" Type="Flux" />
+          <BoundaryType Boundary="Zp" Type="Flux" />
+          <PdeEquation Name="Caout" SolutionType="Unknown">
+            <Rate>0.0</Rate>
+            <Diffusion>Caout_diffusionRate</Diffusion>
+            <Initial>Caout_init_uM</Initial>
+          </PdeEquation>
+          <PdeEquation Name="IP3" SolutionType="Unknown">
+            <Rate>0.0</Rate>
+            <Diffusion>IP3_diffusionRate</Diffusion>
+            <Initial>IP3_init_uM</Initial>
+          </PdeEquation>
+        </CompartmentSubDomain>
+        <CompartmentSubDomain Name="subdomain0">
+          <BoundaryType Boundary="Xm" Type="Flux" />
+          <BoundaryType Boundary="Xp" Type="Flux" />
+          <BoundaryType Boundary="Ym" Type="Flux" />
+          <BoundaryType Boundary="Yp" Type="Flux" />
+          <BoundaryType Boundary="Zm" Type="Flux" />
+          <BoundaryType Boundary="Zp" Type="Flux" />
+          <PdeEquation Name="Caex" SolutionType="Unknown">
+            <Rate>0.0</Rate>
+            <Diffusion>Caex_diffusionRate</Diffusion>
+            <Initial>Caex_init_uM</Initial>
+          </PdeEquation>
+        </CompartmentSubDomain>
+        <MembraneSubDomain Name="cyt_subdomain0_membrane" InsideCompartment="cyt" OutsideCompartment="subdomain0">
+          <BoundaryType Boundary="Xm" Type="Value" />
+          <BoundaryType Boundary="Xp" Type="Value" />
+          <BoundaryType Boundary="Ym" Type="Value" />
+          <BoundaryType Boundary="Yp" Type="Value" />
+          <BoundaryType Boundary="Zm" Type="Value" />
+          <BoundaryType Boundary="Zp" Type="Value" />
+          <JumpCondition Name="Caex">
+            <InFlux>0.0</InFlux>
+            <OutFlux>- (UnitFactor_uM_um3_molecules_neg_1 * KFlux_CYT_OUT_OUT * J_exleak)</OutFlux>
+          </JumpCondition>
+          <JumpCondition Name="Caout">
+            <InFlux>(UnitFactor_uM_um3_molecules_neg_1 * KFlux_CYT_OUT_CYT * J_exleak)</InFlux>
+            <OutFlux>0.0</OutFlux>
+          </JumpCondition>
+          <JumpCondition Name="IP3">
+            <InFlux>0.0</InFlux>
+            <OutFlux>0.0</OutFlux>
+          </JumpCondition>
+        </MembraneSubDomain>
+        <MembraneSubDomain Name="DTS_cyt_membrane" InsideCompartment="DTS" OutsideCompartment="cyt">
+          <BoundaryType Boundary="Xm" Type="Value" />
+          <BoundaryType Boundary="Xp" Type="Value" />
+          <BoundaryType Boundary="Ym" Type="Value" />
+          <BoundaryType Boundary="Yp" Type="Value" />
+          <BoundaryType Boundary="Zm" Type="Value" />
+          <BoundaryType Boundary="Zp" Type="Value" />
+          <OdeEquation Name="IP3Ri2" SolutionType="Unknown">
+            <Rate>J_to_ri2</Rate>
+            <Initial>IP3Ri2_init_molecules_um_2</Initial>
+          </OdeEquation>
+          <OdeEquation Name="Ip3Ro" SolutionType="Unknown">
+            <Rate>(J_from_ra + J_to_ro - J_to_rs)</Rate>
+            <Initial>Ip3Ro_init_molecules_um_2</Initial>
+          </OdeEquation>
+          <OdeEquation Name="Ip3Rn" SolutionType="Unknown">
+            <Rate>( - J_to_ri1 - J_to_ro)</Rate>
+            <Initial>Ip3Rn_init_molecules_um_2</Initial>
+          </OdeEquation>
+          <OdeEquation Name="Ip3Ri" SolutionType="Unknown">
+            <Rate>J_to_ri1</Rate>
+            <Initial>Ip3Ri_init_molecules_um_2</Initial>
+          </OdeEquation>
+          <OdeEquation Name="IP3Rs" SolutionType="Unknown">
+            <Rate>J_to_rs</Rate>
+            <Initial>IP3Rs_init_molecules_um_2</Initial>
+          </OdeEquation>
+          <JumpCondition Name="Caout">
+            <InFlux>0.0</InFlux>
+            <OutFlux>(((((((UnitFactor_uM_um3_molecules_neg_1 * KFlux_DTS_CYT_CYT * J_ip3rflux) - (UnitFactor_uM_um3_molecules_neg_1 * KFlux_DTS_CYT_CYT * J_Serca2flux)) - (UnitFactor_uM_um3_molecules_neg_1 * KFlux_DTS_CYT_CYT * J_serca3flux)) - (UnitFactor_uM_um3_molecules_neg_1 * KFlux_DTS_CYT_CYT * J_to_ri2)) + (UnitFactor_uM_um3_molecules_neg_1 * KFlux_DTS_CYT_CYT * J_from_ra)) - (UnitFactor_uM_um3_molecules_neg_1 * KFlux_DTS_CYT_CYT * J_to_ri1)) + (UnitFactor_uM_um3_molecules_neg_1 * KFlux_DTS_CYT_CYT * J_leak))</OutFlux>
+          </JumpCondition>
+          <JumpCondition Name="IP3">
+            <InFlux>0.0</InFlux>
+            <OutFlux>- (UnitFactor_uM_um3_molecules_neg_1 * KFlux_DTS_CYT_CYT * J_to_ro)</OutFlux>
+          </JumpCondition>
+          <JumpCondition Name="cain">
+            <InFlux>((( - (UnitFactor_uM_um3_molecules_neg_1 * KFlux_DTS_CYT_DTS * J_ip3rflux) + (UnitFactor_uM_um3_molecules_neg_1 * KFlux_DTS_CYT_DTS * J_Serca2flux)) + (UnitFactor_uM_um3_molecules_neg_1 * KFlux_DTS_CYT_DTS * J_serca3flux)) - (UnitFactor_uM_um3_molecules_neg_1 * KFlux_DTS_CYT_DTS * J_leak))</InFlux>
+            <OutFlux>0.0</OutFlux>
+          </JumpCondition>
+        </MembraneSubDomain>
+        <Version Name="Application0_generated" KeyValue="98833392" BranchId="97937084" Archived="0" Date="27-Mar-2016 03:35:20" FromVersionable="false">
+          <Owner Name="kobasabu" Identifier="97576374" />
+          <GroupAccess Type="1" />
+        </Version>
+      </MathDescription>
+      <Simulation Name="Simulation0">
+        <SolverTaskDescription TaskType="Unsteady" UseSymbolicJacobian="false" Solver="Finite Volume Standalone, Regular Grid">
+          <TimeBound StartTime="0.0" EndTime="0.002" />
+          <TimeStep DefaultTime="1.0E-6" MinTime="1.0E-4" MaxTime="1.0E-4" />
+          <ErrorTolerance Absolut="1.0E-9" Relative="1.0E-8" />
+          <OutputOptions OutputTimeStep="9.999999999999999E-5" />
+          <SmoldynSimulationOptions>
+            <Accuracy>10.0</Accuracy>
+            <HighResolutionSample>true</HighResolutionSample>
+            <saveParticleFiles>false</saveParticleFiles>
+            <gaussianTableSize>4096</gaussianTableSize>
+            <SmoldynStepMultiplier>1</SmoldynStepMultiplier>
+          </SmoldynSimulationOptions>
+          <NumberProcessors>1</NumberProcessors>
+        </SolverTaskDescription>
+        <MathOverrides />
+        <MeshSpecification>
+          <Size X="50" Y="148" Z="50" />
+        </MeshSpecification>
+        <Version Name="Simulation0" KeyValue="98833429" BranchId="97937126" Archived="0" Date="27-Mar-2016 03:35:20" FromVersionable="false">
+          <Owner Name="kobasabu" Identifier="97576374" />
+          <GroupAccess Type="1" />
+        </Version>
+      </Simulation>
+      <Simulation Name="Copy of Simulation0">
+        <SolverTaskDescription TaskType="Unsteady" UseSymbolicJacobian="false" Solver="Sundials Stiff PDE Solver (Variable Time Step)">
+          <TimeBound StartTime="0.0" EndTime="0.075" />
+          <TimeStep DefaultTime="0.1" MinTime="0.0" MaxTime="1.0E-4" />
+          <ErrorTolerance Absolut="1.0E-9" Relative="1.0E-7" />
+          <OutputOptions OutputTimeStep="0.005" />
+          <SundialsSolverOptions>
+            <maxOrderAdvection>2</maxOrderAdvection>
+          </SundialsSolverOptions>
+          <NumberProcessors>1</NumberProcessors>
+        </SolverTaskDescription>
+        <MathOverrides />
+        <MeshSpecification>
+          <Size X="50" Y="148" Z="50" />
+        </MeshSpecification>
+        <Version Name="Copy of Simulation0" KeyValue="98833432" BranchId="98578116" Archived="0" Date="27-Mar-2016 03:35:20" FromVersionable="false">
+          <Owner Name="kobasabu" Identifier="97576374" />
+          <GroupAccess Type="1" />
+        </Version>
+      </Simulation>
+      <Simulation Name="lower diffusion">
+        <SolverTaskDescription TaskType="Unsteady" UseSymbolicJacobian="false" Solver="Sundials Stiff PDE Solver (Variable Time Step)">
+          <TimeBound StartTime="0.0" EndTime="0.075" />
+          <TimeStep DefaultTime="0.1" MinTime="0.0" MaxTime="1.0E-4" />
+          <ErrorTolerance Absolut="1.0E-9" Relative="1.0E-7" />
+          <OutputOptions OutputTimeStep="0.005" />
+          <SundialsSolverOptions>
+            <maxOrderAdvection>2</maxOrderAdvection>
+          </SundialsSolverOptions>
+          <NumberProcessors>1</NumberProcessors>
+        </SolverTaskDescription>
+        <MathOverrides>
+          <Constant Name="Caout_diffusionRate">1.0</Constant>
+        </MathOverrides>
+        <MeshSpecification>
+          <Size X="50" Y="148" Z="50" />
+        </MeshSpecification>
+        <Version Name="lower diffusion" KeyValue="98833434" BranchId="98589266" Archived="0" Date="27-Mar-2016 03:35:20" FromVersionable="false">
+          <Owner Name="kobasabu" Identifier="97576374" />
+          <GroupAccess Type="1" />
+        </Version>
+      </Simulation>
+      <Simulation Name="lower ca">
+        <SolverTaskDescription TaskType="Unsteady" UseSymbolicJacobian="false" Solver="Sundials Stiff PDE Solver (Variable Time Step)">
+          <TimeBound StartTime="0.0" EndTime="0.075" />
+          <TimeStep DefaultTime="0.1" MinTime="0.0" MaxTime="1.0E-4" />
+          <ErrorTolerance Absolut="1.0E-9" Relative="1.0E-7" />
+          <OutputOptions OutputTimeStep="0.005" />
+          <SundialsSolverOptions>
+            <maxOrderAdvection>2</maxOrderAdvection>
+          </SundialsSolverOptions>
+          <NumberProcessors>1</NumberProcessors>
+        </SolverTaskDescription>
+        <MathOverrides>
+          <Constant Name="cain_init_uM">30.0</Constant>
+        </MathOverrides>
+        <MeshSpecification>
+          <Size X="50" Y="148" Z="50" />
+        </MeshSpecification>
+        <Version Name="lower ca" KeyValue="98833436" BranchId="98588733" Archived="0" Date="27-Mar-2016 03:35:20" FromVersionable="false">
+          <Owner Name="kobasabu" Identifier="97576374" />
+          <GroupAccess Type="1" />
+        </Version>
+      </Simulation>
+      <Simulation Name="higher diffusion">
+        <SolverTaskDescription TaskType="Unsteady" UseSymbolicJacobian="false" Solver="Sundials Stiff PDE Solver (Variable Time Step)">
+          <TimeBound StartTime="0.0" EndTime="0.075" />
+          <TimeStep DefaultTime="0.1" MinTime="0.0" MaxTime="1.0E-4" />
+          <ErrorTolerance Absolut="1.0E-9" Relative="1.0E-7" />
+          <OutputOptions OutputTimeStep="0.005" />
+          <SundialsSolverOptions>
+            <maxOrderAdvection>2</maxOrderAdvection>
+          </SundialsSolverOptions>
+          <NumberProcessors>1</NumberProcessors>
+        </SolverTaskDescription>
+        <MathOverrides>
+          <Constant Name="Caout_diffusionRate">220.0</Constant>
+        </MathOverrides>
+        <MeshSpecification>
+          <Size X="50" Y="148" Z="50" />
+        </MeshSpecification>
+        <Version Name="higher diffusion" KeyValue="98833438" BranchId="98588736" Archived="0" Date="27-Mar-2016 03:35:20" FromVersionable="false">
+          <Owner Name="kobasabu" Identifier="97576374" />
+          <GroupAccess Type="1" />
+        </Version>
+      </Simulation>
+      <Simulation Name=" and higher diffusion">
+        <SolverTaskDescription TaskType="Unsteady" UseSymbolicJacobian="false" Solver="Sundials Stiff PDE Solver (Variable Time Step)">
+          <TimeBound StartTime="0.0" EndTime="2.0" />
+          <TimeStep DefaultTime="0.1" MinTime="0.0" MaxTime="1.0E-4" />
+          <ErrorTolerance Absolut="1.0E-9" Relative="1.0E-7" />
+          <OutputOptions OutputTimeStep="0.1" />
+          <SundialsSolverOptions>
+            <maxOrderAdvection>2</maxOrderAdvection>
+          </SundialsSolverOptions>
+          <NumberProcessors>1</NumberProcessors>
+        </SolverTaskDescription>
+        <MathOverrides>
+          <Constant Name="Caout_diffusionRate">200.0</Constant>
+        </MathOverrides>
+        <MeshSpecification>
+          <Size X="50" Y="148" Z="50" />
+        </MeshSpecification>
+        <Version Name=" and higher diffusion" KeyValue="98833440" BranchId="98686576" Archived="0" Date="27-Mar-2016 03:35:20" FromVersionable="false">
+          <Owner Name="kobasabu" Identifier="97576374" />
+          <GroupAccess Type="1" />
+        </Version>
+      </Simulation>
+      <Simulation Name="lower ca lower diffusion">
+        <SolverTaskDescription TaskType="Unsteady" UseSymbolicJacobian="false" Solver="Sundials Stiff PDE Solver (Variable Time Step)">
+          <TimeBound StartTime="0.0" EndTime="0.075" />
+          <TimeStep DefaultTime="0.1" MinTime="0.0" MaxTime="1.0E-4" />
+          <ErrorTolerance Absolut="1.0E-9" Relative="1.0E-7" />
+          <OutputOptions OutputTimeStep="0.005" />
+          <SundialsSolverOptions>
+            <maxOrderAdvection>2</maxOrderAdvection>
+          </SundialsSolverOptions>
+          <NumberProcessors>1</NumberProcessors>
+        </SolverTaskDescription>
+        <MathOverrides>
+          <Constant Name="cain_diffusionRate">1.0</Constant>
+          <Constant Name="Caout_diffusionRate">1.0</Constant>
+          <Constant Name="cain_init_uM">30.0</Constant>
+        </MathOverrides>
+        <MeshSpecification>
+          <Size X="50" Y="148" Z="50" />
+        </MeshSpecification>
+        <Version Name="lower ca lower diffusion" KeyValue="98833442" BranchId="98678613" Archived="0" Date="27-Mar-2016 03:35:20" FromVersionable="false">
+          <Owner Name="kobasabu" Identifier="97576374" />
+          <GroupAccess Type="1" />
+        </Version>
+      </Simulation>
+      <Simulation Name="222 higher diffusion">
+        <SolverTaskDescription TaskType="Unsteady" UseSymbolicJacobian="false" Solver="Sundials Stiff PDE Solver (Variable Time Step)">
+          <TimeBound StartTime="0.0" EndTime="2.0" />
+          <TimeStep DefaultTime="0.1" MinTime="0.0" MaxTime="1.0E-4" />
+          <ErrorTolerance Absolut="1.0E-9" Relative="1.0E-7" />
+          <OutputOptions OutputTimeStep="0.1" />
+          <SundialsSolverOptions>
+            <maxOrderAdvection>2</maxOrderAdvection>
+          </SundialsSolverOptions>
+          <NumberProcessors>1</NumberProcessors>
+        </SolverTaskDescription>
+        <MathOverrides>
+          <Constant Name="Caout_diffusionRate">200.0</Constant>
+          <Constant Name="cain_init_uM">30.0</Constant>
+        </MathOverrides>
+        <MeshSpecification>
+          <Size X="50" Y="148" Z="50" />
+        </MeshSpecification>
+        <Version Name="222 higher diffusion" KeyValue="98833444" BranchId="98679588" Archived="0" Date="27-Mar-2016 03:35:20" FromVersionable="false">
+          <Owner Name="kobasabu" Identifier="97576374" />
+          <GroupAccess Type="1" />
+        </Version>
+      </Simulation>
+      <SpatialObjects>
+        <SpatialObject Name="vobj_subdomain00" Type="Volume" subVolume="subdomain0" regionId="0">
+          <QuantityCategoryList>
+            <QuantityCategory Name="VolumeCentroid" Enabled="false" />
+            <QuantityCategory Name="InteriorVelocity" Enabled="false" />
+            <QuantityCategory Name="VolumeRegionSize" Enabled="true" />
+          </QuantityCategoryList>
+        </SpatialObject>
+        <SpatialObject Name="vobj_cyt1" Type="Volume" subVolume="cyt" regionId="1">
+          <QuantityCategoryList>
+            <QuantityCategory Name="VolumeCentroid" Enabled="false" />
+            <QuantityCategory Name="InteriorVelocity" Enabled="false" />
+            <QuantityCategory Name="VolumeRegionSize" Enabled="true" />
+          </QuantityCategoryList>
+        </SpatialObject>
+        <SpatialObject Name="vobj_DTS2" Type="Volume" subVolume="DTS" regionId="2">
+          <QuantityCategoryList>
+            <QuantityCategory Name="VolumeCentroid" Enabled="false" />
+            <QuantityCategory Name="InteriorVelocity" Enabled="false" />
+            <QuantityCategory Name="VolumeRegionSize" Enabled="true" />
+          </QuantityCategoryList>
+        </SpatialObject>
+        <SpatialObject Name="sobj_cyt1_subdomain00" Type="Surface" subVolumeInside="cyt" regionIdInside="1" subVolumeOutside="subdomain0" regionIdOutside="0">
+          <QuantityCategoryList>
+            <QuantityCategory Name="SurfaceNormal" Enabled="false" />
+            <QuantityCategory Name="SurfaceVelocity" Enabled="false" />
+            <QuantityCategory Name="DistanceToSurface" Enabled="false" />
+            <QuantityCategory Name="DirectionToSurface" Enabled="false" />
+            <QuantityCategory Name="SurfaceSize" Enabled="true" />
+          </QuantityCategoryList>
+        </SpatialObject>
+        <SpatialObject Name="sobj_DTS2_cyt1" Type="Surface" subVolumeInside="DTS" regionIdInside="2" subVolumeOutside="cyt" regionIdOutside="1">
+          <QuantityCategoryList>
+            <QuantityCategory Name="SurfaceNormal" Enabled="false" />
+            <QuantityCategory Name="SurfaceVelocity" Enabled="false" />
+            <QuantityCategory Name="DistanceToSurface" Enabled="false" />
+            <QuantityCategory Name="DirectionToSurface" Enabled="false" />
+            <QuantityCategory Name="SurfaceSize" Enabled="true" />
+          </QuantityCategoryList>
+        </SpatialObject>
+      </SpatialObjects>
+      <Version Name="Application0" KeyValue="98833394" BranchId="97937114" Archived="0" Date="27-Mar-2016 03:35:20" FromVersionable="false">
+        <Owner Name="kobasabu" Identifier="97576374" />
+        <GroupAccess Type="1" />
+      </Version>
+      <MicroscopeMeasurement Name="fluor">
+        <ConvolutionKernel Type="ProjectionZKernel" />
+      </MicroscopeMeasurement>
+    </SimulationSpec>
+    <Version Name="TrIP3RSERCASpaDyn" KeyValue="98833446" BranchId="98730208" Archived="0" Date="27-Mar-2016 03:35:20" FromVersionable="false">
+      <Owner Name="kobasabu" Identifier="97576374" />
+      <GroupAccess Type="0" />
+    </Version>
+    <pathwayModel>
+      <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:bp="http://www.biopax.org/release/biopax-level3.owl#" version="3.0" />
+    </pathwayModel>
+    <relationshipModel>
+      <RMNS version="3.0" />
+    </relationshipModel>
+    <vcmetadata>
+      <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" />
+      <nonrdfAnnotationList />
+      <uriBindingList />
+    </vcmetadata>
+  </BioModel>
+</vcml>
+

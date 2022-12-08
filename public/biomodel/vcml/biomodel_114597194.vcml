@@ -1,0 +1,363 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--This biomodel was generated in VCML Version Alpha_Version_7.4.0_build_87-->
+<vcml xmlns="http://sourceforge.net/projects/vcell/vcml" Version="Alpha_Version_7.4.0_build_87">
+  <BioModel Name="DupontCellCalcium">
+    <Model Name="unnamed">
+      <ModelParameters>
+        <Parameter Name="Vin" Role="user defined" Unit="tbd">0.0</Parameter>
+        <Parameter Name="V_M2" Role="user defined" Unit="uM.s-1">0.8333333333333334</Parameter>
+        <Parameter Name="n" Role="user defined" Unit="tbd">2.0</Parameter>
+        <Parameter Name="K_2" Role="user defined" Unit="tbd">1.0</Parameter>
+        <Parameter Name="K_R" Role="user defined" Unit="tbd">2.0</Parameter>
+        <Parameter Name="V_M3" Role="user defined" Unit="tbd">10.833333333333334</Parameter>
+        <Parameter Name="m" Role="user defined" Unit="tbd">2.0</Parameter>
+        <Parameter Name="p" Role="user defined" Unit="tbd">4.0</Parameter>
+        <Parameter Name="K_A" Role="user defined" Unit="tbd">0.9</Parameter>
+        <Parameter Name="beta" Role="user defined" Unit="tbd">0.4</Parameter>
+        <Parameter Name="k_f" Role="user defined" Unit="s-1">0.016666666666666666</Parameter>
+      </ModelParameters>
+      <Compound Name="s0" />
+      <Compound Name="s1" />
+      <Feature Name="Dupont Goldbeter model" KeyValue="114597143" />
+      <LocalizedCompound Name="Ca2_cyt" CompoundRef="s0" Structure="Dupont Goldbeter model" OverrideName="true" KeyValue="114597145" />
+      <LocalizedCompound Name="Ca2_ER" CompoundRef="s1" Structure="Dupont Goldbeter model" OverrideName="true" KeyValue="114597146" />
+      <SimpleReaction Structure="Dupont Goldbeter model" Name="V_in" Reversible="true" FluxOption="MolecularOnly" KeyValue="114597147">
+        <Product LocalizedCompoundRef="Ca2_cyt" Stoichiometry="1" KeyValue="114597148" />
+        <Kinetics KineticsType="GeneralKinetics">
+          <Parameter Name="J" Role="reaction rate" Unit="uM.s-1">(v_0 + (v_1 * beta))</Parameter>
+          <Parameter Name="v_0" Role="user defined" Unit="uM.s-1">0.056666666666666664</Parameter>
+          <Parameter Name="v_1" Role="user defined" Unit="tbd">0.056666666666666664</Parameter>
+        </Kinetics>
+      </SimpleReaction>
+      <SimpleReaction Structure="Dupont Goldbeter model" Name="V2" Reversible="true" FluxOption="MolecularOnly" KeyValue="114597149">
+        <Reactant LocalizedCompoundRef="Ca2_cyt" Stoichiometry="1" KeyValue="114597150" />
+        <Product LocalizedCompoundRef="Ca2_ER" Stoichiometry="1" KeyValue="114597151" />
+        <Kinetics KineticsType="GeneralKinetics">
+          <Parameter Name="J" Role="reaction rate" Unit="uM.s-1">(V_M2 * (Ca2_cyt ^ n) / ((K_2 ^ n) + (Ca2_cyt ^ n)))</Parameter>
+        </Kinetics>
+      </SimpleReaction>
+      <SimpleReaction Structure="Dupont Goldbeter model" Name="V3" Reversible="true" FluxOption="MolecularOnly" KeyValue="114597152">
+        <Reactant LocalizedCompoundRef="Ca2_ER" Stoichiometry="1" KeyValue="114597153" />
+        <Product LocalizedCompoundRef="Ca2_cyt" Stoichiometry="1" KeyValue="114597154" />
+        <Kinetics KineticsType="GeneralKinetics">
+          <Parameter Name="J" Role="reaction rate" Unit="uM.s-1">(beta * V_M3 * (Ca2_cyt ^ p) * (Ca2_ER ^ m) / ((K_A ^ p) + (Ca2_cyt ^ p)) / ((K_R ^ m) + (Ca2_ER ^ m)))</Parameter>
+        </Kinetics>
+      </SimpleReaction>
+      <SimpleReaction Structure="Dupont Goldbeter model" Name="leak from ER" Reversible="true" FluxOption="MolecularOnly" KeyValue="114597155">
+        <Reactant LocalizedCompoundRef="Ca2_ER" Stoichiometry="1" KeyValue="114597156" />
+        <Product LocalizedCompoundRef="Ca2_cyt" Stoichiometry="1" KeyValue="114597157" />
+        <Kinetics KineticsType="GeneralKinetics">
+          <Parameter Name="J" Role="reaction rate" Unit="uM.s-1">(k_f * Ca2_ER)</Parameter>
+        </Kinetics>
+      </SimpleReaction>
+      <SimpleReaction Structure="Dupont Goldbeter model" Name="r0" Reversible="true" FluxOption="MolecularOnly" KeyValue="114597158">
+        <Reactant LocalizedCompoundRef="Ca2_cyt" Stoichiometry="1" KeyValue="114597159" />
+        <Kinetics KineticsType="GeneralKinetics">
+          <Parameter Name="J" Role="reaction rate" Unit="uM.s-1">(k * Ca2_cyt)</Parameter>
+          <Parameter Name="k" Role="user defined" Unit="s-1">0.16666666666666666</Parameter>
+        </Kinetics>
+      </SimpleReaction>
+      <Diagram Name="c0" Structure="Dupont Goldbeter model">
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="Ca2_cyt" LocationX="67" LocationY="64" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="full" SimpleReactionRef="leak from ER" LocationX="170" LocationY="78" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="full" SimpleReactionRef="V2" LocationX="166" LocationY="21" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="full" SimpleReactionRef="V_in" LocationX="16" LocationY="35" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="full" SimpleReactionRef="V3" LocationX="166" LocationY="148" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="full" SimpleReactionRef="r0" LocationX="21" LocationY="111" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="Ca2_ER" LocationX="291" LocationY="82" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="Ca2_ER" LocationX="137" LocationY="74" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="molecule" SimpleReactionRef="leak from ER" LocationX="88" LocationY="66" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="molecule" SimpleReactionRef="V_in" LocationX="24" LocationY="45" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="molecule" SimpleReactionRef="r0" LocationX="21" LocationY="111" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="Ca2_cyt" LocationX="40" LocationY="58" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="molecule" SimpleReactionRef="V2" LocationX="99" LocationY="39" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="molecule" SimpleReactionRef="V3" LocationX="76" LocationY="117" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="Ca2_ER" LocationX="137" LocationY="74" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="rule" SimpleReactionRef="leak from ER" LocationX="88" LocationY="66" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="rule" SimpleReactionRef="V_in" LocationX="24" LocationY="45" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="rule" SimpleReactionRef="r0" LocationX="21" LocationY="111" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="Ca2_cyt" LocationX="40" LocationY="58" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="rule" SimpleReactionRef="V2" LocationX="99" LocationY="39" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="rule" SimpleReactionRef="V3" LocationX="76" LocationY="117" />
+      </Diagram>
+      <Version Name="unnamed" KeyValue="114597139" BranchId="75664215" Archived="0" Date="04-Jul-2017 07:26:44" FromVersionable="false">
+        <Owner Name="moutoutan" Identifier="73424874" />
+        <GroupAccess Type="1" />
+      </Version>
+      <ModelUnitSystem VolumeSubstanceUnit="uM.um3" MembraneSubstanceUnit="molecules" LumpedReactionSubstanceUnit="molecules" VolumeUnit="um3" AreaUnit="um2" LengthUnit="um" TimeUnit="s" />
+    </Model>
+    <SimulationSpec Name="Application0" Stochastic="false" UseConcentration="true" RuleBased="false" MassConservationModelReduction="true" InsufficientIterations="false" InsufficientMaxMolecules="false">
+      <NetworkConstraints RbmMaxIteration="3" RbmMaxMoleculesPerSpecies="10" RbmSpeciesLimit="800" RbmReactionsLimit="2500" />
+      <Annotation />
+      <Geometry Name="non-spatial343253535" Dimension="0">
+        <Extent X="10.0" Y="10.0" Z="10.0" />
+        <Origin X="0.0" Y="0.0" Z="0.0" />
+        <SubVolume Name="Compartment" Handle="0" Type="Compartmental" KeyValue="75664210" />
+        <Version Name="non-spatial343253535" KeyValue="75664206" BranchId="75664207" Archived="0" Date="11-Oct-2012 05:12:00" FromVersionable="false">
+          <Owner Name="moutoutan" Identifier="73424874" />
+          <GroupAccess Type="1" />
+        </Version>
+      </Geometry>
+      <GeometryContext>
+        <FeatureMapping Feature="Dupont Goldbeter model" GeometryClass="Compartment" SubVolume="Compartment" Size="500.0">
+          <BoundariesTypes Xm="Flux" Xp="Flux" Ym="Flux" Yp="Flux" Zm="Flux" Zp="Flux" />
+        </FeatureMapping>
+      </GeometryContext>
+      <ReactionContext>
+        <LocalizedCompoundSpec LocalizedCompoundRef="Ca2_cyt" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>0.37</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="Ca2_ER" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>1.87</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <ReactionSpec ReactionStepRef="V_in" ReactionMapping="included" />
+        <ReactionSpec ReactionStepRef="V2" ReactionMapping="included" />
+        <ReactionSpec ReactionStepRef="V3" ReactionMapping="included" />
+        <ReactionSpec ReactionStepRef="leak from ER" ReactionMapping="included" />
+        <ReactionSpec ReactionStepRef="r0" ReactionMapping="included" />
+      </ReactionContext>
+      <MathDescription Name="Application0_generated">
+        <Constant Name="_F_">96480.0</Constant>
+        <Constant Name="_F_nmol_">9.648E-5</Constant>
+        <Constant Name="_K_GHK_">1.0E-9</Constant>
+        <Constant Name="_N_pmol_">6.02E11</Constant>
+        <Constant Name="_PI_">3.141592653589793</Constant>
+        <Constant Name="_R_">8314.0</Constant>
+        <Constant Name="_T_">300.0</Constant>
+        <Constant Name="beta">0.4</Constant>
+        <Constant Name="Ca2_cyt_init_uM">0.37</Constant>
+        <Constant Name="Ca2_ER_init_uM">1.87</Constant>
+        <Constant Name="k">0.16666666666666666</Constant>
+        <Constant Name="K_2">1.0</Constant>
+        <Constant Name="K_A">0.9</Constant>
+        <Constant Name="k_f">0.016666666666666666</Constant>
+        <Constant Name="K_millivolts_per_volt">1000.0</Constant>
+        <Constant Name="K_R">2.0</Constant>
+        <Constant Name="KMOLE">(1.0 / 602.0)</Constant>
+        <Constant Name="m">2.0</Constant>
+        <Constant Name="n">2.0</Constant>
+        <Constant Name="p">4.0</Constant>
+        <Constant Name="Size_Dupont_Goldbeter_model">500.0</Constant>
+        <Constant Name="v_0">0.056666666666666664</Constant>
+        <Constant Name="v_1">0.056666666666666664</Constant>
+        <Constant Name="V_M2">0.8333333333333334</Constant>
+        <Constant Name="V_M3">10.833333333333334</Constant>
+        <Constant Name="Vin">0.0</Constant>
+        <VolumeVariable Name="Ca2_cyt" Domain="Compartment" />
+        <VolumeVariable Name="Ca2_ER" Domain="Compartment" />
+        <Function Name="J_leak_from_ER" Domain="Compartment">(k_f * Ca2_ER)</Function>
+        <Function Name="J_r0" Domain="Compartment">(k * Ca2_cyt)</Function>
+        <Function Name="J_V2" Domain="Compartment">(V_M2 * (Ca2_cyt ^ n) / ((K_2 ^ n) + (Ca2_cyt ^ n)))</Function>
+        <Function Name="J_V3" Domain="Compartment">(beta * V_M3 * (Ca2_cyt ^ p) * (Ca2_ER ^ m) / ((K_A ^ p) + (Ca2_cyt ^ p)) / ((K_R ^ m) + (Ca2_ER ^ m)))</Function>
+        <Function Name="J_V_in" Domain="Compartment">(v_0 + (v_1 * beta))</Function>
+        <CompartmentSubDomain Name="Compartment">
+          <BoundaryType Boundary="Xm" Type="Value" />
+          <BoundaryType Boundary="Xp" Type="Value" />
+          <BoundaryType Boundary="Ym" Type="Value" />
+          <BoundaryType Boundary="Yp" Type="Value" />
+          <BoundaryType Boundary="Zm" Type="Value" />
+          <BoundaryType Boundary="Zp" Type="Value" />
+          <OdeEquation Name="Ca2_cyt" SolutionType="Unknown">
+            <Rate>(J_V_in - J_V2 + J_V3 + J_leak_from_ER - J_r0)</Rate>
+            <Initial>Ca2_cyt_init_uM</Initial>
+          </OdeEquation>
+          <OdeEquation Name="Ca2_ER" SolutionType="Unknown">
+            <Rate>(J_V2 - J_V3 - J_leak_from_ER)</Rate>
+            <Initial>Ca2_ER_init_uM</Initial>
+          </OdeEquation>
+        </CompartmentSubDomain>
+        <Version Name="Application0_generated" KeyValue="114597137" BranchId="75664212" Archived="0" Date="04-Jul-2017 07:26:44" FromVersionable="false">
+          <Owner Name="moutoutan" Identifier="73424874" />
+          <GroupAccess Type="1" />
+        </Version>
+      </MathDescription>
+      <Simulation Name="Simulation0">
+        <SolverTaskDescription TaskType="Unsteady" UseSymbolicJacobian="false" Solver="IDA (Variable Order, Variable Time Step, ODE/DAE)">
+          <TimeBound StartTime="0.0" EndTime="800.0" />
+          <TimeStep DefaultTime="0.1" MinTime="1.0E-8" MaxTime="1.0" />
+          <ErrorTolerance Absolut="1.0E-9" Relative="1.0E-9" />
+          <OutputOptions KeepEvery="1" KeepAtMost="3000" />
+          <NumberProcessors>1</NumberProcessors>
+        </SolverTaskDescription>
+        <MathOverrides>
+          <Constant Name="Ca2_ER_init_uM" ConstantArraySpec="1001">2.0 to 3.5, 20 values</Constant>
+        </MathOverrides>
+        <Version Name="Simulation0" KeyValue="114597172" BranchId="75664240" Archived="0" Date="04-Jul-2017 07:26:45" FromVersionable="false">
+          <Owner Name="moutoutan" Identifier="73424874" />
+          <GroupAccess Type="1" />
+        </Version>
+      </Simulation>
+      <Simulation Name="Copy of Simulation0">
+        <SolverTaskDescription TaskType="Unsteady" UseSymbolicJacobian="false" Solver="Combined Stiff Solver (IDA/CVODE)">
+          <TimeBound StartTime="0.0" EndTime="200.0" />
+          <TimeStep DefaultTime="0.1" MinTime="1.0E-8" MaxTime="1.0" />
+          <ErrorTolerance Absolut="1.0E-9" Relative="1.0E-9" />
+          <OutputOptions KeepEvery="1" KeepAtMost="3000" />
+          <NumberProcessors>1</NumberProcessors>
+        </SolverTaskDescription>
+        <MathOverrides />
+        <Version Name="Copy of Simulation0" KeyValue="114597174" BranchId="75815506" Archived="0" Date="04-Jul-2017 07:26:45" FromVersionable="false">
+          <Owner Name="moutoutan" Identifier="73424874" />
+          <GroupAccess Type="1" />
+        </Version>
+      </Simulation>
+      <Simulation Name="vm2scan">
+        <SolverTaskDescription TaskType="Unsteady" UseSymbolicJacobian="false" Solver="Combined Stiff Solver (IDA/CVODE)">
+          <TimeBound StartTime="0.0" EndTime="200.0" />
+          <TimeStep DefaultTime="0.1" MinTime="1.0E-8" MaxTime="1.0" />
+          <ErrorTolerance Absolut="1.0E-9" Relative="1.0E-9" />
+          <OutputOptions KeepEvery="1" KeepAtMost="3000" />
+          <NumberProcessors>1</NumberProcessors>
+        </SolverTaskDescription>
+        <MathOverrides />
+        <Version Name="vm2scan" KeyValue="114597176" BranchId="75815509" Archived="0" Date="04-Jul-2017 07:26:45" FromVersionable="false">
+          <Owner Name="moutoutan" Identifier="73424874" />
+          <GroupAccess Type="1" />
+        </Version>
+      </Simulation>
+      <Simulation Name="vm3scan">
+        <SolverTaskDescription TaskType="Unsteady" UseSymbolicJacobian="false" Solver="Combined Stiff Solver (IDA/CVODE)">
+          <TimeBound StartTime="0.0" EndTime="200.0" />
+          <TimeStep DefaultTime="0.1" MinTime="1.0E-8" MaxTime="1.0" />
+          <ErrorTolerance Absolut="1.0E-9" Relative="1.0E-9" />
+          <OutputOptions KeepEvery="1" KeepAtMost="3000" />
+          <NumberProcessors>1</NumberProcessors>
+        </SolverTaskDescription>
+        <MathOverrides />
+        <Version Name="vm3scan" KeyValue="114597178" BranchId="75815512" Archived="0" Date="04-Jul-2017 07:26:45" FromVersionable="false">
+          <Owner Name="moutoutan" Identifier="73424874" />
+          <GroupAccess Type="1" />
+        </Version>
+      </Simulation>
+      <Simulation Name="Copy of vm2scan large">
+        <SolverTaskDescription TaskType="Unsteady" UseSymbolicJacobian="false" Solver="Combined Stiff Solver (IDA/CVODE)">
+          <TimeBound StartTime="0.0" EndTime="1000.0" />
+          <TimeStep DefaultTime="0.1" MinTime="1.0E-8" MaxTime="1.0" />
+          <ErrorTolerance Absolut="1.0E-9" Relative="1.0E-9" />
+          <OutputOptions KeepEvery="1" KeepAtMost="3000" />
+          <NumberProcessors>1</NumberProcessors>
+        </SolverTaskDescription>
+        <MathOverrides />
+        <Version Name="Copy of vm2scan large" KeyValue="114597180" BranchId="75815575" Archived="0" Date="04-Jul-2017 07:26:45" FromVersionable="false">
+          <Owner Name="moutoutan" Identifier="73424874" />
+          <GroupAccess Type="1" />
+        </Version>
+      </Simulation>
+      <Simulation Name="Copy of Copy of vm2scan morelarge">
+        <SolverTaskDescription TaskType="Unsteady" UseSymbolicJacobian="false" Solver="Combined Stiff Solver (IDA/CVODE)">
+          <TimeBound StartTime="0.0" EndTime="1000.0" />
+          <TimeStep DefaultTime="0.1" MinTime="1.0E-8" MaxTime="1.0" />
+          <ErrorTolerance Absolut="1.0E-9" Relative="1.0E-9" />
+          <OutputOptions KeepEvery="1" KeepAtMost="3000" />
+          <NumberProcessors>1</NumberProcessors>
+        </SolverTaskDescription>
+        <MathOverrides />
+        <Version Name="Copy of Copy of vm2scan morelarge" KeyValue="114597182" BranchId="75815640" Archived="0" Date="04-Jul-2017 07:26:45" FromVersionable="false">
+          <Owner Name="moutoutan" Identifier="73424874" />
+          <GroupAccess Type="1" />
+        </Version>
+      </Simulation>
+      <Simulation Name="Simulation1">
+        <SolverTaskDescription TaskType="Unsteady" UseSymbolicJacobian="false" Solver="Combined Stiff Solver (IDA/CVODE)">
+          <TimeBound StartTime="0.0" EndTime="2000.0" />
+          <TimeStep DefaultTime="0.1" MinTime="1.0E-8" MaxTime="1.0" />
+          <ErrorTolerance Absolut="1.0E-9" Relative="1.0E-9" />
+          <OutputOptions KeepEvery="1" KeepAtMost="1800" />
+          <NumberProcessors>1</NumberProcessors>
+        </SolverTaskDescription>
+        <MathOverrides />
+        <Version Name="Simulation1" KeyValue="114597184" BranchId="75815969" Archived="0" Date="04-Jul-2017 07:26:45" FromVersionable="false">
+          <Owner Name="moutoutan" Identifier="73424874" />
+          <GroupAccess Type="1" />
+        </Version>
+      </Simulation>
+      <Simulation Name="Simulation KR">
+        <SolverTaskDescription TaskType="Unsteady" UseSymbolicJacobian="false" Solver="Combined Stiff Solver (IDA/CVODE)">
+          <TimeBound StartTime="0.0" EndTime="2000.0" />
+          <TimeStep DefaultTime="0.1" MinTime="1.0E-8" MaxTime="1.0" />
+          <ErrorTolerance Absolut="1.0E-9" Relative="1.0E-9" />
+          <OutputOptions KeepEvery="1" KeepAtMost="1800" />
+          <NumberProcessors>1</NumberProcessors>
+        </SolverTaskDescription>
+        <MathOverrides>
+          <Constant Name="K_R" ConstantArraySpec="1001">10.0 to 1000.0, log, 40 values</Constant>
+        </MathOverrides>
+        <Version Name="Simulation KR" KeyValue="114597186" BranchId="75817254" Archived="0" Date="04-Jul-2017 07:26:45" FromVersionable="false">
+          <Owner Name="moutoutan" Identifier="73424874" />
+          <GroupAccess Type="1" />
+        </Version>
+      </Simulation>
+      <Simulation Name="Copy of Simulation KA">
+        <SolverTaskDescription TaskType="Unsteady" UseSymbolicJacobian="false" Solver="Combined Stiff Solver (IDA/CVODE)">
+          <TimeBound StartTime="0.0" EndTime="2000.0" />
+          <TimeStep DefaultTime="0.1" MinTime="1.0E-8" MaxTime="1.0" />
+          <ErrorTolerance Absolut="1.0E-9" Relative="1.0E-9" />
+          <OutputOptions KeepEvery="1" KeepAtMost="1800" />
+          <NumberProcessors>1</NumberProcessors>
+        </SolverTaskDescription>
+        <MathOverrides />
+        <Version Name="Copy of Simulation KA" KeyValue="114597188" BranchId="75817197" Archived="0" Date="04-Jul-2017 07:26:45" FromVersionable="false">
+          <Owner Name="moutoutan" Identifier="73424874" />
+          <GroupAccess Type="1" />
+        </Version>
+      </Simulation>
+      <Simulation Name="low frequency test">
+        <SolverTaskDescription TaskType="Unsteady" UseSymbolicJacobian="false" Solver="Combined Stiff Solver (IDA/CVODE)">
+          <TimeBound StartTime="0.0" EndTime="2000.0" />
+          <TimeStep DefaultTime="0.1" MinTime="1.0E-8" MaxTime="1.0" />
+          <ErrorTolerance Absolut="1.0E-9" Relative="1.0E-9" />
+          <OutputOptions KeepEvery="1" KeepAtMost="1800" />
+          <NumberProcessors>1</NumberProcessors>
+        </SolverTaskDescription>
+        <MathOverrides>
+          <Constant Name="beta">0.237</Constant>
+        </MathOverrides>
+        <Version Name="low frequency test" KeyValue="114597190" BranchId="76038280" Archived="0" Date="04-Jul-2017 07:26:45" FromVersionable="false">
+          <Owner Name="moutoutan" Identifier="73424874" />
+          <GroupAccess Type="1" />
+        </Version>
+      </Simulation>
+      <Simulation Name="Copy of Simulation0 1">
+        <SolverTaskDescription TaskType="Unsteady" UseSymbolicJacobian="false" Solver="IDA (Variable Order, Variable Time Step, ODE/DAE)">
+          <TimeBound StartTime="0.0" EndTime="10000.0" />
+          <TimeStep DefaultTime="0.1" MinTime="1.0E-8" MaxTime="1.0" />
+          <ErrorTolerance Absolut="1.0E-9" Relative="1.0E-9" />
+          <OutputOptions KeepEvery="1" KeepAtMost="30000" />
+          <NumberProcessors>1</NumberProcessors>
+        </SolverTaskDescription>
+        <MathOverrides>
+          <Constant Name="Ca2_ER_init_uM">2.2</Constant>
+        </MathOverrides>
+        <Version Name="Copy of Simulation0 1" KeyValue="114597192" BranchId="82428186" Archived="0" Date="04-Jul-2017 07:26:45" FromVersionable="false">
+          <Owner Name="moutoutan" Identifier="73424874" />
+          <GroupAccess Type="1" />
+        </Version>
+      </Simulation>
+      <Version Name="Application0" KeyValue="114597162" BranchId="75664232" Archived="0" Date="04-Jul-2017 07:26:44" FromVersionable="false">
+        <Owner Name="moutoutan" Identifier="73424874" />
+        <GroupAccess Type="1" />
+      </Version>
+      <MicroscopeMeasurement Name="fluor">
+        <ConvolutionKernel Type="ProjectionZKernel" />
+      </MicroscopeMeasurement>
+    </SimulationSpec>
+    <Version Name="DupontCellCalcium" KeyValue="114597194" BranchId="75664243" Archived="0" Date="04-Jul-2017 07:26:45" FromVersionable="false">
+      <Owner Name="moutoutan" Identifier="73424874" />
+      <GroupAccess Type="0" />
+    </Version>
+    <pathwayModel>
+      <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:bp="http://www.biopax.org/release/biopax-level3.owl#" version="3.0" />
+    </pathwayModel>
+    <relationshipModel>
+      <RMNS version="3.0" />
+    </relationshipModel>
+    <vcmetadata>
+      <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" />
+      <nonrdfAnnotationList />
+      <uriBindingList />
+    </vcmetadata>
+  </BioModel>
+</vcml>
+

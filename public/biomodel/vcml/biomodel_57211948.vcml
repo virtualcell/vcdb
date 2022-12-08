@@ -1,0 +1,216 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--This biomodel was generated in VCML Version Alpha_Version_7.4.0_build_87-->
+<vcml xmlns="http://sourceforge.net/projects/vcell/vcml" Version="Alpha_Version_7.4.0_build_87">
+  <BioModel Name="Tutorial_FRAP">
+    <Annotation>cloned from 'Tutorial_FRAP' owned by user tutorial</Annotation>
+    <Model Name="FRAP">
+      <Annotation>cloned from 'FRAP' owned by user tutorial
+cloned from 'FRAP' owned by user susan</Annotation>
+      <Compound Name="Dex">
+        <Annotation>Dextran</Annotation>
+      </Compound>
+      <Feature Name="EC" KeyValue="36031227" />
+      <Feature Name="cell" KeyValue="36031230" />
+      <Membrane InsideFeature="cell" OutsideFeature="EC" PositiveFeature="cell" NegativeFeature="EC" MembraneVoltage="Voltage_PM" Name="PM" KeyValue="36031229" />
+      <LocalizedCompound Name="Dex_cell" CompoundRef="Dex" Structure="cell" OverrideName="true" KeyValue="36031233" />
+      <Diagram Name="unnamedCompartment_diagram" Structure="EC" />
+      <Diagram Name="Membrane0_diagram" Structure="PM" />
+      <Diagram Name="Feature0_diagram" Structure="cell" />
+      <Version Name="FRAP" KeyValue="36031223" BranchId="36031224" Archived="0" Date="05-Oct-2009 20:28:39" FromVersionable="false">
+        <Owner Name="Education" Identifier="30625624" />
+        <GroupAccess Type="1" />
+        <Annotation>cloned from 'FRAP' owned by user tutorial
+cloned from 'FRAP' owned by user susan</Annotation>
+      </Version>
+      <ModelUnitSystem VolumeSubstanceUnit="uM.um3" MembraneSubstanceUnit="molecules" LumpedReactionSubstanceUnit="molecules" VolumeUnit="um3" AreaUnit="um2" LengthUnit="um" TimeUnit="s" />
+    </Model>
+    <SimulationSpec Name="FRAP" Stochastic="false" UseConcentration="true" RuleBased="false" MassConservationModelReduction="true" InsufficientIterations="false" InsufficientMaxMolecules="false" CharacteristicSize="0.04561394691467284">
+      <NetworkConstraints RbmMaxIteration="1" RbmMaxMoleculesPerSpecies="10" RbmSpeciesLimit="800" RbmReactionsLimit="2500" />
+      <Annotation>cloned from 'FRAP' owned by user tutorial
+cloned from 'FRAP' owned by user susan</Annotation>
+      <Geometry Name="FRAP_geometry" Dimension="2">
+        <Annotation>cloned from 'FRAP_geometry' owned by user tutorial
+cloned from 'FRAP_geometry' owned by user susan</Annotation>
+        <Extent X="22.0" Y="22.0" Z="10.0" />
+        <Origin X="-11.0" Y="-11.0" Z="0.0" />
+        <SubVolume Name="cell" Handle="1" Type="Analytical" KeyValue="36031214">
+          <AnalyticExpression>(((x * x) + (y * y)) &lt; 100.0)</AnalyticExpression>
+        </SubVolume>
+        <SubVolume Name="EC" Handle="0" Type="Analytical" KeyValue="36031215">
+          <AnalyticExpression>1.0</AnalyticExpression>
+        </SubVolume>
+        <SurfaceClass Name="EC_cell_membrane" SubVolume1Ref="EC" SubVolume2Ref="cell" />
+        <SurfaceDescription NumSamplesX="101" NumSamplesY="101" NumSamplesZ="1" CutoffFrequency="0.3">
+          <VolumeRegion Name="EC0" RegionID="0" SubVolume="EC" Size="169.3516" Unit="um2" />
+          <VolumeRegion Name="cell1" RegionID="1" SubVolume="cell" Size="314.6484" Unit="um2" />
+          <MembraneRegion Name="membrane_EC0_cell1" VolumeRegion1="cell1" VolumeRegion2="EC0" Size="623.9002231300552" Unit="um" />
+        </SurfaceDescription>
+        <Version Name="FRAP_geometry" KeyValue="36031210" BranchId="36031211" Archived="0" Date="05-Oct-2009 20:28:39" FromVersionable="false">
+          <Owner Name="Education" Identifier="30625624" />
+          <GroupAccess Type="1" />
+          <Annotation>cloned from 'FRAP_geometry' owned by user tutorial
+cloned from 'FRAP_geometry' owned by user susan</Annotation>
+        </Version>
+      </Geometry>
+      <GeometryContext>
+        <FeatureMapping Feature="EC" GeometryClass="EC" SubVolume="EC">
+          <BoundariesTypes Xm="Flux" Xp="Flux" Ym="Flux" Yp="Flux" Zm="Value" Zp="Value" />
+        </FeatureMapping>
+        <FeatureMapping Feature="cell" GeometryClass="cell" SubVolume="cell">
+          <BoundariesTypes Xm="Flux" Xp="Flux" Ym="Flux" Yp="Flux" Zm="Value" Zp="Value" />
+        </FeatureMapping>
+        <MembraneMapping Membrane="PM" SurfaceToVolumeRatio="1.0" VolumeFraction="0.2" CalculateVoltage="false" SpecificCapacitance="1.0" InitialVoltage="0.0" GeometryClass="EC_cell_membrane">
+          <BoundariesTypes Xm="Flux" Xp="Flux" Ym="Flux" Yp="Flux" Zm="Value" Zp="Value" />
+        </MembraneMapping>
+      </GeometryContext>
+      <ReactionContext>
+        <LocalizedCompoundSpec LocalizedCompoundRef="Dex_cell" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>(10.0 * ((x &lt;  - 5.0) || (x &gt; 5.0) || (y &lt;  - 5.0) || (y &gt; 5.0)))</InitialConcentration>
+          <Diffusion>20.0</Diffusion>
+        </LocalizedCompoundSpec>
+      </ReactionContext>
+      <MathDescription Name="FRAP_130359">
+        <Annotation>cloned from 'FRAP_130359' owned by user tutorial
+cloned from 'FRAP_130359' owned by user susan</Annotation>
+        <Constant Name="_F_">96480.0</Constant>
+        <Constant Name="_F_nmol_">9.648E-5</Constant>
+        <Constant Name="_K_GHK_">1.0E-9</Constant>
+        <Constant Name="_N_pmol_">6.02E11</Constant>
+        <Constant Name="_R_">8314.0</Constant>
+        <Constant Name="_T_">300.0</Constant>
+        <Constant Name="Dex_cell_diffusionRate">20.0</Constant>
+        <Constant Name="K_millivolts_per_volt">1000.0</Constant>
+        <Constant Name="KMOLE">0.0016611295681063123</Constant>
+        <Constant Name="Voltage_PM">0.0</Constant>
+        <VolumeVariable Name="Dex" />
+        <Function Name="Dex_cell_init">(10.0 * ((x &lt;  - 5.0) || (x &gt; 5.0) || (y &lt;  - 5.0) || (y &gt; 5.0)))</Function>
+        <Function Name="Size_cell">vcRegionVolume('cell')</Function>
+        <Function Name="Size_EC">vcRegionVolume('EC')</Function>
+        <Function Name="Size_PM">vcRegionArea('cell_EC')</Function>
+        <CompartmentSubDomain Name="cell">
+          <BoundaryType Boundary="Xm" Type="Flux" />
+          <BoundaryType Boundary="Xp" Type="Flux" />
+          <BoundaryType Boundary="Ym" Type="Flux" />
+          <BoundaryType Boundary="Yp" Type="Flux" />
+          <BoundaryType Boundary="Zm" Type="Value" />
+          <BoundaryType Boundary="Zp" Type="Value" />
+          <PdeEquation Name="Dex" SolutionType="Unknown">
+            <Rate>0.0</Rate>
+            <Diffusion>Dex_cell_diffusionRate</Diffusion>
+            <Initial>Dex_cell_init</Initial>
+          </PdeEquation>
+        </CompartmentSubDomain>
+        <CompartmentSubDomain Name="EC">
+          <BoundaryType Boundary="Xm" Type="Flux" />
+          <BoundaryType Boundary="Xp" Type="Flux" />
+          <BoundaryType Boundary="Ym" Type="Flux" />
+          <BoundaryType Boundary="Yp" Type="Flux" />
+          <BoundaryType Boundary="Zm" Type="Value" />
+          <BoundaryType Boundary="Zp" Type="Value" />
+          <PdeEquation Name="Dex" SolutionType="Unknown">
+            <Rate>0.0</Rate>
+            <Diffusion>Dex_cell_diffusionRate</Diffusion>
+            <Initial>0.0</Initial>
+          </PdeEquation>
+        </CompartmentSubDomain>
+        <MembraneSubDomain Name="EC_cell_membrane" InsideCompartment="cell" OutsideCompartment="EC">
+          <BoundaryType Boundary="Xm" Type="Value" />
+          <BoundaryType Boundary="Xp" Type="Value" />
+          <BoundaryType Boundary="Ym" Type="Value" />
+          <BoundaryType Boundary="Yp" Type="Value" />
+          <BoundaryType Boundary="Zm" Type="Value" />
+          <BoundaryType Boundary="Zp" Type="Value" />
+          <JumpCondition Name="Dex">
+            <InFlux>0.0</InFlux>
+            <OutFlux>0.0</OutFlux>
+          </JumpCondition>
+        </MembraneSubDomain>
+        <Version Name="FRAP_130359" KeyValue="57211938" BranchId="36031221" Archived="0" Date="30-May-2011 11:15:49" FromVersionable="false">
+          <Owner Name="Education" Identifier="30625624" />
+          <GroupAccess Type="1" />
+          <Annotation>cloned from 'FRAP_130359' owned by user tutorial
+cloned from 'FRAP_130359' owned by user susan</Annotation>
+        </Version>
+      </MathDescription>
+      <Simulation Name="FRAP 1">
+        <Annotation>cloned from 'FRAP 1' owned by user tutorial
+FRAP Simulation for tutorial.</Annotation>
+        <SolverTaskDescription TaskType="Unsteady" UseSymbolicJacobian="false" Solver="Finite Volume Standalone, Regular Grid">
+          <TimeBound StartTime="0.0" EndTime="3.0" />
+          <TimeStep DefaultTime="0.01" MinTime="1.0E-8" MaxTime="1.0" />
+          <ErrorTolerance Absolut="1.0E-9" Relative="1.0E-8" />
+          <OutputOptions OutputTimeStep="0.3" />
+          <NumberProcessors>1</NumberProcessors>
+        </SolverTaskDescription>
+        <MathOverrides />
+        <MeshSpecification>
+          <Size X="51" Y="51" Z="1" />
+        </MeshSpecification>
+        <Version Name="FRAP 1" KeyValue="57211946" BranchId="36031245" Archived="0" Date="30-May-2011 11:15:49" FromVersionable="false">
+          <Owner Name="Education" Identifier="30625624" />
+          <GroupAccess Type="1" />
+          <Annotation>cloned from 'FRAP 1' owned by user tutorial
+FRAP Simulation for tutorial.</Annotation>
+        </Version>
+      </Simulation>
+      <SpatialObjects>
+        <SpatialObject Name="vobj_EC0" Type="Volume" subVolume="EC" regionId="0">
+          <QuantityCategoryList>
+            <QuantityCategory Name="VolumeCentroid" Enabled="false" />
+            <QuantityCategory Name="InteriorVelocity" Enabled="false" />
+            <QuantityCategory Name="VolumeRegionSize" Enabled="true" />
+          </QuantityCategoryList>
+        </SpatialObject>
+        <SpatialObject Name="vobj_cell1" Type="Volume" subVolume="cell" regionId="1">
+          <QuantityCategoryList>
+            <QuantityCategory Name="VolumeCentroid" Enabled="false" />
+            <QuantityCategory Name="InteriorVelocity" Enabled="false" />
+            <QuantityCategory Name="VolumeRegionSize" Enabled="true" />
+          </QuantityCategoryList>
+        </SpatialObject>
+        <SpatialObject Name="sobj_cell1_EC0" Type="Surface" subVolumeInside="cell" regionIdInside="1" subVolumeOutside="EC" regionIdOutside="0">
+          <QuantityCategoryList>
+            <QuantityCategory Name="SurfaceNormal" Enabled="false" />
+            <QuantityCategory Name="SurfaceVelocity" Enabled="false" />
+            <QuantityCategory Name="DistanceToSurface" Enabled="false" />
+            <QuantityCategory Name="DirectionToSurface" Enabled="false" />
+            <QuantityCategory Name="SurfaceSize" Enabled="true" />
+          </QuantityCategoryList>
+        </SpatialObject>
+      </SpatialObjects>
+      <Version Name="FRAP" KeyValue="57211940" BranchId="36031238" Archived="0" Date="30-May-2011 11:15:49" FromVersionable="false">
+        <Owner Name="Education" Identifier="30625624" />
+        <GroupAccess Type="1" />
+        <Annotation>cloned from 'FRAP' owned by user tutorial
+cloned from 'FRAP' owned by user susan</Annotation>
+      </Version>
+      <MicroscopeMeasurement Name="fluor">
+        <ConvolutionKernel Type="ProjectionZKernel" />
+      </MicroscopeMeasurement>
+    </SimulationSpec>
+    <Version Name="Tutorial_FRAP" KeyValue="57211948" BranchId="36031248" Archived="0" Date="30-May-2011 11:15:49" FromVersionable="false">
+      <Owner Name="Education" Identifier="30625624" />
+      <GroupAccess Type="0" />
+      <Annotation>cloned from 'Tutorial_FRAP' owned by user tutorial</Annotation>
+    </Version>
+    <pathwayModel>
+      <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:bp="http://www.biopax.org/release/biopax-level3.owl#" version="3.0" />
+    </pathwayModel>
+    <relationshipModel>
+      <RMNS version="3.0" />
+    </relationshipModel>
+    <vcmetadata>
+      <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" />
+      <nonrdfAnnotationList>
+        <nonrdfAnnotation vcid="Species(Dex)">
+          <freetext>Dextran</freetext>
+        </nonrdfAnnotation>
+        <nonrdfAnnotation vcid="BioModel(Tutorial_FRAP)">
+          <freetext>cloned from 'Tutorial_FRAP' owned by user tutorial</freetext>
+        </nonrdfAnnotation>
+      </nonrdfAnnotationList>
+      <uriBindingList />
+    </vcmetadata>
+  </BioModel>
+</vcml>
+

@@ -1,0 +1,187 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--This biomodel was generated in VCML Version Alpha_Version_7.4.0_build_87-->
+<vcml xmlns="http://sourceforge.net/projects/vcell/vcml" Version="Alpha_Version_7.4.0_build_87">
+  <BioModel Name="phj-Cell1">
+    <Model Name="unnamed">
+      <Compound Name="DEX">
+        <Annotation>Dextran</Annotation>
+      </Compound>
+      <Feature Name="EC" KeyValue="5700234" />
+      <Feature Name="Cell" KeyValue="5700237" />
+      <Membrane InsideFeature="Cell" OutsideFeature="EC" PositiveFeature="Cell" NegativeFeature="EC" MembraneVoltage="Voltage_PM" Name="PM" KeyValue="5700236" />
+      <LocalizedCompound Name="DEX_Cell" CompoundRef="DEX" Structure="Cell" OverrideName="true" KeyValue="5700240" />
+      <Diagram Name="unnamed" Structure="EC" />
+      <Diagram Name="PM" Structure="PM" />
+      <Diagram Name="Cell" Structure="Cell" />
+      <Version Name="unnamed" KeyValue="5700231" BranchId="5700232" Archived="0" Date="27-Jul-2003 21:57:54" FromVersionable="false">
+        <Owner Name="pslab" Identifier="5674350" />
+        <GroupAccess Type="1" />
+      </Version>
+      <ModelUnitSystem VolumeSubstanceUnit="uM.um3" MembraneSubstanceUnit="molecules" LumpedReactionSubstanceUnit="molecules" VolumeUnit="um3" AreaUnit="um2" LengthUnit="um" TimeUnit="s" />
+    </Model>
+    <SimulationSpec Name="phj" Stochastic="false" UseConcentration="true" RuleBased="false" MassConservationModelReduction="true" InsufficientIterations="false" InsufficientMaxMolecules="false" CharacteristicSize="0.04561394691467284">
+      <NetworkConstraints RbmMaxIteration="1" RbmMaxMoleculesPerSpecies="10" RbmSpeciesLimit="800" RbmReactionsLimit="2500" />
+      <Annotation />
+      <Geometry Name="phj-Cell" Dimension="2">
+        <Extent X="22.0" Y="22.0" Z="10.0" />
+        <Origin X="-11.0" Y="-11.0" Z="0.0" />
+        <SubVolume Name="cytosol" Handle="0" Type="Analytical" KeyValue="5700256">
+          <AnalyticExpression>(((x * x) + (y * y)) &lt; 100.0)</AnalyticExpression>
+        </SubVolume>
+        <SubVolume Name="extracellular" Handle="1" Type="Analytical" KeyValue="5700257">
+          <AnalyticExpression>1.0</AnalyticExpression>
+        </SubVolume>
+        <SurfaceClass Name="cytosol_extracellular_membrane" SubVolume1Ref="cytosol" SubVolume2Ref="extracellular" />
+        <SurfaceDescription NumSamplesX="101" NumSamplesY="101" NumSamplesZ="1" CutoffFrequency="0.3">
+          <VolumeRegion Name="extracellular0" RegionID="0" SubVolume="extracellular" Size="169.3516" Unit="um2" />
+          <VolumeRegion Name="cytosol1" RegionID="1" SubVolume="cytosol" Size="314.6484" Unit="um2" />
+          <MembraneRegion Name="membrane_extracellular0_cytosol1" VolumeRegion1="cytosol1" VolumeRegion2="extracellular0" Size="623.9002231300552" Unit="um" />
+        </SurfaceDescription>
+        <Version Name="phj-Cell" KeyValue="5700253" BranchId="5700254" Archived="0" Date="27-Jul-2003 22:46:08" FromVersionable="false">
+          <Owner Name="pslab" Identifier="5674350" />
+          <GroupAccess Type="1" />
+        </Version>
+      </Geometry>
+      <GeometryContext>
+        <FeatureMapping Feature="EC" GeometryClass="extracellular" SubVolume="extracellular">
+          <BoundariesTypes Xm="Value" Xp="Value" Ym="Value" Yp="Value" Zm="Value" Zp="Value" />
+        </FeatureMapping>
+        <FeatureMapping Feature="Cell" GeometryClass="cytosol" SubVolume="cytosol">
+          <BoundariesTypes Xm="Value" Xp="Value" Ym="Value" Yp="Value" Zm="Value" Zp="Value" />
+        </FeatureMapping>
+        <MembraneMapping Membrane="PM" SurfaceToVolumeRatio="1.0" VolumeFraction="0.2" CalculateVoltage="false" SpecificCapacitance="0.01" InitialVoltage="0.0" GeometryClass="cytosol_extracellular_membrane">
+          <BoundariesTypes Xm="Value" Xp="Value" Ym="Value" Yp="Value" Zm="Value" Zp="Value" />
+        </MembraneMapping>
+      </GeometryContext>
+      <ReactionContext>
+        <LocalizedCompoundSpec LocalizedCompoundRef="DEX_Cell" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>(10.0 * ((x &lt;  - 5.0) || (x &gt; 5.0) || (y &lt;  - 5.0) || (y &gt; 5.0)))</InitialConcentration>
+          <Diffusion>20.0</Diffusion>
+        </LocalizedCompoundSpec>
+      </ReactionContext>
+      <MathDescription Name="phj_generated">
+        <Constant Name="_F_">96480.0</Constant>
+        <Constant Name="_R_">8314.0</Constant>
+        <Constant Name="_T_">300.0</Constant>
+        <Constant Name="K_milliVolts_per_Volt">1000.0</Constant>
+        <Constant Name="KMOLE">0.0016611295681063123</Constant>
+        <VolumeVariable Name="DEX" />
+        <Function Name="DEX_Cell_init">(10.0 * ((x &lt;  - 5.0) || (x &gt; 5.0) || (y &lt;  - 5.0) || (y &gt; 5.0)))</Function>
+        <Function Name="Voltage_PM">0.0</Function>
+        <CompartmentSubDomain Name="cytosol">
+          <BoundaryType Boundary="Xm" Type="Value" />
+          <BoundaryType Boundary="Xp" Type="Value" />
+          <BoundaryType Boundary="Ym" Type="Value" />
+          <BoundaryType Boundary="Yp" Type="Value" />
+          <BoundaryType Boundary="Zm" Type="Value" />
+          <BoundaryType Boundary="Zp" Type="Value" />
+          <PdeEquation Name="DEX" SolutionType="Unknown">
+            <Rate>0.0</Rate>
+            <Diffusion>20.0</Diffusion>
+            <Initial>DEX_Cell_init</Initial>
+          </PdeEquation>
+        </CompartmentSubDomain>
+        <CompartmentSubDomain Name="extracellular">
+          <BoundaryType Boundary="Xm" Type="Value" />
+          <BoundaryType Boundary="Xp" Type="Value" />
+          <BoundaryType Boundary="Ym" Type="Value" />
+          <BoundaryType Boundary="Yp" Type="Value" />
+          <BoundaryType Boundary="Zm" Type="Value" />
+          <BoundaryType Boundary="Zp" Type="Value" />
+          <PdeEquation Name="DEX" SolutionType="Unknown">
+            <Rate>0.0</Rate>
+            <Diffusion>20.0</Diffusion>
+            <Initial>0.0</Initial>
+          </PdeEquation>
+        </CompartmentSubDomain>
+        <MembraneSubDomain Name="cytosol_extracellular_membrane" InsideCompartment="cytosol" OutsideCompartment="extracellular">
+          <BoundaryType Boundary="Xm" Type="Value" />
+          <BoundaryType Boundary="Xp" Type="Value" />
+          <BoundaryType Boundary="Ym" Type="Value" />
+          <BoundaryType Boundary="Yp" Type="Value" />
+          <BoundaryType Boundary="Zm" Type="Value" />
+          <BoundaryType Boundary="Zp" Type="Value" />
+          <JumpCondition Name="DEX">
+            <InFlux>0.0</InFlux>
+            <OutFlux>0.0</OutFlux>
+          </JumpCondition>
+        </MembraneSubDomain>
+        <Version Name="phj_generated" KeyValue="5700261" BranchId="5700262" Archived="0" Date="27-Jul-2003 22:55:43" FromVersionable="false">
+          <Owner Name="pslab" Identifier="5674350" />
+          <GroupAccess Type="1" />
+        </Version>
+      </MathDescription>
+      <Simulation Name="phj-Sim">
+        <Annotation>first Simulation</Annotation>
+        <SolverTaskDescription TaskType="Unsteady" UseSymbolicJacobian="false" Solver="Finite Volume, Regular Grid">
+          <TimeBound StartTime="0.0" EndTime="3.0" />
+          <TimeStep DefaultTime="0.01" MinTime="1.0E-8" MaxTime="1.0" />
+          <ErrorTolerance Absolut="1.0E-9" Relative="1.0E-9" />
+          <OutputOptions KeepEvery="10" KeepAtMost="1000" />
+          <NumberProcessors>1</NumberProcessors>
+        </SolverTaskDescription>
+        <MathOverrides />
+        <MeshSpecification>
+          <Size X="51" Y="51" Z="1" />
+        </MeshSpecification>
+        <Version Name="phj-Sim" KeyValue="5700280" BranchId="5700281" Archived="0" Date="27-Jul-2003 23:02:41" FromVersionable="false">
+          <Owner Name="pslab" Identifier="5674350" />
+          <GroupAccess Type="1" />
+          <Annotation>first Simulation</Annotation>
+        </Version>
+      </Simulation>
+      <SpatialObjects>
+        <SpatialObject Name="vobj_extracellular0" Type="Volume" subVolume="extracellular" regionId="0">
+          <QuantityCategoryList>
+            <QuantityCategory Name="VolumeCentroid" Enabled="false" />
+            <QuantityCategory Name="InteriorVelocity" Enabled="false" />
+            <QuantityCategory Name="VolumeRegionSize" Enabled="true" />
+          </QuantityCategoryList>
+        </SpatialObject>
+        <SpatialObject Name="vobj_cytosol1" Type="Volume" subVolume="cytosol" regionId="1">
+          <QuantityCategoryList>
+            <QuantityCategory Name="VolumeCentroid" Enabled="false" />
+            <QuantityCategory Name="InteriorVelocity" Enabled="false" />
+            <QuantityCategory Name="VolumeRegionSize" Enabled="true" />
+          </QuantityCategoryList>
+        </SpatialObject>
+        <SpatialObject Name="sobj_cytosol1_extracellular0" Type="Surface" subVolumeInside="cytosol" regionIdInside="1" subVolumeOutside="extracellular" regionIdOutside="0">
+          <QuantityCategoryList>
+            <QuantityCategory Name="SurfaceNormal" Enabled="false" />
+            <QuantityCategory Name="SurfaceVelocity" Enabled="false" />
+            <QuantityCategory Name="DistanceToSurface" Enabled="false" />
+            <QuantityCategory Name="DirectionToSurface" Enabled="false" />
+            <QuantityCategory Name="SurfaceSize" Enabled="true" />
+          </QuantityCategoryList>
+        </SpatialObject>
+      </SpatialObjects>
+      <Version Name="phj" KeyValue="5700259" BranchId="5700260" Archived="0" Date="27-Jul-2003 22:55:43" FromVersionable="false">
+        <Owner Name="pslab" Identifier="5674350" />
+        <GroupAccess Type="1" />
+      </Version>
+      <MicroscopeMeasurement Name="fluor">
+        <ConvolutionKernel Type="ProjectionZKernel" />
+      </MicroscopeMeasurement>
+    </SimulationSpec>
+    <Version Name="phj-Cell1" KeyValue="5700287" BranchId="5700250" Archived="0" Date="27-Jul-2003 23:02:43" FromVersionable="false">
+      <Owner Name="pslab" Identifier="5674350" />
+      <GroupAccess Type="0" />
+    </Version>
+    <pathwayModel>
+      <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:bp="http://www.biopax.org/release/biopax-level3.owl#" version="3.0" />
+    </pathwayModel>
+    <relationshipModel>
+      <RMNS version="3.0" />
+    </relationshipModel>
+    <vcmetadata>
+      <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" />
+      <nonrdfAnnotationList>
+        <nonrdfAnnotation vcid="Species(DEX)">
+          <freetext>Dextran</freetext>
+        </nonrdfAnnotation>
+      </nonrdfAnnotationList>
+      <uriBindingList />
+    </vcmetadata>
+  </BioModel>
+</vcml>
+

@@ -1,0 +1,178 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--This biomodel was generated in VCML Version Alpha_Version_7.4.0_build_87-->
+<vcml xmlns="http://sourceforge.net/projects/vcell/vcml" Version="Alpha_Version_7.4.0_build_87">
+  <BioModel Name="BE306Group4_Proj6_Prob1">
+    <Model Name="unnamed">
+      <ModelParameters>
+        <Parameter Name="c0" Role="user defined" Unit="uM">5.0</Parameter>
+        <Parameter Name="k1on" Role="user defined" Unit="s-1">0.08</Parameter>
+        <Parameter Name="k1off" Role="user defined" Unit="uM.s-1">0.05</Parameter>
+        <Parameter Name="k2on" Role="user defined" Unit="s-1">0.5</Parameter>
+        <Parameter Name="k2off" Role="user defined" Unit="uM.s-1">0.1</Parameter>
+        <Parameter Name="M" Role="user defined" Unit="1">5.0</Parameter>
+        <Parameter Name="n1" Role="user defined" Unit="molecules">(P1 * Reaction_Volume / (M * KMOLE))</Parameter>
+        <Parameter Name="n2" Role="user defined" Unit="molecules">(P2 * Reaction_Volume / (M * KMOLE))</Parameter>
+        <Parameter Name="R" Role="user defined" Unit="uM">(c0 - P1 - P2)</Parameter>
+      </ModelParameters>
+      <Compound Name="P2" />
+      <Compound Name="P1" />
+      <Feature Name="Reaction_Volume" KeyValue="92826986" />
+      <LocalizedCompound Name="P2" CompoundRef="P2" Structure="Reaction_Volume" OverrideName="true" KeyValue="92826988" />
+      <LocalizedCompound Name="P1" CompoundRef="P1" Structure="Reaction_Volume" OverrideName="true" KeyValue="92826989" />
+      <SimpleReaction Structure="Reaction_Volume" Name="Pointed" Reversible="true" FluxOption="MolecularOnly" KeyValue="92826990">
+        <Product LocalizedCompoundRef="P1" Stoichiometry="1" KeyValue="92826991" />
+        <Modifier LocalizedCompoundRef="P2" />
+        <Kinetics KineticsType="GeneralLumpedKinetics">
+          <Parameter Name="LumpedJ" Role="lumped reaction rate" Unit="molecules.s-1">(Reaction_Volume * ((k1on * (c0 - P1 - P2)) - k1off) / KMOLE)</Parameter>
+        </Kinetics>
+      </SimpleReaction>
+      <SimpleReaction Structure="Reaction_Volume" Name="Barbed" Reversible="true" FluxOption="MolecularOnly" KeyValue="92826992">
+        <Product LocalizedCompoundRef="P2" Stoichiometry="1" KeyValue="92826993" />
+        <Modifier LocalizedCompoundRef="P1" />
+        <Kinetics KineticsType="GeneralLumpedKinetics">
+          <Parameter Name="LumpedJ" Role="lumped reaction rate" Unit="molecules.s-1">(Reaction_Volume * ((k2on * (c0 - P1 - P2)) - k2off) / KMOLE)</Parameter>
+        </Kinetics>
+      </SimpleReaction>
+      <Diagram Name="c0" Structure="Reaction_Volume" />
+      <Version Name="unnamed" KeyValue="92826982" BranchId="92821381" Archived="0" Date="06-Dec-2014 16:56:51" FromVersionable="false">
+        <Owner Name="vint14" Identifier="92304520" />
+        <GroupAccess Type="1" />
+      </Version>
+      <ModelUnitSystem VolumeSubstanceUnit="uM.um3" MembraneSubstanceUnit="molecules" LumpedReactionSubstanceUnit="molecules" VolumeUnit="um3" AreaUnit="um2" LengthUnit="um" TimeUnit="s" />
+    </Model>
+    <SimulationSpec Name="Application0" Stochastic="false" UseConcentration="true" RuleBased="false" MassConservationModelReduction="true" InsufficientIterations="false" InsufficientMaxMolecules="false">
+      <NetworkConstraints RbmMaxIteration="1" RbmMaxMoleculesPerSpecies="10" RbmSpeciesLimit="800" RbmReactionsLimit="2500" />
+      <Annotation />
+      <Geometry Name="non-spatial" Dimension="0">
+        <Extent X="10.0" Y="10.0" Z="10.0" />
+        <Origin X="0.0" Y="0.0" Z="0.0" />
+        <SubVolume Name="Compartment" Handle="0" Type="Compartmental" KeyValue="92821376" />
+        <Version Name="non-spatial" KeyValue="92821372" BranchId="92821373" Archived="0" Date="06-Dec-2014 15:12:22" FromVersionable="false">
+          <Owner Name="vint14" Identifier="92304520" />
+          <GroupAccess Type="1" />
+        </Version>
+      </Geometry>
+      <GeometryContext>
+        <FeatureMapping Feature="Reaction_Volume" GeometryClass="Compartment" SubVolume="Compartment" Size="50000.0">
+          <BoundariesTypes Xm="Flux" Xp="Flux" Ym="Flux" Yp="Flux" Zm="Flux" Zp="Flux" />
+        </FeatureMapping>
+      </GeometryContext>
+      <ReactionContext>
+        <LocalizedCompoundSpec LocalizedCompoundRef="P2" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>0.0</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="P1" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>0.0</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <ReactionSpec ReactionStepRef="Pointed" ReactionMapping="included" />
+        <ReactionSpec ReactionStepRef="Barbed" ReactionMapping="included" />
+      </ReactionContext>
+      <MathDescription Name="Application0_generated">
+        <Constant Name="_F_">96480.0</Constant>
+        <Constant Name="_F_nmol_">9.648E-5</Constant>
+        <Constant Name="_K_GHK_">1.0E-9</Constant>
+        <Constant Name="_N_pmol_">6.02E11</Constant>
+        <Constant Name="_PI_">3.141592653589793</Constant>
+        <Constant Name="_R_">8314.0</Constant>
+        <Constant Name="_T_">300.0</Constant>
+        <Constant Name="c0">5.0</Constant>
+        <Constant Name="k1off">0.05</Constant>
+        <Constant Name="k1on">0.08</Constant>
+        <Constant Name="k2off">0.1</Constant>
+        <Constant Name="k2on">0.5</Constant>
+        <Constant Name="K_millivolts_per_volt">1000.0</Constant>
+        <Constant Name="KMOLE">0.0016611295681063123</Constant>
+        <Constant Name="M">5.0</Constant>
+        <Constant Name="P1_init_uM">0.0</Constant>
+        <Constant Name="P2_init_uM">0.0</Constant>
+        <Constant Name="Size_Reaction_Volume">50000.0</Constant>
+        <VolumeVariable Name="P1" Domain="Compartment" />
+        <VolumeVariable Name="P2" Domain="Compartment" />
+        <Function Name="LumpedJ_Barbed" Domain="Compartment">(Size_Reaction_Volume * ((k2on * (c0 - P1 - P2)) - k2off) / KMOLE)</Function>
+        <Function Name="LumpedJ_Pointed" Domain="Compartment">(Size_Reaction_Volume * ((k1on * (c0 - P1 - P2)) - k1off) / KMOLE)</Function>
+        <Function Name="n1">(P1 * Size_Reaction_Volume / (M * KMOLE))</Function>
+        <Function Name="n2">(P2 * Size_Reaction_Volume / (M * KMOLE))</Function>
+        <Function Name="R">(c0 - P1 - P2)</Function>
+        <CompartmentSubDomain Name="Compartment">
+          <BoundaryType Boundary="Xm" Type="Value" />
+          <BoundaryType Boundary="Xp" Type="Value" />
+          <BoundaryType Boundary="Ym" Type="Value" />
+          <BoundaryType Boundary="Yp" Type="Value" />
+          <BoundaryType Boundary="Zm" Type="Value" />
+          <BoundaryType Boundary="Zp" Type="Value" />
+          <OdeEquation Name="P2" SolutionType="Unknown">
+            <Rate>(LumpedJ_Barbed * KMOLE / Size_Reaction_Volume)</Rate>
+            <Initial>P2_init_uM</Initial>
+          </OdeEquation>
+          <OdeEquation Name="P1" SolutionType="Unknown">
+            <Rate>(LumpedJ_Pointed * KMOLE / Size_Reaction_Volume)</Rate>
+            <Initial>P1_init_uM</Initial>
+          </OdeEquation>
+        </CompartmentSubDomain>
+        <Version Name="Application0_generated" KeyValue="92826980" BranchId="92821378" Archived="0" Date="06-Dec-2014 16:56:51" FromVersionable="false">
+          <Owner Name="vint14" Identifier="92304520" />
+          <GroupAccess Type="1" />
+        </Version>
+      </MathDescription>
+      <Simulation Name="Problem 1 Part (c)">
+        <SolverTaskDescription TaskType="Unsteady" UseSymbolicJacobian="false" Solver="Combined Stiff Solver (IDA/CVODE)">
+          <TimeBound StartTime="0.0" EndTime="300.0" />
+          <TimeStep DefaultTime="0.1" MinTime="1.0E-8" MaxTime="1.0" />
+          <ErrorTolerance Absolut="1.0E-9" Relative="1.0E-9" />
+          <OutputOptions KeepEvery="1" KeepAtMost="1000" />
+          <NumberProcessors>1</NumberProcessors>
+        </SolverTaskDescription>
+        <MathOverrides>
+          <Constant Name="_R_" ConstantArraySpec="1001">0.0 to 10.0, 9 values</Constant>
+        </MathOverrides>
+        <Version Name="Problem 1 Part (c)" KeyValue="92829902" BranchId="92829903" Archived="0" Date="06-Dec-2014 23:04:16" FromVersionable="false">
+          <Owner Name="vint14" Identifier="92304520" />
+          <GroupAccess Type="1" />
+          <ParentSimRef KeyValue="92829817" />
+        </Version>
+      </Simulation>
+      <Simulation Name="Problem 1 Part (d)">
+        <SolverTaskDescription TaskType="Unsteady" UseSymbolicJacobian="false" Solver="Combined Stiff Solver (IDA/CVODE)">
+          <TimeBound StartTime="0.0" EndTime="300.0" />
+          <TimeStep DefaultTime="0.1" MinTime="1.0E-8" MaxTime="1.0" />
+          <ErrorTolerance Absolut="1.0E-9" Relative="1.0E-9" />
+          <OutputOptions KeepEvery="1" KeepAtMost="1000" />
+          <NumberProcessors>1</NumberProcessors>
+        </SolverTaskDescription>
+        <MathOverrides>
+          <Constant Name="k1on" ConstantArraySpec="1000">"0.02", "0.08", "0.1", "0.2", "0.5", "0.8", "1.0"</Constant>
+          <Constant Name="k2on" ConstantArraySpec="1000">"0.05", "0.08", "0.1", "0.2", "0.5", "0.8", "1.0"</Constant>
+        </MathOverrides>
+        <Version Name="Problem 1 Part (d)" KeyValue="92829905" BranchId="92829906" Archived="0" Date="06-Dec-2014 23:04:16" FromVersionable="false">
+          <Owner Name="vint14" Identifier="92304520" />
+          <GroupAccess Type="1" />
+        </Version>
+      </Simulation>
+      <Version Name="Application0" KeyValue="92826996" BranchId="92821396" Archived="0" Date="06-Dec-2014 16:56:52" FromVersionable="false">
+        <Owner Name="vint14" Identifier="92304520" />
+        <GroupAccess Type="1" />
+      </Version>
+      <MicroscopeMeasurement Name="fluor">
+        <ConvolutionKernel Type="ProjectionZKernel" />
+      </MicroscopeMeasurement>
+    </SimulationSpec>
+    <Version Name="BE306Group4_Proj6_Prob1" KeyValue="92829908" BranchId="92821407" Archived="0" Date="06-Dec-2014 23:04:16" FromVersionable="false">
+      <Owner Name="vint14" Identifier="92304520" />
+      <GroupAccess Type="1" />
+    </Version>
+    <pathwayModel>
+      <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:bp="http://www.biopax.org/release/biopax-level3.owl#" version="3.0" />
+    </pathwayModel>
+    <relationshipModel>
+      <RMNS version="3.0" />
+    </relationshipModel>
+    <vcmetadata>
+      <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" />
+      <nonrdfAnnotationList />
+      <uriBindingList />
+    </vcmetadata>
+  </BioModel>
+</vcml>
+

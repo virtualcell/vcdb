@@ -1,0 +1,743 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--This biomodel was generated in VCML Version Alpha_Version_7.4.0_build_87-->
+<vcml xmlns="http://sourceforge.net/projects/vcell/vcml" Version="Alpha_Version_7.4.0_build_87">
+  <BioModel Name="Rho-GEF_activation">
+    <Model Name="unnamed">
+      <Compound Name="GAPa*" />
+      <Compound Name="GEF" />
+      <Compound Name="GEFa*" />
+      <Compound Name="signal" />
+      <Compound Name="Rho" />
+      <Compound Name="Rho_a*" />
+      <Feature Name="Cell" KeyValue="58542768" />
+      <Feature Name="EC" KeyValue="58542766" />
+      <Membrane InsideFeature="Cell" OutsideFeature="EC" PositiveFeature="Cell" NegativeFeature="EC" MembraneVoltage="Voltage_PM" Name="PM" KeyValue="58542767" />
+      <LocalizedCompound Name="GAPa__Cell" CompoundRef="GAPa*" Structure="Cell" OverrideName="true" KeyValue="58542772" />
+      <LocalizedCompound Name="GEF_Cell" CompoundRef="GEF" Structure="Cell" OverrideName="true" KeyValue="58542773" />
+      <LocalizedCompound Name="GEFa__Cell" CompoundRef="GEFa*" Structure="Cell" OverrideName="true" KeyValue="58542774" />
+      <LocalizedCompound Name="signal_Cell" CompoundRef="signal" Structure="Cell" OverrideName="true" KeyValue="58542775" />
+      <LocalizedCompound Name="Rho_Cell" CompoundRef="Rho" Structure="Cell" OverrideName="true" KeyValue="58542776" />
+      <LocalizedCompound Name="Rho_a__Cell" CompoundRef="Rho_a*" Structure="Cell" OverrideName="true" KeyValue="58542777" />
+      <SimpleReaction Structure="Cell" Name="GEF activation" Reversible="true" FluxOption="MolecularOnly" KeyValue="58542778">
+        <Reactant LocalizedCompoundRef="GEF_Cell" Stoichiometry="1" KeyValue="58542779" />
+        <Product LocalizedCompoundRef="GEFa__Cell" Stoichiometry="1" KeyValue="58542780" />
+        <Modifier LocalizedCompoundRef="signal_Cell" />
+        <Modifier LocalizedCompoundRef="Rho_a__Cell" />
+        <Modifier LocalizedCompoundRef="Rho_Cell" />
+        <Kinetics KineticsType="GeneralKinetics">
+          <Parameter Name="J" Role="reaction rate" Unit="uM.s-1">((GEF_Cell * signal_Cell) - (Koff * GEFa__Cell * GEFa__Cell) + (Fdbk * GEFa__Cell))</Parameter>
+          <Parameter Name="Fdbk" Role="user defined" Unit="uM.s-1">(Rho_a__Cell / (Rho_Cell + Rho_a__Cell))</Parameter>
+          <Parameter Name="Koff" Role="user defined" Unit="s-1">0.15</Parameter>
+        </Kinetics>
+      </SimpleReaction>
+      <SimpleReaction Structure="Cell" Name="Rho activation" Reversible="true" FluxOption="MolecularOnly" KeyValue="58542783">
+        <Reactant LocalizedCompoundRef="Rho_Cell" Stoichiometry="1" KeyValue="58542784" />
+        <Product LocalizedCompoundRef="Rho_a__Cell" Stoichiometry="1" KeyValue="58542785" />
+        <Modifier LocalizedCompoundRef="GEFa__Cell" />
+        <Kinetics KineticsType="GeneralKinetics">
+          <Parameter Name="J" Role="reaction rate" Unit="uM.s-1">(Vmax * GEFa__Cell * GEFa__Cell * Rho_Cell / (Km + (GEFa__Cell * GEFa__Cell)))</Parameter>
+          <Parameter Name="Km" Role="user defined" Unit="uM2">8.33</Parameter>
+          <Parameter Name="Vmax" Role="user defined" Unit="s-1">7.0</Parameter>
+        </Kinetics>
+      </SimpleReaction>
+      <SimpleReaction Structure="Cell" Name="Rho inactivation" Reversible="true" FluxOption="MolecularOnly" KeyValue="58542787">
+        <Reactant LocalizedCompoundRef="Rho_a__Cell" Stoichiometry="1" KeyValue="58542788" />
+        <Product LocalizedCompoundRef="Rho_Cell" Stoichiometry="1" KeyValue="58542789" />
+        <Modifier LocalizedCompoundRef="GAPa__Cell" />
+        <Kinetics KineticsType="GeneralKinetics">
+          <Parameter Name="J" Role="reaction rate" Unit="uM.s-1">(Vmax * GAPa__Cell * Rho_a__Cell * (t &gt; 11.5))</Parameter>
+          <Parameter Name="Vmax" Role="user defined" Unit="s-1">0.3</Parameter>
+        </Kinetics>
+      </SimpleReaction>
+      <Diagram Name="EC" Structure="EC" />
+      <Diagram Name="PM" Structure="PM" />
+      <Diagram Name="Unnamed compartment" Structure="Cell">
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="GEFa__Cell" LocationX="287" LocationY="139" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="signal_Cell" LocationX="160" LocationY="62" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="cGMP_PDE_Cell" LocationX="106" LocationY="338" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="Rho_Cell" LocationX="253" LocationY="241" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="Rho_a__Cell" LocationX="412" LocationY="243" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="GEF_Cell" LocationX="101" LocationY="131" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="GAP_Cell" LocationX="152" LocationY="290" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="GAPa__Cell" LocationX="271" LocationY="333" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="full" SimpleReactionRef="Rho activation" LocationX="330" LocationY="196" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="full" SimpleReactionRef="Rho inactivation" LocationX="331" LocationY="287" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="full" SimpleReactionRef="GEF activation" LocationX="196" LocationY="133" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="full" SimpleReactionRef="reaction0" LocationX="88" LocationY="271" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="GEFa__Cell" LocationX="287" LocationY="139" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="signal_Cell" LocationX="160" LocationY="62" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="cGMP_PDE_Cell" LocationX="106" LocationY="338" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="Rho_Cell" LocationX="253" LocationY="241" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="Rho_a__Cell" LocationX="412" LocationY="243" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="GEF_Cell" LocationX="101" LocationY="131" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="GAP_Cell" LocationX="152" LocationY="290" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="GAPa__Cell" LocationX="271" LocationY="333" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="molecule" SimpleReactionRef="Rho activation" LocationX="330" LocationY="196" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="molecule" SimpleReactionRef="Rho inactivation" LocationX="331" LocationY="287" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="molecule" SimpleReactionRef="GEF activation" LocationX="196" LocationY="133" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="molecule" SimpleReactionRef="reaction0" LocationX="88" LocationY="271" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="GEFa__Cell" LocationX="287" LocationY="139" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="signal_Cell" LocationX="160" LocationY="62" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="cGMP_PDE_Cell" LocationX="106" LocationY="338" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="Rho_Cell" LocationX="253" LocationY="241" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="Rho_a__Cell" LocationX="412" LocationY="243" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="GEF_Cell" LocationX="101" LocationY="131" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="GAP_Cell" LocationX="152" LocationY="290" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="GAPa__Cell" LocationX="271" LocationY="333" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="rule" SimpleReactionRef="Rho activation" LocationX="330" LocationY="196" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="rule" SimpleReactionRef="Rho inactivation" LocationX="331" LocationY="287" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="rule" SimpleReactionRef="GEF activation" LocationX="196" LocationY="133" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="rule" SimpleReactionRef="reaction0" LocationX="88" LocationY="271" />
+      </Diagram>
+      <Version Name="unnamed" KeyValue="58542758" BranchId="57370419" Archived="0" Date="14-Jul-2011 18:36:29" FromVersionable="false">
+        <Owner Name="cnevins" Identifier="56866785" />
+        <GroupAccess Type="1" />
+      </Version>
+      <ModelUnitSystem VolumeSubstanceUnit="uM.um3" MembraneSubstanceUnit="molecules" LumpedReactionSubstanceUnit="molecules" VolumeUnit="um3" AreaUnit="um2" LengthUnit="um" TimeUnit="s" />
+    </Model>
+    <SimulationSpec Name="GEF activation" Stochastic="false" UseConcentration="true" RuleBased="false" MassConservationModelReduction="true" InsufficientIterations="false" InsufficientMaxMolecules="false" CharacteristicSize="0.04561394691467284">
+      <NetworkConstraints RbmMaxIteration="1" RbmMaxMoleculesPerSpecies="10" RbmSpeciesLimit="800" RbmReactionsLimit="2500" />
+      <Annotation />
+      <Geometry Name="Geometry217777576" Dimension="2">
+        <Extent X="22.0" Y="22.0" Z="10.0" />
+        <Origin X="-11.0" Y="-11.0" Z="0.0" />
+        <SubVolume Name="Cell" Handle="1" Type="Analytical" KeyValue="61872013">
+          <AnalyticExpression>((( - x ^ 2.0) + ( - y ^ 2.0)) &lt; 100.0)</AnalyticExpression>
+        </SubVolume>
+        <SubVolume Name="EC" Handle="0" Type="Analytical" KeyValue="61872014">
+          <AnalyticExpression>1.0</AnalyticExpression>
+        </SubVolume>
+        <SurfaceClass Name="Cell_EC_membrane" SubVolume1Ref="Cell" SubVolume2Ref="EC" KeyValue="61872015" />
+        <SurfaceDescription NumSamplesX="101" NumSamplesY="101" NumSamplesZ="1" CutoffFrequency="0.3">
+          <VolumeRegion Name="EC0" RegionID="0" SubVolume="EC" Size="169.3516" Unit="um2" />
+          <VolumeRegion Name="Cell1" RegionID="1" SubVolume="Cell" Size="314.6484" Unit="um2" />
+          <MembraneRegion Name="membrane_EC0_Cell1" VolumeRegion1="Cell1" VolumeRegion2="EC0" Size="63.01392253613547" Unit="um" />
+        </SurfaceDescription>
+        <Version Name="Geometry217777576" KeyValue="61872010" BranchId="57370890" Archived="0" Date="14-Jan-2012 22:59:09" FromVersionable="false">
+          <Owner Name="cnevins" Identifier="56866785" />
+          <GroupAccess Type="1" />
+        </Version>
+      </Geometry>
+      <GeometryContext>
+        <FeatureMapping Feature="Cell" GeometryClass="Cell" SubVolume="Cell" VolumePerUnitVolume="1.0">
+          <BoundariesTypes Xm="Flux" Xp="Flux" Ym="Flux" Yp="Flux" Zm="Flux" Zp="Flux" />
+        </FeatureMapping>
+        <FeatureMapping Feature="EC" GeometryClass="EC" SubVolume="EC" VolumePerUnitVolume="1.0">
+          <BoundariesTypes Xm="Flux" Xp="Flux" Ym="Flux" Yp="Flux" Zm="Flux" Zp="Flux" />
+        </FeatureMapping>
+        <MembraneMapping Membrane="PM" SurfaceToVolumeRatio="1.0" VolumeFraction="0.2" AreaPerUnitArea="1.0" CalculateVoltage="false" SpecificCapacitance="1.0" InitialVoltage="0.0" GeometryClass="Cell_EC_membrane">
+          <BoundariesTypes Xm="Flux" Xp="Flux" Ym="Flux" Yp="Flux" Zm="Flux" Zp="Flux" />
+        </MembraneMapping>
+      </GeometryContext>
+      <ReactionContext>
+        <LocalizedCompoundSpec LocalizedCompoundRef="GAPa__Cell" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>0.0</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="GEF_Cell" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>(10.0 * (((x * x) + (y * y)) &lt; 100.0))</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="GEFa__Cell" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>0.0</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="signal_Cell" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>(((x * x) + (y * y)) &lt; 4.0)</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="Rho_Cell" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>0.0</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="Rho_a__Cell" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>0.0</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <ReactionSpec ReactionStepRef="GEF activation" ReactionMapping="included" />
+        <ReactionSpec ReactionStepRef="Rho activation" ReactionMapping="included" />
+        <ReactionSpec ReactionStepRef="Rho inactivation" ReactionMapping="included" />
+      </ReactionContext>
+      <MathDescription Name="GEF activation_generated">
+        <Constant Name="_F_">96480.0</Constant>
+        <Constant Name="_F_nmol_">9.648E-5</Constant>
+        <Constant Name="_K_GHK_">1.0E-9</Constant>
+        <Constant Name="_N_pmol_">6.02E11</Constant>
+        <Constant Name="_PI_">3.141592653589793</Constant>
+        <Constant Name="_R_">8314.0</Constant>
+        <Constant Name="_T_">300.0</Constant>
+        <Constant Name="AreaPerUnitArea_PM">1.0</Constant>
+        <Constant Name="GAPa__Cell_init">0.0</Constant>
+        <Constant Name="GEFa__Cell_init">0.0</Constant>
+        <Constant Name="K_millivolts_per_volt">1000.0</Constant>
+        <Constant Name="Km">8.33</Constant>
+        <Constant Name="KMOLE">0.0016611295681063123</Constant>
+        <Constant Name="Koff">0.15</Constant>
+        <Constant Name="Rho_a__Cell_init">0.0</Constant>
+        <Constant Name="Rho_Cell_init">0.0</Constant>
+        <Constant Name="Vmax_Rho_activation">7.0</Constant>
+        <Constant Name="Vmax_Rho_inactivation">0.3</Constant>
+        <Constant Name="Voltage_PM">0.0</Constant>
+        <Constant Name="VolumePerUnitVolume_Cell">1.0</Constant>
+        <Constant Name="VolumePerUnitVolume_EC">1.0</Constant>
+        <VolumeVariable Name="GEFa__Cell" Domain="Cell" />
+        <VolumeVariable Name="Rho_a__Cell" Domain="Cell" />
+        <Function Name="Fdbk" Domain="Cell">(Rho_a__Cell / (Rho_Cell + Rho_a__Cell))</Function>
+        <Function Name="GAPa__Cell" Domain="Cell">(K_GAPa__Cell_total / VolumePerUnitVolume_Cell)</Function>
+        <Function Name="GEF_Cell" Domain="Cell">((K_GEF_Cell_total - (VolumePerUnitVolume_Cell * GEFa__Cell)) / VolumePerUnitVolume_Cell)</Function>
+        <Function Name="GEF_Cell_init" Domain="Cell">(10.0 * (((x * x) + (y * y)) &lt; 100.0))</Function>
+        <Function Name="J_GEF_activation" Domain="Cell">((GEF_Cell * signal_Cell) - (Koff * GEFa__Cell * GEFa__Cell) + (Fdbk * GEFa__Cell))</Function>
+        <Function Name="J_Rho_activation" Domain="Cell">(Vmax_Rho_activation * GEFa__Cell * GEFa__Cell * Rho_Cell / (Km + (GEFa__Cell * GEFa__Cell)))</Function>
+        <Function Name="J_Rho_inactivation" Domain="Cell">(Vmax_Rho_inactivation * GAPa__Cell * Rho_a__Cell * (t &gt; 11.5))</Function>
+        <Function Name="K_GAPa__Cell_total" Domain="Cell">(VolumePerUnitVolume_Cell * GAPa__Cell_init)</Function>
+        <Function Name="K_GEF_Cell_total" Domain="Cell">((VolumePerUnitVolume_Cell * GEF_Cell_init) + (VolumePerUnitVolume_Cell * GEFa__Cell_init))</Function>
+        <Function Name="K_Rho_Cell_total" Domain="Cell">((VolumePerUnitVolume_Cell * Rho_Cell_init) + (VolumePerUnitVolume_Cell * Rho_a__Cell_init))</Function>
+        <Function Name="K_signal_Cell_total" Domain="Cell">(VolumePerUnitVolume_Cell * signal_Cell_init)</Function>
+        <Function Name="Rho_Cell" Domain="Cell">((K_Rho_Cell_total - (VolumePerUnitVolume_Cell * Rho_a__Cell)) / VolumePerUnitVolume_Cell)</Function>
+        <Function Name="signal_Cell" Domain="Cell">(K_signal_Cell_total / VolumePerUnitVolume_Cell)</Function>
+        <Function Name="signal_Cell_init" Domain="Cell">(((x * x) + (y * y)) &lt; 4.0)</Function>
+        <Function Name="Size_Cell" Domain="Cell">(VolumePerUnitVolume_Cell * vcRegionVolume('Cell'))</Function>
+        <Function Name="Size_EC" Domain="EC">(VolumePerUnitVolume_EC * vcRegionVolume('EC'))</Function>
+        <Function Name="Size_PM" Domain="Cell_EC_membrane">(AreaPerUnitArea_PM * vcRegionArea('Cell_EC_membrane'))</Function>
+        <CompartmentSubDomain Name="Cell">
+          <BoundaryType Boundary="Xm" Type="Flux" />
+          <BoundaryType Boundary="Xp" Type="Flux" />
+          <BoundaryType Boundary="Ym" Type="Flux" />
+          <BoundaryType Boundary="Yp" Type="Flux" />
+          <BoundaryType Boundary="Zm" Type="Value" />
+          <BoundaryType Boundary="Zp" Type="Value" />
+          <OdeEquation Name="GEFa__Cell" SolutionType="Unknown">
+            <Rate>J_GEF_activation</Rate>
+            <Initial>GEFa__Cell_init</Initial>
+          </OdeEquation>
+          <OdeEquation Name="Rho_a__Cell" SolutionType="Unknown">
+            <Rate>(J_Rho_activation - J_Rho_inactivation)</Rate>
+            <Initial>Rho_a__Cell_init</Initial>
+          </OdeEquation>
+        </CompartmentSubDomain>
+        <CompartmentSubDomain Name="EC">
+          <BoundaryType Boundary="Xm" Type="Flux" />
+          <BoundaryType Boundary="Xp" Type="Flux" />
+          <BoundaryType Boundary="Ym" Type="Flux" />
+          <BoundaryType Boundary="Yp" Type="Flux" />
+          <BoundaryType Boundary="Zm" Type="Value" />
+          <BoundaryType Boundary="Zp" Type="Value" />
+        </CompartmentSubDomain>
+        <MembraneSubDomain Name="Cell_EC_membrane" InsideCompartment="Cell" OutsideCompartment="EC">
+          <BoundaryType Boundary="Xm" Type="Value" />
+          <BoundaryType Boundary="Xp" Type="Value" />
+          <BoundaryType Boundary="Ym" Type="Value" />
+          <BoundaryType Boundary="Yp" Type="Value" />
+          <BoundaryType Boundary="Zm" Type="Value" />
+          <BoundaryType Boundary="Zp" Type="Value" />
+        </MembraneSubDomain>
+        <Version Name="GEF activation_generated" KeyValue="61872040" BranchId="57370900" Archived="0" Date="14-Jan-2012 22:59:10" FromVersionable="false">
+          <Owner Name="cnevins" Identifier="56866785" />
+          <GroupAccess Type="1" />
+        </Version>
+      </MathDescription>
+      <Simulation Name="Simulation0">
+        <SolverTaskDescription TaskType="Unsteady" UseSymbolicJacobian="false" Solver="Finite Volume Standalone, Regular Grid">
+          <TimeBound StartTime="0.0" EndTime="30.0" />
+          <TimeStep DefaultTime="0.1" MinTime="1.0E-8" MaxTime="1.0" />
+          <ErrorTolerance Absolut="1.0E-9" Relative="1.0E-8" />
+          <OutputOptions OutputTimeStep="0.1" />
+          <NumberProcessors>1</NumberProcessors>
+        </SolverTaskDescription>
+        <MathOverrides />
+        <MeshSpecification>
+          <Size X="51" Y="51" Z="1" />
+        </MeshSpecification>
+        <Version Name="Simulation0" KeyValue="61872088" BranchId="57370934" Archived="0" Date="14-Jan-2012 22:59:11" FromVersionable="false">
+          <Owner Name="cnevins" Identifier="56866785" />
+          <GroupAccess Type="1" />
+        </Version>
+      </Simulation>
+      <SpatialObjects>
+        <SpatialObject Name="vobj_EC0" Type="Volume" subVolume="EC" regionId="0">
+          <QuantityCategoryList>
+            <QuantityCategory Name="VolumeCentroid" Enabled="false" />
+            <QuantityCategory Name="InteriorVelocity" Enabled="false" />
+            <QuantityCategory Name="VolumeRegionSize" Enabled="true" />
+          </QuantityCategoryList>
+        </SpatialObject>
+        <SpatialObject Name="vobj_Cell1" Type="Volume" subVolume="Cell" regionId="1">
+          <QuantityCategoryList>
+            <QuantityCategory Name="VolumeCentroid" Enabled="false" />
+            <QuantityCategory Name="InteriorVelocity" Enabled="false" />
+            <QuantityCategory Name="VolumeRegionSize" Enabled="true" />
+          </QuantityCategoryList>
+        </SpatialObject>
+        <SpatialObject Name="sobj_Cell1_EC0" Type="Surface" subVolumeInside="Cell" regionIdInside="1" subVolumeOutside="EC" regionIdOutside="0">
+          <QuantityCategoryList>
+            <QuantityCategory Name="SurfaceNormal" Enabled="false" />
+            <QuantityCategory Name="SurfaceVelocity" Enabled="false" />
+            <QuantityCategory Name="DistanceToSurface" Enabled="false" />
+            <QuantityCategory Name="DirectionToSurface" Enabled="false" />
+            <QuantityCategory Name="SurfaceSize" Enabled="true" />
+          </QuantityCategoryList>
+        </SpatialObject>
+      </SpatialObjects>
+      <Version Name="GEF activation" KeyValue="61872046" BranchId="57370924" Archived="0" Date="14-Jan-2012 22:59:10" FromVersionable="false">
+        <Owner Name="cnevins" Identifier="56866785" />
+        <GroupAccess Type="1" />
+      </Version>
+      <MicroscopeMeasurement Name="fluor">
+        <ConvolutionKernel Type="ProjectionZKernel" />
+      </MicroscopeMeasurement>
+    </SimulationSpec>
+    <SimulationSpec Name="Rho activation" Stochastic="false" UseConcentration="true" RuleBased="false" MassConservationModelReduction="true" InsufficientIterations="false" InsufficientMaxMolecules="false" CharacteristicSize="0.04561394691467284">
+      <NetworkConstraints RbmMaxIteration="1" RbmMaxMoleculesPerSpecies="10" RbmSpeciesLimit="800" RbmReactionsLimit="2500" />
+      <Annotation />
+      <Geometry Name="Geometry480325219" Dimension="2">
+        <Extent X="22.0" Y="22.0" Z="10.0" />
+        <Origin X="-11.0" Y="-11.0" Z="0.0" />
+        <SubVolume Name="Cell" Handle="1" Type="Analytical" KeyValue="61872023">
+          <AnalyticExpression>((( - x ^ 2.0) + ( - y ^ 2.0)) &lt; 100.0)</AnalyticExpression>
+        </SubVolume>
+        <SubVolume Name="EC" Handle="0" Type="Analytical" KeyValue="61872024">
+          <AnalyticExpression>1.0</AnalyticExpression>
+        </SubVolume>
+        <SurfaceClass Name="Cell_EC_membrane" SubVolume1Ref="Cell" SubVolume2Ref="EC" KeyValue="61872025" />
+        <SurfaceDescription NumSamplesX="101" NumSamplesY="101" NumSamplesZ="1" CutoffFrequency="0.3">
+          <VolumeRegion Name="EC0" RegionID="0" SubVolume="EC" Size="169.3516" Unit="um2" />
+          <VolumeRegion Name="Cell1" RegionID="1" SubVolume="Cell" Size="314.6484" Unit="um2" />
+          <MembraneRegion Name="membrane_EC0_Cell1" VolumeRegion1="Cell1" VolumeRegion2="EC0" Size="63.01392253613547" Unit="um" />
+        </SurfaceDescription>
+        <Version Name="Geometry480325219" KeyValue="61872020" BranchId="57406236" Archived="0" Date="14-Jan-2012 22:59:10" FromVersionable="false">
+          <Owner Name="cnevins" Identifier="56866785" />
+          <GroupAccess Type="1" />
+        </Version>
+      </Geometry>
+      <GeometryContext>
+        <FeatureMapping Feature="Cell" GeometryClass="Cell" SubVolume="Cell" VolumePerUnitVolume="1.0">
+          <BoundariesTypes Xm="Flux" Xp="Flux" Ym="Flux" Yp="Flux" Zm="Flux" Zp="Flux" />
+        </FeatureMapping>
+        <FeatureMapping Feature="EC" GeometryClass="EC" SubVolume="EC" VolumePerUnitVolume="1.0">
+          <BoundariesTypes Xm="Flux" Xp="Flux" Ym="Flux" Yp="Flux" Zm="Flux" Zp="Flux" />
+        </FeatureMapping>
+        <MembraneMapping Membrane="PM" SurfaceToVolumeRatio="1.0" VolumeFraction="0.2" AreaPerUnitArea="1.0" CalculateVoltage="false" SpecificCapacitance="1.0" InitialVoltage="0.0" GeometryClass="Cell_EC_membrane">
+          <BoundariesTypes Xm="Flux" Xp="Flux" Ym="Flux" Yp="Flux" Zm="Flux" Zp="Flux" />
+        </MembraneMapping>
+      </GeometryContext>
+      <ReactionContext>
+        <LocalizedCompoundSpec LocalizedCompoundRef="GAPa__Cell" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>0.0</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="GEF_Cell" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>(10.0 * (((x * x) + (y * y)) &lt; 100.0))</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="GEFa__Cell" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>0.0</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="signal_Cell" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>(((x * x) + (y * y)) &lt; 4.0)</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="Rho_Cell" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>(10.0 * (((x * x) + (y * y)) &lt; 100.0))</InitialConcentration>
+          <Diffusion>2.5</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="Rho_a__Cell" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>0.0</InitialConcentration>
+          <Diffusion>2.5</Diffusion>
+        </LocalizedCompoundSpec>
+        <ReactionSpec ReactionStepRef="GEF activation" ReactionMapping="included" />
+        <ReactionSpec ReactionStepRef="Rho activation" ReactionMapping="included" />
+        <ReactionSpec ReactionStepRef="Rho inactivation" ReactionMapping="included" />
+      </ReactionContext>
+      <MathDescription Name="Rho activation_generated">
+        <Constant Name="_F_">96480.0</Constant>
+        <Constant Name="_F_nmol_">9.648E-5</Constant>
+        <Constant Name="_K_GHK_">1.0E-9</Constant>
+        <Constant Name="_N_pmol_">6.02E11</Constant>
+        <Constant Name="_PI_">3.141592653589793</Constant>
+        <Constant Name="_R_">8314.0</Constant>
+        <Constant Name="_T_">300.0</Constant>
+        <Constant Name="AreaPerUnitArea_PM">1.0</Constant>
+        <Constant Name="GAPa__Cell_init">0.0</Constant>
+        <Constant Name="GEFa__Cell_init">0.0</Constant>
+        <Constant Name="K_millivolts_per_volt">1000.0</Constant>
+        <Constant Name="Km">8.33</Constant>
+        <Constant Name="KMOLE">0.0016611295681063123</Constant>
+        <Constant Name="Koff">0.15</Constant>
+        <Constant Name="Rho_a__Cell_diffusionRate">2.5</Constant>
+        <Constant Name="Rho_a__Cell_init">0.0</Constant>
+        <Constant Name="Rho_Cell_diffusionRate">2.5</Constant>
+        <Constant Name="Vmax_Rho_activation">7.0</Constant>
+        <Constant Name="Vmax_Rho_inactivation">0.3</Constant>
+        <Constant Name="Voltage_PM">0.0</Constant>
+        <Constant Name="VolumePerUnitVolume_Cell">1.0</Constant>
+        <Constant Name="VolumePerUnitVolume_EC">1.0</Constant>
+        <VolumeVariable Name="GEFa__Cell" Domain="Cell" />
+        <VolumeVariable Name="Rho_a__Cell" Domain="Cell" />
+        <VolumeVariable Name="Rho_Cell" Domain="Cell" />
+        <Function Name="Fdbk" Domain="Cell">(Rho_a__Cell / (Rho_Cell + Rho_a__Cell))</Function>
+        <Function Name="GAPa__Cell" Domain="Cell">(K_GAPa__Cell_total / VolumePerUnitVolume_Cell)</Function>
+        <Function Name="GEF_Cell" Domain="Cell">((K_GEF_Cell_total - (VolumePerUnitVolume_Cell * GEFa__Cell)) / VolumePerUnitVolume_Cell)</Function>
+        <Function Name="GEF_Cell_init" Domain="Cell">(10.0 * (((x * x) + (y * y)) &lt; 100.0))</Function>
+        <Function Name="J_GEF_activation" Domain="Cell">((GEF_Cell * signal_Cell) - (Koff * GEFa__Cell * GEFa__Cell) + (Fdbk * GEFa__Cell))</Function>
+        <Function Name="J_Rho_activation" Domain="Cell">(Vmax_Rho_activation * GEFa__Cell * GEFa__Cell * Rho_Cell / (Km + (GEFa__Cell * GEFa__Cell)))</Function>
+        <Function Name="J_Rho_inactivation" Domain="Cell">(Vmax_Rho_inactivation * GAPa__Cell * Rho_a__Cell * (t &gt; 11.5))</Function>
+        <Function Name="K_GAPa__Cell_total" Domain="Cell">(VolumePerUnitVolume_Cell * GAPa__Cell_init)</Function>
+        <Function Name="K_GEF_Cell_total" Domain="Cell">((VolumePerUnitVolume_Cell * GEF_Cell_init) + (VolumePerUnitVolume_Cell * GEFa__Cell_init))</Function>
+        <Function Name="K_signal_Cell_total" Domain="Cell">(VolumePerUnitVolume_Cell * signal_Cell_init)</Function>
+        <Function Name="Rho_Cell_init" Domain="Cell">(10.0 * (((x * x) + (y * y)) &lt; 100.0))</Function>
+        <Function Name="signal_Cell" Domain="Cell">(K_signal_Cell_total / VolumePerUnitVolume_Cell)</Function>
+        <Function Name="signal_Cell_init" Domain="Cell">(((x * x) + (y * y)) &lt; 4.0)</Function>
+        <Function Name="Size_Cell" Domain="Cell">(VolumePerUnitVolume_Cell * vcRegionVolume('Cell'))</Function>
+        <Function Name="Size_EC" Domain="EC">(VolumePerUnitVolume_EC * vcRegionVolume('EC'))</Function>
+        <Function Name="Size_PM" Domain="Cell_EC_membrane">(AreaPerUnitArea_PM * vcRegionArea('Cell_EC_membrane'))</Function>
+        <CompartmentSubDomain Name="Cell">
+          <BoundaryType Boundary="Xm" Type="Flux" />
+          <BoundaryType Boundary="Xp" Type="Flux" />
+          <BoundaryType Boundary="Ym" Type="Flux" />
+          <BoundaryType Boundary="Yp" Type="Flux" />
+          <BoundaryType Boundary="Zm" Type="Value" />
+          <BoundaryType Boundary="Zp" Type="Value" />
+          <OdeEquation Name="GEFa__Cell" SolutionType="Unknown">
+            <Rate>J_GEF_activation</Rate>
+            <Initial>GEFa__Cell_init</Initial>
+          </OdeEquation>
+          <PdeEquation Name="Rho_Cell" SolutionType="Unknown">
+            <Rate>( - J_Rho_activation + J_Rho_inactivation)</Rate>
+            <Diffusion>Rho_Cell_diffusionRate</Diffusion>
+            <Initial>Rho_Cell_init</Initial>
+          </PdeEquation>
+          <PdeEquation Name="Rho_a__Cell" SolutionType="Unknown">
+            <Rate>(J_Rho_activation - J_Rho_inactivation)</Rate>
+            <Diffusion>Rho_a__Cell_diffusionRate</Diffusion>
+            <Initial>Rho_a__Cell_init</Initial>
+          </PdeEquation>
+        </CompartmentSubDomain>
+        <CompartmentSubDomain Name="EC">
+          <BoundaryType Boundary="Xm" Type="Flux" />
+          <BoundaryType Boundary="Xp" Type="Flux" />
+          <BoundaryType Boundary="Ym" Type="Flux" />
+          <BoundaryType Boundary="Yp" Type="Flux" />
+          <BoundaryType Boundary="Zm" Type="Value" />
+          <BoundaryType Boundary="Zp" Type="Value" />
+        </CompartmentSubDomain>
+        <MembraneSubDomain Name="Cell_EC_membrane" InsideCompartment="Cell" OutsideCompartment="EC">
+          <BoundaryType Boundary="Xm" Type="Value" />
+          <BoundaryType Boundary="Xp" Type="Value" />
+          <BoundaryType Boundary="Ym" Type="Value" />
+          <BoundaryType Boundary="Yp" Type="Value" />
+          <BoundaryType Boundary="Zm" Type="Value" />
+          <BoundaryType Boundary="Zp" Type="Value" />
+          <JumpCondition Name="Rho_Cell">
+            <InFlux>0.0</InFlux>
+            <OutFlux>0.0</OutFlux>
+          </JumpCondition>
+          <JumpCondition Name="Rho_a__Cell">
+            <InFlux>0.0</InFlux>
+            <OutFlux>0.0</OutFlux>
+          </JumpCondition>
+        </MembraneSubDomain>
+        <Version Name="Rho activation_generated" KeyValue="61872042" BranchId="57406248" Archived="0" Date="14-Jan-2012 22:59:10" FromVersionable="false">
+          <Owner Name="cnevins" Identifier="56866785" />
+          <GroupAccess Type="1" />
+        </Version>
+      </MathDescription>
+      <Simulation Name="Simulation1">
+        <SolverTaskDescription TaskType="Unsteady" UseSymbolicJacobian="false" Solver="Finite Volume Standalone, Regular Grid">
+          <TimeBound StartTime="0.0" EndTime="60.0" />
+          <TimeStep DefaultTime="0.1" MinTime="1.0E-8" MaxTime="1.0" />
+          <ErrorTolerance Absolut="1.0E-9" Relative="1.0E-8" />
+          <OutputOptions OutputTimeStep="0.1" />
+          <NumberProcessors>1</NumberProcessors>
+        </SolverTaskDescription>
+        <MathOverrides />
+        <MeshSpecification>
+          <Size X="51" Y="51" Z="1" />
+        </MeshSpecification>
+        <Version Name="Simulation1" KeyValue="61872090" BranchId="57406307" Archived="0" Date="14-Jan-2012 22:59:11" FromVersionable="false">
+          <Owner Name="cnevins" Identifier="56866785" />
+          <GroupAccess Type="1" />
+        </Version>
+      </Simulation>
+      <SpatialObjects>
+        <SpatialObject Name="vobj_EC0" Type="Volume" subVolume="EC" regionId="0">
+          <QuantityCategoryList>
+            <QuantityCategory Name="VolumeCentroid" Enabled="false" />
+            <QuantityCategory Name="InteriorVelocity" Enabled="false" />
+            <QuantityCategory Name="VolumeRegionSize" Enabled="true" />
+          </QuantityCategoryList>
+        </SpatialObject>
+        <SpatialObject Name="vobj_Cell1" Type="Volume" subVolume="Cell" regionId="1">
+          <QuantityCategoryList>
+            <QuantityCategory Name="VolumeCentroid" Enabled="false" />
+            <QuantityCategory Name="InteriorVelocity" Enabled="false" />
+            <QuantityCategory Name="VolumeRegionSize" Enabled="true" />
+          </QuantityCategoryList>
+        </SpatialObject>
+        <SpatialObject Name="sobj_Cell1_EC0" Type="Surface" subVolumeInside="Cell" regionIdInside="1" subVolumeOutside="EC" regionIdOutside="0">
+          <QuantityCategoryList>
+            <QuantityCategory Name="SurfaceNormal" Enabled="false" />
+            <QuantityCategory Name="SurfaceVelocity" Enabled="false" />
+            <QuantityCategory Name="DistanceToSurface" Enabled="false" />
+            <QuantityCategory Name="DirectionToSurface" Enabled="false" />
+            <QuantityCategory Name="SurfaceSize" Enabled="true" />
+          </QuantityCategoryList>
+        </SpatialObject>
+      </SpatialObjects>
+      <Version Name="Rho activation" KeyValue="61872060" BranchId="57406292" Archived="0" Date="14-Jan-2012 22:59:11" FromVersionable="false">
+        <Owner Name="cnevins" Identifier="56866785" />
+        <GroupAccess Type="1" />
+      </Version>
+      <MicroscopeMeasurement Name="fluor">
+        <ConvolutionKernel Type="ProjectionZKernel" />
+      </MicroscopeMeasurement>
+    </SimulationSpec>
+    <SimulationSpec Name="Rho inactivation" Stochastic="false" UseConcentration="true" RuleBased="false" MassConservationModelReduction="true" InsufficientIterations="false" InsufficientMaxMolecules="false" CharacteristicSize="0.025312499999999998">
+      <NetworkConstraints RbmMaxIteration="1" RbmMaxMoleculesPerSpecies="10" RbmSpeciesLimit="800" RbmReactionsLimit="2500" />
+      <Annotation />
+      <Geometry Name="Geometry486903068" Dimension="2">
+        <Extent X="12.0" Y="12.0" Z="10.0" />
+        <Origin X="-6.0" Y="-6.0" Z="0.0" />
+        <SubVolume Name="Cell" Handle="1" Type="Analytical" KeyValue="61872033">
+          <AnalyticExpression>((( - x ^ 2.0) + ( - y ^ 2.0)) &lt; 25.0)</AnalyticExpression>
+        </SubVolume>
+        <SubVolume Name="EC" Handle="0" Type="Analytical" KeyValue="61872034">
+          <AnalyticExpression>1.0</AnalyticExpression>
+        </SubVolume>
+        <SurfaceClass Name="Cell_EC_membrane" SubVolume1Ref="Cell" SubVolume2Ref="EC" KeyValue="61872035" />
+        <SurfaceDescription NumSamplesX="101" NumSamplesY="101" NumSamplesZ="1" CutoffFrequency="0.3">
+          <VolumeRegion Name="EC0" RegionID="0" SubVolume="EC" Size="65.53439999999999" Unit="um2" />
+          <VolumeRegion Name="Cell1" RegionID="1" SubVolume="Cell" Size="78.4656" Unit="um2" />
+          <MembraneRegion Name="membrane_EC0_Cell1" VolumeRegion1="Cell1" VolumeRegion2="EC0" Size="31.482337987361063" Unit="um" />
+        </SurfaceDescription>
+        <Version Name="Geometry486903068" KeyValue="61872030" BranchId="57531573" Archived="0" Date="14-Jan-2012 22:59:10" FromVersionable="false">
+          <Owner Name="cnevins" Identifier="56866785" />
+          <GroupAccess Type="1" />
+        </Version>
+      </Geometry>
+      <GeometryContext>
+        <FeatureMapping Feature="Cell" GeometryClass="Cell" SubVolume="Cell" VolumePerUnitVolume="1.0">
+          <BoundariesTypes Xm="Flux" Xp="Flux" Ym="Flux" Yp="Flux" Zm="Flux" Zp="Flux" />
+        </FeatureMapping>
+        <FeatureMapping Feature="EC" GeometryClass="EC" SubVolume="EC" VolumePerUnitVolume="1.0">
+          <BoundariesTypes Xm="Flux" Xp="Flux" Ym="Flux" Yp="Flux" Zm="Flux" Zp="Flux" />
+        </FeatureMapping>
+        <MembraneMapping Membrane="PM" SurfaceToVolumeRatio="1.0" VolumeFraction="0.2" AreaPerUnitArea="1.0" CalculateVoltage="false" SpecificCapacitance="1.0" InitialVoltage="0.0" GeometryClass="Cell_EC_membrane">
+          <BoundariesTypes Xm="Flux" Xp="Flux" Ym="Flux" Yp="Flux" Zm="Flux" Zp="Flux" />
+        </MembraneMapping>
+      </GeometryContext>
+      <ReactionContext>
+        <LocalizedCompoundSpec LocalizedCompoundRef="GAPa__Cell" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>(10.0 * (((x * x) + (y * y)) &lt; 25.0))</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="GEF_Cell" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>(10.0 * (((x * x) + (y * y)) &lt; 25.0))</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="GEFa__Cell" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>0.0</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="signal_Cell" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>((((x * x) + (y * y)) &lt; 1.0) * ((t &gt; 10.0) &amp;&amp; (t &lt; 11.0)))</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="Rho_Cell" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>(3.1 * (((x * x) + (y * y)) &lt; 25.0))</InitialConcentration>
+          <Diffusion>0.5</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="Rho_a__Cell" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>0.0</InitialConcentration>
+          <Diffusion>0.5</Diffusion>
+        </LocalizedCompoundSpec>
+        <ReactionSpec ReactionStepRef="GEF activation" ReactionMapping="included" />
+        <ReactionSpec ReactionStepRef="Rho activation" ReactionMapping="included" />
+        <ReactionSpec ReactionStepRef="Rho inactivation" ReactionMapping="included" />
+      </ReactionContext>
+      <MathDescription Name="Rho inactivation_generated">
+        <Constant Name="_F_">96480.0</Constant>
+        <Constant Name="_F_nmol_">9.648E-5</Constant>
+        <Constant Name="_K_GHK_">1.0E-9</Constant>
+        <Constant Name="_N_pmol_">6.02E11</Constant>
+        <Constant Name="_PI_">3.141592653589793</Constant>
+        <Constant Name="_R_">8314.0</Constant>
+        <Constant Name="_T_">300.0</Constant>
+        <Constant Name="AreaPerUnitArea_PM">1.0</Constant>
+        <Constant Name="GEFa__Cell_init">0.0</Constant>
+        <Constant Name="K_millivolts_per_volt">1000.0</Constant>
+        <Constant Name="Km">8.33</Constant>
+        <Constant Name="KMOLE">0.0016611295681063123</Constant>
+        <Constant Name="Koff">0.15</Constant>
+        <Constant Name="Rho_a__Cell_diffusionRate">0.5</Constant>
+        <Constant Name="Rho_a__Cell_init">0.0</Constant>
+        <Constant Name="Rho_Cell_diffusionRate">0.5</Constant>
+        <Constant Name="Vmax_Rho_activation">7.0</Constant>
+        <Constant Name="Vmax_Rho_inactivation">0.3</Constant>
+        <Constant Name="Voltage_PM">0.0</Constant>
+        <Constant Name="VolumePerUnitVolume_Cell">1.0</Constant>
+        <Constant Name="VolumePerUnitVolume_EC">1.0</Constant>
+        <VolumeVariable Name="GEFa__Cell" Domain="Cell" />
+        <VolumeVariable Name="Rho_a__Cell" Domain="Cell" />
+        <VolumeVariable Name="Rho_Cell" Domain="Cell" />
+        <Function Name="Fdbk" Domain="Cell">(Rho_a__Cell / (Rho_Cell + Rho_a__Cell))</Function>
+        <Function Name="GAPa__Cell" Domain="Cell">(K_GAPa__Cell_total / VolumePerUnitVolume_Cell)</Function>
+        <Function Name="GAPa__Cell_init" Domain="Cell">(10.0 * (((x * x) + (y * y)) &lt; 25.0))</Function>
+        <Function Name="GEF_Cell" Domain="Cell">((K_GEF_Cell_total - (VolumePerUnitVolume_Cell * GEFa__Cell)) / VolumePerUnitVolume_Cell)</Function>
+        <Function Name="GEF_Cell_init" Domain="Cell">(10.0 * (((x * x) + (y * y)) &lt; 25.0))</Function>
+        <Function Name="J_GEF_activation" Domain="Cell">((GEF_Cell * signal_Cell) - (Koff * GEFa__Cell * GEFa__Cell) + (Fdbk * GEFa__Cell))</Function>
+        <Function Name="J_Rho_activation" Domain="Cell">(Vmax_Rho_activation * GEFa__Cell * GEFa__Cell * Rho_Cell / (Km + (GEFa__Cell * GEFa__Cell)))</Function>
+        <Function Name="J_Rho_inactivation" Domain="Cell">(Vmax_Rho_inactivation * GAPa__Cell * Rho_a__Cell * (t &gt; 11.5))</Function>
+        <Function Name="K_GAPa__Cell_total" Domain="Cell">(VolumePerUnitVolume_Cell * GAPa__Cell_init)</Function>
+        <Function Name="K_GEF_Cell_total" Domain="Cell">((VolumePerUnitVolume_Cell * GEF_Cell_init) + (VolumePerUnitVolume_Cell * GEFa__Cell_init))</Function>
+        <Function Name="K_signal_Cell_total" Domain="Cell">(VolumePerUnitVolume_Cell * signal_Cell_init)</Function>
+        <Function Name="Rho_Cell_init" Domain="Cell">(3.1 * (((x * x) + (y * y)) &lt; 25.0))</Function>
+        <Function Name="signal_Cell" Domain="Cell">(K_signal_Cell_total / VolumePerUnitVolume_Cell)</Function>
+        <Function Name="signal_Cell_init" Domain="Cell">((((x * x) + (y * y)) &lt; 1.0) * ((t &gt; 10.0) &amp;&amp; (t &lt; 11.0)))</Function>
+        <Function Name="Size_Cell" Domain="Cell">(VolumePerUnitVolume_Cell * vcRegionVolume('Cell'))</Function>
+        <Function Name="Size_EC" Domain="EC">(VolumePerUnitVolume_EC * vcRegionVolume('EC'))</Function>
+        <Function Name="Size_PM" Domain="Cell_EC_membrane">(AreaPerUnitArea_PM * vcRegionArea('Cell_EC_membrane'))</Function>
+        <CompartmentSubDomain Name="Cell">
+          <BoundaryType Boundary="Xm" Type="Flux" />
+          <BoundaryType Boundary="Xp" Type="Flux" />
+          <BoundaryType Boundary="Ym" Type="Flux" />
+          <BoundaryType Boundary="Yp" Type="Flux" />
+          <BoundaryType Boundary="Zm" Type="Value" />
+          <BoundaryType Boundary="Zp" Type="Value" />
+          <OdeEquation Name="GEFa__Cell" SolutionType="Unknown">
+            <Rate>J_GEF_activation</Rate>
+            <Initial>GEFa__Cell_init</Initial>
+          </OdeEquation>
+          <PdeEquation Name="Rho_Cell" SolutionType="Unknown">
+            <Rate>( - J_Rho_activation + J_Rho_inactivation)</Rate>
+            <Diffusion>Rho_Cell_diffusionRate</Diffusion>
+            <Initial>Rho_Cell_init</Initial>
+          </PdeEquation>
+          <PdeEquation Name="Rho_a__Cell" SolutionType="Unknown">
+            <Rate>(J_Rho_activation - J_Rho_inactivation)</Rate>
+            <Diffusion>Rho_a__Cell_diffusionRate</Diffusion>
+            <Initial>Rho_a__Cell_init</Initial>
+          </PdeEquation>
+        </CompartmentSubDomain>
+        <CompartmentSubDomain Name="EC">
+          <BoundaryType Boundary="Xm" Type="Flux" />
+          <BoundaryType Boundary="Xp" Type="Flux" />
+          <BoundaryType Boundary="Ym" Type="Flux" />
+          <BoundaryType Boundary="Yp" Type="Flux" />
+          <BoundaryType Boundary="Zm" Type="Value" />
+          <BoundaryType Boundary="Zp" Type="Value" />
+        </CompartmentSubDomain>
+        <MembraneSubDomain Name="Cell_EC_membrane" InsideCompartment="Cell" OutsideCompartment="EC">
+          <BoundaryType Boundary="Xm" Type="Value" />
+          <BoundaryType Boundary="Xp" Type="Value" />
+          <BoundaryType Boundary="Ym" Type="Value" />
+          <BoundaryType Boundary="Yp" Type="Value" />
+          <BoundaryType Boundary="Zm" Type="Value" />
+          <BoundaryType Boundary="Zp" Type="Value" />
+          <JumpCondition Name="Rho_Cell">
+            <InFlux>0.0</InFlux>
+            <OutFlux>0.0</OutFlux>
+          </JumpCondition>
+          <JumpCondition Name="Rho_a__Cell">
+            <InFlux>0.0</InFlux>
+            <OutFlux>0.0</OutFlux>
+          </JumpCondition>
+        </MembraneSubDomain>
+        <Version Name="Rho inactivation_generated" KeyValue="61872044" BranchId="57531587" Archived="0" Date="14-Jan-2012 22:59:10" FromVersionable="false">
+          <Owner Name="cnevins" Identifier="56866785" />
+          <GroupAccess Type="1" />
+        </Version>
+      </MathDescription>
+      <Simulation Name="Simulation2">
+        <SolverTaskDescription TaskType="Unsteady" UseSymbolicJacobian="false" Solver="Finite Volume Standalone, Regular Grid">
+          <TimeBound StartTime="0.0" EndTime="200.0" />
+          <TimeStep DefaultTime="0.1" MinTime="1.0E-8" MaxTime="1.0" />
+          <ErrorTolerance Absolut="1.0E-9" Relative="1.0E-8" />
+          <OutputOptions OutputTimeStep="0.5" />
+          <NumberProcessors>1</NumberProcessors>
+        </SolverTaskDescription>
+        <MathOverrides />
+        <MeshSpecification>
+          <Size X="51" Y="51" Z="1" />
+        </MeshSpecification>
+        <Version Name="Simulation2" KeyValue="74759508" BranchId="74759509" Archived="0" Date="29-Aug-2012 17:03:11" FromVersionable="false">
+          <Owner Name="cnevins" Identifier="56866785" />
+          <GroupAccess Type="1" />
+        </Version>
+      </Simulation>
+      <SpatialObjects>
+        <SpatialObject Name="vobj_EC0" Type="Volume" subVolume="EC" regionId="0">
+          <QuantityCategoryList>
+            <QuantityCategory Name="VolumeCentroid" Enabled="false" />
+            <QuantityCategory Name="InteriorVelocity" Enabled="false" />
+            <QuantityCategory Name="VolumeRegionSize" Enabled="true" />
+          </QuantityCategoryList>
+        </SpatialObject>
+        <SpatialObject Name="vobj_Cell1" Type="Volume" subVolume="Cell" regionId="1">
+          <QuantityCategoryList>
+            <QuantityCategory Name="VolumeCentroid" Enabled="false" />
+            <QuantityCategory Name="InteriorVelocity" Enabled="false" />
+            <QuantityCategory Name="VolumeRegionSize" Enabled="true" />
+          </QuantityCategoryList>
+        </SpatialObject>
+        <SpatialObject Name="sobj_Cell1_EC0" Type="Surface" subVolumeInside="Cell" regionIdInside="1" subVolumeOutside="EC" regionIdOutside="0">
+          <QuantityCategoryList>
+            <QuantityCategory Name="SurfaceNormal" Enabled="false" />
+            <QuantityCategory Name="SurfaceVelocity" Enabled="false" />
+            <QuantityCategory Name="DistanceToSurface" Enabled="false" />
+            <QuantityCategory Name="DirectionToSurface" Enabled="false" />
+            <QuantityCategory Name="SurfaceSize" Enabled="true" />
+          </QuantityCategoryList>
+        </SpatialObject>
+      </SpatialObjects>
+      <Version Name="Rho inactivation" KeyValue="61872074" BranchId="57531667" Archived="0" Date="14-Jan-2012 22:59:11" FromVersionable="false">
+        <Owner Name="cnevins" Identifier="56866785" />
+        <GroupAccess Type="1" />
+      </Version>
+      <MicroscopeMeasurement Name="fluor">
+        <ConvolutionKernel Type="ProjectionZKernel" />
+      </MicroscopeMeasurement>
+    </SimulationSpec>
+    <Version Name="Rho-GEF_activation" KeyValue="74759511" BranchId="58544113" Archived="0" Date="29-Aug-2012 17:03:11" FromVersionable="false">
+      <Owner Name="cnevins" Identifier="56866785" />
+      <GroupAccess Type="0" />
+    </Version>
+    <pathwayModel>
+      <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:bp="http://www.biopax.org/release/biopax-level3.owl#" version="3.0" />
+    </pathwayModel>
+    <relationshipModel>
+      <RMNS version="3.0" />
+    </relationshipModel>
+    <vcmetadata>
+      <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" />
+      <nonrdfAnnotationList>
+        <nonrdfAnnotation vcid="Species(GEFa*)">
+          <freetext>Guanine exchange factor, activated</freetext>
+        </nonrdfAnnotation>
+        <nonrdfAnnotation vcid="Species(signal)">
+          <freetext>Initial EC signal that begins signaling cascade; possibly a G-protein receptor alpha subunit, which dissociates from receptor, binds to GEF, and activates it</freetext>
+        </nonrdfAnnotation>
+        <nonrdfAnnotation vcid="Species(GAPa*)">
+          <freetext>GTPase-activating protein, active. Inhibits Rho activity by converting GTP to GDP.</freetext>
+        </nonrdfAnnotation>
+        <nonrdfAnnotation vcid="ReactionStep(Rho activation)">
+          <freetext>Rho activated to become Rho_a*, catalyzed by GEF activation</freetext>
+        </nonrdfAnnotation>
+        <nonrdfAnnotation vcid="Species(Rho)">
+          <freetext>inactive Rho protein</freetext>
+        </nonrdfAnnotation>
+        <nonrdfAnnotation vcid="Species(GEF)">
+          <freetext>Guanine exchange factor, inactive</freetext>
+        </nonrdfAnnotation>
+        <nonrdfAnnotation vcid="Species(Rho_a*)">
+          <freetext>active Rho (activated by GEFa*)</freetext>
+        </nonrdfAnnotation>
+        <nonrdfAnnotation vcid="ReactionStep(GEF activation)">
+          <freetext>LPA activates G protein-coupled receptor; alpha subunit (a_sub) dissociates and binds to/activates GEF (?)</freetext>
+        </nonrdfAnnotation>
+      </nonrdfAnnotationList>
+      <uriBindingList />
+    </vcmetadata>
+  </BioModel>
+</vcml>
+

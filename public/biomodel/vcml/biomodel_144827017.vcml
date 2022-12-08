@@ -1,0 +1,1207 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--This biomodel was generated in VCML Version Alpha_Version_7.4.0_build_87-->
+<vcml xmlns="http://sourceforge.net/projects/vcell/vcml" Version="Alpha_Version_7.4.0_build_87">
+  <BioModel Name="Visual_Dushek_2014">
+    <Annotation>cloned from 'Visual_Dushek_2014' owned by user mblinov</Annotation>
+    <Model Name="model">
+      <Annotation>cloned from 'model' owned by user mblinov</Annotation>
+      <ModelParameters>
+        <Parameter Name="Ekf" Role="user defined" Unit="tbd">10.0</Parameter>
+        <Parameter Name="Ekb" Role="user defined" Unit="tbd">1.0</Parameter>
+        <Parameter Name="Ekc" Role="user defined" Unit="tbd">1.0</Parameter>
+        <Parameter Name="Fkf" Role="user defined" Unit="tbd">10.0</Parameter>
+        <Parameter Name="Fkb" Role="user defined" Unit="tbd">1.0</Parameter>
+        <Parameter Name="Fkc" Role="user defined" Unit="tbd">1.0</Parameter>
+        <Parameter Name="kon1" Role="user defined" Unit="tbd">1000.0</Parameter>
+        <Parameter Name="koff1" Role="user defined" Unit="tbd">1.0</Parameter>
+        <Parameter Name="kon2" Role="user defined" Unit="tbd">10.0</Parameter>
+        <Parameter Name="koff2" Role="user defined" Unit="tbd">1.0</Parameter>
+      </ModelParameters>
+      <Compound Name="E_b" />
+      <Compound Name="F_b" />
+      <Compound Name="B_e0_b_YU" />
+      <Feature Name="c" KeyValue="144826998" />
+      <LocalizedCompound Name="E_b" CompoundRef="E_b" Structure="c" OverrideName="true" KeyValue="144827000">
+        <SpeciesPattern>
+          <MolecularTypePattern Index="1">
+            <MolecularType Name="E" />
+            <ComponentPattern MolecularComponent="b" BondType="-" />
+          </MolecularTypePattern>
+        </SpeciesPattern>
+      </LocalizedCompound>
+      <LocalizedCompound Name="F_b" CompoundRef="F_b" Structure="c" OverrideName="true" KeyValue="144827001">
+        <SpeciesPattern>
+          <MolecularTypePattern Index="1">
+            <MolecularType Name="F" />
+            <ComponentPattern MolecularComponent="b" BondType="-" />
+          </MolecularTypePattern>
+        </SpeciesPattern>
+      </LocalizedCompound>
+      <LocalizedCompound Name="B" CompoundRef="B_e0_b_YU" Structure="c" OverrideName="true" KeyValue="144827002">
+        <SpeciesPattern>
+          <MolecularTypePattern Index="1">
+            <MolecularType Name="B" />
+            <ComponentPattern MolecularComponent="e" ComponentStatePattern="s0" BondType="-" />
+            <ComponentPattern MolecularComponent="b" BondType="-" />
+            <ComponentPattern MolecularComponent="Y" ComponentStatePattern="U" BondType="-" />
+          </MolecularTypePattern>
+        </SpeciesPattern>
+      </LocalizedCompound>
+      <RbmModelContainer>
+        <MolecularTypeList>
+          <MolecularType Name="E" AnchorAll="true">
+            <MolecularComponent Name="b" Index="1" />
+          </MolecularType>
+          <MolecularType Name="F" AnchorAll="true">
+            <MolecularComponent Name="b" Index="1" />
+          </MolecularType>
+          <MolecularType Name="B" AnchorAll="true">
+            <MolecularComponent Name="e" Index="1">
+              <AllowableState Name="s0" />
+              <AllowableState Name="s1" />
+            </MolecularComponent>
+            <MolecularComponent Name="b" Index="2" />
+            <MolecularComponent Name="Y" Index="3">
+              <AllowableState Name="U" />
+              <AllowableState Name="P" />
+            </MolecularComponent>
+          </MolecularType>
+        </MolecularTypeList>
+        <ReactionRuleList>
+          <ReactionRule Name="r0" Structure="c" ReactionRuleLabel="r0" ReactionRuleReversible="true">
+            <ReactantPatternsList>
+              <ReactantPattern Structure="c">
+                <SpeciesPattern>
+                  <MolecularTypePattern Index="1">
+                    <MolecularType Name="E" />
+                    <ComponentPattern MolecularComponent="b" BondType="-" />
+                  </MolecularTypePattern>
+                </SpeciesPattern>
+              </ReactantPattern>
+              <ReactantPattern Structure="c">
+                <SpeciesPattern>
+                  <MolecularTypePattern Index="1">
+                    <MolecularType Name="B" />
+                    <ComponentPattern MolecularComponent="e" ComponentStatePattern="s0" BondType="-" />
+                    <ComponentPattern MolecularComponent="b" BondType="-" />
+                    <ComponentPattern MolecularComponent="Y" ComponentStatePattern="U" BondType="-" />
+                  </MolecularTypePattern>
+                </SpeciesPattern>
+              </ReactantPattern>
+            </ReactantPatternsList>
+            <ProductPatternsList>
+              <ProductPattern Structure="c">
+                <SpeciesPattern>
+                  <MolecularTypePattern Index="1">
+                    <MolecularType Name="E" />
+                    <ComponentPattern MolecularComponent="b" BondType="1">
+                      <Bond MolecularTypePattern="B" ComponentPattern="Y" />
+                    </ComponentPattern>
+                  </MolecularTypePattern>
+                  <MolecularTypePattern Index="2">
+                    <MolecularType Name="B" />
+                    <ComponentPattern MolecularComponent="e" ComponentStatePattern="s1" BondType="-" />
+                    <ComponentPattern MolecularComponent="b" BondType="-" />
+                    <ComponentPattern MolecularComponent="Y" ComponentStatePattern="U" BondType="1">
+                      <Bond MolecularTypePattern="E" ComponentPattern="b" />
+                    </ComponentPattern>
+                  </MolecularTypePattern>
+                </SpeciesPattern>
+              </ProductPattern>
+            </ProductPatternsList>
+            <Kinetics KineticsType="MassAction">
+              <Parameter Name="ruleRate" Role="RuleRate" Unit="molecules.um-3.s-1" />
+              <Parameter Name="Kf" Role="MassActionKf" Unit="um3.s-1.molecules-1">(10.0 * Ekf)</Parameter>
+              <Parameter Name="Kr" Role="MassActionKr" Unit="s-1">Ekb</Parameter>
+            </Kinetics>
+          </ReactionRule>
+          <ReactionRule Name="r1" Structure="c" ReactionRuleLabel="r1" ReactionRuleReversible="false">
+            <ReactantPatternsList>
+              <ReactantPattern Structure="c">
+                <SpeciesPattern>
+                  <MolecularTypePattern Index="1">
+                    <MolecularType Name="E" />
+                    <ComponentPattern MolecularComponent="b" BondType="1">
+                      <Bond MolecularTypePattern="B" ComponentPattern="Y" />
+                    </ComponentPattern>
+                  </MolecularTypePattern>
+                  <MolecularTypePattern Index="2">
+                    <MolecularType Name="B" />
+                    <ComponentPattern MolecularComponent="e" ComponentStatePattern="s1" BondType="-" />
+                    <ComponentPattern MolecularComponent="b" BondType="-" />
+                    <ComponentPattern MolecularComponent="Y" ComponentStatePattern="U" BondType="1">
+                      <Bond MolecularTypePattern="E" ComponentPattern="b" />
+                    </ComponentPattern>
+                  </MolecularTypePattern>
+                </SpeciesPattern>
+              </ReactantPattern>
+            </ReactantPatternsList>
+            <ProductPatternsList>
+              <ProductPattern Structure="c">
+                <SpeciesPattern>
+                  <MolecularTypePattern Index="1">
+                    <MolecularType Name="E" />
+                    <ComponentPattern MolecularComponent="b" BondType="-" />
+                  </MolecularTypePattern>
+                </SpeciesPattern>
+              </ProductPattern>
+              <ProductPattern Structure="c">
+                <SpeciesPattern>
+                  <MolecularTypePattern Index="1">
+                    <MolecularType Name="B" />
+                    <ComponentPattern MolecularComponent="e" ComponentStatePattern="s0" BondType="-" />
+                    <ComponentPattern MolecularComponent="b" BondType="-" />
+                    <ComponentPattern MolecularComponent="Y" ComponentStatePattern="P" BondType="-" />
+                  </MolecularTypePattern>
+                </SpeciesPattern>
+              </ProductPattern>
+            </ProductPatternsList>
+            <Kinetics KineticsType="MassAction">
+              <Parameter Name="ruleRate" Role="RuleRate" Unit="molecules.um-3.s-1" />
+              <Parameter Name="Kf" Role="MassActionKf" Unit="s-1">Ekc</Parameter>
+              <Parameter Name="Kr" Role="MassActionKr" Unit="um3.s-1.molecules-1">0.0</Parameter>
+            </Kinetics>
+          </ReactionRule>
+          <ReactionRule Name="r2" Structure="c" ReactionRuleLabel="r2" ReactionRuleReversible="true">
+            <ReactantPatternsList>
+              <ReactantPattern Structure="c">
+                <SpeciesPattern>
+                  <MolecularTypePattern Index="1">
+                    <MolecularType Name="F" />
+                    <ComponentPattern MolecularComponent="b" BondType="-" />
+                  </MolecularTypePattern>
+                </SpeciesPattern>
+              </ReactantPattern>
+              <ReactantPattern Structure="c">
+                <SpeciesPattern>
+                  <MolecularTypePattern Index="1">
+                    <MolecularType Name="B" />
+                    <ComponentPattern MolecularComponent="e" ComponentStatePattern="s0" BondType="-" />
+                    <ComponentPattern MolecularComponent="b" BondType="-" />
+                    <ComponentPattern MolecularComponent="Y" ComponentStatePattern="P" BondType="-" />
+                  </MolecularTypePattern>
+                </SpeciesPattern>
+              </ReactantPattern>
+            </ReactantPatternsList>
+            <ProductPatternsList>
+              <ProductPattern Structure="c">
+                <SpeciesPattern>
+                  <MolecularTypePattern Index="1">
+                    <MolecularType Name="F" />
+                    <ComponentPattern MolecularComponent="b" BondType="1">
+                      <Bond MolecularTypePattern="B" ComponentPattern="Y" />
+                    </ComponentPattern>
+                  </MolecularTypePattern>
+                  <MolecularTypePattern Index="2">
+                    <MolecularType Name="B" />
+                    <ComponentPattern MolecularComponent="e" ComponentStatePattern="s1" BondType="-" />
+                    <ComponentPattern MolecularComponent="b" BondType="-" />
+                    <ComponentPattern MolecularComponent="Y" ComponentStatePattern="P" BondType="1">
+                      <Bond MolecularTypePattern="F" ComponentPattern="b" />
+                    </ComponentPattern>
+                  </MolecularTypePattern>
+                </SpeciesPattern>
+              </ProductPattern>
+            </ProductPatternsList>
+            <Kinetics KineticsType="MassAction">
+              <Parameter Name="ruleRate" Role="RuleRate" Unit="molecules.um-3.s-1" />
+              <Parameter Name="Kf" Role="MassActionKf" Unit="um3.s-1.molecules-1">(10.0 * Fkf)</Parameter>
+              <Parameter Name="Kr" Role="MassActionKr" Unit="s-1">Fkb</Parameter>
+            </Kinetics>
+          </ReactionRule>
+          <ReactionRule Name="r3" Structure="c" ReactionRuleLabel="r3" ReactionRuleReversible="false">
+            <ReactantPatternsList>
+              <ReactantPattern Structure="c">
+                <SpeciesPattern>
+                  <MolecularTypePattern Index="1">
+                    <MolecularType Name="F" />
+                    <ComponentPattern MolecularComponent="b" BondType="1">
+                      <Bond MolecularTypePattern="B" ComponentPattern="Y" />
+                    </ComponentPattern>
+                  </MolecularTypePattern>
+                  <MolecularTypePattern Index="2">
+                    <MolecularType Name="B" />
+                    <ComponentPattern MolecularComponent="e" ComponentStatePattern="s1" BondType="-" />
+                    <ComponentPattern MolecularComponent="b" BondType="-" />
+                    <ComponentPattern MolecularComponent="Y" ComponentStatePattern="P" BondType="1">
+                      <Bond MolecularTypePattern="F" ComponentPattern="b" />
+                    </ComponentPattern>
+                  </MolecularTypePattern>
+                </SpeciesPattern>
+              </ReactantPattern>
+            </ReactantPatternsList>
+            <ProductPatternsList>
+              <ProductPattern Structure="c">
+                <SpeciesPattern>
+                  <MolecularTypePattern Index="1">
+                    <MolecularType Name="F" />
+                    <ComponentPattern MolecularComponent="b" BondType="-" />
+                  </MolecularTypePattern>
+                </SpeciesPattern>
+              </ProductPattern>
+              <ProductPattern Structure="c">
+                <SpeciesPattern>
+                  <MolecularTypePattern Index="1">
+                    <MolecularType Name="B" />
+                    <ComponentPattern MolecularComponent="e" ComponentStatePattern="s0" BondType="-" />
+                    <ComponentPattern MolecularComponent="b" BondType="-" />
+                    <ComponentPattern MolecularComponent="Y" ComponentStatePattern="U" BondType="-" />
+                  </MolecularTypePattern>
+                </SpeciesPattern>
+              </ProductPattern>
+            </ProductPatternsList>
+            <Kinetics KineticsType="MassAction">
+              <Parameter Name="ruleRate" Role="RuleRate" Unit="molecules.um-3.s-1" />
+              <Parameter Name="Kf" Role="MassActionKf" Unit="s-1">Fkc</Parameter>
+              <Parameter Name="Kr" Role="MassActionKr" Unit="um3.s-1.molecules-1">0.0</Parameter>
+            </Kinetics>
+          </ReactionRule>
+          <ReactionRule Name="r4" Structure="c" ReactionRuleLabel="r4" ReactionRuleReversible="true">
+            <ReactantPatternsList>
+              <ReactantPattern Structure="c">
+                <SpeciesPattern>
+                  <MolecularTypePattern Index="1">
+                    <MolecularType Name="B" />
+                    <ComponentPattern MolecularComponent="e" ComponentStatePattern="s0" BondType="-" />
+                    <ComponentPattern MolecularComponent="b" BondType="-" />
+                    <ComponentPattern MolecularComponent="Y" ComponentStatePattern="P" BondType="-" />
+                  </MolecularTypePattern>
+                </SpeciesPattern>
+              </ReactantPattern>
+            </ReactantPatternsList>
+            <ProductPatternsList>
+              <ProductPattern Structure="c">
+                <SpeciesPattern>
+                  <MolecularTypePattern Index="1">
+                    <MolecularType Name="B" />
+                    <ComponentPattern MolecularComponent="e" ComponentStatePattern="s0" BondType="-" />
+                    <ComponentPattern MolecularComponent="b" BondType="1">
+                      <Bond MolecularTypePattern="B" ComponentPattern="Y" />
+                    </ComponentPattern>
+                    <ComponentPattern MolecularComponent="Y" ComponentStatePattern="P" BondType="1">
+                      <Bond MolecularTypePattern="B" ComponentPattern="b" />
+                    </ComponentPattern>
+                  </MolecularTypePattern>
+                </SpeciesPattern>
+              </ProductPattern>
+            </ProductPatternsList>
+            <Kinetics KineticsType="MassAction">
+              <Parameter Name="ruleRate" Role="RuleRate" Unit="molecules.um-3.s-1" />
+              <Parameter Name="Kf" Role="MassActionKf" Unit="s-1">kon1</Parameter>
+              <Parameter Name="Kr" Role="MassActionKr" Unit="s-1">koff1</Parameter>
+            </Kinetics>
+          </ReactionRule>
+          <ReactionRule Name="r5" Structure="c" ReactionRuleLabel="r5" ReactionRuleReversible="true">
+            <ReactantPatternsList>
+              <ReactantPattern Structure="c">
+                <SpeciesPattern>
+                  <MolecularTypePattern ParticipantMatch="1" Index="1">
+                    <MolecularType Name="B" />
+                    <ComponentPattern MolecularComponent="e" ComponentStatePattern="s0" BondType="-" />
+                    <ComponentPattern MolecularComponent="b" BondType="?" />
+                    <ComponentPattern MolecularComponent="Y" ComponentStatePattern="P" BondType="-" />
+                  </MolecularTypePattern>
+                </SpeciesPattern>
+              </ReactantPattern>
+              <ReactantPattern Structure="c">
+                <SpeciesPattern>
+                  <MolecularTypePattern ParticipantMatch="2" Index="1">
+                    <MolecularType Name="B" />
+                    <ComponentPattern MolecularComponent="e" ComponentStatePattern="s0" BondType="-" />
+                    <ComponentPattern MolecularComponent="b" BondType="-" />
+                    <ComponentPattern MolecularComponent="Y" Any="true" BondType="?" />
+                  </MolecularTypePattern>
+                </SpeciesPattern>
+              </ReactantPattern>
+            </ReactantPatternsList>
+            <ProductPatternsList>
+              <ProductPattern Structure="c">
+                <SpeciesPattern>
+                  <MolecularTypePattern ParticipantMatch="1" Index="1">
+                    <MolecularType Name="B" />
+                    <ComponentPattern MolecularComponent="e" ComponentStatePattern="s0" BondType="-" />
+                    <ComponentPattern MolecularComponent="b" BondType="?" />
+                    <ComponentPattern MolecularComponent="Y" ComponentStatePattern="P" BondType="1">
+                      <Bond MolecularTypePattern="B" ComponentPattern="b" />
+                    </ComponentPattern>
+                  </MolecularTypePattern>
+                  <MolecularTypePattern ParticipantMatch="2" Index="2">
+                    <MolecularType Name="B" />
+                    <ComponentPattern MolecularComponent="e" ComponentStatePattern="s0" BondType="-" />
+                    <ComponentPattern MolecularComponent="b" BondType="1">
+                      <Bond MolecularTypePattern="B" ComponentPattern="Y" />
+                    </ComponentPattern>
+                    <ComponentPattern MolecularComponent="Y" Any="true" BondType="?" />
+                  </MolecularTypePattern>
+                </SpeciesPattern>
+              </ProductPattern>
+            </ProductPatternsList>
+            <Kinetics KineticsType="MassAction">
+              <Parameter Name="ruleRate" Role="RuleRate" Unit="molecules.um-3.s-1" />
+              <Parameter Name="Kf" Role="MassActionKf" Unit="um3.s-1.molecules-1">(10.0 * kon2)</Parameter>
+              <Parameter Name="Kr" Role="MassActionKr" Unit="s-1">koff2</Parameter>
+            </Kinetics>
+          </ReactionRule>
+        </ReactionRuleList>
+      </RbmModelContainer>
+      <Diagram Name="c0" Structure="c">
+        <ReactionRuleShapeTag NodeReferenceModeAttrTag="full" ReactionRuleRef2AttrTag="r0" LocationX="285" LocationY="91" />
+        <RuleParticipantFullShapeTag NodeReferenceModeAttrTag="full" RuleParticipantRefAttrTag="B(Y~P,b,e~s0)" LocationX="381" LocationY="37" />
+        <RuleParticipantFullShapeTag NodeReferenceModeAttrTag="full" RuleParticipantRefAttrTag="B(Y~P,e~s0)%1" LocationX="206" LocationY="160" />
+        <RuleParticipantFullShapeTag NodeReferenceModeAttrTag="full" RuleParticipantRefAttrTag="B(Y~U!1,b,e~s1).E(b!1)" LocationX="279" LocationY="48" />
+        <RuleParticipantFullShapeTag NodeReferenceModeAttrTag="full" RuleParticipantRefAttrTag="F(b)" LocationX="374" LocationY="111" />
+        <RuleParticipantFullShapeTag NodeReferenceModeAttrTag="full" RuleParticipantRefAttrTag="B(Y~P!1,b,e~s1).F(b!1)" LocationX="381" LocationY="133" />
+        <ReactionRuleShapeTag NodeReferenceModeAttrTag="full" ReactionRuleRef2AttrTag="r1" LocationX="333" LocationY="34" />
+        <ReactionRuleShapeTag NodeReferenceModeAttrTag="full" ReactionRuleRef2AttrTag="r3" LocationX="348" LocationY="144" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="E_b" LocationX="111" LocationY="142" />
+        <ReactionRuleShapeTag NodeReferenceModeAttrTag="full" ReactionRuleRef2AttrTag="r4" LocationX="431" LocationY="34" />
+        <RuleParticipantFullShapeTag NodeReferenceModeAttrTag="full" RuleParticipantRefAttrTag="B(Y~P!1,b!1,e~s0)" LocationX="463" LocationY="34" />
+        <RuleParticipantFullShapeTag NodeReferenceModeAttrTag="full" RuleParticipantRefAttrTag="E(b)" LocationX="331" LocationY="75" />
+        <RuleParticipantFullShapeTag NodeReferenceModeAttrTag="full" RuleParticipantRefAttrTag="B(Y~P!1,e~s0)%1.B(b!1,e~s0)%2" LocationX="179" LocationY="207" />
+        <ReactionRuleShapeTag NodeReferenceModeAttrTag="full" ReactionRuleRef2AttrTag="r5" LocationX="229" LocationY="199" />
+        <RuleParticipantFullShapeTag NodeReferenceModeAttrTag="full" RuleParticipantRefAttrTag="B(Y~U,b,e~s0)" LocationX="295" LocationY="133" />
+        <ReactionRuleShapeTag NodeReferenceModeAttrTag="full" ReactionRuleRef2AttrTag="r2" LocationX="405" LocationY="92" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="B" LocationX="14" LocationY="110" />
+        <RuleParticipantFullShapeTag NodeReferenceModeAttrTag="full" RuleParticipantRefAttrTag="B(b,e~s0)%2" LocationX="255" LocationY="220" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="F_b" LocationX="173" LocationY="67" />
+        <ReactionRuleShapeTag NodeReferenceModeAttrTag="molecule" ReactionRuleRef2AttrTag="r2" LocationX="236" LocationY="402" />
+        <RuleParticipantShortShapeTag NodeReferenceModeAttrTag="molecule" RuleParticipantRefAttrTag="F(b)" LocationX="325" LocationY="256" />
+        <RuleParticipantShortShapeTag NodeReferenceModeAttrTag="molecule" RuleParticipantRefAttrTag="B(Y~P!1,b,e~s1).F(b!1)" LocationX="221" LocationY="323" />
+        <RuleParticipantShortShapeTag NodeReferenceModeAttrTag="molecule" RuleParticipantRefAttrTag="B(Y~U,b,e~s0)" LocationX="105" LocationY="228" />
+        <RuleParticipantShortShapeTag NodeReferenceModeAttrTag="molecule" RuleParticipantRefAttrTag="E(b)" LocationX="327" LocationY="211" />
+        <ReactionRuleShapeTag NodeReferenceModeAttrTag="molecule" ReactionRuleRef2AttrTag="r5" LocationX="40" LocationY="179" />
+        <RuleParticipantShortShapeTag NodeReferenceModeAttrTag="molecule" RuleParticipantRefAttrTag="B(Y~U!1,b,e~s1).E(b!1)" LocationX="221" LocationY="153" />
+        <ReactionRuleShapeTag NodeReferenceModeAttrTag="molecule" ReactionRuleRef2AttrTag="r0" LocationX="229" LocationY="199" />
+        <ReactionRuleShapeTag NodeReferenceModeAttrTag="molecule" ReactionRuleRef2AttrTag="r1" LocationX="230" LocationY="72" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="B" LocationX="423" LocationY="470" />
+        <RuleParticipantShortShapeTag NodeReferenceModeAttrTag="molecule" RuleParticipantRefAttrTag="B(Y~P!1,e~s0)%1.B(b!1,e~s0)%2" LocationX="14" LocationY="73" />
+        <ReactionRuleShapeTag NodeReferenceModeAttrTag="molecule" ReactionRuleRef2AttrTag="r3" LocationX="231" LocationY="268" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="E_b" LocationX="477" LocationY="466" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="F_b" LocationX="517" LocationY="456" />
+        <ReactionRuleShapeTag NodeReferenceModeAttrTag="molecule" ReactionRuleRef2AttrTag="r4" LocationX="34" LocationY="302" />
+      </Diagram>
+      <Version Name="model" KeyValue="144826993" BranchId="143148694" Archived="0" Date="25-Nov-2018 04:36:24" FromVersionable="false">
+        <Owner Name="MolecularPD" Identifier="143102837" />
+        <GroupAccess Type="1" />
+        <Annotation>cloned from 'model' owned by user mblinov</Annotation>
+      </Version>
+      <ModelUnitSystem VolumeSubstanceUnit="molecules" MembraneSubstanceUnit="molecules" LumpedReactionSubstanceUnit="molecules" VolumeUnit="um3" AreaUnit="um2" LengthUnit="um" TimeUnit="s" />
+    </Model>
+    <SimulationSpec Name="NFSim app" Stochastic="false" UseConcentration="false" RuleBased="true" RandomizeInitCondition="false" MassConservationModelReduction="true" InsufficientIterations="false" InsufficientMaxMolecules="false">
+      <NetworkConstraints RbmMaxIteration="3" RbmMaxMoleculesPerSpecies="10" RbmSpeciesLimit="800" RbmReactionsLimit="2500">
+        <MaxStoichiometry MolecularType="E" Integer="100" />
+        <MaxStoichiometry MolecularType="F" Integer="100" />
+        <MaxStoichiometry MolecularType="B" Integer="100" />
+      </NetworkConstraints>
+      <Annotation>cloned from 'NFSim app' owned by user mblinov</Annotation>
+      <Geometry Name="non-spatial330018368" Dimension="0">
+        <Annotation>cloned from 'non-spatial330018368' owned by user mblinov</Annotation>
+        <Extent X="10.0" Y="10.0" Z="10.0" />
+        <Origin X="0.0" Y="0.0" Z="0.0" />
+        <SubVolume Name="Compartment" Handle="0" Type="Compartmental" KeyValue="143148681" />
+        <Version Name="non-spatial330018368" KeyValue="143148677" BranchId="143148678" Archived="0" Date="23-Oct-2018 19:29:17" FromVersionable="false">
+          <Owner Name="MolecularPD" Identifier="143102837" />
+          <GroupAccess Type="1" />
+          <Annotation>cloned from 'non-spatial330018368' owned by user mblinov</Annotation>
+        </Version>
+      </Geometry>
+      <GeometryContext>
+        <FeatureMapping Feature="c" GeometryClass="Compartment" SubVolume="Compartment" Size="10.0">
+          <BoundariesTypes Xm="Flux" Xp="Flux" Ym="Flux" Yp="Flux" Zm="Flux" Zp="Flux" />
+        </FeatureMapping>
+      </GeometryContext>
+      <ReactionContext>
+        <LocalizedCompoundSpec LocalizedCompoundRef="E_b" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialCount>1.0</InitialCount>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="F_b" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialCount>1.0</InitialCount>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="B" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialCount>100.0</InitialCount>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <ReactionRuleSpecs>
+          <ReactionRuleSpec ReactionRuleRef="r0" ReactionRuleMapping="included" />
+          <ReactionRuleSpec ReactionRuleRef="r1" ReactionRuleMapping="included" />
+          <ReactionRuleSpec ReactionRuleRef="r2" ReactionRuleMapping="included" />
+          <ReactionRuleSpec ReactionRuleRef="r3" ReactionRuleMapping="included" />
+          <ReactionRuleSpec ReactionRuleRef="r4" ReactionRuleMapping="included" />
+          <ReactionRuleSpec ReactionRuleRef="r5" ReactionRuleMapping="included" />
+        </ReactionRuleSpecs>
+      </ReactionContext>
+      <MathDescription Name="NFSim app_generated">
+        <Annotation>cloned from 'NFSim app_generated' owned by user mblinov</Annotation>
+        <ParticleMolecularType Name="E">
+          <Component Name="b" />
+        </ParticleMolecularType>
+        <ParticleMolecularType Name="F">
+          <Component Name="b" />
+        </ParticleMolecularType>
+        <ParticleMolecularType Name="B">
+          <Component Name="e">
+            <AllowableState Name="s0" />
+            <AllowableState Name="s1" />
+          </Component>
+          <Component Name="b" />
+          <Component Name="Y">
+            <AllowableState Name="U" />
+            <AllowableState Name="P" />
+          </Component>
+        </ParticleMolecularType>
+        <Constant Name="_F_">96480.0</Constant>
+        <Constant Name="_F_nmol_">9.648E-5</Constant>
+        <Constant Name="_N_pmol_">6.02E11</Constant>
+        <Constant Name="_PI_">3.141592653589793</Constant>
+        <Constant Name="_R_">8314.0</Constant>
+        <Constant Name="_T_">300.0</Constant>
+        <Constant Name="B_Count_initCount">100.0</Constant>
+        <Constant Name="E_b_Count_initCount">1.0</Constant>
+        <Constant Name="Ekb">1.0</Constant>
+        <Constant Name="Ekc">1.0</Constant>
+        <Constant Name="Ekf">10.0</Constant>
+        <Constant Name="F_b_Count_initCount">1.0</Constant>
+        <Constant Name="Fkb">1.0</Constant>
+        <Constant Name="Fkc">1.0</Constant>
+        <Constant Name="Fkf">10.0</Constant>
+        <Constant Name="KMOLE">(1.0 / 602.0)</Constant>
+        <Constant Name="koff1">1.0</Constant>
+        <Constant Name="koff2">1.0</Constant>
+        <Constant Name="kon1">1000.0</Constant>
+        <Constant Name="kon2">10.0</Constant>
+        <Constant Name="Size_c">10.0</Constant>
+        <VolumeParticleSpeciesPattern Location="c" Name="speciesPattern0" Domain="Compartment">
+          <MolecularType Name="E" MatchLabel="*">
+            <Component Name="b" State="*" Bond="-" />
+          </MolecularType>
+        </VolumeParticleSpeciesPattern>
+        <VolumeParticleSpeciesPattern Location="c" Name="speciesPattern1" Domain="Compartment">
+          <MolecularType Name="B" MatchLabel="*">
+            <Component Name="e" State="s0" Bond="-" />
+            <Component Name="b" State="*" Bond="-" />
+            <Component Name="Y" State="U" Bond="-" />
+          </MolecularType>
+        </VolumeParticleSpeciesPattern>
+        <VolumeParticleSpeciesPattern Location="c" Name="speciesPattern2" Domain="Compartment">
+          <MolecularType Name="E" MatchLabel="*">
+            <Component Name="b" State="*" Bond="1" />
+          </MolecularType>
+          <MolecularType Name="B" MatchLabel="*">
+            <Component Name="e" State="s1" Bond="-" />
+            <Component Name="b" State="*" Bond="-" />
+            <Component Name="Y" State="U" Bond="1" />
+          </MolecularType>
+        </VolumeParticleSpeciesPattern>
+        <VolumeParticleSpeciesPattern Location="c" Name="speciesPattern3" Domain="Compartment">
+          <MolecularType Name="B" MatchLabel="*">
+            <Component Name="e" State="s0" Bond="-" />
+            <Component Name="b" State="*" Bond="-" />
+            <Component Name="Y" State="P" Bond="-" />
+          </MolecularType>
+        </VolumeParticleSpeciesPattern>
+        <VolumeParticleSpeciesPattern Location="c" Name="speciesPattern4" Domain="Compartment">
+          <MolecularType Name="F" MatchLabel="*">
+            <Component Name="b" State="*" Bond="-" />
+          </MolecularType>
+        </VolumeParticleSpeciesPattern>
+        <VolumeParticleSpeciesPattern Location="c" Name="speciesPattern5" Domain="Compartment">
+          <MolecularType Name="F" MatchLabel="*">
+            <Component Name="b" State="*" Bond="1" />
+          </MolecularType>
+          <MolecularType Name="B" MatchLabel="*">
+            <Component Name="e" State="s1" Bond="-" />
+            <Component Name="b" State="*" Bond="-" />
+            <Component Name="Y" State="P" Bond="1" />
+          </MolecularType>
+        </VolumeParticleSpeciesPattern>
+        <VolumeParticleSpeciesPattern Location="c" Name="speciesPattern6" Domain="Compartment">
+          <MolecularType Name="B" MatchLabel="*">
+            <Component Name="e" State="s0" Bond="-" />
+            <Component Name="b" State="*" Bond="1" />
+            <Component Name="Y" State="P" Bond="1" />
+          </MolecularType>
+        </VolumeParticleSpeciesPattern>
+        <VolumeParticleSpeciesPattern Location="c" Name="speciesPattern7" Domain="Compartment">
+          <MolecularType Name="B" MatchLabel="1">
+            <Component Name="e" State="s0" Bond="-" />
+            <Component Name="b" State="*" Bond="?" />
+            <Component Name="Y" State="P" Bond="-" />
+          </MolecularType>
+        </VolumeParticleSpeciesPattern>
+        <VolumeParticleSpeciesPattern Location="c" Name="speciesPattern8" Domain="Compartment">
+          <MolecularType Name="B" MatchLabel="2">
+            <Component Name="e" State="s0" Bond="-" />
+            <Component Name="b" State="*" Bond="-" />
+            <Component Name="Y" State="*" Bond="?" />
+          </MolecularType>
+        </VolumeParticleSpeciesPattern>
+        <VolumeParticleSpeciesPattern Location="c" Name="speciesPattern9" Domain="Compartment">
+          <MolecularType Name="B" MatchLabel="1">
+            <Component Name="e" State="s0" Bond="-" />
+            <Component Name="b" State="*" Bond="?" />
+            <Component Name="Y" State="P" Bond="1" />
+          </MolecularType>
+          <MolecularType Name="B" MatchLabel="2">
+            <Component Name="e" State="s0" Bond="-" />
+            <Component Name="b" State="*" Bond="1" />
+            <Component Name="Y" State="*" Bond="?" />
+          </MolecularType>
+        </VolumeParticleSpeciesPattern>
+        <VolumeParticleObservable Name="B_Count" Domain="Compartment" MolecularType="Species" SequenceType="Multimolecular">
+          <VolumeParticleSpeciesPatterns>
+            <VolumeParticleSpeciesPattern Name="speciesPattern1" />
+          </VolumeParticleSpeciesPatterns>
+        </VolumeParticleObservable>
+        <VolumeParticleObservable Name="E_b_Count" Domain="Compartment" MolecularType="Species" SequenceType="Multimolecular">
+          <VolumeParticleSpeciesPatterns>
+            <VolumeParticleSpeciesPattern Name="speciesPattern0" />
+          </VolumeParticleSpeciesPatterns>
+        </VolumeParticleObservable>
+        <VolumeParticleObservable Name="F_b_Count" Domain="Compartment" MolecularType="Species" SequenceType="Multimolecular">
+          <VolumeParticleSpeciesPatterns>
+            <VolumeParticleSpeciesPattern Name="speciesPattern4" />
+          </VolumeParticleSpeciesPatterns>
+        </VolumeParticleObservable>
+        <Function Name="B" Domain="Compartment">(B_Count * (1.0 / Size_c))</Function>
+        <Function Name="E_b" Domain="Compartment">(E_b_Count * (1.0 / Size_c))</Function>
+        <Function Name="F_b" Domain="Compartment">(F_b_Count * (1.0 / Size_c))</Function>
+        <Function Name="Kf_r0" Domain="Compartment">(10.0 * Ekf)</Function>
+        <Function Name="Kf_r1" Domain="Compartment">Ekc</Function>
+        <Function Name="Kf_r2" Domain="Compartment">(10.0 * Fkf)</Function>
+        <Function Name="Kf_r3" Domain="Compartment">Fkc</Function>
+        <Function Name="Kf_r4" Domain="Compartment">kon1</Function>
+        <Function Name="Kf_r5" Domain="Compartment">(10.0 * kon2)</Function>
+        <Function Name="Kr_r0" Domain="Compartment">Ekb</Function>
+        <Function Name="Kr_r2" Domain="Compartment">Fkb</Function>
+        <Function Name="Kr_r4" Domain="Compartment">koff1</Function>
+        <Function Name="Kr_r5" Domain="Compartment">koff2</Function>
+        <Function Name="P_r0_probabilityRate" Domain="Compartment">(Kf_r0 / Size_c)</Function>
+        <Function Name="P_r0_reverse_probabilityRate" Domain="Compartment">Kr_r0</Function>
+        <Function Name="P_r1_probabilityRate" Domain="Compartment">Kf_r1</Function>
+        <Function Name="P_r2_probabilityRate" Domain="Compartment">(Kf_r2 / Size_c)</Function>
+        <Function Name="P_r2_reverse_probabilityRate" Domain="Compartment">Kr_r2</Function>
+        <Function Name="P_r3_probabilityRate" Domain="Compartment">Kf_r3</Function>
+        <Function Name="P_r4_probabilityRate" Domain="Compartment">Kf_r4</Function>
+        <Function Name="P_r4_reverse_probabilityRate" Domain="Compartment">Kr_r4</Function>
+        <Function Name="P_r5_probabilityRate" Domain="Compartment">(Kf_r5 / Size_c)</Function>
+        <Function Name="P_r5_reverse_probabilityRate" Domain="Compartment">Kr_r5</Function>
+        <CompartmentSubDomain Name="Compartment">
+          <BoundaryType Boundary="Xm" Type="Value" />
+          <BoundaryType Boundary="Xp" Type="Value" />
+          <BoundaryType Boundary="Ym" Type="Value" />
+          <BoundaryType Boundary="Yp" Type="Value" />
+          <BoundaryType Boundary="Zm" Type="Value" />
+          <BoundaryType Boundary="Zp" Type="Value" />
+          <ParticleJumpProcess Name="r0" ProcessSymmetryFactor="1.0">
+            <SelectedParticle Name="speciesPattern0" />
+            <SelectedParticle Name="speciesPattern1" />
+            <MacroscopicRateConstant>P_r0_probabilityRate</MacroscopicRateConstant>
+            <Effect VarName="speciesPattern0" Operation="destroy" />
+            <Effect VarName="speciesPattern1" Operation="destroy" />
+            <Effect VarName="speciesPattern2" Operation="create" />
+          </ParticleJumpProcess>
+          <ParticleJumpProcess Name="r0_reverse" ProcessSymmetryFactor="1.0">
+            <SelectedParticle Name="speciesPattern2" />
+            <MacroscopicRateConstant>P_r0_reverse_probabilityRate</MacroscopicRateConstant>
+            <Effect VarName="speciesPattern0" Operation="create" />
+            <Effect VarName="speciesPattern1" Operation="create" />
+            <Effect VarName="speciesPattern2" Operation="destroy" />
+          </ParticleJumpProcess>
+          <ParticleJumpProcess Name="r1" ProcessSymmetryFactor="1.0">
+            <SelectedParticle Name="speciesPattern2" />
+            <MacroscopicRateConstant>P_r1_probabilityRate</MacroscopicRateConstant>
+            <Effect VarName="speciesPattern2" Operation="destroy" />
+            <Effect VarName="speciesPattern0" Operation="create" />
+            <Effect VarName="speciesPattern3" Operation="create" />
+          </ParticleJumpProcess>
+          <ParticleJumpProcess Name="r2" ProcessSymmetryFactor="1.0">
+            <SelectedParticle Name="speciesPattern4" />
+            <SelectedParticle Name="speciesPattern3" />
+            <MacroscopicRateConstant>P_r2_probabilityRate</MacroscopicRateConstant>
+            <Effect VarName="speciesPattern4" Operation="destroy" />
+            <Effect VarName="speciesPattern3" Operation="destroy" />
+            <Effect VarName="speciesPattern5" Operation="create" />
+          </ParticleJumpProcess>
+          <ParticleJumpProcess Name="r2_reverse" ProcessSymmetryFactor="1.0">
+            <SelectedParticle Name="speciesPattern5" />
+            <MacroscopicRateConstant>P_r2_reverse_probabilityRate</MacroscopicRateConstant>
+            <Effect VarName="speciesPattern4" Operation="create" />
+            <Effect VarName="speciesPattern3" Operation="create" />
+            <Effect VarName="speciesPattern5" Operation="destroy" />
+          </ParticleJumpProcess>
+          <ParticleJumpProcess Name="r3" ProcessSymmetryFactor="1.0">
+            <SelectedParticle Name="speciesPattern5" />
+            <MacroscopicRateConstant>P_r3_probabilityRate</MacroscopicRateConstant>
+            <Effect VarName="speciesPattern5" Operation="destroy" />
+            <Effect VarName="speciesPattern4" Operation="create" />
+            <Effect VarName="speciesPattern1" Operation="create" />
+          </ParticleJumpProcess>
+          <ParticleJumpProcess Name="r4" ProcessSymmetryFactor="1.0">
+            <SelectedParticle Name="speciesPattern3" />
+            <MacroscopicRateConstant>P_r4_probabilityRate</MacroscopicRateConstant>
+            <Effect VarName="speciesPattern3" Operation="destroy" />
+            <Effect VarName="speciesPattern6" Operation="create" />
+          </ParticleJumpProcess>
+          <ParticleJumpProcess Name="r4_reverse" ProcessSymmetryFactor="1.0">
+            <SelectedParticle Name="speciesPattern6" />
+            <MacroscopicRateConstant>P_r4_reverse_probabilityRate</MacroscopicRateConstant>
+            <Effect VarName="speciesPattern3" Operation="create" />
+            <Effect VarName="speciesPattern6" Operation="destroy" />
+          </ParticleJumpProcess>
+          <ParticleJumpProcess Name="r5" ProcessSymmetryFactor="1.0">
+            <SelectedParticle Name="speciesPattern7" />
+            <SelectedParticle Name="speciesPattern8" />
+            <MacroscopicRateConstant>P_r5_probabilityRate</MacroscopicRateConstant>
+            <Effect VarName="speciesPattern7" Operation="destroy" />
+            <Effect VarName="speciesPattern8" Operation="destroy" />
+            <Effect VarName="speciesPattern9" Operation="create" />
+          </ParticleJumpProcess>
+          <ParticleJumpProcess Name="r5_reverse" ProcessSymmetryFactor="1.0">
+            <SelectedParticle Name="speciesPattern9" />
+            <MacroscopicRateConstant>P_r5_reverse_probabilityRate</MacroscopicRateConstant>
+            <Effect VarName="speciesPattern7" Operation="create" />
+            <Effect VarName="speciesPattern8" Operation="create" />
+            <Effect VarName="speciesPattern9" Operation="destroy" />
+          </ParticleJumpProcess>
+          <ParticleProperties Name="speciesPattern0">
+            <ParticleInitialCount>
+              <ParticleCount>E_b_Count_initCount</ParticleCount>
+              <ParticleLocationX>0.0</ParticleLocationX>
+              <ParticleLocationY>u</ParticleLocationY>
+              <ParticleLocationZ>u</ParticleLocationZ>
+            </ParticleInitialCount>
+            <ParticleDiffusion>0.0</ParticleDiffusion>
+            <ParticleDriftX>0.0</ParticleDriftX>
+            <ParticleDriftY>0.0</ParticleDriftY>
+            <ParticleDriftZ>0.0</ParticleDriftZ>
+          </ParticleProperties>
+          <ParticleProperties Name="speciesPattern4">
+            <ParticleInitialCount>
+              <ParticleCount>F_b_Count_initCount</ParticleCount>
+              <ParticleLocationX>0.0</ParticleLocationX>
+              <ParticleLocationY>u</ParticleLocationY>
+              <ParticleLocationZ>u</ParticleLocationZ>
+            </ParticleInitialCount>
+            <ParticleDiffusion>0.0</ParticleDiffusion>
+            <ParticleDriftX>0.0</ParticleDriftX>
+            <ParticleDriftY>0.0</ParticleDriftY>
+            <ParticleDriftZ>0.0</ParticleDriftZ>
+          </ParticleProperties>
+          <ParticleProperties Name="speciesPattern1">
+            <ParticleInitialCount>
+              <ParticleCount>B_Count_initCount</ParticleCount>
+              <ParticleLocationX>0.0</ParticleLocationX>
+              <ParticleLocationY>u</ParticleLocationY>
+              <ParticleLocationZ>u</ParticleLocationZ>
+            </ParticleInitialCount>
+            <ParticleDiffusion>0.0</ParticleDiffusion>
+            <ParticleDriftX>0.0</ParticleDriftX>
+            <ParticleDriftY>0.0</ParticleDriftY>
+            <ParticleDriftZ>0.0</ParticleDriftZ>
+          </ParticleProperties>
+        </CompartmentSubDomain>
+        <Version Name="NFSim app_generated" KeyValue="144826991" BranchId="143148688" Archived="0" Date="25-Nov-2018 04:36:24" FromVersionable="false">
+          <Owner Name="MolecularPD" Identifier="143102837" />
+          <GroupAccess Type="1" />
+          <Annotation>cloned from 'NFSim app_generated' owned by user mblinov</Annotation>
+        </Version>
+      </MathDescription>
+      <Version Name="NFSim app" KeyValue="144827005" BranchId="143148707" Archived="0" Date="25-Nov-2018 04:36:24" FromVersionable="false">
+        <Owner Name="MolecularPD" Identifier="143102837" />
+        <GroupAccess Type="1" />
+        <Annotation>cloned from 'NFSim app' owned by user mblinov</Annotation>
+      </Version>
+      <MicroscopeMeasurement Name="fluor">
+        <ConvolutionKernel Type="ProjectionZKernel" />
+      </MicroscopeMeasurement>
+    </SimulationSpec>
+    <SimulationSpec Name="BioNetGen app" Stochastic="false" UseConcentration="true" RuleBased="false" MassConservationModelReduction="true" InsufficientIterations="true" InsufficientMaxMolecules="false">
+      <NetworkConstraints RbmMaxIteration="1" RbmMaxMoleculesPerSpecies="10" RbmSpeciesLimit="800" RbmReactionsLimit="2500">
+        <MaxStoichiometry MolecularType="E" Integer="100" />
+        <MaxStoichiometry MolecularType="F" Integer="100" />
+        <MaxStoichiometry MolecularType="B" Integer="100" />
+      </NetworkConstraints>
+      <Annotation>cloned from 'BioNetGen app' owned by user mblinov</Annotation>
+      <Geometry Name="non-spatial1173903773" Dimension="0">
+        <Annotation>cloned from 'non-spatial1173903773' owned by user mblinov</Annotation>
+        <Extent X="10.0" Y="10.0" Z="10.0" />
+        <Origin X="0.0" Y="0.0" Z="0.0" />
+        <SubVolume Name="Compartment" Handle="0" Type="Compartmental" KeyValue="143148686" />
+        <Version Name="non-spatial1173903773" KeyValue="143148682" BranchId="143148683" Archived="0" Date="23-Oct-2018 19:29:17" FromVersionable="false">
+          <Owner Name="MolecularPD" Identifier="143102837" />
+          <GroupAccess Type="1" />
+          <Annotation>cloned from 'non-spatial1173903773' owned by user mblinov</Annotation>
+        </Version>
+      </Geometry>
+      <GeometryContext>
+        <FeatureMapping Feature="c" GeometryClass="Compartment" SubVolume="Compartment" Size="10.0">
+          <BoundariesTypes Xm="Flux" Xp="Flux" Ym="Flux" Yp="Flux" Zm="Flux" Zp="Flux" />
+        </FeatureMapping>
+      </GeometryContext>
+      <ReactionContext>
+        <LocalizedCompoundSpec LocalizedCompoundRef="E_b" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>2.0E-5</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="F_b" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>2.0E-5</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="B" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>0.002</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <ReactionRuleSpecs>
+          <ReactionRuleSpec ReactionRuleRef="r0" ReactionRuleMapping="included" />
+          <ReactionRuleSpec ReactionRuleRef="r1" ReactionRuleMapping="included" />
+          <ReactionRuleSpec ReactionRuleRef="r2" ReactionRuleMapping="included" />
+          <ReactionRuleSpec ReactionRuleRef="r3" ReactionRuleMapping="included" />
+          <ReactionRuleSpec ReactionRuleRef="r4" ReactionRuleMapping="included" />
+          <ReactionRuleSpec ReactionRuleRef="r5" ReactionRuleMapping="included" />
+        </ReactionRuleSpecs>
+      </ReactionContext>
+      <MathDescription Name="BioNetGen app_generated">
+        <Annotation>cloned from 'BioNetGen app_generated' owned by user mblinov</Annotation>
+        <Constant Name="_F_">96480.0</Constant>
+        <Constant Name="_F_nmol_">9.648E-5</Constant>
+        <Constant Name="_K_GHK_">1.0E-9</Constant>
+        <Constant Name="_N_pmol_">6.02E11</Constant>
+        <Constant Name="_PI_">3.141592653589793</Constant>
+        <Constant Name="_R_">8314.0</Constant>
+        <Constant Name="_T_">300.0</Constant>
+        <Constant Name="B_init_molecules_um_3">0.002</Constant>
+        <Constant Name="E_b_init_molecules_um_3">2.0E-5</Constant>
+        <Constant Name="Ekb">1.0</Constant>
+        <Constant Name="Ekc">1.0</Constant>
+        <Constant Name="Ekf">10.0</Constant>
+        <Constant Name="F_b_init_molecules_um_3">2.0E-5</Constant>
+        <Constant Name="Fkb">1.0</Constant>
+        <Constant Name="Fkc">1.0</Constant>
+        <Constant Name="Fkf">10.0</Constant>
+        <Constant Name="K_millivolts_per_volt">1000.0</Constant>
+        <Constant Name="KMOLE">(1.0 / 602.0)</Constant>
+        <Constant Name="koff1">1.0</Constant>
+        <Constant Name="koff2">1.0</Constant>
+        <Constant Name="kon1">1000.0</Constant>
+        <Constant Name="kon2">10.0</Constant>
+        <Constant Name="Kr">0.0</Constant>
+        <Constant Name="s0_init_molecules_um_3">0.0</Constant>
+        <Constant Name="Size_c">10.0</Constant>
+        <VolumeVariable Name="s0" Domain="Compartment" />
+        <Function Name="B" Domain="Compartment">((K_B_total - (Size_c * s0)) / Size_c)</Function>
+        <Function Name="E_b" Domain="Compartment">((K_E_b_total - (Size_c * s0)) / Size_c)</Function>
+        <Function Name="F_b" Domain="Compartment">(K_F_b_total / Size_c)</Function>
+        <Function Name="J_r0_DirectHalf" Domain="Compartment">(((Kf * E_b) * B) - (Kr * s0))</Function>
+        <Function Name="K_B_total" Domain="Compartment">((Size_c * B_init_molecules_um_3) + (Size_c * s0_init_molecules_um_3))</Function>
+        <Function Name="K_E_b_total" Domain="Compartment">((Size_c * E_b_init_molecules_um_3) + (Size_c * s0_init_molecules_um_3))</Function>
+        <Function Name="K_F_b_total" Domain="Compartment">(Size_c * F_b_init_molecules_um_3)</Function>
+        <Function Name="Kf" Domain="Compartment">(10.0 * Ekf)</Function>
+        <CompartmentSubDomain Name="Compartment">
+          <BoundaryType Boundary="Xm" Type="Value" />
+          <BoundaryType Boundary="Xp" Type="Value" />
+          <BoundaryType Boundary="Ym" Type="Value" />
+          <BoundaryType Boundary="Yp" Type="Value" />
+          <BoundaryType Boundary="Zm" Type="Value" />
+          <BoundaryType Boundary="Zp" Type="Value" />
+          <OdeEquation Name="s0" SolutionType="Unknown">
+            <Rate>J_r0_DirectHalf</Rate>
+            <Initial>s0_init_molecules_um_3</Initial>
+          </OdeEquation>
+        </CompartmentSubDomain>
+        <Version Name="BioNetGen app_generated" KeyValue="144401677" BranchId="143148691" Archived="0" Date="14-Nov-2018 01:51:28" FromVersionable="false">
+          <Owner Name="MolecularPD" Identifier="143102837" />
+          <GroupAccess Type="1" />
+          <Annotation>cloned from 'BioNetGen app_generated' owned by user mblinov</Annotation>
+        </Version>
+      </MathDescription>
+      <Version Name="BioNetGen app" KeyValue="144827011" BranchId="143148714" Archived="0" Date="25-Nov-2018 04:36:24" FromVersionable="false">
+        <Owner Name="MolecularPD" Identifier="143102837" />
+        <GroupAccess Type="1" />
+        <Annotation>cloned from 'BioNetGen app' owned by user mblinov</Annotation>
+      </Version>
+      <MicroscopeMeasurement Name="fluor">
+        <ConvolutionKernel Type="ProjectionZKernel" />
+      </MicroscopeMeasurement>
+    </SimulationSpec>
+    <Version Name="Visual_Dushek_2014" KeyValue="144827017" BranchId="143148721" Archived="0" Date="25-Nov-2018 04:36:24" FromVersionable="false">
+      <Owner Name="MolecularPD" Identifier="143102837" />
+      <GroupAccess Type="1" />
+      <Annotation>cloned from 'Visual_Dushek_2014' owned by user mblinov</Annotation>
+    </Version>
+    <pathwayModel>
+      <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:bp="http://www.biopax.org/release/biopax-level3.owl#" version="3.0">
+        <DiagramObjectsID xmlns="">http://cbio.mskcc.org/cpath#CPATH-103001</DiagramObjectsID>
+        <DiagramObjectsID xmlns="">http://cbio.mskcc.org/cpath#CPATH-496364</DiagramObjectsID>
+        <DiagramObjectsID xmlns="">http://cbio.mskcc.org/cpath#CPATH-490321</DiagramObjectsID>
+        <DiagramObjectsID xmlns="">http://cbio.mskcc.org/cpath#CPATH-488403</DiagramObjectsID>
+        <DiagramObjectsID xmlns="">http://cbio.mskcc.org/cpath#CPATH-497459</DiagramObjectsID>
+        <DiagramObjectsID xmlns="">http://cbio.mskcc.org/cpath#CPATH-102407</DiagramObjectsID>
+        <DiagramObjectsID xmlns="">http://cbio.mskcc.org/cpath#CPATH-497449</DiagramObjectsID>
+        <DiagramObjectsID xmlns="">http://cbio.mskcc.org/cpath#CPATH-492949</DiagramObjectsID>
+        <DiagramObjectsID xmlns="">http://cbio.mskcc.org/cpath#CPATH-496404</DiagramObjectsID>
+        <DiagramObjectsID xmlns="">http://cbio.mskcc.org/cpath#CPATH-498838</DiagramObjectsID>
+        <bp:Complex rdf:about="http://cbio.mskcc.org/cpath#CPATH-497449">
+          <bp:dataSource rdf:resource="http://cbio.mskcc.org/cpath#CPATH-LOCAL-7400780" />
+          <bp:name rdf:datatype="http://www.w3.org/2001/XMLSchema#string">phospho-ERK-1:MEK1</bp:name>
+          <bp:name rdf:datatype="http://www.w3.org/2001/XMLSchema#string">phospho-ERK-1:MEK1 [cytosol]</bp:name>
+          <bp:xref rdf:resource="http://cbio.mskcc.org/cpath#CPATH-LOCAL-7400798" />
+          <bp:xref rdf:resource="http://cbio.mskcc.org/cpath#CPATH-LOCAL-7400799" />
+          <bp:xref rdf:resource="http://cbio.mskcc.org/cpath#CPATH-LOCAL-7455611" />
+          <bp:component rdf:resource="http://cbio.mskcc.org/cpath#CPATH-103001" />
+          <bp:component rdf:resource="http://cbio.mskcc.org/cpath#CPATH-102407" />
+        </bp:Complex>
+        <bp:UnificationXref rdf:about="http://cbio.mskcc.org/cpath#CPATH-LOCAL-7455611">
+          <bp:db rdf:datatype="http://www.w3.org/2001/XMLSchema#string">CPATH</bp:db>
+          <bp:id rdf:datatype="http://www.w3.org/2001/XMLSchema#string">497449</bp:id>
+        </bp:UnificationXref>
+        <bp:Protein rdf:about="http://cbio.mskcc.org/cpath#CPATH-498838">
+          <bp:comment rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Converted from EntitySet in Reactome. Each synonym is a name of a PhysicalEntity, and each XREF points to one PhysicalEntity</bp:comment>
+          <bp:dataSource rdf:resource="http://cbio.mskcc.org/cpath#CPATH-LOCAL-7406632" />
+          <bp:name rdf:datatype="http://www.w3.org/2001/XMLSchema#string">p-MEK1 [cytosol]</bp:name>
+          <bp:name rdf:datatype="http://www.w3.org/2001/XMLSchema#string">p-S218,222,T286,292-MEK1 [cytosol]</bp:name>
+          <bp:name rdf:datatype="http://www.w3.org/2001/XMLSchema#string">p-T286,292-MEK1 [cytosol]</bp:name>
+          <bp:xref rdf:resource="http://cbio.mskcc.org/cpath#CPATH-LOCAL-7406635" />
+          <bp:xref rdf:resource="http://cbio.mskcc.org/cpath#CPATH-LOCAL-7406636" />
+          <bp:xref rdf:resource="http://cbio.mskcc.org/cpath#CPATH-LOCAL-7456226" />
+        </bp:Protein>
+        <bp:RelationshipXref rdf:about="http://cbio.mskcc.org/cpath#CPATH-LOCAL-7406636">
+          <bp:db rdf:datatype="http://www.w3.org/2001/XMLSchema#string">ENTREZ_GENE</bp:db>
+          <bp:id rdf:datatype="http://www.w3.org/2001/XMLSchema#string">5604</bp:id>
+        </bp:RelationshipXref>
+        <bp:Provenance rdf:about="http://cbio.mskcc.org/cpath#CPATH-LOCAL-7406632">
+          <bp:comment rdf:datatype="http://www.w3.org/2001/XMLSchema#string">http://www.reactome.org</bp:comment>
+          <bp:name rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Reactome</bp:name>
+        </bp:Provenance>
+        <bp:Protein rdf:about="http://cbio.mskcc.org/cpath#CPATH-103001">
+          <bp:comment rdf:datatype="http://www.w3.org/2001/XMLSchema#string">FUNCTION: Catalyzes the concomitant phosphorylation of a threonine and a tyrosine residue in a Thr-Glu-Tyr sequence located in MAP kinases. Activates ERK1 and ERK2 MAP kinases. CATALYTIC ACTIVITY: ATP + a protein = ADP + a phosphoprotein. ENZYME REGULATION: Activated by phosphorylation. SUBUNIT: Interacts with MORG1. Interacts with ARRB2. Found in a complex with at least BRAF, HRAS1, MAP2K1, MAPK3 and RGS14 (By similarity). Interacts with Yersinia yopJ. ALTERNATIVE PRODUCTS: Event=Alternative splicing; Named isoforms=2; Name=1; Synonyms=MKK1a;   IsoId=Q02750-1; Sequence=Displayed; Name=2; Synonyms=MKK1b;   IsoId=Q02750-2; Sequence=VSP_040500; TISSUE SPECIFICITY: Widely expressed, with extremely low levels in brain. PTM: Phosphorylation on Ser/Thr by MAP kinase kinase kinases (RAF or MEKK1) regulates positively the kinase activity. PTM: Acetylation by Yersinia yopJ prevents phosphorylation and activation, thus blocking the MAPK signaling pathway. DISEASE: Defects in MAP2K1 are a cause of cardiofaciocutaneous syndrome (CFC syndrome) [MIM:115150]; also known as cardio-facio- cutaneous syndrome. CFC syndrome is characterized by a distinctive facial appearance, heart defects and mental retardation. Heart defects include pulmonic stenosis, atrial septal defects and hypertrophic cardiomyopathy. Some affected individuals present with ectodermal abnormalities such as sparse, friable hair, hyperkeratotic skin lesions and a generalized ichthyosis-like condition. Typical facial features are similar to Noonan syndrome. They include high forehead with bitemporal constriction, hypoplastic supraorbital ridges, downslanting palpebral fissures, a depressed nasal bridge, and posteriorly angulated ears with prominent helices. The inheritance of CFC syndrome is autosomal dominant. SIMILARITY: Belongs to the protein kinase superfamily. STE Ser/Thr protein kinase family. MAP kinase kinase subfamily. SIMILARITY: Contains 1 protein kinase domain. WEB RESOURCE: Name=GeneReviews; URL="http://www.ncbi.nlm.nih.gov/sites/GeneTests/lab/gene/MAP2K1"; GENE SYNONYMS: MEK1 PRKMK1. COPYRIGHT:  Protein annotation is derived from the UniProt Consortium (http://www.uniprot.org/).  Distributed under the Creative Commons Attribution-NoDerivs License.</bp:comment>
+          <bp:name rdf:datatype="http://www.w3.org/2001/XMLSchema#string">MP2K1_HUMAN</bp:name>
+          <bp:name rdf:datatype="http://www.w3.org/2001/XMLSchema#string">MEK 1</bp:name>
+          <bp:name rdf:datatype="http://www.w3.org/2001/XMLSchema#string">MKK1</bp:name>
+          <bp:name rdf:datatype="http://www.w3.org/2001/XMLSchema#string">MAPK/ERK kinase 1</bp:name>
+          <bp:name rdf:datatype="http://www.w3.org/2001/XMLSchema#string">ERK activator kinase 1</bp:name>
+          <bp:name rdf:datatype="http://www.w3.org/2001/XMLSchema#string">2.7.12.2</bp:name>
+          <bp:name rdf:datatype="http://www.w3.org/2001/XMLSchema#string">MAP kinase kinase 1</bp:name>
+          <bp:name rdf:datatype="http://www.w3.org/2001/XMLSchema#string">MAPKK 1</bp:name>
+          <bp:name rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Dual specificity mitogen-activated protein kinase kinase 1</bp:name>
+          <bp:xref rdf:resource="http://cbio.mskcc.org/cpath#CPATH-LOCAL-425688" />
+          <bp:xref rdf:resource="http://cbio.mskcc.org/cpath#CPATH-LOCAL-425689" />
+          <bp:xref rdf:resource="http://cbio.mskcc.org/cpath#CPATH-LOCAL-425690" />
+          <bp:xref rdf:resource="http://cbio.mskcc.org/cpath#CPATH-LOCAL-425691" />
+          <bp:xref rdf:resource="http://cbio.mskcc.org/cpath#CPATH-LOCAL-427533" />
+        </bp:Protein>
+        <bp:UnificationXref rdf:about="http://cbio.mskcc.org/cpath#CPATH-LOCAL-7400798">
+          <bp:comment rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Reactome stable identifier. Use this URL to connect to the web page of this instance in Reactome: http://www.reactome.org/cgi-bin/eventbrowser_st_id?ST_ID=REACT_2796.1</bp:comment>
+          <bp:db rdf:datatype="http://www.w3.org/2001/XMLSchema#string">REACTOME</bp:db>
+          <bp:id rdf:datatype="http://www.w3.org/2001/XMLSchema#string">REACT_2796</bp:id>
+          <bp:idVersion rdf:datatype="http://www.w3.org/2001/XMLSchema#string">1</bp:idVersion>
+        </bp:UnificationXref>
+        <bp:BiochemicalReaction rdf:about="http://cbio.mskcc.org/cpath#CPATH-490321">
+          <bp:comment rdf:datatype="http://www.w3.org/2001/XMLSchema#string">MEK1 phosphorylates the critical Tyrosine and Threonine on ERK1, converting two ATP to ADP. Phosphorylation of ERK-1 activates its kinase activity.</bp:comment>
+          <bp:comment rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Authored: Charalambous, M, 2005-02-04 06:50:22</bp:comment>
+          <bp:comment rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Reviewed: Greene, LA, 2007-11-08 15:39:37</bp:comment>
+          <bp:comment rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Edited: Schmidt, EE, 0000-00-00 00:00:00</bp:comment>
+          <bp:dataSource rdf:resource="http://cbio.mskcc.org/cpath#CPATH-LOCAL-7329167" />
+          <bp:name rdf:datatype="http://www.w3.org/2001/XMLSchema#string">MEK1 phosphorylates ERK-1</bp:name>
+          <bp:name rdf:datatype="http://www.w3.org/2001/XMLSchema#string">MEK1 phosphorylates ERK-1</bp:name>
+          <bp:xref rdf:resource="http://cbio.mskcc.org/cpath#CPATH-LOCAL-7329172" />
+          <bp:xref rdf:resource="http://cbio.mskcc.org/cpath#CPATH-LOCAL-7329173" />
+          <bp:xref rdf:resource="http://cbio.mskcc.org/cpath#CPATH-LOCAL-7329174" />
+          <bp:xref rdf:resource="http://cbio.mskcc.org/cpath#CPATH-LOCAL-7450282" />
+          <bp:left rdf:resource="http://cbio.mskcc.org/cpath#CPATH-497459" />
+          <bp:left rdf:resource="http://cbio.mskcc.org/cpath#CPATH-496364" />
+          <bp:right rdf:resource="http://cbio.mskcc.org/cpath#CPATH-497449" />
+          <bp:right rdf:resource="http://cbio.mskcc.org/cpath#CPATH-496404" />
+          <bp:participantStoichiometry rdf:nodeID="VCELL_LOCAL_ID_3" />
+          <bp:participantStoichiometry rdf:nodeID="VCELL_LOCAL_ID_4" />
+          <bp:participantStoichiometry rdf:nodeID="VCELL_LOCAL_ID_5" />
+          <bp:participantStoichiometry rdf:nodeID="VCELL_LOCAL_ID_6" />
+          <bp:eCNumber rdf:datatype="http://www.w3.org/2001/XMLSchema#string">2.7.11</bp:eCNumber>
+        </bp:BiochemicalReaction>
+        <bp:Stoichiometry rdf:nodeID="VCELL_LOCAL_ID_5">
+          <bp:physicalEntity rdf:resource="http://cbio.mskcc.org/cpath#CPATH-497449" />
+          <bp:stoichiometricCoefficient rdf:datatype="http://www.w3.org/2001/XMLSchema#double">1.0</bp:stoichiometricCoefficient>
+        </bp:Stoichiometry>
+        <bp:UnificationXref rdf:about="http://cbio.mskcc.org/cpath#CPATH-LOCAL-7450282">
+          <bp:db rdf:datatype="http://www.w3.org/2001/XMLSchema#string">CPATH</bp:db>
+          <bp:id rdf:datatype="http://www.w3.org/2001/XMLSchema#string">490321</bp:id>
+        </bp:UnificationXref>
+        <bp:Stoichiometry rdf:nodeID="VCELL_LOCAL_ID_6">
+          <bp:physicalEntity rdf:resource="http://cbio.mskcc.org/cpath#CPATH-496404" />
+          <bp:stoichiometricCoefficient rdf:datatype="http://www.w3.org/2001/XMLSchema#double">2.0</bp:stoichiometricCoefficient>
+        </bp:Stoichiometry>
+        <bp:UnificationXref rdf:about="http://cbio.mskcc.org/cpath#CPATH-LOCAL-425691">
+          <bp:db rdf:datatype="http://www.w3.org/2001/XMLSchema#string">UNIPROT</bp:db>
+          <bp:id rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Q02750</bp:id>
+        </bp:UnificationXref>
+        <bp:Provenance rdf:about="http://cbio.mskcc.org/cpath#CPATH-LOCAL-7400780">
+          <bp:comment rdf:datatype="http://www.w3.org/2001/XMLSchema#string">http://www.reactome.org</bp:comment>
+          <bp:name rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Reactome</bp:name>
+        </bp:Provenance>
+        <bp:UnificationXref rdf:about="http://cbio.mskcc.org/cpath#CPATH-LOCAL-7329172">
+          <bp:comment rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Reactome stable identifier. Use this URL to connect to the web page of this instance in Reactome: http://www.reactome.org/cgi-bin/eventbrowser_st_id?ST_ID=REACT_136.4</bp:comment>
+          <bp:db rdf:datatype="http://www.w3.org/2001/XMLSchema#string">REACTOME</bp:db>
+          <bp:id rdf:datatype="http://www.w3.org/2001/XMLSchema#string">REACT_136</bp:id>
+          <bp:idVersion rdf:datatype="http://www.w3.org/2001/XMLSchema#string">4</bp:idVersion>
+        </bp:UnificationXref>
+        <bp:Complex rdf:about="http://cbio.mskcc.org/cpath#CPATH-497459">
+          <bp:dataSource rdf:resource="http://cbio.mskcc.org/cpath#CPATH-LOCAL-7400919" />
+          <bp:name rdf:datatype="http://www.w3.org/2001/XMLSchema#string">MEK1:ERK-1</bp:name>
+          <bp:name rdf:datatype="http://www.w3.org/2001/XMLSchema#string">MEK1:ERK-1 [cytosol]</bp:name>
+          <bp:xref rdf:resource="http://cbio.mskcc.org/cpath#CPATH-LOCAL-7400931" />
+          <bp:xref rdf:resource="http://cbio.mskcc.org/cpath#CPATH-LOCAL-7400932" />
+          <bp:xref rdf:resource="http://cbio.mskcc.org/cpath#CPATH-LOCAL-7455621" />
+          <bp:component rdf:resource="http://cbio.mskcc.org/cpath#CPATH-102407" />
+          <bp:component rdf:resource="http://cbio.mskcc.org/cpath#CPATH-103001" />
+        </bp:Complex>
+        <bp:UnificationXref rdf:about="http://cbio.mskcc.org/cpath#CPATH-LOCAL-7400799">
+          <bp:comment rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Database identifier. Use this URL to connect to the web page of this instance in Reactome: http://www.reactome.org/cgi-bin/eventbrowser?DB=gk_current&amp;ID=109843</bp:comment>
+          <bp:db rdf:datatype="http://www.w3.org/2001/XMLSchema#string">REACTOME DATABASE ID</bp:db>
+          <bp:id rdf:datatype="http://www.w3.org/2001/XMLSchema#string">109843</bp:id>
+        </bp:UnificationXref>
+        <bp:Catalysis rdf:about="http://cbio.mskcc.org/cpath#CPATH-488403">
+          <bp:dataSource rdf:resource="http://cbio.mskcc.org/cpath#CPATH-LOCAL-7307946" />
+          <bp:xref rdf:resource="http://cbio.mskcc.org/cpath#CPATH-LOCAL-7307947" />
+          <bp:xref rdf:resource="http://cbio.mskcc.org/cpath#CPATH-LOCAL-7307948" />
+          <bp:xref rdf:resource="http://cbio.mskcc.org/cpath#CPATH-LOCAL-7448364" />
+          <bp:controller rdf:resource="http://cbio.mskcc.org/cpath#CPATH-497459" />
+          <bp:controlType rdf:datatype="http://www.w3.org/2001/XMLSchema#string">ACTIVATION</bp:controlType>
+          <bp:controlled rdf:resource="http://cbio.mskcc.org/cpath#CPATH-490321" />
+          <bp:catalysisDirection rdf:datatype="http://www.w3.org/2001/XMLSchema#string">PHYSIOL_LEFT_TO_RIGHT</bp:catalysisDirection>
+        </bp:Catalysis>
+        <bp:UnificationXref rdf:about="http://cbio.mskcc.org/cpath#CPATH-LOCAL-7307947">
+          <bp:comment rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Database identifier. Use this URL to connect to the web page of this instance in Reactome: http://www.reactome.org/cgi-bin/eventbrowser?DB=gk_current&amp;ID=109859</bp:comment>
+          <bp:db rdf:datatype="http://www.w3.org/2001/XMLSchema#string">REACTOME DATABASE ID</bp:db>
+          <bp:id rdf:datatype="http://www.w3.org/2001/XMLSchema#string">109859</bp:id>
+        </bp:UnificationXref>
+        <bp:RelationshipXref rdf:about="http://cbio.mskcc.org/cpath#CPATH-LOCAL-7307948">
+          <bp:db rdf:datatype="http://www.w3.org/2001/XMLSchema#string">GENE_ONTOLOGY</bp:db>
+          <bp:id rdf:datatype="http://www.w3.org/2001/XMLSchema#string">0004674</bp:id>
+          <bp:relationshipType rdf:nodeID="node-8524179616210022022_1542750880302" />
+        </bp:RelationshipXref>
+        <bp:RelationshipXref rdf:about="http://cbio.mskcc.org/cpath#CPATH-LOCAL-7406635">
+          <bp:db rdf:datatype="http://www.w3.org/2001/XMLSchema#string">UNIPROT</bp:db>
+          <bp:id rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Q02750</bp:id>
+        </bp:RelationshipXref>
+        <bp:RelationshipXref rdf:about="http://cbio.mskcc.org/cpath#CPATH-LOCAL-425688">
+          <bp:db rdf:datatype="http://www.w3.org/2001/XMLSchema#string">ENTREZ_GENE</bp:db>
+          <bp:id rdf:datatype="http://www.w3.org/2001/XMLSchema#string">5604</bp:id>
+        </bp:RelationshipXref>
+        <bp:SmallMolecule rdf:about="http://cbio.mskcc.org/cpath#CPATH-496364">
+          <bp:dataSource rdf:resource="http://cbio.mskcc.org/cpath#CPATH-LOCAL-7386381" />
+          <bp:name rdf:datatype="http://www.w3.org/2001/XMLSchema#string">ATP</bp:name>
+          <bp:name rdf:datatype="http://www.w3.org/2001/XMLSchema#string">ATP [ChEBI:15422]</bp:name>
+          <bp:name rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Adenosine 5'-triphosphate</bp:name>
+          <bp:xref rdf:resource="http://cbio.mskcc.org/cpath#CPATH-LOCAL-7386382" />
+          <bp:xref rdf:resource="http://cbio.mskcc.org/cpath#CPATH-LOCAL-7454579" />
+        </bp:SmallMolecule>
+        <bp:Stoichiometry rdf:nodeID="VCELL_LOCAL_ID_4">
+          <bp:physicalEntity rdf:resource="http://cbio.mskcc.org/cpath#CPATH-496364" />
+          <bp:stoichiometricCoefficient rdf:datatype="http://www.w3.org/2001/XMLSchema#double">2.0</bp:stoichiometricCoefficient>
+        </bp:Stoichiometry>
+        <bp:RelationshipTypeVocabulary rdf:nodeID="node-8524179616210022022_1542750880302">
+          <bp:term rdf:datatype="http://www.w3.org/2001/XMLSchema#string">GO molecular function</bp:term>
+        </bp:RelationshipTypeVocabulary>
+        <bp:SmallMolecule rdf:about="http://cbio.mskcc.org/cpath#CPATH-496404">
+          <bp:dataSource rdf:resource="http://cbio.mskcc.org/cpath#CPATH-LOCAL-7386427" />
+          <bp:name rdf:datatype="http://www.w3.org/2001/XMLSchema#string">ADP</bp:name>
+          <bp:name rdf:datatype="http://www.w3.org/2001/XMLSchema#string">ADP [ChEBI:16761]</bp:name>
+          <bp:name rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Adenosine 5'-diphosphate</bp:name>
+          <bp:xref rdf:resource="http://cbio.mskcc.org/cpath#CPATH-LOCAL-7386428" />
+          <bp:xref rdf:resource="http://cbio.mskcc.org/cpath#CPATH-LOCAL-7454599" />
+        </bp:SmallMolecule>
+        <bp:UnificationXref rdf:about="http://cbio.mskcc.org/cpath#CPATH-LOCAL-7448364">
+          <bp:db rdf:datatype="http://www.w3.org/2001/XMLSchema#string">CPATH</bp:db>
+          <bp:id rdf:datatype="http://www.w3.org/2001/XMLSchema#string">488403</bp:id>
+        </bp:UnificationXref>
+        <bp:UnificationXref rdf:about="http://cbio.mskcc.org/cpath#CPATH-LOCAL-7386382">
+          <bp:db rdf:datatype="http://www.w3.org/2001/XMLSchema#string">ChEBI</bp:db>
+          <bp:id rdf:datatype="http://www.w3.org/2001/XMLSchema#string">15422</bp:id>
+        </bp:UnificationXref>
+        <bp:Provenance rdf:about="http://cbio.mskcc.org/cpath#CPATH-LOCAL-7386381">
+          <bp:comment rdf:datatype="http://www.w3.org/2001/XMLSchema#string">http://www.reactome.org</bp:comment>
+          <bp:name rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Reactome</bp:name>
+        </bp:Provenance>
+        <bp:UnificationXref rdf:about="http://cbio.mskcc.org/cpath#CPATH-LOCAL-7454599">
+          <bp:db rdf:datatype="http://www.w3.org/2001/XMLSchema#string">CPATH</bp:db>
+          <bp:id rdf:datatype="http://www.w3.org/2001/XMLSchema#string">496404</bp:id>
+        </bp:UnificationXref>
+        <bp:Provenance rdf:about="http://cbio.mskcc.org/cpath#CPATH-LOCAL-7329167">
+          <bp:comment rdf:datatype="http://www.w3.org/2001/XMLSchema#string">http://www.reactome.org</bp:comment>
+          <bp:name rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Reactome</bp:name>
+        </bp:Provenance>
+        <bp:Provenance rdf:about="http://cbio.mskcc.org/cpath#CPATH-LOCAL-7386427">
+          <bp:comment rdf:datatype="http://www.w3.org/2001/XMLSchema#string">http://www.reactome.org</bp:comment>
+          <bp:name rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Reactome</bp:name>
+        </bp:Provenance>
+        <bp:Stoichiometry rdf:nodeID="VCELL_LOCAL_ID_3">
+          <bp:physicalEntity rdf:resource="http://cbio.mskcc.org/cpath#CPATH-497459" />
+          <bp:stoichiometricCoefficient rdf:datatype="http://www.w3.org/2001/XMLSchema#double">1.0</bp:stoichiometricCoefficient>
+        </bp:Stoichiometry>
+        <bp:UnificationXref rdf:about="http://cbio.mskcc.org/cpath#CPATH-LOCAL-7329173">
+          <bp:comment rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Database identifier. Use this URL to connect to the web page of this instance in Reactome: http://www.reactome.org/cgi-bin/eventbrowser?DB=gk_current&amp;ID=109860</bp:comment>
+          <bp:db rdf:datatype="http://www.w3.org/2001/XMLSchema#string">REACTOME DATABASE ID</bp:db>
+          <bp:id rdf:datatype="http://www.w3.org/2001/XMLSchema#string">109860</bp:id>
+        </bp:UnificationXref>
+        <bp:UnificationXref rdf:about="http://cbio.mskcc.org/cpath#CPATH-LOCAL-7400932">
+          <bp:comment rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Database identifier. Use this URL to connect to the web page of this instance in Reactome: http://www.reactome.org/cgi-bin/eventbrowser?DB=gk_current&amp;ID=109838</bp:comment>
+          <bp:db rdf:datatype="http://www.w3.org/2001/XMLSchema#string">REACTOME DATABASE ID</bp:db>
+          <bp:id rdf:datatype="http://www.w3.org/2001/XMLSchema#string">109838</bp:id>
+        </bp:UnificationXref>
+        <bp:UnificationXref rdf:about="http://cbio.mskcc.org/cpath#CPATH-LOCAL-7455621">
+          <bp:db rdf:datatype="http://www.w3.org/2001/XMLSchema#string">CPATH</bp:db>
+          <bp:id rdf:datatype="http://www.w3.org/2001/XMLSchema#string">497459</bp:id>
+        </bp:UnificationXref>
+        <bp:Control rdf:about="http://cbio.mskcc.org/cpath#CPATH-492949">
+          <bp:dataSource rdf:resource="http://cbio.mskcc.org/cpath#CPATH-LOCAL-7364327" />
+          <bp:name rdf:datatype="http://www.w3.org/2001/XMLSchema#string">'p-MEK1 [cytosol]' negatively regulates 'MEK1 phosphorylates ERK-1'</bp:name>
+          <bp:xref rdf:resource="http://cbio.mskcc.org/cpath#CPATH-LOCAL-7364328" />
+          <bp:xref rdf:resource="http://cbio.mskcc.org/cpath#CPATH-LOCAL-7364329" />
+          <bp:xref rdf:resource="http://cbio.mskcc.org/cpath#CPATH-LOCAL-7452910" />
+          <bp:controller rdf:resource="http://cbio.mskcc.org/cpath#CPATH-498838" />
+          <bp:controlType rdf:datatype="http://www.w3.org/2001/XMLSchema#string">INHIBITION</bp:controlType>
+          <bp:controlled rdf:resource="http://cbio.mskcc.org/cpath#CPATH-490321" />
+        </bp:Control>
+        <bp:UnificationXref rdf:about="http://cbio.mskcc.org/cpath#CPATH-LOCAL-7364329">
+          <bp:comment rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Reactome stable identifier. Use this URL to connect to the web page of this instance in Reactome: http://www.reactome.org/cgi-bin/eventbrowser_st_id?ST_ID=REACT_6097.3</bp:comment>
+          <bp:db rdf:datatype="http://www.w3.org/2001/XMLSchema#string">REACTOME</bp:db>
+          <bp:id rdf:datatype="http://www.w3.org/2001/XMLSchema#string">REACT_6097</bp:id>
+          <bp:idVersion rdf:datatype="http://www.w3.org/2001/XMLSchema#string">3</bp:idVersion>
+        </bp:UnificationXref>
+        <bp:UnificationXref rdf:about="http://cbio.mskcc.org/cpath#CPATH-LOCAL-7364328">
+          <bp:comment rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Database identifier. Use this URL to connect to the web page of this instance in Reactome: http://www.reactome.org/cgi-bin/eventbrowser?DB=gk_current&amp;ID=112343</bp:comment>
+          <bp:db rdf:datatype="http://www.w3.org/2001/XMLSchema#string">REACTOME DATABASE ID</bp:db>
+          <bp:id rdf:datatype="http://www.w3.org/2001/XMLSchema#string">112343</bp:id>
+        </bp:UnificationXref>
+        <bp:Provenance rdf:about="http://cbio.mskcc.org/cpath#CPATH-LOCAL-7364327">
+          <bp:comment rdf:datatype="http://www.w3.org/2001/XMLSchema#string">http://www.reactome.org</bp:comment>
+          <bp:name rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Reactome</bp:name>
+        </bp:Provenance>
+        <bp:UnificationXref rdf:about="http://cbio.mskcc.org/cpath#CPATH-LOCAL-7452910">
+          <bp:db rdf:datatype="http://www.w3.org/2001/XMLSchema#string">CPATH</bp:db>
+          <bp:id rdf:datatype="http://www.w3.org/2001/XMLSchema#string">492949</bp:id>
+        </bp:UnificationXref>
+        <bp:PublicationXref rdf:about="http://cbio.mskcc.org/cpath#CPATH-LOCAL-7329174">
+          <bp:db rdf:datatype="http://www.w3.org/2001/XMLSchema#string">PUBMED</bp:db>
+          <bp:id rdf:datatype="http://www.w3.org/2001/XMLSchema#string">8388392</bp:id>
+          <bp:author rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Guan, KL</bp:author>
+          <bp:author rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Zheng, CF</bp:author>
+          <bp:source rdf:datatype="http://www.w3.org/2001/XMLSchema#string">J Biol Chem 268:11435-9</bp:source>
+          <bp:year rdf:datatype="http://www.w3.org/2001/XMLSchema#int">1993</bp:year>
+          <bp:title rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Cloning and characterization of two distinct human extracellular signal-regulated kinase activator kinases, MEK1 and MEK2.</bp:title>
+        </bp:PublicationXref>
+        <bp:Protein rdf:about="http://cbio.mskcc.org/cpath#CPATH-102407">
+          <bp:comment rdf:datatype="http://www.w3.org/2001/XMLSchema#string">FUNCTION: Involved in both the initiation and regulation of meiosis, mitosis, and postmitotic functions in differentiated cells by phosphorylating a number of transcription factors such as ELK-1. Phosphorylates EIF4EBP1; required for initiation of translation. Phosphorylates microtubule-associated protein 2 (MAP2). Phosphorylates SPZ1 (By similarity). Phosphorylates heat shock factor protein 4 (HSF4). CATALYTIC ACTIVITY: ATP + a protein = ADP + a phosphoprotein. COFACTOR: Magnesium (By similarity). ENZYME REGULATION: Activated by tyrosine phosphorylation in response to insulin and NGF. SUBUNIT: Interacts with MORG1. Found in a complex with at least BRAF, HRAS1, MAP2K1, MAPK3 and RGS14 (By similarity). Binds to HIV-1 Nef. This interaction inhibits its kinase activity. Interacts with HSF4 and NISCH. Interacts with ARRB2. Interacts with ADAM15. DOMAIN: The TXY motif contains the threonine and tyrosine residues whose phosphorylation activates the MAP kinases. PTM: Phosphorylated upon FLT3 signaling (By similarity). Dually phosphorylated on Thr-202 and Tyr-204, which activates the enzyme. Dephosphorylated by PTPRJ at Tyr-204. SIMILARITY: Belongs to the protein kinase superfamily. CMGC Ser/Thr protein kinase family. MAP kinase subfamily. SIMILARITY: Contains 1 protein kinase domain. GENE SYNONYMS: ERK1 PRKM3. COPYRIGHT:  Protein annotation is derived from the UniProt Consortium (http://www.uniprot.org/).  Distributed under the Creative Commons Attribution-NoDerivs License.</bp:comment>
+          <bp:name rdf:datatype="http://www.w3.org/2001/XMLSchema#string">MK03_HUMAN</bp:name>
+          <bp:name rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Microtubule-associated protein 2 kinase</bp:name>
+          <bp:name rdf:datatype="http://www.w3.org/2001/XMLSchema#string">MAP kinase isoform p44</bp:name>
+          <bp:name rdf:datatype="http://www.w3.org/2001/XMLSchema#string">MAPK 1</bp:name>
+          <bp:name rdf:datatype="http://www.w3.org/2001/XMLSchema#string">2.7.11.24</bp:name>
+          <bp:name rdf:datatype="http://www.w3.org/2001/XMLSchema#string">MAPK 3</bp:name>
+          <bp:name rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Insulin-stimulated MAP2 kinase</bp:name>
+          <bp:name rdf:datatype="http://www.w3.org/2001/XMLSchema#string">ERT2</bp:name>
+          <bp:name rdf:datatype="http://www.w3.org/2001/XMLSchema#string">p44-MAPK</bp:name>
+          <bp:name rdf:datatype="http://www.w3.org/2001/XMLSchema#string">MAP kinase 1</bp:name>
+          <bp:name rdf:datatype="http://www.w3.org/2001/XMLSchema#string">p44-ERK1</bp:name>
+          <bp:name rdf:datatype="http://www.w3.org/2001/XMLSchema#string">MAP kinase 3</bp:name>
+          <bp:name rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Extracellular signal-regulated kinase 1</bp:name>
+          <bp:name rdf:datatype="http://www.w3.org/2001/XMLSchema#string">ERK-1</bp:name>
+          <bp:name rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Mitogen-activated protein kinase 1</bp:name>
+          <bp:name rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Mitogen-activated protein kinase 3</bp:name>
+          <bp:xref rdf:resource="http://cbio.mskcc.org/cpath#CPATH-LOCAL-422776" />
+          <bp:xref rdf:resource="http://cbio.mskcc.org/cpath#CPATH-LOCAL-422777" />
+          <bp:xref rdf:resource="http://cbio.mskcc.org/cpath#CPATH-LOCAL-422778" />
+          <bp:xref rdf:resource="http://cbio.mskcc.org/cpath#CPATH-LOCAL-422779" />
+          <bp:xref rdf:resource="http://cbio.mskcc.org/cpath#CPATH-LOCAL-422780" />
+          <bp:xref rdf:resource="http://cbio.mskcc.org/cpath#CPATH-LOCAL-422781" />
+          <bp:xref rdf:resource="http://cbio.mskcc.org/cpath#CPATH-LOCAL-422782" />
+          <bp:xref rdf:resource="http://cbio.mskcc.org/cpath#CPATH-LOCAL-427237" />
+        </bp:Protein>
+        <bp:RelationshipXref rdf:about="http://cbio.mskcc.org/cpath#CPATH-LOCAL-422782">
+          <bp:db rdf:datatype="http://www.w3.org/2001/XMLSchema#string">REF_SEQ</bp:db>
+          <bp:id rdf:datatype="http://www.w3.org/2001/XMLSchema#string">NP_001103361</bp:id>
+        </bp:RelationshipXref>
+        <bp:UnificationXref rdf:about="http://cbio.mskcc.org/cpath#CPATH-LOCAL-427237">
+          <bp:db rdf:datatype="http://www.w3.org/2001/XMLSchema#string">CPATH</bp:db>
+          <bp:id rdf:datatype="http://www.w3.org/2001/XMLSchema#string">102407</bp:id>
+        </bp:UnificationXref>
+        <bp:RelationshipXref rdf:about="http://cbio.mskcc.org/cpath#CPATH-LOCAL-422777">
+          <bp:db rdf:datatype="http://www.w3.org/2001/XMLSchema#string">ENTREZ_GENE</bp:db>
+          <bp:id rdf:datatype="http://www.w3.org/2001/XMLSchema#string">5595</bp:id>
+        </bp:RelationshipXref>
+        <bp:UnificationXref rdf:about="http://cbio.mskcc.org/cpath#CPATH-LOCAL-422780">
+          <bp:db rdf:datatype="http://www.w3.org/2001/XMLSchema#string">UNIPROT</bp:db>
+          <bp:id rdf:datatype="http://www.w3.org/2001/XMLSchema#string">P27361</bp:id>
+        </bp:UnificationXref>
+        <bp:UnificationXref rdf:about="http://cbio.mskcc.org/cpath#CPATH-LOCAL-422779">
+          <bp:db rdf:datatype="http://www.w3.org/2001/XMLSchema#string">UNIPROT</bp:db>
+          <bp:id rdf:datatype="http://www.w3.org/2001/XMLSchema#string">B0LPG3</bp:id>
+        </bp:UnificationXref>
+        <bp:RelationshipXref rdf:about="http://cbio.mskcc.org/cpath#CPATH-LOCAL-422776">
+          <bp:db rdf:datatype="http://www.w3.org/2001/XMLSchema#string">GENE_SYMBOL</bp:db>
+          <bp:id rdf:datatype="http://www.w3.org/2001/XMLSchema#string">MAPK3</bp:id>
+        </bp:RelationshipXref>
+        <bp:UnificationXref rdf:about="http://cbio.mskcc.org/cpath#CPATH-LOCAL-7400931">
+          <bp:comment rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Reactome stable identifier. Use this URL to connect to the web page of this instance in Reactome: http://www.reactome.org/cgi-bin/eventbrowser_st_id?ST_ID=REACT_5539.1</bp:comment>
+          <bp:db rdf:datatype="http://www.w3.org/2001/XMLSchema#string">REACTOME</bp:db>
+          <bp:id rdf:datatype="http://www.w3.org/2001/XMLSchema#string">REACT_5539</bp:id>
+          <bp:idVersion rdf:datatype="http://www.w3.org/2001/XMLSchema#string">1</bp:idVersion>
+        </bp:UnificationXref>
+        <bp:Provenance rdf:about="http://cbio.mskcc.org/cpath#CPATH-LOCAL-7307946">
+          <bp:comment rdf:datatype="http://www.w3.org/2001/XMLSchema#string">http://www.reactome.org</bp:comment>
+          <bp:name rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Reactome</bp:name>
+        </bp:Provenance>
+        <bp:RelationshipXref rdf:about="http://cbio.mskcc.org/cpath#CPATH-LOCAL-422778">
+          <bp:db rdf:datatype="http://www.w3.org/2001/XMLSchema#string">REF_SEQ</bp:db>
+          <bp:id rdf:datatype="http://www.w3.org/2001/XMLSchema#string">NP_002737</bp:id>
+        </bp:RelationshipXref>
+        <bp:RelationshipXref rdf:about="http://cbio.mskcc.org/cpath#CPATH-LOCAL-425690">
+          <bp:db rdf:datatype="http://www.w3.org/2001/XMLSchema#string">REF_SEQ</bp:db>
+          <bp:id rdf:datatype="http://www.w3.org/2001/XMLSchema#string">NP_002746</bp:id>
+        </bp:RelationshipXref>
+        <bp:UnificationXref rdf:about="http://cbio.mskcc.org/cpath#CPATH-LOCAL-7454579">
+          <bp:db rdf:datatype="http://www.w3.org/2001/XMLSchema#string">CPATH</bp:db>
+          <bp:id rdf:datatype="http://www.w3.org/2001/XMLSchema#string">496364</bp:id>
+        </bp:UnificationXref>
+        <bp:UnificationXref rdf:about="http://cbio.mskcc.org/cpath#CPATH-LOCAL-7456226">
+          <bp:db rdf:datatype="http://www.w3.org/2001/XMLSchema#string">CPATH</bp:db>
+          <bp:id rdf:datatype="http://www.w3.org/2001/XMLSchema#string">498838</bp:id>
+        </bp:UnificationXref>
+        <bp:RelationshipXref rdf:about="http://cbio.mskcc.org/cpath#CPATH-LOCAL-422781">
+          <bp:db rdf:datatype="http://www.w3.org/2001/XMLSchema#string">REF_SEQ</bp:db>
+          <bp:id rdf:datatype="http://www.w3.org/2001/XMLSchema#string">NP_001035145</bp:id>
+        </bp:RelationshipXref>
+        <bp:RelationshipXref rdf:about="http://cbio.mskcc.org/cpath#CPATH-LOCAL-425689">
+          <bp:db rdf:datatype="http://www.w3.org/2001/XMLSchema#string">GENE_SYMBOL</bp:db>
+          <bp:id rdf:datatype="http://www.w3.org/2001/XMLSchema#string">MAP2K1</bp:id>
+        </bp:RelationshipXref>
+        <bp:UnificationXref rdf:about="http://cbio.mskcc.org/cpath#CPATH-LOCAL-427533">
+          <bp:db rdf:datatype="http://www.w3.org/2001/XMLSchema#string">CPATH</bp:db>
+          <bp:id rdf:datatype="http://www.w3.org/2001/XMLSchema#string">103001</bp:id>
+        </bp:UnificationXref>
+        <bp:UnificationXref rdf:about="http://cbio.mskcc.org/cpath#CPATH-LOCAL-7386428">
+          <bp:db rdf:datatype="http://www.w3.org/2001/XMLSchema#string">ChEBI</bp:db>
+          <bp:id rdf:datatype="http://www.w3.org/2001/XMLSchema#string">16761</bp:id>
+        </bp:UnificationXref>
+        <bp:Provenance rdf:about="http://cbio.mskcc.org/cpath#CPATH-LOCAL-7400919">
+          <bp:comment rdf:datatype="http://www.w3.org/2001/XMLSchema#string">http://www.reactome.org</bp:comment>
+          <bp:name rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Reactome</bp:name>
+        </bp:Provenance>
+      </rdf:RDF>
+    </pathwayModel>
+    <relationshipModel>
+      <RMNS version="3.0" />
+    </relationshipModel>
+    <vcmetadata>
+      <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" />
+      <nonrdfAnnotationList>
+        <nonrdfAnnotation vcid="BioModel(Visual_Dushek_2014)">
+          <freetext>#Model of a kinase (E) and phosphatase (F) actin on a biosensor (B) .</freetext>
+        </nonrdfAnnotation>
+      </nonrdfAnnotationList>
+      <uriBindingList />
+    </vcmetadata>
+  </BioModel>
+</vcml>
+

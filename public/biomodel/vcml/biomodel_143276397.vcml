@@ -1,0 +1,1082 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--This biomodel was generated in VCML Version Alpha_Version_7.4.0_build_87-->
+<vcml xmlns="http://sourceforge.net/projects/vcell/vcml" Version="Alpha_Version_7.4.0_build_87">
+  <BioModel Name="Aging_Study_Quadrant3">
+    <Annotation>cloned from '705dataset3' owned by user pallyjoel
+cloned from '2012-06-08-SampleBistab' owned by user mblinov
+cloned from '2012-05-17-SampleBistab' owned by user pallyjoel
+cloned from '2012-05-01-bistab' owned by user mblinov
+cloned from '2012-04-24-bistab' owned by user pallyjoel
+cloned from '2012-04-05-bistab' owned by user mblinov</Annotation>
+    <Model Name="unnamed">
+      <Annotation>cloned from 'unnamed' owned by user pallyjoel
+cloned from 'unnamed' owned by user mblinov
+cloned from 'unnamed' owned by user pallyjoel
+cloned from 'unnamed' owned by user mblinov
+cloned from 'unnamed' owned by user pallyjoel
+cloned from 'unnamed' owned by user mblinov</Annotation>
+      <ModelParameters>
+        <Parameter Name="k1" Role="user defined" Unit="tbd">0.104</Parameter>
+        <Parameter Name="k2" Role="user defined" Unit="tbd">69.5</Parameter>
+        <Parameter Name="k3" Role="user defined" Unit="uM.s-1">0.0</Parameter>
+        <Parameter Name="k4" Role="user defined" Unit="s-1">0.06772</Parameter>
+        <Parameter Name="n" Role="user defined" Unit="tbd">2.0</Parameter>
+        <Parameter Name="kr" Role="user defined" Unit="uM-1.s-1">1.0</Parameter>
+        <Parameter Name="kf" Role="user defined" Unit="uM-1.s-1">1.0</Parameter>
+        <Parameter Name="kd" Role="user defined" Unit="uM-1.s-1">0.001</Parameter>
+        <Parameter Name="m" Role="user defined" Unit="tbd">2.0</Parameter>
+        <Parameter Name="KscalIL6" Role="user defined" Unit="uM-1">1000.0</Parameter>
+        <Parameter Name="KscalIGF" Role="user defined" Unit="uM-1">0.1</Parameter>
+        <Parameter Name="kf2" Role="user defined" Unit="uM-1">1.0</Parameter>
+      </ModelParameters>
+      <Compound Name="s4" />
+      <Compound Name="s2" />
+      <Compound Name="s3" />
+      <Compound Name="s0" />
+      <Compound Name="s1" />
+      <Feature Name="Blood" KeyValue="143276295" />
+      <LocalizedCompound Name="Death" CompoundRef="s4" Structure="Blood" OverrideName="true" KeyValue="143276297" />
+      <LocalizedCompound Name="Frailty" CompoundRef="s2" Structure="Blood" OverrideName="true" KeyValue="143276298" />
+      <LocalizedCompound Name="Robustness" CompoundRef="s3" Structure="Blood" OverrideName="true" KeyValue="143276299" />
+      <LocalizedCompound Name="IL6" CompoundRef="s0" Structure="Blood" OverrideName="true" KeyValue="143276300" />
+      <LocalizedCompound Name="IGF1" CompoundRef="s1" Structure="Blood" OverrideName="true" KeyValue="143276301" />
+      <SimpleReaction Structure="Blood" Name="r1" Reversible="true" FluxOption="MolecularOnly" KeyValue="143276302">
+        <Product LocalizedCompoundRef="IGF1" Stoichiometry="1" KeyValue="143276303" />
+        <Modifier LocalizedCompoundRef="IL6" />
+        <Kinetics KineticsType="GeneralKinetics">
+          <Parameter Name="J" Role="reaction rate" Unit="uM.s-1">(k2 / (1.0 + ((KscalIL6 * IL6) ^ m)))</Parameter>
+        </Kinetics>
+      </SimpleReaction>
+      <SimpleReaction Structure="Blood" Name="r2" Reversible="true" FluxOption="MolecularOnly" KeyValue="143276305">
+        <Reactant LocalizedCompoundRef="IL6" Stoichiometry="1" KeyValue="143276306" />
+        <Kinetics KineticsType="GeneralKinetics">
+          <Parameter Name="J" Role="reaction rate" Unit="uM.s-1">(k3 + (k4 * IL6))</Parameter>
+        </Kinetics>
+      </SimpleReaction>
+      <SimpleReaction Structure="Blood" Name="r3" Reversible="true" FluxOption="MolecularOnly" KeyValue="143276307">
+        <Reactant LocalizedCompoundRef="IGF1" Stoichiometry="1" KeyValue="143276308" />
+        <Kinetics KineticsType="GeneralKinetics">
+          <Parameter Name="J" Role="reaction rate" Unit="uM.s-1">(k5 + (k6 * IGF1))</Parameter>
+          <Parameter Name="k5" Role="user defined" Unit="uM.s-1">0.0</Parameter>
+          <Parameter Name="k6" Role="user defined" Unit="s-1">0.0106</Parameter>
+        </Kinetics>
+      </SimpleReaction>
+      <SimpleReaction Structure="Blood" Name="r5" Reversible="true" FluxOption="MolecularOnly" KeyValue="143276309">
+        <Reactant LocalizedCompoundRef="Robustness" Stoichiometry="1" KeyValue="143276310" />
+        <Product LocalizedCompoundRef="Frailty" Stoichiometry="1" KeyValue="143276311" />
+        <Modifier LocalizedCompoundRef="IL6" />
+        <Modifier LocalizedCompoundRef="IGF1" />
+        <Kinetics KineticsType="GeneralKinetics">
+          <Parameter Name="J" Role="reaction rate" Unit="uM.s-1">(kf * Robustness * IL6 / (1.0 + (kf2 * IGF1)))</Parameter>
+        </Kinetics>
+      </SimpleReaction>
+      <SimpleReaction Structure="Blood" Name="r6" Reversible="true" FluxOption="MolecularOnly" KeyValue="143276314">
+        <Reactant LocalizedCompoundRef="Frailty" Stoichiometry="1" KeyValue="143276315" />
+        <Product LocalizedCompoundRef="Death" Stoichiometry="1" KeyValue="143276316" />
+        <Modifier LocalizedCompoundRef="IL6" />
+        <Kinetics KineticsType="GeneralKinetics">
+          <Parameter Name="J" Role="reaction rate" Unit="uM.s-1">(kd * Frailty * IL6)</Parameter>
+        </Kinetics>
+      </SimpleReaction>
+      <SimpleReaction Structure="Blood" Name="r0" Reversible="true" FluxOption="MolecularOnly" KeyValue="143276318">
+        <Product LocalizedCompoundRef="IL6" Stoichiometry="1" KeyValue="143276319" />
+        <Modifier LocalizedCompoundRef="IGF1" />
+        <Kinetics KineticsType="GeneralKinetics">
+          <Parameter Name="J" Role="reaction rate" Unit="uM.s-1">(k1 / (1.0 + ((KscalIGF * IGF1) ^ n)))</Parameter>
+        </Kinetics>
+      </SimpleReaction>
+      <Diagram Name="c0" Structure="Blood">
+        <SimpleReactionShape NodeReferenceModeAttrTag="full" SimpleReactionRef="r0" LocationX="225" LocationY="104" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="full" SimpleReactionRef="r6" LocationX="140" LocationY="210" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="Frailty" LocationX="211" LocationY="208" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="IGF1" LocationX="246" LocationY="42" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="full" SimpleReactionRef="r1" LocationX="314" LocationY="43" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="full" SimpleReactionRef="r5" LocationX="307" LocationY="211" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="IL6" LocationX="299" LocationY="100" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="Death" LocationX="79" LocationY="210" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="full" SimpleReactionRef="r3" LocationX="176" LocationY="45" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="Robustness" LocationX="401" LocationY="208" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="full" SimpleReactionRef="r2" LocationX="412" LocationY="103" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="molecule" SimpleReactionRef="r2" LocationX="451" LocationY="62" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="Frailty" LocationX="126" LocationY="222" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="IL6" LocationX="317" LocationY="60" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="Robustness" LocationX="435" LocationY="207" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="molecule" SimpleReactionRef="r6" LocationX="71" LocationY="216" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="molecule" SimpleReactionRef="r0" LocationX="241" LocationY="80" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="molecule" SimpleReactionRef="r3" LocationX="19" LocationY="60" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="IGF1" LocationX="134" LocationY="55" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="molecule" SimpleReactionRef="r1" LocationX="239" LocationY="36" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="molecule" SimpleReactionRef="r4" LocationX="266" LocationY="260" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="molecule" SimpleReactionRef="r5" LocationX="267" LocationY="182" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="Death" LocationX="14" LocationY="221" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="rule" SimpleReactionRef="r2" LocationX="451" LocationY="62" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="Frailty" LocationX="126" LocationY="222" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="IL6" LocationX="317" LocationY="60" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="Robustness" LocationX="435" LocationY="207" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="rule" SimpleReactionRef="r6" LocationX="71" LocationY="216" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="rule" SimpleReactionRef="r0" LocationX="241" LocationY="80" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="rule" SimpleReactionRef="r3" LocationX="19" LocationY="60" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="IGF1" LocationX="134" LocationY="55" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="rule" SimpleReactionRef="r1" LocationX="239" LocationY="36" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="rule" SimpleReactionRef="r4" LocationX="266" LocationY="260" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="rule" SimpleReactionRef="r5" LocationX="267" LocationY="182" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="Death" LocationX="14" LocationY="221" />
+      </Diagram>
+      <Version Name="unnamed" KeyValue="143276288" BranchId="97490540" Archived="0" Date="26-Oct-2018 00:23:35" FromVersionable="false">
+        <Owner Name="mblinov" Identifier="12487253" />
+        <GroupAccess Type="1" />
+        <Annotation>cloned from 'unnamed' owned by user pallyjoel
+cloned from 'unnamed' owned by user mblinov
+cloned from 'unnamed' owned by user pallyjoel
+cloned from 'unnamed' owned by user mblinov
+cloned from 'unnamed' owned by user pallyjoel
+cloned from 'unnamed' owned by user mblinov</Annotation>
+      </Version>
+      <ModelUnitSystem VolumeSubstanceUnit="uM.um3" MembraneSubstanceUnit="molecules" LumpedReactionSubstanceUnit="molecules" VolumeUnit="um3" AreaUnit="um2" LengthUnit="um" TimeUnit="s" />
+    </Model>
+    <SimulationSpec Name="NoDeath" Stochastic="false" UseConcentration="true" RuleBased="false" MassConservationModelReduction="true" InsufficientIterations="false" InsufficientMaxMolecules="false">
+      <NetworkConstraints RbmMaxIteration="3" RbmMaxMoleculesPerSpecies="10" RbmSpeciesLimit="800" RbmReactionsLimit="2500" />
+      <Annotation>cloned from 'NoDeath' owned by user pallyjoel
+cloned from 'Death-Blinov Data' owned by user mblinov
+cloned from 'Death-Blinov Data' owned by user pallyjoel
+cloned from 'Death' owned by user mblinov
+cloned from 'Application0' owned by user pallyjoel
+cloned from 'Application0' owned by user mblinov</Annotation>
+      <Geometry Name="non-spatial1073789105" Dimension="0">
+        <Annotation>cloned from 'non-spatial692685840' owned by user pallyjoel
+cloned from 'non-spatial2047059438' owned by user mblinov
+cloned from 'non-spatial1057435449' owned by user pallyjoel
+cloned from 'non-spatial1057435449' owned by user mblinov
+cloned from 'non-spatial633958308' owned by user pallyjoel
+cloned from 'non-spatial633958308' owned by user mblinov</Annotation>
+        <Extent X="10.0" Y="10.0" Z="10.0" />
+        <Origin X="0.0" Y="0.0" Z="0.0" />
+        <SubVolume Name="Compartment" Handle="0" Type="Compartmental" KeyValue="97490511" />
+        <Version Name="non-spatial1073789105" KeyValue="97490507" BranchId="97490508" Archived="0" Date="03-Nov-2015 16:47:48" FromVersionable="false">
+          <Owner Name="mblinov" Identifier="12487253" />
+          <GroupAccess Type="1" />
+          <Annotation>cloned from 'non-spatial692685840' owned by user pallyjoel
+cloned from 'non-spatial2047059438' owned by user mblinov
+cloned from 'non-spatial1057435449' owned by user pallyjoel
+cloned from 'non-spatial1057435449' owned by user mblinov
+cloned from 'non-spatial633958308' owned by user pallyjoel
+cloned from 'non-spatial633958308' owned by user mblinov</Annotation>
+        </Version>
+      </Geometry>
+      <GeometryContext>
+        <FeatureMapping Feature="Blood" GeometryClass="Compartment" SubVolume="Compartment" Size="50000.0">
+          <BoundariesTypes Xm="Flux" Xp="Flux" Ym="Flux" Yp="Flux" Zm="Flux" Zp="Flux" />
+        </FeatureMapping>
+      </GeometryContext>
+      <ReactionContext>
+        <LocalizedCompoundSpec LocalizedCompoundRef="Death" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>0.0</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="Frailty" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>51.0</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="Robustness" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>49.0</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="IL6" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>0.00623</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="IGF1" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>148.0</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <ReactionSpec ReactionStepRef="r1" ReactionMapping="included" />
+        <ReactionSpec ReactionStepRef="r2" ReactionMapping="included" />
+        <ReactionSpec ReactionStepRef="r3" ReactionMapping="included" />
+        <ReactionSpec ReactionStepRef="r5" ReactionMapping="included" />
+        <ReactionSpec ReactionStepRef="r6" ReactionMapping="excluded" />
+        <ReactionSpec ReactionStepRef="r0" ReactionMapping="included" />
+      </ReactionContext>
+      <MathDescription Name="Application0_generated">
+        <Annotation>cloned from 'Application0_generated' owned by user pallyjoel
+cloned from 'Application0_generated' owned by user mblinov
+cloned from 'Application0_generated' owned by user pallyjoel
+cloned from 'Application0_generated' owned by user mblinov
+cloned from 'Application0_generated' owned by user pallyjoel
+cloned from 'Application0_generated' owned by user mblinov</Annotation>
+        <Constant Name="_F_">96480.0</Constant>
+        <Constant Name="_F_nmol_">9.648E-5</Constant>
+        <Constant Name="_K_GHK_">1.0E-9</Constant>
+        <Constant Name="_N_pmol_">6.02E11</Constant>
+        <Constant Name="_PI_">3.141592653589793</Constant>
+        <Constant Name="_R_">8314.0</Constant>
+        <Constant Name="_T_">300.0</Constant>
+        <Constant Name="Death_init_uM">0.0</Constant>
+        <Constant Name="Frailty_init_uM">51.0</Constant>
+        <Constant Name="IGF1_init_uM">148.0</Constant>
+        <Constant Name="IL6_init_uM">0.00623</Constant>
+        <Constant Name="k1">0.104</Constant>
+        <Constant Name="k2">69.5</Constant>
+        <Constant Name="k3">0.0</Constant>
+        <Constant Name="k4">0.06772</Constant>
+        <Constant Name="k5">0.0</Constant>
+        <Constant Name="k6">0.0106</Constant>
+        <Constant Name="K_millivolts_per_volt">1000.0</Constant>
+        <Constant Name="kd">0.001</Constant>
+        <Constant Name="kf">1.0</Constant>
+        <Constant Name="kf2">1.0</Constant>
+        <Constant Name="KMOLE">(1.0 / 602.0)</Constant>
+        <Constant Name="kr">1.0</Constant>
+        <Constant Name="KscalIGF">0.1</Constant>
+        <Constant Name="KscalIL6">1000.0</Constant>
+        <Constant Name="m">2.0</Constant>
+        <Constant Name="n">2.0</Constant>
+        <Constant Name="Robustness_init_uM">49.0</Constant>
+        <Constant Name="Size_Blood">50000.0</Constant>
+        <VolumeVariable Name="IGF1" Domain="Compartment" />
+        <VolumeVariable Name="IL6" Domain="Compartment" />
+        <VolumeVariable Name="Robustness" Domain="Compartment" />
+        <Function Name="Death" Domain="Compartment">(K_Death_total / Size_Blood)</Function>
+        <Function Name="Frailty" Domain="Compartment">((K_Frailty_total - (Size_Blood * Robustness)) / Size_Blood)</Function>
+        <Function Name="J_r0" Domain="Compartment">(k1 / (1.0 + ((KscalIGF * IGF1) ^ n)))</Function>
+        <Function Name="J_r1" Domain="Compartment">(k2 / (1.0 + ((KscalIL6 * IL6) ^ m)))</Function>
+        <Function Name="J_r2" Domain="Compartment">(k3 + (k4 * IL6))</Function>
+        <Function Name="J_r3" Domain="Compartment">(k5 + (k6 * IGF1))</Function>
+        <Function Name="J_r5" Domain="Compartment">(kf * Robustness * IL6 / (1.0 + (kf2 * IGF1)))</Function>
+        <Function Name="K_Death_total" Domain="Compartment">(Size_Blood * Death_init_uM)</Function>
+        <Function Name="K_Frailty_total" Domain="Compartment">((Size_Blood * Frailty_init_uM) + (Size_Blood * Robustness_init_uM))</Function>
+        <CompartmentSubDomain Name="Compartment">
+          <BoundaryType Boundary="Xm" Type="Value" />
+          <BoundaryType Boundary="Xp" Type="Value" />
+          <BoundaryType Boundary="Ym" Type="Value" />
+          <BoundaryType Boundary="Yp" Type="Value" />
+          <BoundaryType Boundary="Zm" Type="Value" />
+          <BoundaryType Boundary="Zp" Type="Value" />
+          <OdeEquation Name="Robustness" SolutionType="Unknown">
+            <Rate>- J_r5</Rate>
+            <Initial>Robustness_init_uM</Initial>
+          </OdeEquation>
+          <OdeEquation Name="IL6" SolutionType="Unknown">
+            <Rate>( - J_r2 + J_r0)</Rate>
+            <Initial>IL6_init_uM</Initial>
+          </OdeEquation>
+          <OdeEquation Name="IGF1" SolutionType="Unknown">
+            <Rate>(J_r1 - J_r3)</Rate>
+            <Initial>IGF1_init_uM</Initial>
+          </OdeEquation>
+        </CompartmentSubDomain>
+        <Version Name="Application0_generated" KeyValue="143276280" BranchId="97490528" Archived="0" Date="26-Oct-2018 00:23:34" FromVersionable="false">
+          <Owner Name="mblinov" Identifier="12487253" />
+          <GroupAccess Type="1" />
+          <Annotation>cloned from 'Application0_generated' owned by user pallyjoel
+cloned from 'Application0_generated' owned by user mblinov
+cloned from 'Application0_generated' owned by user pallyjoel
+cloned from 'Application0_generated' owned by user mblinov
+cloned from 'Application0_generated' owned by user pallyjoel
+cloned from 'Application0_generated' owned by user mblinov</Annotation>
+        </Version>
+      </MathDescription>
+      <OutputFunctions>
+        <AnnotatedFunction Name="Survival" ErrorString="" FunctionType="Nonspatial">(100.0 - Death)</AnnotatedFunction>
+        <AnnotatedFunction Name="Healthy" ErrorString="" FunctionType="Nonspatial">(Robustness - Death)</AnnotatedFunction>
+      </OutputFunctions>
+      <Simulation Name="Simulation2">
+        <Annotation>cloned from 'Simulation2' owned by user pallyjoel</Annotation>
+        <SolverTaskDescription TaskType="Unsteady" UseSymbolicJacobian="false" Solver="Combined Stiff Solver (IDA/CVODE)">
+          <TimeBound StartTime="0.0" EndTime="240.0" />
+          <TimeStep DefaultTime="0.1" MinTime="1.0E-8" MaxTime="1.0" />
+          <ErrorTolerance Absolut="1.0E-9" Relative="1.0E-9" />
+          <OutputOptions KeepEvery="1" KeepAtMost="1000" />
+          <NumberProcessors>1</NumberProcessors>
+        </SolverTaskDescription>
+        <MathOverrides>
+          <Constant Name="kr">1.0E-4</Constant>
+          <Constant Name="kf">12.3774</Constant>
+          <Constant Name="IGF1_init_uM" ConstantArraySpec="1000">"40.0", "80.0", "148.0", "200.0", "225.0", "250.0"</Constant>
+          <Constant Name="IL6_init_uM" ConstantArraySpec="1000">"0.001", "0.002", "0.004", "0.0069", "0.012", "0.028"</Constant>
+        </MathOverrides>
+        <Version Name="Simulation2" KeyValue="143276384" BranchId="97490649" Archived="0" Date="26-Oct-2018 00:23:35" FromVersionable="false">
+          <Owner Name="mblinov" Identifier="12487253" />
+          <GroupAccess Type="1" />
+          <Annotation>cloned from 'Simulation2' owned by user pallyjoel</Annotation>
+        </Version>
+      </Simulation>
+      <Simulation Name="2018_10">
+        <SolverTaskDescription TaskType="Unsteady" UseSymbolicJacobian="false" Solver="Combined Stiff Solver (IDA/CVODE)">
+          <TimeBound StartTime="0.0" EndTime="240.0" />
+          <TimeStep DefaultTime="0.1" MinTime="1.0E-8" MaxTime="1.0" />
+          <ErrorTolerance Absolut="1.0E-9" Relative="1.0E-9" />
+          <OutputOptions KeepEvery="1" KeepAtMost="1000" />
+          <NumberProcessors>1</NumberProcessors>
+        </SolverTaskDescription>
+        <MathOverrides>
+          <Constant Name="kf2">122.54249265021974</Constant>
+          <Constant Name="kf">100000.0</Constant>
+          <Constant Name="IGF1_init_uM" ConstantArraySpec="1001">0.0 to 250.0, 10 values</Constant>
+          <Constant Name="IL6_init_uM" ConstantArraySpec="1001">1.0E-6 to 0.0623, 10 values</Constant>
+        </MathOverrides>
+        <Version Name="2018_10" KeyValue="143276386" BranchId="143276387" Archived="0" Date="26-Oct-2018 00:23:35" FromVersionable="false">
+          <Owner Name="mblinov" Identifier="12487253" />
+          <GroupAccess Type="1" />
+        </Version>
+      </Simulation>
+      <AnalysisTaskList>
+        <ParameterEstimationTask Name="DefaultTask">
+          <parameterMappingSpecList>
+            <parameterMappingSpec parameterReferenceAttribute="unnamed.k1" lowLimit="0.1" highLimit="100.0" currentValue="1.0" selected="false" />
+            <parameterMappingSpec parameterReferenceAttribute="unnamed.k2" lowLimit="0.1" highLimit="100.0" currentValue="1.0" selected="false" />
+            <parameterMappingSpec parameterReferenceAttribute="unnamed.k3" lowLimit="0.0" highLimit="100.0" currentValue="0.0" selected="false" />
+            <parameterMappingSpec parameterReferenceAttribute="unnamed.k4" lowLimit="0.1" highLimit="100.0" currentValue="1.0" selected="false" />
+            <parameterMappingSpec parameterReferenceAttribute="unnamed.n" lowLimit="0.2" highLimit="20.0" currentValue="2.0" selected="false" />
+            <parameterMappingSpec parameterReferenceAttribute="unnamed.kr" lowLimit="0.0" highLimit="1.0E-11" currentValue="0.0" selected="false" />
+            <parameterMappingSpec parameterReferenceAttribute="unnamed.kf" lowLimit="0.001" highLimit="100000.0" currentValue="10.0" selected="true" />
+            <parameterMappingSpec parameterReferenceAttribute="unnamed.kd" lowLimit="1.0E-4" highLimit="0.01" currentValue="0.001" selected="false" />
+            <parameterMappingSpec parameterReferenceAttribute="unnamed.m" lowLimit="0.0" highLimit="0.0" currentValue="0.0" selected="false" />
+            <parameterMappingSpec parameterReferenceAttribute="unnamed.KscalIL6" lowLimit="0.0" highLimit="0.0" currentValue="0.0" selected="false" />
+            <parameterMappingSpec parameterReferenceAttribute="unnamed.KscalIGF" lowLimit="0.0" highLimit="0.0" currentValue="0.0" selected="false" />
+            <parameterMappingSpec parameterReferenceAttribute="unnamed.kf2" lowLimit="0.001" highLimit="1000.0" currentValue="10.0" selected="true" />
+            <parameterMappingSpec parameterReferenceAttribute="unnamed.r3.k5" lowLimit="0.0" highLimit="100.0" currentValue="0.0" selected="false" />
+            <parameterMappingSpec parameterReferenceAttribute="unnamed.r3.k6" lowLimit="0.1" highLimit="100.0" currentValue="1.0" selected="false" />
+            <parameterMappingSpec parameterReferenceAttribute="NoDeath.Death_scs.initConc" lowLimit="0.0" highLimit="0.0" currentValue="0.0" selected="false" />
+            <parameterMappingSpec parameterReferenceAttribute="NoDeath.Frailty_scs.initConc" lowLimit="6.0" highLimit="600.0" currentValue="60.0" selected="false" />
+            <parameterMappingSpec parameterReferenceAttribute="NoDeath.Robustness_scs.initConc" lowLimit="4.0" highLimit="400.0" currentValue="40.0" selected="false" />
+            <parameterMappingSpec parameterReferenceAttribute="NoDeath.IL6_scs.initConc" lowLimit="0.1" highLimit="10.0" currentValue="1.0" selected="false" />
+            <parameterMappingSpec parameterReferenceAttribute="NoDeath.IGF1_scs.initConc" lowLimit="0.1" highLimit="10.0" currentValue="1.0" selected="false" />
+            <parameterMappingSpec parameterReferenceAttribute="NoDeath.Blood_mapping.Size" lowLimit="5000.0" highLimit="500000.0" currentValue="50000.0" selected="false" />
+          </parameterMappingSpecList>
+          <referenceData numRows="4" numColumns="3">
+            <dataColumnList>
+              <dataColumn Name="t" weight="1.0" />
+              <dataColumn Name="H_robust" weight="1.0" />
+              <dataColumn Name="H_frail" weight="1.0" />
+            </dataColumnList>
+            <dataRowList>
+              <dataRow>0.0 49.0 51.0</dataRow>
+              <dataRow>12.0 40.0 60.0</dataRow>
+              <dataRow>36.0 8.0 92.0</dataRow>
+              <dataRow>60.0 3.0 97.0</dataRow>
+            </dataRowList>
+          </referenceData>
+          <referenceDataMappingSpecList>
+            <referenceDataMappingSpec referenceDataColumnName="t" referenceDataModelSymbol="t" />
+            <referenceDataMappingSpec referenceDataColumnName="H_robust" referenceDataModelSymbol="Robustness" />
+            <referenceDataMappingSpec referenceDataColumnName="H_frail" referenceDataModelSymbol="Frailty" />
+          </referenceDataMappingSpecList>
+          <optimizationSolverSpec optimizationSolverType="Evolutionary Programming" NumOfRuns="50">
+            <ListOfParameters>
+              <Parameter Name="Number of Generations" Value="200.0" />
+              <Parameter Name="Population Size" Value="20.0" />
+              <Parameter Name="Random Number Generator" Value="1.0" />
+              <Parameter Name="Seed" Value="0.0" />
+            </ListOfParameters>
+          </optimizationSolverSpec>
+          <OptimizationResultSet>
+            <bestOptRunResultSet>
+              <ListOfParameters>
+                <Parameter Name="kf" Value="100000.0" />
+                <Parameter Name="kf2" Value="122.54249265021974" />
+              </ListOfParameters>
+              <objectiveFunction Value="108.26048568187326" />
+              <ObjectiveFunctionEvaluations Value="4006" />
+            </bestOptRunResultSet>
+          </OptimizationResultSet>
+        </ParameterEstimationTask>
+      </AnalysisTaskList>
+      <Version Name="NoDeath" KeyValue="143276323" BranchId="97490579" Archived="0" Date="26-Oct-2018 00:23:35" FromVersionable="false">
+        <Owner Name="mblinov" Identifier="12487253" />
+        <GroupAccess Type="1" />
+        <Annotation>cloned from 'NoDeath' owned by user pallyjoel
+cloned from 'Death-Blinov Data' owned by user mblinov
+cloned from 'Death-Blinov Data' owned by user pallyjoel
+cloned from 'Death' owned by user mblinov
+cloned from 'Application0' owned by user pallyjoel
+cloned from 'Application0' owned by user mblinov</Annotation>
+      </Version>
+      <MicroscopeMeasurement Name="fluor">
+        <ConvolutionKernel Type="ProjectionZKernel" />
+      </MicroscopeMeasurement>
+    </SimulationSpec>
+    <SimulationSpec Name="Molecular Only" Stochastic="false" UseConcentration="true" RuleBased="false" MassConservationModelReduction="true" InsufficientIterations="false" InsufficientMaxMolecules="false">
+      <NetworkConstraints RbmMaxIteration="3" RbmMaxMoleculesPerSpecies="10" RbmSpeciesLimit="800" RbmReactionsLimit="2500" />
+      <Annotation>cloned from 'Molecular Only' owned by user pallyjoel</Annotation>
+      <Geometry Name="non-spatial1739218010" Dimension="0">
+        <Annotation>cloned from 'non-spatial428428359' owned by user pallyjoel</Annotation>
+        <Extent X="10.0" Y="10.0" Z="10.0" />
+        <Origin X="0.0" Y="0.0" Z="0.0" />
+        <SubVolume Name="Compartment" Handle="0" Type="Compartmental" KeyValue="97490516" />
+        <Version Name="non-spatial1739218010" KeyValue="97490512" BranchId="97490513" Archived="0" Date="03-Nov-2015 16:47:48" FromVersionable="false">
+          <Owner Name="mblinov" Identifier="12487253" />
+          <GroupAccess Type="1" />
+          <Annotation>cloned from 'non-spatial428428359' owned by user pallyjoel</Annotation>
+        </Version>
+      </Geometry>
+      <GeometryContext>
+        <FeatureMapping Feature="Blood" GeometryClass="Compartment" SubVolume="Compartment" Size="50000.0">
+          <BoundariesTypes Xm="Flux" Xp="Flux" Ym="Flux" Yp="Flux" Zm="Flux" Zp="Flux" />
+        </FeatureMapping>
+      </GeometryContext>
+      <ReactionContext>
+        <LocalizedCompoundSpec LocalizedCompoundRef="Death" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>0.0</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="Frailty" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>0.0</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="Robustness" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>0.0</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="IL6" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>0.00623</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="IGF1" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>148.0</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <ReactionSpec ReactionStepRef="r1" ReactionMapping="included" />
+        <ReactionSpec ReactionStepRef="r2" ReactionMapping="included" />
+        <ReactionSpec ReactionStepRef="r3" ReactionMapping="included" />
+        <ReactionSpec ReactionStepRef="r5" ReactionMapping="excluded" />
+        <ReactionSpec ReactionStepRef="r6" ReactionMapping="excluded" />
+        <ReactionSpec ReactionStepRef="r0" ReactionMapping="included" />
+      </ReactionContext>
+      <MathDescription Name="Molecular Only_generated">
+        <Annotation>cloned from 'Molecular Only_generated' owned by user pallyjoel</Annotation>
+        <Constant Name="_F_">96480.0</Constant>
+        <Constant Name="_F_nmol_">9.648E-5</Constant>
+        <Constant Name="_K_GHK_">1.0E-9</Constant>
+        <Constant Name="_N_pmol_">6.02E11</Constant>
+        <Constant Name="_PI_">3.141592653589793</Constant>
+        <Constant Name="_R_">8314.0</Constant>
+        <Constant Name="_T_">300.0</Constant>
+        <Constant Name="Death_init_uM">0.0</Constant>
+        <Constant Name="Frailty_init_uM">0.0</Constant>
+        <Constant Name="IGF1_init_uM">148.0</Constant>
+        <Constant Name="IL6_init_uM">0.00623</Constant>
+        <Constant Name="k1">0.104</Constant>
+        <Constant Name="k2">69.5</Constant>
+        <Constant Name="k3">0.0</Constant>
+        <Constant Name="k4">0.06772</Constant>
+        <Constant Name="k5">0.0</Constant>
+        <Constant Name="k6">0.0106</Constant>
+        <Constant Name="K_millivolts_per_volt">1000.0</Constant>
+        <Constant Name="kd">0.001</Constant>
+        <Constant Name="kf">1.0</Constant>
+        <Constant Name="kf2">1.0</Constant>
+        <Constant Name="KMOLE">(1.0 / 602.0)</Constant>
+        <Constant Name="kr">1.0</Constant>
+        <Constant Name="KscalIGF">0.1</Constant>
+        <Constant Name="KscalIL6">1000.0</Constant>
+        <Constant Name="m">2.0</Constant>
+        <Constant Name="n">2.0</Constant>
+        <Constant Name="Robustness_init_uM">0.0</Constant>
+        <Constant Name="Size_Blood">50000.0</Constant>
+        <VolumeVariable Name="IGF1" Domain="Compartment" />
+        <VolumeVariable Name="IL6" Domain="Compartment" />
+        <Function Name="Death" Domain="Compartment">(K_Death_total / Size_Blood)</Function>
+        <Function Name="Frailty" Domain="Compartment">(K_Frailty_total / Size_Blood)</Function>
+        <Function Name="J_r0" Domain="Compartment">(k1 / (1.0 + ((KscalIGF * IGF1) ^ n)))</Function>
+        <Function Name="J_r1" Domain="Compartment">(k2 / (1.0 + ((KscalIL6 * IL6) ^ m)))</Function>
+        <Function Name="J_r2" Domain="Compartment">(k3 + (k4 * IL6))</Function>
+        <Function Name="J_r3" Domain="Compartment">(k5 + (k6 * IGF1))</Function>
+        <Function Name="K_Death_total" Domain="Compartment">(Size_Blood * Death_init_uM)</Function>
+        <Function Name="K_Frailty_total" Domain="Compartment">(Size_Blood * Frailty_init_uM)</Function>
+        <Function Name="K_Robustness_total" Domain="Compartment">(Size_Blood * Robustness_init_uM)</Function>
+        <Function Name="Robustness" Domain="Compartment">(K_Robustness_total / Size_Blood)</Function>
+        <CompartmentSubDomain Name="Compartment">
+          <BoundaryType Boundary="Xm" Type="Value" />
+          <BoundaryType Boundary="Xp" Type="Value" />
+          <BoundaryType Boundary="Ym" Type="Value" />
+          <BoundaryType Boundary="Yp" Type="Value" />
+          <BoundaryType Boundary="Zm" Type="Value" />
+          <BoundaryType Boundary="Zp" Type="Value" />
+          <OdeEquation Name="IL6" SolutionType="Unknown">
+            <Rate>( - J_r2 + J_r0)</Rate>
+            <Initial>IL6_init_uM</Initial>
+          </OdeEquation>
+          <OdeEquation Name="IGF1" SolutionType="Unknown">
+            <Rate>(J_r1 - J_r3)</Rate>
+            <Initial>IGF1_init_uM</Initial>
+          </OdeEquation>
+        </CompartmentSubDomain>
+        <Version Name="Molecular Only_generated" KeyValue="143276282" BranchId="97490531" Archived="0" Date="26-Oct-2018 00:23:35" FromVersionable="false">
+          <Owner Name="mblinov" Identifier="12487253" />
+          <GroupAccess Type="1" />
+          <Annotation>cloned from 'Molecular Only_generated' owned by user pallyjoel</Annotation>
+        </Version>
+      </MathDescription>
+      <Simulation Name="Simulation4">
+        <Annotation>cloned from 'Simulation4' owned by user pallyjoel</Annotation>
+        <SolverTaskDescription TaskType="Unsteady" UseSymbolicJacobian="false" Solver="Combined Stiff Solver (IDA/CVODE)">
+          <TimeBound StartTime="0.0" EndTime="60.0" />
+          <TimeStep DefaultTime="0.1" MinTime="1.0E-8" MaxTime="1.0" />
+          <ErrorTolerance Absolut="1.0E-9" Relative="1.0E-9" />
+          <OutputOptions KeepEvery="1" KeepAtMost="1000" />
+          <NumberProcessors>1</NumberProcessors>
+        </SolverTaskDescription>
+        <MathOverrides>
+          <Constant Name="IGF1_init_uM" ConstantArraySpec="1000">"40.0", "80.0", "148.0", "200.0", "225.0", "250.0"</Constant>
+          <Constant Name="k6">0.0106052</Constant>
+          <Constant Name="IL6_init_uM" ConstantArraySpec="1000">"0.001", "0.002", "0.004", "0.0069", "0.012", "0.028"</Constant>
+          <Constant Name="k4">0.0672735</Constant>
+          <Constant Name="k2">69.5146</Constant>
+          <Constant Name="k1">0.104394</Constant>
+        </MathOverrides>
+        <Version Name="Simulation4" KeyValue="143276389" BranchId="97490652" Archived="0" Date="26-Oct-2018 00:23:36" FromVersionable="false">
+          <Owner Name="mblinov" Identifier="12487253" />
+          <GroupAccess Type="1" />
+          <Annotation>cloned from 'Simulation4' owned by user pallyjoel</Annotation>
+          <ParentSimRef KeyValue="97490651" />
+        </Version>
+      </Simulation>
+      <AnalysisTaskList>
+        <ParameterEstimationTask Name="DefaultTask">
+          <parameterMappingSpecList>
+            <parameterMappingSpec parameterReferenceAttribute="unnamed.k1" lowLimit="0.01" highLimit="100.0" currentValue="1.0" selected="true" />
+            <parameterMappingSpec parameterReferenceAttribute="unnamed.k2" lowLimit="0.01" highLimit="100.0" currentValue="1.0" selected="true" />
+            <parameterMappingSpec parameterReferenceAttribute="unnamed.k3" lowLimit="0.01" highLimit="100.0" currentValue="1.0" selected="false" />
+            <parameterMappingSpec parameterReferenceAttribute="unnamed.k4" lowLimit="0.01" highLimit="100.0" currentValue="1.0" selected="true" />
+            <parameterMappingSpec parameterReferenceAttribute="unnamed.n" lowLimit="2.0" highLimit="20.0" currentValue="2.0" selected="false" />
+            <parameterMappingSpec parameterReferenceAttribute="unnamed.kr" lowLimit="0.1" highLimit="10.0" currentValue="1.0" selected="false" />
+            <parameterMappingSpec parameterReferenceAttribute="unnamed.kf" lowLimit="0.1" highLimit="10.0" currentValue="1.0" selected="false" />
+            <parameterMappingSpec parameterReferenceAttribute="unnamed.kd" lowLimit="1.0E-4" highLimit="0.01" currentValue="0.001" selected="false" />
+            <parameterMappingSpec parameterReferenceAttribute="unnamed.m" lowLimit="2.0" highLimit="20.0" currentValue="2.0" selected="false" />
+            <parameterMappingSpec parameterReferenceAttribute="unnamed.KscalIL6" lowLimit="0.0" highLimit="0.0" currentValue="0.0" selected="false" />
+            <parameterMappingSpec parameterReferenceAttribute="unnamed.KscalIGF" lowLimit="0.0" highLimit="0.0" currentValue="0.0" selected="false" />
+            <parameterMappingSpec parameterReferenceAttribute="unnamed.kf2" lowLimit="0.0" highLimit="0.0" currentValue="0.0" selected="false" />
+            <parameterMappingSpec parameterReferenceAttribute="unnamed.r3.k5" lowLimit="0.01" highLimit="100.0" currentValue="1.0" selected="false" />
+            <parameterMappingSpec parameterReferenceAttribute="unnamed.r3.k6" lowLimit="0.01" highLimit="100.0" currentValue="1.0" selected="true" />
+            <parameterMappingSpec parameterReferenceAttribute="Molecular_Only.Death_scs.initConc" lowLimit="0.0" highLimit="0.0" currentValue="0.0" selected="false" />
+            <parameterMappingSpec parameterReferenceAttribute="Molecular_Only.Frailty_scs.initConc" lowLimit="0.0" highLimit="0.0" currentValue="0.0" selected="false" />
+            <parameterMappingSpec parameterReferenceAttribute="Molecular_Only.Robustness_scs.initConc" lowLimit="0.0" highLimit="0.0" currentValue="0.0" selected="false" />
+            <parameterMappingSpec parameterReferenceAttribute="Molecular_Only.IL6_scs.initConc" lowLimit="0.0" highLimit="0.0" currentValue="0.0" selected="false" />
+            <parameterMappingSpec parameterReferenceAttribute="Molecular_Only.IGF1_scs.initConc" lowLimit="0.0" highLimit="0.0" currentValue="0.0" selected="false" />
+            <parameterMappingSpec parameterReferenceAttribute="Molecular_Only.Blood_mapping.Size" lowLimit="5000.0" highLimit="500000.0" currentValue="50000.0" selected="false" />
+          </parameterMappingSpecList>
+          <referenceData numRows="4" numColumns="3">
+            <dataColumnList>
+              <dataColumn Name="t" weight="1.0" />
+              <dataColumn Name="IL61" weight="1.0" />
+              <dataColumn Name="IGF1" weight="1.0" />
+            </dataColumnList>
+            <dataRowList>
+              <dataRow>0.0 0.00623 148.0</dataRow>
+              <dataRow>12.0 0.00665 146.0</dataRow>
+              <dataRow>36.0 0.00707 144.0</dataRow>
+              <dataRow>60.0 0.00749 142.0</dataRow>
+            </dataRowList>
+          </referenceData>
+          <referenceDataMappingSpecList>
+            <referenceDataMappingSpec referenceDataColumnName="t" referenceDataModelSymbol="t" />
+            <referenceDataMappingSpec referenceDataColumnName="IL61" referenceDataModelSymbol="IL6" />
+            <referenceDataMappingSpec referenceDataColumnName="IGF1" referenceDataModelSymbol="IGF1" />
+          </referenceDataMappingSpecList>
+          <optimizationSolverSpec optimizationSolverType="Evolutionary Programming" NumOfRuns="50">
+            <ListOfParameters>
+              <Parameter Name="Number of Generations" Value="200.0" />
+              <Parameter Name="Population Size" Value="20.0" />
+              <Parameter Name="Random Number Generator" Value="1.0" />
+              <Parameter Name="Seed" Value="0.0" />
+            </ListOfParameters>
+          </optimizationSolverSpec>
+          <OptimizationResultSet>
+            <bestOptRunResultSet>
+              <ListOfParameters>
+                <Parameter Name="k1" Value="0.14024598357787046" />
+                <Parameter Name="k2" Value="65.0630396358213" />
+                <Parameter Name="k4" Value="0.09176792788275619" />
+                <Parameter Name="k6" Value="0.01" />
+              </ListOfParameters>
+              <objectiveFunction Value="2.4574016152334936E-8" />
+              <ObjectiveFunctionEvaluations Value="4008" />
+            </bestOptRunResultSet>
+          </OptimizationResultSet>
+        </ParameterEstimationTask>
+      </AnalysisTaskList>
+      <Version Name="Molecular Only" KeyValue="143276339" BranchId="97490598" Archived="0" Date="26-Oct-2018 00:23:35" FromVersionable="false">
+        <Owner Name="mblinov" Identifier="12487253" />
+        <GroupAccess Type="1" />
+        <Annotation>cloned from 'Molecular Only' owned by user pallyjoel</Annotation>
+      </Version>
+      <MicroscopeMeasurement Name="fluor">
+        <ConvolutionKernel Type="ProjectionZKernel" />
+      </MicroscopeMeasurement>
+    </SimulationSpec>
+    <SimulationSpec Name="Copy of Molecular Only" Stochastic="false" UseConcentration="true" RuleBased="false" MassConservationModelReduction="true" InsufficientIterations="false" InsufficientMaxMolecules="false">
+      <NetworkConstraints RbmMaxIteration="3" RbmMaxMoleculesPerSpecies="10" RbmSpeciesLimit="800" RbmReactionsLimit="2500" />
+      <Annotation>cloned from 'Copy of Molecular Only' owned by user pallyjoel
+(copied from Molecular Only)</Annotation>
+      <Geometry Name="non-spatial1467254878" Dimension="0">
+        <Annotation>cloned from 'non-spatial428428359' owned by user pallyjoel</Annotation>
+        <Extent X="10.0" Y="10.0" Z="10.0" />
+        <Origin X="0.0" Y="0.0" Z="0.0" />
+        <SubVolume Name="Compartment" Handle="0" Type="Compartmental" KeyValue="97490521" />
+        <Version Name="non-spatial1467254878" KeyValue="97490517" BranchId="97490518" Archived="0" Date="03-Nov-2015 16:47:48" FromVersionable="false">
+          <Owner Name="mblinov" Identifier="12487253" />
+          <GroupAccess Type="1" />
+          <Annotation>cloned from 'non-spatial428428359' owned by user pallyjoel</Annotation>
+        </Version>
+      </Geometry>
+      <GeometryContext>
+        <FeatureMapping Feature="Blood" GeometryClass="Compartment" SubVolume="Compartment" Size="50000.0">
+          <BoundariesTypes Xm="Flux" Xp="Flux" Ym="Flux" Yp="Flux" Zm="Flux" Zp="Flux" />
+        </FeatureMapping>
+      </GeometryContext>
+      <ReactionContext>
+        <LocalizedCompoundSpec LocalizedCompoundRef="Death" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>0.0</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="Frailty" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>0.0</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="Robustness" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>0.0</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="IL6" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>0.00206</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="IGF1" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>148.0</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <ReactionSpec ReactionStepRef="r1" ReactionMapping="included" />
+        <ReactionSpec ReactionStepRef="r2" ReactionMapping="included" />
+        <ReactionSpec ReactionStepRef="r3" ReactionMapping="included" />
+        <ReactionSpec ReactionStepRef="r5" ReactionMapping="excluded" />
+        <ReactionSpec ReactionStepRef="r6" ReactionMapping="excluded" />
+        <ReactionSpec ReactionStepRef="r0" ReactionMapping="included" />
+      </ReactionContext>
+      <MathDescription Name="Copy of Molecular Only_generated">
+        <Annotation>cloned from 'Copy of Molecular Only_generated' owned by user pallyjoel</Annotation>
+        <Constant Name="_F_">96480.0</Constant>
+        <Constant Name="_F_nmol_">9.648E-5</Constant>
+        <Constant Name="_K_GHK_">1.0E-9</Constant>
+        <Constant Name="_N_pmol_">6.02E11</Constant>
+        <Constant Name="_PI_">3.141592653589793</Constant>
+        <Constant Name="_R_">8314.0</Constant>
+        <Constant Name="_T_">300.0</Constant>
+        <Constant Name="Death_init_uM">0.0</Constant>
+        <Constant Name="Frailty_init_uM">0.0</Constant>
+        <Constant Name="IGF1_init_uM">148.0</Constant>
+        <Constant Name="IL6_init_uM">0.00206</Constant>
+        <Constant Name="k1">0.104</Constant>
+        <Constant Name="k2">69.5</Constant>
+        <Constant Name="k3">0.0</Constant>
+        <Constant Name="k4">0.06772</Constant>
+        <Constant Name="k5">0.0</Constant>
+        <Constant Name="k6">0.0106</Constant>
+        <Constant Name="K_millivolts_per_volt">1000.0</Constant>
+        <Constant Name="kd">0.001</Constant>
+        <Constant Name="kf">1.0</Constant>
+        <Constant Name="kf2">1.0</Constant>
+        <Constant Name="KMOLE">(1.0 / 602.0)</Constant>
+        <Constant Name="kr">1.0</Constant>
+        <Constant Name="KscalIGF">0.1</Constant>
+        <Constant Name="KscalIL6">1000.0</Constant>
+        <Constant Name="m">2.0</Constant>
+        <Constant Name="n">2.0</Constant>
+        <Constant Name="Robustness_init_uM">0.0</Constant>
+        <Constant Name="Size_Blood">50000.0</Constant>
+        <VolumeVariable Name="IGF1" Domain="Compartment" />
+        <VolumeVariable Name="IL6" Domain="Compartment" />
+        <Function Name="Death" Domain="Compartment">(K_Death_total / Size_Blood)</Function>
+        <Function Name="Frailty" Domain="Compartment">(K_Frailty_total / Size_Blood)</Function>
+        <Function Name="J_r0" Domain="Compartment">(k1 / (1.0 + ((KscalIGF * IGF1) ^ n)))</Function>
+        <Function Name="J_r1" Domain="Compartment">(k2 / (1.0 + ((KscalIL6 * IL6) ^ m)))</Function>
+        <Function Name="J_r2" Domain="Compartment">(k3 + (k4 * IL6))</Function>
+        <Function Name="J_r3" Domain="Compartment">(k5 + (k6 * IGF1))</Function>
+        <Function Name="K_Death_total" Domain="Compartment">(Size_Blood * Death_init_uM)</Function>
+        <Function Name="K_Frailty_total" Domain="Compartment">(Size_Blood * Frailty_init_uM)</Function>
+        <Function Name="K_Robustness_total" Domain="Compartment">(Size_Blood * Robustness_init_uM)</Function>
+        <Function Name="Robustness" Domain="Compartment">(K_Robustness_total / Size_Blood)</Function>
+        <CompartmentSubDomain Name="Compartment">
+          <BoundaryType Boundary="Xm" Type="Value" />
+          <BoundaryType Boundary="Xp" Type="Value" />
+          <BoundaryType Boundary="Ym" Type="Value" />
+          <BoundaryType Boundary="Yp" Type="Value" />
+          <BoundaryType Boundary="Zm" Type="Value" />
+          <BoundaryType Boundary="Zp" Type="Value" />
+          <OdeEquation Name="IL6" SolutionType="Unknown">
+            <Rate>( - J_r2 + J_r0)</Rate>
+            <Initial>IL6_init_uM</Initial>
+          </OdeEquation>
+          <OdeEquation Name="IGF1" SolutionType="Unknown">
+            <Rate>(J_r1 - J_r3)</Rate>
+            <Initial>IGF1_init_uM</Initial>
+          </OdeEquation>
+        </CompartmentSubDomain>
+        <Version Name="Copy of Molecular Only_generated" KeyValue="143276284" BranchId="97490534" Archived="0" Date="26-Oct-2018 00:23:35" FromVersionable="false">
+          <Owner Name="mblinov" Identifier="12487253" />
+          <GroupAccess Type="1" />
+          <Annotation>cloned from 'Copy of Molecular Only_generated' owned by user pallyjoel</Annotation>
+        </Version>
+      </MathDescription>
+      <Simulation Name="Simulation1">
+        <Annotation>cloned from 'Simulation1' owned by user pallyjoel</Annotation>
+        <SolverTaskDescription TaskType="Unsteady" UseSymbolicJacobian="false" Solver="Combined Stiff Solver (IDA/CVODE)">
+          <TimeBound StartTime="0.0" EndTime="120.0" />
+          <TimeStep DefaultTime="0.1" MinTime="1.0E-8" MaxTime="1.0" />
+          <ErrorTolerance Absolut="1.0E-9" Relative="1.0E-9" />
+          <OutputOptions KeepEvery="1" KeepAtMost="1000" />
+          <NumberProcessors>1</NumberProcessors>
+        </SolverTaskDescription>
+        <MathOverrides>
+          <Constant Name="k6">0.0100004</Constant>
+          <Constant Name="k4">0.0118555</Constant>
+          <Constant Name="k2">80.4748</Constant>
+          <Constant Name="k1">0.0215755</Constant>
+        </MathOverrides>
+        <Version Name="Simulation1" KeyValue="143276391" BranchId="97490655" Archived="0" Date="26-Oct-2018 00:23:36" FromVersionable="false">
+          <Owner Name="mblinov" Identifier="12487253" />
+          <GroupAccess Type="1" />
+          <Annotation>cloned from 'Simulation1' owned by user pallyjoel</Annotation>
+          <ParentSimRef KeyValue="97490654" />
+        </Version>
+      </Simulation>
+      <Simulation Name="Fit for both Kscal">
+        <Annotation>cloned from 'Fit for both Kscal' owned by user pallyjoel</Annotation>
+        <SolverTaskDescription TaskType="Unsteady" UseSymbolicJacobian="false" Solver="Combined Stiff Solver (IDA/CVODE)">
+          <TimeBound StartTime="0.0" EndTime="60.0" />
+          <TimeStep DefaultTime="0.1" MinTime="1.0E-8" MaxTime="1.0" />
+          <ErrorTolerance Absolut="1.0E-9" Relative="1.0E-9" />
+          <OutputOptions KeepEvery="1" KeepAtMost="1000" />
+          <NumberProcessors>1</NumberProcessors>
+        </SolverTaskDescription>
+        <MathOverrides>
+          <Constant Name="k6">0.0100304</Constant>
+          <Constant Name="KscalIGF">0.144153</Constant>
+          <Constant Name="k4">0.0275488</Constant>
+          <Constant Name="KscalIL6">16.0885</Constant>
+          <Constant Name="k2">1.34099</Constant>
+          <Constant Name="k1">0.0422858</Constant>
+        </MathOverrides>
+        <Version Name="Fit for both Kscal" KeyValue="143276393" BranchId="97490658" Archived="0" Date="26-Oct-2018 00:23:36" FromVersionable="false">
+          <Owner Name="mblinov" Identifier="12487253" />
+          <GroupAccess Type="1" />
+          <Annotation>cloned from 'Fit for both Kscal' owned by user pallyjoel</Annotation>
+          <ParentSimRef KeyValue="97490657" />
+        </Version>
+      </Simulation>
+      <AnalysisTaskList>
+        <ParameterEstimationTask Name="DefaultTask">
+          <parameterMappingSpecList>
+            <parameterMappingSpec parameterReferenceAttribute="unnamed.k1" lowLimit="0.01" highLimit="100.0" currentValue="1.0" selected="true" />
+            <parameterMappingSpec parameterReferenceAttribute="unnamed.k2" lowLimit="0.01" highLimit="100.0" currentValue="1.0" selected="true" />
+            <parameterMappingSpec parameterReferenceAttribute="unnamed.k3" lowLimit="0.01" highLimit="100.0" currentValue="1.0" selected="false" />
+            <parameterMappingSpec parameterReferenceAttribute="unnamed.k4" lowLimit="0.01" highLimit="100.0" currentValue="1.0" selected="true" />
+            <parameterMappingSpec parameterReferenceAttribute="unnamed.n" lowLimit="2.0" highLimit="20.0" currentValue="2.0" selected="false" />
+            <parameterMappingSpec parameterReferenceAttribute="unnamed.kr" lowLimit="0.1" highLimit="10.0" currentValue="1.0" selected="false" />
+            <parameterMappingSpec parameterReferenceAttribute="unnamed.kf" lowLimit="0.1" highLimit="10.0" currentValue="1.0" selected="false" />
+            <parameterMappingSpec parameterReferenceAttribute="unnamed.kd" lowLimit="1.0E-4" highLimit="0.01" currentValue="0.001" selected="false" />
+            <parameterMappingSpec parameterReferenceAttribute="unnamed.m" lowLimit="2.0" highLimit="20.0" currentValue="2.0" selected="false" />
+            <parameterMappingSpec parameterReferenceAttribute="unnamed.KscalIL6" lowLimit="0.001" highLimit="100000.0" currentValue="1000.0" selected="true" />
+            <parameterMappingSpec parameterReferenceAttribute="unnamed.KscalIGF" lowLimit="0.001" highLimit="100000.0" currentValue="0.1" selected="true" />
+            <parameterMappingSpec parameterReferenceAttribute="unnamed.kf2" lowLimit="0.0" highLimit="0.0" currentValue="0.0" selected="false" />
+            <parameterMappingSpec parameterReferenceAttribute="unnamed.r3.k5" lowLimit="0.01" highLimit="100.0" currentValue="1.0" selected="false" />
+            <parameterMappingSpec parameterReferenceAttribute="unnamed.r3.k6" lowLimit="0.01" highLimit="100.0" currentValue="1.0" selected="true" />
+            <parameterMappingSpec parameterReferenceAttribute="Copy_of_Molecular_Only.Death_scs.initConc" lowLimit="0.0" highLimit="0.0" currentValue="0.0" selected="false" />
+            <parameterMappingSpec parameterReferenceAttribute="Copy_of_Molecular_Only.Frailty_scs.initConc" lowLimit="0.0" highLimit="0.0" currentValue="0.0" selected="false" />
+            <parameterMappingSpec parameterReferenceAttribute="Copy_of_Molecular_Only.Robustness_scs.initConc" lowLimit="0.0" highLimit="0.0" currentValue="0.0" selected="false" />
+            <parameterMappingSpec parameterReferenceAttribute="Copy_of_Molecular_Only.IL6_scs.initConc" lowLimit="0.0" highLimit="0.0" currentValue="0.0" selected="false" />
+            <parameterMappingSpec parameterReferenceAttribute="Copy_of_Molecular_Only.IGF1_scs.initConc" lowLimit="0.0" highLimit="0.0" currentValue="0.0" selected="false" />
+            <parameterMappingSpec parameterReferenceAttribute="Copy_of_Molecular_Only.Blood_mapping.Size" lowLimit="5000.0" highLimit="500000.0" currentValue="50000.0" selected="false" />
+          </parameterMappingSpecList>
+          <referenceData numRows="4" numColumns="3">
+            <dataColumnList>
+              <dataColumn Name="t" weight="1.0" />
+              <dataColumn Name="IL6a" weight="1.0" />
+              <dataColumn Name="IGF1a" weight="1.0" />
+            </dataColumnList>
+            <dataRowList>
+              <dataRow>0.0 0.00206 148.0</dataRow>
+              <dataRow>12.0 0.00248 146.0</dataRow>
+              <dataRow>36.0 0.0029 144.0</dataRow>
+              <dataRow>60.0 0.00332 142.0</dataRow>
+            </dataRowList>
+          </referenceData>
+          <referenceDataMappingSpecList>
+            <referenceDataMappingSpec referenceDataColumnName="t" referenceDataModelSymbol="t" />
+            <referenceDataMappingSpec referenceDataColumnName="IL6a" referenceDataModelSymbol="IL6" />
+            <referenceDataMappingSpec referenceDataColumnName="IGF1a" referenceDataModelSymbol="IGF1" />
+          </referenceDataMappingSpecList>
+          <optimizationSolverSpec optimizationSolverType="Evolutionary Programming" NumOfRuns="25">
+            <ListOfParameters>
+              <Parameter Name="Number of Generations" Value="200.0" />
+              <Parameter Name="Population Size" Value="20.0" />
+              <Parameter Name="Random Number Generator" Value="1.0" />
+              <Parameter Name="Seed" Value="0.0" />
+            </ListOfParameters>
+          </optimizationSolverSpec>
+          <OptimizationResultSet>
+            <bestOptRunResultSet>
+              <ListOfParameters>
+                <Parameter Name="k1" Value="0.0422858" />
+                <Parameter Name="k2" Value="1.34099" />
+                <Parameter Name="k4" Value="0.0275488" />
+                <Parameter Name="KscalIL6" Value="16.0885" />
+                <Parameter Name="KscalIGF" Value="0.144153" />
+                <Parameter Name="k6" Value="0.0100304" />
+              </ListOfParameters>
+              <objectiveFunction Value="6.58715E-9" />
+              <ObjectiveFunctionEvaluations Value="4008" />
+            </bestOptRunResultSet>
+          </OptimizationResultSet>
+        </ParameterEstimationTask>
+      </AnalysisTaskList>
+      <Version Name="Copy of Molecular Only" KeyValue="143276354" BranchId="97490615" Archived="0" Date="26-Oct-2018 00:23:35" FromVersionable="false">
+        <Owner Name="mblinov" Identifier="12487253" />
+        <GroupAccess Type="1" />
+        <Annotation>cloned from 'Copy of Molecular Only' owned by user pallyjoel
+(copied from Molecular Only)</Annotation>
+      </Version>
+      <MicroscopeMeasurement Name="fluor">
+        <ConvolutionKernel Type="ProjectionZKernel" />
+      </MicroscopeMeasurement>
+    </SimulationSpec>
+    <SimulationSpec Name="Death" Stochastic="false" UseConcentration="true" RuleBased="false" MassConservationModelReduction="true" InsufficientIterations="false" InsufficientMaxMolecules="false">
+      <NetworkConstraints RbmMaxIteration="3" RbmMaxMoleculesPerSpecies="10" RbmSpeciesLimit="800" RbmReactionsLimit="2500" />
+      <Annotation>cloned from 'Death' owned by user pallyjoel</Annotation>
+      <Geometry Name="non-spatial234137592" Dimension="0">
+        <Annotation>cloned from 'non-spatial234137592' owned by user pallyjoel</Annotation>
+        <Extent X="10.0" Y="10.0" Z="10.0" />
+        <Origin X="0.0" Y="0.0" Z="0.0" />
+        <SubVolume Name="Compartment" Handle="0" Type="Compartmental" KeyValue="97490526" />
+        <Version Name="non-spatial234137592" KeyValue="97490522" BranchId="97490523" Archived="0" Date="03-Nov-2015 16:47:48" FromVersionable="false">
+          <Owner Name="mblinov" Identifier="12487253" />
+          <GroupAccess Type="1" />
+          <Annotation>cloned from 'non-spatial234137592' owned by user pallyjoel</Annotation>
+        </Version>
+      </Geometry>
+      <GeometryContext>
+        <FeatureMapping Feature="Blood" GeometryClass="Compartment" SubVolume="Compartment" Size="50000.0">
+          <BoundariesTypes Xm="Flux" Xp="Flux" Ym="Flux" Yp="Flux" Zm="Flux" Zp="Flux" />
+        </FeatureMapping>
+      </GeometryContext>
+      <ReactionContext>
+        <LocalizedCompoundSpec LocalizedCompoundRef="Death" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>0.0</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="Frailty" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>51.0</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="Robustness" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>49.0</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="IL6" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>0.00623</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="IGF1" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>148.0</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <ReactionSpec ReactionStepRef="r1" ReactionMapping="included" />
+        <ReactionSpec ReactionStepRef="r2" ReactionMapping="included" />
+        <ReactionSpec ReactionStepRef="r3" ReactionMapping="included" />
+        <ReactionSpec ReactionStepRef="r5" ReactionMapping="included" />
+        <ReactionSpec ReactionStepRef="r6" ReactionMapping="included" />
+        <ReactionSpec ReactionStepRef="r0" ReactionMapping="included" />
+      </ReactionContext>
+      <MathDescription Name="Death_generated">
+        <Annotation>cloned from 'Death_generated' owned by user pallyjoel</Annotation>
+        <Constant Name="_F_">96480.0</Constant>
+        <Constant Name="_F_nmol_">9.648E-5</Constant>
+        <Constant Name="_K_GHK_">1.0E-9</Constant>
+        <Constant Name="_N_pmol_">6.02E11</Constant>
+        <Constant Name="_PI_">3.141592653589793</Constant>
+        <Constant Name="_R_">8314.0</Constant>
+        <Constant Name="_T_">300.0</Constant>
+        <Constant Name="Death_init_uM">0.0</Constant>
+        <Constant Name="Frailty_init_uM">51.0</Constant>
+        <Constant Name="IGF1_init_uM">148.0</Constant>
+        <Constant Name="IL6_init_uM">0.00623</Constant>
+        <Constant Name="k1">0.104</Constant>
+        <Constant Name="k2">69.5</Constant>
+        <Constant Name="k3">0.0</Constant>
+        <Constant Name="k4">0.06772</Constant>
+        <Constant Name="k5">0.0</Constant>
+        <Constant Name="k6">0.0106</Constant>
+        <Constant Name="K_millivolts_per_volt">1000.0</Constant>
+        <Constant Name="kd">0.001</Constant>
+        <Constant Name="kf">1.0</Constant>
+        <Constant Name="kf2">1.0</Constant>
+        <Constant Name="KMOLE">(1.0 / 602.0)</Constant>
+        <Constant Name="kr">1.0</Constant>
+        <Constant Name="KscalIGF">0.1</Constant>
+        <Constant Name="KscalIL6">1000.0</Constant>
+        <Constant Name="m">2.0</Constant>
+        <Constant Name="n">2.0</Constant>
+        <Constant Name="Robustness_init_uM">49.0</Constant>
+        <Constant Name="Size_Blood">50000.0</Constant>
+        <VolumeVariable Name="Frailty" Domain="Compartment" />
+        <VolumeVariable Name="IGF1" Domain="Compartment" />
+        <VolumeVariable Name="IL6" Domain="Compartment" />
+        <VolumeVariable Name="Robustness" Domain="Compartment" />
+        <Function Name="Death" Domain="Compartment">((K_Death_total - (Size_Blood * Frailty) - (Size_Blood * Robustness)) / Size_Blood)</Function>
+        <Function Name="J_r0" Domain="Compartment">(k1 / (1.0 + ((KscalIGF * IGF1) ^ n)))</Function>
+        <Function Name="J_r1" Domain="Compartment">(k2 / (1.0 + ((KscalIL6 * IL6) ^ m)))</Function>
+        <Function Name="J_r2" Domain="Compartment">(k3 + (k4 * IL6))</Function>
+        <Function Name="J_r3" Domain="Compartment">(k5 + (k6 * IGF1))</Function>
+        <Function Name="J_r5" Domain="Compartment">(kf * Robustness * IL6 / (1.0 + (kf2 * IGF1)))</Function>
+        <Function Name="J_r6" Domain="Compartment">(kd * Frailty * IL6)</Function>
+        <Function Name="K_Death_total" Domain="Compartment">((Size_Blood * Death_init_uM) + (Size_Blood * Frailty_init_uM) + (Size_Blood * Robustness_init_uM))</Function>
+        <CompartmentSubDomain Name="Compartment">
+          <BoundaryType Boundary="Xm" Type="Value" />
+          <BoundaryType Boundary="Xp" Type="Value" />
+          <BoundaryType Boundary="Ym" Type="Value" />
+          <BoundaryType Boundary="Yp" Type="Value" />
+          <BoundaryType Boundary="Zm" Type="Value" />
+          <BoundaryType Boundary="Zp" Type="Value" />
+          <OdeEquation Name="Frailty" SolutionType="Unknown">
+            <Rate>(J_r5 - J_r6)</Rate>
+            <Initial>Frailty_init_uM</Initial>
+          </OdeEquation>
+          <OdeEquation Name="Robustness" SolutionType="Unknown">
+            <Rate>- J_r5</Rate>
+            <Initial>Robustness_init_uM</Initial>
+          </OdeEquation>
+          <OdeEquation Name="IL6" SolutionType="Unknown">
+            <Rate>( - J_r2 + J_r0)</Rate>
+            <Initial>IL6_init_uM</Initial>
+          </OdeEquation>
+          <OdeEquation Name="IGF1" SolutionType="Unknown">
+            <Rate>(J_r1 - J_r3)</Rate>
+            <Initial>IGF1_init_uM</Initial>
+          </OdeEquation>
+        </CompartmentSubDomain>
+        <Version Name="Death_generated" KeyValue="143276286" BranchId="97490537" Archived="0" Date="26-Oct-2018 00:23:35" FromVersionable="false">
+          <Owner Name="mblinov" Identifier="12487253" />
+          <GroupAccess Type="1" />
+          <Annotation>cloned from 'Death_generated' owned by user pallyjoel</Annotation>
+        </Version>
+      </MathDescription>
+      <Simulation Name="Simulation0">
+        <Annotation>cloned from 'Simulation0' owned by user pallyjoel</Annotation>
+        <SolverTaskDescription TaskType="Unsteady" UseSymbolicJacobian="false" Solver="Combined Stiff Solver (IDA/CVODE)">
+          <TimeBound StartTime="0.0" EndTime="120.0" />
+          <TimeStep DefaultTime="0.1" MinTime="1.0E-8" MaxTime="1.0" />
+          <ErrorTolerance Absolut="1.0E-9" Relative="1.0E-9" />
+          <OutputOptions KeepEvery="1" KeepAtMost="1000" />
+          <NumberProcessors>1</NumberProcessors>
+        </SolverTaskDescription>
+        <MathOverrides>
+          <Constant Name="kr">1.0E-4</Constant>
+          <Constant Name="kf">11.2849</Constant>
+          <Constant Name="IGF1_init_uM" ConstantArraySpec="1000">"40.0", "80.0", "148.0", "200.0", "225.0", "250.0"</Constant>
+          <Constant Name="kd">1.15151</Constant>
+          <Constant Name="IL6_init_uM" ConstantArraySpec="1000">"0.001", "0.002", "0.004", "0.0069", "0.012", "0.028"</Constant>
+        </MathOverrides>
+        <Version Name="Simulation0" KeyValue="143276395" BranchId="97490661" Archived="0" Date="26-Oct-2018 00:23:36" FromVersionable="false">
+          <Owner Name="mblinov" Identifier="12487253" />
+          <GroupAccess Type="1" />
+          <Annotation>cloned from 'Simulation0' owned by user pallyjoel</Annotation>
+        </Version>
+      </Simulation>
+      <AnalysisTaskList>
+        <ParameterEstimationTask Name="DefaultTask">
+          <parameterMappingSpecList>
+            <parameterMappingSpec parameterReferenceAttribute="unnamed.k1" lowLimit="0.0104" highLimit="1.04" currentValue="0.104" selected="false" />
+            <parameterMappingSpec parameterReferenceAttribute="unnamed.k2" lowLimit="6.95" highLimit="695.0" currentValue="69.5" selected="false" />
+            <parameterMappingSpec parameterReferenceAttribute="unnamed.k3" lowLimit="0.0" highLimit="0.0" currentValue="0.0" selected="false" />
+            <parameterMappingSpec parameterReferenceAttribute="unnamed.k4" lowLimit="0.006772" highLimit="0.6772" currentValue="0.06772" selected="false" />
+            <parameterMappingSpec parameterReferenceAttribute="unnamed.n" lowLimit="0.2" highLimit="20.0" currentValue="2.0" selected="false" />
+            <parameterMappingSpec parameterReferenceAttribute="unnamed.kr" lowLimit="1.0E-4" highLimit="1000.0" currentValue="1.0" selected="true" />
+            <parameterMappingSpec parameterReferenceAttribute="unnamed.kf" lowLimit="1.0E-4" highLimit="1.0E9" currentValue="1.0" selected="true" />
+            <parameterMappingSpec parameterReferenceAttribute="unnamed.kd" lowLimit="1.0E-4" highLimit="1000.0" currentValue="0.001" selected="true" />
+            <parameterMappingSpec parameterReferenceAttribute="unnamed.m" lowLimit="0.2" highLimit="20.0" currentValue="2.0" selected="false" />
+            <parameterMappingSpec parameterReferenceAttribute="unnamed.KscalIL6" lowLimit="100.0" highLimit="10000.0" currentValue="1000.0" selected="false" />
+            <parameterMappingSpec parameterReferenceAttribute="unnamed.KscalIGF" lowLimit="0.010000000000000002" highLimit="1.0" currentValue="0.1" selected="false" />
+            <parameterMappingSpec parameterReferenceAttribute="unnamed.kf2" lowLimit="1.0E-4" highLimit="1000.0" currentValue="0.001" selected="true" />
+            <parameterMappingSpec parameterReferenceAttribute="unnamed.r3.k5" lowLimit="0.0" highLimit="0.0" currentValue="0.0" selected="false" />
+            <parameterMappingSpec parameterReferenceAttribute="unnamed.r3.k6" lowLimit="0.00106" highLimit="0.106" currentValue="0.0106" selected="false" />
+            <parameterMappingSpec parameterReferenceAttribute="Death.Death_scs.initConc" lowLimit="0.0" highLimit="0.0" currentValue="0.0" selected="false" />
+            <parameterMappingSpec parameterReferenceAttribute="Death.Frailty_scs.initConc" lowLimit="0.0" highLimit="0.0" currentValue="0.0" selected="false" />
+            <parameterMappingSpec parameterReferenceAttribute="Death.Robustness_scs.initConc" lowLimit="0.0" highLimit="0.0" currentValue="0.0" selected="false" />
+            <parameterMappingSpec parameterReferenceAttribute="Death.IL6_scs.initConc" lowLimit="0.0" highLimit="0.0" currentValue="0.0" selected="false" />
+            <parameterMappingSpec parameterReferenceAttribute="Death.IGF1_scs.initConc" lowLimit="0.0" highLimit="0.0" currentValue="0.0" selected="false" />
+            <parameterMappingSpec parameterReferenceAttribute="Death.Blood_mapping.Size" lowLimit="5000.0" highLimit="500000.0" currentValue="50000.0" selected="false" />
+          </parameterMappingSpecList>
+          <referenceData numRows="4" numColumns="4">
+            <dataColumnList>
+              <dataColumn Name="t" weight="1.0" />
+              <dataColumn Name="H_robust" weight="1.0" />
+              <dataColumn Name="H_frail" weight="1.0" />
+              <dataColumn Name="H_dead" weight="1.0" />
+            </dataColumnList>
+            <dataRowList>
+              <dataRow>0.0 49.0 51.0 0.0</dataRow>
+              <dataRow>12.0 40.0 60.0 0.0</dataRow>
+              <dataRow>36.0 8.0 77.0 15.0</dataRow>
+              <dataRow>60.0 3.0 63.0 34.0</dataRow>
+            </dataRowList>
+          </referenceData>
+          <referenceDataMappingSpecList>
+            <referenceDataMappingSpec referenceDataColumnName="t" referenceDataModelSymbol="t" />
+            <referenceDataMappingSpec referenceDataColumnName="H_robust" referenceDataModelSymbol="Robustness" />
+            <referenceDataMappingSpec referenceDataColumnName="H_frail" referenceDataModelSymbol="Frailty" />
+            <referenceDataMappingSpec referenceDataColumnName="H_dead" referenceDataModelSymbol="Death" />
+          </referenceDataMappingSpecList>
+          <optimizationSolverSpec optimizationSolverType="Evolutionary Programming" NumOfRuns="50">
+            <ListOfParameters>
+              <Parameter Name="Number of Generations" Value="200.0" />
+              <Parameter Name="Population Size" Value="20.0" />
+              <Parameter Name="Random Number Generator" Value="1.0" />
+              <Parameter Name="Seed" Value="0.0" />
+            </ListOfParameters>
+          </optimizationSolverSpec>
+          <OptimizationResultSet>
+            <bestOptRunResultSet>
+              <ListOfParameters>
+                <Parameter Name="kr" Value="411.3477853240302" />
+                <Parameter Name="kf" Value="839561.4409804294" />
+                <Parameter Name="kd" Value="1.1437322813009274" />
+                <Parameter Name="kf2" Value="1000.0" />
+              </ListOfParameters>
+              <objectiveFunction Value="80.42310342373665" />
+              <ObjectiveFunctionEvaluations Value="4007" />
+            </bestOptRunResultSet>
+          </OptimizationResultSet>
+        </ParameterEstimationTask>
+      </AnalysisTaskList>
+      <Version Name="Death" KeyValue="143276369" BranchId="97490632" Archived="0" Date="26-Oct-2018 00:23:35" FromVersionable="false">
+        <Owner Name="mblinov" Identifier="12487253" />
+        <GroupAccess Type="1" />
+        <Annotation>cloned from 'Death' owned by user pallyjoel</Annotation>
+      </Version>
+      <MicroscopeMeasurement Name="fluor">
+        <ConvolutionKernel Type="ProjectionZKernel" />
+      </MicroscopeMeasurement>
+    </SimulationSpec>
+    <Version Name="Aging_Study_Quadrant3" KeyValue="143276397" BranchId="97490664" Archived="0" Date="26-Oct-2018 00:23:36" FromVersionable="false">
+      <Owner Name="mblinov" Identifier="12487253" />
+      <GroupAccess Type="0" />
+      <Annotation>cloned from '705dataset3' owned by user pallyjoel
+cloned from '2012-06-08-SampleBistab' owned by user mblinov
+cloned from '2012-05-17-SampleBistab' owned by user pallyjoel
+cloned from '2012-05-01-bistab' owned by user mblinov
+cloned from '2012-04-24-bistab' owned by user pallyjoel
+cloned from '2012-04-05-bistab' owned by user mblinov</Annotation>
+    </Version>
+    <pathwayModel>
+      <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:bp="http://www.biopax.org/release/biopax-level3.owl#" version="3.0" />
+    </pathwayModel>
+    <relationshipModel>
+      <RMNS version="3.0" />
+    </relationshipModel>
+    <vcmetadata>
+      <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" />
+      <nonrdfAnnotationList />
+      <uriBindingList />
+    </vcmetadata>
+  </BioModel>
+</vcml>
+

@@ -1,0 +1,171 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--This biomodel was generated in VCML Version Alpha_Version_7.4.0_build_87-->
+<vcml xmlns="http://sourceforge.net/projects/vcell/vcml" Version="Alpha_Version_7.4.0_build_87">
+  <BioModel Name="BICH-301">
+    <Model Name="model">
+      <Compound Name="s0" />
+      <Compound Name="s1" />
+      <Compound Name="s2" />
+      <Compound Name="C" />
+      <Feature Name="Cytoplasm" KeyValue="140410760" />
+      <LocalizedCompound Name="A" CompoundRef="s0" Structure="Cytoplasm" OverrideName="true" KeyValue="140410762" />
+      <LocalizedCompound Name="B" CompoundRef="s1" Structure="Cytoplasm" OverrideName="true" KeyValue="140410763" />
+      <LocalizedCompound Name="AB" CompoundRef="s2" Structure="Cytoplasm" OverrideName="true" KeyValue="140410764" />
+      <LocalizedCompound Name="C" CompoundRef="C" Structure="Cytoplasm" OverrideName="true" KeyValue="140410765" />
+      <SimpleReaction Structure="Cytoplasm" Name="AB synthesis" Reversible="true" FluxOption="MolecularOnly" KeyValue="140410766">
+        <Reactant LocalizedCompoundRef="A" Stoichiometry="1" KeyValue="140410767" />
+        <Reactant LocalizedCompoundRef="B" Stoichiometry="1" KeyValue="140410768" />
+        <Product LocalizedCompoundRef="AB" Stoichiometry="1" KeyValue="140410769" />
+        <Kinetics KineticsType="MassAction">
+          <Parameter Name="J" Role="reaction rate" Unit="uM.s-1">(((Kf * A) * B) - (Kr * AB))</Parameter>
+          <Parameter Name="Kf" Role="forward rate constant" Unit="s-1.uM-1">0.5</Parameter>
+          <Parameter Name="Kr" Role="reverse rate constant" Unit="s-1">0.1</Parameter>
+        </Kinetics>
+      </SimpleReaction>
+      <SimpleReaction Structure="Cytoplasm" Name="Final Product" Reversible="true" FluxOption="MolecularOnly" KeyValue="140410770">
+        <Reactant LocalizedCompoundRef="AB" Stoichiometry="1" KeyValue="140410771" />
+        <Product LocalizedCompoundRef="B" Stoichiometry="1" KeyValue="140410772" />
+        <Product LocalizedCompoundRef="C" Stoichiometry="1" KeyValue="140410773" />
+        <Kinetics KineticsType="HMMIrreversible">
+          <Parameter Name="J" Role="reaction rate" Unit="uM.s-1">((Vmax * AB) / (Km + AB))</Parameter>
+          <Parameter Name="Km" Role="Km (1/2 max)" Unit="uM">0.65</Parameter>
+          <Parameter Name="Vmax" Role="max reaction rate" Unit="uM.s-1">0.9</Parameter>
+        </Kinetics>
+      </SimpleReaction>
+      <Diagram Name="c0" Structure="Cytoplasm">
+        <SimpleReactionShape NodeReferenceModeAttrTag="full" SimpleReactionRef="AB synthesis" LocationX="153" LocationY="73" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="B" LocationX="52" LocationY="102" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="AB" LocationX="234" LocationY="100" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="A" LocationX="159" LocationY="19" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="C" LocationX="154" LocationY="209" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="full" SimpleReactionRef="Final Product" LocationX="163" LocationY="133" />
+      </Diagram>
+      <Version Name="model" KeyValue="140410754" BranchId="139327824" Archived="0" Date="17-Sep-2018 23:40:19" FromVersionable="false">
+        <Owner Name="raheelkhan88" Identifier="111900872" />
+        <GroupAccess Type="1" />
+      </Version>
+      <ModelUnitSystem VolumeSubstanceUnit="uM.um3" MembraneSubstanceUnit="molecules" LumpedReactionSubstanceUnit="molecules" VolumeUnit="um3" AreaUnit="um2" LengthUnit="um" TimeUnit="s" />
+    </Model>
+    <SimulationSpec Name="Application0" Stochastic="false" UseConcentration="true" RuleBased="false" MassConservationModelReduction="true" InsufficientIterations="false" InsufficientMaxMolecules="false">
+      <NetworkConstraints RbmMaxIteration="3" RbmMaxMoleculesPerSpecies="10" RbmSpeciesLimit="800" RbmReactionsLimit="2500" />
+      <Annotation />
+      <Geometry Name="non-spatial3388982" Dimension="0">
+        <Extent X="10.0" Y="10.0" Z="10.0" />
+        <Origin X="0.0" Y="0.0" Z="0.0" />
+        <SubVolume Name="Compartment" Handle="0" Type="Compartmental" KeyValue="139327819" />
+        <Version Name="non-spatial3388982" KeyValue="139327815" BranchId="139327816" Archived="0" Date="03-Sep-2018 00:07:43" FromVersionable="false">
+          <Owner Name="raheelkhan88" Identifier="111900872" />
+          <GroupAccess Type="1" />
+        </Version>
+      </Geometry>
+      <GeometryContext>
+        <FeatureMapping Feature="Cytoplasm" GeometryClass="Compartment" SubVolume="Compartment" Size="50000.0">
+          <BoundariesTypes Xm="Flux" Xp="Flux" Ym="Flux" Yp="Flux" Zm="Flux" Zp="Flux" />
+        </FeatureMapping>
+      </GeometryContext>
+      <ReactionContext>
+        <LocalizedCompoundSpec LocalizedCompoundRef="A" ForceConstant="true" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>0.5</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="B" ForceConstant="true" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>2.0</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="AB" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>0.0</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="C" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>0.0</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <ReactionSpec ReactionStepRef="AB synthesis" ReactionMapping="included" />
+        <ReactionSpec ReactionStepRef="Final Product" ReactionMapping="included" />
+      </ReactionContext>
+      <MathDescription Name="Application0_generated">
+        <Constant Name="_F_">96480.0</Constant>
+        <Constant Name="_F_nmol_">9.648E-5</Constant>
+        <Constant Name="_K_GHK_">1.0E-9</Constant>
+        <Constant Name="_N_pmol_">6.02E11</Constant>
+        <Constant Name="_PI_">3.141592653589793</Constant>
+        <Constant Name="_R_">8314.0</Constant>
+        <Constant Name="_T_">300.0</Constant>
+        <Constant Name="A_init_uM">0.5</Constant>
+        <Constant Name="AB_init_uM">0.0</Constant>
+        <Constant Name="B_init_uM">2.0</Constant>
+        <Constant Name="C_init_uM">0.0</Constant>
+        <Constant Name="K_millivolts_per_volt">1000.0</Constant>
+        <Constant Name="Kf">0.5</Constant>
+        <Constant Name="Km">0.65</Constant>
+        <Constant Name="KMOLE">(1.0 / 602.0)</Constant>
+        <Constant Name="Kr">0.1</Constant>
+        <Constant Name="Size_Cytoplasm">50000.0</Constant>
+        <Constant Name="Vmax">0.9</Constant>
+        <VolumeVariable Name="AB" Domain="Compartment" />
+        <VolumeVariable Name="C" Domain="Compartment" />
+        <Function Name="A" Domain="Compartment">A_init_uM</Function>
+        <Function Name="B" Domain="Compartment">B_init_uM</Function>
+        <Function Name="J_AB_synthesis" Domain="Compartment">(((Kf * A) * B) - (Kr * AB))</Function>
+        <Function Name="J_Final_Product" Domain="Compartment">((Vmax * AB) / (Km + AB))</Function>
+        <CompartmentSubDomain Name="Compartment">
+          <BoundaryType Boundary="Xm" Type="Value" />
+          <BoundaryType Boundary="Xp" Type="Value" />
+          <BoundaryType Boundary="Ym" Type="Value" />
+          <BoundaryType Boundary="Yp" Type="Value" />
+          <BoundaryType Boundary="Zm" Type="Value" />
+          <BoundaryType Boundary="Zp" Type="Value" />
+          <OdeEquation Name="AB" SolutionType="Unknown">
+            <Rate>(J_AB_synthesis - J_Final_Product)</Rate>
+            <Initial>AB_init_uM</Initial>
+          </OdeEquation>
+          <OdeEquation Name="C" SolutionType="Unknown">
+            <Rate>J_Final_Product</Rate>
+            <Initial>C_init_uM</Initial>
+          </OdeEquation>
+        </CompartmentSubDomain>
+        <Version Name="Application0_generated" KeyValue="140852031" BranchId="139327821" Archived="0" Date="24-Sep-2018 09:47:59" FromVersionable="false">
+          <Owner Name="raheelkhan88" Identifier="111900872" />
+          <GroupAccess Type="1" />
+        </Version>
+      </MathDescription>
+      <Simulation Name="Simulation0">
+        <SolverTaskDescription TaskType="Unsteady" UseSymbolicJacobian="false" Solver="Combined Stiff Solver (IDA/CVODE)">
+          <TimeBound StartTime="0.0" EndTime="100.0" />
+          <TimeStep DefaultTime="0.1" MinTime="1.0E-8" MaxTime="1.0" />
+          <ErrorTolerance Absolut="1.0E-9" Relative="1.0E-9" />
+          <OutputOptions KeepEvery="1" KeepAtMost="1000" />
+          <NumberProcessors>1</NumberProcessors>
+        </SolverTaskDescription>
+        <MathOverrides />
+        <Version Name="Simulation0" KeyValue="140852042" BranchId="139327848" Archived="0" Date="24-Sep-2018 09:48:00" FromVersionable="false">
+          <Owner Name="raheelkhan88" Identifier="111900872" />
+          <GroupAccess Type="1" />
+        </Version>
+      </Simulation>
+      <Version Name="Application0" KeyValue="140852033" BranchId="139327840" Archived="0" Date="24-Sep-2018 09:47:59" FromVersionable="false">
+        <Owner Name="raheelkhan88" Identifier="111900872" />
+        <GroupAccess Type="1" />
+      </Version>
+      <MicroscopeMeasurement Name="fluor">
+        <ConvolutionKernel Type="ProjectionZKernel" />
+      </MicroscopeMeasurement>
+    </SimulationSpec>
+    <Version Name="BICH-301" KeyValue="140852044" BranchId="139327851" Archived="0" Date="24-Sep-2018 09:48:00" FromVersionable="false">
+      <Owner Name="raheelkhan88" Identifier="111900872" />
+      <GroupAccess Type="1" />
+    </Version>
+    <pathwayModel>
+      <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:bp="http://www.biopax.org/release/biopax-level3.owl#" version="3.0" />
+    </pathwayModel>
+    <relationshipModel>
+      <RMNS version="3.0" />
+    </relationshipModel>
+    <vcmetadata>
+      <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" />
+      <nonrdfAnnotationList />
+      <uriBindingList />
+    </vcmetadata>
+  </BioModel>
+</vcml>
+

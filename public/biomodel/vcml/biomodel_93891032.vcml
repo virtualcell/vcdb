@@ -1,0 +1,630 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--This biomodel was generated in VCML Version Alpha_Version_7.4.0_build_87-->
+<vcml xmlns="http://sourceforge.net/projects/vcell/vcml" Version="Alpha_Version_7.4.0_build_87">
+  <BioModel Name="Greg Smith Ca Diffusion 1D radial CSHL09">
+    <Model Name="unnamed">
+      <ModelParameters>
+        <Parameter Name="L" Role="user defined" Unit="um">5.0</Parameter>
+        <Parameter Name="mesh" Role="user defined" Unit="1">50.0</Parameter>
+        <Parameter Name="lambda" Role="user defined" Unit="um">(L / mesh)</Parameter>
+        <Parameter Name="current" Role="user defined" Unit="1.0E-12 mol.item-1.s-1">5.0</Parameter>
+        <Parameter Name="BoundJ" Role="user defined" Unit="uM.s-1">(2595.0 * current / (3.1416 * lambda))</Parameter>
+        <Parameter Name="DCa" Role="user defined" Unit="um2.s-1">250.0</Parameter>
+        <Parameter Name="DB" Role="user defined" Unit="um2.s-1">7.5</Parameter>
+        <Parameter Name="DCaB" Role="user defined" Unit="um2.s-1">7.5</Parameter>
+        <Parameter Name="radcorr" Role="user defined" Unit="um">(dist_cell + (0.5 * lambda))</Parameter>
+        <Parameter Name="Ca" Role="user defined" Unit="uM">(Ca_r_cell / radcorr)</Parameter>
+        <Parameter Name="CaB" Role="user defined" Unit="uM">(CaB_r_cell / radcorr)</Parameter>
+        <Parameter Name="B" Role="user defined" Unit="uM">(B_r_cell / radcorr)</Parameter>
+      </ModelParameters>
+      <Compound Name="CaB_r" />
+      <Compound Name="dist" />
+      <Compound Name="Ca_r" />
+      <Compound Name="B_r" />
+      <Feature Name="cell" KeyValue="34242989" />
+      <LocalizedCompound Name="CaB_r_cell" CompoundRef="CaB_r" Structure="cell" OverrideName="true" KeyValue="34242992" />
+      <LocalizedCompound Name="dist_cell" CompoundRef="dist" Structure="cell" OverrideName="true" KeyValue="34242993" />
+      <LocalizedCompound Name="Ca_r_cell" CompoundRef="Ca_r" Structure="cell" OverrideName="true" KeyValue="34242994" />
+      <LocalizedCompound Name="B_r_cell" CompoundRef="B_r" Structure="cell" OverrideName="true" KeyValue="34242991" />
+      <SimpleReaction Structure="cell" Name="Reaction1" Reversible="true" FluxOption="MolecularOnly" KeyValue="34242995">
+        <Reactant LocalizedCompoundRef="B_r_cell" Stoichiometry="1" KeyValue="34242997" />
+        <Reactant LocalizedCompoundRef="Ca_r_cell" Stoichiometry="1" KeyValue="34242996" />
+        <Product LocalizedCompoundRef="CaB_r_cell" Stoichiometry="1" KeyValue="34242998" />
+        <Kinetics KineticsType="MassAction">
+          <Parameter Name="J" Role="reaction rate" Unit="uM.s-1">(((Kf * B_r_cell) * Ca_r_cell) - (Kr * CaB_r_cell))</Parameter>
+          <Parameter Name="Kf" Role="forward rate constant" Unit="s-1.uM-1">(Kfr / radcorr)</Parameter>
+          <Parameter Name="Kr" Role="reverse rate constant" Unit="s-1">10000.0</Parameter>
+          <Parameter Name="Kfr" Role="user defined" Unit="1000000000 m2.mol-1.s-1">1000.0</Parameter>
+        </Kinetics>
+      </SimpleReaction>
+      <Diagram Name="Unnamed compartment" Structure="cell">
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="B_r_cell" LocationX="206" LocationY="156" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="Ca_r_cell" LocationX="121" LocationY="175" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="CaB_r_cell" LocationX="335" LocationY="313" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="dist_cell" LocationX="61" LocationY="282" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="full" SimpleReactionRef="Reaction1" LocationX="210" LocationY="271" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="full" SimpleReactionRef="Ca_Current" LocationX="190" LocationY="364" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="B_r_cell" LocationX="206" LocationY="156" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="Ca_r_cell" LocationX="121" LocationY="175" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="CaB_r_cell" LocationX="335" LocationY="313" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="dist_cell" LocationX="61" LocationY="282" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="molecule" SimpleReactionRef="Reaction1" LocationX="210" LocationY="271" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="molecule" SimpleReactionRef="Ca_Current" LocationX="190" LocationY="364" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="B_r_cell" LocationX="206" LocationY="156" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="Ca_r_cell" LocationX="121" LocationY="175" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="CaB_r_cell" LocationX="335" LocationY="313" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="dist_cell" LocationX="61" LocationY="282" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="rule" SimpleReactionRef="Reaction1" LocationX="210" LocationY="271" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="rule" SimpleReactionRef="Ca_Current" LocationX="190" LocationY="364" />
+      </Diagram>
+      <Version Name="unnamed" KeyValue="34242983" BranchId="34182914" Archived="0" Date="03-Jul-2009 10:09:45" FromVersionable="false">
+        <Owner Name="les" Identifier="6" />
+        <GroupAccess Type="1" />
+      </Version>
+      <ModelUnitSystem VolumeSubstanceUnit="uM.um3" MembraneSubstanceUnit="molecules" LumpedReactionSubstanceUnit="molecules" VolumeUnit="um3" AreaUnit="um2" LengthUnit="um" TimeUnit="s" />
+    </Model>
+    <SimulationSpec Name="1D" Stochastic="false" UseConcentration="true" RuleBased="false" MassConservationModelReduction="true" InsufficientIterations="false" InsufficientMaxMolecules="false" CharacteristicSize="0.2109018768489839">
+      <NetworkConstraints RbmMaxIteration="1" RbmMaxMoleculesPerSpecies="10" RbmSpeciesLimit="800" RbmReactionsLimit="2500" />
+      <Annotation>(copied from compartment)</Annotation>
+      <Geometry Name="1D,5um" Dimension="1">
+        <Annotation>cloned from '1D' owned by user Katie</Annotation>
+        <Extent X="5.0" Y="10.0" Z="10.0" />
+        <Origin X="0.0" Y="0.0" Z="0.0" />
+        <SubVolume Name="extracellular" Handle="0" Type="Analytical" KeyValue="34226371">
+          <AnalyticExpression>1.0</AnalyticExpression>
+        </SubVolume>
+        <SurfaceDescription NumSamplesX="50" NumSamplesY="1" NumSamplesZ="1" CutoffFrequency="0.3">
+          <VolumeRegion Name="extracellular0" RegionID="0" SubVolume="extracellular" Size="5.0" Unit="um" />
+        </SurfaceDescription>
+        <Version Name="1D,5um" KeyValue="34226367" BranchId="34226368" Archived="0" Date="01-Jul-2009 13:57:12" FromVersionable="false">
+          <Owner Name="les" Identifier="6" />
+          <GroupAccess Type="1" />
+          <Annotation>cloned from '1D' owned by user Katie</Annotation>
+        </Version>
+      </Geometry>
+      <GeometryContext>
+        <FeatureMapping Feature="cell" GeometryClass="extracellular" SubVolume="extracellular" VolumePerUnitVolume="1.0">
+          <BoundariesTypes Xm="Flux" Xp="Flux" Ym="Flux" Yp="Flux" Zm="Flux" Zp="Flux" />
+        </FeatureMapping>
+      </GeometryContext>
+      <ReactionContext>
+        <LocalizedCompoundSpec LocalizedCompoundRef="CaB_r_cell" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>(0.4950495049504951 * radcorr)</InitialConcentration>
+          <Diffusion>DCaB</Diffusion>
+          <Boundaries Xm=" - (DCaB * CaB_r_cell / radcorr)" Xp=" - (DCaB * CaB_r_cell / radcorr)" />
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="dist_cell" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>x</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="Ca_r_cell" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>(0.1 * radcorr)</InitialConcentration>
+          <Diffusion>DCa</Diffusion>
+          <Boundaries Xm="(BoundJ - (2.0 * DCa * Ca_r_cell / lambda))" Xp=" - (DCa * Ca_r_cell / radcorr)" />
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="B_r_cell" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>(49.504950495049506 * radcorr)</InitialConcentration>
+          <Diffusion>DB</Diffusion>
+          <Boundaries Xm=" - (2.0 * DB * B_r_cell / lambda)" Xp=" - (DB * B_r_cell / radcorr)" />
+        </LocalizedCompoundSpec>
+        <ReactionSpec ReactionStepRef="Reaction1" ReactionMapping="included" />
+      </ReactionContext>
+      <MathDescription Name="1D_generated">
+        <Constant Name="_F_">96480.0</Constant>
+        <Constant Name="_F_nmol_">9.648E-5</Constant>
+        <Constant Name="_K_GHK_">1.0E-9</Constant>
+        <Constant Name="_N_pmol_">6.02E11</Constant>
+        <Constant Name="_PI_">3.141592653589793</Constant>
+        <Constant Name="_R_">8314.0</Constant>
+        <Constant Name="_T_">300.0</Constant>
+        <Constant Name="current">5.0</Constant>
+        <Constant Name="DB">7.5</Constant>
+        <Constant Name="DCa">250.0</Constant>
+        <Constant Name="DCaB">7.5</Constant>
+        <Constant Name="K_millivolts_per_volt">1000.0</Constant>
+        <Constant Name="Kfr">1000.0</Constant>
+        <Constant Name="KMOLE">0.0016611295681063123</Constant>
+        <Constant Name="Kr">10000.0</Constant>
+        <Constant Name="L">5.0</Constant>
+        <Constant Name="mesh">50.0</Constant>
+        <Constant Name="VolumePerUnitVolume_cell">1.0</Constant>
+        <VolumeVariable Name="B_r_cell" Domain="extracellular" />
+        <VolumeVariable Name="Ca_r_cell" Domain="extracellular" />
+        <VolumeVariable Name="CaB_r_cell" Domain="extracellular" />
+        <Function Name="B" Domain="extracellular">(B_r_cell / radcorr)</Function>
+        <Function Name="B_r_cell_boundaryXm" Domain="extracellular">- (2.0 * DB * B_r_cell / lambda)</Function>
+        <Function Name="B_r_cell_boundaryXp" Domain="extracellular">- (DB * B_r_cell / radcorr)</Function>
+        <Function Name="B_r_cell_diffusionRate" Domain="extracellular">DB</Function>
+        <Function Name="B_r_cell_init_uM" Domain="extracellular">(49.504950495049506 * radcorr)</Function>
+        <Function Name="BoundJ">(2595.0 * current / (3.1416 * lambda))</Function>
+        <Function Name="Ca" Domain="extracellular">(Ca_r_cell / radcorr)</Function>
+        <Function Name="Ca_r_cell_boundaryXm" Domain="extracellular">(BoundJ - (2.0 * DCa * Ca_r_cell / lambda))</Function>
+        <Function Name="Ca_r_cell_boundaryXp" Domain="extracellular">- (DCa * Ca_r_cell / radcorr)</Function>
+        <Function Name="Ca_r_cell_diffusionRate" Domain="extracellular">DCa</Function>
+        <Function Name="Ca_r_cell_init_uM" Domain="extracellular">(0.1 * radcorr)</Function>
+        <Function Name="CaB" Domain="extracellular">(CaB_r_cell / radcorr)</Function>
+        <Function Name="CaB_r_cell_boundaryXm" Domain="extracellular">- (DCaB * CaB_r_cell / radcorr)</Function>
+        <Function Name="CaB_r_cell_boundaryXp" Domain="extracellular">- (DCaB * CaB_r_cell / radcorr)</Function>
+        <Function Name="CaB_r_cell_diffusionRate" Domain="extracellular">DCaB</Function>
+        <Function Name="CaB_r_cell_init_uM" Domain="extracellular">(0.4950495049504951 * radcorr)</Function>
+        <Function Name="dist_cell" Domain="extracellular">(K_dist_cell_total / VolumePerUnitVolume_cell)</Function>
+        <Function Name="dist_cell_init_uM" Domain="extracellular">x</Function>
+        <Function Name="J_Reaction1" Domain="extracellular">((Ca_r_cell * Kf * B_r_cell) - (Kr * CaB_r_cell))</Function>
+        <Function Name="K_dist_cell_total" Domain="extracellular">(VolumePerUnitVolume_cell * dist_cell_init_uM)</Function>
+        <Function Name="Kf" Domain="extracellular">(Kfr / radcorr)</Function>
+        <Function Name="lambda">(L / mesh)</Function>
+        <Function Name="radcorr" Domain="extracellular">(dist_cell + (0.5 * lambda))</Function>
+        <Function Name="Size_cell" Domain="extracellular">(VolumePerUnitVolume_cell * vcRegionVolume('extracellular'))</Function>
+        <CompartmentSubDomain Name="extracellular">
+          <BoundaryType Boundary="Xm" Type="Flux" />
+          <BoundaryType Boundary="Xp" Type="Flux" />
+          <BoundaryType Boundary="Ym" Type="Value" />
+          <BoundaryType Boundary="Yp" Type="Value" />
+          <BoundaryType Boundary="Zm" Type="Value" />
+          <BoundaryType Boundary="Zp" Type="Value" />
+          <PdeEquation Name="CaB_r_cell" SolutionType="Unknown">
+            <Boundaries Xm="CaB_r_cell_boundaryXm" Xp="CaB_r_cell_boundaryXp" />
+            <Rate>J_Reaction1</Rate>
+            <Diffusion>CaB_r_cell_diffusionRate</Diffusion>
+            <Initial>CaB_r_cell_init_uM</Initial>
+          </PdeEquation>
+          <PdeEquation Name="Ca_r_cell" SolutionType="Unknown">
+            <Boundaries Xm="Ca_r_cell_boundaryXm" Xp="Ca_r_cell_boundaryXp" />
+            <Rate>- J_Reaction1</Rate>
+            <Diffusion>Ca_r_cell_diffusionRate</Diffusion>
+            <Initial>Ca_r_cell_init_uM</Initial>
+          </PdeEquation>
+          <PdeEquation Name="B_r_cell" SolutionType="Unknown">
+            <Boundaries Xm="B_r_cell_boundaryXm" Xp="B_r_cell_boundaryXp" />
+            <Rate>- J_Reaction1</Rate>
+            <Diffusion>B_r_cell_diffusionRate</Diffusion>
+            <Initial>B_r_cell_init_uM</Initial>
+          </PdeEquation>
+        </CompartmentSubDomain>
+        <Version Name="1D_generated" KeyValue="93890987" BranchId="34182996" Archived="0" Date="27-Feb-2015 12:08:30" FromVersionable="false">
+          <Owner Name="les" Identifier="6" />
+          <GroupAccess Type="1" />
+        </Version>
+      </MathDescription>
+      <Simulation Name="fine mesh">
+        <SolverTaskDescription TaskType="Unsteady" UseSymbolicJacobian="false" Solver="Sundials Stiff PDE Solver (Variable Time Step)">
+          <TimeBound StartTime="0.0" EndTime="0.01" />
+          <TimeStep DefaultTime="0.1" MinTime="0.0" MaxTime="0.1" />
+          <ErrorTolerance Absolut="1.0E-9" Relative="1.0E-7" />
+          <OutputOptions OutputTimeStep="1.0E-4" />
+          <SundialsSolverOptions>
+            <maxOrderAdvection>2</maxOrderAdvection>
+          </SundialsSolverOptions>
+          <NumberProcessors>1</NumberProcessors>
+        </SolverTaskDescription>
+        <MathOverrides>
+          <Constant Name="mesh">200.0</Constant>
+        </MathOverrides>
+        <MeshSpecification>
+          <Size X="200" Y="1" Z="1" />
+        </MeshSpecification>
+        <Version Name="fine mesh" KeyValue="93891017" BranchId="34242682" Archived="0" Date="27-Feb-2015 12:08:31" FromVersionable="false">
+          <Owner Name="les" Identifier="6" />
+          <GroupAccess Type="1" />
+          <ParentSimRef KeyValue="34243476" />
+        </Version>
+      </Simulation>
+      <Simulation Name="default coarse mesh">
+        <SolverTaskDescription TaskType="Unsteady" UseSymbolicJacobian="false" Solver="Sundials Stiff PDE Solver (Variable Time Step)">
+          <TimeBound StartTime="0.0" EndTime="0.01" />
+          <TimeStep DefaultTime="0.1" MinTime="0.0" MaxTime="0.1" />
+          <ErrorTolerance Absolut="1.0E-9" Relative="1.0E-7" />
+          <OutputOptions OutputTimeStep="1.0E-4" />
+          <SundialsSolverOptions>
+            <maxOrderAdvection>2</maxOrderAdvection>
+          </SundialsSolverOptions>
+          <NumberProcessors>1</NumberProcessors>
+        </SolverTaskDescription>
+        <MathOverrides />
+        <MeshSpecification>
+          <Size X="51" Y="1" Z="1" />
+        </MeshSpecification>
+        <Version Name="default coarse mesh" KeyValue="93891019" BranchId="34242685" Archived="0" Date="27-Feb-2015 12:08:31" FromVersionable="false">
+          <Owner Name="les" Identifier="6" />
+          <GroupAccess Type="1" />
+          <ParentSimRef KeyValue="34243478" />
+        </Version>
+      </Simulation>
+      <Simulation Name="Steady state check, current=0">
+        <SolverTaskDescription TaskType="Unsteady" UseSymbolicJacobian="false" Solver="Sundials Stiff PDE Solver (Variable Time Step)">
+          <TimeBound StartTime="0.0" EndTime="0.01" />
+          <TimeStep DefaultTime="0.1" MinTime="0.0" MaxTime="0.1" />
+          <ErrorTolerance Absolut="1.0E-9" Relative="1.0E-7" />
+          <OutputOptions OutputTimeStep="1.0E-4" />
+          <SundialsSolverOptions>
+            <maxOrderAdvection>2</maxOrderAdvection>
+          </SundialsSolverOptions>
+          <NumberProcessors>1</NumberProcessors>
+        </SolverTaskDescription>
+        <MathOverrides>
+          <Constant Name="current">0.0</Constant>
+          <Constant Name="mesh">400.0</Constant>
+        </MathOverrides>
+        <MeshSpecification>
+          <Size X="401" Y="1" Z="1" />
+        </MeshSpecification>
+        <Version Name="Steady state check, current=0" KeyValue="93891021" BranchId="34242688" Archived="0" Date="27-Feb-2015 12:08:31" FromVersionable="false">
+          <Owner Name="les" Identifier="6" />
+          <GroupAccess Type="1" />
+          <ParentSimRef KeyValue="34243480" />
+        </Version>
+      </Simulation>
+      <Simulation Name="Current=0.1pA">
+        <SolverTaskDescription TaskType="Unsteady" UseSymbolicJacobian="false" Solver="Sundials Stiff PDE Solver (Variable Time Step)">
+          <TimeBound StartTime="0.0" EndTime="0.01" />
+          <TimeStep DefaultTime="0.1" MinTime="0.0" MaxTime="0.1" />
+          <ErrorTolerance Absolut="1.0E-9" Relative="1.0E-7" />
+          <OutputOptions OutputTimeStep="1.0E-4" />
+          <SundialsSolverOptions>
+            <maxOrderAdvection>2</maxOrderAdvection>
+          </SundialsSolverOptions>
+          <NumberProcessors>1</NumberProcessors>
+        </SolverTaskDescription>
+        <MathOverrides>
+          <Constant Name="current">0.1</Constant>
+          <Constant Name="mesh">200.0</Constant>
+        </MathOverrides>
+        <MeshSpecification>
+          <Size X="200" Y="1" Z="1" />
+        </MeshSpecification>
+        <Version Name="Current=0.1pA" KeyValue="93891023" BranchId="34242691" Archived="0" Date="27-Feb-2015 12:08:31" FromVersionable="false">
+          <Owner Name="les" Identifier="6" />
+          <GroupAccess Type="1" />
+          <ParentSimRef KeyValue="34243482" />
+        </Version>
+      </Simulation>
+      <SpatialObjects>
+        <SpatialObject Name="vobj_extracellular0" Type="Volume" subVolume="extracellular" regionId="0">
+          <QuantityCategoryList>
+            <QuantityCategory Name="VolumeCentroid" Enabled="false" />
+            <QuantityCategory Name="InteriorVelocity" Enabled="false" />
+            <QuantityCategory Name="VolumeRegionSize" Enabled="true" />
+          </QuantityCategoryList>
+        </SpatialObject>
+      </SpatialObjects>
+      <Version Name="1D" KeyValue="93890993" BranchId="34183028" Archived="0" Date="27-Feb-2015 12:08:30" FromVersionable="false">
+        <Owner Name="les" Identifier="6" />
+        <GroupAccess Type="1" />
+        <Annotation>(copied from compartment)</Annotation>
+      </Version>
+      <MicroscopeMeasurement Name="fluor">
+        <ConvolutionKernel Type="ProjectionZKernel" />
+      </MicroscopeMeasurement>
+    </SimulationSpec>
+    <SimulationSpec Name="steady states for 0.1uM basal Ca" Stochastic="false" UseConcentration="true" RuleBased="false" MassConservationModelReduction="true" InsufficientIterations="false" InsufficientMaxMolecules="false">
+      <NetworkConstraints RbmMaxIteration="1" RbmMaxMoleculesPerSpecies="10" RbmSpeciesLimit="800" RbmReactionsLimit="2500" />
+      <Annotation>(copied from compartment)</Annotation>
+      <Geometry Name="non-spatial15484850" Dimension="0">
+        <Extent X="10.0" Y="10.0" Z="10.0" />
+        <Origin X="0.0" Y="0.0" Z="0.0" />
+        <SubVolume Name="Compartment" Handle="0" Type="Compartmental" KeyValue="34182909" />
+        <Version Name="non-spatial15484850" KeyValue="34182905" BranchId="34182906" Archived="0" Date="30-Jun-2009 08:14:20" FromVersionable="false">
+          <Owner Name="les" Identifier="6" />
+          <GroupAccess Type="1" />
+        </Version>
+      </Geometry>
+      <GeometryContext>
+        <FeatureMapping Feature="cell" GeometryClass="Compartment" SubVolume="Compartment" Size="4000.0">
+          <BoundariesTypes Xm="Flux" Xp="Flux" Ym="Flux" Yp="Flux" Zm="Flux" Zp="Flux" />
+        </FeatureMapping>
+      </GeometryContext>
+      <ReactionContext>
+        <LocalizedCompoundSpec LocalizedCompoundRef="CaB_r_cell" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>0.0</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="dist_cell" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>0.0</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="Ca_r_cell" ForceConstant="true" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>0.1</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="B_r_cell" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>250.0</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <ReactionSpec ReactionStepRef="Reaction1" ReactionMapping="included" />
+      </ReactionContext>
+      <MathDescription Name="steady states for 0.1uM basal Ca_generated">
+        <Constant Name="_F_">96480.0</Constant>
+        <Constant Name="_F_nmol_">9.648E-5</Constant>
+        <Constant Name="_K_GHK_">1.0E-9</Constant>
+        <Constant Name="_N_pmol_">6.02E11</Constant>
+        <Constant Name="_PI_">3.141592653589793</Constant>
+        <Constant Name="_R_">8314.0</Constant>
+        <Constant Name="_T_">300.0</Constant>
+        <Constant Name="B_r_cell_init_uM">250.0</Constant>
+        <Constant Name="Ca_r_cell">0.1</Constant>
+        <Constant Name="Ca_r_cell_init_uM">0.1</Constant>
+        <Constant Name="CaB_r_cell_init_uM">0.0</Constant>
+        <Constant Name="current">5.0</Constant>
+        <Constant Name="DB">7.5</Constant>
+        <Constant Name="DCa">250.0</Constant>
+        <Constant Name="DCaB">7.5</Constant>
+        <Constant Name="dist_cell_init_uM">0.0</Constant>
+        <Constant Name="K_millivolts_per_volt">1000.0</Constant>
+        <Constant Name="Kfr">1000.0</Constant>
+        <Constant Name="KMOLE">0.0016611295681063123</Constant>
+        <Constant Name="Kr">10000.0</Constant>
+        <Constant Name="L">5.0</Constant>
+        <Constant Name="mesh">50.0</Constant>
+        <Constant Name="Size_cell">4000.0</Constant>
+        <VolumeVariable Name="B_r_cell" Domain="Compartment" />
+        <Function Name="B">(B_r_cell / radcorr)</Function>
+        <Function Name="BoundJ">(2595.0 * current / (3.1416 * lambda))</Function>
+        <Function Name="Ca">(Ca_r_cell / radcorr)</Function>
+        <Function Name="CaB">(CaB_r_cell / radcorr)</Function>
+        <Function Name="CaB_r_cell" Domain="Compartment">((K_CaB_r_cell_total - (Size_cell * B_r_cell)) / Size_cell)</Function>
+        <Function Name="dist_cell" Domain="Compartment">(K_dist_cell_total / Size_cell)</Function>
+        <Function Name="J_Reaction1" Domain="Compartment">((Ca_r_cell * Kf * B_r_cell) - (Kr * CaB_r_cell))</Function>
+        <Function Name="K_CaB_r_cell_total" Domain="Compartment">((Size_cell * CaB_r_cell_init_uM) + (Size_cell * B_r_cell_init_uM))</Function>
+        <Function Name="K_dist_cell_total" Domain="Compartment">(Size_cell * dist_cell_init_uM)</Function>
+        <Function Name="Kf" Domain="Compartment">(Kfr / radcorr)</Function>
+        <Function Name="lambda">(L / mesh)</Function>
+        <Function Name="radcorr">(dist_cell + (0.5 * lambda))</Function>
+        <CompartmentSubDomain Name="Compartment">
+          <BoundaryType Boundary="Xm" Type="Value" />
+          <BoundaryType Boundary="Xp" Type="Value" />
+          <BoundaryType Boundary="Ym" Type="Value" />
+          <BoundaryType Boundary="Yp" Type="Value" />
+          <BoundaryType Boundary="Zm" Type="Value" />
+          <BoundaryType Boundary="Zp" Type="Value" />
+          <OdeEquation Name="B_r_cell" SolutionType="Unknown">
+            <Rate>- J_Reaction1</Rate>
+            <Initial>B_r_cell_init_uM</Initial>
+          </OdeEquation>
+        </CompartmentSubDomain>
+        <Version Name="steady states for 0.1uM basal Ca_generated" KeyValue="93890989" BranchId="34188223" Archived="0" Date="27-Feb-2015 12:08:30" FromVersionable="false">
+          <Owner Name="les" Identifier="6" />
+          <GroupAccess Type="1" />
+        </Version>
+      </MathDescription>
+      <Simulation Name="Simulation2">
+        <SolverTaskDescription TaskType="Unsteady" UseSymbolicJacobian="false" Solver="Combined Stiff Solver (IDA/CVODE)">
+          <TimeBound StartTime="0.0" EndTime="1.0" />
+          <TimeStep DefaultTime="0.1" MinTime="1.0E-8" MaxTime="1.0" />
+          <ErrorTolerance Absolut="1.0E-9" Relative="1.0E-9" />
+          <OutputOptions KeepEvery="1" KeepAtMost="1000" />
+          <NumberProcessors>1</NumberProcessors>
+        </SolverTaskDescription>
+        <MathOverrides>
+          <Constant Name="L">10.0</Constant>
+          <Constant Name="B_r_cell_init_uM" ConstantArraySpec="1000">"50.0", "250.0"</Constant>
+          <Constant Name="mesh">5.0</Constant>
+        </MathOverrides>
+        <Version Name="Simulation2" KeyValue="93891025" BranchId="93891026" Archived="0" Date="27-Feb-2015 12:08:31" FromVersionable="false">
+          <Owner Name="les" Identifier="6" />
+          <GroupAccess Type="1" />
+        </Version>
+      </Simulation>
+      <Version Name="steady states for 0.1uM basal Ca" KeyValue="93891001" BranchId="34188226" Archived="0" Date="27-Feb-2015 12:08:30" FromVersionable="false">
+        <Owner Name="les" Identifier="6" />
+        <GroupAccess Type="1" />
+        <Annotation>(copied from compartment)</Annotation>
+      </Version>
+      <MicroscopeMeasurement Name="fluor">
+        <ConvolutionKernel Type="ProjectionZKernel" />
+      </MicroscopeMeasurement>
+    </SimulationSpec>
+    <SimulationSpec Name="Excess Buffer case" Stochastic="false" UseConcentration="true" RuleBased="false" MassConservationModelReduction="true" InsufficientIterations="false" InsufficientMaxMolecules="false" CharacteristicSize="0.2109018768489839">
+      <NetworkConstraints RbmMaxIteration="1" RbmMaxMoleculesPerSpecies="10" RbmSpeciesLimit="800" RbmReactionsLimit="2500" />
+      <Annotation>(copied from 1D) (copied from compartment)</Annotation>
+      <Geometry Name="1D,5um" Dimension="1">
+        <Annotation>cloned from '1D' owned by user Katie</Annotation>
+        <Extent X="5.0" Y="10.0" Z="10.0" />
+        <Origin X="0.0" Y="0.0" Z="0.0" />
+        <SubVolume Name="extracellular" Handle="0" Type="Analytical" KeyValue="34226371">
+          <AnalyticExpression>1.0</AnalyticExpression>
+        </SubVolume>
+        <SurfaceDescription NumSamplesX="50" NumSamplesY="1" NumSamplesZ="1" CutoffFrequency="0.3">
+          <VolumeRegion Name="extracellular0" RegionID="0" SubVolume="extracellular" Size="5.0" Unit="um" />
+        </SurfaceDescription>
+        <Version Name="1D,5um" KeyValue="34226367" BranchId="34226368" Archived="0" Date="01-Jul-2009 13:57:12" FromVersionable="false">
+          <Owner Name="les" Identifier="6" />
+          <GroupAccess Type="1" />
+          <Annotation>cloned from '1D' owned by user Katie</Annotation>
+        </Version>
+      </Geometry>
+      <GeometryContext>
+        <FeatureMapping Feature="cell" GeometryClass="extracellular" SubVolume="extracellular" VolumePerUnitVolume="1.0">
+          <BoundariesTypes Xm="Flux" Xp="Flux" Ym="Flux" Yp="Flux" Zm="Flux" Zp="Flux" />
+        </FeatureMapping>
+      </GeometryContext>
+      <ReactionContext>
+        <LocalizedCompoundSpec LocalizedCompoundRef="CaB_r_cell" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>(2.475247524747473 * radcorr)</InitialConcentration>
+          <Diffusion>DCaB</Diffusion>
+          <Boundaries Xm=" - (DCaB * CaB_r_cell / radcorr)" Xp=" - (DCaB * CaB_r_cell / radcorr)" />
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="dist_cell" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>x</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="Ca_r_cell" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>(0.1 * radcorr)</InitialConcentration>
+          <Diffusion>DCa</Diffusion>
+          <Boundaries Xm="(BoundJ - (2.0 * DCa * Ca_r_cell / lambda))" Xp=" - (DCa * Ca_r_cell / radcorr)" />
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="B_r_cell" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>(247.52475247474732 * radcorr)</InitialConcentration>
+          <Diffusion>DB</Diffusion>
+          <Boundaries Xm=" - (2.0 * DB * B_r_cell / lambda)" Xp=" - (DB * B_r_cell / radcorr)" />
+        </LocalizedCompoundSpec>
+        <ReactionSpec ReactionStepRef="Reaction1" ReactionMapping="included" />
+      </ReactionContext>
+      <MathDescription Name="Excess Buffer case_generated">
+        <Constant Name="_F_">96480.0</Constant>
+        <Constant Name="_F_nmol_">9.648E-5</Constant>
+        <Constant Name="_K_GHK_">1.0E-9</Constant>
+        <Constant Name="_N_pmol_">6.02E11</Constant>
+        <Constant Name="_PI_">3.141592653589793</Constant>
+        <Constant Name="_R_">8314.0</Constant>
+        <Constant Name="_T_">300.0</Constant>
+        <Constant Name="current">5.0</Constant>
+        <Constant Name="DB">7.5</Constant>
+        <Constant Name="DCa">250.0</Constant>
+        <Constant Name="DCaB">7.5</Constant>
+        <Constant Name="K_millivolts_per_volt">1000.0</Constant>
+        <Constant Name="Kfr">1000.0</Constant>
+        <Constant Name="KMOLE">0.0016611295681063123</Constant>
+        <Constant Name="Kr">10000.0</Constant>
+        <Constant Name="L">5.0</Constant>
+        <Constant Name="mesh">50.0</Constant>
+        <Constant Name="VolumePerUnitVolume_cell">1.0</Constant>
+        <VolumeVariable Name="B_r_cell" Domain="extracellular" />
+        <VolumeVariable Name="Ca_r_cell" Domain="extracellular" />
+        <VolumeVariable Name="CaB_r_cell" Domain="extracellular" />
+        <Function Name="B" Domain="extracellular">(B_r_cell / radcorr)</Function>
+        <Function Name="B_r_cell_boundaryXm" Domain="extracellular">- (2.0 * DB * B_r_cell / lambda)</Function>
+        <Function Name="B_r_cell_boundaryXp" Domain="extracellular">- (DB * B_r_cell / radcorr)</Function>
+        <Function Name="B_r_cell_diffusionRate" Domain="extracellular">DB</Function>
+        <Function Name="B_r_cell_init_uM" Domain="extracellular">(247.52475247474732 * radcorr)</Function>
+        <Function Name="BoundJ">(2595.0 * current / (3.1416 * lambda))</Function>
+        <Function Name="Ca" Domain="extracellular">(Ca_r_cell / radcorr)</Function>
+        <Function Name="Ca_r_cell_boundaryXm" Domain="extracellular">(BoundJ - (2.0 * DCa * Ca_r_cell / lambda))</Function>
+        <Function Name="Ca_r_cell_boundaryXp" Domain="extracellular">- (DCa * Ca_r_cell / radcorr)</Function>
+        <Function Name="Ca_r_cell_diffusionRate" Domain="extracellular">DCa</Function>
+        <Function Name="Ca_r_cell_init_uM" Domain="extracellular">(0.1 * radcorr)</Function>
+        <Function Name="CaB" Domain="extracellular">(CaB_r_cell / radcorr)</Function>
+        <Function Name="CaB_r_cell_boundaryXm" Domain="extracellular">- (DCaB * CaB_r_cell / radcorr)</Function>
+        <Function Name="CaB_r_cell_boundaryXp" Domain="extracellular">- (DCaB * CaB_r_cell / radcorr)</Function>
+        <Function Name="CaB_r_cell_diffusionRate" Domain="extracellular">DCaB</Function>
+        <Function Name="CaB_r_cell_init_uM" Domain="extracellular">(2.475247524747473 * radcorr)</Function>
+        <Function Name="dist_cell" Domain="extracellular">(K_dist_cell_total / VolumePerUnitVolume_cell)</Function>
+        <Function Name="dist_cell_init_uM" Domain="extracellular">x</Function>
+        <Function Name="J_Reaction1" Domain="extracellular">((Ca_r_cell * Kf * B_r_cell) - (Kr * CaB_r_cell))</Function>
+        <Function Name="K_dist_cell_total" Domain="extracellular">(VolumePerUnitVolume_cell * dist_cell_init_uM)</Function>
+        <Function Name="Kf" Domain="extracellular">(Kfr / radcorr)</Function>
+        <Function Name="lambda">(L / mesh)</Function>
+        <Function Name="radcorr" Domain="extracellular">(dist_cell + (0.5 * lambda))</Function>
+        <Function Name="Size_cell" Domain="extracellular">(VolumePerUnitVolume_cell * vcRegionVolume('extracellular'))</Function>
+        <CompartmentSubDomain Name="extracellular">
+          <BoundaryType Boundary="Xm" Type="Flux" />
+          <BoundaryType Boundary="Xp" Type="Flux" />
+          <BoundaryType Boundary="Ym" Type="Value" />
+          <BoundaryType Boundary="Yp" Type="Value" />
+          <BoundaryType Boundary="Zm" Type="Value" />
+          <BoundaryType Boundary="Zp" Type="Value" />
+          <PdeEquation Name="CaB_r_cell" SolutionType="Unknown">
+            <Boundaries Xm="CaB_r_cell_boundaryXm" Xp="CaB_r_cell_boundaryXp" />
+            <Rate>J_Reaction1</Rate>
+            <Diffusion>CaB_r_cell_diffusionRate</Diffusion>
+            <Initial>CaB_r_cell_init_uM</Initial>
+          </PdeEquation>
+          <PdeEquation Name="Ca_r_cell" SolutionType="Unknown">
+            <Boundaries Xm="Ca_r_cell_boundaryXm" Xp="Ca_r_cell_boundaryXp" />
+            <Rate>- J_Reaction1</Rate>
+            <Diffusion>Ca_r_cell_diffusionRate</Diffusion>
+            <Initial>Ca_r_cell_init_uM</Initial>
+          </PdeEquation>
+          <PdeEquation Name="B_r_cell" SolutionType="Unknown">
+            <Boundaries Xm="B_r_cell_boundaryXm" Xp="B_r_cell_boundaryXp" />
+            <Rate>- J_Reaction1</Rate>
+            <Diffusion>B_r_cell_diffusionRate</Diffusion>
+            <Initial>B_r_cell_init_uM</Initial>
+          </PdeEquation>
+        </CompartmentSubDomain>
+        <Version Name="Excess Buffer case_generated" KeyValue="93890991" BranchId="34243636" Archived="0" Date="27-Feb-2015 12:08:30" FromVersionable="false">
+          <Owner Name="les" Identifier="6" />
+          <GroupAccess Type="1" />
+        </Version>
+      </MathDescription>
+      <Simulation Name="Excess buffer - case 3">
+        <SolverTaskDescription TaskType="Unsteady" UseSymbolicJacobian="false" Solver="Sundials Stiff PDE Solver (Variable Time Step)">
+          <TimeBound StartTime="0.0" EndTime="0.01" />
+          <TimeStep DefaultTime="0.1" MinTime="0.0" MaxTime="0.1" />
+          <ErrorTolerance Absolut="1.0E-9" Relative="1.0E-7" />
+          <OutputOptions OutputTimeStep="1.0E-4" />
+          <SundialsSolverOptions>
+            <maxOrderAdvection>2</maxOrderAdvection>
+          </SundialsSolverOptions>
+          <NumberProcessors>1</NumberProcessors>
+        </SolverTaskDescription>
+        <MathOverrides>
+          <Constant Name="Kr">1000.0</Constant>
+          <Constant Name="DB">75.0</Constant>
+          <Constant Name="DCaB">75.0</Constant>
+          <Constant Name="current">0.5</Constant>
+          <Constant Name="Kfr">100.0</Constant>
+          <Constant Name="mesh">200.0</Constant>
+        </MathOverrides>
+        <MeshSpecification>
+          <Size X="201" Y="1" Z="1" />
+        </MeshSpecification>
+        <Version Name="Excess buffer - case 3" KeyValue="93891028" BranchId="34243648" Archived="0" Date="27-Feb-2015 12:08:31" FromVersionable="false">
+          <Owner Name="les" Identifier="6" />
+          <GroupAccess Type="1" />
+          <ParentSimRef KeyValue="34243747" />
+        </Version>
+      </Simulation>
+      <Simulation Name="0 current - ss check">
+        <SolverTaskDescription TaskType="Unsteady" UseSymbolicJacobian="false" Solver="Sundials Stiff PDE Solver (Variable Time Step)">
+          <TimeBound StartTime="0.0" EndTime="0.01" />
+          <TimeStep DefaultTime="0.1" MinTime="0.0" MaxTime="0.1" />
+          <ErrorTolerance Absolut="1.0E-9" Relative="1.0E-7" />
+          <OutputOptions OutputTimeStep="1.0E-4" />
+          <SundialsSolverOptions>
+            <maxOrderAdvection>2</maxOrderAdvection>
+          </SundialsSolverOptions>
+          <NumberProcessors>1</NumberProcessors>
+        </SolverTaskDescription>
+        <MathOverrides>
+          <Constant Name="Kr">1000.0</Constant>
+          <Constant Name="DB">75.0</Constant>
+          <Constant Name="DCaB">75.0</Constant>
+          <Constant Name="current">0.0</Constant>
+          <Constant Name="Kfr">100.0</Constant>
+          <Constant Name="mesh">200.0</Constant>
+        </MathOverrides>
+        <MeshSpecification>
+          <Size X="201" Y="1" Z="1" />
+        </MeshSpecification>
+        <Version Name="0 current - ss check" KeyValue="93891030" BranchId="34243673" Archived="0" Date="27-Feb-2015 12:08:31" FromVersionable="false">
+          <Owner Name="les" Identifier="6" />
+          <GroupAccess Type="1" />
+          <ParentSimRef KeyValue="34243749" />
+        </Version>
+      </Simulation>
+      <SpatialObjects>
+        <SpatialObject Name="vobj_extracellular0" Type="Volume" subVolume="extracellular" regionId="0">
+          <QuantityCategoryList>
+            <QuantityCategory Name="VolumeCentroid" Enabled="false" />
+            <QuantityCategory Name="InteriorVelocity" Enabled="false" />
+            <QuantityCategory Name="VolumeRegionSize" Enabled="true" />
+          </QuantityCategoryList>
+        </SpatialObject>
+      </SpatialObjects>
+      <Version Name="Excess Buffer case" KeyValue="93891009" BranchId="34243639" Archived="0" Date="27-Feb-2015 12:08:31" FromVersionable="false">
+        <Owner Name="les" Identifier="6" />
+        <GroupAccess Type="1" />
+        <Annotation>(copied from 1D) (copied from compartment)</Annotation>
+      </Version>
+      <MicroscopeMeasurement Name="fluor">
+        <ConvolutionKernel Type="ProjectionZKernel" />
+      </MicroscopeMeasurement>
+    </SimulationSpec>
+    <Version Name="Greg Smith Ca Diffusion 1D radial CSHL09" KeyValue="93891032" BranchId="34223728" Archived="0" Date="27-Feb-2015 12:08:31" FromVersionable="false">
+      <Owner Name="les" Identifier="6" />
+      <GroupAccess Type="0" />
+    </Version>
+    <pathwayModel>
+      <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:bp="http://www.biopax.org/release/biopax-level3.owl#" version="3.0" />
+    </pathwayModel>
+    <relationshipModel>
+      <RMNS version="3.0" />
+    </relationshipModel>
+    <vcmetadata>
+      <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" />
+      <nonrdfAnnotationList />
+      <uriBindingList />
+    </vcmetadata>
+  </BioModel>
+</vcml>
+

@@ -1,0 +1,223 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--This biomodel was generated in VCML Version Alpha_Version_7.4.0_build_87-->
+<vcml xmlns="http://sourceforge.net/projects/vcell/vcml" Version="Alpha_Version_7.4.0_build_87">
+  <BioModel Name="CSHL CCB VCell Example 4 - simulations completed">
+    <Model Name="unnamed">
+      <Compound Name="Ca" />
+      <Compound Name="ion" />
+      <Feature Name="Extracellular" KeyValue="34105803" />
+      <Feature Name="cell" KeyValue="34105806" />
+      <Membrane InsideFeature="cell" OutsideFeature="Extracellular" PositiveFeature="cell" NegativeFeature="Extracellular" MembraneVoltage="Voltage_PM" Name="PM" KeyValue="34105805" />
+      <LocalizedCompound Name="Ca_Extracellular" CompoundRef="Ca" Structure="Extracellular" OverrideName="true" KeyValue="34105809" />
+      <LocalizedCompound Name="ion_Extracellular" CompoundRef="ion" Structure="Extracellular" OverrideName="true" KeyValue="34105810" />
+      <LocalizedCompound Name="Ca_cell" CompoundRef="Ca" Structure="cell" OverrideName="true" KeyValue="34105811" />
+      <LocalizedCompound Name="ion_cell" CompoundRef="ion" Structure="cell" OverrideName="true" KeyValue="34105812" />
+      <FluxStep Name="Ca_Flux" Structure="PM" Reversible="true" FluxOption="ElectricalOnly" KeyValue="34105813">
+        <Reactant LocalizedCompoundRef="Ca_Extracellular" Stoichiometry="1" />
+        <Product LocalizedCompoundRef="Ca_cell" Stoichiometry="1" />
+        <Kinetics KineticsType="GeneralCurrentLumpedKinetics">
+          <Parameter Name="LumpedI" Role="lumped current" Unit="pA">(gCa * minf * (ECa - Voltage_PM))</Parameter>
+          <Parameter Name="LumpedJ" Role="lumped reaction rate" Unit="molecules.s-1">0.0</Parameter>
+          <Parameter Name="carrierValence" Role="flux carrier valence" Unit="1">1.0</Parameter>
+          <Parameter Name="ECa" Role="user defined" Unit="mV">120.0</Parameter>
+          <Parameter Name="gCa" Role="user defined" Unit="tbd">0.0013</Parameter>
+          <Parameter Name="minf" Role="user defined" Unit="tbd">(0.5 * (1.0 + tanh(((Voltage_PM - V1) / V2))))</Parameter>
+          <Parameter Name="V1" Role="user defined" Unit="mV">-1.0</Parameter>
+          <Parameter Name="V2" Role="user defined" Unit="mV">15.0</Parameter>
+        </Kinetics>
+      </FluxStep>
+      <FluxStep Name="Leak" Structure="PM" Reversible="true" FluxOption="ElectricalOnly" KeyValue="34105816">
+        <Reactant LocalizedCompoundRef="ion_Extracellular" Stoichiometry="1" />
+        <Product LocalizedCompoundRef="ion_cell" Stoichiometry="1" />
+        <Kinetics KineticsType="GeneralCurrentLumpedKinetics">
+          <Parameter Name="LumpedI" Role="lumped current" Unit="pA">(gLeak * (ELeak - Voltage_PM))</Parameter>
+          <Parameter Name="LumpedJ" Role="lumped reaction rate" Unit="molecules.s-1">0.0</Parameter>
+          <Parameter Name="carrierValence" Role="flux carrier valence" Unit="1">0.0</Parameter>
+          <Parameter Name="gLeak" Role="user defined" Unit="nS">5.0E-4</Parameter>
+          <Parameter Name="ELeak" Role="user defined" Unit="mV">-70.0</Parameter>
+        </Kinetics>
+      </FluxStep>
+      <Diagram Name="Unnamed compartment" Structure="Extracellular">
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="m_Extracellular" LocationX="252" LocationY="192" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="full" SimpleReactionRef="minf tanh function" LocationX="183" LocationY="142" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="m_Extracellular" LocationX="252" LocationY="192" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="molecule" SimpleReactionRef="minf tanh function" LocationX="183" LocationY="142" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="m_Extracellular" LocationX="252" LocationY="192" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="rule" SimpleReactionRef="minf tanh function" LocationX="183" LocationY="142" />
+      </Diagram>
+      <Diagram Name="PM" Structure="PM">
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="Ca_cell" LocationX="44" LocationY="117" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="ion_cell" LocationX="57" LocationY="195" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="Ca_Extracellular" LocationX="39" LocationY="118" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="ion_Extracellular" LocationX="38" LocationY="196" />
+        <FluxReactionShape NodeReferenceModeAttrTag="full" FluxReactionRef="Ca_Flux" LocationX="104" LocationY="114" />
+        <FluxReactionShape NodeReferenceModeAttrTag="full" FluxReactionRef="Leak" LocationX="104" LocationY="189" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="Ca_cell" LocationX="44" LocationY="117" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="ion_cell" LocationX="57" LocationY="195" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="Ca_Extracellular" LocationX="39" LocationY="118" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="ion_Extracellular" LocationX="38" LocationY="196" />
+        <FluxReactionShape NodeReferenceModeAttrTag="molecule" FluxReactionRef="Ca_Flux" LocationX="104" LocationY="114" />
+        <FluxReactionShape NodeReferenceModeAttrTag="molecule" FluxReactionRef="Leak" LocationX="104" LocationY="189" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="Ca_cell" LocationX="44" LocationY="117" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="ion_cell" LocationX="57" LocationY="195" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="Ca_Extracellular" LocationX="39" LocationY="118" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="ion_Extracellular" LocationX="38" LocationY="196" />
+        <FluxReactionShape NodeReferenceModeAttrTag="rule" FluxReactionRef="Ca_Flux" LocationX="104" LocationY="114" />
+        <FluxReactionShape NodeReferenceModeAttrTag="rule" FluxReactionRef="Leak" LocationX="104" LocationY="189" />
+      </Diagram>
+      <Diagram Name="cell" Structure="cell">
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="Ca_cell" LocationX="60" LocationY="38" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="ion_cell" LocationX="12" LocationY="37" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="Ca_cell" LocationX="60" LocationY="38" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="ion_cell" LocationX="12" LocationY="37" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="Ca_cell" LocationX="60" LocationY="38" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="ion_cell" LocationX="12" LocationY="37" />
+      </Diagram>
+      <Version Name="unnamed" KeyValue="34105799" BranchId="34103190" Archived="0" Date="27-Jun-2009 22:22:39" FromVersionable="false">
+        <Owner Name="Brown" Identifier="26331356" />
+        <GroupAccess Type="1" />
+      </Version>
+      <ModelUnitSystem VolumeSubstanceUnit="uM.um3" MembraneSubstanceUnit="molecules" LumpedReactionSubstanceUnit="molecules" VolumeUnit="um3" AreaUnit="um2" LengthUnit="um" TimeUnit="s" />
+    </Model>
+    <SimulationSpec Name="M - 4" Stochastic="false" UseConcentration="true" RuleBased="false" MassConservationModelReduction="true" InsufficientIterations="false" InsufficientMaxMolecules="false">
+      <NetworkConstraints RbmMaxIteration="1" RbmMaxMoleculesPerSpecies="10" RbmSpeciesLimit="800" RbmReactionsLimit="2500" />
+      <Annotation />
+      <Geometry Name="non-spatial1370915805" Dimension="0">
+        <Extent X="10.0" Y="10.0" Z="10.0" />
+        <Origin X="0.0" Y="0.0" Z="0.0" />
+        <SubVolume Name="Compartment" Handle="0" Type="Compartmental" KeyValue="34105189" />
+        <Version Name="non-spatial1370915805" KeyValue="34105185" BranchId="34105186" Archived="0" Date="27-Jun-2009 18:16:21" FromVersionable="false">
+          <Owner Name="Brown" Identifier="26331356" />
+          <GroupAccess Type="1" />
+        </Version>
+      </Geometry>
+      <GeometryContext>
+        <FeatureMapping Feature="Extracellular" GeometryClass="Compartment" SubVolume="Compartment" Size="1.0">
+          <BoundariesTypes Xm="Flux" Xp="Flux" Ym="Flux" Yp="Flux" Zm="Flux" Zp="Flux" />
+        </FeatureMapping>
+        <FeatureMapping Feature="cell" GeometryClass="Compartment" SubVolume="Compartment" Size="1.0">
+          <BoundariesTypes Xm="Flux" Xp="Flux" Ym="Flux" Yp="Flux" Zm="Flux" Zp="Flux" />
+        </FeatureMapping>
+        <MembraneMapping Membrane="PM" SurfaceToVolumeRatio="1.0" VolumeFraction="0.5" Size="1.0" CalculateVoltage="true" SpecificCapacitance="0.01" InitialVoltage="-70.0" GeometryClass="Compartment">
+          <BoundariesTypes Xm="Flux" Xp="Flux" Ym="Flux" Yp="Flux" Zm="Flux" Zp="Flux" />
+        </MembraneMapping>
+      </GeometryContext>
+      <ReactionContext>
+        <LocalizedCompoundSpec LocalizedCompoundRef="Ca_Extracellular" ForceConstant="true" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>1500.0</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="ion_Extracellular" ForceConstant="true" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>100.0</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="Ca_cell" ForceConstant="true" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>0.1</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="ion_cell" ForceConstant="true" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>100.0</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <ReactionSpec ReactionStepRef="Ca_Flux" ReactionMapping="included" />
+        <ReactionSpec ReactionStepRef="Leak" ReactionMapping="included" />
+      </ReactionContext>
+      <MathDescription Name="M - 4_generated">
+        <Constant Name="_F_">96480.0</Constant>
+        <Constant Name="_F_nmol_">9.648E-5</Constant>
+        <Constant Name="_K_GHK_">1.0E-9</Constant>
+        <Constant Name="_N_pmol_">6.02E11</Constant>
+        <Constant Name="_R_">8314.0</Constant>
+        <Constant Name="_T_">300.0</Constant>
+        <Constant Name="C_PM">0.01</Constant>
+        <Constant Name="Ca_cell">0.1</Constant>
+        <Constant Name="Ca_cell_init">0.1</Constant>
+        <Constant Name="Ca_Extracellular">1500.0</Constant>
+        <Constant Name="Ca_Extracellular_init">1500.0</Constant>
+        <Constant Name="ECa">120.0</Constant>
+        <Constant Name="ELeak">-70.0</Constant>
+        <Constant Name="gCa">0.0013</Constant>
+        <Constant Name="gLeak">5.0E-4</Constant>
+        <Constant Name="I_PM">0.0</Constant>
+        <Constant Name="ion_cell">100.0</Constant>
+        <Constant Name="ion_cell_init">100.0</Constant>
+        <Constant Name="ion_Extracellular">100.0</Constant>
+        <Constant Name="ion_Extracellular_init">100.0</Constant>
+        <Constant Name="K_millivolts_per_volt">1000.0</Constant>
+        <Constant Name="KMOLE">0.0016611295681063123</Constant>
+        <Constant Name="LumpedJ_Ca_Flux">0.0</Constant>
+        <Constant Name="LumpedJ_Leak">0.0</Constant>
+        <Constant Name="Size_cell">1.0</Constant>
+        <Constant Name="Size_Extracellular">1.0</Constant>
+        <Constant Name="Size_PM">1.0</Constant>
+        <Constant Name="SurfToVol_PM">1.0</Constant>
+        <Constant Name="V1">-1.0</Constant>
+        <Constant Name="V2">15.0</Constant>
+        <Constant Name="VolFract_cell">0.5</Constant>
+        <Constant Name="Voltage_PM_init">-70.0</Constant>
+        <VolumeVariable Name="Voltage_PM" />
+        <Function Name="F_PM">( - (LumpedI_Ca_Flux / Size_PM) - (LumpedI_Leak / Size_PM))</Function>
+        <Function Name="KFlux_PM_mapping_cell">SurfToVol_PM</Function>
+        <Function Name="KFlux_PM_mapping_Extracellular">(SurfToVol_PM * VolFract_cell / (1.0 - VolFract_cell))</Function>
+        <Function Name="LumpedI_Ca_Flux">(gCa * minf * (ECa - Voltage_PM))</Function>
+        <Function Name="LumpedI_Leak">(gLeak * (ELeak - Voltage_PM))</Function>
+        <Function Name="minf">(0.5 * (1.0 + tanh(((Voltage_PM - V1) / V2))))</Function>
+        <CompartmentSubDomain Name="Compartment">
+          <BoundaryType Boundary="Xm" Type="Value" />
+          <BoundaryType Boundary="Xp" Type="Value" />
+          <BoundaryType Boundary="Ym" Type="Value" />
+          <BoundaryType Boundary="Yp" Type="Value" />
+          <BoundaryType Boundary="Zm" Type="Value" />
+          <BoundaryType Boundary="Zp" Type="Value" />
+          <OdeEquation Name="Voltage_PM" SolutionType="Unknown">
+            <Rate>(1000.0 * (I_PM - ( - (LumpedI_Ca_Flux / Size_PM) - (LumpedI_Leak / Size_PM))) / C_PM)</Rate>
+            <Initial>Voltage_PM_init</Initial>
+          </OdeEquation>
+        </CompartmentSubDomain>
+        <Version Name="M - 4_generated" KeyValue="34105797" BranchId="34105191" Archived="0" Date="27-Jun-2009 22:22:39" FromVersionable="false">
+          <Owner Name="Brown" Identifier="26331356" />
+          <GroupAccess Type="1" />
+        </Version>
+      </MathDescription>
+      <Simulation Name="Run for 1s">
+        <SolverTaskDescription TaskType="Unsteady" UseSymbolicJacobian="false" Solver="CVODE (Variable Order, Variable Time Step)">
+          <TimeBound StartTime="0.0" EndTime="1.0" />
+          <TimeStep DefaultTime="0.1" MinTime="1.0E-8" MaxTime="1.0" />
+          <ErrorTolerance Absolut="1.0E-9" Relative="1.0E-9" />
+          <OutputOptions KeepEvery="1" KeepAtMost="10000" />
+          <NumberProcessors>1</NumberProcessors>
+        </SolverTaskDescription>
+        <MathOverrides>
+          <Constant Name="Voltage_PM_init" ConstantArraySpec="1001">-150.0 to 300.0, 10 values</Constant>
+        </MathOverrides>
+        <Version Name="Run for 1s" KeyValue="34105833" BranchId="34105297" Archived="0" Date="27-Jun-2009 22:22:39" FromVersionable="false">
+          <Owner Name="Brown" Identifier="26331356" />
+          <GroupAccess Type="1" />
+        </Version>
+      </Simulation>
+      <Version Name="M - 4" KeyValue="34105822" BranchId="34105194" Archived="0" Date="27-Jun-2009 22:22:39" FromVersionable="false">
+        <Owner Name="Brown" Identifier="26331356" />
+        <GroupAccess Type="1" />
+      </Version>
+      <MicroscopeMeasurement Name="fluor">
+        <ConvolutionKernel Type="ProjectionZKernel" />
+      </MicroscopeMeasurement>
+    </SimulationSpec>
+    <Version Name="CSHL CCB VCell Example 4 - simulations completed" KeyValue="34105851" BranchId="34105852" Archived="0" Date="27-Jun-2009 22:43:20" FromVersionable="false">
+      <Owner Name="Brown" Identifier="26331356" />
+      <GroupAccess Type="1" />
+    </Version>
+    <pathwayModel>
+      <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:bp="http://www.biopax.org/release/biopax-level3.owl#" version="3.0" />
+    </pathwayModel>
+    <relationshipModel>
+      <RMNS version="3.0" />
+    </relationshipModel>
+    <vcmetadata>
+      <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" />
+      <nonrdfAnnotationList />
+      <uriBindingList />
+    </vcmetadata>
+  </BioModel>
+</vcml>
+

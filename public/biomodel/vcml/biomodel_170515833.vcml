@@ -1,0 +1,482 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--This biomodel was generated in VCML Version Alpha_Version_7.4.0_build_87-->
+<vcml xmlns="http://sourceforge.net/projects/vcell/vcml" Version="Alpha_Version_7.4.0_build_87">
+  <BioModel Name="LDL Regulation Model">
+    <Model Name="model">
+      <Compound Name="s0" />
+      <Compound Name="s1" />
+      <Compound Name="s2" />
+      <Compound Name="s3" />
+      <Compound Name="s4" />
+      <Compound Name="s5" />
+      <Compound Name="s6" />
+      <Compound Name="s7" />
+      <Compound Name="s9" />
+      <Compound Name="s10" />
+      <Compound Name="s11" />
+      <Feature Name="Cytosol" KeyValue="170515750" />
+      <Feature Name="Extracellular" KeyValue="170515752" />
+      <Membrane MembraneVoltage="Voltage_CM" Name="CM" KeyValue="170515754" />
+      <LocalizedCompound Name="R" CompoundRef="s0" Structure="CM" OverrideName="true" KeyValue="170515756" />
+      <LocalizedCompound Name="LDL" CompoundRef="s1" Structure="Extracellular" OverrideName="true" KeyValue="170515757" />
+      <LocalizedCompound Name="PCSK9" CompoundRef="s2" Structure="Extracellular" OverrideName="true" KeyValue="170515758" />
+      <LocalizedCompound Name="antiPCSK9" CompoundRef="s3" Structure="Extracellular" OverrideName="true" KeyValue="170515759" />
+      <LocalizedCompound Name="iPCSK9" CompoundRef="s4" Structure="Extracellular" OverrideName="true" KeyValue="170515760" />
+      <LocalizedCompound Name="RL" CompoundRef="s5" Structure="CM" OverrideName="true" KeyValue="170515761" />
+      <LocalizedCompound Name="RLP" CompoundRef="s6" Structure="CM" OverrideName="true" KeyValue="170515762" />
+      <LocalizedCompound Name="LysosomeP" CompoundRef="s7" Structure="Cytosol" OverrideName="true" KeyValue="170515763" />
+      <LocalizedCompound Name="C" CompoundRef="s9" Structure="Cytosol" OverrideName="true" KeyValue="170515764" />
+      <LocalizedCompound Name="RP" CompoundRef="s10" Structure="CM" OverrideName="true" KeyValue="170515765" />
+      <LocalizedCompound Name="Lysosome" CompoundRef="s11" Structure="Cytosol" OverrideName="true" KeyValue="170515766" />
+      <SimpleReaction Structure="CM" Name="LDL Binding" Reversible="true" FluxOption="MolecularOnly" KeyValue="170515767">
+        <Reactant LocalizedCompoundRef="LDL" Stoichiometry="1" KeyValue="170515768" />
+        <Reactant LocalizedCompoundRef="R" Stoichiometry="1" KeyValue="170515769" />
+        <Product LocalizedCompoundRef="RL" Stoichiometry="1" KeyValue="170515770" />
+        <Kinetics KineticsType="MassAction">
+          <Parameter Name="J" Role="reaction rate" Unit="molecules.um-2.s-1">(((Kf * LDL) * R) - (Kr * RL))</Parameter>
+          <Parameter Name="I" Role="inward current density" Unit="pA.um-2">0.0</Parameter>
+          <Parameter Name="netValence" Role="net charge valence" Unit="1">1.0</Parameter>
+          <Parameter Name="Kf" Role="forward rate constant" Unit="s-1.uM-1">0.4133</Parameter>
+          <Parameter Name="Kr" Role="reverse rate constant" Unit="s-1">0.0059</Parameter>
+        </Kinetics>
+      </SimpleReaction>
+      <SimpleReaction Structure="CM" Name="r1" Reversible="true" FluxOption="MolecularOnly" KeyValue="170515771">
+        <Reactant LocalizedCompoundRef="R" Stoichiometry="1" KeyValue="170515772" />
+        <Reactant LocalizedCompoundRef="PCSK9" Stoichiometry="1" KeyValue="170515773" />
+        <Product LocalizedCompoundRef="RP" Stoichiometry="1" KeyValue="170515774" />
+        <Kinetics KineticsType="MassAction">
+          <Parameter Name="J" Role="reaction rate" Unit="molecules.um-2.s-1">(((Kf * R) * PCSK9) - (Kr * RP))</Parameter>
+          <Parameter Name="I" Role="inward current density" Unit="pA.um-2">0.0</Parameter>
+          <Parameter Name="netValence" Role="net charge valence" Unit="1">1.0</Parameter>
+          <Parameter Name="Kf" Role="forward rate constant" Unit="s-1.uM-1">0.0958</Parameter>
+          <Parameter Name="Kr" Role="reverse rate constant" Unit="s-1">6.0E-4</Parameter>
+        </Kinetics>
+      </SimpleReaction>
+      <SimpleReaction Structure="CM" Name="r2" Reversible="true" FluxOption="MolecularOnly" KeyValue="170515775">
+        <Reactant LocalizedCompoundRef="LDL" Stoichiometry="1" KeyValue="170515776" />
+        <Reactant LocalizedCompoundRef="RP" Stoichiometry="1" KeyValue="170515777" />
+        <Product LocalizedCompoundRef="RLP" Stoichiometry="1" KeyValue="170515778" />
+        <Kinetics KineticsType="MassAction">
+          <Parameter Name="J" Role="reaction rate" Unit="molecules.um-2.s-1">(((Kf * LDL) * RP) - (Kr * RLP))</Parameter>
+          <Parameter Name="I" Role="inward current density" Unit="pA.um-2">0.0</Parameter>
+          <Parameter Name="netValence" Role="net charge valence" Unit="1">1.0</Parameter>
+          <Parameter Name="Kf" Role="forward rate constant" Unit="s-1.uM-1">0.04133</Parameter>
+          <Parameter Name="Kr" Role="reverse rate constant" Unit="s-1">0.0059</Parameter>
+        </Kinetics>
+      </SimpleReaction>
+      <SimpleReaction Structure="Extracellular" Name="r3" Reversible="true" FluxOption="MolecularOnly" KeyValue="170515779">
+        <Reactant LocalizedCompoundRef="antiPCSK9" Stoichiometry="1" KeyValue="170515780" />
+        <Reactant LocalizedCompoundRef="PCSK9" Stoichiometry="1" KeyValue="170515781" />
+        <Product LocalizedCompoundRef="iPCSK9" Stoichiometry="1" KeyValue="170515782" />
+        <Kinetics KineticsType="MassAction">
+          <Parameter Name="J" Role="reaction rate" Unit="uM.s-1">(((Kf * antiPCSK9) * PCSK9) - (Kr * iPCSK9))</Parameter>
+          <Parameter Name="Kf" Role="forward rate constant" Unit="s-1.uM-1">0.53</Parameter>
+          <Parameter Name="Kr" Role="reverse rate constant" Unit="s-1">1.8E-5</Parameter>
+        </Kinetics>
+      </SimpleReaction>
+      <SimpleReaction Structure="CM" Name="RLP Endocytosis" Reversible="false" FluxOption="MolecularOnly" KeyValue="170515783">
+        <Reactant LocalizedCompoundRef="RLP" Stoichiometry="1" KeyValue="170515784" />
+        <Product LocalizedCompoundRef="LysosomeP" Stoichiometry="1" KeyValue="170515785" />
+        <Kinetics KineticsType="MassAction">
+          <Parameter Name="J" Role="reaction rate" Unit="molecules.um-2.s-1">((Kf * RLP) - (Kr * LysosomeP))</Parameter>
+          <Parameter Name="I" Role="inward current density" Unit="pA.um-2">0.0</Parameter>
+          <Parameter Name="netValence" Role="net charge valence" Unit="1">1.0</Parameter>
+          <Parameter Name="Kf" Role="forward rate constant" Unit="s-1">0.002717</Parameter>
+          <Parameter Name="Kr" Role="reverse rate constant" Unit="molecules.um-2.s-1.uM-1">0.0</Parameter>
+        </Kinetics>
+      </SimpleReaction>
+      <SimpleReaction Structure="Cytosol" Name="r4" Reversible="false" FluxOption="MolecularOnly" KeyValue="170515786">
+        <Reactant LocalizedCompoundRef="Lysosome" Stoichiometry="1" KeyValue="170515787" />
+        <Product LocalizedCompoundRef="C" Stoichiometry="1" KeyValue="170515788" />
+        <Product LocalizedCompoundRef="R" Stoichiometry="1" KeyValue="170515789" />
+        <Kinetics KineticsType="MassAction">
+          <Parameter Name="J" Role="reaction rate" Unit="uM.s-1">((Kf * Lysosome) - ((Kr * C) * R))</Parameter>
+          <Parameter Name="Kf" Role="forward rate constant" Unit="s-1">0.10883</Parameter>
+          <Parameter Name="Kr" Role="reverse rate constant" Unit="um2.s-1.molecules-1">0.0</Parameter>
+        </Kinetics>
+      </SimpleReaction>
+      <SimpleReaction Structure="Cytosol" Name="r5" Reversible="false" FluxOption="MolecularOnly" KeyValue="170515790">
+        <Reactant LocalizedCompoundRef="LysosomeP" Stoichiometry="1" KeyValue="170515791" />
+        <Product LocalizedCompoundRef="C" Stoichiometry="1" KeyValue="170515792" />
+        <Kinetics KineticsType="MassAction">
+          <Parameter Name="J" Role="reaction rate" Unit="uM.s-1">((Kf * LysosomeP) - (Kr * C))</Parameter>
+          <Parameter Name="Kf" Role="forward rate constant" Unit="s-1">0.10883</Parameter>
+          <Parameter Name="Kr" Role="reverse rate constant" Unit="s-1">0.0</Parameter>
+        </Kinetics>
+      </SimpleReaction>
+      <SimpleReaction Structure="CM" Name="r0" Reversible="false" FluxOption="MolecularOnly" KeyValue="170515793">
+        <Reactant LocalizedCompoundRef="RL" Stoichiometry="1" KeyValue="170515794" />
+        <Product LocalizedCompoundRef="Lysosome" Stoichiometry="1" KeyValue="170515795" />
+        <Kinetics KineticsType="MassAction">
+          <Parameter Name="J" Role="reaction rate" Unit="molecules.um-2.s-1">((Kf * RL) - (Kr * Lysosome))</Parameter>
+          <Parameter Name="I" Role="inward current density" Unit="pA.um-2">0.0</Parameter>
+          <Parameter Name="netValence" Role="net charge valence" Unit="1">1.0</Parameter>
+          <Parameter Name="Kf" Role="forward rate constant" Unit="s-1">0.002717</Parameter>
+          <Parameter Name="Kr" Role="reverse rate constant" Unit="molecules.um-2.s-1.uM-1">0.0</Parameter>
+        </Kinetics>
+      </SimpleReaction>
+      <SimpleReaction Structure="CM" Name="r6" Reversible="false" FluxOption="MolecularOnly" KeyValue="170515796">
+        <Product LocalizedCompoundRef="R" Stoichiometry="1" KeyValue="170515797" />
+        <Modifier LocalizedCompoundRef="C" />
+        <Kinetics KineticsType="GeneralLumpedKinetics">
+          <Parameter Name="LumpedI" Role="lumped current" Unit="pA">0.0</Parameter>
+          <Parameter Name="LumpedJ" Role="lumped reaction rate" Unit="molecules.s-1">(100.0 + (100.0 / (1.0 + C)))</Parameter>
+          <Parameter Name="netValence" Role="net charge valence" Unit="1">1.0</Parameter>
+        </Kinetics>
+      </SimpleReaction>
+      <SimpleReaction Structure="CM" Name="r7" Reversible="false" FluxOption="MolecularOnly" KeyValue="170515798">
+        <Product LocalizedCompoundRef="PCSK9" Stoichiometry="1" KeyValue="170515799" />
+        <Modifier LocalizedCompoundRef="C" />
+        <Kinetics KineticsType="GeneralLumpedKinetics">
+          <Parameter Name="LumpedI" Role="lumped current" Unit="pA">0.0</Parameter>
+          <Parameter Name="LumpedJ" Role="lumped reaction rate" Unit="molecules.s-1">(500.0 + (500.0 / (1.0 + C)))</Parameter>
+          <Parameter Name="netValence" Role="net charge valence" Unit="1">1.0</Parameter>
+        </Kinetics>
+      </SimpleReaction>
+      <Diagram Name="c0" Structure="Cytosol">
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="antiPCSK9" LocationX="155" LocationY="247" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="full" SimpleReactionRef="r2" LocationX="243" LocationY="253" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="full" SimpleReactionRef="r4" LocationX="122" LocationY="140" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="full" SimpleReactionRef="r1" LocationX="232" LocationY="140" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="full" SimpleReactionRef="LDL Binding" LocationX="226" LocationY="44" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="LDL" LocationX="65" LocationY="135" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="full" SimpleReactionRef="r7" LocationX="258" LocationY="179" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="full" SimpleReactionRef="r5" LocationX="116" LocationY="176" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="RLP" LocationX="224" LocationY="305" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="R" LocationX="136" LocationY="136" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="full" SimpleReactionRef="r6" LocationX="80" LocationY="95" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="iPCSK9" LocationX="161" LocationY="127" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="LysosomeP" LocationX="122" LocationY="235" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="full" SimpleReactionRef="RLP Endocytosis" LocationX="46" LocationY="251" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="full" SimpleReactionRef="r3" LocationX="132" LocationY="208" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="RL" LocationX="183" LocationY="38" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="full" SimpleReactionRef="r0" LocationX="46" LocationY="34" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="PCSK9" LocationX="73" LocationY="207" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="Lysosome" LocationX="153" LocationY="163" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="RP" LocationX="227" LocationY="202" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="C" LocationX="66" LocationY="56" />
+      </Diagram>
+      <Diagram Name="m0" Structure="CM">
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="antiPCSK9" LocationX="155" LocationY="247" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="full" SimpleReactionRef="r2" LocationX="243" LocationY="253" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="full" SimpleReactionRef="r4" LocationX="122" LocationY="140" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="full" SimpleReactionRef="r1" LocationX="232" LocationY="140" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="full" SimpleReactionRef="LDL Binding" LocationX="226" LocationY="44" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="LDL" LocationX="65" LocationY="135" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="full" SimpleReactionRef="r7" LocationX="258" LocationY="179" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="full" SimpleReactionRef="r5" LocationX="116" LocationY="176" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="RLP" LocationX="224" LocationY="305" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="R" LocationX="136" LocationY="136" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="full" SimpleReactionRef="r6" LocationX="80" LocationY="95" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="iPCSK9" LocationX="161" LocationY="127" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="LysosomeP" LocationX="122" LocationY="235" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="full" SimpleReactionRef="RLP Endocytosis" LocationX="46" LocationY="251" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="full" SimpleReactionRef="r3" LocationX="132" LocationY="208" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="RL" LocationX="183" LocationY="38" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="full" SimpleReactionRef="r0" LocationX="46" LocationY="34" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="PCSK9" LocationX="73" LocationY="207" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="Lysosome" LocationX="153" LocationY="163" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="RP" LocationX="227" LocationY="202" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="C" LocationX="66" LocationY="56" />
+      </Diagram>
+      <Diagram Name="c1" Structure="Extracellular">
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="antiPCSK9" LocationX="155" LocationY="247" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="full" SimpleReactionRef="r2" LocationX="243" LocationY="253" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="full" SimpleReactionRef="r4" LocationX="122" LocationY="140" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="full" SimpleReactionRef="r1" LocationX="232" LocationY="140" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="full" SimpleReactionRef="LDL Binding" LocationX="226" LocationY="44" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="LDL" LocationX="65" LocationY="135" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="full" SimpleReactionRef="r7" LocationX="258" LocationY="179" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="full" SimpleReactionRef="r5" LocationX="116" LocationY="176" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="RLP" LocationX="224" LocationY="305" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="R" LocationX="136" LocationY="136" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="full" SimpleReactionRef="r6" LocationX="80" LocationY="95" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="iPCSK9" LocationX="161" LocationY="127" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="LysosomeP" LocationX="122" LocationY="235" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="full" SimpleReactionRef="RLP Endocytosis" LocationX="46" LocationY="251" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="full" SimpleReactionRef="r3" LocationX="132" LocationY="208" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="RL" LocationX="183" LocationY="38" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="full" SimpleReactionRef="r0" LocationX="46" LocationY="34" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="PCSK9" LocationX="73" LocationY="207" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="Lysosome" LocationX="153" LocationY="163" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="RP" LocationX="227" LocationY="202" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="C" LocationX="66" LocationY="56" />
+      </Diagram>
+      <Version Name="model" KeyValue="170515737" BranchId="169923680" Archived="0" Date="23-Nov-2019 18:38:33" FromVersionable="false">
+        <Owner Name="jlbyrd3" Identifier="166472114" />
+        <GroupAccess Type="1" />
+      </Version>
+      <ModelUnitSystem VolumeSubstanceUnit="uM.um3" MembraneSubstanceUnit="molecules" LumpedReactionSubstanceUnit="molecules" VolumeUnit="um3" AreaUnit="um2" LengthUnit="um" TimeUnit="s" />
+    </Model>
+    <SimulationSpec Name="Application0" Stochastic="false" UseConcentration="true" RuleBased="false" MassConservationModelReduction="true" InsufficientIterations="false" InsufficientMaxMolecules="false">
+      <NetworkConstraints RbmMaxIteration="3" RbmMaxMoleculesPerSpecies="10" RbmSpeciesLimit="800" RbmReactionsLimit="2500" />
+      <Annotation />
+      <Geometry Name="non-spatial967578648" Dimension="0">
+        <Extent X="10.0" Y="10.0" Z="10.0" />
+        <Origin X="0.0" Y="0.0" Z="0.0" />
+        <SubVolume Name="Compartment" Handle="0" Type="Compartmental" KeyValue="169923675" />
+        <Version Name="non-spatial967578648" KeyValue="169923671" BranchId="169923672" Archived="0" Date="11-Nov-2019 23:35:23" FromVersionable="false">
+          <Owner Name="jlbyrd3" Identifier="166472114" />
+          <GroupAccess Type="1" />
+        </Version>
+      </Geometry>
+      <GeometryContext>
+        <FeatureMapping Feature="Cytosol" GeometryClass="Compartment" SubVolume="Compartment" Size="1000.0">
+          <BoundariesTypes Xm="Flux" Xp="Flux" Ym="Flux" Yp="Flux" Zm="Flux" Zp="Flux" />
+        </FeatureMapping>
+        <FeatureMapping Feature="Extracellular" GeometryClass="Compartment" SubVolume="Compartment" Size="8272.0">
+          <BoundariesTypes Xm="Flux" Xp="Flux" Ym="Flux" Yp="Flux" Zm="Flux" Zp="Flux" />
+        </FeatureMapping>
+        <MembraneMapping Membrane="CM" Size="600.0" CalculateVoltage="false" SpecificCapacitance="1.0" InitialVoltage="0.0" GeometryClass="Compartment">
+          <BoundariesTypes Xm="Flux" Xp="Flux" Ym="Flux" Yp="Flux" Zm="Flux" Zp="Flux" />
+        </MembraneMapping>
+      </GeometryContext>
+      <ReactionContext>
+        <LocalizedCompoundSpec LocalizedCompoundRef="LysosomeP" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>0.0</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="C" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>0.0</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="Lysosome" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>0.0</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="LDL" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>2000.0</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="PCSK9" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>0.00714</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="antiPCSK9" ForceConstant="true" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>0.36</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="iPCSK9" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>0.0</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="R" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>0.11</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="RL" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>0.11</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="RLP" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>0.11</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="RP" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>0.11</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <ReactionSpec ReactionStepRef="LDL Binding" ReactionMapping="included" />
+        <ReactionSpec ReactionStepRef="r1" ReactionMapping="included" />
+        <ReactionSpec ReactionStepRef="r2" ReactionMapping="included" />
+        <ReactionSpec ReactionStepRef="r3" ReactionMapping="included" />
+        <ReactionSpec ReactionStepRef="RLP Endocytosis" ReactionMapping="included" />
+        <ReactionSpec ReactionStepRef="r4" ReactionMapping="included" />
+        <ReactionSpec ReactionStepRef="r5" ReactionMapping="included" />
+        <ReactionSpec ReactionStepRef="r0" ReactionMapping="included" />
+        <ReactionSpec ReactionStepRef="r6" ReactionMapping="included" />
+        <ReactionSpec ReactionStepRef="r7" ReactionMapping="included" />
+      </ReactionContext>
+      <MathDescription Name="Application0_generated">
+        <Constant Name="_F_">96480.0</Constant>
+        <Constant Name="_F_nmol_">9.648E-5</Constant>
+        <Constant Name="_K_GHK_">1.0E-9</Constant>
+        <Constant Name="_N_pmol_">6.02E11</Constant>
+        <Constant Name="_PI_">3.141592653589793</Constant>
+        <Constant Name="_R_">8314.0</Constant>
+        <Constant Name="_T_">300.0</Constant>
+        <Constant Name="antiPCSK9_init_uM">0.36</Constant>
+        <Constant Name="C_init_uM">0.0</Constant>
+        <Constant Name="iPCSK9_init_uM">0.0</Constant>
+        <Constant Name="K_millivolts_per_volt">1000.0</Constant>
+        <Constant Name="Kf_LDL_Binding">0.4133</Constant>
+        <Constant Name="Kf_r0">0.002717</Constant>
+        <Constant Name="Kf_r1">0.0958</Constant>
+        <Constant Name="Kf_r2">0.04133</Constant>
+        <Constant Name="Kf_r3">0.53</Constant>
+        <Constant Name="Kf_r4">0.10883</Constant>
+        <Constant Name="Kf_r5">0.10883</Constant>
+        <Constant Name="Kf_RLP_Endocytosis">0.002717</Constant>
+        <Constant Name="KMOLE">(1.0 / 602.0)</Constant>
+        <Constant Name="Kr_LDL_Binding">0.0059</Constant>
+        <Constant Name="Kr_r0">0.0</Constant>
+        <Constant Name="Kr_r1">6.0E-4</Constant>
+        <Constant Name="Kr_r2">0.0059</Constant>
+        <Constant Name="Kr_r3">1.8E-5</Constant>
+        <Constant Name="Kr_r4">0.0</Constant>
+        <Constant Name="Kr_r5">0.0</Constant>
+        <Constant Name="Kr_RLP_Endocytosis">0.0</Constant>
+        <Constant Name="LDL_init_uM">2000.0</Constant>
+        <Constant Name="Lysosome_init_uM">0.0</Constant>
+        <Constant Name="LysosomeP_init_uM">0.0</Constant>
+        <Constant Name="netValence_LDL_Binding">1.0</Constant>
+        <Constant Name="netValence_r0">1.0</Constant>
+        <Constant Name="netValence_r1">1.0</Constant>
+        <Constant Name="netValence_r2">1.0</Constant>
+        <Constant Name="netValence_r6">1.0</Constant>
+        <Constant Name="netValence_r7">1.0</Constant>
+        <Constant Name="netValence_RLP_Endocytosis">1.0</Constant>
+        <Constant Name="PCSK9_init_uM">0.00714</Constant>
+        <Constant Name="R_init_molecules_um_2">0.11</Constant>
+        <Constant Name="RL_init_molecules_um_2">0.11</Constant>
+        <Constant Name="RLP_init_molecules_um_2">0.11</Constant>
+        <Constant Name="RP_init_molecules_um_2">0.11</Constant>
+        <Constant Name="Size_CM">600.0</Constant>
+        <Constant Name="Size_Cytosol">1000.0</Constant>
+        <Constant Name="Size_Extracellular">8272.0</Constant>
+        <Constant Name="Voltage_CM">0.0</Constant>
+        <VolumeVariable Name="C" Domain="Compartment" />
+        <VolumeVariable Name="iPCSK9" Domain="Compartment" />
+        <VolumeVariable Name="LDL" Domain="Compartment" />
+        <VolumeVariable Name="Lysosome" Domain="Compartment" />
+        <VolumeVariable Name="PCSK9" Domain="Compartment" />
+        <VolumeVariable Name="R" Domain="Compartment" />
+        <VolumeVariable Name="RL" Domain="Compartment" />
+        <VolumeVariable Name="RLP" Domain="Compartment" />
+        <VolumeVariable Name="RP" Domain="Compartment" />
+        <Function Name="antiPCSK9" Domain="Compartment">antiPCSK9_init_uM</Function>
+        <Function Name="J_LDL_Binding" Domain="Compartment">(((Kf_LDL_Binding * LDL) * R) - (Kr_LDL_Binding * RL))</Function>
+        <Function Name="J_r0" Domain="Compartment">((Kf_r0 * RL) - (Kr_r0 * Lysosome))</Function>
+        <Function Name="J_r1" Domain="Compartment">(((Kf_r1 * R) * PCSK9) - (Kr_r1 * RP))</Function>
+        <Function Name="J_r2" Domain="Compartment">(((Kf_r2 * LDL) * RP) - (Kr_r2 * RLP))</Function>
+        <Function Name="J_r3" Domain="Compartment">(((Kf_r3 * antiPCSK9) * PCSK9) - (Kr_r3 * iPCSK9))</Function>
+        <Function Name="J_r4" Domain="Compartment">((Kf_r4 * Lysosome) - ((Kr_r4 * C) * R))</Function>
+        <Function Name="J_r5" Domain="Compartment">((Kf_r5 * LysosomeP) - (Kr_r5 * C))</Function>
+        <Function Name="J_RLP_Endocytosis" Domain="Compartment">((Kf_RLP_Endocytosis * RLP) - (Kr_RLP_Endocytosis * LysosomeP))</Function>
+        <Function Name="K_LysosomeP_total" Domain="Compartment">((Size_Cytosol * LysosomeP_init_uM) + (Size_Cytosol * C_init_uM) + (Size_Cytosol * Lysosome_init_uM) + (Size_Extracellular * LDL_init_uM) + (Size_CM * UnitFactor_uM_um3_molecules_neg_1 * RL_init_molecules_um_2) + (Size_CM * UnitFactor_uM_um3_molecules_neg_1 * RLP_init_molecules_um_2))</Function>
+        <Function Name="KFlux_CM_Cytosol" Domain="Compartment">(Size_CM / Size_Cytosol)</Function>
+        <Function Name="KFlux_CM_Extracellular" Domain="Compartment">(Size_CM / Size_Extracellular)</Function>
+        <Function Name="KFlux_Cytosol_CM" Domain="Compartment">(Size_Cytosol / Size_CM)</Function>
+        <Function Name="LumpedJ_r6" Domain="Compartment">(100.0 + (100.0 / (1.0 + C)))</Function>
+        <Function Name="LumpedJ_r7" Domain="Compartment">(500.0 + (500.0 / (1.0 + C)))</Function>
+        <Function Name="LysosomeP" Domain="Compartment">((K_LysosomeP_total - (Size_Cytosol * C) - (Size_Cytosol * Lysosome) - (Size_Extracellular * LDL) - (Size_CM * UnitFactor_uM_um3_molecules_neg_1 * RL) - (Size_CM * UnitFactor_uM_um3_molecules_neg_1 * RLP)) / Size_Cytosol)</Function>
+        <Function Name="UnitFactor_molecules_um_neg_3_uM_neg_1">(602.0 / 1.0)</Function>
+        <Function Name="UnitFactor_uM_um3_molecules_neg_1">(1.0 / 602.0)</Function>
+        <CompartmentSubDomain Name="Compartment">
+          <BoundaryType Boundary="Xm" Type="Value" />
+          <BoundaryType Boundary="Xp" Type="Value" />
+          <BoundaryType Boundary="Ym" Type="Value" />
+          <BoundaryType Boundary="Yp" Type="Value" />
+          <BoundaryType Boundary="Zm" Type="Value" />
+          <BoundaryType Boundary="Zp" Type="Value" />
+          <OdeEquation Name="C" SolutionType="Unknown">
+            <Rate>(J_r4 + J_r5)</Rate>
+            <Initial>C_init_uM</Initial>
+          </OdeEquation>
+          <OdeEquation Name="Lysosome" SolutionType="Unknown">
+            <Rate>( - J_r4 + (UnitFactor_uM_um3_molecules_neg_1 * KFlux_CM_Cytosol * J_r0))</Rate>
+            <Initial>Lysosome_init_uM</Initial>
+          </OdeEquation>
+          <OdeEquation Name="LDL" SolutionType="Unknown">
+            <Rate>( - (UnitFactor_uM_um3_molecules_neg_1 * KFlux_CM_Extracellular * J_LDL_Binding) - (UnitFactor_uM_um3_molecules_neg_1 * KFlux_CM_Extracellular * J_r2))</Rate>
+            <Initial>LDL_init_uM</Initial>
+          </OdeEquation>
+          <OdeEquation Name="PCSK9" SolutionType="Unknown">
+            <Rate>( - (UnitFactor_uM_um3_molecules_neg_1 * KFlux_CM_Extracellular * J_r1) - J_r3 + (UnitFactor_uM_um3_molecules_neg_1 * KFlux_CM_Extracellular * LumpedJ_r7 / Size_CM))</Rate>
+            <Initial>PCSK9_init_uM</Initial>
+          </OdeEquation>
+          <OdeEquation Name="iPCSK9" SolutionType="Unknown">
+            <Rate>J_r3</Rate>
+            <Initial>iPCSK9_init_uM</Initial>
+          </OdeEquation>
+          <OdeEquation Name="R" SolutionType="Unknown">
+            <Rate>( - J_LDL_Binding - J_r1 + (UnitFactor_molecules_um_neg_3_uM_neg_1 * KFlux_Cytosol_CM * J_r4) + (LumpedJ_r6 / Size_CM))</Rate>
+            <Initial>R_init_molecules_um_2</Initial>
+          </OdeEquation>
+          <OdeEquation Name="RL" SolutionType="Unknown">
+            <Rate>(J_LDL_Binding - J_r0)</Rate>
+            <Initial>RL_init_molecules_um_2</Initial>
+          </OdeEquation>
+          <OdeEquation Name="RLP" SolutionType="Unknown">
+            <Rate>(J_r2 - J_RLP_Endocytosis)</Rate>
+            <Initial>RLP_init_molecules_um_2</Initial>
+          </OdeEquation>
+          <OdeEquation Name="RP" SolutionType="Unknown">
+            <Rate>(J_r1 - J_r2)</Rate>
+            <Initial>RP_init_molecules_um_2</Initial>
+          </OdeEquation>
+        </CompartmentSubDomain>
+        <Version Name="Application0_generated" KeyValue="170515735" BranchId="169923677" Archived="0" Date="23-Nov-2019 18:38:33" FromVersionable="false">
+          <Owner Name="jlbyrd3" Identifier="166472114" />
+          <GroupAccess Type="1" />
+        </Version>
+      </MathDescription>
+      <Simulation Name="Simulation0">
+        <SolverTaskDescription TaskType="Unsteady" UseSymbolicJacobian="false" Solver="Combined Stiff Solver (IDA/CVODE)">
+          <TimeBound StartTime="0.0" EndTime="1000000.0" />
+          <TimeStep DefaultTime="0.1" MinTime="1.0E-8" MaxTime="1.0" />
+          <ErrorTolerance Absolut="1.0E-9" Relative="1.0E-9" />
+          <OutputOptions KeepEvery="10000" KeepAtMost="1000" />
+          <NumberProcessors>1</NumberProcessors>
+        </SolverTaskDescription>
+        <MathOverrides />
+        <Version Name="Simulation0" KeyValue="170515829" BranchId="170381124" Archived="0" Date="23-Nov-2019 18:38:33" FromVersionable="false">
+          <Owner Name="jlbyrd3" Identifier="166472114" />
+          <GroupAccess Type="1" />
+        </Version>
+      </Simulation>
+      <Simulation Name="Copy of Simulation0">
+        <SolverTaskDescription TaskType="Unsteady" UseSymbolicJacobian="false" Solver="Combined Stiff Solver (IDA/CVODE)">
+          <TimeBound StartTime="0.0" EndTime="1000000.0" />
+          <TimeStep DefaultTime="0.1" MinTime="1.0E-8" MaxTime="1.0" />
+          <ErrorTolerance Absolut="1.0E-9" Relative="1.0E-9" />
+          <OutputOptions KeepEvery="10000" KeepAtMost="1000" />
+          <NumberProcessors>1</NumberProcessors>
+        </SolverTaskDescription>
+        <MathOverrides>
+          <Constant Name="antiPCSK9_init_uM" ConstantArraySpec="1000">"0.0", "0.36", "0.72"</Constant>
+        </MathOverrides>
+        <Version Name="Copy of Simulation0" KeyValue="170515831" BranchId="170381343" Archived="0" Date="23-Nov-2019 18:38:33" FromVersionable="false">
+          <Owner Name="jlbyrd3" Identifier="166472114" />
+          <GroupAccess Type="1" />
+        </Version>
+      </Simulation>
+      <Version Name="Application0" KeyValue="170515803" BranchId="169923740" Archived="0" Date="23-Nov-2019 18:38:33" FromVersionable="false">
+        <Owner Name="jlbyrd3" Identifier="166472114" />
+        <GroupAccess Type="1" />
+      </Version>
+      <MicroscopeMeasurement Name="fluor">
+        <ConvolutionKernel Type="ProjectionZKernel" />
+      </MicroscopeMeasurement>
+    </SimulationSpec>
+    <Version Name="LDL Regulation Model" KeyValue="170515833" BranchId="170511907" Archived="0" Date="23-Nov-2019 18:38:33" FromVersionable="false">
+      <Owner Name="jlbyrd3" Identifier="166472114" />
+      <GroupAccess Type="1" />
+    </Version>
+    <pathwayModel>
+      <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:bp="http://www.biopax.org/release/biopax-level3.owl#" version="3.0" />
+    </pathwayModel>
+    <relationshipModel>
+      <RMNS version="3.0" />
+    </relationshipModel>
+    <vcmetadata>
+      <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" />
+      <nonrdfAnnotationList>
+        <nonrdfAnnotation vcid="BioModel(LDL Regulation Model)">
+          <freetext>&lt;html&gt;&#xD;
+  &lt;head&gt;&#xD;
+&#xD;
+  &lt;/head&gt;&#xD;
+  &lt;body&gt;&#xD;
+    &lt;p style="margin-top: 0"&gt;&#xD;
+      &#xD;
+    &lt;/p&gt;&#xD;
+  &lt;/body&gt;&#xD;
+&lt;/html&gt;</freetext>
+        </nonrdfAnnotation>
+      </nonrdfAnnotationList>
+      <uriBindingList />
+    </vcmetadata>
+  </BioModel>
+</vcml>
+

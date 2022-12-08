@@ -1,0 +1,380 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--This biomodel was generated in VCML Version Alpha_Version_7.4.0_build_87-->
+<vcml xmlns="http://sourceforge.net/projects/vcell/vcml" Version="Alpha_Version_7.4.0_build_87">
+  <BioModel Name="test-JHL3">
+    <Model Name="unnamed">
+      <ModelParameters>
+        <Parameter Name="F" Role="user defined" Unit="C.mole-1">
+          96484.6
+          <Annotation>Copied from model : cbit.vcell.model.Model$ModelNameScope@2e528dc8: 'unnamed'</Annotation>
+        </Parameter>
+        <Parameter Name="R" Role="user defined" Unit="cm3.kPa.K-1.mole-1">
+          8314.0
+          <Annotation>Copied from model : cbit.vcell.model.Model$ModelNameScope@2e528dc8: 'unnamed'</Annotation>
+        </Parameter>
+        <Parameter Name="Temp" Role="user defined" Unit="K">
+          310.0
+          <Annotation>Copied from model : cbit.vcell.model.Model$ModelNameScope@2e528dc8: 'unnamed'</Annotation>
+        </Parameter>
+      </ModelParameters>
+      <Compound Name="s0" />
+      <Compound Name="s1" />
+      <Compound Name="s2" />
+      <Compound Name="s3" />
+      <Compound Name="s5" />
+      <Compound Name="s6" />
+      <Feature Name="Matrix" KeyValue="101052018" />
+      <Feature Name="Cyto" KeyValue="101052020" />
+      <Membrane PositiveFeature="Cyto" NegativeFeature="Matrix" MembraneVoltage="Voltage_Mito_Memb" Name="Mito_Memb" KeyValue="101052022" />
+      <LocalizedCompound Name="H_Cyto" CompoundRef="s0" Structure="Cyto" OverrideName="true" KeyValue="101052024" />
+      <LocalizedCompound Name="H_Matrix" CompoundRef="s1" Structure="Matrix" OverrideName="true" KeyValue="101052025" />
+      <LocalizedCompound Name="Na_Cyto" CompoundRef="s2" Structure="Cyto" OverrideName="true" KeyValue="101052026" />
+      <LocalizedCompound Name="Na_Matrix" CompoundRef="s3" Structure="Matrix" OverrideName="true" KeyValue="101052027" />
+      <LocalizedCompound Name="Ca_Cyto" CompoundRef="s5" Structure="Cyto" OverrideName="true" KeyValue="101052028" />
+      <LocalizedCompound Name="Ca_Matrix" CompoundRef="s6" Structure="Matrix" OverrideName="true" KeyValue="101052029" />
+      <SimpleReaction Structure="Mito_Memb" Name="NCX" Reversible="true" FluxOption="MolecularAndElectrical" KeyValue="101052030">
+        <Reactant LocalizedCompoundRef="Na_Cyto" Stoichiometry="3" KeyValue="101052031" />
+        <Reactant LocalizedCompoundRef="Ca_Matrix" Stoichiometry="1" KeyValue="101052032" />
+        <Product LocalizedCompoundRef="Na_Matrix" Stoichiometry="3" KeyValue="101052033" />
+        <Product LocalizedCompoundRef="Ca_Cyto" Stoichiometry="1" KeyValue="101052034" />
+        <Kinetics KineticsType="GeneralKinetics">
+          <Parameter Name="J" Role="reaction rate" Unit="molecules.um-2.s-1">(Vnc * (y1 - y2) / (1.0 + y3 + y4))</Parameter>
+          <Parameter Name="I" Role="inward current density" Unit="pA.um-2">((netValence * _F_ * J) * unitFactor)</Parameter>
+          <Parameter Name="netValence" Role="net charge valence" Unit="1">1.0</Parameter>
+          <Parameter Name="unitFactor" Role="electrical unit factor" Unit="pA.s.mol.molecules-1.C-1">(1.0 / 6.02214179E11)</Parameter>
+          <Parameter Name="y1" Role="user defined" Unit="1">(exp(((0.5 * Voltage_Mito_Memb * _F_) / (_R_ * _T_))) * ((Na_Cyto ^ 3.0) * Ca_Matrix) / ((KNa ^ 3.0) * KCa))</Parameter>
+          <Parameter Name="y2" Role="user defined" Unit="1">(exp((( - 0.5 * Voltage_Mito_Memb * _F_) / (_R_ * _T_))) * ((Na_Matrix ^ 3.0) * Ca_Cyto) / ((KNa ^ 3.0) * KCa))</Parameter>
+          <Parameter Name="Vnc" Role="user defined" Unit="molecules.um-2.s-1">(0.018 * 0.0012 * 0.01863)</Parameter>
+          <Parameter Name="y3" Role="user defined" Unit="1">(((Na_Cyto ^ 3.0) / (KNa ^ 3.0)) + (Ca_Matrix / KCa) + (((Na_Cyto ^ 3.0) * Ca_Matrix) / ((KNa ^ 3.0) * KCa)))</Parameter>
+          <Parameter Name="y4" Role="user defined" Unit="1">(((Na_Matrix ^ 3.0) / (KNa ^ 3.0)) + (Ca_Cyto / KCa) + (((Na_Matrix ^ 3.0) * Ca_Cyto) / ((KNa ^ 3.0) * KCa)))</Parameter>
+          <Parameter Name="KCa" Role="user defined" Unit="uM">9.1E-4</Parameter>
+          <Parameter Name="KNa" Role="user defined" Unit="uM">2.4</Parameter>
+        </Kinetics>
+      </SimpleReaction>
+      <SimpleReaction Structure="Mito_Memb" Name="NHX" Reversible="true" FluxOption="MolecularAndElectrical" KeyValue="101052035">
+        <Reactant LocalizedCompoundRef="H_Cyto" Stoichiometry="1" KeyValue="101052036" />
+        <Reactant LocalizedCompoundRef="Na_Matrix" Stoichiometry="1" KeyValue="101052037" />
+        <Product LocalizedCompoundRef="H_Matrix" Stoichiometry="1" KeyValue="101052038" />
+        <Product LocalizedCompoundRef="Na_Cyto" Stoichiometry="1" KeyValue="101052039" />
+        <Kinetics KineticsType="GeneralKinetics">
+          <Parameter Name="J" Role="reaction rate" Unit="molecules.um-2.s-1">((y1 - y2) / (1.0 + y3))</Parameter>
+          <Parameter Name="I" Role="inward current density" Unit="pA.um-2">((netValence * _F_ * J) * unitFactor)</Parameter>
+          <Parameter Name="netValence" Role="net charge valence" Unit="1">1.0</Parameter>
+          <Parameter Name="unitFactor" Role="electrical unit factor" Unit="pA.s.mol.molecules-1.C-1">(1.0 / 6.02214179E11)</Parameter>
+          <Parameter Name="y1" Role="user defined" Unit="tbd">(Vnah * H_Cyto * Na_Matrix / (KHi * KNam))</Parameter>
+          <Parameter Name="y2" Role="user defined" Unit="tbd">0.0</Parameter>
+          <Parameter Name="y3" Role="user defined" Unit="tbd">0.0</Parameter>
+          <Parameter Name="Vnah" Role="user defined" Unit="tbd">0.0</Parameter>
+          <Parameter Name="KNam" Role="user defined" Unit="tbd">0.0</Parameter>
+          <Parameter Name="KHi" Role="user defined" Unit="tbd">0.0</Parameter>
+        </Kinetics>
+      </SimpleReaction>
+      <FluxStep Name="JFlux" Structure="Mito_Memb" Reversible="true" FluxOption="MolecularAndElectrical" KeyValue="101052040">
+        <Reactant LocalizedCompoundRef="H_Matrix" Stoichiometry="1" KeyValue="101052041" />
+        <Product LocalizedCompoundRef="H_Cyto" Stoichiometry="1" KeyValue="101052042" />
+        <Kinetics KineticsType="GeneralKinetics">
+          <Parameter Name="J" Role="reaction rate" Unit="uM.um.s-1">(gh * (Voltage_Mito_Memb - ((2.303 * _R_ * _T_ / _F_) * log((H_Cyto / H_Matrix)))))</Parameter>
+          <Parameter Name="I" Role="inward current density" Unit="pA.um-2">((netValence * _F_ * J) * unitFactor)</Parameter>
+          <Parameter Name="netValence" Role="net charge valence" Unit="1">1.0</Parameter>
+          <Parameter Name="unitFactor" Role="electrical unit factor" Unit="pA.s.mol.um-3.uM-1.C-1">(1.0 / 1.0E9)</Parameter>
+          <Parameter Name="gh" Role="user defined" Unit="uM.um.s-1.mV-1">1.867E-6</Parameter>
+        </Kinetics>
+      </FluxStep>
+      <FluxStep Name="NS_Current" Structure="Mito_Memb" Reversible="true" FluxOption="MolecularAndElectrical" KeyValue="101052043">
+        <Reactant LocalizedCompoundRef="H_Matrix" Stoichiometry="1" KeyValue="101052044" />
+        <Product LocalizedCompoundRef="H_Cyto" Stoichiometry="1" KeyValue="101052045" />
+        <Kinetics KineticsType="NernstKinetics">
+          <Parameter Name="I" Role="inward current density" Unit="pA.um-2">(C * ((((_R_ * _T_) / (carrierValence * _F_)) * log((H_Matrix / H_Cyto))) - Voltage_Mito_Memb))</Parameter>
+          <Parameter Name="J" Role="reaction rate" Unit="uM.um.s-1">((I / (carrierValence * _F_)) * unitFactor)</Parameter>
+          <Parameter Name="carrierValence" Role="flux carrier valence" Unit="1">1.0</Parameter>
+          <Parameter Name="C" Role="conductivity" Unit="nS.um-2">1.867E-6</Parameter>
+          <Parameter Name="unitFactor" Role="electrical unit factor" Unit="uM.um3.C.s-1.pA-1.mol-1">(1.0E9 / 1.0)</Parameter>
+        </Kinetics>
+      </FluxStep>
+      <Diagram Name="c1" Structure="Cyto">
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="Ca_Matrix" LocationX="20" LocationY="136" />
+        <FluxReactionShape NodeReferenceModeAttrTag="full" FluxReactionRef="NS_Current" LocationX="61" LocationY="25" />
+        <FluxReactionShape NodeReferenceModeAttrTag="full" FluxReactionRef="JFlux" LocationX="53" LocationY="58" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="full" SimpleReactionRef="NCX" LocationX="47" LocationY="122" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="Ca_Cyto" LocationX="145" LocationY="156" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="full" SimpleReactionRef="NHX" LocationX="43" LocationY="87" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="H_Matrix" LocationX="47" LocationY="54" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="Na_Cyto" LocationX="140" LocationY="95" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="H_Cyto" LocationX="134" LocationY="44" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="Na_Matrix" LocationX="31" LocationY="100" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="Ca_Matrix" LocationX="20" LocationY="136" />
+        <FluxReactionShape NodeReferenceModeAttrTag="molecule" FluxReactionRef="NS_Current" LocationX="61" LocationY="25" />
+        <FluxReactionShape NodeReferenceModeAttrTag="molecule" FluxReactionRef="JFlux" LocationX="53" LocationY="58" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="molecule" SimpleReactionRef="NCX" LocationX="47" LocationY="122" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="Ca_Cyto" LocationX="145" LocationY="156" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="molecule" SimpleReactionRef="NHX" LocationX="43" LocationY="87" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="H_Matrix" LocationX="47" LocationY="54" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="Na_Cyto" LocationX="140" LocationY="95" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="H_Cyto" LocationX="134" LocationY="44" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="Na_Matrix" LocationX="31" LocationY="100" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="Ca_Matrix" LocationX="20" LocationY="136" />
+        <FluxReactionShape NodeReferenceModeAttrTag="rule" FluxReactionRef="NS_Current" LocationX="61" LocationY="25" />
+        <FluxReactionShape NodeReferenceModeAttrTag="rule" FluxReactionRef="JFlux" LocationX="53" LocationY="58" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="rule" SimpleReactionRef="NCX" LocationX="47" LocationY="122" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="Ca_Cyto" LocationX="145" LocationY="156" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="rule" SimpleReactionRef="NHX" LocationX="43" LocationY="87" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="H_Matrix" LocationX="47" LocationY="54" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="Na_Cyto" LocationX="140" LocationY="95" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="H_Cyto" LocationX="134" LocationY="44" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="Na_Matrix" LocationX="31" LocationY="100" />
+      </Diagram>
+      <Diagram Name="m0" Structure="Mito_Memb">
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="Ca_Matrix" LocationX="20" LocationY="136" />
+        <FluxReactionShape NodeReferenceModeAttrTag="full" FluxReactionRef="NS_Current" LocationX="61" LocationY="25" />
+        <FluxReactionShape NodeReferenceModeAttrTag="full" FluxReactionRef="JFlux" LocationX="53" LocationY="58" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="full" SimpleReactionRef="NCX" LocationX="47" LocationY="122" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="Ca_Cyto" LocationX="145" LocationY="156" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="full" SimpleReactionRef="NHX" LocationX="43" LocationY="87" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="H_Matrix" LocationX="47" LocationY="54" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="Na_Cyto" LocationX="140" LocationY="95" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="H_Cyto" LocationX="134" LocationY="44" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="Na_Matrix" LocationX="31" LocationY="100" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="Ca_Matrix" LocationX="20" LocationY="136" />
+        <FluxReactionShape NodeReferenceModeAttrTag="molecule" FluxReactionRef="NS_Current" LocationX="61" LocationY="25" />
+        <FluxReactionShape NodeReferenceModeAttrTag="molecule" FluxReactionRef="JFlux" LocationX="53" LocationY="58" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="molecule" SimpleReactionRef="NCX" LocationX="47" LocationY="122" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="Ca_Cyto" LocationX="145" LocationY="156" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="molecule" SimpleReactionRef="NHX" LocationX="43" LocationY="87" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="H_Matrix" LocationX="47" LocationY="54" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="Na_Cyto" LocationX="140" LocationY="95" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="H_Cyto" LocationX="134" LocationY="44" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="Na_Matrix" LocationX="31" LocationY="100" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="Ca_Matrix" LocationX="20" LocationY="136" />
+        <FluxReactionShape NodeReferenceModeAttrTag="rule" FluxReactionRef="NS_Current" LocationX="61" LocationY="25" />
+        <FluxReactionShape NodeReferenceModeAttrTag="rule" FluxReactionRef="JFlux" LocationX="53" LocationY="58" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="rule" SimpleReactionRef="NCX" LocationX="47" LocationY="122" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="Ca_Cyto" LocationX="145" LocationY="156" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="rule" SimpleReactionRef="NHX" LocationX="43" LocationY="87" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="H_Matrix" LocationX="47" LocationY="54" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="Na_Cyto" LocationX="140" LocationY="95" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="H_Cyto" LocationX="134" LocationY="44" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="Na_Matrix" LocationX="31" LocationY="100" />
+      </Diagram>
+      <Diagram Name="c0" Structure="Matrix">
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="Ca_Matrix" LocationX="20" LocationY="136" />
+        <FluxReactionShape NodeReferenceModeAttrTag="full" FluxReactionRef="NS_Current" LocationX="61" LocationY="25" />
+        <FluxReactionShape NodeReferenceModeAttrTag="full" FluxReactionRef="JFlux" LocationX="53" LocationY="58" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="full" SimpleReactionRef="NCX" LocationX="47" LocationY="122" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="Ca_Cyto" LocationX="145" LocationY="156" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="full" SimpleReactionRef="NHX" LocationX="43" LocationY="87" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="H_Matrix" LocationX="47" LocationY="54" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="Na_Cyto" LocationX="140" LocationY="95" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="H_Cyto" LocationX="134" LocationY="44" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="Na_Matrix" LocationX="31" LocationY="100" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="Ca_Matrix" LocationX="20" LocationY="136" />
+        <FluxReactionShape NodeReferenceModeAttrTag="molecule" FluxReactionRef="NS_Current" LocationX="61" LocationY="25" />
+        <FluxReactionShape NodeReferenceModeAttrTag="molecule" FluxReactionRef="JFlux" LocationX="53" LocationY="58" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="molecule" SimpleReactionRef="NCX" LocationX="47" LocationY="122" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="Ca_Cyto" LocationX="145" LocationY="156" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="molecule" SimpleReactionRef="NHX" LocationX="43" LocationY="87" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="H_Matrix" LocationX="47" LocationY="54" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="Na_Cyto" LocationX="140" LocationY="95" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="H_Cyto" LocationX="134" LocationY="44" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="Na_Matrix" LocationX="31" LocationY="100" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="Ca_Matrix" LocationX="20" LocationY="136" />
+        <FluxReactionShape NodeReferenceModeAttrTag="rule" FluxReactionRef="NS_Current" LocationX="61" LocationY="25" />
+        <FluxReactionShape NodeReferenceModeAttrTag="rule" FluxReactionRef="JFlux" LocationX="53" LocationY="58" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="rule" SimpleReactionRef="NCX" LocationX="47" LocationY="122" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="Ca_Cyto" LocationX="145" LocationY="156" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="rule" SimpleReactionRef="NHX" LocationX="43" LocationY="87" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="H_Matrix" LocationX="47" LocationY="54" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="Na_Cyto" LocationX="140" LocationY="95" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="H_Cyto" LocationX="134" LocationY="44" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="Na_Matrix" LocationX="31" LocationY="100" />
+      </Diagram>
+      <Version Name="unnamed" KeyValue="101052010" BranchId="100662166" Archived="0" Date="20-Jun-2016 17:39:57" FromVersionable="false">
+        <Owner Name="nasrin" Identifier="98619315" />
+        <GroupAccess Type="1" />
+      </Version>
+      <ModelUnitSystem VolumeSubstanceUnit="uM.um3" MembraneSubstanceUnit="molecules" LumpedReactionSubstanceUnit="molecules" VolumeUnit="um3" AreaUnit="um2" LengthUnit="um" TimeUnit="s" />
+    </Model>
+    <SimulationSpec Name="Application0" Stochastic="false" UseConcentration="true" RuleBased="false" MassConservationModelReduction="true" InsufficientIterations="false" InsufficientMaxMolecules="false">
+      <NetworkConstraints RbmMaxIteration="3" RbmMaxMoleculesPerSpecies="10" RbmSpeciesLimit="800" RbmReactionsLimit="2500" />
+      <Annotation />
+      <Geometry Name="non-spatial1999406376" Dimension="0">
+        <Extent X="10.0" Y="10.0" Z="10.0" />
+        <Origin X="0.0" Y="0.0" Z="0.0" />
+        <SubVolume Name="Compartment" Handle="0" Type="Compartmental" KeyValue="100662161" />
+        <Version Name="non-spatial1999406376" KeyValue="100662157" BranchId="100662158" Archived="0" Date="02-Jun-2016 15:55:56" FromVersionable="false">
+          <Owner Name="nasrin" Identifier="98619315" />
+          <GroupAccess Type="1" />
+        </Version>
+      </Geometry>
+      <GeometryContext>
+        <FeatureMapping Feature="Matrix" GeometryClass="Compartment" SubVolume="Compartment" Size="0.3">
+          <BoundariesTypes Xm="Flux" Xp="Flux" Ym="Flux" Yp="Flux" Zm="Flux" Zp="Flux" />
+        </FeatureMapping>
+        <FeatureMapping Feature="Cyto" GeometryClass="Compartment" SubVolume="Compartment" Size="100.0">
+          <BoundariesTypes Xm="Flux" Xp="Flux" Ym="Flux" Yp="Flux" Zm="Flux" Zp="Flux" />
+        </FeatureMapping>
+        <MembraneMapping Membrane="Mito_Memb" Size="22.0" CalculateVoltage="true" SpecificCapacitance="0.35" InitialVoltage="-190.0" GeometryClass="Compartment">
+          <BoundariesTypes Xm="Flux" Xp="Flux" Ym="Flux" Yp="Flux" Zm="Flux" Zp="Flux" />
+        </MembraneMapping>
+      </GeometryContext>
+      <ReactionContext>
+        <LocalizedCompoundSpec LocalizedCompoundRef="H_Matrix" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>(6.28 * (10.0 ^  - 5.0))</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="Na_Matrix" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>(2.2 * (10.0 ^ 3.0))</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="Ca_Matrix" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>0.0</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="H_Cyto" ForceConstant="true" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>(10.0 ^  - 4.1)</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="Na_Cyto" ForceConstant="true" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>10.0</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="Ca_Cyto" ForceConstant="true" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>(1.0 * (10.0 ^  - 1.0))</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <ReactionSpec ReactionStepRef="NCX" ReactionMapping="included" />
+        <ReactionSpec ReactionStepRef="NHX" ReactionMapping="included" />
+        <ReactionSpec ReactionStepRef="JFlux" ReactionMapping="included" />
+        <ReactionSpec ReactionStepRef="NS_Current" ReactionMapping="excluded" />
+      </ReactionContext>
+      <MathDescription Name="Application0_generated">
+        <Constant Name="_F_">96480.0</Constant>
+        <Constant Name="_F_nmol_">9.648E-5</Constant>
+        <Constant Name="_K_GHK_">1.0E-9</Constant>
+        <Constant Name="_N_pmol_">6.02E11</Constant>
+        <Constant Name="_PI_">3.141592653589793</Constant>
+        <Constant Name="_R_">8314.0</Constant>
+        <Constant Name="_T_">300.0</Constant>
+        <Constant Name="C_Mito_Memb">0.35</Constant>
+        <Constant Name="Ca_Matrix_init_uM">0.0</Constant>
+        <Constant Name="F">96484.6</Constant>
+        <Constant Name="gh">1.867E-6</Constant>
+        <Constant Name="I_Mito_Memb">0.0</Constant>
+        <Constant Name="K_millivolts_per_volt">1000.0</Constant>
+        <Constant Name="KCa">9.1E-4</Constant>
+        <Constant Name="KHi">0.0</Constant>
+        <Constant Name="KMOLE">(1.0 / 602.0)</Constant>
+        <Constant Name="KNa">2.4</Constant>
+        <Constant Name="KNam">0.0</Constant>
+        <Constant Name="Na_Cyto_init_uM">10.0</Constant>
+        <Constant Name="netValence_JFlux">1.0</Constant>
+        <Constant Name="netValence_NCX">1.0</Constant>
+        <Constant Name="netValence_NHX">1.0</Constant>
+        <Constant Name="R">8314.0</Constant>
+        <Constant Name="Size_Cyto">100.0</Constant>
+        <Constant Name="Size_Matrix">0.3</Constant>
+        <Constant Name="Size_Mito_Memb">22.0</Constant>
+        <Constant Name="Temp">310.0</Constant>
+        <Constant Name="Vnah">0.0</Constant>
+        <Constant Name="Voltage_Mito_Memb_init">-190.0</Constant>
+        <Constant Name="y2_NHX">0.0</Constant>
+        <Constant Name="y3_NHX">0.0</Constant>
+        <VolumeVariable Name="Ca_Matrix" Domain="Compartment" />
+        <VolumeVariable Name="H_Matrix" Domain="Compartment" />
+        <VolumeVariable Name="Na_Matrix" Domain="Compartment" />
+        <VolumeVariable Name="Voltage_Mito_Memb" Domain="Compartment" />
+        <Function Name="Ca_Cyto" Domain="Compartment">Ca_Cyto_init_uM</Function>
+        <Function Name="Ca_Cyto_init_uM" Domain="Compartment">(1.0 * (10.0 ^  - 1.0))</Function>
+        <Function Name="device_Mito_Memb.Capacitance" Domain="Compartment">(C_Mito_Memb * Size_Mito_Memb)</Function>
+        <Function Name="F_Mito_Memb" Domain="Compartment">( - (I_NCX * Size_Mito_Memb) - (I_NHX * Size_Mito_Memb) - (I_JFlux * Size_Mito_Memb))</Function>
+        <Function Name="H_Cyto" Domain="Compartment">H_Cyto_init_uM</Function>
+        <Function Name="H_Cyto_init_uM" Domain="Compartment">(10.0 ^  - 4.1)</Function>
+        <Function Name="H_Matrix_init_uM" Domain="Compartment">(6.28 * (10.0 ^  - 5.0))</Function>
+        <Function Name="I_JFlux" Domain="Compartment">((netValence_JFlux * _F_ * J_JFlux) * unitFactor_JFlux)</Function>
+        <Function Name="I_NCX" Domain="Compartment">((netValence_NCX * _F_ * J_NCX) * unitFactor_NCX)</Function>
+        <Function Name="I_NHX" Domain="Compartment">((netValence_NHX * _F_ * J_NHX) * unitFactor_NHX)</Function>
+        <Function Name="J_JFlux" Domain="Compartment">(gh * (Voltage_Mito_Memb - ((2.303 * _R_ * _T_ / _F_) * log((H_Cyto / H_Matrix)))))</Function>
+        <Function Name="J_NCX" Domain="Compartment">(Vnc * (y1_NCX - y2_NCX) / (1.0 + y3_NCX + y4))</Function>
+        <Function Name="J_NHX" Domain="Compartment">((y1_NHX - y2_NHX) / (1.0 + y3_NHX))</Function>
+        <Function Name="KFlux_Mito_Memb_Matrix" Domain="Compartment">(Size_Mito_Memb / Size_Matrix)</Function>
+        <Function Name="Na_Cyto" Domain="Compartment">Na_Cyto_init_uM</Function>
+        <Function Name="Na_Matrix_init_uM" Domain="Compartment">(2.2 * (10.0 ^ 3.0))</Function>
+        <Function Name="unitFactor_JFlux" Domain="Compartment">(1.0 / 9.99999999E8)</Function>
+        <Function Name="UnitFactor_mV_pF_s_neg_1_pA_neg_1">(1000.0 / 1.0)</Function>
+        <Function Name="unitFactor_NCX" Domain="Compartment">(1.0 / 6.01999999398E11)</Function>
+        <Function Name="unitFactor_NHX" Domain="Compartment">(1.0 / 6.01999999398E11)</Function>
+        <Function Name="UnitFactor_uM_um3_molecules_neg_1">(1.0 / 602.0)</Function>
+        <Function Name="Vnc" Domain="Compartment">(0.018 * 0.0012 * 0.01863)</Function>
+        <Function Name="y1_NCX" Domain="Compartment">(exp(((0.5 * Voltage_Mito_Memb * _F_) / (_R_ * _T_))) * ((Na_Cyto ^ 3.0) * Ca_Matrix) / ((KNa ^ 3.0) * KCa))</Function>
+        <Function Name="y1_NHX" Domain="Compartment">(Vnah * H_Cyto * Na_Matrix / (KHi * KNam))</Function>
+        <Function Name="y2_NCX" Domain="Compartment">(exp((( - 0.5 * Voltage_Mito_Memb * _F_) / (_R_ * _T_))) * ((Na_Matrix ^ 3.0) * Ca_Cyto) / ((KNa ^ 3.0) * KCa))</Function>
+        <Function Name="y3_NCX" Domain="Compartment">(((Na_Cyto ^ 3.0) / (KNa ^ 3.0)) + (Ca_Matrix / KCa) + (((Na_Cyto ^ 3.0) * Ca_Matrix) / ((KNa ^ 3.0) * KCa)))</Function>
+        <Function Name="y4" Domain="Compartment">(((Na_Matrix ^ 3.0) / (KNa ^ 3.0)) + (Ca_Cyto / KCa) + (((Na_Matrix ^ 3.0) * Ca_Cyto) / ((KNa ^ 3.0) * KCa)))</Function>
+        <CompartmentSubDomain Name="Compartment">
+          <BoundaryType Boundary="Xm" Type="Value" />
+          <BoundaryType Boundary="Xp" Type="Value" />
+          <BoundaryType Boundary="Ym" Type="Value" />
+          <BoundaryType Boundary="Yp" Type="Value" />
+          <BoundaryType Boundary="Zm" Type="Value" />
+          <BoundaryType Boundary="Zp" Type="Value" />
+          <OdeEquation Name="H_Matrix" SolutionType="Unknown">
+            <Rate>((UnitFactor_uM_um3_molecules_neg_1 * KFlux_Mito_Memb_Matrix * J_NHX) - (KFlux_Mito_Memb_Matrix * J_JFlux))</Rate>
+            <Initial>H_Matrix_init_uM</Initial>
+          </OdeEquation>
+          <OdeEquation Name="Na_Matrix" SolutionType="Unknown">
+            <Rate>((3.0 * UnitFactor_uM_um3_molecules_neg_1 * KFlux_Mito_Memb_Matrix * J_NCX) - (UnitFactor_uM_um3_molecules_neg_1 * KFlux_Mito_Memb_Matrix * J_NHX))</Rate>
+            <Initial>Na_Matrix_init_uM</Initial>
+          </OdeEquation>
+          <OdeEquation Name="Ca_Matrix" SolutionType="Unknown">
+            <Rate>- (UnitFactor_uM_um3_molecules_neg_1 * KFlux_Mito_Memb_Matrix * J_NCX)</Rate>
+            <Initial>Ca_Matrix_init_uM</Initial>
+          </OdeEquation>
+          <OdeEquation Name="Voltage_Mito_Memb" SolutionType="Unknown">
+            <Rate>((UnitFactor_mV_pF_s_neg_1_pA_neg_1 / device_Mito_Memb.Capacitance) * (I_Mito_Memb - ( - (I_NCX * Size_Mito_Memb) - (I_NHX * Size_Mito_Memb) - (I_JFlux * Size_Mito_Memb))))</Rate>
+            <Initial>Voltage_Mito_Memb_init</Initial>
+          </OdeEquation>
+        </CompartmentSubDomain>
+        <Version Name="Application0_generated" KeyValue="101050978" BranchId="100662163" Archived="0" Date="20-Jun-2016 17:27:17" FromVersionable="false">
+          <Owner Name="nasrin" Identifier="98619315" />
+          <GroupAccess Type="1" />
+        </Version>
+      </MathDescription>
+      <Simulation Name="Simulation0">
+        <SolverTaskDescription TaskType="Unsteady" UseSymbolicJacobian="false" Solver="Combined Stiff Solver (IDA/CVODE)">
+          <TimeBound StartTime="0.0" EndTime="10.0" />
+          <TimeStep DefaultTime="0.1" MinTime="1.0E-8" MaxTime="1.0" />
+          <ErrorTolerance Absolut="1.0E-9" Relative="1.0E-9" />
+          <OutputOptions KeepEvery="1" KeepAtMost="1000" />
+          <NumberProcessors>1</NumberProcessors>
+        </SolverTaskDescription>
+        <MathOverrides />
+        <Version Name="Simulation0" KeyValue="101051035" BranchId="100662194" Archived="0" Date="20-Jun-2016 17:27:17" FromVersionable="false">
+          <Owner Name="nasrin" Identifier="98619315" />
+          <GroupAccess Type="1" />
+        </Version>
+      </Simulation>
+      <Version Name="Application0" KeyValue="101052050" BranchId="100662185" Archived="0" Date="20-Jun-2016 17:39:57" FromVersionable="false">
+        <Owner Name="nasrin" Identifier="98619315" />
+        <GroupAccess Type="1" />
+      </Version>
+      <MicroscopeMeasurement Name="fluor">
+        <ConvolutionKernel Type="ProjectionZKernel" />
+      </MicroscopeMeasurement>
+    </SimulationSpec>
+    <Version Name="test-JHL3" KeyValue="101052065" BranchId="100662197" Archived="0" Date="20-Jun-2016 17:39:57" FromVersionable="false">
+      <Owner Name="nasrin" Identifier="98619315" />
+      <GroupAccess Type="0" />
+    </Version>
+    <pathwayModel>
+      <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:bp="http://www.biopax.org/release/biopax-level3.owl#" version="3.0" />
+    </pathwayModel>
+    <relationshipModel>
+      <RMNS version="3.0" />
+    </relationshipModel>
+    <vcmetadata>
+      <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" />
+      <nonrdfAnnotationList />
+      <uriBindingList />
+    </vcmetadata>
+  </BioModel>
+</vcml>
+

@@ -1,0 +1,701 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--This biomodel was generated in VCML Version Alpha_Version_7.4.0_build_87-->
+<vcml xmlns="http://sourceforge.net/projects/vcell/vcml" Version="Alpha_Version_7.4.0_build_87">
+  <BioModel Name="CM_PM25628036_MB1::GEF_activation">
+    <Annotation>cloned from 'CM_PM25628036_MB1::GEF_activation' owned by user ModelBrick</Annotation>
+    <Model Name="unnamed">
+      <Annotation>cloned from 'unnamed' owned by user ModelBrick</Annotation>
+      <ModelParameters>
+        <Parameter Name="k3" Role="user defined" Unit="min-1">0.5</Parameter>
+        <Parameter Name="k2" Role="user defined" Unit="min-1">0.1</Parameter>
+        <Parameter Name="kcatGEF" Role="user defined" Unit="min-1">5.64</Parameter>
+        <Parameter Name="KmGEFRho" Role="user defined" Unit="umol.l-1">24.5</Parameter>
+        <Parameter Name="KmGEFGDI" Role="user defined" Unit="umol.l-1">1.0</Parameter>
+        <Parameter Name="k1" Role="user defined" Unit="l.umol-1.min-1">1.0</Parameter>
+      </ModelParameters>
+      <Compound Name="s1">
+        <Annotation>s1</Annotation>
+      </Compound>
+      <Compound Name="s3">
+        <Annotation>s3</Annotation>
+      </Compound>
+      <Compound Name="s4">
+        <Annotation>s4</Annotation>
+      </Compound>
+      <Feature Name="cell" KeyValue="211583269" />
+      <LocalizedCompound Name="Activator" SbmlName="Activator" CompoundRef="s1" Structure="cell" OverrideName="true" KeyValue="211583271">
+        <SpeciesPattern>
+          <MolecularTypePattern Index="1">
+            <MolecularType Name="Activator" />
+          </MolecularTypePattern>
+        </SpeciesPattern>
+      </LocalizedCompound>
+      <LocalizedCompound Name="GEF" SbmlName="GEF" CompoundRef="s3" Structure="cell" OverrideName="true" KeyValue="211583272">
+        <SpeciesPattern>
+          <MolecularTypePattern Index="1">
+            <MolecularType Name="RhoGEF" />
+            <ComponentPattern MolecularComponent="Active" ComponentStatePattern="no" BondType="-" />
+          </MolecularTypePattern>
+        </SpeciesPattern>
+      </LocalizedCompound>
+      <LocalizedCompound Name="Active_GEF" SbmlName="Active GEF" CompoundRef="s4" Structure="cell" OverrideName="true" KeyValue="211583273">
+        <SpeciesPattern>
+          <MolecularTypePattern Index="1">
+            <MolecularType Name="RhoGEF" />
+            <ComponentPattern MolecularComponent="Active" ComponentStatePattern="yes" BondType="-" />
+          </MolecularTypePattern>
+        </SpeciesPattern>
+      </LocalizedCompound>
+      <SimpleReaction Structure="cell" Name="GEF_activation" Reversible="false" FluxOption="MolecularOnly" KeyValue="211583274">
+        <Reactant LocalizedCompoundRef="GEF" Stoichiometry="1" KeyValue="211583275" />
+        <Product LocalizedCompoundRef="Active_GEF" Stoichiometry="1" KeyValue="211583276" />
+        <Modifier LocalizedCompoundRef="Activator" />
+        <Kinetics KineticsType="GeneralKinetics">
+          <Parameter Name="J" Role="reaction rate" Unit="umol.l-1.min-1">(Activator * GEF * k1)</Parameter>
+        </Kinetics>
+      </SimpleReaction>
+      <SimpleReaction Structure="cell" Name="GEF_inactivation" Reversible="false" FluxOption="MolecularOnly" KeyValue="211583278">
+        <Reactant LocalizedCompoundRef="Active_GEF" Stoichiometry="1" KeyValue="211583279" />
+        <Product LocalizedCompoundRef="GEF" Stoichiometry="1" KeyValue="211583280" />
+        <Kinetics KineticsType="GeneralKinetics">
+          <Parameter Name="J" Role="reaction rate" Unit="umol.l-1.min-1">(Active_GEF * k2)</Parameter>
+        </Kinetics>
+      </SimpleReaction>
+      <SimpleReaction Structure="cell" Name="Activator_degradation" Reversible="false" FluxOption="MolecularOnly" KeyValue="211583281">
+        <Reactant LocalizedCompoundRef="Activator" Stoichiometry="1" KeyValue="211583282" />
+        <Kinetics KineticsType="GeneralKinetics">
+          <Parameter Name="J" Role="reaction rate" Unit="umol.l-1.min-1">(Activator * k3)</Parameter>
+        </Kinetics>
+      </SimpleReaction>
+      <RbmModelContainer>
+        <MolecularTypeList>
+          <MolecularType Name="Activator" AnchorAll="true" />
+          <MolecularType Name="RhoGEF" AnchorAll="true">
+            <MolecularComponent Name="Active" Index="1">
+              <AllowableState Name="no" />
+              <AllowableState Name="yes" />
+            </MolecularComponent>
+          </MolecularType>
+        </MolecularTypeList>
+        <RbmObservableList>
+          <Observable Name="O0_Activator_tot" ObservableType="Molecules" Sequence="Multimolecular" LengthEqual="2" LengthGreater="1" Structure="cell">
+            <SpeciesPattern>
+              <MolecularTypePattern Index="1">
+                <MolecularType Name="Activator" />
+              </MolecularTypePattern>
+            </SpeciesPattern>
+          </Observable>
+          <Observable Name="O0_RhoGEF_tot" ObservableType="Molecules" Sequence="Multimolecular" LengthEqual="2" LengthGreater="1" Structure="cell">
+            <SpeciesPattern>
+              <MolecularTypePattern Index="1">
+                <MolecularType Name="RhoGEF" />
+                <ComponentPattern MolecularComponent="Active" Any="true" BondType="?" />
+              </MolecularTypePattern>
+            </SpeciesPattern>
+          </Observable>
+        </RbmObservableList>
+      </RbmModelContainer>
+      <Diagram Name="default" Structure="cell">
+        <SimpleReactionShape NodeReferenceModeAttrTag="full" SimpleReactionRef="GEF_activation" LocationX="219" LocationY="102" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="GEF" LocationX="258" LocationY="73" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="full" SimpleReactionRef="GEF_inactivation" LocationX="308" LocationY="101" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="Active_GEF" LocationX="263" LocationY="120" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="Activator" LocationX="163" LocationY="101" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="full" SimpleReactionRef="Activator_degradation" LocationX="102" LocationY="101" />
+      </Diagram>
+      <Version Name="unnamed" KeyValue="211583263" BranchId="211583264" Archived="0" Date="20-Jul-2021 18:50:16" FromVersionable="false">
+        <Owner Name="Sanyu" Identifier="210592880" />
+        <GroupAccess Type="1" />
+        <Annotation>cloned from 'unnamed' owned by user ModelBrick</Annotation>
+      </Version>
+      <ModelUnitSystem VolumeSubstanceUnit="umol" MembraneSubstanceUnit="umol" LumpedReactionSubstanceUnit="umol" VolumeUnit="l" AreaUnit="m2" LengthUnit="m" TimeUnit="min" />
+    </Model>
+    <SimulationSpec Name="Canonical Application" Stochastic="false" UseConcentration="true" RuleBased="false" MassConservationModelReduction="true" InsufficientIterations="false" InsufficientMaxMolecules="false">
+      <NetworkConstraints RbmMaxIteration="3" RbmMaxMoleculesPerSpecies="10" RbmSpeciesLimit="800" RbmReactionsLimit="2500">
+        <MaxStoichiometry MolecularType="Activator" Integer="100" />
+        <MaxStoichiometry MolecularType="RhoGEF" Integer="100" />
+      </NetworkConstraints>
+      <Annotation>cloned from 'Canonical Application' owned by user ModelBrick</Annotation>
+      <Geometry Name="Compartmental1466267146" Dimension="0">
+        <Annotation>cloned from 'Compartmental1466267146' owned by user ModelBrick</Annotation>
+        <Extent X="10.0" Y="10.0" Z="10.0" />
+        <Origin X="0.0" Y="0.0" Z="0.0" />
+        <SubVolume Name="Compartment" Handle="0" Type="Compartmental" KeyValue="211583259" />
+        <Version Name="Compartmental1466267146" KeyValue="211583255" BranchId="211583256" Archived="0" Date="20-Jul-2021 18:50:16" FromVersionable="false">
+          <Owner Name="Sanyu" Identifier="210592880" />
+          <GroupAccess Type="1" />
+          <Annotation>cloned from 'Compartmental1466267146' owned by user ModelBrick</Annotation>
+        </Version>
+      </Geometry>
+      <GeometryContext>
+        <FeatureMapping Feature="cell" GeometryClass="Compartment" SubVolume="Compartment" Size="1.0">
+          <BoundariesTypes Xm="Flux" Xp="Flux" Ym="Flux" Yp="Flux" Zm="Flux" Zp="Flux" />
+        </FeatureMapping>
+      </GeometryContext>
+      <ReactionContext>
+        <LocalizedCompoundSpec LocalizedCompoundRef="Activator" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>1.0</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="GEF" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>0.31</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="Active_GEF" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>0.0</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <ReactionSpec ReactionStepRef="GEF_activation" ReactionMapping="included" />
+        <ReactionSpec ReactionStepRef="GEF_inactivation" ReactionMapping="included" />
+        <ReactionSpec ReactionStepRef="Activator_degradation" ReactionMapping="included" />
+      </ReactionContext>
+      <MathDescription Name="Copy of Copy of Copy of unnamed_generated">
+        <Annotation>cloned from 'Copy of Copy of Copy of unnamed_generated' owned by user ModelBrick</Annotation>
+        <Constant Name="_F_">96485.3321</Constant>
+        <Constant Name="_F_nmol_">9.64853321E-5</Constant>
+        <Constant Name="_K_GHK_">1.0E-9</Constant>
+        <Constant Name="_N_pmol_">6.02214179E11</Constant>
+        <Constant Name="_PI_">3.141592653589793</Constant>
+        <Constant Name="_R_">8314.46261815</Constant>
+        <Constant Name="_T_">300.0</Constant>
+        <Constant Name="Activator_init_umol_l_1">1.0</Constant>
+        <Constant Name="Active_GEF_init_umol_l_1">0.0</Constant>
+        <Constant Name="GEF_init_umol_l_1">0.31</Constant>
+        <Constant Name="k1">1.0</Constant>
+        <Constant Name="k2">0.1</Constant>
+        <Constant Name="k3">0.5</Constant>
+        <Constant Name="K_millivolts_per_volt">1000.0</Constant>
+        <Constant Name="kcatGEF">5.64</Constant>
+        <Constant Name="KmGEFGDI">1.0</Constant>
+        <Constant Name="KmGEFRho">24.5</Constant>
+        <Constant Name="KMOLE">0.001660538783162726</Constant>
+        <Constant Name="Size_cell">1.0</Constant>
+        <VolumeVariable Name="Activator" Domain="Compartment" />
+        <VolumeVariable Name="Active_GEF" Domain="Compartment" />
+        <Function Name="GEF" Domain="Compartment">((K_GEF_total - (Size_cell * Active_GEF)) / Size_cell)</Function>
+        <Function Name="J_Activator_degradation" Domain="Compartment">(Activator * k3)</Function>
+        <Function Name="J_GEF_activation" Domain="Compartment">(Activator * GEF * k1)</Function>
+        <Function Name="J_GEF_inactivation" Domain="Compartment">(Active_GEF * k2)</Function>
+        <Function Name="K_GEF_total" Domain="Compartment">((Size_cell * GEF_init_umol_l_1) + (Size_cell * Active_GEF_init_umol_l_1))</Function>
+        <CompartmentSubDomain Name="Compartment">
+          <BoundaryType Boundary="Xm" Type="Value" />
+          <BoundaryType Boundary="Xp" Type="Value" />
+          <BoundaryType Boundary="Ym" Type="Value" />
+          <BoundaryType Boundary="Yp" Type="Value" />
+          <BoundaryType Boundary="Zm" Type="Value" />
+          <BoundaryType Boundary="Zp" Type="Value" />
+          <OdeEquation Name="Activator" SolutionType="Unknown">
+            <Rate>- J_Activator_degradation</Rate>
+            <Initial>Activator_init_umol_l_1</Initial>
+          </OdeEquation>
+          <OdeEquation Name="Active_GEF" SolutionType="Unknown">
+            <Rate>(J_GEF_activation - J_GEF_inactivation)</Rate>
+            <Initial>Active_GEF_init_umol_l_1</Initial>
+          </OdeEquation>
+        </CompartmentSubDomain>
+        <Version Name="Copy of Copy of Copy of unnamed_generated" KeyValue="211583260" BranchId="211583261" Archived="0" Date="20-Jul-2021 18:50:16" FromVersionable="false">
+          <Owner Name="Sanyu" Identifier="210592880" />
+          <GroupAccess Type="1" />
+          <Annotation>cloned from 'Copy of Copy of Copy of unnamed_generated' owned by user ModelBrick</Annotation>
+        </Version>
+      </MathDescription>
+      <Simulation Name="Simulation0">
+        <Annotation>cloned from 'Simulation0' owned by user ModelBrick</Annotation>
+        <SolverTaskDescription TaskType="Unsteady" UseSymbolicJacobian="false" Solver="Combined Stiff Solver (IDA/CVODE)">
+          <TimeBound StartTime="0.0" EndTime="600.0" />
+          <TimeStep DefaultTime="0.1" MinTime="1.0E-8" MaxTime="1.0" />
+          <ErrorTolerance Absolut="1.0E-9" Relative="1.0E-9" />
+          <OutputOptions KeepEvery="1" KeepAtMost="1000" />
+          <NumberProcessors>1</NumberProcessors>
+        </SolverTaskDescription>
+        <MathOverrides />
+        <Version Name="Simulation0" KeyValue="211583295" BranchId="211583296" Archived="0" Date="20-Jul-2021 18:50:16" FromVersionable="false">
+          <Owner Name="Sanyu" Identifier="210592880" />
+          <GroupAccess Type="1" />
+          <Annotation>cloned from 'Simulation0' owned by user ModelBrick</Annotation>
+        </Version>
+      </Simulation>
+      <Version Name="Canonical Application" KeyValue="211583870" BranchId="211583286" Archived="0" Date="20-Jul-2021 18:59:25" FromVersionable="false">
+        <Owner Name="Sanyu" Identifier="210592880" />
+        <GroupAccess Type="1" />
+        <Annotation>cloned from 'Canonical Application' owned by user ModelBrick</Annotation>
+      </Version>
+      <MicroscopeMeasurement Name="fluor">
+        <ConvolutionKernel Type="ProjectionZKernel" />
+      </MicroscopeMeasurement>
+    </SimulationSpec>
+    <Version Name="CM_PM25628036_MB1::GEF_activation" KeyValue="211583879" BranchId="211583299" Archived="0" Date="20-Jul-2021 18:59:25" FromVersionable="false">
+      <Owner Name="Sanyu" Identifier="210592880" />
+      <GroupAccess Type="0" />
+      <Annotation>cloned from 'CM_PM25628036_MB1::GEF_activation' owned by user ModelBrick</Annotation>
+    </Version>
+    <pathwayModel>
+      <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:bp="http://www.biopax.org/release/biopax-level3.owl#" version="3.0" />
+    </pathwayModel>
+    <relationshipModel>
+      <RMNS version="3.0" />
+    </relationshipModel>
+    <vcmetadata>
+      <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
+        <rdf:Description rdf:about="http://sourceforge.net/projects/vcell/vcml/cbit.vcell.model.SimpleReaction/1926234369">
+          <bqmodel:isDescribedBy xmlns:bqmodel="http://biomodels.net/model-qualifiers/">
+            <rdf:Bag rdf:nodeID="node0">
+              <rdf:_1>
+                <rdf:Description rdf:about="urn:miriam:reactome:R-HSA-194854.3" />
+              </rdf:_1>
+            </rdf:Bag>
+          </bqmodel:isDescribedBy>
+        </rdf:Description>
+        <rdf:Description rdf:about="http://sourceforge.net/projects/vcell/vcml/cbit.vcell.model.SimpleReaction/2073887359">
+          <bqmodel:isDescribedBy xmlns:bqmodel="http://biomodels.net/model-qualifiers/">
+            <rdf:Bag rdf:nodeID="node1">
+              <rdf:_1>
+                <rdf:Description rdf:about="urn:miriam:reactome:R-HSA-194894.2" />
+              </rdf:_1>
+            </rdf:Bag>
+          </bqmodel:isDescribedBy>
+        </rdf:Description>
+        <rdf:Description rdf:about="http://sourceforge.net/projects/vcell/vcml/cbit.vcell.model.SimpleReaction/222233127">
+          <bqmodel:isDescribedBy xmlns:bqmodel="http://biomodels.net/model-qualifiers/">
+            <rdf:Bag rdf:nodeID="node2">
+              <rdf:_1>
+                <rdf:Description rdf:about="urn:miriam:reactome:R-HSA-194922.2" />
+              </rdf:_1>
+            </rdf:Bag>
+          </bqmodel:isDescribedBy>
+        </rdf:Description>
+        <rdf:Description rdf:about="http://sourceforge.net/projects/vcell/vcml/cbit.vcell.model.SimpleReaction/866099828">
+          <bqmodel:isDescribedBy xmlns:bqmodel="http://biomodels.net/model-qualifiers/">
+            <rdf:Bag rdf:nodeID="node3">
+              <rdf:_1>
+                <rdf:Description rdf:about="urn:miriam:reactome:+R-HSA-194913.2" />
+              </rdf:_1>
+            </rdf:Bag>
+          </bqmodel:isDescribedBy>
+        </rdf:Description>
+        <rdf:Description rdf:about="http://sourceforge.net/projects/vcell/vcml/cbit.vcell.model.SimpleReaction/metaid_1698375497">
+          <bqbiol:isVersionOf xmlns:bqbiol="http://biomodels.net/biology-qualifiers/">
+            <rdf:Bag rdf:nodeID="node4">
+              <rdf:_1>
+                <rdf:Description rdf:about="urn:miriam:obo.go:GO%3A0005085" />
+              </rdf:_1>
+            </rdf:Bag>
+          </bqbiol:isVersionOf>
+          <bqmodel:isDescribedBy xmlns:bqmodel="http://biomodels.net/model-qualifiers/">
+            <rdf:Bag rdf:nodeID="node5">
+              <rdf:_1>
+                <rdf:Description rdf:about="urn:miriam:sbo:SBO%3A0000012" />
+              </rdf:_1>
+            </rdf:Bag>
+          </bqmodel:isDescribedBy>
+        </rdf:Description>
+        <rdf:Description rdf:about="http://sourceforge.net/projects/vcell/vcml/cbit.vcell.model.SimpleReaction/metaid_1997526566">
+          <bqbiol:isVersionOf xmlns:bqbiol="http://biomodels.net/biology-qualifiers/">
+            <rdf:Bag rdf:nodeID="node6">
+              <rdf:_1>
+                <rdf:Description rdf:about="urn:miriam:obo.go:GO%3A0005085" />
+              </rdf:_1>
+            </rdf:Bag>
+          </bqbiol:isVersionOf>
+          <bqmodel:isDescribedBy xmlns:bqmodel="http://biomodels.net/model-qualifiers/">
+            <rdf:Bag rdf:nodeID="node7">
+              <rdf:_1>
+                <rdf:Description rdf:about="urn:miriam:sbo:SBO%3A0000012" />
+              </rdf:_1>
+            </rdf:Bag>
+          </bqmodel:isDescribedBy>
+        </rdf:Description>
+        <rdf:Description rdf:about="http://sourceforge.net/projects/vcell/vcml/cbit.vcell.model.SimpleReaction/metaid_205026051">
+          <bqmodel:isDescribedBy xmlns:bqmodel="http://biomodels.net/model-qualifiers/">
+            <rdf:Bag rdf:nodeID="node8">
+              <rdf:_1>
+                <rdf:Description rdf:about="urn:miriam:sbo:SBO%3A0000012" />
+              </rdf:_1>
+            </rdf:Bag>
+          </bqmodel:isDescribedBy>
+        </rdf:Description>
+        <rdf:Description rdf:about="http://sourceforge.net/projects/vcell/vcml/org.vcell.model.rbm.MolecularType/1325353578">
+          <bqmodel:isDescribedBy xmlns:bqmodel="http://biomodels.net/model-qualifiers/">
+            <rdf:Bag rdf:nodeID="node9">
+              <rdf:_1>
+                <rdf:Description rdf:about="urn:miriam:uniprot:Q7L0Q8" />
+              </rdf:_1>
+            </rdf:Bag>
+          </bqmodel:isDescribedBy>
+        </rdf:Description>
+        <rdf:Description rdf:about="http://sourceforge.net/projects/vcell/vcml/org.vcell.model.rbm.MolecularType/1498290467">
+          <bqmodel:isDescribedBy xmlns:bqmodel="http://biomodels.net/model-qualifiers/">
+            <rdf:Bag rdf:nodeID="node10">
+              <rdf:_1>
+                <rdf:Description rdf:about="urn:miriam:doi:10.1042%2Fbj3480241" />
+              </rdf:_1>
+            </rdf:Bag>
+          </bqmodel:isDescribedBy>
+        </rdf:Description>
+        <rdf:Description rdf:about="http://sourceforge.net/projects/vcell/vcml/org.vcell.model.rbm.MolecularType/230752867">
+          <bqmodel:isDescribedBy xmlns:bqmodel="http://biomodels.net/model-qualifiers/">
+            <rdf:Bag rdf:nodeID="node11">
+              <rdf:_1>
+                <rdf:Description rdf:about="urn:miriam:uniprot:P52565" />
+              </rdf:_1>
+            </rdf:Bag>
+          </bqmodel:isDescribedBy>
+        </rdf:Description>
+        <rdf:Description rdf:about="http://sourceforge.net/projects/vcell/vcml/org.vcell.model.rbm.MolecularType/305550382">
+          <bqbiol:hasVersion xmlns:bqbiol="http://biomodels.net/biology-qualifiers/">
+            <rdf:Bag rdf:nodeID="node12">
+              <rdf:_1>
+                <rdf:Description rdf:about="urn:miriam:uniprot:Q92888" />
+              </rdf:_1>
+            </rdf:Bag>
+          </bqbiol:hasVersion>
+          <bqbiol:isVersionOf xmlns:bqbiol="http://biomodels.net/biology-qualifiers/">
+            <rdf:Bag rdf:nodeID="node13">
+              <rdf:_1>
+                <rdf:Description rdf:about="urn:miriam:obo.go:GO%3A0005089" />
+              </rdf:_1>
+            </rdf:Bag>
+          </bqbiol:isVersionOf>
+        </rdf:Description>
+        <rdf:Description rdf:about="http://www.sbml.org/sbml/level2/version4/s3">
+          <bqbiol:hasVersion xmlns:bqbiol="http://biomodels.net/biology-qualifiers/">
+            <rdf:Bag rdf:nodeID="node14">
+              <rdf:_1>
+                <rdf:Description rdf:about="urn:miriam:uniprot:Q92888" />
+              </rdf:_1>
+            </rdf:Bag>
+          </bqbiol:hasVersion>
+          <bqbiol:isVersionOf xmlns:bqbiol="http://biomodels.net/biology-qualifiers/">
+            <rdf:Bag rdf:nodeID="node15">
+              <rdf:_1>
+                <rdf:Description rdf:about="urn:miriam:obo.go:GO%3A0005089" />
+              </rdf:_1>
+            </rdf:Bag>
+          </bqbiol:isVersionOf>
+          <bqmodel:isDerivedFrom xmlns:bqmodel="http://biomodels.net/model-qualifiers/">
+            <rdf:Bag rdf:nodeID="node16">
+              <rdf:_1>
+                <rdf:Description rdf:about="urn:miriam:pubmed:17535963" />
+              </rdf:_1>
+            </rdf:Bag>
+          </bqmodel:isDerivedFrom>
+          <bqmodel:isDerivedFrom xmlns:bqmodel="http://biomodels.net/model-qualifiers/">
+            <rdf:Bag rdf:nodeID="node17">
+              <rdf:_1>
+                <rdf:Description rdf:about="urn:miriam:doi:10.1083%2Fjcb.200609017" />
+              </rdf:_1>
+            </rdf:Bag>
+          </bqmodel:isDerivedFrom>
+        </rdf:Description>
+        <rdf:Description rdf:about="http://www.sbml.org/sbml/level2/version4/s4">
+          <bqbiol:hasVersion xmlns:bqbiol="http://biomodels.net/biology-qualifiers/">
+            <rdf:Bag rdf:nodeID="node18">
+              <rdf:_1>
+                <rdf:Description rdf:about="urn:miriam:uniprot:Q92888" />
+              </rdf:_1>
+            </rdf:Bag>
+          </bqbiol:hasVersion>
+          <bqbiol:isVersionOf xmlns:bqbiol="http://biomodels.net/biology-qualifiers/">
+            <rdf:Bag rdf:nodeID="node19">
+              <rdf:_1>
+                <rdf:Description rdf:about="urn:miriam:obo.go:GO%3A0005089" />
+              </rdf:_1>
+            </rdf:Bag>
+          </bqbiol:isVersionOf>
+        </rdf:Description>
+        <rdf:Description rdf:about="http://www.sbml.org/sbml/level2/version4/s5">
+          <bqmodel:isDescribedBy xmlns:bqmodel="http://biomodels.net/model-qualifiers/">
+            <rdf:Bag rdf:nodeID="node20">
+              <rdf:_1>
+                <rdf:Description rdf:about="urn:miriam:uniprot:Q7L0Q8" />
+              </rdf:_1>
+            </rdf:Bag>
+          </bqmodel:isDescribedBy>
+        </rdf:Description>
+        <rdf:Description rdf:about="http://www.sbml.org/sbml/level2/version4/s6">
+          <bqmodel:isDescribedBy xmlns:bqmodel="http://biomodels.net/model-qualifiers/">
+            <rdf:Bag rdf:nodeID="node21">
+              <rdf:_1>
+                <rdf:Description rdf:about="urn:miriam:uniprot:Q7L0Q8" />
+              </rdf:_1>
+            </rdf:Bag>
+          </bqmodel:isDescribedBy>
+        </rdf:Description>
+        <rdf:Description rdf:about="http://www.sbml.org/sbml/level2/version4/s7">
+          <bqmodel:isDescribedBy xmlns:bqmodel="http://biomodels.net/model-qualifiers/">
+            <rdf:Bag rdf:nodeID="node22">
+              <rdf:_1>
+                <rdf:Description rdf:about="urn:miriam:uniprot:P52565" />
+              </rdf:_1>
+            </rdf:Bag>
+          </bqmodel:isDescribedBy>
+        </rdf:Description>
+        <rdf:Description rdf:about="http://www.sbml.org/sbml/level2/version4/s8">
+          <bqmodel:isDescribedBy xmlns:bqmodel="http://biomodels.net/model-qualifiers/">
+            <rdf:Bag rdf:nodeID="node23">
+              <rdf:_1>
+                <rdf:Description rdf:about="urn:miriam:uniprot:Q07960" />
+              </rdf:_1>
+            </rdf:Bag>
+          </bqmodel:isDescribedBy>
+        </rdf:Description>
+        <rdf:Description rdf:about="http://www.sbml.org/sbml/level2/version4/s9">
+          <bqmodel:isDescribedBy xmlns:bqmodel="http://biomodels.net/model-qualifiers/">
+            <rdf:Bag rdf:nodeID="node24">
+              <rdf:_1>
+                <rdf:Description rdf:about="urn:miriam:doi:10.1042%2Fbj3480241+" />
+              </rdf:_1>
+            </rdf:Bag>
+          </bqmodel:isDescribedBy>
+        </rdf:Description>
+        <rdf:Description rdf:about="http://www.sbml.org/sbml/level2/version4/untitled">
+          <bqbiol:isVersionOf xmlns:bqbiol="http://biomodels.net/biology-qualifiers/">
+            <rdf:Bag rdf:nodeID="node25">
+              <rdf:_1>
+                <rdf:Description rdf:about="urn:miriam:doi:10.1146%2Fannurev.cellbio.21.020604.150721" />
+              </rdf:_1>
+            </rdf:Bag>
+          </bqbiol:isVersionOf>
+          <bqbiol:isVersionOf xmlns:bqbiol="http://biomodels.net/biology-qualifiers/">
+            <rdf:Bag rdf:nodeID="node26">
+              <rdf:_1>
+                <rdf:Description rdf:about="urn:miriam:pubmed:16212495" />
+              </rdf:_1>
+            </rdf:Bag>
+          </bqbiol:isVersionOf>
+          <bqbiol:isVersionOf xmlns:bqbiol="http://biomodels.net/biology-qualifiers/">
+            <rdf:Bag rdf:nodeID="node27">
+              <rdf:_1>
+                <rdf:Description rdf:about="urn:miriam:obo.go:GO%3A0043087" />
+              </rdf:_1>
+            </rdf:Bag>
+          </bqbiol:isVersionOf>
+          <bqbiol:isVersionOf xmlns:bqbiol="http://biomodels.net/biology-qualifiers/">
+            <rdf:Bag rdf:nodeID="node28">
+              <rdf:_1>
+                <rdf:Description rdf:about="urn:miriam:reactome:R-HSA-194315.4" />
+              </rdf:_1>
+            </rdf:Bag>
+          </bqbiol:isVersionOf>
+          <bqmodel:isDescribedBy xmlns:bqmodel="http://biomodels.net/model-qualifiers/">
+            <rdf:Bag rdf:nodeID="node29">
+              <rdf:_1>
+                <rdf:Description rdf:about="urn:miriam:doi:10.1186%2Fs12918-015-0143-5" />
+              </rdf:_1>
+            </rdf:Bag>
+          </bqmodel:isDescribedBy>
+          <bqmodel:isDescribedBy xmlns:bqmodel="http://biomodels.net/model-qualifiers/">
+            <rdf:Bag rdf:nodeID="node30">
+              <rdf:_1>
+                <rdf:Description rdf:about="urn:miriam:pubmed:25628036" />
+              </rdf:_1>
+            </rdf:Bag>
+          </bqmodel:isDescribedBy>
+        </rdf:Description>
+      </rdf:RDF>
+      <nonrdfAnnotationList>
+        <nonrdfAnnotation vcid="Species(s4)">
+          <freetext>&lt;html&gt;&#xD;
+  &lt;head&gt;&#xD;
+    &#xD;
+  &lt;/head&gt;&#xD;
+  &lt;body&gt;&#xD;
+    guanine nucleotide exchange factor (GEF)- regulator of RhoGTPases. &lt;span align="left" style="letter-spacing: normal; text-indent: 0px; text-transform: none; white-space: normal; word-spacing: 0px; background-color: rgb(255, 255, 255); display: inline !important; float: none"&gt;&lt;font color="rgb(0, 0, 0)" face="Times New Roman, stixgeneral, serif" size="15.9991px"&gt;GEFs &#xD;
+    activate GTPases by promoting the exchange of GDP for GTP. GAPs inactivate &#xD;
+    GTPases by stimulating their intrinsic GTP-hydrolyzing activity.&lt;/font&gt;&lt;/span&gt;&lt;font color="rgb(0, 0, 0)" face="Times New Roman, stixgeneral, serif" size="15.9991px"&gt;&lt;span&gt;&amp;#160;&lt;/span&gt;&lt;/font&gt;&#xD;
+  &lt;/body&gt;&#xD;
+&lt;/html&gt;</freetext>
+          <annotationList>
+            <annotation />
+            <annotation />
+          </annotationList>
+        </nonrdfAnnotation>
+        <nonrdfAnnotation vcid="SimulationContext(Canonical Application)">
+          <freetext>&lt;html&gt;&#xD;
+  &lt;head&gt;&#xD;
+&#xD;
+  &lt;/head&gt;&#xD;
+  &lt;body&gt;&#xD;
+    &#xD;
+  &lt;/body&gt;&#xD;
+&lt;/html&gt;</freetext>
+        </nonrdfAnnotation>
+        <nonrdfAnnotation vcid="SpeciesContext(GEF)">
+          <freetext>&lt;html&gt;&#xD;
+  &lt;head&gt;&#xD;
+    &#xD;
+  &lt;/head&gt;&#xD;
+  &lt;body&gt;&#xD;
+    &lt;p style="margin-top: 0"&gt;&#xD;
+      guanine nucleotide exchange factors: Activate small G proteins by &#xD;
+      promoting exchange of GDP for GTP&#xD;
+    &lt;/p&gt;&#xD;
+  &lt;/body&gt;&#xD;
+&lt;/html&gt;</freetext>
+        </nonrdfAnnotation>
+        <nonrdfAnnotation vcid="ReactionStep(GEF_activation)">
+          <freetext>&lt;html&gt;&#xD;
+  &lt;head&gt;&#xD;
+    &#xD;
+  &lt;/head&gt;&#xD;
+  &lt;body&gt;&#xD;
+    &lt;p style="margin-top: 0"&gt;&#xD;
+      Activation of GEF.&#xD;
+    &lt;/p&gt;&#xD;
+    &lt;p style="margin-top: 0"&gt;&#xD;
+      The forward reaction rate parameter (k1) is assigned an arbitrary value &#xD;
+      (1 uM-1min-1).&#xD;
+    &lt;/p&gt;&#xD;
+  &lt;/body&gt;&#xD;
+&lt;/html&gt;</freetext>
+        </nonrdfAnnotation>
+        <nonrdfAnnotation vcid="BioModel(CM_PM25628036_MB1::GEF_activation)">
+          <freetext>&lt;html&gt;&#xD;
+  &lt;head&gt;&#xD;
+    &#xD;
+  &lt;/head&gt;&#xD;
+  &lt;body&gt;&#xD;
+    &lt;p class="MsoNormal" style="margin-bottom: .0001pt; line-height: normal"&gt;&#xD;
+      &lt;span&gt;&lt;font size="12.0pt" face="Times New Roman,serif"&gt;This ModelBrick &#xD;
+      from the article, &amp;quot;&lt;i&gt;Positive regulation of Rho GTPase activity by &#xD;
+      RhoGDIs as a result of their direct interaction with GAPs&lt;/i&gt;&amp;quot; describes &#xD;
+      the activation of GEF and the degradation of the activator. GDIs inhibit &#xD;
+      GEF and GAP activities by sequestering GTPase (kinetic law was adjusted &#xD;
+      to eliminate effect of GDI on both GEF and GAP).&lt;/font&gt;&lt;/span&gt;&#xD;
+    &lt;/p&gt;&#xD;
+  &lt;/body&gt;&#xD;
+&lt;/html&gt;</freetext>
+          <annotationList>
+            <annotation />
+            <annotation />
+          </annotationList>
+        </nonrdfAnnotation>
+        <nonrdfAnnotation vcid="MolecularType(RhoGEF)">
+          <freetext>&lt;html&gt;&#xD;
+  &lt;head&gt;&#xD;
+    &#xD;
+  &lt;/head&gt;&#xD;
+  &lt;body&gt;&#xD;
+    Seems to play a role in the regulation of RhoA GTPase by guanine &#xD;
+    nucleotide-binding alpha-12 (GNA12) and alpha-13 (GNA13) subunits &#xD;
+    (PubMed:9641915, PubMed:9641916). Acts as GTPase-activating protein (GAP) &#xD;
+    for GNA12 and GNA13, and as guanine nucleotide exchange factor (GEF) for &#xD;
+    RhoA GTPase (PubMed:9641915, PubMed:9641916, PubMed:8810315, &#xD;
+    PubMed:30521495). Activated G alpha 13/GNA13 stimulates the RhoGEF &#xD;
+    activity through interaction with the RGS-like domain (PubMed:9641916). &#xD;
+    This GEF activity is inhibited by binding to activated GNA12 &#xD;
+    (PubMed:9641916). Mediates angiotensin-2-induced RhoA activation &#xD;
+    (PubMed:20098430).&#xD;
+  &lt;/body&gt;&#xD;
+&lt;/html&gt;</freetext>
+        </nonrdfAnnotation>
+        <nonrdfAnnotation vcid="ReactionStep(Activator_degradation)">
+          <freetext>&lt;html&gt;&#xD;
+  &lt;head&gt;&#xD;
+    &#xD;
+  &lt;/head&gt;&#xD;
+  &lt;body&gt;&#xD;
+    &lt;p style="margin-top: 0"&gt;&#xD;
+      Activator degradation. &#xD;
+    &lt;/p&gt;&#xD;
+    &lt;p style="margin-top: 0"&gt;&#xD;
+      The forward reaction rate parameter (k3) is assigned an arbitrary value &#xD;
+      (1 uM-1min-1).&#xD;
+    &lt;/p&gt;&#xD;
+  &lt;/body&gt;&#xD;
+&lt;/html&gt;</freetext>
+        </nonrdfAnnotation>
+        <nonrdfAnnotation vcid="ReactionStep(GEF_inactivation)">
+          <freetext>&lt;html&gt;&#xD;
+  &lt;head&gt;&#xD;
+    &#xD;
+  &lt;/head&gt;&#xD;
+  &lt;body&gt;&#xD;
+    &lt;p style="margin-top: 0"&gt;&#xD;
+      Inactivation of GEF.&#xD;
+    &lt;/p&gt;&#xD;
+    &lt;p style="margin-top: 0"&gt;&#xD;
+      The forward reaction rate parameter (k2) is assigned an arbitrary value &#xD;
+      (0.1 min-1).&#xD;
+    &lt;/p&gt;&#xD;
+  &lt;/body&gt;&#xD;
+&lt;/html&gt;</freetext>
+        </nonrdfAnnotation>
+        <nonrdfAnnotation vcid="Species(s3)">
+          <freetext>&lt;html&gt;&#xD;
+  &lt;head&gt;&#xD;
+    &#xD;
+  &lt;/head&gt;&#xD;
+  &lt;body&gt;&#xD;
+    guanine nucleotide exchange factor (GEF)- regulator of RhoGTPases. &lt;span align="left" style="letter-spacing: normal; text-indent: 0px; text-transform: none; white-space: normal; word-spacing: 0px; background-color: rgb(255, 255, 255); display: inline !important; float: none"&gt;&lt;font color="rgb(0, 0, 0)" face="Times New Roman, stixgeneral, serif" size="15.9991px"&gt;GEFs &#xD;
+    activate GTPases by promoting the exchange of GDP for GTP. GAPs inactivate &#xD;
+    GTPases by stimulating their intrinsic GTP-hydrolyzing activity.&lt;/font&gt;&lt;/span&gt;&lt;font color="rgb(0, 0, 0)" face="Times New Roman, stixgeneral, serif" size="15.9991px"&gt;&lt;span&gt;&amp;#160;The &#xD;
+    authors used 0.31 uM for the cellular concentration of GEF (Aoki, 2007).&lt;/span&gt;&lt;/font&gt;&#xD;
+  &lt;/body&gt;&#xD;
+&lt;/html&gt;</freetext>
+          <annotationList>
+            <annotation />
+            <annotation />
+          </annotationList>
+        </nonrdfAnnotation>
+        <nonrdfAnnotation vcid="Species(s1)">
+          <freetext>&lt;html&gt;
+  &lt;head&gt;
+    
+  &lt;/head&gt;
+  &lt;body&gt;
+    The authors used 1 uM for the cellular concentration of the activator 
+    (arbitrary value).
+  &lt;/body&gt;
+&lt;/html&gt;</freetext>
+          <annotationList>
+            <annotation />
+            <annotation />
+          </annotationList>
+        </nonrdfAnnotation>
+        <nonrdfAnnotation vcid="MolecularType(Activator)">
+          <freetext>&lt;html&gt;
+  &lt;head&gt;
+    
+  &lt;/head&gt;
+  &lt;body&gt;
+    &lt;span charset="utf-8" align="left" style="letter-spacing: normal; text-indent: 0px; text-transform: none; white-space: normal; word-spacing: 0px; display: inline !important; float: none"&gt;&lt;font color="rgb(34, 34, 34)" face="Verdana, Arial, sans-serif" size="13px"&gt;Receptor 
+    tyrosine kinase binding ligands of the EGF family and activating several 
+    signaling cascades to convert extracellular cues into appropriate cellular 
+    responses (PubMed:&lt;/font&gt;&lt;/span&gt;&lt;a href="https://www.uniprot.org/citations/8404850" align="left" style="text-indent: 0px; border-bottom-style: none; border-bottom-width: medium; letter-spacing: normal; text-transform: none; white-space: normal; word-spacing: 0px"&gt;&lt;font color="rgb(0, 112, 155)" face="Verdana, Arial, sans-serif" size="13px"&gt;8404850&lt;/font&gt;&lt;/a&gt;&lt;span align="left" style="letter-spacing: normal; text-indent: 0px; text-transform: none; white-space: normal; word-spacing: 0px; display: inline !important; float: none"&gt;&lt;font color="rgb(34, 34, 34)" face="Verdana, Arial, sans-serif" size="13px"&gt;). 
+    Known ligands include EGF, TGFA/TGF-alpha, AREG, epigen/EPGN, 
+    BTC/betacellulin, epiregulin/EREG and HBEGF/heparin-binding EGF. Ligand 
+    binding triggers receptor homo- and/or heterodimerization and 
+    autophosphorylation on key cytoplasmic residues. The phosphorylated 
+    receptor recruits adapter proteins like GRB2 which in turn activates 
+    complex downstream signaling cascades. Activates at least 4 major 
+    downstream signaling cascades including the RAS-RAF-MEK-ERK, PI3 
+    kinase-AKT, PLCgamma-PKC and STATs modules. May also activate the 
+    NF-kappa-B signaling cascade. Also directly phosphorylates other proteins 
+    like RGS16, activating its GTPase activity and probably coupling the EGF 
+    receptor signaling to the G protein-coupled receptor signaling. Also 
+    phosphorylates MUC1 and increases its interaction with SRC and 
+    CTNNB1/beta-catenin (By similarity). Positively regulates cell migration 
+    via interaction with CCDC88A/GIV which retains EGFR at the cell membrane 
+    following ligand stimulation, promoting EGFR signaling which triggers cell 
+    migration (By similarity). Plays a role in enhancing learning and memory 
+    performance (PubMed:&lt;/font&gt;&lt;/span&gt;&lt;a href="https://www.uniprot.org/citations/20639532" align="left" style="text-indent: 0px; border-bottom-style: none; border-bottom-width: medium; letter-spacing: normal; text-transform: none; white-space: normal; word-spacing: 0px"&gt;&lt;font color="rgb(0, 112, 155)" face="Verdana, Arial, sans-serif" size="13px"&gt;20639532&lt;/font&gt;&lt;/a&gt;&lt;span align="left" style="letter-spacing: normal; text-indent: 0px; text-transform: none; white-space: normal; word-spacing: 0px; display: inline !important; float: none"&gt;&lt;font color="rgb(34, 34, 34)" face="Verdana, Arial, sans-serif" size="13px"&gt;).&lt;/font&gt;&lt;/span&gt;
+  &lt;/body&gt;
+&lt;/html&gt;</freetext>
+        </nonrdfAnnotation>
+      </nonrdfAnnotationList>
+      <uriBindingList>
+        <uriBinding uri="http://www.sbml.org/sbml/level2/version4/s3" vcid="Species(s3)" />
+        <uriBinding uri="http://sourceforge.net/projects/vcell/vcml/cbit.vcell.model.SimpleReaction/metaid_1997526566" vcid="ReactionStep(GEF_inactivation)" />
+        <uriBinding uri="http://sourceforge.net/projects/vcell/vcml/cbit.vcell.model.SimpleReaction/metaid_1698375497" vcid="ReactionStep(GEF_activation)" />
+        <uriBinding uri="http://www.sbml.org/sbml/level2/version4/untitled" vcid="BioModel(CM_PM25628036_MB1::GEF_activation)" />
+        <uriBinding uri="http://sourceforge.net/projects/vcell/vcml/cbit.vcell.model.SimpleReaction/metaid_205026051" vcid="ReactionStep(Activator_degradation)" />
+        <uriBinding uri="http://www.sbml.org/sbml/level2/version4/s1" vcid="Species(s1)" />
+        <uriBinding uri="http://www.sbml.org/sbml/level2/version4/s4" vcid="Species(s4)" />
+        <uriBinding uri="http://sourceforge.net/projects/vcell/vcml/org.vcell.model.rbm.MolecularType/305550382" vcid="MolecularType(RhoGEF)" />
+        <uriBinding uri="http://www.sbml.org/sbml/level2/version4/default" vcid="Structure(cell)" />
+      </uriBindingList>
+    </vcmetadata>
+  </BioModel>
+</vcml>
+

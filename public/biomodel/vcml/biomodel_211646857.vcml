@@ -1,0 +1,1562 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--This biomodel was generated in VCML Version Alpha_Version_7.4.0_build_87-->
+<vcml xmlns="http://sourceforge.net/projects/vcell/vcml" Version="Alpha_Version_7.4.0_build_87">
+  <BioModel Name="CM_PM19804630_MB1::Initial_events_EGFR_signaling">
+    <Annotation>cloned from 'CM_PM19804630_MB1::Initial_events_EGFR_signaling' owned by user ModelBrick
+cloned from 'savi_Orton2009 - ModelBrick1' owned by user mblinov
+cloned from 'PERSONAL Orton2009 - ModelBrick1' owned by user savi06
+cloned from 'Orton2009 - ModelBrick1' owned by user mblinov
+cloned from 'Orton2009 - new' owned by user cab15130</Annotation>
+    <Model Name="unnamed">
+      <Annotation>cloned from 'unnamed' owned by user ModelBrick
+cloned from 'unnamed' owned by user mblinov
+cloned from 'unnamed' owned by user savi06
+cloned from 'unnamed' owned by user mblinov
+cloned from 'unnamed' owned by user cab15130</Annotation>
+      <ModelParameters>
+        <Parameter Name="k1_deg" Role="user defined" Unit="min-1">0.2</Parameter>
+        <Parameter Name="v_EGFR" Role="user defined" Unit="mmol.min-1.ml-1">100.0</Parameter>
+        <Parameter Name="k1_EGFR" Role="user defined" Unit="ml.min-1.mmol-1">2.18503E-5</Parameter>
+        <Parameter Name="k2_EGFR" Role="user defined" Unit="min-1">0.121008</Parameter>
+      </ModelParameters>
+      <Compound Name="species_0">
+        <Annotation>species_0</Annotation>
+      </Compound>
+      <Compound Name="species_1">
+        <Annotation>species_1</Annotation>
+      </Compound>
+      <Compound Name="species_18">
+        <Annotation>species_18</Annotation>
+      </Compound>
+      <Compound Name="species_25">
+        <Annotation>species_25</Annotation>
+      </Compound>
+      <Compound Name="species_30">
+        <Annotation>species_30</Annotation>
+      </Compound>
+      <Feature Name="compartment" KeyValue="211643124" />
+      <LocalizedCompound Name="LR" SbmlName="boundEGFReceptor" CompoundRef="species_0" Structure="compartment" OverrideName="true" KeyValue="211643126">
+        <SpeciesPattern>
+          <MolecularTypePattern Index="1">
+            <MolecularType Name="EGFR" />
+            <ComponentPattern MolecularComponent="Y" ComponentStatePattern="U" BondType="1">
+              <Bond MolecularTypePattern="EGF" ComponentPattern="Site0" />
+            </ComponentPattern>
+            <ComponentPattern MolecularComponent="State" ComponentStatePattern="active" BondType="-" />
+          </MolecularTypePattern>
+          <MolecularTypePattern Index="2">
+            <MolecularType Name="EGF" />
+            <ComponentPattern MolecularComponent="Site0" BondType="1">
+              <Bond MolecularTypePattern="EGFR" ComponentPattern="Y" />
+            </ComponentPattern>
+          </MolecularTypePattern>
+        </SpeciesPattern>
+      </LocalizedCompound>
+      <LocalizedCompound Name="EGFR" SbmlName="freeEGFReceptor" CompoundRef="species_1" Structure="compartment" OverrideName="true" KeyValue="211643127">
+        <SpeciesPattern>
+          <MolecularTypePattern Index="1">
+            <MolecularType Name="EGFR" />
+            <ComponentPattern MolecularComponent="Y" ComponentStatePattern="U" BondType="-" />
+            <ComponentPattern MolecularComponent="State" ComponentStatePattern="active" BondType="-" />
+          </MolecularTypePattern>
+        </SpeciesPattern>
+      </LocalizedCompound>
+      <LocalizedCompound Name="EGFR_deg" SbmlName="degradedEGFReceptor" CompoundRef="species_18" Structure="compartment" OverrideName="true" KeyValue="211643128">
+        <SpeciesPattern>
+          <MolecularTypePattern Index="1">
+            <MolecularType Name="EGFR" />
+            <ComponentPattern MolecularComponent="Y" ComponentStatePattern="U" BondType="-" />
+            <ComponentPattern MolecularComponent="State" ComponentStatePattern="deg" BondType="-" />
+          </MolecularTypePattern>
+        </SpeciesPattern>
+      </LocalizedCompound>
+      <LocalizedCompound Name="EGF" SbmlName="EGF" CompoundRef="species_25" Structure="compartment" OverrideName="true" KeyValue="211643129">
+        <SpeciesPattern>
+          <MolecularTypePattern Index="1">
+            <MolecularType Name="EGF" />
+            <ComponentPattern MolecularComponent="Site0" BondType="-" />
+          </MolecularTypePattern>
+        </SpeciesPattern>
+      </LocalizedCompound>
+      <LocalizedCompound Name="proEGFR" SbmlName="proEGFReceptor" CompoundRef="species_30" Structure="compartment" OverrideName="true" KeyValue="211643130">
+        <SpeciesPattern>
+          <MolecularTypePattern Index="1">
+            <MolecularType Name="EGFR" />
+            <ComponentPattern MolecularComponent="Y" ComponentStatePattern="U" BondType="-" />
+            <ComponentPattern MolecularComponent="State" ComponentStatePattern="deg" BondType="-" />
+          </MolecularTypePattern>
+        </SpeciesPattern>
+      </LocalizedCompound>
+      <SimpleReaction Structure="compartment" Name="EGF_Binding_Unbinding" Reversible="true" FluxOption="MolecularOnly" KeyValue="211643131" SbmlName="EGF_Binding_Unbinding">
+        <Reactant LocalizedCompoundRef="EGFR" Stoichiometry="1" KeyValue="211643132" />
+        <Reactant LocalizedCompoundRef="EGF" Stoichiometry="1" KeyValue="211643133" />
+        <Product LocalizedCompoundRef="LR" Stoichiometry="1" KeyValue="211643134" />
+        <Kinetics KineticsType="GeneralKinetics">
+          <Parameter Name="J" Role="reaction rate" Unit="mmol.ml-1.min-1">((k1_EGFR * EGF * EGFR) - (k2_EGFR * LR))</Parameter>
+        </Kinetics>
+      </SimpleReaction>
+      <SimpleReaction Structure="compartment" Name="EGFReceptor_Degradation" Reversible="false" FluxOption="MolecularOnly" KeyValue="211643135" SbmlName="EGFReceptor_Degradation">
+        <Reactant LocalizedCompoundRef="LR" Stoichiometry="1" KeyValue="211643136" />
+        <Product LocalizedCompoundRef="EGFR_deg" Stoichiometry="1" KeyValue="211643137" />
+        <Kinetics KineticsType="GeneralKinetics">
+          <Parameter Name="J" Role="reaction rate" Unit="mmol.ml-1.min-1">(k1_deg * LR)</Parameter>
+        </Kinetics>
+      </SimpleReaction>
+      <SimpleReaction Structure="compartment" Name="EGFReceptor_Production" Reversible="false" FluxOption="MolecularOnly" KeyValue="211643138" SbmlName="EGFReceptor_Production">
+        <Reactant LocalizedCompoundRef="proEGFR" Stoichiometry="1" KeyValue="211643139" />
+        <Product LocalizedCompoundRef="EGFR" Stoichiometry="1" KeyValue="211643140" />
+        <Kinetics KineticsType="GeneralKinetics">
+          <Parameter Name="J" Role="reaction rate" Unit="mmol.ml-1.min-1">v_EGFR</Parameter>
+        </Kinetics>
+      </SimpleReaction>
+      <SimpleReaction Structure="compartment" Name="EGFReceptor_Degradation_Free" Reversible="false" FluxOption="MolecularOnly" KeyValue="211643141" SbmlName="EGFReceptor_Degradtion_Free">
+        <Reactant LocalizedCompoundRef="EGFR" Stoichiometry="1" KeyValue="211643142" />
+        <Product LocalizedCompoundRef="EGFR_deg" Stoichiometry="1" KeyValue="211643143" />
+        <Kinetics KineticsType="GeneralKinetics">
+          <Parameter Name="J" Role="reaction rate" Unit="mmol.ml-1.min-1">(k1_deg * EGFR)</Parameter>
+        </Kinetics>
+      </SimpleReaction>
+      <RbmModelContainer>
+        <MolecularTypeList>
+          <MolecularType Name="EGFR" AnchorAll="true">
+            <MolecularComponent Name="Y" Index="1">
+              <AllowableState Name="P" />
+              <AllowableState Name="U" />
+            </MolecularComponent>
+            <MolecularComponent Name="State" Index="2">
+              <AllowableState Name="deg" />
+              <AllowableState Name="active" />
+            </MolecularComponent>
+          </MolecularType>
+          <MolecularType Name="EGF" AnchorAll="true">
+            <MolecularComponent Name="Site0" Index="1" />
+          </MolecularType>
+          <MolecularType Name="SOS" AnchorAll="true">
+            <MolecularComponent Name="Active" Index="1">
+              <AllowableState Name="yes" />
+              <AllowableState Name="no" />
+            </MolecularComponent>
+          </MolecularType>
+          <MolecularType Name="Ras" AnchorAll="true">
+            <MolecularComponent Name="Active" Index="1">
+              <AllowableState Name="yes" />
+              <AllowableState Name="no" />
+            </MolecularComponent>
+          </MolecularType>
+          <MolecularType Name="Raf" AnchorAll="true">
+            <MolecularComponent Name="Active" Index="1">
+              <AllowableState Name="yes" />
+              <AllowableState Name="no" />
+            </MolecularComponent>
+          </MolecularType>
+          <MolecularType Name="MEK" AnchorAll="true">
+            <MolecularComponent Name="Active" Index="1">
+              <AllowableState Name="yes" />
+              <AllowableState Name="no" />
+            </MolecularComponent>
+          </MolecularType>
+          <MolecularType Name="ERK" AnchorAll="true">
+            <MolecularComponent Name="Active" Index="1">
+              <AllowableState Name="yes" />
+              <AllowableState Name="no" />
+            </MolecularComponent>
+          </MolecularType>
+          <MolecularType Name="P90Rsk" AnchorAll="true">
+            <MolecularComponent Name="Active" Index="1">
+              <AllowableState Name="yes" />
+              <AllowableState Name="no" />
+            </MolecularComponent>
+          </MolecularType>
+          <MolecularType Name="PI3K" AnchorAll="true">
+            <MolecularComponent Name="Active" Index="1">
+              <AllowableState Name="yes" />
+              <AllowableState Name="no" />
+            </MolecularComponent>
+          </MolecularType>
+          <MolecularType Name="Akt" AnchorAll="true">
+            <MolecularComponent Name="Active" Index="1">
+              <AllowableState Name="yes" />
+              <AllowableState Name="no" />
+            </MolecularComponent>
+          </MolecularType>
+          <MolecularType Name="C3G" AnchorAll="true">
+            <MolecularComponent Name="Active" Index="1">
+              <AllowableState Name="yes" />
+              <AllowableState Name="no" />
+            </MolecularComponent>
+          </MolecularType>
+          <MolecularType Name="Rap1" AnchorAll="true">
+            <MolecularComponent Name="Active" Index="1">
+              <AllowableState Name="yes" />
+              <AllowableState Name="no" />
+            </MolecularComponent>
+          </MolecularType>
+          <MolecularType Name="B_Raf" AnchorAll="true">
+            <MolecularComponent Name="Active" Index="1">
+              <AllowableState Name="yes" />
+              <AllowableState Name="no" />
+            </MolecularComponent>
+          </MolecularType>
+          <MolecularType Name="PP2A" AnchorAll="true">
+            <MolecularComponent Name="Active" Index="1">
+              <AllowableState Name="yes" />
+              <AllowableState Name="no" />
+            </MolecularComponent>
+          </MolecularType>
+          <MolecularType Name="P_tase" AnchorAll="true" />
+          <MolecularType Name="GAP" AnchorAll="true" />
+        </MolecularTypeList>
+      </RbmModelContainer>
+      <Diagram Name="compartment_0" Structure="compartment">
+        <SimpleReactionShape NodeReferenceModeAttrTag="full" SimpleReactionRef="EGF_Binding_Unbinding" LocationX="404" LocationY="86" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="EGF" LocationX="460" LocationY="40" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="proEGFR" LocationX="30" LocationY="33" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="EGFR_deg" LocationX="378" LocationY="203" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="LR" LocationX="470" LocationY="153" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="full" SimpleReactionRef="EGFReceptor_Degradation_Free" LocationX="318" LocationY="176" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="full" SimpleReactionRef="EGFReceptor_Production" LocationX="104" LocationY="54" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="EGFR" LocationX="178" LocationY="83" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="full" SimpleReactionRef="EGFReceptor_Degradation" LocationX="455" LocationY="220" />
+      </Diagram>
+      <Version Name="unnamed" KeyValue="211643116" BranchId="211643117" Archived="0" Date="21-Jul-2021 14:56:47" FromVersionable="false">
+        <Owner Name="PraneetDangol" Identifier="210593687" />
+        <GroupAccess Type="1" />
+        <Annotation>cloned from 'unnamed' owned by user ModelBrick
+cloned from 'unnamed' owned by user mblinov
+cloned from 'unnamed' owned by user savi06
+cloned from 'unnamed' owned by user mblinov
+cloned from 'unnamed' owned by user cab15130</Annotation>
+      </Version>
+      <ModelUnitSystem VolumeSubstanceUnit="mmol" MembraneSubstanceUnit="mmol" LumpedReactionSubstanceUnit="mmol" VolumeUnit="ml" AreaUnit="m2" LengthUnit="m" TimeUnit="min" />
+    </Model>
+    <SimulationSpec Name="Deterministic" Stochastic="false" UseConcentration="true" RuleBased="false" MassConservationModelReduction="false" InsufficientIterations="false" InsufficientMaxMolecules="false">
+      <NetworkConstraints RbmMaxIteration="3" RbmMaxMoleculesPerSpecies="10" RbmSpeciesLimit="800" RbmReactionsLimit="2500">
+        <MaxStoichiometry MolecularType="EGFR" Integer="100" />
+        <MaxStoichiometry MolecularType="EGF" Integer="100" />
+        <MaxStoichiometry MolecularType="C3G" Integer="100" />
+        <MaxStoichiometry MolecularType="SOS" Integer="100" />
+        <MaxStoichiometry MolecularType="Rap1" Integer="100" />
+        <MaxStoichiometry MolecularType="Ras" Integer="100" />
+        <MaxStoichiometry MolecularType="B_Raf" Integer="100" />
+        <MaxStoichiometry MolecularType="MEK" Integer="100" />
+        <MaxStoichiometry MolecularType="ERK" Integer="100" />
+        <MaxStoichiometry MolecularType="Raf" Integer="100" />
+        <MaxStoichiometry MolecularType="P90Rsk" Integer="100" />
+        <MaxStoichiometry MolecularType="PI3K" Integer="100" />
+        <MaxStoichiometry MolecularType="Akt" Integer="100" />
+        <MaxStoichiometry MolecularType="PP2A" Integer="100" />
+        <MaxStoichiometry MolecularType="P_tase" Integer="100" />
+        <MaxStoichiometry MolecularType="GAP" Integer="100" />
+      </NetworkConstraints>
+      <Annotation>cloned from 'Deterministic' owned by user ModelBrick
+cloned from 'Deterministic' owned by user mblinov
+cloned from 'Deterministic' owned by user savi06
+cloned from 'Deterministic' owned by user mblinov
+cloned from 'Deterministic' owned by user cab15130</Annotation>
+      <Geometry Name="Compartmental1477080845" Dimension="0">
+        <Annotation>cloned from 'Compartmental1477080845' owned by user ModelBrick
+cloned from 'Compartmental1477080845' owned by user mblinov
+cloned from 'Compartmental705997714' owned by user savi06
+cloned from 'Compartmental705997714' owned by user mblinov
+cloned from 'Compartmental' owned by user cab15130</Annotation>
+        <Extent X="10.0" Y="10.0" Z="10.0" />
+        <Origin X="0.0" Y="0.0" Z="0.0" />
+        <SubVolume Name="Compartment" Handle="0" Type="Compartmental" KeyValue="211643112" />
+        <Version Name="Compartmental1477080845" KeyValue="211643108" BranchId="211643109" Archived="0" Date="21-Jul-2021 14:56:46" FromVersionable="false">
+          <Owner Name="PraneetDangol" Identifier="210593687" />
+          <GroupAccess Type="1" />
+          <Annotation>cloned from 'Compartmental1477080845' owned by user ModelBrick
+cloned from 'Compartmental1477080845' owned by user mblinov
+cloned from 'Compartmental705997714' owned by user savi06
+cloned from 'Compartmental705997714' owned by user mblinov
+cloned from 'Compartmental' owned by user cab15130</Annotation>
+        </Version>
+      </Geometry>
+      <GeometryContext>
+        <FeatureMapping Feature="compartment" GeometryClass="Compartment" SubVolume="Compartment" Size="1.0">
+          <BoundariesTypes Xm="Flux" Xp="Flux" Ym="Flux" Yp="Flux" Zm="Flux" Zp="Flux" />
+        </FeatureMapping>
+      </GeometryContext>
+      <ReactionContext>
+        <LocalizedCompoundSpec LocalizedCompoundRef="LR" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>0.0</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="EGFR" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>80000.0</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="EGFR_deg" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>0.0</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="EGF" ForceConstant="true" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>1.0002E7</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="proEGFR" ForceConstant="true" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>1.0</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <ReactionSpec ReactionStepRef="EGF_Binding_Unbinding" ReactionMapping="included" />
+        <ReactionSpec ReactionStepRef="EGFReceptor_Degradation" ReactionMapping="included" />
+        <ReactionSpec ReactionStepRef="EGFReceptor_Production" ReactionMapping="included" />
+        <ReactionSpec ReactionStepRef="EGFReceptor_Degradation_Free" ReactionMapping="included" />
+      </ReactionContext>
+      <MathDescription Name="Deterministic_generated">
+        <Annotation>cloned from 'Deterministic_generated' owned by user ModelBrick
+cloned from 'Deterministic_generated' owned by user mblinov
+cloned from 'Deterministic_generated' owned by user savi06
+cloned from 'Deterministic_generated' owned by user mblinov
+cloned from 'Deterministic_generated' owned by user cab15130</Annotation>
+        <Constant Name="_F_">96485.3321</Constant>
+        <Constant Name="_F_nmol_">9.64853321E-5</Constant>
+        <Constant Name="_K_GHK_">1.0E-9</Constant>
+        <Constant Name="_N_pmol_">6.02214179E11</Constant>
+        <Constant Name="_PI_">3.141592653589793</Constant>
+        <Constant Name="_R_">8314.46261815</Constant>
+        <Constant Name="_T_">300.0</Constant>
+        <Constant Name="EGF_init_mmol_ml_1">1.0002E7</Constant>
+        <Constant Name="EGFR_deg_init_mmol_ml_1">0.0</Constant>
+        <Constant Name="EGFR_init_mmol_ml_1">80000.0</Constant>
+        <Constant Name="k1_deg">0.2</Constant>
+        <Constant Name="k1_EGFR">2.18503E-5</Constant>
+        <Constant Name="k2_EGFR">0.121008</Constant>
+        <Constant Name="K_millivolts_per_volt">1000.0</Constant>
+        <Constant Name="KMOLE">0.001660538783162726</Constant>
+        <Constant Name="LR_init_mmol_ml_1">0.0</Constant>
+        <Constant Name="proEGFR_init_mmol_ml_1">1.0</Constant>
+        <Constant Name="Size_compartment">1.0</Constant>
+        <Constant Name="v_EGFR">100.0</Constant>
+        <VolumeVariable Name="EGFR" Domain="Compartment" />
+        <VolumeVariable Name="EGFR_deg" Domain="Compartment" />
+        <VolumeVariable Name="LR" Domain="Compartment" />
+        <Function Name="EGF" Domain="Compartment">EGF_init_mmol_ml_1</Function>
+        <Function Name="J_EGF_Binding_Unbinding" Domain="Compartment">((k1_EGFR * EGF * EGFR) - (k2_EGFR * LR))</Function>
+        <Function Name="J_EGFReceptor_Degradation" Domain="Compartment">(k1_deg * LR)</Function>
+        <Function Name="J_EGFReceptor_Degradation_Free" Domain="Compartment">(k1_deg * EGFR)</Function>
+        <Function Name="J_EGFReceptor_Production" Domain="Compartment">v_EGFR</Function>
+        <Function Name="proEGFR" Domain="Compartment">proEGFR_init_mmol_ml_1</Function>
+        <CompartmentSubDomain Name="Compartment">
+          <BoundaryType Boundary="Xm" Type="Value" />
+          <BoundaryType Boundary="Xp" Type="Value" />
+          <BoundaryType Boundary="Ym" Type="Value" />
+          <BoundaryType Boundary="Yp" Type="Value" />
+          <BoundaryType Boundary="Zm" Type="Value" />
+          <BoundaryType Boundary="Zp" Type="Value" />
+          <OdeEquation Name="LR" SolutionType="Unknown">
+            <Rate>(J_EGF_Binding_Unbinding - J_EGFReceptor_Degradation)</Rate>
+            <Initial>LR_init_mmol_ml_1</Initial>
+          </OdeEquation>
+          <OdeEquation Name="EGFR" SolutionType="Unknown">
+            <Rate>( - J_EGF_Binding_Unbinding + J_EGFReceptor_Production - J_EGFReceptor_Degradation_Free)</Rate>
+            <Initial>EGFR_init_mmol_ml_1</Initial>
+          </OdeEquation>
+          <OdeEquation Name="EGFR_deg" SolutionType="Unknown">
+            <Rate>(J_EGFReceptor_Degradation + J_EGFReceptor_Degradation_Free)</Rate>
+            <Initial>EGFR_deg_init_mmol_ml_1</Initial>
+          </OdeEquation>
+        </CompartmentSubDomain>
+        <Version Name="Deterministic_generated" KeyValue="211643113" BranchId="211643114" Archived="0" Date="21-Jul-2021 14:56:46" FromVersionable="false">
+          <Owner Name="PraneetDangol" Identifier="210593687" />
+          <GroupAccess Type="1" />
+          <Annotation>cloned from 'Deterministic_generated' owned by user ModelBrick
+cloned from 'Deterministic_generated' owned by user mblinov
+cloned from 'Deterministic_generated' owned by user savi06
+cloned from 'Deterministic_generated' owned by user mblinov
+cloned from 'Deterministic_generated' owned by user cab15130</Annotation>
+        </Version>
+      </MathDescription>
+      <Simulation Name="test">
+        <Annotation>cloned from 'test' owned by user ModelBrick
+cloned from '4D' owned by user mblinov
+cloned from '4D' owned by user savi06
+cloned from '4D' owned by user mblinov
+cloned from '4D' owned by user cab15130</Annotation>
+        <SolverTaskDescription TaskType="Unsteady" UseSymbolicJacobian="false" Solver="Combined Stiff Solver (IDA/CVODE)">
+          <TimeBound StartTime="0.0" EndTime="60.0" />
+          <TimeStep DefaultTime="0.1" MinTime="1.0E-8" MaxTime="1.0" />
+          <ErrorTolerance Absolut="1.0E-9" Relative="1.0E-9" />
+          <OutputOptions KeepEvery="1" KeepAtMost="1000" />
+          <NumberProcessors>1</NumberProcessors>
+        </SolverTaskDescription>
+        <MathOverrides />
+        <Version Name="test" KeyValue="211643159" BranchId="211643160" Archived="0" Date="21-Jul-2021 14:56:47" FromVersionable="false">
+          <Owner Name="PraneetDangol" Identifier="210593687" />
+          <GroupAccess Type="1" />
+          <Annotation>cloned from 'test' owned by user ModelBrick
+cloned from '4D' owned by user mblinov
+cloned from '4D' owned by user savi06
+cloned from '4D' owned by user mblinov
+cloned from '4D' owned by user cab15130</Annotation>
+        </Version>
+      </Simulation>
+      <Version Name="Deterministic" KeyValue="211646845" BranchId="211643147" Archived="0" Date="21-Jul-2021 16:08:24" FromVersionable="false">
+        <Owner Name="PraneetDangol" Identifier="210593687" />
+        <GroupAccess Type="1" />
+        <Annotation>cloned from 'Deterministic' owned by user ModelBrick
+cloned from 'Deterministic' owned by user mblinov
+cloned from 'Deterministic' owned by user savi06
+cloned from 'Deterministic' owned by user mblinov
+cloned from 'Deterministic' owned by user cab15130</Annotation>
+      </Version>
+      <MicroscopeMeasurement Name="fluor">
+        <ConvolutionKernel Type="ProjectionZKernel" />
+      </MicroscopeMeasurement>
+    </SimulationSpec>
+    <Version Name="CM_PM19804630_MB1::Initial_events_EGFR_signaling" KeyValue="211646857" BranchId="211643163" Archived="0" Date="21-Jul-2021 16:08:24" FromVersionable="false">
+      <Owner Name="PraneetDangol" Identifier="210593687" />
+      <GroupAccess Type="0" />
+      <Annotation>cloned from 'CM_PM19804630_MB1::Initial_events_EGFR_signaling' owned by user ModelBrick
+cloned from 'savi_Orton2009 - ModelBrick1' owned by user mblinov
+cloned from 'PERSONAL Orton2009 - ModelBrick1' owned by user savi06
+cloned from 'Orton2009 - ModelBrick1' owned by user mblinov
+cloned from 'Orton2009 - new' owned by user cab15130</Annotation>
+    </Version>
+    <pathwayModel>
+      <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:bp="http://www.biopax.org/release/biopax-level3.owl#" version="3.0" />
+    </pathwayModel>
+    <relationshipModel>
+      <RMNS version="3.0" />
+    </relationshipModel>
+    <vcmetadata>
+      <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
+        <rdf:Description rdf:about="http://www.sbml.org/sbml/level2/version4/COPASI0">
+          <bqbiol:hasProperty xmlns:bqbiol="http://biomodels.net/biology-qualifiers/">
+            <rdf:Bag rdf:nodeID="node0">
+              <rdf:_1>
+                <rdf:Description rdf:about="http://identifiers.org/doid/DOID:162" />
+              </rdf:_1>
+            </rdf:Bag>
+          </bqbiol:hasProperty>
+          <bqbiol:hasTaxon xmlns:bqbiol="http://biomodels.net/biology-qualifiers/">
+            <rdf:Bag rdf:nodeID="node1">
+              <rdf:_1>
+                <rdf:Description rdf:about="http://identifiers.org/taxonomy/10116" />
+              </rdf:_1>
+            </rdf:Bag>
+          </bqbiol:hasTaxon>
+          <bqbiol:isVersionOf xmlns:bqbiol="http://biomodels.net/biology-qualifiers/">
+            <rdf:Bag rdf:nodeID="node2">
+              <rdf:_1>
+                <rdf:Description rdf:about="http://identifiers.org/go/GO:0007173" />
+              </rdf:_1>
+            </rdf:Bag>
+          </bqbiol:isVersionOf>
+          <bqbiol:occursIn xmlns:bqbiol="http://biomodels.net/biology-qualifiers/">
+            <rdf:Bag rdf:nodeID="node3">
+              <rdf:_1>
+                <rdf:Description rdf:about="http://identifiers.org/bto/BTO:0001009" />
+              </rdf:_1>
+            </rdf:Bag>
+          </bqbiol:occursIn>
+          <bqmodel:is xmlns:bqmodel="http://biomodels.net/model-qualifiers/">
+            <rdf:Bag rdf:nodeID="node4">
+              <rdf:_1>
+                <rdf:Description rdf:about="http://identifiers.org/biomodels.db/MODEL1611280000" />
+              </rdf:_1>
+            </rdf:Bag>
+          </bqmodel:is>
+          <bqmodel:is xmlns:bqmodel="http://biomodels.net/model-qualifiers/">
+            <rdf:Bag rdf:nodeID="node5">
+              <rdf:_1>
+                <rdf:Description rdf:about="http://identifiers.org/biomodels.db/BIOMD0000000623" />
+              </rdf:_1>
+            </rdf:Bag>
+          </bqmodel:is>
+          <bqmodel:isDerivedFrom xmlns:bqmodel="http://biomodels.net/model-qualifiers/">
+            <rdf:Bag rdf:nodeID="node6">
+              <rdf:_1>
+                <rdf:Description rdf:about="http://identifiers.org/biomodels.db/BIOMD0000000033" />
+              </rdf:_1>
+            </rdf:Bag>
+          </bqmodel:isDerivedFrom>
+          <bqmodel:isDescribedBy xmlns:bqmodel="http://biomodels.net/model-qualifiers/">
+            <rdf:Bag rdf:nodeID="node7">
+              <rdf:_1>
+                <rdf:Description rdf:about="http://identifiers.org/pubmed/19804630" />
+              </rdf:_1>
+            </rdf:Bag>
+          </bqmodel:isDescribedBy>
+          <dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">
+            <rdf:Bag rdf:nodeID="node8">
+              <rdf:_1>
+                <rdf:Description rdf:nodeID="node86">
+                  <vcard:EMAIL xmlns:vcard="http://www.w3.org/2001/vcard-rdf/3.0#" rdf:datatype="http://www.w3.org/2001/XMLSchema#string">tvarusai@ebi.ac.uk</vcard:EMAIL>
+                  <vcard:N xmlns:vcard="http://www.w3.org/2001/vcard-rdf/3.0#">
+                    <rdf:Description rdf:nodeID="node87">
+                      <vcard:Family rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Varusai</vcard:Family>
+                      <vcard:Given rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Thawfeek</vcard:Given>
+                    </rdf:Description>
+                  </vcard:N>
+                  <vcard:ORG xmlns:vcard="http://www.w3.org/2001/vcard-rdf/3.0#">
+                    <rdf:Description rdf:nodeID="node88">
+                      <vcard:Orgname rdf:datatype="http://www.w3.org/2001/XMLSchema#string">EMBL-EBI</vcard:Orgname>
+                    </rdf:Description>
+                  </vcard:ORG>
+                </rdf:Description>
+              </rdf:_1>
+            </rdf:Bag>
+          </dc:creator>
+          <n0:created xmlns:n0="http://purl.org/dc/terms/">
+            <rdf:Description rdf:nodeID="node9">
+              <n0:W3CDTF rdf:datatype="http://www.w3.org/2001/XMLSchema#string">2016-11-28T09:09:16Z</n0:W3CDTF>
+            </rdf:Description>
+          </n0:created>
+          <n0:modified xmlns:n0="http://purl.org/dc/terms/">
+            <rdf:Description rdf:nodeID="node10">
+              <n0:W3CDTF rdf:datatype="http://www.w3.org/2001/XMLSchema#string">2017-01-09T11:54:49Z</n0:W3CDTF>
+            </rdf:Description>
+          </n0:modified>
+        </rdf:Description>
+        <rdf:Description rdf:about="http://www.sbml.org/sbml/level2/version4/COPASI1">
+          <bqmodel:is xmlns:bqmodel="http://biomodels.net/model-qualifiers/">
+            <rdf:Bag rdf:nodeID="node11">
+              <rdf:_1>
+                <rdf:Description rdf:about="http://identifiers.org/go/GO:0005623" />
+              </rdf:_1>
+            </rdf:Bag>
+          </bqmodel:is>
+        </rdf:Description>
+        <rdf:Description rdf:about="http://www.sbml.org/sbml/level2/version4/COPASI10">
+          <bqbiol:isVersionOf xmlns:bqbiol="http://biomodels.net/biology-qualifiers/">
+            <rdf:Bag rdf:nodeID="node12">
+              <rdf:_1>
+                <rdf:Description rdf:about="http://identifiers.org/uniprot/P36506" />
+              </rdf:_1>
+            </rdf:Bag>
+          </bqbiol:isVersionOf>
+          <bqbiol:isVersionOf xmlns:bqbiol="http://biomodels.net/biology-qualifiers/">
+            <rdf:Bag rdf:nodeID="node13">
+              <rdf:_1>
+                <rdf:Description rdf:about="http://identifiers.org/uniprot/Q01986" />
+              </rdf:_1>
+            </rdf:Bag>
+          </bqbiol:isVersionOf>
+        </rdf:Description>
+        <rdf:Description rdf:about="http://www.sbml.org/sbml/level2/version4/COPASI11">
+          <bqbiol:isVersionOf xmlns:bqbiol="http://biomodels.net/biology-qualifiers/">
+            <rdf:Bag rdf:nodeID="node14">
+              <rdf:_1>
+                <rdf:Description rdf:about="http://identifiers.org/uniprot/Q01986" />
+              </rdf:_1>
+            </rdf:Bag>
+          </bqbiol:isVersionOf>
+          <bqbiol:isVersionOf xmlns:bqbiol="http://biomodels.net/biology-qualifiers/">
+            <rdf:Bag rdf:nodeID="node15">
+              <rdf:_1>
+                <rdf:Description rdf:about="http://identifiers.org/uniprot/P36506" />
+              </rdf:_1>
+            </rdf:Bag>
+          </bqbiol:isVersionOf>
+        </rdf:Description>
+        <rdf:Description rdf:about="http://www.sbml.org/sbml/level2/version4/COPASI12">
+          <bqbiol:isVersionOf xmlns:bqbiol="http://biomodels.net/biology-qualifiers/">
+            <rdf:Bag rdf:nodeID="node16">
+              <rdf:_1>
+                <rdf:Description rdf:about="http://identifiers.org/uniprot/P63086" />
+              </rdf:_1>
+            </rdf:Bag>
+          </bqbiol:isVersionOf>
+          <bqbiol:isVersionOf xmlns:bqbiol="http://biomodels.net/biology-qualifiers/">
+            <rdf:Bag rdf:nodeID="node17">
+              <rdf:_1>
+                <rdf:Description rdf:about="http://identifiers.org/uniprot/P21708" />
+              </rdf:_1>
+            </rdf:Bag>
+          </bqbiol:isVersionOf>
+        </rdf:Description>
+        <rdf:Description rdf:about="http://www.sbml.org/sbml/level2/version4/COPASI13">
+          <bqbiol:isVersionOf xmlns:bqbiol="http://biomodels.net/biology-qualifiers/">
+            <rdf:Bag rdf:nodeID="node18">
+              <rdf:_1>
+                <rdf:Description rdf:about="http://identifiers.org/uniprot/P21708" />
+              </rdf:_1>
+            </rdf:Bag>
+          </bqbiol:isVersionOf>
+          <bqbiol:isVersionOf xmlns:bqbiol="http://biomodels.net/biology-qualifiers/">
+            <rdf:Bag rdf:nodeID="node19">
+              <rdf:_1>
+                <rdf:Description rdf:about="http://identifiers.org/uniprot/P63086" />
+              </rdf:_1>
+            </rdf:Bag>
+          </bqbiol:isVersionOf>
+        </rdf:Description>
+        <rdf:Description rdf:about="http://www.sbml.org/sbml/level2/version4/COPASI14">
+          <bqbiol:isVersionOf xmlns:bqbiol="http://biomodels.net/biology-qualifiers/">
+            <rdf:Bag rdf:nodeID="node20">
+              <rdf:_1>
+                <rdf:Description rdf:about="http://identifiers.org/uniprot/Q9Z1I2" />
+              </rdf:_1>
+            </rdf:Bag>
+          </bqbiol:isVersionOf>
+          <bqbiol:isVersionOf xmlns:bqbiol="http://biomodels.net/biology-qualifiers/">
+            <rdf:Bag rdf:nodeID="node21">
+              <rdf:_1>
+                <rdf:Description rdf:about="http://identifiers.org/uniprot/Q63531" />
+              </rdf:_1>
+            </rdf:Bag>
+          </bqbiol:isVersionOf>
+        </rdf:Description>
+        <rdf:Description rdf:about="http://www.sbml.org/sbml/level2/version4/COPASI15">
+          <bqbiol:isVersionOf xmlns:bqbiol="http://biomodels.net/biology-qualifiers/">
+            <rdf:Bag rdf:nodeID="node22">
+              <rdf:_1>
+                <rdf:Description rdf:about="http://identifiers.org/uniprot/Q9Z1I2" />
+              </rdf:_1>
+            </rdf:Bag>
+          </bqbiol:isVersionOf>
+          <bqbiol:isVersionOf xmlns:bqbiol="http://biomodels.net/biology-qualifiers/">
+            <rdf:Bag rdf:nodeID="node23">
+              <rdf:_1>
+                <rdf:Description rdf:about="http://identifiers.org/uniprot/Q63531" />
+              </rdf:_1>
+            </rdf:Bag>
+          </bqbiol:isVersionOf>
+        </rdf:Description>
+        <rdf:Description rdf:about="http://www.sbml.org/sbml/level2/version4/COPASI16">
+          <bqbiol:isVersionOf xmlns:bqbiol="http://biomodels.net/biology-qualifiers/">
+            <rdf:Bag rdf:nodeID="node24">
+              <rdf:_1>
+                <rdf:Description rdf:about="http://identifiers.org/uniprot/Q63787" />
+              </rdf:_1>
+            </rdf:Bag>
+          </bqbiol:isVersionOf>
+        </rdf:Description>
+        <rdf:Description rdf:about="http://www.sbml.org/sbml/level2/version4/COPASI17">
+          <bqbiol:isVersionOf xmlns:bqbiol="http://biomodels.net/biology-qualifiers/">
+            <rdf:Bag rdf:nodeID="node25">
+              <rdf:_1>
+                <rdf:Description rdf:about="http://identifiers.org/uniprot/Q63787" />
+              </rdf:_1>
+            </rdf:Bag>
+          </bqbiol:isVersionOf>
+        </rdf:Description>
+        <rdf:Description rdf:about="http://www.sbml.org/sbml/level2/version4/COPASI18">
+          <bqbiol:isVersionOf xmlns:bqbiol="http://biomodels.net/biology-qualifiers/">
+            <rdf:Bag rdf:nodeID="node26">
+              <rdf:_1>
+                <rdf:Description rdf:about="http://identifiers.org/uniprot/P47196" />
+              </rdf:_1>
+            </rdf:Bag>
+          </bqbiol:isVersionOf>
+          <bqbiol:isVersionOf xmlns:bqbiol="http://biomodels.net/biology-qualifiers/">
+            <rdf:Bag rdf:nodeID="node27">
+              <rdf:_1>
+                <rdf:Description rdf:about="http://identifiers.org/uniprot/P47197" />
+              </rdf:_1>
+            </rdf:Bag>
+          </bqbiol:isVersionOf>
+          <bqbiol:isVersionOf xmlns:bqbiol="http://biomodels.net/biology-qualifiers/">
+            <rdf:Bag rdf:nodeID="node28">
+              <rdf:_1>
+                <rdf:Description rdf:about="http://identifiers.org/uniprot/Q63484" />
+              </rdf:_1>
+            </rdf:Bag>
+          </bqbiol:isVersionOf>
+        </rdf:Description>
+        <rdf:Description rdf:about="http://www.sbml.org/sbml/level2/version4/COPASI19">
+          <bqbiol:isVersionOf xmlns:bqbiol="http://biomodels.net/biology-qualifiers/">
+            <rdf:Bag rdf:nodeID="node29">
+              <rdf:_1>
+                <rdf:Description rdf:about="http://identifiers.org/uniprot/Q63484" />
+              </rdf:_1>
+            </rdf:Bag>
+          </bqbiol:isVersionOf>
+          <bqbiol:isVersionOf xmlns:bqbiol="http://biomodels.net/biology-qualifiers/">
+            <rdf:Bag rdf:nodeID="node30">
+              <rdf:_1>
+                <rdf:Description rdf:about="http://identifiers.org/uniprot/P47197" />
+              </rdf:_1>
+            </rdf:Bag>
+          </bqbiol:isVersionOf>
+          <bqbiol:isVersionOf xmlns:bqbiol="http://biomodels.net/biology-qualifiers/">
+            <rdf:Bag rdf:nodeID="node31">
+              <rdf:_1>
+                <rdf:Description rdf:about="http://identifiers.org/uniprot/P47196" />
+              </rdf:_1>
+            </rdf:Bag>
+          </bqbiol:isVersionOf>
+        </rdf:Description>
+        <rdf:Description rdf:about="http://www.sbml.org/sbml/level2/version4/COPASI2">
+          <bqbiol:hasPart xmlns:bqbiol="http://biomodels.net/biology-qualifiers/">
+            <rdf:Bag rdf:nodeID="node32">
+              <rdf:_1>
+                <rdf:Description rdf:about="urn:miriam:uniprot:P07522" />
+              </rdf:_1>
+            </rdf:Bag>
+          </bqbiol:hasPart>
+          <bqbiol:hasPart xmlns:bqbiol="http://biomodels.net/biology-qualifiers/">
+            <rdf:Bag rdf:nodeID="node33">
+              <rdf:_1>
+                <rdf:Description rdf:about="urn:miriam:uniprot:Q9QX70" />
+              </rdf:_1>
+            </rdf:Bag>
+          </bqbiol:hasPart>
+        </rdf:Description>
+        <rdf:Description rdf:about="http://www.sbml.org/sbml/level2/version4/COPASI20">
+          <bqbiol:isVersionOf xmlns:bqbiol="http://biomodels.net/biology-qualifiers/">
+            <rdf:Bag rdf:nodeID="node34">
+              <rdf:_1>
+                <rdf:Description rdf:about="http://identifiers.org/uniprot/Q9QX70" />
+              </rdf:_1>
+            </rdf:Bag>
+          </bqbiol:isVersionOf>
+        </rdf:Description>
+        <rdf:Description rdf:about="http://www.sbml.org/sbml/level2/version4/COPASI21">
+          <bqbiol:isVersionOf xmlns:bqbiol="http://biomodels.net/biology-qualifiers/">
+            <rdf:Bag rdf:nodeID="node35">
+              <rdf:_1>
+                <rdf:Description rdf:about="http://identifiers.org/uniprot/Q9QYV3" />
+              </rdf:_1>
+            </rdf:Bag>
+          </bqbiol:isVersionOf>
+        </rdf:Description>
+        <rdf:Description rdf:about="http://www.sbml.org/sbml/level2/version4/COPASI22">
+          <bqbiol:isVersionOf xmlns:bqbiol="http://biomodels.net/biology-qualifiers/">
+            <rdf:Bag rdf:nodeID="node36">
+              <rdf:_1>
+                <rdf:Description rdf:about="http://identifiers.org/uniprot/Q9QYV3" />
+              </rdf:_1>
+            </rdf:Bag>
+          </bqbiol:isVersionOf>
+        </rdf:Description>
+        <rdf:Description rdf:about="http://www.sbml.org/sbml/level2/version4/COPASI23">
+          <bqbiol:isVersionOf xmlns:bqbiol="http://biomodels.net/biology-qualifiers/">
+            <rdf:Bag rdf:nodeID="node37">
+              <rdf:_1>
+                <rdf:Description rdf:about="http://identifiers.org/uniprot/Q62636" />
+              </rdf:_1>
+            </rdf:Bag>
+          </bqbiol:isVersionOf>
+        </rdf:Description>
+        <rdf:Description rdf:about="http://www.sbml.org/sbml/level2/version4/COPASI24">
+          <bqbiol:isVersionOf xmlns:bqbiol="http://biomodels.net/biology-qualifiers/">
+            <rdf:Bag rdf:nodeID="node38">
+              <rdf:_1>
+                <rdf:Description rdf:about="http://identifiers.org/uniprot/Q62636" />
+              </rdf:_1>
+            </rdf:Bag>
+          </bqbiol:isVersionOf>
+        </rdf:Description>
+        <rdf:Description rdf:about="http://www.sbml.org/sbml/level2/version4/COPASI25">
+          <bqbiol:isVersionOf xmlns:bqbiol="http://biomodels.net/biology-qualifiers/">
+            <rdf:Bag rdf:nodeID="node39">
+              <rdf:_1>
+                <rdf:Description rdf:about="http://identifiers.org/uniprot/F1M9C3" />
+              </rdf:_1>
+            </rdf:Bag>
+          </bqbiol:isVersionOf>
+        </rdf:Description>
+        <rdf:Description rdf:about="http://www.sbml.org/sbml/level2/version4/COPASI26">
+          <bqbiol:isVersionOf xmlns:bqbiol="http://biomodels.net/biology-qualifiers/">
+            <rdf:Bag rdf:nodeID="node40">
+              <rdf:_1>
+                <rdf:Description rdf:about="http://identifiers.org/uniprot/F1M9C3" />
+              </rdf:_1>
+            </rdf:Bag>
+          </bqbiol:isVersionOf>
+        </rdf:Description>
+        <rdf:Description rdf:about="http://www.sbml.org/sbml/level2/version4/COPASI27">
+          <bqbiol:isVersionOf xmlns:bqbiol="http://biomodels.net/biology-qualifiers/">
+            <rdf:Bag rdf:nodeID="node41">
+              <rdf:_1>
+                <rdf:Description rdf:about="http://identifiers.org/uniprot/P07522" />
+              </rdf:_1>
+            </rdf:Bag>
+          </bqbiol:isVersionOf>
+        </rdf:Description>
+        <rdf:Description rdf:about="http://www.sbml.org/sbml/level2/version4/COPASI28">
+          <bqbiol:isVersionOf xmlns:bqbiol="http://biomodels.net/biology-qualifiers/">
+            <rdf:Bag rdf:nodeID="node42">
+              <rdf:_1>
+                <rdf:Description rdf:about="http://identifiers.org/go/GO:0000159" />
+              </rdf:_1>
+            </rdf:Bag>
+          </bqbiol:isVersionOf>
+        </rdf:Description>
+        <rdf:Description rdf:about="http://www.sbml.org/sbml/level2/version4/COPASI29">
+          <bqbiol:isVersionOf xmlns:bqbiol="http://biomodels.net/biology-qualifiers/">
+            <rdf:Bag rdf:nodeID="node43">
+              <rdf:_1>
+                <rdf:Description rdf:about="http://identifiers.org/go/GO:1903293" />
+              </rdf:_1>
+            </rdf:Bag>
+          </bqbiol:isVersionOf>
+        </rdf:Description>
+        <rdf:Description rdf:about="http://www.sbml.org/sbml/level2/version4/COPASI3">
+          <bqbiol:isVersionOf xmlns:bqbiol="http://biomodels.net/biology-qualifiers/">
+            <rdf:Bag rdf:nodeID="node44">
+              <rdf:_1>
+                <rdf:Description rdf:about="http://identifiers.org/uniprot/Q9QX70" />
+              </rdf:_1>
+            </rdf:Bag>
+          </bqbiol:isVersionOf>
+        </rdf:Description>
+        <rdf:Description rdf:about="http://www.sbml.org/sbml/level2/version4/COPASI30">
+          <bqbiol:isVersionOf xmlns:bqbiol="http://biomodels.net/biology-qualifiers/">
+            <rdf:Bag rdf:nodeID="node45">
+              <rdf:_1>
+                <rdf:Description rdf:about="http://identifiers.org/uniprot/P50904" />
+              </rdf:_1>
+            </rdf:Bag>
+          </bqbiol:isVersionOf>
+        </rdf:Description>
+        <rdf:Description rdf:about="http://www.sbml.org/sbml/level2/version4/COPASI31">
+          <bqbiol:isVersionOf xmlns:bqbiol="http://biomodels.net/biology-qualifiers/">
+            <rdf:Bag rdf:nodeID="node46">
+              <rdf:_1>
+                <rdf:Description rdf:about="http://identifiers.org/uniprot/F1LV89" />
+              </rdf:_1>
+            </rdf:Bag>
+          </bqbiol:isVersionOf>
+        </rdf:Description>
+        <rdf:Description rdf:about="http://www.sbml.org/sbml/level2/version4/COPASI32">
+          <bqbiol:isVersionOf xmlns:bqbiol="http://biomodels.net/biology-qualifiers/">
+            <rdf:Bag rdf:nodeID="node47">
+              <rdf:_1>
+                <rdf:Description rdf:about="http://identifiers.org/uniprot/Q9QX70" />
+              </rdf:_1>
+            </rdf:Bag>
+          </bqbiol:isVersionOf>
+        </rdf:Description>
+        <rdf:Description rdf:about="http://www.sbml.org/sbml/level2/version4/COPASI33">
+          <bqbiol:is xmlns:bqbiol="http://biomodels.net/biology-qualifiers/">
+            <rdf:Bag rdf:nodeID="node48">
+              <rdf:_1>
+                <rdf:Description rdf:about="http://identifiers.org/sbo/SBO:0000012" />
+              </rdf:_1>
+            </rdf:Bag>
+          </bqbiol:is>
+        </rdf:Description>
+        <rdf:Description rdf:about="http://www.sbml.org/sbml/level2/version4/COPASI34">
+          <bqbiol:is xmlns:bqbiol="http://biomodels.net/biology-qualifiers/">
+            <rdf:Bag rdf:nodeID="node49">
+              <rdf:_1>
+                <rdf:Description rdf:about="http://identifiers.org/sbo/SBO:0000029" />
+              </rdf:_1>
+            </rdf:Bag>
+          </bqbiol:is>
+        </rdf:Description>
+        <rdf:Description rdf:about="http://www.sbml.org/sbml/level2/version4/COPASI35">
+          <bqbiol:is xmlns:bqbiol="http://biomodels.net/biology-qualifiers/">
+            <rdf:Bag rdf:nodeID="node50">
+              <rdf:_1>
+                <rdf:Description rdf:about="http://identifiers.org/sbo/SBO:0000012" />
+              </rdf:_1>
+            </rdf:Bag>
+          </bqbiol:is>
+        </rdf:Description>
+        <rdf:Description rdf:about="http://www.sbml.org/sbml/level2/version4/COPASI36">
+          <bqbiol:is xmlns:bqbiol="http://biomodels.net/biology-qualifiers/">
+            <rdf:Bag rdf:nodeID="node51">
+              <rdf:_1>
+                <rdf:Description rdf:about="http://identifiers.org/sbo/SBO:0000029" />
+              </rdf:_1>
+            </rdf:Bag>
+          </bqbiol:is>
+        </rdf:Description>
+        <rdf:Description rdf:about="http://www.sbml.org/sbml/level2/version4/COPASI37">
+          <bqbiol:is xmlns:bqbiol="http://biomodels.net/biology-qualifiers/">
+            <rdf:Bag rdf:nodeID="node52">
+              <rdf:_1>
+                <rdf:Description rdf:about="http://identifiers.org/sbo/SBO:0000029" />
+              </rdf:_1>
+            </rdf:Bag>
+          </bqbiol:is>
+        </rdf:Description>
+        <rdf:Description rdf:about="http://www.sbml.org/sbml/level2/version4/COPASI38">
+          <bqbiol:is xmlns:bqbiol="http://biomodels.net/biology-qualifiers/">
+            <rdf:Bag rdf:nodeID="node53">
+              <rdf:_1>
+                <rdf:Description rdf:about="http://identifiers.org/sbo/SBO:0000029" />
+              </rdf:_1>
+            </rdf:Bag>
+          </bqbiol:is>
+        </rdf:Description>
+        <rdf:Description rdf:about="http://www.sbml.org/sbml/level2/version4/COPASI39">
+          <bqbiol:is xmlns:bqbiol="http://biomodels.net/biology-qualifiers/">
+            <rdf:Bag rdf:nodeID="node54">
+              <rdf:_1>
+                <rdf:Description rdf:about="http://identifiers.org/sbo/SBO:0000029" />
+              </rdf:_1>
+            </rdf:Bag>
+          </bqbiol:is>
+        </rdf:Description>
+        <rdf:Description rdf:about="http://www.sbml.org/sbml/level2/version4/COPASI4">
+          <bqbiol:isVersionOf xmlns:bqbiol="http://biomodels.net/biology-qualifiers/">
+            <rdf:Bag rdf:nodeID="node55">
+              <rdf:_1>
+                <rdf:Description rdf:about="http://identifiers.org/uniprot/Q9Z1I1" />
+              </rdf:_1>
+            </rdf:Bag>
+          </bqbiol:isVersionOf>
+        </rdf:Description>
+        <rdf:Description rdf:about="http://www.sbml.org/sbml/level2/version4/COPASI40">
+          <bqbiol:is xmlns:bqbiol="http://biomodels.net/biology-qualifiers/">
+            <rdf:Bag rdf:nodeID="node56">
+              <rdf:_1>
+                <rdf:Description rdf:about="http://identifiers.org/sbo/SBO:0000029" />
+              </rdf:_1>
+            </rdf:Bag>
+          </bqbiol:is>
+        </rdf:Description>
+        <rdf:Description rdf:about="http://www.sbml.org/sbml/level2/version4/COPASI41">
+          <bqbiol:is xmlns:bqbiol="http://biomodels.net/biology-qualifiers/">
+            <rdf:Bag rdf:nodeID="node57">
+              <rdf:_1>
+                <rdf:Description rdf:about="http://identifiers.org/sbo/SBO:0000029" />
+              </rdf:_1>
+            </rdf:Bag>
+          </bqbiol:is>
+        </rdf:Description>
+        <rdf:Description rdf:about="http://www.sbml.org/sbml/level2/version4/COPASI42">
+          <bqbiol:is xmlns:bqbiol="http://biomodels.net/biology-qualifiers/">
+            <rdf:Bag rdf:nodeID="node58">
+              <rdf:_1>
+                <rdf:Description rdf:about="http://identifiers.org/sbo/SBO:0000029" />
+              </rdf:_1>
+            </rdf:Bag>
+          </bqbiol:is>
+        </rdf:Description>
+        <rdf:Description rdf:about="http://www.sbml.org/sbml/level2/version4/COPASI43">
+          <bqbiol:is xmlns:bqbiol="http://biomodels.net/biology-qualifiers/">
+            <rdf:Bag rdf:nodeID="node59">
+              <rdf:_1>
+                <rdf:Description rdf:about="http://identifiers.org/sbo/SBO:0000029" />
+              </rdf:_1>
+            </rdf:Bag>
+          </bqbiol:is>
+        </rdf:Description>
+        <rdf:Description rdf:about="http://www.sbml.org/sbml/level2/version4/COPASI44">
+          <bqbiol:is xmlns:bqbiol="http://biomodels.net/biology-qualifiers/">
+            <rdf:Bag rdf:nodeID="node60">
+              <rdf:_1>
+                <rdf:Description rdf:about="http://identifiers.org/sbo/SBO:0000029" />
+              </rdf:_1>
+            </rdf:Bag>
+          </bqbiol:is>
+        </rdf:Description>
+        <rdf:Description rdf:about="http://www.sbml.org/sbml/level2/version4/COPASI45">
+          <bqbiol:is xmlns:bqbiol="http://biomodels.net/biology-qualifiers/">
+            <rdf:Bag rdf:nodeID="node61">
+              <rdf:_1>
+                <rdf:Description rdf:about="http://identifiers.org/sbo/SBO:0000012" />
+              </rdf:_1>
+            </rdf:Bag>
+          </bqbiol:is>
+        </rdf:Description>
+        <rdf:Description rdf:about="http://www.sbml.org/sbml/level2/version4/COPASI46">
+          <bqbiol:is xmlns:bqbiol="http://biomodels.net/biology-qualifiers/">
+            <rdf:Bag rdf:nodeID="node62">
+              <rdf:_1>
+                <rdf:Description rdf:about="http://identifiers.org/sbo/SBO:0000029" />
+              </rdf:_1>
+            </rdf:Bag>
+          </bqbiol:is>
+        </rdf:Description>
+        <rdf:Description rdf:about="http://www.sbml.org/sbml/level2/version4/COPASI47">
+          <bqbiol:is xmlns:bqbiol="http://biomodels.net/biology-qualifiers/">
+            <rdf:Bag rdf:nodeID="node63">
+              <rdf:_1>
+                <rdf:Description rdf:about="http://identifiers.org/sbo/SBO:0000029" />
+              </rdf:_1>
+            </rdf:Bag>
+          </bqbiol:is>
+        </rdf:Description>
+        <rdf:Description rdf:about="http://www.sbml.org/sbml/level2/version4/COPASI48">
+          <bqbiol:is xmlns:bqbiol="http://biomodels.net/biology-qualifiers/">
+            <rdf:Bag rdf:nodeID="node64">
+              <rdf:_1>
+                <rdf:Description rdf:about="http://identifiers.org/sbo/SBO:0000029" />
+              </rdf:_1>
+            </rdf:Bag>
+          </bqbiol:is>
+        </rdf:Description>
+        <rdf:Description rdf:about="http://www.sbml.org/sbml/level2/version4/COPASI49">
+          <bqbiol:is xmlns:bqbiol="http://biomodels.net/biology-qualifiers/">
+            <rdf:Bag rdf:nodeID="node65">
+              <rdf:_1>
+                <rdf:Description rdf:about="http://identifiers.org/sbo/SBO:0000012" />
+              </rdf:_1>
+            </rdf:Bag>
+          </bqbiol:is>
+        </rdf:Description>
+        <rdf:Description rdf:about="http://www.sbml.org/sbml/level2/version4/COPASI5">
+          <bqbiol:isVersionOf xmlns:bqbiol="http://biomodels.net/biology-qualifiers/">
+            <rdf:Bag rdf:nodeID="node66">
+              <rdf:_1>
+                <rdf:Description rdf:about="http://identifiers.org/uniprot/Q9Z1I1" />
+              </rdf:_1>
+            </rdf:Bag>
+          </bqbiol:isVersionOf>
+        </rdf:Description>
+        <rdf:Description rdf:about="http://www.sbml.org/sbml/level2/version4/COPASI50">
+          <bqbiol:is xmlns:bqbiol="http://biomodels.net/biology-qualifiers/">
+            <rdf:Bag rdf:nodeID="node67">
+              <rdf:_1>
+                <rdf:Description rdf:about="http://identifiers.org/sbo/SBO:0000029" />
+              </rdf:_1>
+            </rdf:Bag>
+          </bqbiol:is>
+        </rdf:Description>
+        <rdf:Description rdf:about="http://www.sbml.org/sbml/level2/version4/COPASI51">
+          <bqbiol:is xmlns:bqbiol="http://biomodels.net/biology-qualifiers/">
+            <rdf:Bag rdf:nodeID="node68">
+              <rdf:_1>
+                <rdf:Description rdf:about="http://identifiers.org/sbo/SBO:0000012" />
+              </rdf:_1>
+            </rdf:Bag>
+          </bqbiol:is>
+        </rdf:Description>
+        <rdf:Description rdf:about="http://www.sbml.org/sbml/level2/version4/COPASI52">
+          <bqbiol:is xmlns:bqbiol="http://biomodels.net/biology-qualifiers/">
+            <rdf:Bag rdf:nodeID="node69">
+              <rdf:_1>
+                <rdf:Description rdf:about="http://identifiers.org/sbo/SBO:0000029" />
+              </rdf:_1>
+            </rdf:Bag>
+          </bqbiol:is>
+        </rdf:Description>
+        <rdf:Description rdf:about="http://www.sbml.org/sbml/level2/version4/COPASI53">
+          <bqbiol:is xmlns:bqbiol="http://biomodels.net/biology-qualifiers/">
+            <rdf:Bag rdf:nodeID="node70">
+              <rdf:_1>
+                <rdf:Description rdf:about="http://identifiers.org/sbo/SBO:0000029" />
+              </rdf:_1>
+            </rdf:Bag>
+          </bqbiol:is>
+          <bqmodel:isDescribedBy xmlns:bqmodel="http://biomodels.net/model-qualifiers/">
+            <rdf:Bag rdf:nodeID="node71">
+              <rdf:_1>
+                <rdf:Description rdf:about="urn:miriam:sbo:SBO%3A0000012" />
+              </rdf:_1>
+            </rdf:Bag>
+          </bqmodel:isDescribedBy>
+        </rdf:Description>
+        <rdf:Description rdf:about="http://www.sbml.org/sbml/level2/version4/COPASI54">
+          <bqbiol:is xmlns:bqbiol="http://biomodels.net/biology-qualifiers/">
+            <rdf:Bag rdf:nodeID="node72">
+              <rdf:_1>
+                <rdf:Description rdf:about="http://identifiers.org/sbo/SBO:0000029" />
+              </rdf:_1>
+            </rdf:Bag>
+          </bqbiol:is>
+        </rdf:Description>
+        <rdf:Description rdf:about="http://www.sbml.org/sbml/level2/version4/COPASI55">
+          <bqbiol:is xmlns:bqbiol="http://biomodels.net/biology-qualifiers/">
+            <rdf:Bag rdf:nodeID="node73">
+              <rdf:_1>
+                <rdf:Description rdf:about="http://identifiers.org/sbo/SBO:0000012" />
+              </rdf:_1>
+            </rdf:Bag>
+          </bqbiol:is>
+        </rdf:Description>
+        <rdf:Description rdf:about="http://www.sbml.org/sbml/level2/version4/COPASI56">
+          <bqbiol:is xmlns:bqbiol="http://biomodels.net/biology-qualifiers/">
+            <rdf:Bag rdf:nodeID="node74">
+              <rdf:_1>
+                <rdf:Description rdf:about="http://identifiers.org/sbo/SBO:0000029" />
+              </rdf:_1>
+            </rdf:Bag>
+          </bqbiol:is>
+        </rdf:Description>
+        <rdf:Description rdf:about="http://www.sbml.org/sbml/level2/version4/COPASI57">
+          <bqbiol:is xmlns:bqbiol="http://biomodels.net/biology-qualifiers/">
+            <rdf:Bag rdf:nodeID="node75">
+              <rdf:_1>
+                <rdf:Description rdf:about="http://identifiers.org/sbo/SBO:0000029" />
+              </rdf:_1>
+            </rdf:Bag>
+          </bqbiol:is>
+        </rdf:Description>
+        <rdf:Description rdf:about="http://www.sbml.org/sbml/level2/version4/COPASI58">
+          <bqbiol:is xmlns:bqbiol="http://biomodels.net/biology-qualifiers/">
+            <rdf:Bag rdf:nodeID="node76">
+              <rdf:_1>
+                <rdf:Description rdf:about="http://identifiers.org/sbo/SBO:0000029" />
+              </rdf:_1>
+            </rdf:Bag>
+          </bqbiol:is>
+        </rdf:Description>
+        <rdf:Description rdf:about="http://www.sbml.org/sbml/level2/version4/COPASI59">
+          <bqbiol:is xmlns:bqbiol="http://biomodels.net/biology-qualifiers/">
+            <rdf:Bag rdf:nodeID="node77">
+              <rdf:_1>
+                <rdf:Description rdf:about="http://identifiers.org/sbo/SBO:0000029" />
+              </rdf:_1>
+            </rdf:Bag>
+          </bqbiol:is>
+        </rdf:Description>
+        <rdf:Description rdf:about="http://www.sbml.org/sbml/level2/version4/COPASI6">
+          <bqbiol:isVersionOf xmlns:bqbiol="http://biomodels.net/biology-qualifiers/">
+            <rdf:Bag rdf:nodeID="node78">
+              <rdf:_1>
+                <rdf:Description rdf:about="http://identifiers.org/interpro/IPR020849" />
+              </rdf:_1>
+            </rdf:Bag>
+          </bqbiol:isVersionOf>
+        </rdf:Description>
+        <rdf:Description rdf:about="http://www.sbml.org/sbml/level2/version4/COPASI60">
+          <bqbiol:is xmlns:bqbiol="http://biomodels.net/biology-qualifiers/">
+            <rdf:Bag rdf:nodeID="node79">
+              <rdf:_1>
+                <rdf:Description rdf:about="http://identifiers.org/sbo/SBO:0000029" />
+              </rdf:_1>
+            </rdf:Bag>
+          </bqbiol:is>
+        </rdf:Description>
+        <rdf:Description rdf:about="http://www.sbml.org/sbml/level2/version4/COPASI61">
+          <bqbiol:is xmlns:bqbiol="http://biomodels.net/biology-qualifiers/">
+            <rdf:Bag rdf:nodeID="node80">
+              <rdf:_1>
+                <rdf:Description rdf:about="http://identifiers.org/sbo/SBO:0000001" />
+              </rdf:_1>
+            </rdf:Bag>
+          </bqbiol:is>
+        </rdf:Description>
+        <rdf:Description rdf:about="http://www.sbml.org/sbml/level2/version4/COPASI62">
+          <bqmodel:isDescribedBy xmlns:bqmodel="http://biomodels.net/model-qualifiers/">
+            <rdf:Bag rdf:nodeID="node81">
+              <rdf:_1>
+                <rdf:Description rdf:about="urn:miriam:sbo:SBO%3A0000012" />
+              </rdf:_1>
+            </rdf:Bag>
+          </bqmodel:isDescribedBy>
+        </rdf:Description>
+        <rdf:Description rdf:about="http://www.sbml.org/sbml/level2/version4/COPASI63">
+          <bqbiol:is xmlns:bqbiol="http://biomodels.net/biology-qualifiers/">
+            <rdf:Bag rdf:nodeID="node82">
+              <rdf:_1>
+                <rdf:Description rdf:about="http://identifiers.org/sbo/SBO:0000029" />
+              </rdf:_1>
+            </rdf:Bag>
+          </bqbiol:is>
+        </rdf:Description>
+        <rdf:Description rdf:about="http://www.sbml.org/sbml/level2/version4/COPASI7">
+          <bqbiol:isVersionOf xmlns:bqbiol="http://biomodels.net/biology-qualifiers/">
+            <rdf:Bag rdf:nodeID="node83">
+              <rdf:_1>
+                <rdf:Description rdf:about="http://identifiers.org/interpro/IPR020849" />
+              </rdf:_1>
+            </rdf:Bag>
+          </bqbiol:isVersionOf>
+        </rdf:Description>
+        <rdf:Description rdf:about="http://www.sbml.org/sbml/level2/version4/COPASI8">
+          <bqbiol:isVersionOf xmlns:bqbiol="http://biomodels.net/biology-qualifiers/">
+            <rdf:Bag rdf:nodeID="node84">
+              <rdf:_1>
+                <rdf:Description rdf:about="http://identifiers.org/uniprot/P11345" />
+              </rdf:_1>
+            </rdf:Bag>
+          </bqbiol:isVersionOf>
+        </rdf:Description>
+        <rdf:Description rdf:about="http://www.sbml.org/sbml/level2/version4/COPASI9">
+          <bqbiol:isVersionOf xmlns:bqbiol="http://biomodels.net/biology-qualifiers/">
+            <rdf:Bag rdf:nodeID="node85">
+              <rdf:_1>
+                <rdf:Description rdf:about="http://identifiers.org/uniprot/P11345" />
+              </rdf:_1>
+            </rdf:Bag>
+          </bqbiol:isVersionOf>
+        </rdf:Description>
+      </rdf:RDF>
+      <nonrdfAnnotationList>
+        <nonrdfAnnotation vcid="Species(species_0)">
+          <freetext>&lt;html&gt;
+  &lt;head&gt;
+    
+  &lt;/head&gt;
+  &lt;body xmlns="http://www.w3.org/1999/xhtml"&gt;
+    &lt;pre&gt;EGFR Receptor bound to EGF; Initial value was estimated from experiments&lt;/pre&gt;
+  &lt;/body&gt;
+&lt;/html&gt;</freetext>
+          <annotationList>
+            <annotation>
+              <COPASI xmlns="http://www.copasi.org/static/sbml">
+                <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:CopasiMT="http://www.copasi.org/RDF/MiriamTerms#" xmlns:dcterms="http://purl.org/dc/terms/">
+                  <rdf:Description rdf:about="#COPASI2">
+                    <dcterms:created>
+                      <rdf:Description>
+                        <dcterms:W3CDTF>2016-11-28T10:41:40Z</dcterms:W3CDTF>
+                      </rdf:Description>
+                    </dcterms:created>
+                    <CopasiMT:isVersionOf rdf:resource="urn:miriam:uniprot:Q9QX70" />
+                  </rdf:Description>
+                </rdf:RDF>
+              </COPASI>
+            </annotation>
+          </annotationList>
+        </nonrdfAnnotation>
+        <nonrdfAnnotation vcid="Species(species_18)">
+          <freetext>&lt;html&gt;
+  &lt;head&gt;
+    
+  &lt;/head&gt;
+  &lt;body xmlns="http://www.w3.org/1999/xhtml"&gt;
+    &lt;pre&gt;Degraded species of EGFR; Initial value estimated from experiments&lt;/pre&gt;
+  &lt;/body&gt;
+&lt;/html&gt;</freetext>
+          <annotationList>
+            <annotation>
+              <COPASI xmlns="http://www.copasi.org/static/sbml">
+                <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:CopasiMT="http://www.copasi.org/RDF/MiriamTerms#" xmlns:dcterms="http://purl.org/dc/terms/">
+                  <rdf:Description rdf:about="#COPASI20">
+                    <dcterms:created>
+                      <rdf:Description>
+                        <dcterms:W3CDTF>2016-11-28T15:28:34Z</dcterms:W3CDTF>
+                      </rdf:Description>
+                    </dcterms:created>
+                    <CopasiMT:isVersionOf rdf:resource="urn:miriam:uniprot:Q9QX70" />
+                  </rdf:Description>
+                </rdf:RDF>
+              </COPASI>
+            </annotation>
+          </annotationList>
+        </nonrdfAnnotation>
+        <nonrdfAnnotation vcid="Species(species_25)">
+          <freetext>&lt;notes&gt;
+          &lt;body xmlns="http://www.w3.org/1999/xhtml"&gt;
+            &lt;pre&gt;Epidermal Growth Factor; Initial value taken from Brown et al 2004&lt;/pre&gt;
+          &lt;/body&gt;
+        &lt;/notes&gt;</freetext>
+          <annotationList>
+            <annotation>
+              <COPASI xmlns="http://www.copasi.org/static/sbml">
+                <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:CopasiMT="http://www.copasi.org/RDF/MiriamTerms#" xmlns:dcterms="http://purl.org/dc/terms/">
+                  <rdf:Description rdf:about="#COPASI27">
+                    <dcterms:created>
+                      <rdf:Description>
+                        <dcterms:W3CDTF>2016-11-28T15:30:23Z</dcterms:W3CDTF>
+                      </rdf:Description>
+                    </dcterms:created>
+                    <CopasiMT:isVersionOf rdf:resource="urn:miriam:uniprot:P07522" />
+                  </rdf:Description>
+                </rdf:RDF>
+              </COPASI>
+            </annotation>
+          </annotationList>
+        </nonrdfAnnotation>
+        <nonrdfAnnotation vcid="ReactionStep(EGF_Binding_Unbinding)">
+          <freetext>&lt;html&gt;
+  &lt;head&gt;
+    
+  &lt;/head&gt;
+  &lt;body xmlns="http://www.w3.org/1999/xhtml"&gt;
+    &lt;pre&gt;This reaction is the binding of the EGF molecule to the EGF Receptor to produce LR, which is the binded state of the receptor and molecule.
+
+Parameters taken from Brown et al 2004&lt;/pre&gt;
+  &lt;/body&gt;
+&lt;/html&gt;</freetext>
+          <annotationList>
+            <annotation>
+              <COPASI xmlns="http://www.copasi.org/static/sbml">
+                <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:CopasiMT="http://www.copasi.org/RDF/MiriamTerms#" xmlns:dcterms="http://purl.org/dc/terms/">
+                  <rdf:Description rdf:about="#COPASI33">
+                    <dcterms:created>
+                      <rdf:Description>
+                        <dcterms:W3CDTF>2016-11-28T16:26:49Z</dcterms:W3CDTF>
+                      </rdf:Description>
+                    </dcterms:created>
+                    <CopasiMT:is rdf:resource="urn:miriam:sbo:SBO:0000012" />
+                  </rdf:Description>
+                </rdf:RDF>
+              </COPASI>
+            </annotation>
+          </annotationList>
+        </nonrdfAnnotation>
+        <nonrdfAnnotation vcid="BioModel(CM_PM19804630_MB1::Initial_events_EGFR_signaling)">
+          <freetext>&lt;html&gt;
+  &lt;head&gt;
+    
+  &lt;/head&gt;
+  &lt;body xmlns="http://www.w3.org/1999/xhtml"&gt;
+    &lt;div class="dc:title"&gt;
+      Orton2009 - Modelling cancerous mutations in the EGFR/ERK pathway - EGF 
+      Model
+    &lt;/div&gt;
+    &lt;div class="dc:description"&gt;
+      This model studies the aberrations in ERK signalling for different 
+      cancer mutations. The authors alter a previously existing EGF model 
+      (Brown et al 2004) to include new interactions that better fit empirical 
+      data. Predictions show that the ERK signalling is a robust mechanism 
+      taking different courses for different cancer mutations. Most parameter 
+      values are used from the previous model and the new parameters are 
+      estimated using experimental data performed by the authors on PC12 cells 
+      (adrenal gland, rat). The authors provide an SBML version of the model 
+      in the paper.
+    &lt;/div&gt;
+    &lt;div class="dc:bibliographicCitation"&gt;
+      &lt;p&gt;
+        This model is described in the article:
+      &lt;/p&gt;
+      &lt;div class="bibo:title"&gt;
+        &lt;a title="Access to this publication" href="http://identifiers.org/pubmed/19804630"&gt;Computational 
+        modelling of cancerous mutations in the EGFR/ERK signalling pathway.&lt;/a&gt;
+      &lt;/div&gt;
+      &lt;div class="bibo:authorList"&gt;
+        Orton RJ, Adriaens ME, Gormand A, Sturm OE, Kolch W, Gilbert DR.
+      &lt;/div&gt;
+      &lt;div class="bibo:Journal"&gt;
+        BMC Syst Biol 2009 Oct; 3: 100
+      &lt;/div&gt;
+      &lt;p&gt;
+        Abstract:
+      &lt;/p&gt;
+      &lt;div class="bibo:abstract"&gt;
+        &lt;p&gt;
+          The Epidermal Growth Factor Receptor (EGFR) activated 
+          Extracellular-signal Regulated Kinase (ERK) pathway is a critical 
+          cell signalling pathway that relays the signal for a cell to 
+          proliferate from the plasma membrane to the nucleus. Deregulation of 
+          the EGFR/ERK pathway due to alterations affecting the expression or 
+          function of a number of pathway components has long been associated 
+          with numerous forms of cancer. Under normal conditions, Epidermal 
+          Growth Factor (EGF) stimulates a rapid but transient activation of 
+          ERK as the signal is rapidly shutdown. Whereas, under cancerous 
+          mutation conditions the ERK signal cannot be shutdown and is 
+          sustained resulting in the constitutive activation of ERK and 
+          continual cell proliferation. In this study, we have used 
+          computational modelling techniques to investigate what effects 
+          various cancerous alterations have on the signalling flow through 
+          the ERK pathway.We have generated a new model of the EGFR activated 
+          ERK pathway, which was verified by our own experimental data. We 
+          then altered our model to represent various cancerous situations 
+          such as Ras, B-Raf and EGFR mutations, as well as EGFR 
+          overexpression. Analysis of the models showed that different 
+          cancerous situations resulted in different signalling patterns 
+          through the ERK pathway, especially when compared to the normal EGF 
+          signal pattern. Our model predicts that cancerous EGFR mutation and 
+          overexpression signals almost exclusively via the Rap1 pathway, 
+          predicting that this pathway is the best target for drugs. 
+          Furthermore, our model also highlights the importance of receptor 
+          degradation in normal and cancerous EGFR signalling, and suggests 
+          that receptor degradation is a key difference between the signalling 
+          from the EGF and Nerve Growth Factor (NGF) receptors.Our results 
+          suggest that different routes to ERK activation are being utilised 
+          in different cancerous situations which therefore has interesting 
+          implications for drug selection strategies. We also conducted a 
+          comparison of the critical differences between signalling from 
+          different growth factor receptors (namely EGFR, mutated EGFR, NGF, 
+          and Insulin) with our results suggesting the difference between the 
+          systems are large scale and can be attributed to the 
+          presence/absence of entire pathways rather than subtledifference in 
+          individual rate constants between the system
+        &lt;/p&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+  &lt;/body&gt;
+&lt;/html&gt;</freetext>
+          <annotationList>
+            <annotation>
+              <COPASI xmlns="http://www.copasi.org/static/sbml">
+                <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:CopasiMT="http://www.copasi.org/RDF/MiriamTerms#" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:vCard="http://www.w3.org/2001/vcard-rdf/3.0#">
+                  <rdf:Description rdf:about="#COPASI0">
+                    <dcterms:created>
+                      <rdf:Description>
+                        <dcterms:W3CDTF>2016-11-28T09:09:16Z</dcterms:W3CDTF>
+                      </rdf:Description>
+                    </dcterms:created>
+                    <dcterms:creator>
+                      <rdf:Description>
+                        <vCard:EMAIL>tvarusai@ebi.ac.uk</vCard:EMAIL>
+                        <vCard:N>
+                          <rdf:Description>
+                            <vCard:Family>Varusai</vCard:Family>
+                            <vCard:Given>Thawfeek</vCard:Given>
+                          </rdf:Description>
+                        </vCard:N>
+                        <vCard:ORG>
+                          <rdf:Description>
+                            <vCard:Orgname>EMBL-EBI</vCard:Orgname>
+                          </rdf:Description>
+                        </vCard:ORG>
+                      </rdf:Description>
+                    </dcterms:creator>
+                    <CopasiMT:isVersionOf rdf:resource="urn:miriam:go:GO:0007173" />
+                  </rdf:Description>
+                </rdf:RDF>
+              </COPASI>
+            </annotation>
+          </annotationList>
+        </nonrdfAnnotation>
+        <nonrdfAnnotation vcid="ReactionStep(EGFReceptor_Production)">
+          <freetext>&lt;html&gt;
+  &lt;head&gt;
+    
+  &lt;/head&gt;
+  &lt;body xmlns="http://www.w3.org/1999/xhtml"&gt;
+    &lt;pre&gt;This reaction produces EGFReceptor by converting the proEGFR molecules into active EGFR molecule receptors.
+
+Parameters were estimated from experiments&lt;/pre&gt;
+  &lt;/body&gt;
+&lt;/html&gt;</freetext>
+          <annotationList>
+            <annotation>
+              <COPASI xmlns="http://www.copasi.org/static/sbml">
+                <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:CopasiMT="http://www.copasi.org/RDF/MiriamTerms#" xmlns:dcterms="http://purl.org/dc/terms/">
+                  <rdf:Description rdf:about="#COPASI61">
+                    <dcterms:created>
+                      <rdf:Description>
+                        <dcterms:W3CDTF>2016-11-28T16:25:33Z</dcterms:W3CDTF>
+                      </rdf:Description>
+                    </dcterms:created>
+                    <CopasiMT:is rdf:resource="urn:miriam:sbo:SBO:0000001" />
+                  </rdf:Description>
+                </rdf:RDF>
+              </COPASI>
+            </annotation>
+          </annotationList>
+        </nonrdfAnnotation>
+        <nonrdfAnnotation vcid="ReactionStep(EGFReceptor_Degradation_Free)">
+          <freetext>&lt;html&gt;
+  &lt;head&gt;
+    
+  &lt;/head&gt;
+  &lt;body xmlns="http://www.w3.org/1999/xhtml"&gt;
+    &lt;pre&gt;This reaction breaks the active EGF Receptor down into its degraded form. 
+
+Parameters were estimated from experiments&lt;/pre&gt;
+  &lt;/body&gt;
+&lt;/html&gt;</freetext>
+          <annotationList>
+            <annotation>
+              <COPASI xmlns="http://www.copasi.org/static/sbml">
+                <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:CopasiMT="http://www.copasi.org/RDF/MiriamTerms#" xmlns:dcterms="http://purl.org/dc/terms/">
+                  <rdf:Description rdf:about="#COPASI62">
+                    <dcterms:created>
+                      <rdf:Description>
+                        <dcterms:W3CDTF>2016-11-28T16:25:31Z</dcterms:W3CDTF>
+                      </rdf:Description>
+                    </dcterms:created>
+                    <CopasiMT:is rdf:resource="urn:miriam:sbo:SBO:0000029" />
+                  </rdf:Description>
+                </rdf:RDF>
+              </COPASI>
+            </annotation>
+          </annotationList>
+        </nonrdfAnnotation>
+        <nonrdfAnnotation vcid="Species(species_30)">
+          <freetext>&lt;html&gt;
+  &lt;head&gt;
+    
+  &lt;/head&gt;
+  &lt;body xmlns="http://www.w3.org/1999/xhtml"&gt;
+    &lt;pre&gt;Species preceding active EGF receptor; Initial value estimated from experiments&lt;/pre&gt;
+  &lt;/body&gt;
+&lt;/html&gt;</freetext>
+          <annotationList>
+            <annotation>
+              <COPASI xmlns="http://www.copasi.org/static/sbml">
+                <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:CopasiMT="http://www.copasi.org/RDF/MiriamTerms#" xmlns:dcterms="http://purl.org/dc/terms/">
+                  <rdf:Description rdf:about="#COPASI32">
+                    <dcterms:created>
+                      <rdf:Description>
+                        <dcterms:W3CDTF>2016-11-28T15:50:14Z</dcterms:W3CDTF>
+                      </rdf:Description>
+                    </dcterms:created>
+                    <CopasiMT:isVersionOf rdf:resource="urn:miriam:uniprot:Q9QX70" />
+                  </rdf:Description>
+                </rdf:RDF>
+              </COPASI>
+            </annotation>
+          </annotationList>
+        </nonrdfAnnotation>
+        <nonrdfAnnotation vcid="ReactionStep(EGFReceptor_Degradation)">
+          <freetext>&lt;html&gt;
+  &lt;head&gt;
+    
+  &lt;/head&gt;
+  &lt;body xmlns="http://www.w3.org/1999/xhtml"&gt;
+    &lt;pre&gt;This reaction breaks the EGFR Receptor bound to EGF down into the degraded form of the EGFR Receptor. &lt;/pre&gt;
+    &lt;pre&gt;Parameters were estimated from experiments&lt;/pre&gt;
+  &lt;/body&gt;
+&lt;/html&gt;</freetext>
+          <annotationList>
+            <annotation>
+              <COPASI xmlns="http://www.copasi.org/static/sbml">
+                <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:CopasiMT="http://www.copasi.org/RDF/MiriamTerms#" xmlns:dcterms="http://purl.org/dc/terms/">
+                  <rdf:Description rdf:about="#COPASI53">
+                    <dcterms:created>
+                      <rdf:Description>
+                        <dcterms:W3CDTF>2016-11-28T16:25:26Z</dcterms:W3CDTF>
+                      </rdf:Description>
+                    </dcterms:created>
+                    <CopasiMT:is rdf:resource="urn:miriam:sbo:SBO:0000029" />
+                  </rdf:Description>
+                </rdf:RDF>
+              </COPASI>
+            </annotation>
+          </annotationList>
+        </nonrdfAnnotation>
+        <nonrdfAnnotation vcid="Species(species_1)">
+          <freetext>&lt;html&gt;
+  &lt;head&gt;
+    
+  &lt;/head&gt;
+  &lt;body xmlns="http://www.w3.org/1999/xhtml"&gt;
+    &lt;pre&gt;Free and active EGF receptor; Initial value taken from Brown et al 2004&lt;/pre&gt;
+  &lt;/body&gt;
+&lt;/html&gt;</freetext>
+          <annotationList>
+            <annotation>
+              <COPASI xmlns="http://www.copasi.org/static/sbml">
+                <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:CopasiMT="http://www.copasi.org/RDF/MiriamTerms#" xmlns:dcterms="http://purl.org/dc/terms/">
+                  <rdf:Description rdf:about="#COPASI3">
+                    <dcterms:created>
+                      <rdf:Description>
+                        <dcterms:W3CDTF>2016-11-28T15:48:48Z</dcterms:W3CDTF>
+                      </rdf:Description>
+                    </dcterms:created>
+                    <CopasiMT:isVersionOf rdf:resource="urn:miriam:uniprot:Q9QX70" />
+                  </rdf:Description>
+                </rdf:RDF>
+              </COPASI>
+            </annotation>
+          </annotationList>
+        </nonrdfAnnotation>
+        <nonrdfAnnotation vcid="SimulationContext(Deterministic)">
+          <freetext>&lt;html&gt;
+  &lt;head&gt;
+    
+  &lt;/head&gt;
+  &lt;body xmlns="http://www.w3.org/1999/xhtml"&gt;
+  &lt;/body&gt;
+&lt;/html&gt;</freetext>
+        </nonrdfAnnotation>
+        <nonrdfAnnotation vcid="Structure(compartment)">
+          <annotationList>
+            <annotation>
+              <COPASI xmlns="http://www.copasi.org/static/sbml">
+                <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:CopasiMT="http://www.copasi.org/RDF/MiriamTerms#" xmlns:dcterms="http://purl.org/dc/terms/">
+                  <rdf:Description rdf:about="#COPASI1">
+                    <dcterms:created>
+                      <rdf:Description>
+                        <dcterms:W3CDTF>2016-11-28T10:41:12Z</dcterms:W3CDTF>
+                      </rdf:Description>
+                    </dcterms:created>
+                    <CopasiMT:is rdf:resource="urn:miriam:go:GO:0097234" />
+                  </rdf:Description>
+                </rdf:RDF>
+              </COPASI>
+            </annotation>
+          </annotationList>
+        </nonrdfAnnotation>
+      </nonrdfAnnotationList>
+      <uriBindingList>
+        <uriBinding uri="http://www.sbml.org/sbml/level2/version4/COPASI0" vcid="BioModel(CM_PM19804630_MB1::Initial_events_EGFR_signaling)" />
+        <uriBinding uri="http://www.sbml.org/sbml/level2/version4/COPASI20" vcid="Species(species_18)" />
+        <uriBinding uri="http://www.sbml.org/sbml/level2/version4/COPASI3" vcid="Species(species_1)" />
+        <uriBinding uri="http://www.sbml.org/sbml/level2/version4/COPASI62" vcid="ReactionStep(EGFReceptor_Degradation_Free)" />
+        <uriBinding uri="http://www.sbml.org/sbml/level2/version4/COPASI53" vcid="ReactionStep(EGFReceptor_Degradation)" />
+        <uriBinding uri="http://www.sbml.org/sbml/level2/version4/COPASI32" vcid="Species(species_30)" />
+        <uriBinding uri="http://www.sbml.org/sbml/level2/version4/COPASI33" vcid="ReactionStep(EGF_Binding_Unbinding)" />
+        <uriBinding uri="http://www.sbml.org/sbml/level2/version4/COPASI61" vcid="ReactionStep(EGFReceptor_Production)" />
+        <uriBinding uri="http://www.sbml.org/sbml/level2/version4/COPASI2" vcid="Species(species_0)" />
+        <uriBinding uri="http://www.sbml.org/sbml/level2/version4/COPASI1" vcid="Structure(compartment)" />
+        <uriBinding uri="http://www.sbml.org/sbml/level2/version4/COPASI27" vcid="Species(species_25)" />
+      </uriBindingList>
+    </vcmetadata>
+  </BioModel>
+</vcml>
+

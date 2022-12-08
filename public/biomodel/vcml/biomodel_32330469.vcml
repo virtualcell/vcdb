@@ -1,0 +1,388 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--This biomodel was generated in VCML Version Alpha_Version_7.4.0_build_87-->
+<vcml xmlns="http://sourceforge.net/projects/vcell/vcml" Version="Alpha_Version_7.4.0_build_87">
+  <BioModel Name="cylindrical model (very small)">
+    <Model Name="unnamed">
+      <Compound Name="species0" />
+      <Compound Name="__PSF__" />
+      <Feature Name="Unnamed compartment" KeyValue="32246663" />
+      <Feature Name="inside" KeyValue="32246666" />
+      <Membrane InsideFeature="inside" OutsideFeature="Unnamed compartment" PositiveFeature="inside" NegativeFeature="Unnamed compartment" MembraneVoltage="Voltage_membrane" Name="membrane" KeyValue="32246665" />
+      <LocalizedCompound Name="species0_membrane" CompoundRef="species0" Structure="membrane" OverrideName="true" KeyValue="32246669" />
+      <LocalizedCompound Name="__PSF__" CompoundRef="__PSF__" Structure="Unnamed compartment" OverrideName="true" KeyValue="32246670" />
+      <Diagram Name="Unnamed compartment" Structure="Unnamed compartment" />
+      <Diagram Name="membrane" Structure="membrane" />
+      <Diagram Name="inside" Structure="inside" />
+      <Version Name="unnamed" KeyValue="32246659" BranchId="27822156" Archived="0" Date="06-Mar-2009 15:25:11" FromVersionable="false">
+        <Owner Name="longtu" Identifier="27524085" />
+        <GroupAccess Type="1" />
+      </Version>
+      <ModelUnitSystem VolumeSubstanceUnit="uM.um3" MembraneSubstanceUnit="molecules" LumpedReactionSubstanceUnit="molecules" VolumeUnit="um3" AreaUnit="um2" LengthUnit="um" TimeUnit="s" />
+    </Model>
+    <SimulationSpec Name="diffusion" Stochastic="false" UseConcentration="true" RuleBased="false" MassConservationModelReduction="true" InsufficientIterations="false" InsufficientMaxMolecules="false" CharacteristicSize="0.010403160765672964">
+      <NetworkConstraints RbmMaxIteration="1" RbmMaxMoleculesPerSpecies="10" RbmSpeciesLimit="800" RbmReactionsLimit="2500" />
+      <Annotation />
+      <Geometry Name="cylinder (very small)" Dimension="3">
+        <Extent X="0.5" Y="0.5" Z="0.14" />
+        <Origin X="0.0" Y="0.0" Z="0.0" />
+        <SubVolume Name="subVolume0" Handle="1" Type="Analytical" KeyValue="27989370">
+          <AnalyticExpression>((((0.866025 + z) ^ 2.0) + (y ^ 2.0)) &lt; 1.0)</AnalyticExpression>
+        </SubVolume>
+        <SubVolume Name="subVolume1" Handle="0" Type="Analytical" KeyValue="27989371">
+          <AnalyticExpression>1.0</AnalyticExpression>
+        </SubVolume>
+        <SurfaceClass Name="subVolume0_subVolume1_membrane" SubVolume1Ref="subVolume0" SubVolume2Ref="subVolume1" />
+        <SurfaceDescription NumSamplesX="100" NumSamplesY="100" NumSamplesZ="100" CutoffFrequency="0.3">
+          <VolumeRegion Name="subVolume00" RegionID="0" SubVolume="subVolume0" Size="0.022642332415059693" Unit="um3" />
+          <VolumeRegion Name="subVolume11" RegionID="1" SubVolume="subVolume1" Size="0.012357667584940316" Unit="um3" />
+          <MembraneRegion Name="membrane_subVolume00_subVolume11" VolumeRegion1="subVolume11" VolumeRegion2="subVolume00" Size="0.2617497929172328" Unit="um2" />
+        </SurfaceDescription>
+        <Version Name="cylinder (very small)" KeyValue="27989367" BranchId="27989320" Archived="0" Date="01-Jul-2008 16:52:58" FromVersionable="false">
+          <Owner Name="longtu" Identifier="27524085" />
+          <GroupAccess Type="1" />
+        </Version>
+      </Geometry>
+      <GeometryContext>
+        <FeatureMapping Feature="Unnamed compartment" GeometryClass="subVolume1" SubVolume="subVolume1">
+          <BoundariesTypes Xm="Flux" Xp="Flux" Ym="Flux" Yp="Flux" Zm="Flux" Zp="Flux" />
+        </FeatureMapping>
+        <FeatureMapping Feature="inside" GeometryClass="subVolume0" SubVolume="subVolume0">
+          <BoundariesTypes Xm="Flux" Xp="Flux" Ym="Flux" Yp="Flux" Zm="Flux" Zp="Flux" />
+        </FeatureMapping>
+        <MembraneMapping Membrane="membrane" SurfaceToVolumeRatio="1.0" VolumeFraction="0.2" CalculateVoltage="false" SpecificCapacitance="1.0" InitialVoltage="0.0" GeometryClass="subVolume0_subVolume1_membrane">
+          <BoundariesTypes Xm="Flux" Xp="Flux" Ym="Flux" Yp="Flux" Zm="Flux" Zp="Flux" />
+        </MembraneMapping>
+      </GeometryContext>
+      <ReactionContext>
+        <LocalizedCompoundSpec LocalizedCompoundRef="__PSF__" ForceConstant="true" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>vcField('kernel_3x3x150', 'kernel', 0.0, 'Volume')</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="species0_membrane" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>((x &gt;= 0.0) * (x &lt;= 0.001) * (y &gt;= 0.0) * (y &lt;= 0.001))</InitialConcentration>
+          <Diffusion>1.0</Diffusion>
+          <Boundaries Xm="0.0" Xp="0.0" Ym="0.0" Yp="0.0" Zm="0.0" Zp="0.0" />
+        </LocalizedCompoundSpec>
+      </ReactionContext>
+      <MathDescription Name="diffusion_generated">
+        <Constant Name="_F_">96480.0</Constant>
+        <Constant Name="_F_nmol_">9.648E-5</Constant>
+        <Constant Name="_K_GHK_">1.0E-9</Constant>
+        <Constant Name="_N_pmol_">6.02E11</Constant>
+        <Constant Name="_R_">8314.0</Constant>
+        <Constant Name="_T_">300.0</Constant>
+        <Constant Name="K_millivolts_per_volt">1000.0</Constant>
+        <Constant Name="KMOLE">0.0016611295681063123</Constant>
+        <Constant Name="species0_membrane_boundaryXm">0.0</Constant>
+        <Constant Name="species0_membrane_boundaryXp">0.0</Constant>
+        <Constant Name="species0_membrane_boundaryYm">0.0</Constant>
+        <Constant Name="species0_membrane_boundaryYp">0.0</Constant>
+        <Constant Name="species0_membrane_boundaryZm">0.0</Constant>
+        <Constant Name="species0_membrane_boundaryZp">0.0</Constant>
+        <Constant Name="species0_membrane_diffusionRate">1.0</Constant>
+        <Constant Name="Voltage_membrane">0.0</Constant>
+        <MembraneVariable Name="species0_membrane" />
+        <Function Name="__PSF__">vcField('kernel_3x3x150', 'kernel', 0.0, 'Volume')</Function>
+        <Function Name="__PSF___init">vcField('kernel_3x3x150', 'kernel', 0.0, 'Volume')</Function>
+        <Function Name="species0_membrane_init">((x &gt;= 0.0) * (x &lt;= 0.001) * (y &gt;= 0.0) * (y &lt;= 0.001))</Function>
+        <CompartmentSubDomain Name="subVolume0">
+          <BoundaryType Boundary="Xm" Type="Flux" />
+          <BoundaryType Boundary="Xp" Type="Flux" />
+          <BoundaryType Boundary="Ym" Type="Flux" />
+          <BoundaryType Boundary="Yp" Type="Flux" />
+          <BoundaryType Boundary="Zm" Type="Flux" />
+          <BoundaryType Boundary="Zp" Type="Flux" />
+        </CompartmentSubDomain>
+        <CompartmentSubDomain Name="subVolume1">
+          <BoundaryType Boundary="Xm" Type="Flux" />
+          <BoundaryType Boundary="Xp" Type="Flux" />
+          <BoundaryType Boundary="Ym" Type="Flux" />
+          <BoundaryType Boundary="Yp" Type="Flux" />
+          <BoundaryType Boundary="Zm" Type="Flux" />
+          <BoundaryType Boundary="Zp" Type="Flux" />
+        </CompartmentSubDomain>
+        <MembraneSubDomain Name="subVolume0_subVolume1_membrane" InsideCompartment="subVolume0" OutsideCompartment="subVolume1">
+          <BoundaryType Boundary="Xm" Type="Value" />
+          <BoundaryType Boundary="Xp" Type="Value" />
+          <BoundaryType Boundary="Ym" Type="Value" />
+          <BoundaryType Boundary="Yp" Type="Value" />
+          <BoundaryType Boundary="Zm" Type="Value" />
+          <BoundaryType Boundary="Zp" Type="Value" />
+          <PdeEquation Name="species0_membrane" SolutionType="Unknown">
+            <Boundaries Xm="species0_membrane_boundaryXm" Xp="species0_membrane_boundaryXp" Ym="species0_membrane_boundaryYm" Yp="species0_membrane_boundaryYp" Zm="species0_membrane_boundaryZm" Zp="species0_membrane_boundaryZp" />
+            <Rate>0.0</Rate>
+            <Diffusion>species0_membrane_diffusionRate</Diffusion>
+            <Initial>species0_membrane_init</Initial>
+          </PdeEquation>
+        </MembraneSubDomain>
+        <Version Name="diffusion_generated" KeyValue="32330435" BranchId="27822153" Archived="0" Date="10-Mar-2009 16:45:29" FromVersionable="false">
+          <Owner Name="longtu" Identifier="27524085" />
+          <GroupAccess Type="1" />
+        </Version>
+      </MathDescription>
+      <Simulation Name="Simulation0">
+        <SolverTaskDescription TaskType="Unsteady" UseSymbolicJacobian="false" Solver="Finite Volume, Regular Grid">
+          <TimeBound StartTime="0.0" EndTime="0.01" />
+          <TimeStep DefaultTime="1.0E-6" MinTime="1.0E-8" MaxTime="1.0" />
+          <ErrorTolerance Absolut="1.0E-9" Relative="1.0E-9" />
+          <OutputOptions KeepEvery="10" KeepAtMost="1000" />
+          <NumberProcessors>1</NumberProcessors>
+        </SolverTaskDescription>
+        <MathOverrides />
+        <MeshSpecification>
+          <Size X="50" Y="50" Z="14" />
+        </MeshSpecification>
+        <Version Name="Simulation0" KeyValue="32330445" BranchId="27822177" Archived="0" Date="10-Mar-2009 16:45:29" FromVersionable="false">
+          <Owner Name="longtu" Identifier="27524085" />
+          <GroupAccess Type="1" />
+          <ParentSimRef KeyValue="28189859" />
+        </Version>
+      </Simulation>
+      <Simulation Name="Copy of Simulation0">
+        <SolverTaskDescription TaskType="Unsteady" UseSymbolicJacobian="false" Solver="Finite Volume, Regular Grid">
+          <TimeBound StartTime="0.0" EndTime="0.01" />
+          <TimeStep DefaultTime="1.0E-6" MinTime="1.0E-8" MaxTime="1.0" />
+          <ErrorTolerance Absolut="1.0E-9" Relative="1.0E-9" />
+          <OutputOptions KeepEvery="10" KeepAtMost="1000" />
+          <NumberProcessors>1</NumberProcessors>
+        </SolverTaskDescription>
+        <MathOverrides />
+        <MeshSpecification>
+          <Size X="100" Y="100" Z="27" />
+        </MeshSpecification>
+        <Version Name="Copy of Simulation0" KeyValue="32330447" BranchId="28189862" Archived="0" Date="10-Mar-2009 16:45:29" FromVersionable="false">
+          <Owner Name="longtu" Identifier="27524085" />
+          <GroupAccess Type="1" />
+          <ParentSimRef KeyValue="28189861" />
+        </Version>
+      </Simulation>
+      <Simulation Name="Copy of Copy of Simulation0">
+        <SolverTaskDescription TaskType="Unsteady" UseSymbolicJacobian="false" Solver="Finite Volume, Regular Grid">
+          <TimeBound StartTime="0.0" EndTime="0.01" />
+          <TimeStep DefaultTime="1.0E-6" MinTime="1.0E-8" MaxTime="1.0" />
+          <ErrorTolerance Absolut="1.0E-9" Relative="1.0E-9" />
+          <OutputOptions KeepEvery="10" KeepAtMost="1000" />
+          <NumberProcessors>1</NumberProcessors>
+        </SolverTaskDescription>
+        <MathOverrides />
+        <MeshSpecification>
+          <Size X="150" Y="150" Z="41" />
+        </MeshSpecification>
+        <Version Name="Copy of Copy of Simulation0" KeyValue="32330449" BranchId="28189865" Archived="0" Date="10-Mar-2009 16:45:29" FromVersionable="false">
+          <Owner Name="longtu" Identifier="27524085" />
+          <GroupAccess Type="1" />
+          <ParentSimRef KeyValue="28189864" />
+        </Version>
+      </Simulation>
+      <Simulation Name="Copy of Copy of Copy of Simulation0">
+        <SolverTaskDescription TaskType="Unsteady" UseSymbolicJacobian="false" Solver="Finite Volume, Regular Grid">
+          <TimeBound StartTime="0.0" EndTime="0.01" />
+          <TimeStep DefaultTime="1.0E-6" MinTime="1.0E-8" MaxTime="1.0" />
+          <ErrorTolerance Absolut="1.0E-9" Relative="1.0E-9" />
+          <OutputOptions KeepEvery="10" KeepAtMost="1000" />
+          <NumberProcessors>1</NumberProcessors>
+        </SolverTaskDescription>
+        <MathOverrides />
+        <MeshSpecification>
+          <Size X="200" Y="200" Z="54" />
+        </MeshSpecification>
+        <Version Name="Copy of Copy of Copy of Simulation0" KeyValue="32330451" BranchId="28189868" Archived="0" Date="10-Mar-2009 16:45:29" FromVersionable="false">
+          <Owner Name="longtu" Identifier="27524085" />
+          <GroupAccess Type="1" />
+          <ParentSimRef KeyValue="28189867" />
+        </Version>
+      </Simulation>
+      <Simulation Name="Copy of Copy of Copy of Copy of Simulation0">
+        <SolverTaskDescription TaskType="Unsteady" UseSymbolicJacobian="false" Solver="Finite Volume, Regular Grid">
+          <TimeBound StartTime="0.0" EndTime="0.01" />
+          <TimeStep DefaultTime="1.0E-6" MinTime="1.0E-8" MaxTime="1.0" />
+          <ErrorTolerance Absolut="1.0E-9" Relative="1.0E-9" />
+          <OutputOptions KeepEvery="10" KeepAtMost="1000" />
+          <NumberProcessors>1</NumberProcessors>
+        </SolverTaskDescription>
+        <MathOverrides />
+        <MeshSpecification>
+          <Size X="250" Y="250" Z="68" />
+        </MeshSpecification>
+        <Version Name="Copy of Copy of Copy of Copy of Simulation0" KeyValue="32330453" BranchId="28189871" Archived="0" Date="10-Mar-2009 16:45:29" FromVersionable="false">
+          <Owner Name="longtu" Identifier="27524085" />
+          <GroupAccess Type="1" />
+          <ParentSimRef KeyValue="28189870" />
+        </Version>
+      </Simulation>
+      <Simulation Name="Copy of Copy of Copy of Copy of Copy of Simulation0">
+        <SolverTaskDescription TaskType="Unsteady" UseSymbolicJacobian="false" Solver="Finite Volume, Regular Grid">
+          <TimeBound StartTime="0.0" EndTime="0.01" />
+          <TimeStep DefaultTime="1.0E-6" MinTime="1.0E-8" MaxTime="1.0" />
+          <ErrorTolerance Absolut="1.0E-9" Relative="1.0E-9" />
+          <OutputOptions KeepEvery="10" KeepAtMost="1000" />
+          <NumberProcessors>1</NumberProcessors>
+        </SolverTaskDescription>
+        <MathOverrides />
+        <MeshSpecification>
+          <Size X="300" Y="300" Z="81" />
+        </MeshSpecification>
+        <Version Name="Copy of Copy of Copy of Copy of Copy of Simulation0" KeyValue="32330455" BranchId="28189874" Archived="0" Date="10-Mar-2009 16:45:29" FromVersionable="false">
+          <Owner Name="longtu" Identifier="27524085" />
+          <GroupAccess Type="1" />
+          <ParentSimRef KeyValue="28189873" />
+        </Version>
+      </Simulation>
+      <Simulation Name="Copy of Copy of Copy of Copy of Copy of Copy of Simulation0">
+        <SolverTaskDescription TaskType="Unsteady" UseSymbolicJacobian="false" Solver="Finite Volume, Regular Grid">
+          <TimeBound StartTime="0.0" EndTime="0.01" />
+          <TimeStep DefaultTime="1.0E-6" MinTime="1.0E-8" MaxTime="1.0" />
+          <ErrorTolerance Absolut="1.0E-9" Relative="1.0E-9" />
+          <OutputOptions KeepEvery="10" KeepAtMost="1000" />
+          <NumberProcessors>1</NumberProcessors>
+        </SolverTaskDescription>
+        <MathOverrides />
+        <MeshSpecification>
+          <Size X="275" Y="275" Z="74" />
+        </MeshSpecification>
+        <Version Name="Copy of Copy of Copy of Copy of Copy of Copy of Simulation0" KeyValue="32330457" BranchId="28189877" Archived="0" Date="10-Mar-2009 16:45:29" FromVersionable="false">
+          <Owner Name="longtu" Identifier="27524085" />
+          <GroupAccess Type="1" />
+          <ParentSimRef KeyValue="28189876" />
+        </Version>
+      </Simulation>
+      <Simulation Name="Copy of Copy of Copy of Copy of Copy of Copy of Copy of Simulation0">
+        <SolverTaskDescription TaskType="Unsteady" UseSymbolicJacobian="false" Solver="Finite Volume, Regular Grid">
+          <TimeBound StartTime="0.0" EndTime="0.01" />
+          <TimeStep DefaultTime="1.0E-6" MinTime="1.0E-8" MaxTime="1.0" />
+          <ErrorTolerance Absolut="1.0E-9" Relative="1.0E-9" />
+          <OutputOptions KeepEvery="10" KeepAtMost="1000" />
+          <NumberProcessors>1</NumberProcessors>
+        </SolverTaskDescription>
+        <MathOverrides />
+        <MeshSpecification>
+          <Size X="225" Y="225" Z="60" />
+        </MeshSpecification>
+        <Version Name="Copy of Copy of Copy of Copy of Copy of Copy of Copy of Simulation0" KeyValue="32330459" BranchId="28189880" Archived="0" Date="10-Mar-2009 16:45:29" FromVersionable="false">
+          <Owner Name="longtu" Identifier="27524085" />
+          <GroupAccess Type="1" />
+          <ParentSimRef KeyValue="28189879" />
+        </Version>
+      </Simulation>
+      <Simulation Name="Copy of Copy of Copy of Copy of Copy of Copy of Copy of Copy of Simulation0">
+        <SolverTaskDescription TaskType="Unsteady" UseSymbolicJacobian="false" Solver="Finite Volume, Regular Grid">
+          <TimeBound StartTime="0.0" EndTime="0.01" />
+          <TimeStep DefaultTime="1.0E-6" MinTime="1.0E-8" MaxTime="1.0" />
+          <ErrorTolerance Absolut="1.0E-9" Relative="1.0E-9" />
+          <OutputOptions KeepEvery="10" KeepAtMost="1000" />
+          <NumberProcessors>1</NumberProcessors>
+        </SolverTaskDescription>
+        <MathOverrides />
+        <MeshSpecification>
+          <Size X="175" Y="175" Z="47" />
+        </MeshSpecification>
+        <Version Name="Copy of Copy of Copy of Copy of Copy of Copy of Copy of Copy of Simulation0" KeyValue="32330461" BranchId="28189883" Archived="0" Date="10-Mar-2009 16:45:29" FromVersionable="false">
+          <Owner Name="longtu" Identifier="27524085" />
+          <GroupAccess Type="1" />
+          <ParentSimRef KeyValue="28189882" />
+        </Version>
+      </Simulation>
+      <Simulation Name="Copy of Copy of Copy of Copy of Copy of Copy of Copy of Copy of Copy of Simulation0">
+        <SolverTaskDescription TaskType="Unsteady" UseSymbolicJacobian="false" Solver="Finite Volume, Regular Grid">
+          <TimeBound StartTime="0.0" EndTime="0.01" />
+          <TimeStep DefaultTime="1.0E-6" MinTime="1.0E-8" MaxTime="1.0" />
+          <ErrorTolerance Absolut="1.0E-9" Relative="1.0E-9" />
+          <OutputOptions KeepEvery="10" KeepAtMost="1000" />
+          <NumberProcessors>1</NumberProcessors>
+        </SolverTaskDescription>
+        <MathOverrides />
+        <MeshSpecification>
+          <Size X="125" Y="125" Z="33" />
+        </MeshSpecification>
+        <Version Name="Copy of Copy of Copy of Copy of Copy of Copy of Copy of Copy of Copy of Simulation0" KeyValue="32330463" BranchId="28189886" Archived="0" Date="10-Mar-2009 16:45:29" FromVersionable="false">
+          <Owner Name="longtu" Identifier="27524085" />
+          <GroupAccess Type="1" />
+          <ParentSimRef KeyValue="28189885" />
+        </Version>
+      </Simulation>
+      <Simulation Name="Copy of Copy of Copy of Copy of Copy of Copy of Copy of Copy of Copy of Copy of Simulation0">
+        <SolverTaskDescription TaskType="Unsteady" UseSymbolicJacobian="false" Solver="Finite Volume, Regular Grid">
+          <TimeBound StartTime="0.0" EndTime="0.01" />
+          <TimeStep DefaultTime="1.0E-6" MinTime="1.0E-8" MaxTime="1.0" />
+          <ErrorTolerance Absolut="1.0E-9" Relative="1.0E-9" />
+          <OutputOptions KeepEvery="10" KeepAtMost="1000" />
+          <NumberProcessors>1</NumberProcessors>
+        </SolverTaskDescription>
+        <MathOverrides />
+        <MeshSpecification>
+          <Size X="75" Y="75" Z="20" />
+        </MeshSpecification>
+        <Version Name="Copy of Copy of Copy of Copy of Copy of Copy of Copy of Copy of Copy of Copy of Simulation0" KeyValue="32330465" BranchId="28189889" Archived="0" Date="10-Mar-2009 16:45:29" FromVersionable="false">
+          <Owner Name="longtu" Identifier="27524085" />
+          <GroupAccess Type="1" />
+          <ParentSimRef KeyValue="28189888" />
+        </Version>
+      </Simulation>
+      <Simulation Name="projection">
+        <SolverTaskDescription TaskType="Unsteady" UseSymbolicJacobian="false" Solver="Finite Volume, Regular Grid">
+          <TimeBound StartTime="0.0" EndTime="0.01" />
+          <TimeStep DefaultTime="1.0E-6" MinTime="1.0E-8" MaxTime="1.0" />
+          <ErrorTolerance Absolut="1.0E-9" Relative="1.0E-9" />
+          <OutputOptions KeepEvery="10" KeepAtMost="1000" />
+          <NumberProcessors>1</NumberProcessors>
+        </SolverTaskDescription>
+        <MathOverrides />
+        <MeshSpecification>
+          <Size X="50" Y="50" Z="14" />
+        </MeshSpecification>
+        <Version Name="projection" KeyValue="32330467" BranchId="32246704" Archived="0" Date="10-Mar-2009 16:45:29" FromVersionable="false">
+          <Owner Name="longtu" Identifier="27524085" />
+          <GroupAccess Type="1" />
+        </Version>
+      </Simulation>
+      <SpatialObjects>
+        <SpatialObject Name="vobj_subVolume00" Type="Volume" subVolume="subVolume0" regionId="0">
+          <QuantityCategoryList>
+            <QuantityCategory Name="VolumeCentroid" Enabled="false" />
+            <QuantityCategory Name="InteriorVelocity" Enabled="false" />
+            <QuantityCategory Name="VolumeRegionSize" Enabled="true" />
+          </QuantityCategoryList>
+        </SpatialObject>
+        <SpatialObject Name="vobj_subVolume11" Type="Volume" subVolume="subVolume1" regionId="1">
+          <QuantityCategoryList>
+            <QuantityCategory Name="VolumeCentroid" Enabled="false" />
+            <QuantityCategory Name="InteriorVelocity" Enabled="false" />
+            <QuantityCategory Name="VolumeRegionSize" Enabled="true" />
+          </QuantityCategoryList>
+        </SpatialObject>
+        <SpatialObject Name="sobj_subVolume11_subVolume00" Type="Surface" subVolumeInside="subVolume1" regionIdInside="1" subVolumeOutside="subVolume0" regionIdOutside="0">
+          <QuantityCategoryList>
+            <QuantityCategory Name="SurfaceNormal" Enabled="false" />
+            <QuantityCategory Name="SurfaceVelocity" Enabled="false" />
+            <QuantityCategory Name="DistanceToSurface" Enabled="false" />
+            <QuantityCategory Name="DirectionToSurface" Enabled="false" />
+            <QuantityCategory Name="SurfaceSize" Enabled="true" />
+          </QuantityCategoryList>
+        </SpatialObject>
+      </SpatialObjects>
+      <Version Name="diffusion" KeyValue="32330438" BranchId="27822170" Archived="0" Date="10-Mar-2009 16:45:29" FromVersionable="false">
+        <Owner Name="longtu" Identifier="27524085" />
+        <GroupAccess Type="1" />
+      </Version>
+      <MicroscopeMeasurement Name="fluor">
+        <ConvolutionKernel Type="ProjectionZKernel" />
+      </MicroscopeMeasurement>
+    </SimulationSpec>
+    <Version Name="cylindrical model (very small)" KeyValue="32330469" BranchId="27989863" Archived="0" Date="10-Mar-2009 16:45:29" FromVersionable="false">
+      <Owner Name="longtu" Identifier="27524085" />
+      <GroupAccess Type="0" />
+    </Version>
+    <pathwayModel>
+      <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:bp="http://www.biopax.org/release/biopax-level3.owl#" version="3.0" />
+    </pathwayModel>
+    <relationshipModel>
+      <RMNS version="3.0" />
+    </relationshipModel>
+    <vcmetadata>
+      <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" />
+      <nonrdfAnnotationList />
+      <uriBindingList />
+    </vcmetadata>
+  </BioModel>
+</vcml>
+

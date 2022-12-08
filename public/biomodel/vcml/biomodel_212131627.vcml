@@ -1,0 +1,1192 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--This biomodel was generated in VCML Version Alpha_Version_7.4.0_build_87-->
+<vcml xmlns="http://sourceforge.net/projects/vcell/vcml" Version="Alpha_Version_7.4.0_build_87">
+  <BioModel Name="CM_PM18628746_MB2::Rab7_switch">
+    <Annotation>cloned from 'CM_PM18628746_MB2::Rab7_switch' owned by user ModelBrick</Annotation>
+    <Model Name="unnamed">
+      <Annotation>cloned from 'unnamed' owned by user ModelBrick</Annotation>
+      <ModelParameters>
+        <Parameter Name="K1" Role="user defined" Unit="mol.s-1.l-1">0.483</Parameter>
+        <Parameter Name="kh_hyrdrol_Rab7_GTP" Role="user defined" Unit="s-1">0.15</Parameter>
+        <Parameter Name="kh" Role="user defined" Unit="s-1">kh_hyrdrol_Rab7_GTP</Parameter>
+        <Parameter Name="kminus1" Role="user defined" Unit="s-1">0.483</Parameter>
+        <Parameter Name="km1_extract_Rab7_GDP" Role="user defined" Unit="s-1">0.483</Parameter>
+        <Parameter Name="K1_recruit_Rab7_GDP" Role="user defined" Unit="mol.s-1.l-1">0.483</Parameter>
+        <Parameter Name="ke_act_Rab7_GEF5" Role="user defined" Unit="s-1">0.021</Parameter>
+        <Parameter Name="kf_act_Rab7_GEF5" Role="user defined" Unit="M-1">3.0</Parameter>
+        <Parameter Name="kg_act_Rab7_GEF5" Role="user defined" Unit="M">1.0</Parameter>
+        <Parameter Name="h_act_Rab7_GEF7" Role="user defined" Unit="tbd">3.0</Parameter>
+        <Parameter Name="kg_act_Rab7_GEF7" Role="user defined" Unit="tbd">1.0</Parameter>
+        <Parameter Name="ke_act_Rab7_GEF7" Role="user defined" Unit="tbd">0.21</Parameter>
+      </ModelParameters>
+      <Compound Name="R5">
+        <Annotation>R5</Annotation>
+      </Compound>
+      <Compound Name="r7">
+        <Annotation>r7</Annotation>
+      </Compound>
+      <Compound Name="R7">
+        <Annotation>R7</Annotation>
+      </Compound>
+      <Feature Name="endosome" KeyValue="211653533" />
+      <LocalizedCompound Name="Rab5_GTP" SbmlName="Rab5-GTP" CompoundRef="R5" Structure="endosome" OverrideName="true" KeyValue="211653535">
+        <SpeciesPattern>
+          <MolecularTypePattern Index="1">
+            <MolecularType Name="RAB5" />
+            <ComponentPattern MolecularComponent="BS" BondType="1">
+              <Bond MolecularTypePattern="GTP" ComponentPattern="BS" />
+            </ComponentPattern>
+          </MolecularTypePattern>
+          <MolecularTypePattern Index="2">
+            <MolecularType Name="GTP" />
+            <ComponentPattern MolecularComponent="BS" BondType="1">
+              <Bond MolecularTypePattern="RAB5" ComponentPattern="BS" />
+            </ComponentPattern>
+          </MolecularTypePattern>
+        </SpeciesPattern>
+      </LocalizedCompound>
+      <LocalizedCompound Name="Rab7_GDP" SbmlName="Rab7-GDP" CompoundRef="r7" Structure="endosome" OverrideName="true" KeyValue="211653536">
+        <SpeciesPattern>
+          <MolecularTypePattern Index="1">
+            <MolecularType Name="Rab7" />
+            <ComponentPattern MolecularComponent="bs" BondType="1">
+              <Bond MolecularTypePattern="GDP" ComponentPattern="BS" />
+            </ComponentPattern>
+          </MolecularTypePattern>
+          <MolecularTypePattern Index="2">
+            <MolecularType Name="GDP" />
+            <ComponentPattern MolecularComponent="BS" BondType="1">
+              <Bond MolecularTypePattern="Rab7" ComponentPattern="bs" />
+            </ComponentPattern>
+          </MolecularTypePattern>
+        </SpeciesPattern>
+      </LocalizedCompound>
+      <LocalizedCompound Name="Rab7_GTP" SbmlName="Rab7-GTP" CompoundRef="R7" Structure="endosome" OverrideName="true" KeyValue="211653537">
+        <SpeciesPattern>
+          <MolecularTypePattern Index="1">
+            <MolecularType Name="Rab7" />
+            <ComponentPattern MolecularComponent="bs" BondType="1">
+              <Bond MolecularTypePattern="GTP" ComponentPattern="BS" />
+            </ComponentPattern>
+          </MolecularTypePattern>
+          <MolecularTypePattern Index="2">
+            <MolecularType Name="GTP" />
+            <ComponentPattern MolecularComponent="BS" BondType="1">
+              <Bond MolecularTypePattern="Rab7" ComponentPattern="bs" />
+            </ComponentPattern>
+          </MolecularTypePattern>
+        </SpeciesPattern>
+      </LocalizedCompound>
+      <SimpleReaction Structure="endosome" Name="Recruitment of Rab7_GDP" Reversible="false" FluxOption="MolecularOnly" KeyValue="211653538">
+        <Product LocalizedCompoundRef="Rab7_GDP" Stoichiometry="1" KeyValue="211653539" />
+        <Kinetics KineticsType="GeneralLumpedKinetics">
+          <Parameter Name="LumpedJ" Role="lumped reaction rate" Unit="mole.s-1">(endosome * K1_recruit_Rab7_GDP)</Parameter>
+        </Kinetics>
+      </SimpleReaction>
+      <SimpleReaction Structure="endosome" Name="activation of Rab7 by GEF7" Reversible="false" FluxOption="MolecularOnly" KeyValue="211653540">
+        <Reactant LocalizedCompoundRef="Rab7_GDP" Stoichiometry="1" KeyValue="211653541" />
+        <Product LocalizedCompoundRef="Rab7_GTP" Stoichiometry="1" KeyValue="211653542" />
+        <Kinetics KineticsType="GeneralLumpedKinetics">
+          <Parameter Name="LumpedJ" Role="lumped reaction rate" Unit="mole.s-1">(endosome * ((Rab7_GDP * ke_act_Rab7_GEF7 * pow(Rab7_GTP,h_act_Rab7_GEF7)) / (kg_act_Rab7_GEF7 + pow(Rab7_GTP,h_act_Rab7_GEF7))))</Parameter>
+        </Kinetics>
+      </SimpleReaction>
+      <SimpleReaction Structure="endosome" Name="activation of Rab7 by GEF5" Reversible="false" FluxOption="MolecularOnly" KeyValue="211653543">
+        <Reactant LocalizedCompoundRef="Rab7_GDP" Stoichiometry="1" KeyValue="211653544" />
+        <Product LocalizedCompoundRef="Rab7_GTP" Stoichiometry="1" KeyValue="211653545" />
+        <Modifier LocalizedCompoundRef="Rab5_GTP" />
+        <Kinetics KineticsType="GeneralLumpedKinetics">
+          <Parameter Name="LumpedJ" Role="lumped reaction rate" Unit="mole.s-1">(endosome * ((ke_act_Rab7_GEF5 * Rab7_GDP) / (1.0 + exp(((kg_act_Rab7_GEF5 - Rab5_GTP) * kf_act_Rab7_GEF5)))))</Parameter>
+        </Kinetics>
+      </SimpleReaction>
+      <SimpleReaction Structure="endosome" Name="Extraction of Rab7_GDP" Reversible="false" FluxOption="MolecularOnly" KeyValue="211653547">
+        <Reactant LocalizedCompoundRef="Rab7_GDP" Stoichiometry="1" KeyValue="211653548" />
+        <Kinetics KineticsType="GeneralLumpedKinetics">
+          <Parameter Name="LumpedJ" Role="lumped reaction rate" Unit="mole.s-1">(endosome * (km1_extract_Rab7_GDP * Rab7_GDP))</Parameter>
+        </Kinetics>
+      </SimpleReaction>
+      <SimpleReaction Structure="endosome" Name="Hydrolysis of Rab7_GTP" Reversible="false" FluxOption="MolecularOnly" KeyValue="211653549">
+        <Reactant LocalizedCompoundRef="Rab7_GTP" Stoichiometry="1" KeyValue="211653550" />
+        <Product LocalizedCompoundRef="Rab7_GDP" Stoichiometry="1" KeyValue="211653551" />
+        <Kinetics KineticsType="GeneralLumpedKinetics">
+          <Parameter Name="LumpedJ" Role="lumped reaction rate" Unit="mole.s-1">(endosome * (kh_hyrdrol_Rab7_GTP * Rab7_GTP))</Parameter>
+        </Kinetics>
+      </SimpleReaction>
+      <RbmModelContainer>
+        <MolecularTypeList>
+          <MolecularType Name="RAB5" AnchorAll="true">
+            <MolecularComponent Name="BS" Index="1" />
+          </MolecularType>
+          <MolecularType Name="Rab7" AnchorAll="true">
+            <MolecularComponent Name="bs" Index="1" />
+          </MolecularType>
+          <MolecularType Name="GTP" AnchorAll="true">
+            <MolecularComponent Name="BS" Index="1" />
+          </MolecularType>
+          <MolecularType Name="GDP" AnchorAll="true">
+            <MolecularComponent Name="BS" Index="1" />
+          </MolecularType>
+        </MolecularTypeList>
+        <RbmObservableList>
+          <Observable Name="O0_RAB5_tot" ObservableType="Molecules" Sequence="Multimolecular" LengthEqual="2" LengthGreater="1" Structure="endosome">
+            <SpeciesPattern>
+              <MolecularTypePattern Index="1">
+                <MolecularType Name="RAB5" />
+                <ComponentPattern MolecularComponent="BS" BondType="?" />
+              </MolecularTypePattern>
+            </SpeciesPattern>
+          </Observable>
+          <Observable Name="O0_Rab7_tot" ObservableType="Molecules" Sequence="Multimolecular" LengthEqual="2" LengthGreater="1" Structure="endosome">
+            <SpeciesPattern>
+              <MolecularTypePattern Index="1">
+                <MolecularType Name="Rab7" />
+                <ComponentPattern MolecularComponent="bs" BondType="?" />
+              </MolecularTypePattern>
+            </SpeciesPattern>
+          </Observable>
+          <Observable Name="O0_GTP_tot" ObservableType="Molecules" Sequence="Multimolecular" LengthEqual="2" LengthGreater="1" Structure="endosome">
+            <SpeciesPattern>
+              <MolecularTypePattern Index="1">
+                <MolecularType Name="GTP" />
+                <ComponentPattern MolecularComponent="BS" BondType="?" />
+              </MolecularTypePattern>
+            </SpeciesPattern>
+          </Observable>
+          <Observable Name="O0_GDP_tot" ObservableType="Molecules" Sequence="Multimolecular" LengthEqual="2" LengthGreater="1" Structure="endosome">
+            <SpeciesPattern>
+              <MolecularTypePattern Index="1">
+                <MolecularType Name="GDP" />
+                <ComponentPattern MolecularComponent="BS" BondType="?" />
+              </MolecularTypePattern>
+            </SpeciesPattern>
+          </Observable>
+        </RbmObservableList>
+      </RbmModelContainer>
+      <Diagram Name="endosome" Structure="endosome">
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="Rab7_GDP" LocationX="303" LocationY="142" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="full" SimpleReactionRef="Hydrolysis of Rab7_GTP" LocationX="237" LocationY="119" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="Rab5_GTP" LocationX="141" LocationY="133" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="full" SimpleReactionRef="Recruitment of Rab7_GDP" LocationX="304" LocationY="196" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="full" SimpleReactionRef="activation of Rab7 by GEF5" LocationX="208" LocationY="136" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="Rab7_GTP" LocationX="198" LocationY="66" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="full" SimpleReactionRef="activation of Rab7 by GEF7" LocationX="299" LocationY="81" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="full" SimpleReactionRef="Extraction of Rab7_GDP" LocationX="440" LocationY="196" />
+      </Diagram>
+      <Version Name="unnamed" KeyValue="211653528" BranchId="211642399" Archived="0" Date="21-Jul-2021 18:19:56" FromVersionable="false">
+        <Owner Name="shreyasinha28" Identifier="210593500" />
+        <GroupAccess Type="1" />
+        <Annotation>cloned from 'unnamed' owned by user ModelBrick</Annotation>
+      </Version>
+      <ModelUnitSystem VolumeSubstanceUnit="mole" MembraneSubstanceUnit="mole" LumpedReactionSubstanceUnit="mole" VolumeUnit="litre" AreaUnit="m2" LengthUnit="m" TimeUnit="s" />
+    </Model>
+    <SimulationSpec Name="Deterministic" Stochastic="false" UseConcentration="true" RuleBased="false" MassConservationModelReduction="true" InsufficientIterations="false" InsufficientMaxMolecules="false">
+      <NetworkConstraints RbmMaxIteration="3" RbmMaxMoleculesPerSpecies="10" RbmSpeciesLimit="800" RbmReactionsLimit="2500">
+        <MaxStoichiometry MolecularType="RAB5" Integer="100" />
+        <MaxStoichiometry MolecularType="Rab7" Integer="100" />
+        <MaxStoichiometry MolecularType="GTP" Integer="100" />
+        <MaxStoichiometry MolecularType="GDP" Integer="100" />
+      </NetworkConstraints>
+      <Annotation>cloned from 'Deterministic' owned by user ModelBrick</Annotation>
+      <Geometry Name="Compartmental1388779149" Dimension="0">
+        <Annotation>cloned from 'Compartmental1388779149' owned by user ModelBrick</Annotation>
+        <Extent X="10.0" Y="10.0" Z="10.0" />
+        <Origin X="0.0" Y="0.0" Z="0.0" />
+        <SubVolume Name="Compartment" Handle="0" Type="Compartmental" KeyValue="211642394" />
+        <Version Name="Compartmental1388779149" KeyValue="211642390" BranchId="211642391" Archived="0" Date="21-Jul-2021 14:46:03" FromVersionable="false">
+          <Owner Name="shreyasinha28" Identifier="210593500" />
+          <GroupAccess Type="1" />
+          <Annotation>cloned from 'Compartmental1388779149' owned by user ModelBrick</Annotation>
+        </Version>
+      </Geometry>
+      <GeometryContext>
+        <FeatureMapping Feature="endosome" GeometryClass="Compartment" SubVolume="Compartment" Size="1.0">
+          <BoundariesTypes Xm="Flux" Xp="Flux" Ym="Flux" Yp="Flux" Zm="Flux" Zp="Flux" />
+        </FeatureMapping>
+      </GeometryContext>
+      <ReactionContext>
+        <LocalizedCompoundSpec LocalizedCompoundRef="Rab5_GTP" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>0.001</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="Rab7_GDP" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>1.0</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="Rab7_GTP" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>0.001</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <ReactionSpec ReactionStepRef="Recruitment of Rab7_GDP" ReactionMapping="included" />
+        <ReactionSpec ReactionStepRef="activation of Rab7 by GEF7" ReactionMapping="included" />
+        <ReactionSpec ReactionStepRef="activation of Rab7 by GEF5" ReactionMapping="included" />
+        <ReactionSpec ReactionStepRef="Extraction of Rab7_GDP" ReactionMapping="included" />
+        <ReactionSpec ReactionStepRef="Hydrolysis of Rab7_GTP" ReactionMapping="included" />
+      </ReactionContext>
+      <MathDescription Name="unnamed_generated">
+        <Annotation>cloned from 'unnamed_generated' owned by user ModelBrick</Annotation>
+        <Constant Name="_F_">96485.3321</Constant>
+        <Constant Name="_F_nmol_">9.64853321E-5</Constant>
+        <Constant Name="_K_GHK_">1.0E-9</Constant>
+        <Constant Name="_N_pmol_">6.02214179E11</Constant>
+        <Constant Name="_PI_">3.141592653589793</Constant>
+        <Constant Name="_R_">8314.46261815</Constant>
+        <Constant Name="_T_">300.0</Constant>
+        <Constant Name="h_act_Rab7_GEF7">3.0</Constant>
+        <Constant Name="K1">0.483</Constant>
+        <Constant Name="K1_recruit_Rab7_GDP">0.483</Constant>
+        <Constant Name="K_millivolts_per_volt">1000.0</Constant>
+        <Constant Name="ke_act_Rab7_GEF5">0.021</Constant>
+        <Constant Name="ke_act_Rab7_GEF7">0.21</Constant>
+        <Constant Name="kf_act_Rab7_GEF5">3.0</Constant>
+        <Constant Name="kg_act_Rab7_GEF5">1.0</Constant>
+        <Constant Name="kg_act_Rab7_GEF7">1.0</Constant>
+        <Constant Name="kh_hyrdrol_Rab7_GTP">0.15</Constant>
+        <Constant Name="km1_extract_Rab7_GDP">0.483</Constant>
+        <Constant Name="kminus1">0.483</Constant>
+        <Constant Name="KMOLE">0.001660538783162726</Constant>
+        <Constant Name="Rab5_GTP_init_mole_litre_1">0.001</Constant>
+        <Constant Name="Rab7_GDP_init_mole_litre_1">1.0</Constant>
+        <Constant Name="Rab7_GTP_init_mole_litre_1">0.001</Constant>
+        <Constant Name="Size_endosome">1.0</Constant>
+        <VolumeVariable Name="Rab7_GDP" Domain="Compartment" />
+        <VolumeVariable Name="Rab7_GTP" Domain="Compartment" />
+        <Function Name="K_Rab5_GTP_total" Domain="Compartment">(Size_endosome * Rab5_GTP_init_mole_litre_1)</Function>
+        <Function Name="kh">kh_hyrdrol_Rab7_GTP</Function>
+        <Function Name="LumpedJ_activation_of_Rab7_by_GEF5" Domain="Compartment">(Size_endosome * ((ke_act_Rab7_GEF5 * Rab7_GDP) / (1.0 + exp(((kg_act_Rab7_GEF5 - Rab5_GTP) * kf_act_Rab7_GEF5)))))</Function>
+        <Function Name="LumpedJ_activation_of_Rab7_by_GEF7" Domain="Compartment">(Size_endosome * ((Rab7_GDP * ke_act_Rab7_GEF7 * pow(Rab7_GTP,h_act_Rab7_GEF7)) / (kg_act_Rab7_GEF7 + pow(Rab7_GTP,h_act_Rab7_GEF7))))</Function>
+        <Function Name="LumpedJ_Extraction_of_Rab7_GDP" Domain="Compartment">(Size_endosome * (km1_extract_Rab7_GDP * Rab7_GDP))</Function>
+        <Function Name="LumpedJ_Hydrolysis_of_Rab7_GTP" Domain="Compartment">(Size_endosome * (kh_hyrdrol_Rab7_GTP * Rab7_GTP))</Function>
+        <Function Name="LumpedJ_Recruitment_of_Rab7_GDP" Domain="Compartment">(Size_endosome * K1_recruit_Rab7_GDP)</Function>
+        <Function Name="Rab5_GTP" Domain="Compartment">(K_Rab5_GTP_total / Size_endosome)</Function>
+        <CompartmentSubDomain Name="Compartment">
+          <BoundaryType Boundary="Xm" Type="Value" />
+          <BoundaryType Boundary="Xp" Type="Value" />
+          <BoundaryType Boundary="Ym" Type="Value" />
+          <BoundaryType Boundary="Yp" Type="Value" />
+          <BoundaryType Boundary="Zm" Type="Value" />
+          <BoundaryType Boundary="Zp" Type="Value" />
+          <OdeEquation Name="Rab7_GDP" SolutionType="Unknown">
+            <Rate>((LumpedJ_Recruitment_of_Rab7_GDP / Size_endosome) - (LumpedJ_activation_of_Rab7_by_GEF7 / Size_endosome) - (LumpedJ_activation_of_Rab7_by_GEF5 / Size_endosome) - (LumpedJ_Extraction_of_Rab7_GDP / Size_endosome) + (LumpedJ_Hydrolysis_of_Rab7_GTP / Size_endosome))</Rate>
+            <Initial>Rab7_GDP_init_mole_litre_1</Initial>
+          </OdeEquation>
+          <OdeEquation Name="Rab7_GTP" SolutionType="Unknown">
+            <Rate>((LumpedJ_activation_of_Rab7_by_GEF7 / Size_endosome) + (LumpedJ_activation_of_Rab7_by_GEF5 / Size_endosome) - (LumpedJ_Hydrolysis_of_Rab7_GTP / Size_endosome))</Rate>
+            <Initial>Rab7_GTP_init_mole_litre_1</Initial>
+          </OdeEquation>
+        </CompartmentSubDomain>
+        <Version Name="unnamed_generated" KeyValue="211653526" BranchId="211642396" Archived="0" Date="21-Jul-2021 18:19:56" FromVersionable="false">
+          <Owner Name="shreyasinha28" Identifier="210593500" />
+          <GroupAccess Type="1" />
+          <Annotation>cloned from 'unnamed_generated' owned by user ModelBrick</Annotation>
+        </Version>
+      </MathDescription>
+      <Simulation Name="Simulation0">
+        <Annotation>cloned from 'Simulation0' owned by user ModelBrick</Annotation>
+        <SolverTaskDescription TaskType="Unsteady" UseSymbolicJacobian="false" Solver="Combined Stiff Solver (IDA/CVODE)">
+          <TimeBound StartTime="0.0" EndTime="1000.0" />
+          <TimeStep DefaultTime="0.1" MinTime="1.0E-8" MaxTime="1.0" />
+          <ErrorTolerance Absolut="1.0E-9" Relative="1.0E-9" />
+          <OutputOptions KeepEvery="1" KeepAtMost="1000" />
+          <NumberProcessors>1</NumberProcessors>
+        </SolverTaskDescription>
+        <MathOverrides />
+        <Version Name="Simulation0" KeyValue="211653565" BranchId="211642437" Archived="0" Date="21-Jul-2021 18:19:57" FromVersionable="false">
+          <Owner Name="shreyasinha28" Identifier="210593500" />
+          <GroupAccess Type="1" />
+          <Annotation>cloned from 'Simulation0' owned by user ModelBrick</Annotation>
+        </Version>
+      </Simulation>
+      <Version Name="Deterministic" KeyValue="212131616" BranchId="211642425" Archived="0" Date="28-Jul-2021 15:40:17" FromVersionable="false">
+        <Owner Name="shreyasinha28" Identifier="210593500" />
+        <GroupAccess Type="1" />
+        <Annotation>cloned from 'Deterministic' owned by user ModelBrick</Annotation>
+      </Version>
+      <MicroscopeMeasurement Name="fluor">
+        <ConvolutionKernel Type="ProjectionZKernel" />
+      </MicroscopeMeasurement>
+    </SimulationSpec>
+    <Version Name="CM_PM18628746_MB2::Rab7_switch" KeyValue="212131627" BranchId="211642440" Archived="0" Date="28-Jul-2021 15:40:17" FromVersionable="false">
+      <Owner Name="shreyasinha28" Identifier="210593500" />
+      <GroupAccess Type="0" />
+      <Annotation>cloned from 'CM_PM18628746_MB2::Rab7_switch' owned by user ModelBrick</Annotation>
+    </Version>
+    <pathwayModel>
+      <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:bp="http://www.biopax.org/release/biopax-level3.owl#" version="3.0">
+        <DiagramObjectsID xmlns="">http://cbio.mskcc.org/cpath#CPATH-527903</DiagramObjectsID>
+        <DiagramObjectsID xmlns="">http://cbio.mskcc.org/cpath#CPATH-540055</DiagramObjectsID>
+        <bp:Complex rdf:about="http://cbio.mskcc.org/cpath#CPATH-540055">
+          <bp:dataSource rdf:resource="http://cbio.mskcc.org/cpath#CPATH-LOCAL-7706276" />
+          <bp:name rdf:datatype="http://www.w3.org/2001/XMLSchema#string">RAB7/GTP</bp:name>
+          <bp:xref rdf:resource="http://cbio.mskcc.org/cpath#CPATH-LOCAL-7746230" />
+          <bp:component rdf:resource="http://cbio.mskcc.org/cpath#CPATH-49455" />
+          <bp:component rdf:resource="http://cbio.mskcc.org/cpath#CPATH-534663" />
+        </bp:Complex>
+        <bp:Provenance rdf:about="http://cbio.mskcc.org/cpath#CPATH-LOCAL-7706276">
+          <bp:comment rdf:datatype="http://www.w3.org/2001/XMLSchema#string">http://pid.nci.nih.gov</bp:comment>
+          <bp:name rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Pathway Interaction Database</bp:name>
+        </bp:Provenance>
+        <bp:Control rdf:about="http://cbio.mskcc.org/cpath#CPATH-527903">
+          <bp:xref rdf:resource="http://cbio.mskcc.org/cpath#CPATH-LOCAL-7736996" />
+          <bp:controller rdf:resource="http://cbio.mskcc.org/cpath#CPATH-540055" />
+          <bp:controlType rdf:datatype="http://www.w3.org/2001/XMLSchema#string">ACTIVATION</bp:controlType>
+          <bp:controlled rdf:resource="http://cbio.mskcc.org/cpath#CPATH-527902" />
+          <bp:controlled rdf:resource="http://cbio.mskcc.org/cpath#CPATH-527902" />
+        </bp:Control>
+        <bp:Protein rdf:about="http://cbio.mskcc.org/cpath#CPATH-49455">
+          <bp:comment rdf:datatype="http://www.w3.org/2001/XMLSchema#string">FUNCTION: Involved in late endocytic transport. Contributes to the maturation of phagosomes (acidification). SUBUNIT: Interacts with RILP. Interacts with PSMA7. Interacts with RNF115. SUBCELLULAR LOCATION: Late endosome. Lysosome. Cytoplasmic vesicle, phagosome. Melanosome. Note=Identified by mass spectrometry in melanosome fractions from stage I to stage IV. TISSUE SPECIFICITY: Widely expressed; high expression found in skeletal muscle. DISEASE: Defects in RAB7A are the cause of Charcot-Marie-Tooth disease type 2B (CMT2B) [MIM:600882]; also known as hereditary motor and sensory neuropathy II (HMSN2). CMT2B is a form of Charcot-Marie-Tooth disease, the most common inherited disorder of the peripheral nervous system. Charcot-Marie-Tooth disease is classified in two main groups on the basis of electrophysiologic properties and histopathology: primary peripheral demyelinating neuropathy or CMT1, and primary peripheral axonal neuropathy or CMT2. Neuropathies of the CMT2 group are characterized by signs of axonal regeneration in the absence of obvious myelin alterations, normal or slightly reduced nerve conduction velocities, and progressive distal muscle weakness and atrophy. CMT2B is clinically characterized by marked distal muscle weakness and a high frequency of foot ulcers, infections and amputations of the toes. CMT2B inheritance is autosomal dominant. SIMILARITY: Belongs to the small GTPase superfamily. Rab family. SEQUENCE CAUTION: Sequence=BAA91390.1; Type=Erroneous translation; Note=Wrong choice of frame; Sequence=BAF83410.1; Type=Erroneous translation; Note=Wrong choice of frame; Sequence=EAW79303.1; Type=Erroneous gene model prediction; WEB RESOURCE: Name=Inherited peripheral neuropathies mutation db; URL="http://www.molgen.ua.ac.be/CMTMutations/"; WEB RESOURCE: Name=GeneReviews; URL="http://www.ncbi.nlm.nih.gov/sites/GeneTests/lab/gene/RAB7A"; GENE SYNONYMS: RAB7. COPYRIGHT:  Protein annotation is derived from the UniProt Consortium (http://www.uniprot.org/).  Distributed under the Creative Commons Attribution-NoDerivs License.</bp:comment>
+          <bp:name rdf:datatype="http://www.w3.org/2001/XMLSchema#string">RAB7A_HUMAN</bp:name>
+          <bp:name rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Ras-related protein Rab-7a</bp:name>
+          <bp:xref rdf:resource="http://cbio.mskcc.org/cpath#CPATH-LOCAL-198178" />
+          <bp:xref rdf:resource="http://cbio.mskcc.org/cpath#CPATH-LOCAL-198179" />
+          <bp:xref rdf:resource="http://cbio.mskcc.org/cpath#CPATH-LOCAL-198180" />
+          <bp:xref rdf:resource="http://cbio.mskcc.org/cpath#CPATH-LOCAL-198181" />
+          <bp:xref rdf:resource="http://cbio.mskcc.org/cpath#CPATH-LOCAL-198182" />
+          <bp:xref rdf:resource="http://cbio.mskcc.org/cpath#CPATH-LOCAL-198183" />
+          <bp:xref rdf:resource="http://cbio.mskcc.org/cpath#CPATH-LOCAL-198184" />
+          <bp:xref rdf:resource="http://cbio.mskcc.org/cpath#CPATH-LOCAL-206053" />
+        </bp:Protein>
+        <bp:UnificationXref rdf:about="http://cbio.mskcc.org/cpath#CPATH-LOCAL-198180">
+          <bp:db rdf:datatype="http://www.w3.org/2001/XMLSchema#string">UNIPROT</bp:db>
+          <bp:id rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Q9UPB0</bp:id>
+        </bp:UnificationXref>
+        <bp:RelationshipXref rdf:about="http://cbio.mskcc.org/cpath#CPATH-LOCAL-198181">
+          <bp:db rdf:datatype="http://www.w3.org/2001/XMLSchema#string">REF_SEQ</bp:db>
+          <bp:id rdf:datatype="http://www.w3.org/2001/XMLSchema#string">NP_004628</bp:id>
+        </bp:RelationshipXref>
+        <bp:RelationshipXref rdf:about="http://cbio.mskcc.org/cpath#CPATH-LOCAL-198182">
+          <bp:db rdf:datatype="http://www.w3.org/2001/XMLSchema#string">ENTREZ_GENE</bp:db>
+          <bp:id rdf:datatype="http://www.w3.org/2001/XMLSchema#string">7879</bp:id>
+        </bp:RelationshipXref>
+        <bp:UnificationXref rdf:about="http://cbio.mskcc.org/cpath#CPATH-LOCAL-198179">
+          <bp:db rdf:datatype="http://www.w3.org/2001/XMLSchema#string">UNIPROT</bp:db>
+          <bp:id rdf:datatype="http://www.w3.org/2001/XMLSchema#string">P51149</bp:id>
+        </bp:UnificationXref>
+        <bp:UnificationXref rdf:about="http://cbio.mskcc.org/cpath#CPATH-LOCAL-198184">
+          <bp:db rdf:datatype="http://www.w3.org/2001/XMLSchema#string">UNIPROT</bp:db>
+          <bp:id rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Q9NWJ0</bp:id>
+        </bp:UnificationXref>
+        <bp:UnificationXref rdf:about="http://cbio.mskcc.org/cpath#CPATH-LOCAL-7746230">
+          <bp:db rdf:datatype="http://www.w3.org/2001/XMLSchema#string">CPATH</bp:db>
+          <bp:id rdf:datatype="http://www.w3.org/2001/XMLSchema#string">540055</bp:id>
+        </bp:UnificationXref>
+        <bp:RelationshipXref rdf:about="http://cbio.mskcc.org/cpath#CPATH-LOCAL-198178">
+          <bp:db rdf:datatype="http://www.w3.org/2001/XMLSchema#string">GENE_SYMBOL</bp:db>
+          <bp:id rdf:datatype="http://www.w3.org/2001/XMLSchema#string">RAB7A</bp:id>
+        </bp:RelationshipXref>
+        <bp:SmallMolecule rdf:about="http://cbio.mskcc.org/cpath#CPATH-534663">
+          <bp:dataSource rdf:resource="http://cbio.mskcc.org/cpath#CPATH-LOCAL-7671320" />
+          <bp:name rdf:datatype="http://www.w3.org/2001/XMLSchema#string">GTP</bp:name>
+          <bp:xref rdf:resource="http://cbio.mskcc.org/cpath#CPATH-LOCAL-7671321" />
+          <bp:xref rdf:resource="http://cbio.mskcc.org/cpath#CPATH-LOCAL-7743601" />
+        </bp:SmallMolecule>
+        <bp:Provenance rdf:about="http://cbio.mskcc.org/cpath#CPATH-LOCAL-7671320">
+          <bp:comment rdf:datatype="http://www.w3.org/2001/XMLSchema#string">http://pid.nci.nih.gov</bp:comment>
+          <bp:name rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Pathway Interaction Database</bp:name>
+        </bp:Provenance>
+        <bp:UnificationXref rdf:about="http://cbio.mskcc.org/cpath#CPATH-LOCAL-198183">
+          <bp:db rdf:datatype="http://www.w3.org/2001/XMLSchema#string">UNIPROT</bp:db>
+          <bp:id rdf:datatype="http://www.w3.org/2001/XMLSchema#string">A8K3V6</bp:id>
+        </bp:UnificationXref>
+        <bp:UnificationXref rdf:about="http://cbio.mskcc.org/cpath#CPATH-LOCAL-206053">
+          <bp:db rdf:datatype="http://www.w3.org/2001/XMLSchema#string">CPATH</bp:db>
+          <bp:id rdf:datatype="http://www.w3.org/2001/XMLSchema#string">49455</bp:id>
+        </bp:UnificationXref>
+        <bp:UnificationXref rdf:about="http://cbio.mskcc.org/cpath#CPATH-LOCAL-7736996">
+          <bp:db rdf:datatype="http://www.w3.org/2001/XMLSchema#string">CPATH</bp:db>
+          <bp:id rdf:datatype="http://www.w3.org/2001/XMLSchema#string">527903</bp:id>
+        </bp:UnificationXref>
+        <bp:UnificationXref rdf:about="http://cbio.mskcc.org/cpath#CPATH-LOCAL-7671321">
+          <bp:db rdf:datatype="http://www.w3.org/2001/XMLSchema#string">CHEMICALABSTRACTS</bp:db>
+          <bp:id rdf:datatype="http://www.w3.org/2001/XMLSchema#string">86-01-1</bp:id>
+        </bp:UnificationXref>
+        <bp:UnificationXref rdf:about="http://cbio.mskcc.org/cpath#CPATH-LOCAL-7743601">
+          <bp:db rdf:datatype="http://www.w3.org/2001/XMLSchema#string">CPATH</bp:db>
+          <bp:id rdf:datatype="http://www.w3.org/2001/XMLSchema#string">534663</bp:id>
+        </bp:UnificationXref>
+      </rdf:RDF>
+    </pathwayModel>
+    <relationshipModel>
+      <RMNS version="3.0" />
+    </relationshipModel>
+    <vcmetadata>
+      <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
+        <rdf:Description rdf:about="http://sourceforge.net/projects/vcell/vcml/org.vcell.model.rbm.MolecularType/1142757205">
+          <bqmodel:isDescribedBy xmlns:bqmodel="http://biomodels.net/model-qualifiers/">
+            <rdf:Bag rdf:nodeID="node0">
+              <rdf:_1>
+                <rdf:Description rdf:about="urn:miriam:uniprot:P51149" />
+              </rdf:_1>
+            </rdf:Bag>
+          </bqmodel:isDescribedBy>
+        </rdf:Description>
+        <rdf:Description rdf:about="http://sourceforge.net/projects/vcell/vcml/org.vcell.model.rbm.MolecularType/1761513524">
+          <bqbiol:is xmlns:bqbiol="http://biomodels.net/biology-qualifiers/">
+            <rdf:Bag rdf:nodeID="node1">
+              <rdf:_1>
+                <rdf:Description rdf:about="urn:miriam:uniprot:P20339" />
+              </rdf:_1>
+            </rdf:Bag>
+          </bqbiol:is>
+        </rdf:Description>
+        <rdf:Description rdf:about="http://sourceforge.net/projects/vcell/vcml/org.vcell.model.rbm.MolecularType/2105126102">
+          <bqbiol:is xmlns:bqbiol="http://biomodels.net/biology-qualifiers/">
+            <rdf:Bag rdf:nodeID="node2">
+              <rdf:_1>
+                <rdf:Description rdf:about="urn:miriam:uniprot:P51149" />
+              </rdf:_1>
+            </rdf:Bag>
+          </bqbiol:is>
+        </rdf:Description>
+        <rdf:Description rdf:about="http://sourceforge.net/projects/vcell/vcml/org.vcell.model.rbm.MolecularType/55503636">
+          <bqmodel:isDescribedBy xmlns:bqmodel="http://biomodels.net/model-qualifiers/">
+            <rdf:Bag rdf:nodeID="node3">
+              <rdf:_1>
+                <rdf:Description rdf:about="urn:miriam:uniprot:P20339" />
+              </rdf:_1>
+            </rdf:Bag>
+          </bqmodel:isDescribedBy>
+        </rdf:Description>
+        <rdf:Description rdf:about="http://sourceforge.net/projects/vcell/vcml/org.vcell.model.rbm.MolecularType/metaid_1781141717">
+          <bqbiol:is xmlns:bqbiol="http://biomodels.net/biology-qualifiers/">
+            <rdf:Bag rdf:nodeID="node4">
+              <rdf:_1>
+                <rdf:Description rdf:about="urn:miriam:chebi:CHEBI%3A15996" />
+              </rdf:_1>
+            </rdf:Bag>
+          </bqbiol:is>
+        </rdf:Description>
+        <rdf:Description rdf:about="http://sourceforge.net/projects/vcell/vcml/org.vcell.model.rbm.MolecularType/metaid_2046547648">
+          <bqbiol:is xmlns:bqbiol="http://biomodels.net/biology-qualifiers/">
+            <rdf:Bag rdf:nodeID="node5">
+              <rdf:_1>
+                <rdf:Description rdf:about="urn:miriam:chebi:CHEBI%3A17552" />
+              </rdf:_1>
+            </rdf:Bag>
+          </bqbiol:is>
+        </rdf:Description>
+        <rdf:Description rdf:about="http://www.sbml.org/sbml/level2/version3/metaid_0000002">
+          <bqbiol:hasProperty xmlns:bqbiol="http://biomodels.net/biology-qualifiers/">
+            <rdf:Bag rdf:nodeID="node6">
+              <rdf:_1>
+                <rdf:Description rdf:about="http://identifiers.org/mamo/MAMO_0000046" />
+              </rdf:_1>
+            </rdf:Bag>
+          </bqbiol:hasProperty>
+          <bqbiol:hasTaxon xmlns:bqbiol="http://biomodels.net/biology-qualifiers/">
+            <rdf:Bag rdf:nodeID="node7">
+              <rdf:_1>
+                <rdf:Description rdf:about="http://identifiers.org/taxonomy/9606" />
+              </rdf:_1>
+            </rdf:Bag>
+          </bqbiol:hasTaxon>
+          <bqbiol:isVersionOf xmlns:bqbiol="http://biomodels.net/biology-qualifiers/">
+            <rdf:Bag rdf:nodeID="node8">
+              <rdf:_1>
+                <rdf:Description rdf:about="urn:miriam:obo.go:GO%3A0043087" />
+              </rdf:_1>
+            </rdf:Bag>
+          </bqbiol:isVersionOf>
+          <bqmodel:is xmlns:bqmodel="http://biomodels.net/model-qualifiers/">
+            <rdf:Bag rdf:nodeID="node9">
+              <rdf:_1>
+                <rdf:Description rdf:about="http://identifiers.org/biomodels.db/BIOMD0000000174" />
+              </rdf:_1>
+            </rdf:Bag>
+          </bqmodel:is>
+          <bqmodel:is xmlns:bqmodel="http://biomodels.net/model-qualifiers/">
+            <rdf:Bag rdf:nodeID="node10">
+              <rdf:_1>
+                <rdf:Description rdf:about="http://identifiers.org/biomodels.db/MODEL5937037510" />
+              </rdf:_1>
+            </rdf:Bag>
+          </bqmodel:is>
+          <bqmodel:isDerivedFrom xmlns:bqmodel="http://biomodels.net/model-qualifiers/">
+            <rdf:Bag rdf:nodeID="node11">
+              <rdf:_1>
+                <rdf:Description rdf:about="http://identifiers.org/pubmed/10591225" />
+              </rdf:_1>
+              <rdf:_2>
+                <rdf:Description rdf:about="http://identifiers.org/pubmed/16890441" />
+              </rdf:_2>
+            </rdf:Bag>
+          </bqmodel:isDerivedFrom>
+          <bqmodel:isDescribedBy xmlns:bqmodel="http://biomodels.net/model-qualifiers/">
+            <rdf:Bag rdf:nodeID="node12">
+              <rdf:_1>
+                <rdf:Description rdf:about="urn:miriam:doi:10.1038%2Fmsb.2008.45" />
+              </rdf:_1>
+            </rdf:Bag>
+          </bqmodel:isDescribedBy>
+          <bqmodel:isDescribedBy xmlns:bqmodel="http://biomodels.net/model-qualifiers/">
+            <rdf:Bag rdf:nodeID="node13">
+              <rdf:_1>
+                <rdf:Description rdf:about="http://identifiers.org/pubmed/18628746" />
+              </rdf:_1>
+            </rdf:Bag>
+          </bqmodel:isDescribedBy>
+          <dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">
+            <rdf:Bag rdf:nodeID="node14">
+              <rdf:_1>
+                <rdf:Description rdf:nodeID="node46">
+                  <vcard:EMAIL xmlns:vcard="http://www.w3.org/2001/vcard-rdf/3.0#" rdf:datatype="http://www.w3.org/2001/XMLSchema#string">pzerial@mpi-cbg.de</vcard:EMAIL>
+                  <vcard:N xmlns:vcard="http://www.w3.org/2001/vcard-rdf/3.0#">
+                    <rdf:Description rdf:nodeID="node48">
+                      <vcard:Family rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Del Conte-Zerial</vcard:Family>
+                      <vcard:Given rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Perla</vcard:Given>
+                    </rdf:Description>
+                  </vcard:N>
+                  <vcard:ORG xmlns:vcard="http://www.w3.org/2001/vcard-rdf/3.0#">
+                    <rdf:Description rdf:nodeID="node49">
+                      <vcard:Orgname rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Center for Information Services and High Performance Computing, University of Technology Dresden, 01062 Dresden, Germany</vcard:Orgname>
+                    </rdf:Description>
+                  </vcard:ORG>
+                </rdf:Description>
+              </rdf:_1>
+              <rdf:_2>
+                <rdf:Description rdf:nodeID="node47">
+                  <vcard:EMAIL xmlns:vcard="http://www.w3.org/2001/vcard-rdf/3.0#" rdf:datatype="http://www.w3.org/2001/XMLSchema#string">lukas@ebi.ac.uk</vcard:EMAIL>
+                  <vcard:N xmlns:vcard="http://www.w3.org/2001/vcard-rdf/3.0#">
+                    <rdf:Description rdf:nodeID="node50">
+                      <vcard:Family rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Endler</vcard:Family>
+                      <vcard:Given rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Lukas</vcard:Given>
+                    </rdf:Description>
+                  </vcard:N>
+                  <vcard:ORG xmlns:vcard="http://www.w3.org/2001/vcard-rdf/3.0#">
+                    <rdf:Description rdf:nodeID="node51">
+                      <vcard:Orgname rdf:datatype="http://www.w3.org/2001/XMLSchema#string">EMBL-EBI</vcard:Orgname>
+                    </rdf:Description>
+                  </vcard:ORG>
+                </rdf:Description>
+              </rdf:_2>
+            </rdf:Bag>
+          </dc:creator>
+          <n0:created xmlns:n0="http://purl.org/dc/terms/">
+            <rdf:Description rdf:nodeID="node15">
+              <n0:W3CDTF rdf:datatype="http://www.w3.org/2001/XMLSchema#string">2008-07-28T12:59:41Z</n0:W3CDTF>
+            </rdf:Description>
+          </n0:created>
+          <n0:modified xmlns:n0="http://purl.org/dc/terms/">
+            <rdf:Description rdf:nodeID="node16">
+              <n0:W3CDTF rdf:datatype="http://www.w3.org/2001/XMLSchema#string">2014-04-28T15:37:54Z</n0:W3CDTF>
+            </rdf:Description>
+          </n0:modified>
+        </rdf:Description>
+        <rdf:Description rdf:about="http://www.sbml.org/sbml/level2/version3/metaid_0000012">
+          <bqbiol:is xmlns:bqbiol="http://biomodels.net/biology-qualifiers/">
+            <rdf:Bag rdf:nodeID="node17">
+              <rdf:_1>
+                <rdf:Description rdf:about="http://identifiers.org/go/GO:0010008" />
+              </rdf:_1>
+            </rdf:Bag>
+          </bqbiol:is>
+        </rdf:Description>
+        <rdf:Description rdf:about="http://www.sbml.org/sbml/level2/version3/metaid_0000013">
+          <bqbiol:hasPart xmlns:bqbiol="http://biomodels.net/biology-qualifiers/">
+            <rdf:Bag rdf:nodeID="node18">
+              <rdf:_1>
+                <rdf:Description rdf:about="http://identifiers.org/chebi/CHEBI:17552" />
+              </rdf:_1>
+              <rdf:_2>
+                <rdf:Description rdf:about="http://identifiers.org/uniprot/P20339" />
+              </rdf:_2>
+            </rdf:Bag>
+          </bqbiol:hasPart>
+          <bqbiol:is xmlns:bqbiol="http://biomodels.net/biology-qualifiers/">
+            <rdf:Bag rdf:nodeID="node19">
+              <rdf:_1>
+                <rdf:Description rdf:about="http://identifiers.org/go/GO:0031225" />
+              </rdf:_1>
+            </rdf:Bag>
+          </bqbiol:is>
+          <bqmodel:isDescribedBy xmlns:bqmodel="http://biomodels.net/model-qualifiers/">
+            <rdf:Bag rdf:nodeID="node20">
+              <rdf:_1>
+                <rdf:Description rdf:about="urn:miriam:uniprot:P20339" />
+              </rdf:_1>
+            </rdf:Bag>
+          </bqmodel:isDescribedBy>
+        </rdf:Description>
+        <rdf:Description rdf:about="http://www.sbml.org/sbml/level2/version3/metaid_0000014">
+          <bqbiol:hasPart xmlns:bqbiol="http://biomodels.net/biology-qualifiers/">
+            <rdf:Bag rdf:nodeID="node21">
+              <rdf:_1>
+                <rdf:Description rdf:about="urn:miriam:chebi:CHEBI%3A15996" />
+              </rdf:_1>
+            </rdf:Bag>
+          </bqbiol:hasPart>
+          <bqbiol:hasPart xmlns:bqbiol="http://biomodels.net/biology-qualifiers/">
+            <rdf:Bag rdf:nodeID="node22">
+              <rdf:_1>
+                <rdf:Description rdf:about="urn:miriam:uniprot:P20339" />
+              </rdf:_1>
+            </rdf:Bag>
+          </bqbiol:hasPart>
+          <bqbiol:is xmlns:bqbiol="http://biomodels.net/biology-qualifiers/">
+            <rdf:Bag rdf:nodeID="node23">
+              <rdf:_1>
+                <rdf:Description rdf:about="http://identifiers.org/go/GO:0031225" />
+              </rdf:_1>
+            </rdf:Bag>
+          </bqbiol:is>
+        </rdf:Description>
+        <rdf:Description rdf:about="http://www.sbml.org/sbml/level2/version3/metaid_0000015">
+          <bqbiol:hasPart xmlns:bqbiol="http://biomodels.net/biology-qualifiers/">
+            <rdf:Bag rdf:nodeID="node24">
+              <rdf:_1>
+                <rdf:Description rdf:about="urn:miriam:uniprot:P51149" />
+              </rdf:_1>
+            </rdf:Bag>
+          </bqbiol:hasPart>
+          <bqbiol:is xmlns:bqbiol="http://biomodels.net/biology-qualifiers/">
+            <rdf:Bag rdf:nodeID="node25">
+              <rdf:_1>
+                <rdf:Description rdf:about="http://identifiers.org/go/GO:0031225" />
+              </rdf:_1>
+            </rdf:Bag>
+          </bqbiol:is>
+          <bqbiol:isVersionOf xmlns:bqbiol="http://biomodels.net/biology-qualifiers/">
+            <rdf:Bag rdf:nodeID="node26">
+              <rdf:_1>
+                <rdf:Description rdf:about="urn:miriam:chebi:CHEBI%3A17552" />
+              </rdf:_1>
+            </rdf:Bag>
+          </bqbiol:isVersionOf>
+        </rdf:Description>
+        <rdf:Description rdf:about="http://www.sbml.org/sbml/level2/version3/metaid_0000016">
+          <bqbiol:hasPart xmlns:bqbiol="http://biomodels.net/biology-qualifiers/">
+            <rdf:Bag rdf:nodeID="node27">
+              <rdf:_1>
+                <rdf:Description rdf:about="urn:miriam:uniprot:P51149" />
+              </rdf:_1>
+            </rdf:Bag>
+          </bqbiol:hasPart>
+          <bqbiol:hasPart xmlns:bqbiol="http://biomodels.net/biology-qualifiers/">
+            <rdf:Bag rdf:nodeID="node28">
+              <rdf:_1>
+                <rdf:Description rdf:about="urn:miriam:chebi:CHEBI%3A15996" />
+              </rdf:_1>
+            </rdf:Bag>
+          </bqbiol:hasPart>
+          <bqbiol:is xmlns:bqbiol="http://biomodels.net/biology-qualifiers/">
+            <rdf:Bag rdf:nodeID="node29">
+              <rdf:_1>
+                <rdf:Description rdf:about="http://identifiers.org/go/GO:0031225" />
+              </rdf:_1>
+            </rdf:Bag>
+          </bqbiol:is>
+        </rdf:Description>
+        <rdf:Description rdf:about="http://www.sbml.org/sbml/level2/version3/metaid_0000017">
+          <bqbiol:isVersionOf xmlns:bqbiol="http://biomodels.net/biology-qualifiers/">
+            <rdf:Bag rdf:nodeID="node30">
+              <rdf:_1>
+                <rdf:Description rdf:about="http://identifiers.org/go/GO:0045184" />
+              </rdf:_1>
+            </rdf:Bag>
+          </bqbiol:isVersionOf>
+        </rdf:Description>
+        <rdf:Description rdf:about="http://www.sbml.org/sbml/level2/version3/metaid_0000018">
+          <bqbiol:isVersionOf xmlns:bqbiol="http://biomodels.net/biology-qualifiers/">
+            <rdf:Bag rdf:nodeID="node31">
+              <rdf:_1>
+                <rdf:Description rdf:about="http://identifiers.org/go/GO:0032858" />
+              </rdf:_1>
+            </rdf:Bag>
+          </bqbiol:isVersionOf>
+        </rdf:Description>
+        <rdf:Description rdf:about="http://www.sbml.org/sbml/level2/version3/metaid_0000020">
+          <bqbiol:isVersionOf xmlns:bqbiol="http://biomodels.net/biology-qualifiers/">
+            <rdf:Bag rdf:nodeID="node32">
+              <rdf:_1>
+                <rdf:Description rdf:about="http://identifiers.org/go/GO:0045184" />
+              </rdf:_1>
+            </rdf:Bag>
+          </bqbiol:isVersionOf>
+          <bqmodel:isDescribedBy xmlns:bqmodel="http://biomodels.net/model-qualifiers/">
+            <rdf:Bag rdf:nodeID="node33">
+              <rdf:_1>
+                <rdf:Description rdf:about="urn:miriam:sbo:SBO%3A0000012" />
+              </rdf:_1>
+            </rdf:Bag>
+          </bqmodel:isDescribedBy>
+        </rdf:Description>
+        <rdf:Description rdf:about="http://www.sbml.org/sbml/level2/version3/metaid_0000021">
+          <bqbiol:isPartOf xmlns:bqbiol="http://biomodels.net/biology-qualifiers/">
+            <rdf:Bag rdf:nodeID="node34">
+              <rdf:_1>
+                <rdf:Description rdf:about="urn:miriam:reactome:R-HSA-8877451.2" />
+              </rdf:_1>
+            </rdf:Bag>
+          </bqbiol:isPartOf>
+          <bqbiol:isVersionOf xmlns:bqbiol="http://biomodels.net/biology-qualifiers/">
+            <rdf:Bag rdf:nodeID="node35">
+              <rdf:_1>
+                <rdf:Description rdf:about="urn:miriam:obo.go:GO%3A0090630" />
+              </rdf:_1>
+            </rdf:Bag>
+          </bqbiol:isVersionOf>
+          <bqbiol:isVersionOf xmlns:bqbiol="http://biomodels.net/biology-qualifiers/">
+            <rdf:Bag rdf:nodeID="node36">
+              <rdf:_1>
+                <rdf:Description rdf:about="urn:miriam:obo.go:GO%3A0005085" />
+              </rdf:_1>
+            </rdf:Bag>
+          </bqbiol:isVersionOf>
+        </rdf:Description>
+        <rdf:Description rdf:about="http://www.sbml.org/sbml/level2/version3/metaid_0000022">
+          <bqbiol:isPartOf xmlns:bqbiol="http://biomodels.net/biology-qualifiers/">
+            <rdf:Bag rdf:nodeID="node37">
+              <rdf:_1>
+                <rdf:Description rdf:about="urn:miriam:reactome:R-HSA-8877451.2" />
+              </rdf:_1>
+            </rdf:Bag>
+          </bqbiol:isPartOf>
+          <bqbiol:isVersionOf xmlns:bqbiol="http://biomodels.net/biology-qualifiers/">
+            <rdf:Bag rdf:nodeID="node38">
+              <rdf:_1>
+                <rdf:Description rdf:about="http://identifiers.org/go/GO:0032858" />
+              </rdf:_1>
+              <rdf:_2>
+                <rdf:Description rdf:about="http://identifiers.org/go/GO:0017112" />
+              </rdf:_2>
+            </rdf:Bag>
+          </bqbiol:isVersionOf>
+        </rdf:Description>
+        <rdf:Description rdf:about="http://www.sbml.org/sbml/level2/version3/metaid_0000023">
+          <bqbiol:isVersionOf xmlns:bqbiol="http://biomodels.net/biology-qualifiers/">
+            <rdf:Bag rdf:nodeID="node39">
+              <rdf:_1>
+                <rdf:Description rdf:about="http://identifiers.org/go/GO:0003924" />
+              </rdf:_1>
+              <rdf:_2>
+                <rdf:Description rdf:about="http://identifiers.org/go/GO:0005097" />
+              </rdf:_2>
+            </rdf:Bag>
+          </bqbiol:isVersionOf>
+          <bqmodel:isDescribedBy xmlns:bqmodel="http://biomodels.net/model-qualifiers/">
+            <rdf:Bag rdf:nodeID="node40">
+              <rdf:_1>
+                <rdf:Description rdf:about="urn:miriam:reactome:R-HSA-8875320.1" />
+              </rdf:_1>
+            </rdf:Bag>
+          </bqmodel:isDescribedBy>
+        </rdf:Description>
+        <rdf:Description rdf:about="http://www.sbml.org/sbml/level2/version3/metaid_0000024">
+          <bqmodel:isDescribedBy xmlns:bqmodel="http://biomodels.net/model-qualifiers/">
+            <rdf:Bag rdf:nodeID="node41">
+              <rdf:_1>
+                <rdf:Description rdf:about="urn:miriam:sbo:SBO%3A0000012" />
+              </rdf:_1>
+            </rdf:Bag>
+          </bqmodel:isDescribedBy>
+        </rdf:Description>
+        <rdf:Description rdf:about="http://www.sbml.org/sbml/level2/version3/metaid_0000025">
+          <bqbiol:isVersionOf xmlns:bqbiol="http://biomodels.net/biology-qualifiers/">
+            <rdf:Bag rdf:nodeID="node42">
+              <rdf:_1>
+                <rdf:Description rdf:about="http://identifiers.org/go/GO:0003924" />
+              </rdf:_1>
+            </rdf:Bag>
+          </bqbiol:isVersionOf>
+          <bqmodel:isDescribedBy xmlns:bqmodel="http://biomodels.net/model-qualifiers/">
+            <rdf:Bag rdf:nodeID="node43">
+              <rdf:_1>
+                <rdf:Description rdf:about="urn:miriam:reactome:R-HSA-8875320.1" />
+              </rdf:_1>
+            </rdf:Bag>
+          </bqmodel:isDescribedBy>
+        </rdf:Description>
+        <rdf:Description rdf:about="http://www.sbml.org/sbml/level2/version3/metaid_0000026">
+          <bqbiol:isVersionOf xmlns:bqbiol="http://biomodels.net/biology-qualifiers/">
+            <rdf:Bag rdf:nodeID="node44">
+              <rdf:_1>
+                <rdf:Description rdf:about="http://identifiers.org/go/GO:0003924" />
+              </rdf:_1>
+            </rdf:Bag>
+          </bqbiol:isVersionOf>
+          <bqmodel:isDescribedBy xmlns:bqmodel="http://biomodels.net/model-qualifiers/">
+            <rdf:Bag rdf:nodeID="node45">
+              <rdf:_1>
+                <rdf:Description rdf:about="urn:miriam:sbo:SBO%3A0000012" />
+              </rdf:_1>
+            </rdf:Bag>
+          </bqmodel:isDescribedBy>
+        </rdf:Description>
+      </rdf:RDF>
+      <nonrdfAnnotationList>
+        <nonrdfAnnotation vcid="ReactionStep(Recruitment of Rab7_GDP)">
+          <freetext>&lt;html&gt;&#xD;
+  &lt;head&gt;&#xD;
+    &#xD;
+  &lt;/head&gt;&#xD;
+  &lt;body&gt;&#xD;
+    &lt;p style="margin-top: 0"&gt;&#xD;
+      Rab7 is recruited for the proccess.&#xD;
+    &lt;/p&gt;&#xD;
+    &lt;p style="margin-top: 0"&gt;&#xD;
+      Authors state that parameter values were sampled from reasonable ranges.&#xD;
+    &lt;/p&gt;&#xD;
+  &lt;/body&gt;&#xD;
+&lt;/html&gt;</freetext>
+          <annotationList>
+            <annotation />
+            <annotation />
+          </annotationList>
+        </nonrdfAnnotation>
+        <nonrdfAnnotation vcid="Species(r7)">
+          <freetext>&lt;html&gt;
+  &lt;head&gt;
+    
+  &lt;/head&gt;
+  &lt;body&gt;
+    GDP-bound Rab7 (inactive)
+  &lt;/body&gt;
+&lt;/html&gt;</freetext>
+          <annotationList>
+            <annotation />
+            <annotation />
+          </annotationList>
+        </nonrdfAnnotation>
+        <nonrdfAnnotation vcid="RbmObservable(O0_RAB5_tot)">
+          <freetext>&lt;html&gt;
+  &lt;head&gt;
+    &lt;style type="text/css"&gt;
+      &lt;!--
+        td { border-top-color: #ccc; border-top-style: solid; border-top-width: 1px; border-right-color: #ccc; border-right-style: solid; border-right-width: 1px; border-bottom-color: #ccc; border-bottom-style: solid; border-bottom-width: 1px; border-left-color: #ccc; border-left-style: solid; border-left-width: 1px }
+      --&gt;
+    &lt;/style&gt;
+    
+  &lt;/head&gt;
+  &lt;body&gt;
+    &lt;span data-sheets-value="{"1":2,"2":"total amount of RAB5 (active and inactive) in the system"}" data-sheets-userformat="{"2":769,"3":{"1":0},"11":4,"12":0}"&gt;&lt;font size="10pt" face="Arial"&gt;Total 
+    amount of RAB5 (active and inactive) in the system.&lt;/font&gt;&lt;/span&gt;
+  &lt;/body&gt;
+&lt;/html&gt;</freetext>
+        </nonrdfAnnotation>
+        <nonrdfAnnotation vcid="Species(R7)">
+          <freetext>&lt;html&gt;
+  &lt;head&gt;
+    
+  &lt;/head&gt;
+  &lt;body&gt;
+    GTP-bound Rab7 (active)
+  &lt;/body&gt;
+&lt;/html&gt;</freetext>
+          <annotationList>
+            <annotation />
+            <annotation />
+          </annotationList>
+        </nonrdfAnnotation>
+        <nonrdfAnnotation vcid="BioModel(CM_PM18628746_MB2::Rab7_switch)">
+          <freetext>&lt;html&gt;
+  &lt;head&gt;
+    
+  &lt;/head&gt;
+  &lt;body&gt;
+    &lt;span align="start" style="letter-spacing: normal; text-indent: 0px; text-transform: none; white-space: normal; word-spacing: 0px; display: inline !important; float: none"&gt;&lt;font color="black" face="-apple-system-font" size="x-small"&gt;This 
+    ModelBrick from the publication &amp;quot;Membrane identity and GTPase cascades 
+    regulated by toggle and cut-out switches&amp;quot; describes Rab activation and 
+    hydrolysis. According to this model, Rab5 activates Rab7 until Rab7 
+    reaches a threshold upon which it inactivates Rab5 through a negative 
+    feedback loop.&lt;/font&gt;&lt;/span&gt;
+  &lt;/body&gt;
+&lt;/html&gt;</freetext>
+          <notes>
+            <html xmlns="http://www.w3.org/1999/xhtml">
+              <head>
+                <title>Cut-out switch model</title>
+              </head>
+              <body>
+                <p>
+                  <b>Membrane identity and GTPase cascades regulated by toggle and cut-out switches</b>
+                  <br />
+                  Perla Del Conte-Zerial, Lutz Brusch, Jochen C Rink, Claudio Collinet, Yannis Kalaidzidis, Marino Zerial, and Andreas Deutsch:
+                  <em>Molecular Systems Biology</em>
+                  4:206
+                  <em>15 July 2008</em>
+                  ,
+                  <a href="http://dx.doi.org/10.1038/msb.2008.45">doi:10.1038/msb.2008.45</a>
+                </p>
+                <p>
+                  This is the cut-out switch model for the Rab5 - Rab7 transition, also referred to as model 2 in the original publication.
+                  <br />
+                  This model is not completely described in all details in the publication. Thanks go to Barbara Szomolay and Lutz Brusch for finding and clarifying this. According to Dr. Brusch this model represents the mechanism identified by the qualitative analysis in the article in the scenario deemed most useful by the authors. For the time-course simulations it was necessary to add a time dependency to one of the parameters, which is only verbally described in the article.
+                  <br />
+                  As argued in the publication the switch between early and late endosomes can be triggered by a parameter change. While with fixed parameter values each switch just converges to one steady state from its initial conditions and stays there, endosomes should switch between two different states. These changes would in reality of course depend on many different factors, such as cargo composition and amount in the specific endosome, its location and some additional cellular control mechanisms and encompass many different parameters. To keep the model simple the authors chose to add a time dependency to only one reaction -
+                  <strong>ke</strong>
+                  in the activation of RAB5 is multiplied with a term monotonously increasing over time from 0 to 1. They also hard coded a time dependence in this term, 100 minutes, to make the switch occur after several hundred minutes. As long as this modulating term remains monotonic all resulting time courses should look similar, with the switching behavior depending on the initial conditions and whether the term is increasing or decreasing. Monotonic increase is a reasonable assumption for the described mechanism of cargo accumulation.
+                  <br />
+                  Not explicitly described in the article:
+                  <em>activation of Rab5 (time)</em>
+                  :
+                  <em>
+                    r*ke*
+                    <strong>time/(100+time)</strong>
+                    /(1+e
+                    <sup>(kg-R)*kf</sup>
+                    )
+                  </em>
+                  instead of
+                  <em>
+                    r*ke/(1+e
+                    <sup>(kg-R)*kf</sup>
+                    )
+                  </em>
+                </p>
+                <p>
+                  This model originates from BioModels Database: A Database of Annotated Published Models. It is copyright (c) 2005-2009 The BioModels Team.
+                  <br />
+                  For more information see the
+                  <a href="http://www.ebi.ac.uk/biomodels/legal.html" target="_blank">terms of use</a>
+                  .
+                  <br />
+                  To cite BioModels Database, please use
+                  <a href="http://www.pubmedcentral.nih.gov/articlerender.fcgi?tool=pubmed&amp;pubmedid=16381960" target="_blank">Le Nov�re N., Bornstein B., Broicher A., Courtot M., Donizelli M., Dharuri H., Li L., Sauro H., Schilstra M., Shapiro B., Snoep J.L., Hucka M. (2006) BioModels Database: A Free, Centralized Database of Curated, Published, Quantitative Kinetic Models of Biochemical and Cellular Systems Nucleic Acids Res., 34: D689-D691.</a>
+                </p>
+              </body>
+            </html>
+          </notes>
+          <annotationList>
+            <annotation />
+            <annotation />
+          </annotationList>
+        </nonrdfAnnotation>
+        <nonrdfAnnotation vcid="SimulationContext(Deterministic)">
+          <freetext>&lt;html&gt;&#xD;
+  &lt;head&gt;&#xD;
+&#xD;
+  &lt;/head&gt;&#xD;
+  &lt;body&gt;&#xD;
+    &lt;p class="MsoNormal" style="line-height: normal"&gt;&#xD;
+      &#xD;
+    &lt;/p&gt;&#xD;
+  &lt;/body&gt;&#xD;
+&lt;/html&gt;</freetext>
+        </nonrdfAnnotation>
+        <nonrdfAnnotation vcid="RbmObservable(O0_GTP_tot)">
+          <freetext>&lt;html&gt;
+  &lt;head&gt;
+    &lt;style type="text/css"&gt;
+      &lt;!--
+        td { border-top-color: #ccc; border-top-style: solid; border-top-width: 1px; border-right-color: #ccc; border-right-style: solid; border-right-width: 1px; border-bottom-color: #ccc; border-bottom-style: solid; border-bottom-width: 1px; border-left-color: #ccc; border-left-style: solid; border-left-width: 1px }
+      --&gt;
+    &lt;/style&gt;
+    
+  &lt;/head&gt;
+  &lt;body&gt;
+    &lt;span data-sheets-value="{"1":2,"2":"total amount of GTP in the system."}" data-sheets-userformat="{"2":769,"3":{"1":0},"11":4,"12":0}"&gt;&lt;font size="10pt" face="Arial"&gt;Total 
+    amount of GTP in the system.&lt;/font&gt;&lt;/span&gt;
+  &lt;/body&gt;
+&lt;/html&gt;</freetext>
+        </nonrdfAnnotation>
+        <nonrdfAnnotation vcid="RbmObservable(O0_GDP_tot)">
+          <freetext>&lt;html&gt;
+  &lt;head&gt;
+    &lt;style type="text/css"&gt;
+      &lt;!--
+        td { border-top-color: #ccc; border-top-style: solid; border-top-width: 1px; border-right-color: #ccc; border-right-style: solid; border-right-width: 1px; border-bottom-color: #ccc; border-bottom-style: solid; border-bottom-width: 1px; border-left-color: #ccc; border-left-style: solid; border-left-width: 1px }
+      --&gt;
+    &lt;/style&gt;
+    
+  &lt;/head&gt;
+  &lt;body&gt;
+    &lt;span data-sheets-value="{" total="total" amount="#DEFAULT" of="#DEFAULT" gdp="#DEFAULT" in="#DEFAULT" the="#DEFAULT" system.="#DEFAULT" data-sheets-userformat="{"&gt;&lt;font size="10pt" face="Arial"&gt;Total 
+    amount of GDP in the system.&lt;/font&gt;&lt;/span&gt;
+  &lt;/body&gt;
+&lt;/html&gt;</freetext>
+        </nonrdfAnnotation>
+        <nonrdfAnnotation vcid="ReactionStep(activation of Rab7 by GEF7)">
+          <freetext>&lt;html&gt;&#xD;
+  &lt;head&gt;&#xD;
+    &#xD;
+  &lt;/head&gt;&#xD;
+  &lt;body&gt;&#xD;
+    &lt;p style="margin-top: 0"&gt;&#xD;
+      Activation of RAB7_GDP by its own activated counterpart Rab7_GTP.&#xD;
+    &lt;/p&gt;&#xD;
+    &lt;p style="margin-top: 0"&gt;&#xD;
+      Authors state that parameter values were sampled from reasonable ranges.&#xD;
+    &lt;/p&gt;&#xD;
+  &lt;/body&gt;&#xD;
+&lt;/html&gt;</freetext>
+          <annotationList>
+            <annotation />
+            <annotation />
+          </annotationList>
+        </nonrdfAnnotation>
+        <nonrdfAnnotation vcid="ReactionStep(Hydrolysis of Rab7_GTP)">
+          <freetext>&lt;html&gt;&#xD;
+  &lt;head&gt;&#xD;
+    &#xD;
+  &lt;/head&gt;&#xD;
+  &lt;body&gt;&#xD;
+    Hydrolysis of GTP to GDP on Rab7.&#xD;
+&#xD;
+    &lt;p style="margin-top: 0"&gt;&#xD;
+      Authors state that parameter values were sampled from reasonable ranges.&#xD;
+    &lt;/p&gt;&#xD;
+  &lt;/body&gt;&#xD;
+&lt;/html&gt;</freetext>
+          <annotationList>
+            <annotation />
+            <annotation />
+          </annotationList>
+        </nonrdfAnnotation>
+        <nonrdfAnnotation vcid="MolecularType(RAB5)">
+          <freetext>&lt;html&gt;
+  &lt;head&gt;
+    
+  &lt;/head&gt;
+  &lt;body&gt;
+    Active Rab5 orchestrates the recruitment of a multi-effector protein 
+    machinery that performs various functions in endosome membrane tethering 
+    and fusion as well as microtubule- and actin-dependent motility
+  &lt;/body&gt;
+&lt;/html&gt;</freetext>
+        </nonrdfAnnotation>
+        <nonrdfAnnotation vcid="MolecularType(GDP)">
+          <freetext>&lt;html&gt;&#xD;
+  &lt;head&gt;&#xD;
+    &#xD;
+  &lt;/head&gt;&#xD;
+  &lt;body&gt;&#xD;
+    &lt;p class="MsoNormal" style="line-height: normal"&gt;&#xD;
+      GDP-bound Rab indicates the active form&#xD;
+    &lt;/p&gt;&#xD;
+  &lt;/body&gt;&#xD;
+&lt;/html&gt;</freetext>
+        </nonrdfAnnotation>
+        <nonrdfAnnotation vcid="MolecularType(GTP)">
+          <freetext>&lt;html&gt;&#xD;
+  &lt;head&gt;&#xD;
+    &#xD;
+  &lt;/head&gt;&#xD;
+  &lt;body&gt;&#xD;
+    &lt;p class="MsoNormal" style="line-height: normal"&gt;&#xD;
+      GTP-bound Rab indicates the active form&#xD;
+    &lt;/p&gt;&#xD;
+  &lt;/body&gt;&#xD;
+&lt;/html&gt;</freetext>
+        </nonrdfAnnotation>
+        <nonrdfAnnotation vcid="Species(R5)">
+          <freetext>&lt;html&gt;
+  &lt;head&gt;
+    
+  &lt;/head&gt;
+  &lt;body&gt;
+    Active Rab5 orchestrates the recruitment of a multi-effector protein 
+    machinery that performs various functions in endosome membrane tethering 
+    and fusion as well as microtubule- and actin-dependent motility
+  &lt;/body&gt;
+&lt;/html&gt;</freetext>
+          <annotationList>
+            <annotation />
+            <annotation />
+          </annotationList>
+        </nonrdfAnnotation>
+        <nonrdfAnnotation vcid="SpeciesContext(Rab7_GDP)">
+          <freetext>&lt;html&gt;&#xD;
+  &lt;head&gt;&#xD;
+&#xD;
+  &lt;/head&gt;&#xD;
+  &lt;body&gt;&#xD;
+    &#xD;
+  &lt;/body&gt;&#xD;
+&lt;/html&gt;</freetext>
+        </nonrdfAnnotation>
+        <nonrdfAnnotation vcid="RbmObservable(O0_Rab7_tot)">
+          <freetext>&lt;html&gt;
+  &lt;head&gt;
+    &lt;style type="text/css"&gt;
+      &lt;!--
+        td { border-top-color: #ccc; border-top-style: solid; border-top-width: 1px; border-right-color: #ccc; border-right-style: solid; border-right-width: 1px; border-bottom-color: #ccc; border-bottom-style: solid; border-bottom-width: 1px; border-left-color: #ccc; border-left-style: solid; border-left-width: 1px }
+      --&gt;
+    &lt;/style&gt;
+    
+  &lt;/head&gt;
+  &lt;body&gt;
+    &lt;span data-sheets-value="{"1":2,"2":"total amount of Rab7 (active and inactive) in the system"}" data-sheets-userformat="{"2":769,"3":{"1":0},"11":4,"12":0}"&gt;&lt;font size="10pt" face="Arial"&gt;Total 
+    amount of Rab7 (active and inactive) in the system.&lt;/font&gt;&lt;/span&gt;
+  &lt;/body&gt;
+&lt;/html&gt;</freetext>
+        </nonrdfAnnotation>
+        <nonrdfAnnotation vcid="ReactionStep(activation of Rab7 by GEF5)">
+          <freetext>&lt;html&gt;&#xD;
+  &lt;head&gt;&#xD;
+    &#xD;
+  &lt;/head&gt;&#xD;
+  &lt;body&gt;&#xD;
+    &lt;p style="margin-top: 0"&gt;&#xD;
+      activation of Rab7_GDP catalyzed by activated Rab5_GTP.&#xD;
+    &lt;/p&gt;&#xD;
+    &lt;p style="margin-top: 0"&gt;&#xD;
+      Authors state that parameter values were sampled from reasonable ranges.&#xD;
+    &lt;/p&gt;&#xD;
+  &lt;/body&gt;&#xD;
+&lt;/html&gt;</freetext>
+          <annotationList>
+            <annotation />
+            <annotation />
+          </annotationList>
+        </nonrdfAnnotation>
+        <nonrdfAnnotation vcid="MolecularType(Rab7)">
+          <freetext>&lt;html&gt;
+  &lt;head&gt;
+    
+  &lt;/head&gt;
+  &lt;body&gt;
+    &lt;span charset="utf-8" align="left" style="letter-spacing: normal; text-indent: 0px; text-transform: none; white-space: pre-wrap; word-spacing: 0px; background-color: rgb(255, 255, 255); display: inline !important; float: none"&gt;&lt;font color="rgb(0, 0, 0)" face="Arial" size="10px"&gt;Small 
+    GTPase which cycles between active GTP-bound and inactive GDP-bound 
+    states. In its active state, binds to a variety of effector proteins 
+    playing a key role in the regulation of endo-lysosomal trafficking.&lt;/font&gt;&lt;/span&gt;
+  &lt;/body&gt;
+&lt;/html&gt;</freetext>
+        </nonrdfAnnotation>
+        <nonrdfAnnotation vcid="Structure(endosome)">
+          <freetext>&lt;html&gt;
+  &lt;head&gt;
+    
+  &lt;/head&gt;
+  &lt;body&gt;
+    &lt;span charset="utf-8" align="left" style="letter-spacing: normal; text-indent: 0px; text-transform: none; white-space: pre-wrap; word-spacing: 0px; background-color: rgb(255, 255, 255); display: inline !important; float: none"&gt;&lt;font color="rgb(0, 0, 0)" face="Arial" size="10px"&gt;The 
+    lipid bilayer surrounding an endosome.&lt;/font&gt;&lt;/span&gt;
+  &lt;/body&gt;
+&lt;/html&gt;</freetext>
+          <annotationList>
+            <annotation />
+            <annotation />
+          </annotationList>
+        </nonrdfAnnotation>
+        <nonrdfAnnotation vcid="ReactionStep(Extraction of Rab7_GDP)">
+          <freetext>&lt;html&gt;&#xD;
+  &lt;head&gt;&#xD;
+    &#xD;
+  &lt;/head&gt;&#xD;
+  &lt;body&gt;&#xD;
+    Degradation of Rab7_GDP.&#xD;
+&#xD;
+    &lt;p style="margin-top: 0"&gt;&#xD;
+      Authors state that parameter values were sampled from reasonable ranges.&#xD;
+    &lt;/p&gt;&#xD;
+  &lt;/body&gt;&#xD;
+&lt;/html&gt;</freetext>
+        </nonrdfAnnotation>
+      </nonrdfAnnotationList>
+      <uriBindingList>
+        <uriBinding uri="http://sourceforge.net/projects/vcell/vcml/org.vcell.model.rbm.MolecularType/1761513524" vcid="MolecularType(RAB5)" />
+        <uriBinding uri="http://www.sbml.org/sbml/level2/version3/metaid_0000015" vcid="Species(r7)" />
+        <uriBinding uri="http://www.sbml.org/sbml/level2/version3/metaid_0000020" vcid="ReactionStep(Recruitment of Rab7_GDP)" />
+        <uriBinding uri="http://sourceforge.net/projects/vcell/vcml/org.vcell.model.rbm.MolecularType/metaid_1781141717" vcid="MolecularType(GTP)" />
+        <uriBinding uri="http://sourceforge.net/projects/vcell/vcml/org.vcell.model.rbm.MolecularType/metaid_2046547648" vcid="MolecularType(GDP)" />
+        <uriBinding uri="http://www.sbml.org/sbml/level2/version3/metaid_0000024" vcid="ReactionStep(Extraction of Rab7_GDP)" />
+        <uriBinding uri="http://www.sbml.org/sbml/level2/version3/metaid_0000012" vcid="Structure(endosome)" />
+        <uriBinding uri="http://www.sbml.org/sbml/level2/version3/metaid_0000026" vcid="ReactionStep(Hydrolysis of Rab7_GTP)" />
+        <uriBinding uri="http://www.sbml.org/sbml/level2/version3/metaid_0000021" vcid="ReactionStep(activation of Rab7 by GEF7)" />
+        <uriBinding uri="http://www.sbml.org/sbml/level2/version3/metaid_0000002" vcid="BioModel(CM_PM18628746_MB2::Rab7_switch)" />
+        <uriBinding uri="http://sourceforge.net/projects/vcell/vcml/org.vcell.model.rbm.MolecularType/2105126102" vcid="MolecularType(Rab7)" />
+        <uriBinding uri="http://www.sbml.org/sbml/level2/version3/metaid_0000014" vcid="Species(R5)" />
+        <uriBinding uri="http://www.sbml.org/sbml/level2/version3/metaid_0000016" vcid="Species(R7)" />
+        <uriBinding uri="http://www.sbml.org/sbml/level2/version3/metaid_0000022" vcid="ReactionStep(activation of Rab7 by GEF5)" />
+      </uriBindingList>
+    </vcmetadata>
+  </BioModel>
+</vcml>
+

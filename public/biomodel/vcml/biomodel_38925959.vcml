@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--This biomodel was generated in VCML Version Alpha_Version_7.4.0_build_87-->
+<vcml xmlns="http://sourceforge.net/projects/vcell/vcml" Version="Alpha_Version_7.4.0_build_87">
+  <BioModel Name="ABSimple">
+    <Model Name="unnamed">
+      <Compound Name="A" />
+      <Compound Name="B" />
+      <Feature Name="Reactor" KeyValue="38925474" />
+      <LocalizedCompound Name="A_Reactor" CompoundRef="A" Structure="Reactor" OverrideName="true" KeyValue="38925476" />
+      <LocalizedCompound Name="B_Reactor" CompoundRef="B" Structure="Reactor" OverrideName="true" KeyValue="38925477" />
+      <SimpleReaction Structure="Reactor" Name="myABreaction" Reversible="true" FluxOption="MolecularOnly" KeyValue="38925478">
+        <Reactant LocalizedCompoundRef="A_Reactor" Stoichiometry="1" KeyValue="38925479" />
+        <Product LocalizedCompoundRef="B_Reactor" Stoichiometry="1" KeyValue="38925480" />
+        <Kinetics KineticsType="GeneralKinetics">
+          <Parameter Name="J" Role="reaction rate" Unit="uM.s-1">(A_Reactor - B_Reactor)</Parameter>
+        </Kinetics>
+      </SimpleReaction>
+      <Diagram Name="Unnamed compartment" Structure="Reactor">
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="A_Reactor" LocationX="101" LocationY="143" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="B_Reactor" LocationX="280" LocationY="145" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="full" SimpleReactionRef="myABreaction" LocationX="187" LocationY="143" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="A_Reactor" LocationX="101" LocationY="143" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="B_Reactor" LocationX="280" LocationY="145" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="molecule" SimpleReactionRef="myABreaction" LocationX="187" LocationY="143" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="A_Reactor" LocationX="101" LocationY="143" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="B_Reactor" LocationX="280" LocationY="145" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="rule" SimpleReactionRef="myABreaction" LocationX="187" LocationY="143" />
+      </Diagram>
+      <Version Name="unnamed" KeyValue="38925470" BranchId="38925247" Archived="0" Date="16-Feb-2010 11:50:52" FromVersionable="false">
+        <Owner Name="samnemo" Identifier="38096389" />
+        <GroupAccess Type="1" />
+      </Version>
+      <ModelUnitSystem VolumeSubstanceUnit="uM.um3" MembraneSubstanceUnit="molecules" LumpedReactionSubstanceUnit="molecules" VolumeUnit="um3" AreaUnit="um2" LengthUnit="um" TimeUnit="s" />
+    </Model>
+    <SimulationSpec Name="compartmental" Stochastic="false" UseConcentration="true" RuleBased="false" MassConservationModelReduction="true" InsufficientIterations="false" InsufficientMaxMolecules="false">
+      <NetworkConstraints RbmMaxIteration="1" RbmMaxMoleculesPerSpecies="10" RbmSpeciesLimit="800" RbmReactionsLimit="2500" />
+      <Annotation />
+      <Geometry Name="non-spatial" Dimension="0">
+        <Extent X="10.0" Y="10.0" Z="10.0" />
+        <Origin X="0.0" Y="0.0" Z="0.0" />
+        <SubVolume Name="Compartment" Handle="0" Type="Compartmental" KeyValue="38925888" />
+        <Version Name="non-spatial" KeyValue="38925884" BranchId="38925885" Archived="0" Date="16-Feb-2010 12:02:57" FromVersionable="false">
+          <Owner Name="samnemo" Identifier="38096389" />
+          <GroupAccess Type="1" />
+        </Version>
+      </Geometry>
+      <GeometryContext>
+        <FeatureMapping Feature="Reactor" GeometryClass="Compartment" SubVolume="Compartment" Size="1.0">
+          <BoundariesTypes Xm="Flux" Xp="Flux" Ym="Flux" Yp="Flux" Zm="Flux" Zp="Flux" />
+        </FeatureMapping>
+      </GeometryContext>
+      <ReactionContext>
+        <LocalizedCompoundSpec LocalizedCompoundRef="A_Reactor" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>10.0</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="B_Reactor" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>0.0</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <ReactionSpec ReactionStepRef="myABreaction" ReactionMapping="included" />
+      </ReactionContext>
+      <MathDescription Name="compartmental_generated">
+        <Constant Name="_F_">96480.0</Constant>
+        <Constant Name="_F_nmol_">9.648E-5</Constant>
+        <Constant Name="_K_GHK_">1.0E-9</Constant>
+        <Constant Name="_N_pmol_">6.02E11</Constant>
+        <Constant Name="_R_">8314.0</Constant>
+        <Constant Name="_T_">300.0</Constant>
+        <Constant Name="A_Reactor_init">10.0</Constant>
+        <Constant Name="B_Reactor_init">0.0</Constant>
+        <Constant Name="K_millivolts_per_volt">1000.0</Constant>
+        <Constant Name="KMOLE">0.0016611295681063123</Constant>
+        <Constant Name="Size_Reactor">1.0</Constant>
+        <VolumeVariable Name="B_Reactor" />
+        <Function Name="A_Reactor">(K_A_Reactor_total - B_Reactor)</Function>
+        <Function Name="J_myABreaction">(A_Reactor - B_Reactor)</Function>
+        <Function Name="K_A_Reactor_total">(A_Reactor_init + B_Reactor_init)</Function>
+        <CompartmentSubDomain Name="Compartment">
+          <BoundaryType Boundary="Xm" Type="Value" />
+          <BoundaryType Boundary="Xp" Type="Value" />
+          <BoundaryType Boundary="Ym" Type="Value" />
+          <BoundaryType Boundary="Yp" Type="Value" />
+          <BoundaryType Boundary="Zm" Type="Value" />
+          <BoundaryType Boundary="Zp" Type="Value" />
+          <OdeEquation Name="B_Reactor" SolutionType="Unknown">
+            <Rate>J_myABreaction</Rate>
+            <Initial>B_Reactor_init</Initial>
+          </OdeEquation>
+        </CompartmentSubDomain>
+        <Version Name="compartmental_generated" KeyValue="38925889" BranchId="38925890" Archived="0" Date="16-Feb-2010 12:02:57" FromVersionable="false">
+          <Owner Name="samnemo" Identifier="38096389" />
+          <GroupAccess Type="1" />
+        </Version>
+      </MathDescription>
+      <Simulation Name="Simulation0">
+        <SolverTaskDescription TaskType="Unsteady" UseSymbolicJacobian="false" Solver="Combined Stiff Solver (IDA/CVODE)">
+          <TimeBound StartTime="0.0" EndTime="5.0" />
+          <TimeStep DefaultTime="0.1" MinTime="1.0E-8" MaxTime="1.0" />
+          <ErrorTolerance Absolut="1.0E-9" Relative="1.0E-9" />
+          <OutputOptions KeepEvery="1" KeepAtMost="5000" />
+          <NumberProcessors>1</NumberProcessors>
+        </SolverTaskDescription>
+        <MathOverrides />
+        <Version Name="Simulation0" KeyValue="38925957" BranchId="38925904" Archived="0" Date="16-Feb-2010 12:07:55" FromVersionable="false">
+          <Owner Name="samnemo" Identifier="38096389" />
+          <GroupAccess Type="1" />
+        </Version>
+      </Simulation>
+      <Version Name="compartmental" KeyValue="38925892" BranchId="38925893" Archived="0" Date="16-Feb-2010 12:02:57" FromVersionable="false">
+        <Owner Name="samnemo" Identifier="38096389" />
+        <GroupAccess Type="1" />
+      </Version>
+      <MicroscopeMeasurement Name="fluor">
+        <ConvolutionKernel Type="ProjectionZKernel" />
+      </MicroscopeMeasurement>
+    </SimulationSpec>
+    <Version Name="ABSimple" KeyValue="38925959" BranchId="38925257" Archived="0" Date="16-Feb-2010 12:07:55" FromVersionable="false">
+      <Owner Name="samnemo" Identifier="38096389" />
+      <GroupAccess Type="1" />
+    </Version>
+    <pathwayModel>
+      <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:bp="http://www.biopax.org/release/biopax-level3.owl#" version="3.0" />
+    </pathwayModel>
+    <relationshipModel>
+      <RMNS version="3.0" />
+    </relationshipModel>
+    <vcmetadata>
+      <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" />
+      <nonrdfAnnotationList />
+      <uriBindingList />
+    </vcmetadata>
+  </BioModel>
+</vcml>
+

@@ -1,0 +1,1158 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--This biomodel was generated in VCML Version Alpha_Version_7.4.0_build_87-->
+<vcml xmlns="http://sourceforge.net/projects/vcell/vcml" Version="Alpha_Version_7.4.0_build_87">
+  <BioModel Name="SMAD shuttling and TGF endocytosis">
+    <Model Name="unnamed">
+      <ModelParameters>
+        <Parameter Name="koff" Role="user defined" Unit="s-1">0.016</Parameter>
+        <Parameter Name="kon" Role="user defined" Unit="uM-1.s-1">1.8391</Parameter>
+        <Parameter Name="kin" Role="user defined" Unit="molecules.um-2.uM-1.s-1">1.5652</Parameter>
+        <Parameter Name="kex" Role="user defined" Unit="molecules.um-2.uM-1.s-1">3.3712</Parameter>
+        <Parameter Name="CIF" Role="user defined" Unit="1">5.7</Parameter>
+        <Parameter Name="Endo" Role="user defined" Unit="s-1">180.0</Parameter>
+        <Parameter Name="Recyc" Role="user defined" Unit="s-1">1800.0</Parameter>
+      </ModelParameters>
+      <Compound Name="TGFb" />
+      <Compound Name="R" />
+      <Compound Name="Ract" />
+      <Compound Name="Racti" />
+      <Compound Name="Ri" />
+      <Compound Name="S2c" />
+      <Compound Name="pS2c" />
+      <Compound Name="S4c" />
+      <Compound Name="S24c" />
+      <Compound Name="S22c" />
+      <Compound Name="S24n" />
+      <Compound Name="S2n" />
+      <Compound Name="S4n" />
+      <Compound Name="S22n" />
+      <Compound Name="PPase" />
+      <Compound Name="pS2n" />
+      <Compound Name="Ractdeg" />
+      <Feature Name="Extracellular Space" KeyValue="49872631" />
+      <Feature Name="Cytoplasm" KeyValue="49872634" />
+      <Feature Name="Nucleus" KeyValue="49872637" />
+      <Membrane InsideFeature="Cytoplasm" OutsideFeature="Extracellular Space" PositiveFeature="Cytoplasm" NegativeFeature="Extracellular Space" MembraneVoltage="Voltage_Membrane" Name="Membrane" KeyValue="49872633" />
+      <Membrane InsideFeature="Nucleus" OutsideFeature="Cytoplasm" PositiveFeature="Nucleus" NegativeFeature="Cytoplasm" MembraneVoltage="Voltage_NM" Name="NM" KeyValue="49872636" />
+      <LocalizedCompound Name="TGFb_Extracellular_Space" CompoundRef="TGFb" Structure="Extracellular Space" OverrideName="true" KeyValue="49872641" />
+      <LocalizedCompound Name="R_Membrane" CompoundRef="R" Structure="Membrane" OverrideName="true" KeyValue="49872642" />
+      <LocalizedCompound Name="Ract_Membrane" CompoundRef="Ract" Structure="Membrane" OverrideName="true" KeyValue="49872643" />
+      <LocalizedCompound Name="Racti_Cytoplasm" CompoundRef="Racti" Structure="Cytoplasm" OverrideName="true" KeyValue="49872644" />
+      <LocalizedCompound Name="Ri_Cytoplasm" CompoundRef="Ri" Structure="Cytoplasm" OverrideName="true" KeyValue="49872645" />
+      <LocalizedCompound Name="S2c_Cytoplasm" CompoundRef="S2c" Structure="Cytoplasm" OverrideName="true" KeyValue="49872646" />
+      <LocalizedCompound Name="pS2c_Cytoplasm" CompoundRef="pS2c" Structure="Cytoplasm" OverrideName="true" KeyValue="49872647" />
+      <LocalizedCompound Name="S4c_Cytoplasm" CompoundRef="S4c" Structure="Cytoplasm" OverrideName="true" KeyValue="49872648" />
+      <LocalizedCompound Name="S24c_Cytoplasm" CompoundRef="S24c" Structure="Cytoplasm" OverrideName="true" KeyValue="49872649" />
+      <LocalizedCompound Name="S22c_Cytoplasm" CompoundRef="S22c" Structure="Cytoplasm" OverrideName="true" KeyValue="49872650" />
+      <LocalizedCompound Name="S24n_Nucleus" CompoundRef="S24n" Structure="Nucleus" OverrideName="true" KeyValue="49872651" />
+      <LocalizedCompound Name="S2n_Nucleus" CompoundRef="S2n" Structure="Nucleus" OverrideName="true" KeyValue="49872652" />
+      <LocalizedCompound Name="S4n_Nucleus" CompoundRef="S4n" Structure="Nucleus" OverrideName="true" KeyValue="49872653" />
+      <LocalizedCompound Name="S22n_Nucleus" CompoundRef="S22n" Structure="Nucleus" OverrideName="true" KeyValue="49872654" />
+      <LocalizedCompound Name="PPase_Nucleus" CompoundRef="PPase" Structure="Nucleus" OverrideName="true" KeyValue="49872655" />
+      <LocalizedCompound Name="pS2n_Nucleus" CompoundRef="pS2n" Structure="Nucleus" OverrideName="true" KeyValue="49872656" />
+      <LocalizedCompound Name="Ractdeg_Cytoplasm" CompoundRef="Ractdeg" Structure="Cytoplasm" OverrideName="true" KeyValue="49872657" />
+      <SimpleReaction Structure="Cytoplasm" Name="PhosSmad2" Reversible="true" FluxOption="MolecularOnly" KeyValue="49872658">
+        <Reactant LocalizedCompoundRef="Racti_Cytoplasm" Stoichiometry="1" KeyValue="49872659" />
+        <Reactant LocalizedCompoundRef="S2c_Cytoplasm" Stoichiometry="1" KeyValue="49872660" />
+        <Product LocalizedCompoundRef="pS2c_Cytoplasm" Stoichiometry="1" KeyValue="49872661" />
+        <Product LocalizedCompoundRef="Racti_Cytoplasm" Stoichiometry="1" KeyValue="49872662" />
+        <Kinetics KineticsType="MassAction">
+          <Parameter Name="J" Role="reaction rate" Unit="uM.s-1">(((Kf * Racti_Cytoplasm) * S2c_Cytoplasm) - ((Kr * pS2c_Cytoplasm) * Racti_Cytoplasm))</Parameter>
+          <Parameter Name="Kf" Role="forward rate constant" Unit="s-1.uM-1">0.403708</Parameter>
+          <Parameter Name="Kr" Role="reverse rate constant" Unit="s-1.uM-1">0.0</Parameter>
+        </Kinetics>
+      </SimpleReaction>
+      <SimpleReaction Structure="Cytoplasm" Name="S24complexes" Reversible="true" FluxOption="MolecularOnly" KeyValue="49872663">
+        <Reactant LocalizedCompoundRef="pS2c_Cytoplasm" Stoichiometry="1" KeyValue="49872664" />
+        <Reactant LocalizedCompoundRef="S4c_Cytoplasm" Stoichiometry="1" KeyValue="49872665" />
+        <Product LocalizedCompoundRef="S24c_Cytoplasm" Stoichiometry="1" KeyValue="49872666" />
+        <Kinetics KineticsType="MassAction">
+          <Parameter Name="J" Role="reaction rate" Unit="uM.s-1">(((Kf * pS2c_Cytoplasm) * S4c_Cytoplasm) - (Kr * S24c_Cytoplasm))</Parameter>
+          <Parameter Name="Kf" Role="forward rate constant" Unit="s-1.uM-1">kon</Parameter>
+          <Parameter Name="Kr" Role="reverse rate constant" Unit="s-1">koff</Parameter>
+        </Kinetics>
+      </SimpleReaction>
+      <SimpleReaction Structure="NM" Name="reaction2" Reversible="true" FluxOption="MolecularOnly" KeyValue="49872667">
+        <Reactant LocalizedCompoundRef="S2c_Cytoplasm" Stoichiometry="1" KeyValue="49872668" />
+        <Product LocalizedCompoundRef="S2n_Nucleus" Stoichiometry="1" KeyValue="49872669" />
+        <Kinetics KineticsType="MassAction">
+          <Parameter Name="J" Role="reaction rate" Unit="molecules.um-2.s-1">((Kf * S2c_Cytoplasm) - (Kr * S2n_Nucleus))</Parameter>
+          <Parameter Name="I" Role="inward current density" Unit="pA.um-2">0.0</Parameter>
+          <Parameter Name="netValence" Role="net charge valence" Unit="1">0.0</Parameter>
+          <Parameter Name="Kf" Role="forward rate constant" Unit="molecules.um-2.s-1.uM-1">kin</Parameter>
+          <Parameter Name="Kr" Role="reverse rate constant" Unit="molecules.um-2.s-1.uM-1">kex</Parameter>
+        </Kinetics>
+      </SimpleReaction>
+      <SimpleReaction Structure="NM" Name="reaction3" Reversible="true" FluxOption="MolecularOnly" KeyValue="49872670">
+        <Reactant LocalizedCompoundRef="S4c_Cytoplasm" Stoichiometry="1" KeyValue="49872671" />
+        <Product LocalizedCompoundRef="S4n_Nucleus" Stoichiometry="1" KeyValue="49872672" />
+        <Kinetics KineticsType="MassAction">
+          <Parameter Name="J" Role="reaction rate" Unit="molecules.um-2.s-1">((Kf * S4c_Cytoplasm) - (Kr * S4n_Nucleus))</Parameter>
+          <Parameter Name="I" Role="inward current density" Unit="pA.um-2">0.0</Parameter>
+          <Parameter Name="netValence" Role="net charge valence" Unit="1">0.0</Parameter>
+          <Parameter Name="Kf" Role="forward rate constant" Unit="molecules.um-2.s-1.uM-1">kin</Parameter>
+          <Parameter Name="Kr" Role="reverse rate constant" Unit="molecules.um-2.s-1.uM-1">kex</Parameter>
+        </Kinetics>
+      </SimpleReaction>
+      <SimpleReaction Structure="NM" Name="reaction4" Reversible="true" FluxOption="MolecularOnly" KeyValue="49872673">
+        <Reactant LocalizedCompoundRef="pS2c_Cytoplasm" Stoichiometry="1" KeyValue="49872674" />
+        <Product LocalizedCompoundRef="pS2n_Nucleus" Stoichiometry="1" KeyValue="49872675" />
+        <Kinetics KineticsType="MassAction">
+          <Parameter Name="J" Role="reaction rate" Unit="molecules.um-2.s-1">((Kf * pS2c_Cytoplasm) - (Kr * pS2n_Nucleus))</Parameter>
+          <Parameter Name="I" Role="inward current density" Unit="pA.um-2">0.0</Parameter>
+          <Parameter Name="netValence" Role="net charge valence" Unit="1">0.0</Parameter>
+          <Parameter Name="Kf" Role="forward rate constant" Unit="molecules.um-2.s-1.uM-1">kin</Parameter>
+          <Parameter Name="Kr" Role="reverse rate constant" Unit="molecules.um-2.s-1.uM-1">kex</Parameter>
+        </Kinetics>
+      </SimpleReaction>
+      <SimpleReaction Structure="Membrane" Name="TGFbBinding" Reversible="true" FluxOption="MolecularOnly" KeyValue="49872676">
+        <Reactant LocalizedCompoundRef="R_Membrane" Stoichiometry="1" KeyValue="49872677" />
+        <Reactant LocalizedCompoundRef="TGFb_Extracellular_Space" Stoichiometry="1" KeyValue="49872678" />
+        <Product LocalizedCompoundRef="Ract_Membrane" Stoichiometry="1" KeyValue="49872679" />
+        <Kinetics KineticsType="MassAction">
+          <Parameter Name="J" Role="reaction rate" Unit="molecules.um-2.s-1">(((Kf * R_Membrane) * TGFb_Extracellular_Space) - (Kr * Ract_Membrane))</Parameter>
+          <Parameter Name="I" Role="inward current density" Unit="pA.um-2">0.0</Parameter>
+          <Parameter Name="netValence" Role="net charge valence" Unit="1">0.0</Parameter>
+          <Parameter Name="Kf" Role="forward rate constant" Unit="s-1.uM-1">74.2356</Parameter>
+          <Parameter Name="Kr" Role="reverse rate constant" Unit="s-1">0.0</Parameter>
+        </Kinetics>
+      </SimpleReaction>
+      <SimpleReaction Structure="Membrane" Name="Endocytosis of R" Reversible="true" FluxOption="MolecularOnly" KeyValue="49872680">
+        <Reactant LocalizedCompoundRef="R_Membrane" Stoichiometry="1" KeyValue="49872681" />
+        <Product LocalizedCompoundRef="Ri_Cytoplasm" Stoichiometry="1" KeyValue="49872682" />
+        <Kinetics KineticsType="MassAction">
+          <Parameter Name="J" Role="reaction rate" Unit="molecules.um-2.s-1">((Kf * R_Membrane) - (Kr * Ri_Cytoplasm))</Parameter>
+          <Parameter Name="I" Role="inward current density" Unit="pA.um-2">0.0</Parameter>
+          <Parameter Name="netValence" Role="net charge valence" Unit="1">0.0</Parameter>
+          <Parameter Name="Kf" Role="forward rate constant" Unit="s-1">Endo</Parameter>
+          <Parameter Name="Kr" Role="reverse rate constant" Unit="molecules.um-2.s-1.uM-1">0.0</Parameter>
+        </Kinetics>
+      </SimpleReaction>
+      <SimpleReaction Structure="Membrane" Name="Endocytosis of Ract" Reversible="true" FluxOption="MolecularOnly" KeyValue="49872683">
+        <Reactant LocalizedCompoundRef="Ract_Membrane" Stoichiometry="1" KeyValue="49872684" />
+        <Product LocalizedCompoundRef="Racti_Cytoplasm" Stoichiometry="1" KeyValue="49872685" />
+        <Kinetics KineticsType="MassAction">
+          <Parameter Name="J" Role="reaction rate" Unit="molecules.um-2.s-1">((Kf * Ract_Membrane) - (Kr * Racti_Cytoplasm))</Parameter>
+          <Parameter Name="I" Role="inward current density" Unit="pA.um-2">0.0</Parameter>
+          <Parameter Name="netValence" Role="net charge valence" Unit="1">0.0</Parameter>
+          <Parameter Name="Kf" Role="forward rate constant" Unit="s-1">Endo</Parameter>
+          <Parameter Name="Kr" Role="reverse rate constant" Unit="molecules.um-2.s-1.uM-1">0.0</Parameter>
+        </Kinetics>
+      </SimpleReaction>
+      <SimpleReaction Structure="Membrane" Name="LigandInducedDeg" Reversible="true" FluxOption="MolecularOnly" KeyValue="49872686">
+        <Reactant LocalizedCompoundRef="Ract_Membrane" Stoichiometry="1" KeyValue="49872687" />
+        <Product LocalizedCompoundRef="Ractdeg_Cytoplasm" Stoichiometry="1" KeyValue="49872688" />
+        <Kinetics KineticsType="MassAction">
+          <Parameter Name="J" Role="reaction rate" Unit="molecules.um-2.s-1">((Kf * Ract_Membrane) - (Kr * Ractdeg_Cytoplasm))</Parameter>
+          <Parameter Name="I" Role="inward current density" Unit="pA.um-2">0.0</Parameter>
+          <Parameter Name="netValence" Role="net charge valence" Unit="1">0.0</Parameter>
+          <Parameter Name="Kf" Role="forward rate constant" Unit="s-1">240.0</Parameter>
+          <Parameter Name="Kr" Role="reverse rate constant" Unit="molecules.um-2.s-1.uM-1">0.0</Parameter>
+        </Kinetics>
+      </SimpleReaction>
+      <SimpleReaction Structure="Membrane" Name="Recycling of R" Reversible="true" FluxOption="MolecularOnly" KeyValue="49872689">
+        <Reactant LocalizedCompoundRef="Ri_Cytoplasm" Stoichiometry="1" KeyValue="49872690" />
+        <Product LocalizedCompoundRef="R_Membrane" Stoichiometry="1" KeyValue="49872691" />
+        <Kinetics KineticsType="MassAction">
+          <Parameter Name="J" Role="reaction rate" Unit="molecules.um-2.s-1">((Kf * Ri_Cytoplasm) - (Kr * R_Membrane))</Parameter>
+          <Parameter Name="I" Role="inward current density" Unit="pA.um-2">0.0</Parameter>
+          <Parameter Name="netValence" Role="net charge valence" Unit="1">0.0</Parameter>
+          <Parameter Name="Kf" Role="forward rate constant" Unit="molecules.um-2.s-1.uM-1">Recyc</Parameter>
+          <Parameter Name="Kr" Role="reverse rate constant" Unit="s-1">0.0</Parameter>
+        </Kinetics>
+      </SimpleReaction>
+      <SimpleReaction Structure="Membrane" Name="Recycling of Ract" Reversible="true" FluxOption="MolecularOnly" KeyValue="49872692">
+        <Reactant LocalizedCompoundRef="Racti_Cytoplasm" Stoichiometry="1" KeyValue="49872693" />
+        <Product LocalizedCompoundRef="Ract_Membrane" Stoichiometry="1" KeyValue="49872694" />
+        <Kinetics KineticsType="MassAction">
+          <Parameter Name="J" Role="reaction rate" Unit="molecules.um-2.s-1">((Kf * Racti_Cytoplasm) - (Kr * Ract_Membrane))</Parameter>
+          <Parameter Name="I" Role="inward current density" Unit="pA.um-2">0.0</Parameter>
+          <Parameter Name="netValence" Role="net charge valence" Unit="1">0.0</Parameter>
+          <Parameter Name="Kf" Role="forward rate constant" Unit="molecules.um-2.s-1.uM-1">Recyc</Parameter>
+          <Parameter Name="Kr" Role="reverse rate constant" Unit="s-1">0.0</Parameter>
+        </Kinetics>
+      </SimpleReaction>
+      <SimpleReaction Structure="Cytoplasm" Name="S22complexes" Reversible="true" FluxOption="MolecularOnly" KeyValue="49872695">
+        <Reactant LocalizedCompoundRef="pS2c_Cytoplasm" Stoichiometry="2" KeyValue="49872696" />
+        <Product LocalizedCompoundRef="S22c_Cytoplasm" Stoichiometry="1" KeyValue="49872697" />
+        <Kinetics KineticsType="MassAction">
+          <Parameter Name="J" Role="reaction rate" Unit="uM.s-1">((Kf * pow(pS2c_Cytoplasm,2.0)) - (Kr * S22c_Cytoplasm))</Parameter>
+          <Parameter Name="Kf" Role="forward rate constant" Unit="s-1.uM-1">kon</Parameter>
+          <Parameter Name="Kr" Role="reverse rate constant" Unit="s-1">koff</Parameter>
+        </Kinetics>
+      </SimpleReaction>
+      <SimpleReaction Structure="Nucleus" Name="nS24complexes" Reversible="true" FluxOption="MolecularOnly" KeyValue="49872698">
+        <Reactant LocalizedCompoundRef="pS2n_Nucleus" Stoichiometry="1" KeyValue="49872699" />
+        <Reactant LocalizedCompoundRef="S4n_Nucleus" Stoichiometry="1" KeyValue="49872700" />
+        <Product LocalizedCompoundRef="S24n_Nucleus" Stoichiometry="1" KeyValue="49872701" />
+        <Kinetics KineticsType="MassAction">
+          <Parameter Name="J" Role="reaction rate" Unit="uM.s-1">(((Kf * pS2n_Nucleus) * S4n_Nucleus) - (Kr * S24n_Nucleus))</Parameter>
+          <Parameter Name="Kf" Role="forward rate constant" Unit="s-1.uM-1">kon</Parameter>
+          <Parameter Name="Kr" Role="reverse rate constant" Unit="s-1">koff</Parameter>
+        </Kinetics>
+      </SimpleReaction>
+      <SimpleReaction Structure="Nucleus" Name="DephosSmad2" Reversible="true" FluxOption="MolecularOnly" KeyValue="49872702">
+        <Reactant LocalizedCompoundRef="pS2n_Nucleus" Stoichiometry="1" KeyValue="49872703" />
+        <Reactant LocalizedCompoundRef="PPase_Nucleus" Stoichiometry="1" KeyValue="49872704" />
+        <Product LocalizedCompoundRef="S2n_Nucleus" Stoichiometry="1" KeyValue="49872705" />
+        <Product LocalizedCompoundRef="PPase_Nucleus" Stoichiometry="1" KeyValue="49872706" />
+        <Kinetics KineticsType="MassAction">
+          <Parameter Name="J" Role="reaction rate" Unit="uM.s-1">(((Kf * pS2n_Nucleus) * PPase_Nucleus) - ((Kr * S2n_Nucleus) * PPase_Nucleus))</Parameter>
+          <Parameter Name="Kf" Role="forward rate constant" Unit="s-1.uM-1">6.56639</Parameter>
+          <Parameter Name="Kr" Role="reverse rate constant" Unit="s-1.uM-1">0.0</Parameter>
+        </Kinetics>
+      </SimpleReaction>
+      <SimpleReaction Structure="Nucleus" Name="nS22complexes" Reversible="true" FluxOption="MolecularOnly" KeyValue="49872707">
+        <Reactant LocalizedCompoundRef="pS2n_Nucleus" Stoichiometry="2" KeyValue="49872708" />
+        <Product LocalizedCompoundRef="S22n_Nucleus" Stoichiometry="1" KeyValue="49872709" />
+        <Kinetics KineticsType="MassAction">
+          <Parameter Name="J" Role="reaction rate" Unit="uM.s-1">((Kf * pow(pS2n_Nucleus,2.0)) - (Kr * S22n_Nucleus))</Parameter>
+          <Parameter Name="Kf" Role="forward rate constant" Unit="s-1.uM-1">kon</Parameter>
+          <Parameter Name="Kr" Role="reverse rate constant" Unit="s-1">koff</Parameter>
+        </Kinetics>
+      </SimpleReaction>
+      <SimpleReaction Structure="NM" Name="reaction0" Reversible="true" FluxOption="MolecularOnly" KeyValue="49872710">
+        <Reactant LocalizedCompoundRef="S22c_Cytoplasm" Stoichiometry="1" KeyValue="49872711" />
+        <Product LocalizedCompoundRef="S22n_Nucleus" Stoichiometry="1" KeyValue="49872712" />
+        <Kinetics KineticsType="MassAction">
+          <Parameter Name="J" Role="reaction rate" Unit="molecules.um-2.s-1">((Kf * S22c_Cytoplasm) - (Kr * S22n_Nucleus))</Parameter>
+          <Parameter Name="I" Role="inward current density" Unit="pA.um-2">0.0</Parameter>
+          <Parameter Name="netValence" Role="net charge valence" Unit="1">0.0</Parameter>
+          <Parameter Name="Kf" Role="forward rate constant" Unit="molecules.um-2.s-1.uM-1">(kin * CIF)</Parameter>
+          <Parameter Name="Kr" Role="reverse rate constant" Unit="molecules.um-2.s-1.uM-1">0.0</Parameter>
+        </Kinetics>
+      </SimpleReaction>
+      <SimpleReaction Structure="NM" Name="reaction1" Reversible="true" FluxOption="MolecularOnly" KeyValue="49872713">
+        <Reactant LocalizedCompoundRef="S24c_Cytoplasm" Stoichiometry="1" KeyValue="49872714" />
+        <Product LocalizedCompoundRef="S24n_Nucleus" Stoichiometry="1" KeyValue="49872715" />
+        <Kinetics KineticsType="MassAction">
+          <Parameter Name="J" Role="reaction rate" Unit="molecules.um-2.s-1">((Kf * S24c_Cytoplasm) - (Kr * S24n_Nucleus))</Parameter>
+          <Parameter Name="I" Role="inward current density" Unit="pA.um-2">0.0</Parameter>
+          <Parameter Name="netValence" Role="net charge valence" Unit="1">0.0</Parameter>
+          <Parameter Name="Kf" Role="forward rate constant" Unit="molecules.um-2.s-1.uM-1">(kin * CIF)</Parameter>
+          <Parameter Name="Kr" Role="reverse rate constant" Unit="molecules.um-2.s-1.uM-1">0.0</Parameter>
+        </Kinetics>
+      </SimpleReaction>
+      <SimpleReaction Structure="Membrane" Name="Production of Receptors" Reversible="true" FluxOption="MolecularOnly" KeyValue="49872716">
+        <Product LocalizedCompoundRef="R_Membrane" Stoichiometry="1" KeyValue="49872717" />
+        <Kinetics KineticsType="GeneralLumpedKinetics">
+          <Parameter Name="LumpedI" Role="lumped current" Unit="pA">0.0</Parameter>
+          <Parameter Name="LumpedJ" Role="lumped reaction rate" Unit="molecules.s-1">360.0</Parameter>
+          <Parameter Name="netValence" Role="net charge valence" Unit="1">0.0</Parameter>
+        </Kinetics>
+      </SimpleReaction>
+      <Diagram Name="Unnamed compartment" Structure="Extracellular Space" />
+      <Diagram Name="Membrane" Structure="Membrane">
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="R_Membrane" LocationX="99" LocationY="148" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="Ract_Membrane" LocationX="53" LocationY="46" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="Racti_Cytoplasm" LocationX="9" LocationY="65" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="Ri_Cytoplasm" LocationX="14" LocationY="193" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="S2c_Cytoplasm" LocationX="70" LocationY="82" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="pS2c_Cytoplasm" LocationX="76" LocationY="185" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="S4c_Cytoplasm" LocationX="70" LocationY="41" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="S24c_Cytoplasm" LocationX="31" LocationY="36" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="S22c_Cytoplasm" LocationX="46" LocationY="55" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="Ractdeg_Cytoplasm" LocationX="18" LocationY="114" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="TGFb_Extracellular_Space" LocationX="62" LocationY="44" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="full" SimpleReactionRef="TGFbBinding" LocationX="12" LocationY="77" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="full" SimpleReactionRef="Endocytosis of R" LocationX="213" LocationY="152" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="full" SimpleReactionRef="Endocytosis of Ract" LocationX="164" LocationY="24" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="full" SimpleReactionRef="LigandInducedDeg" LocationX="178" LocationY="101" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="full" SimpleReactionRef="Recycling of R" LocationX="196" LocationY="202" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="full" SimpleReactionRef="Recycling of Ract" LocationX="183" LocationY="70" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="full" SimpleReactionRef="Production of Receptors" LocationX="150" LocationY="239" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="R_Membrane" LocationX="99" LocationY="148" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="Ract_Membrane" LocationX="53" LocationY="46" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="Racti_Cytoplasm" LocationX="9" LocationY="65" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="Ri_Cytoplasm" LocationX="14" LocationY="193" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="S2c_Cytoplasm" LocationX="70" LocationY="82" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="pS2c_Cytoplasm" LocationX="76" LocationY="185" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="S4c_Cytoplasm" LocationX="70" LocationY="41" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="S24c_Cytoplasm" LocationX="31" LocationY="36" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="S22c_Cytoplasm" LocationX="46" LocationY="55" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="Ractdeg_Cytoplasm" LocationX="18" LocationY="114" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="TGFb_Extracellular_Space" LocationX="62" LocationY="44" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="molecule" SimpleReactionRef="TGFbBinding" LocationX="12" LocationY="77" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="molecule" SimpleReactionRef="Endocytosis of R" LocationX="213" LocationY="152" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="molecule" SimpleReactionRef="Endocytosis of Ract" LocationX="164" LocationY="24" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="molecule" SimpleReactionRef="LigandInducedDeg" LocationX="178" LocationY="101" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="molecule" SimpleReactionRef="Recycling of R" LocationX="196" LocationY="202" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="molecule" SimpleReactionRef="Recycling of Ract" LocationX="183" LocationY="70" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="molecule" SimpleReactionRef="Production of Receptors" LocationX="150" LocationY="239" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="R_Membrane" LocationX="99" LocationY="148" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="Ract_Membrane" LocationX="53" LocationY="46" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="Racti_Cytoplasm" LocationX="9" LocationY="65" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="Ri_Cytoplasm" LocationX="14" LocationY="193" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="S2c_Cytoplasm" LocationX="70" LocationY="82" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="pS2c_Cytoplasm" LocationX="76" LocationY="185" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="S4c_Cytoplasm" LocationX="70" LocationY="41" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="S24c_Cytoplasm" LocationX="31" LocationY="36" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="S22c_Cytoplasm" LocationX="46" LocationY="55" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="Ractdeg_Cytoplasm" LocationX="18" LocationY="114" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="TGFb_Extracellular_Space" LocationX="62" LocationY="44" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="rule" SimpleReactionRef="TGFbBinding" LocationX="12" LocationY="77" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="rule" SimpleReactionRef="Endocytosis of R" LocationX="213" LocationY="152" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="rule" SimpleReactionRef="Endocytosis of Ract" LocationX="164" LocationY="24" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="rule" SimpleReactionRef="LigandInducedDeg" LocationX="178" LocationY="101" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="rule" SimpleReactionRef="Recycling of R" LocationX="196" LocationY="202" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="rule" SimpleReactionRef="Recycling of Ract" LocationX="183" LocationY="70" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="rule" SimpleReactionRef="Production of Receptors" LocationX="150" LocationY="239" />
+      </Diagram>
+      <Diagram Name="Cytoplasm" Structure="Cytoplasm">
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="Racti_Cytoplasm" LocationX="270" LocationY="302" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="Ri_Cytoplasm" LocationX="398" LocationY="144" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="S2c_Cytoplasm" LocationX="97" LocationY="220" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="pS2c_Cytoplasm" LocationX="204" LocationY="145" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="S4c_Cytoplasm" LocationX="187" LocationY="76" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="S24c_Cytoplasm" LocationX="294" LocationY="117" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="S22c_Cytoplasm" LocationX="99" LocationY="67" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="full" SimpleReactionRef="PhosSmad2" LocationX="212" LocationY="245" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="full" SimpleReactionRef="S24complexes" LocationX="246" LocationY="82" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="full" SimpleReactionRef="S22complexes" LocationX="103" LocationY="121" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="Racti_Cytoplasm" LocationX="270" LocationY="302" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="Ri_Cytoplasm" LocationX="398" LocationY="144" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="S2c_Cytoplasm" LocationX="97" LocationY="220" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="pS2c_Cytoplasm" LocationX="204" LocationY="145" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="S4c_Cytoplasm" LocationX="187" LocationY="76" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="S24c_Cytoplasm" LocationX="294" LocationY="117" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="S22c_Cytoplasm" LocationX="99" LocationY="67" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="molecule" SimpleReactionRef="PhosSmad2" LocationX="212" LocationY="245" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="molecule" SimpleReactionRef="S24complexes" LocationX="246" LocationY="82" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="molecule" SimpleReactionRef="S22complexes" LocationX="103" LocationY="121" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="Racti_Cytoplasm" LocationX="270" LocationY="302" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="Ri_Cytoplasm" LocationX="398" LocationY="144" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="S2c_Cytoplasm" LocationX="97" LocationY="220" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="pS2c_Cytoplasm" LocationX="204" LocationY="145" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="S4c_Cytoplasm" LocationX="187" LocationY="76" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="S24c_Cytoplasm" LocationX="294" LocationY="117" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="S22c_Cytoplasm" LocationX="99" LocationY="67" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="rule" SimpleReactionRef="PhosSmad2" LocationX="212" LocationY="245" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="rule" SimpleReactionRef="S24complexes" LocationX="246" LocationY="82" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="rule" SimpleReactionRef="S22complexes" LocationX="103" LocationY="121" />
+      </Diagram>
+      <Diagram Name="NM" Structure="NM">
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="S24n_Nucleus" LocationX="11" LocationY="109" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="S2n_Nucleus" LocationX="10" LocationY="146" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="S4n_Nucleus" LocationX="9" LocationY="188" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="S22n_Nucleus" LocationX="5" LocationY="66" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="PPase_Nucleus" LocationX="53" LocationY="52" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="pS2n_Nucleus" LocationX="14" LocationY="231" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="Racti_Cytoplasm" LocationX="30" LocationY="136" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="Ri_Cytoplasm" LocationX="38" LocationY="42" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="S2c_Cytoplasm" LocationX="136" LocationY="151" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="pS2c_Cytoplasm" LocationX="132" LocationY="237" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="S4c_Cytoplasm" LocationX="140" LocationY="194" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="S24c_Cytoplasm" LocationX="143" LocationY="110" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="S22c_Cytoplasm" LocationX="151" LocationY="63" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="full" SimpleReactionRef="reaction0" LocationX="102" LocationY="70" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="full" SimpleReactionRef="reaction1" LocationX="101" LocationY="108" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="full" SimpleReactionRef="reaction2" LocationX="106" LocationY="153" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="full" SimpleReactionRef="reaction3" LocationX="106" LocationY="198" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="full" SimpleReactionRef="reaction4" LocationX="102" LocationY="233" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="S24n_Nucleus" LocationX="11" LocationY="109" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="S2n_Nucleus" LocationX="10" LocationY="146" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="S4n_Nucleus" LocationX="9" LocationY="188" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="S22n_Nucleus" LocationX="5" LocationY="66" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="PPase_Nucleus" LocationX="53" LocationY="52" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="pS2n_Nucleus" LocationX="14" LocationY="231" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="Racti_Cytoplasm" LocationX="30" LocationY="136" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="Ri_Cytoplasm" LocationX="38" LocationY="42" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="S2c_Cytoplasm" LocationX="136" LocationY="151" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="pS2c_Cytoplasm" LocationX="132" LocationY="237" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="S4c_Cytoplasm" LocationX="140" LocationY="194" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="S24c_Cytoplasm" LocationX="143" LocationY="110" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="S22c_Cytoplasm" LocationX="151" LocationY="63" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="molecule" SimpleReactionRef="reaction0" LocationX="102" LocationY="70" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="molecule" SimpleReactionRef="reaction1" LocationX="101" LocationY="108" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="molecule" SimpleReactionRef="reaction2" LocationX="106" LocationY="153" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="molecule" SimpleReactionRef="reaction3" LocationX="106" LocationY="198" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="molecule" SimpleReactionRef="reaction4" LocationX="102" LocationY="233" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="S24n_Nucleus" LocationX="11" LocationY="109" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="S2n_Nucleus" LocationX="10" LocationY="146" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="S4n_Nucleus" LocationX="9" LocationY="188" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="S22n_Nucleus" LocationX="5" LocationY="66" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="PPase_Nucleus" LocationX="53" LocationY="52" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="pS2n_Nucleus" LocationX="14" LocationY="231" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="Racti_Cytoplasm" LocationX="30" LocationY="136" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="Ri_Cytoplasm" LocationX="38" LocationY="42" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="S2c_Cytoplasm" LocationX="136" LocationY="151" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="pS2c_Cytoplasm" LocationX="132" LocationY="237" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="S4c_Cytoplasm" LocationX="140" LocationY="194" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="S24c_Cytoplasm" LocationX="143" LocationY="110" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="S22c_Cytoplasm" LocationX="151" LocationY="63" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="rule" SimpleReactionRef="reaction0" LocationX="102" LocationY="70" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="rule" SimpleReactionRef="reaction1" LocationX="101" LocationY="108" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="rule" SimpleReactionRef="reaction2" LocationX="106" LocationY="153" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="rule" SimpleReactionRef="reaction3" LocationX="106" LocationY="198" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="rule" SimpleReactionRef="reaction4" LocationX="102" LocationY="233" />
+      </Diagram>
+      <Diagram Name="Nucleus" Structure="Nucleus">
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="S24n_Nucleus" LocationX="318" LocationY="335" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="S2n_Nucleus" LocationX="225" LocationY="96" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="S4n_Nucleus" LocationX="73" LocationY="344" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="S22n_Nucleus" LocationX="398" LocationY="308" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="PPase_Nucleus" LocationX="76" LocationY="60" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="pS2n_Nucleus" LocationX="192" LocationY="212" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="full" SimpleReactionRef="nS24complexes" LocationX="199" LocationY="281" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="full" SimpleReactionRef="DephosSmad2" LocationX="149" LocationY="143" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="full" SimpleReactionRef="nS22complexes" LocationX="330" LocationY="224" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="S24n_Nucleus" LocationX="318" LocationY="335" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="S2n_Nucleus" LocationX="225" LocationY="96" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="S4n_Nucleus" LocationX="73" LocationY="344" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="S22n_Nucleus" LocationX="398" LocationY="308" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="PPase_Nucleus" LocationX="76" LocationY="60" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="pS2n_Nucleus" LocationX="192" LocationY="212" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="molecule" SimpleReactionRef="nS24complexes" LocationX="199" LocationY="281" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="molecule" SimpleReactionRef="DephosSmad2" LocationX="149" LocationY="143" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="molecule" SimpleReactionRef="nS22complexes" LocationX="330" LocationY="224" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="S24n_Nucleus" LocationX="318" LocationY="335" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="S2n_Nucleus" LocationX="225" LocationY="96" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="S4n_Nucleus" LocationX="73" LocationY="344" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="S22n_Nucleus" LocationX="398" LocationY="308" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="PPase_Nucleus" LocationX="76" LocationY="60" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="pS2n_Nucleus" LocationX="192" LocationY="212" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="rule" SimpleReactionRef="nS24complexes" LocationX="199" LocationY="281" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="rule" SimpleReactionRef="DephosSmad2" LocationX="149" LocationY="143" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="rule" SimpleReactionRef="nS22complexes" LocationX="330" LocationY="224" />
+      </Diagram>
+      <Version Name="unnamed" KeyValue="49872612" BranchId="49869280" Archived="0" Date="10-Oct-2010 21:18:04" FromVersionable="false">
+        <Owner Name="ehewett" Identifier="48847528" />
+        <GroupAccess Type="1" />
+      </Version>
+      <ModelUnitSystem VolumeSubstanceUnit="uM.um3" MembraneSubstanceUnit="molecules" LumpedReactionSubstanceUnit="molecules" VolumeUnit="um3" AreaUnit="um2" LengthUnit="um" TimeUnit="s" />
+    </Model>
+    <SimulationSpec Name="Modified Smad Signaling with TGF endocytosis" Stochastic="false" UseConcentration="true" RuleBased="false" MassConservationModelReduction="true" InsufficientIterations="false" InsufficientMaxMolecules="false">
+      <NetworkConstraints RbmMaxIteration="1" RbmMaxMoleculesPerSpecies="10" RbmSpeciesLimit="800" RbmReactionsLimit="2500" />
+      <Annotation />
+      <Geometry Name="non-spatial1825119617" Dimension="0">
+        <Extent X="10.0" Y="10.0" Z="10.0" />
+        <Origin X="0.0" Y="0.0" Z="0.0" />
+        <SubVolume Name="Compartment" Handle="0" Type="Compartmental" KeyValue="49869275" />
+        <Version Name="non-spatial1825119617" KeyValue="49869271" BranchId="49869272" Archived="0" Date="10-Oct-2010 17:13:27" FromVersionable="false">
+          <Owner Name="ehewett" Identifier="48847528" />
+          <GroupAccess Type="1" />
+        </Version>
+      </Geometry>
+      <GeometryContext>
+        <FeatureMapping Feature="Extracellular Space" GeometryClass="Compartment" SubVolume="Compartment" Size="1.0E7">
+          <BoundariesTypes Xm="Flux" Xp="Flux" Ym="Flux" Yp="Flux" Zm="Flux" Zp="Flux" />
+        </FeatureMapping>
+        <FeatureMapping Feature="Cytoplasm" GeometryClass="Compartment" SubVolume="Compartment" Size="200.0">
+          <BoundariesTypes Xm="Flux" Xp="Flux" Ym="Flux" Yp="Flux" Zm="Flux" Zp="Flux" />
+        </FeatureMapping>
+        <FeatureMapping Feature="Nucleus" GeometryClass="Compartment" SubVolume="Compartment" Size="100.0">
+          <BoundariesTypes Xm="Flux" Xp="Flux" Ym="Flux" Yp="Flux" Zm="Flux" Zp="Flux" />
+        </FeatureMapping>
+        <MembraneMapping Membrane="Membrane" SurfaceToVolumeRatio="0.6666666666666666" VolumeFraction="2.999910002699919E-5" Size="200.0" CalculateVoltage="false" SpecificCapacitance="1.0" InitialVoltage="0.0" GeometryClass="Compartment">
+          <BoundariesTypes Xm="Flux" Xp="Flux" Ym="Flux" Yp="Flux" Zm="Flux" Zp="Flux" />
+        </MembraneMapping>
+        <MembraneMapping Membrane="NM" SurfaceToVolumeRatio="1.0" VolumeFraction="0.3333333333333333" Size="100.0" CalculateVoltage="false" SpecificCapacitance="1.0" InitialVoltage="0.0" GeometryClass="Compartment">
+          <BoundariesTypes Xm="Flux" Xp="Flux" Ym="Flux" Yp="Flux" Zm="Flux" Zp="Flux" />
+        </MembraneMapping>
+      </GeometryContext>
+      <ReactionContext>
+        <LocalizedCompoundSpec LocalizedCompoundRef="TGFb_Extracellular_Space" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>6.6E-5</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="Racti_Cytoplasm" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>0.0</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="Ri_Cytoplasm" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>0.0</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="S2c_Cytoplasm" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>0.0605899</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="pS2c_Cytoplasm" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>0.0</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="S4c_Cytoplasm" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>0.0</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="S24c_Cytoplasm" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>0.050781</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="S22c_Cytoplasm" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>0.0</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="Ractdeg_Cytoplasm" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>0.0</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="S24n_Nucleus" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>0.0</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="S2n_Nucleus" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>0.0285148</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="S4n_Nucleus" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>0.0507809</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="S22n_Nucleus" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>0.0</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="PPase_Nucleus" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>0.001</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="pS2n_Nucleus" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>0.0</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="R_Membrane" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>0.001</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="Ract_Membrane" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>0.0</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <ReactionSpec ReactionStepRef="PhosSmad2" ReactionMapping="included" />
+        <ReactionSpec ReactionStepRef="S24complexes" ReactionMapping="included" />
+        <ReactionSpec ReactionStepRef="reaction2" ReactionMapping="included" />
+        <ReactionSpec ReactionStepRef="reaction3" ReactionMapping="included" />
+        <ReactionSpec ReactionStepRef="reaction4" ReactionMapping="included" />
+        <ReactionSpec ReactionStepRef="TGFbBinding" ReactionMapping="included" />
+        <ReactionSpec ReactionStepRef="Endocytosis of R" ReactionMapping="included" />
+        <ReactionSpec ReactionStepRef="Endocytosis of Ract" ReactionMapping="included" />
+        <ReactionSpec ReactionStepRef="LigandInducedDeg" ReactionMapping="included" />
+        <ReactionSpec ReactionStepRef="Recycling of R" ReactionMapping="included" />
+        <ReactionSpec ReactionStepRef="Recycling of Ract" ReactionMapping="included" />
+        <ReactionSpec ReactionStepRef="S22complexes" ReactionMapping="included" />
+        <ReactionSpec ReactionStepRef="nS24complexes" ReactionMapping="included" />
+        <ReactionSpec ReactionStepRef="DephosSmad2" ReactionMapping="included" />
+        <ReactionSpec ReactionStepRef="nS22complexes" ReactionMapping="included" />
+        <ReactionSpec ReactionStepRef="reaction0" ReactionMapping="included" />
+        <ReactionSpec ReactionStepRef="reaction1" ReactionMapping="included" />
+        <ReactionSpec ReactionStepRef="Production of Receptors" ReactionMapping="included" />
+      </ReactionContext>
+      <MathDescription Name="Modified Smad Signaling with TGF endocytosis_generated">
+        <Constant Name="_F_">96480.0</Constant>
+        <Constant Name="_F_nmol_">9.648E-5</Constant>
+        <Constant Name="_K_GHK_">1.0E-9</Constant>
+        <Constant Name="_N_pmol_">6.02E11</Constant>
+        <Constant Name="_R_">8314.0</Constant>
+        <Constant Name="_T_">300.0</Constant>
+        <Constant Name="CIF">5.7</Constant>
+        <Constant Name="Endo">180.0</Constant>
+        <Constant Name="K_millivolts_per_volt">1000.0</Constant>
+        <Constant Name="kex">3.3712</Constant>
+        <Constant Name="Kf_DephosSmad2">6.56639</Constant>
+        <Constant Name="Kf_LigandInducedDeg">240.0</Constant>
+        <Constant Name="Kf_PhosSmad2">0.403708</Constant>
+        <Constant Name="Kf_TGFbBinding">74.2356</Constant>
+        <Constant Name="kin">1.5652</Constant>
+        <Constant Name="KMOLE">0.0016611295681063123</Constant>
+        <Constant Name="koff">0.016</Constant>
+        <Constant Name="kon">1.8391</Constant>
+        <Constant Name="Kr_DephosSmad2">0.0</Constant>
+        <Constant Name="Kr_Endocytosis_of_R">0.0</Constant>
+        <Constant Name="Kr_Endocytosis_of_Ract">0.0</Constant>
+        <Constant Name="Kr_LigandInducedDeg">0.0</Constant>
+        <Constant Name="Kr_PhosSmad2">0.0</Constant>
+        <Constant Name="Kr_reaction0">0.0</Constant>
+        <Constant Name="Kr_reaction1">0.0</Constant>
+        <Constant Name="Kr_Recycling_of_R">0.0</Constant>
+        <Constant Name="Kr_Recycling_of_Ract">0.0</Constant>
+        <Constant Name="Kr_TGFbBinding">0.0</Constant>
+        <Constant Name="LumpedJ">360.0</Constant>
+        <Constant Name="PPase_Nucleus_init">0.001</Constant>
+        <Constant Name="pS2c_Cytoplasm_init">0.0</Constant>
+        <Constant Name="pS2n_Nucleus_init">0.0</Constant>
+        <Constant Name="R_Membrane_init">0.001</Constant>
+        <Constant Name="Ract_Membrane_init">0.0</Constant>
+        <Constant Name="Ractdeg_Cytoplasm_init">0.0</Constant>
+        <Constant Name="Racti_Cytoplasm_init">0.0</Constant>
+        <Constant Name="Recyc">1800.0</Constant>
+        <Constant Name="Ri_Cytoplasm_init">0.0</Constant>
+        <Constant Name="S22c_Cytoplasm_init">0.0</Constant>
+        <Constant Name="S22n_Nucleus_init">0.0</Constant>
+        <Constant Name="S24c_Cytoplasm_init">0.050781</Constant>
+        <Constant Name="S24n_Nucleus_init">0.0</Constant>
+        <Constant Name="S2c_Cytoplasm_init">0.0605899</Constant>
+        <Constant Name="S2n_Nucleus_init">0.0285148</Constant>
+        <Constant Name="S4c_Cytoplasm_init">0.0</Constant>
+        <Constant Name="S4n_Nucleus_init">0.0507809</Constant>
+        <Constant Name="Size_Cytoplasm">200.0</Constant>
+        <Constant Name="Size_Extracellular_Space">1.0E7</Constant>
+        <Constant Name="Size_Membrane">200.0</Constant>
+        <Constant Name="Size_NM">100.0</Constant>
+        <Constant Name="Size_Nucleus">100.0</Constant>
+        <Constant Name="SurfToVol_Membrane">0.6666666666666666</Constant>
+        <Constant Name="SurfToVol_NM">1.0</Constant>
+        <Constant Name="TGFb_Extracellular_Space_init">6.6E-5</Constant>
+        <Constant Name="VolFract_Cytoplasm">2.999910002699919E-5</Constant>
+        <Constant Name="VolFract_Nucleus">0.3333333333333333</Constant>
+        <Constant Name="Voltage_Membrane">0.0</Constant>
+        <Constant Name="Voltage_NM">0.0</Constant>
+        <VolumeVariable Name="pS2c_Cytoplasm" />
+        <VolumeVariable Name="pS2n_Nucleus" />
+        <VolumeVariable Name="R_Membrane" />
+        <VolumeVariable Name="Ract_Membrane" />
+        <VolumeVariable Name="Ractdeg_Cytoplasm" />
+        <VolumeVariable Name="Racti_Cytoplasm" />
+        <VolumeVariable Name="Ri_Cytoplasm" />
+        <VolumeVariable Name="S22c_Cytoplasm" />
+        <VolumeVariable Name="S22n_Nucleus" />
+        <VolumeVariable Name="S24c_Cytoplasm" />
+        <VolumeVariable Name="S24n_Nucleus" />
+        <VolumeVariable Name="S2n_Nucleus" />
+        <VolumeVariable Name="S4n_Nucleus" />
+        <Function Name="J_DephosSmad2">((PPase_Nucleus * Kf_DephosSmad2 * pS2n_Nucleus) - (PPase_Nucleus * Kr_DephosSmad2 * S2n_Nucleus))</Function>
+        <Function Name="J_Endocytosis_of_R">((Kf_Endocytosis_of_R * R_Membrane) - (Kr_Endocytosis_of_R * Ri_Cytoplasm))</Function>
+        <Function Name="J_Endocytosis_of_Ract">((Kf_Endocytosis_of_Ract * Ract_Membrane) - (Kr_Endocytosis_of_Ract * Racti_Cytoplasm))</Function>
+        <Function Name="J_LigandInducedDeg">((Kf_LigandInducedDeg * Ract_Membrane) - (Kr_LigandInducedDeg * Ractdeg_Cytoplasm))</Function>
+        <Function Name="J_nS22complexes">((Kf_nS22complexes * pow(pS2n_Nucleus,2.0)) - (Kr_nS22complexes * S22n_Nucleus))</Function>
+        <Function Name="J_nS24complexes">((S4n_Nucleus * Kf_nS24complexes * pS2n_Nucleus) - (Kr_nS24complexes * S24n_Nucleus))</Function>
+        <Function Name="J_PhosSmad2">((S2c_Cytoplasm * Kf_PhosSmad2 * Racti_Cytoplasm) - (Racti_Cytoplasm * Kr_PhosSmad2 * pS2c_Cytoplasm))</Function>
+        <Function Name="J_reaction0">((Kf_reaction0 * S22c_Cytoplasm) - (Kr_reaction0 * S22n_Nucleus))</Function>
+        <Function Name="J_reaction1">((Kf_reaction1 * S24c_Cytoplasm) - (Kr_reaction1 * S24n_Nucleus))</Function>
+        <Function Name="J_reaction2">((Kf_reaction2 * S2c_Cytoplasm) - (Kr_reaction2 * S2n_Nucleus))</Function>
+        <Function Name="J_reaction3">((Kf_reaction3 * S4c_Cytoplasm) - (Kr_reaction3 * S4n_Nucleus))</Function>
+        <Function Name="J_reaction4">((Kf_reaction4 * pS2c_Cytoplasm) - (Kr_reaction4 * pS2n_Nucleus))</Function>
+        <Function Name="J_Recycling_of_R">((Kf_Recycling_of_R * Ri_Cytoplasm) - (Kr_Recycling_of_R * R_Membrane))</Function>
+        <Function Name="J_Recycling_of_Ract">((Kf_Recycling_of_Ract * Racti_Cytoplasm) - (Kr_Recycling_of_Ract * Ract_Membrane))</Function>
+        <Function Name="J_S22complexes">((Kf_S22complexes * pow(pS2c_Cytoplasm,2.0)) - (Kr_S22complexes * S22c_Cytoplasm))</Function>
+        <Function Name="J_S24complexes">((S4c_Cytoplasm * Kf_S24complexes * pS2c_Cytoplasm) - (Kr_S24complexes * S24c_Cytoplasm))</Function>
+        <Function Name="J_TGFbBinding">((TGFb_Extracellular_Space * Kf_TGFbBinding * R_Membrane) - (Kr_TGFbBinding * Ract_Membrane))</Function>
+        <Function Name="K_PPase_Nucleus_total">(PPase_Nucleus_init * VolFract_Nucleus * VolFract_Cytoplasm)</Function>
+        <Function Name="K_S2c_Cytoplasm_total">((pS2n_Nucleus_init * VolFract_Nucleus * VolFract_Cytoplasm) + (2.0 * S22n_Nucleus_init * VolFract_Nucleus * VolFract_Cytoplasm) + (S2n_Nucleus_init * VolFract_Nucleus * VolFract_Cytoplasm) + (S24n_Nucleus_init * VolFract_Nucleus * VolFract_Cytoplasm) + (2.0 * S22c_Cytoplasm_init * (1.0 - VolFract_Nucleus) * VolFract_Cytoplasm) + (S24c_Cytoplasm_init * (1.0 - VolFract_Nucleus) * VolFract_Cytoplasm) + (S2c_Cytoplasm_init * (1.0 - VolFract_Nucleus) * VolFract_Cytoplasm) + (pS2c_Cytoplasm_init * (1.0 - VolFract_Nucleus) * VolFract_Cytoplasm))</Function>
+        <Function Name="K_S4c_Cytoplasm_total">((S4n_Nucleus_init * VolFract_Nucleus * VolFract_Cytoplasm) + (S24n_Nucleus_init * VolFract_Nucleus * VolFract_Cytoplasm) + (S4c_Cytoplasm_init * (1.0 - VolFract_Nucleus) * VolFract_Cytoplasm) + (S24c_Cytoplasm_init * (1.0 - VolFract_Nucleus) * VolFract_Cytoplasm))</Function>
+        <Function Name="K_TGFb_Extracellular_Space_total">((Ract_Membrane_init * SurfToVol_Membrane * VolFract_Cytoplasm * KMOLE) + (Ractdeg_Cytoplasm_init * (1.0 - VolFract_Nucleus) * VolFract_Cytoplasm) + ((1.0 - VolFract_Cytoplasm) * TGFb_Extracellular_Space_init) + (Racti_Cytoplasm_init * (1.0 - VolFract_Nucleus) * VolFract_Cytoplasm))</Function>
+        <Function Name="Kf_Endocytosis_of_R">Endo</Function>
+        <Function Name="Kf_Endocytosis_of_Ract">Endo</Function>
+        <Function Name="Kf_nS22complexes">kon</Function>
+        <Function Name="Kf_nS24complexes">kon</Function>
+        <Function Name="Kf_reaction0">(kin * CIF)</Function>
+        <Function Name="Kf_reaction1">(kin * CIF)</Function>
+        <Function Name="Kf_reaction2">kin</Function>
+        <Function Name="Kf_reaction3">kin</Function>
+        <Function Name="Kf_reaction4">kin</Function>
+        <Function Name="Kf_Recycling_of_R">Recyc</Function>
+        <Function Name="Kf_Recycling_of_Ract">Recyc</Function>
+        <Function Name="Kf_S22complexes">kon</Function>
+        <Function Name="Kf_S24complexes">kon</Function>
+        <Function Name="KFlux_Membrane_mapping_Cytoplasm">(SurfToVol_Membrane / (1.0 - VolFract_Nucleus))</Function>
+        <Function Name="KFlux_Membrane_mapping_Extracellular_Space">(SurfToVol_Membrane * VolFract_Cytoplasm / (1.0 - VolFract_Cytoplasm))</Function>
+        <Function Name="KFlux_NM_mapping_Cytoplasm">(SurfToVol_NM * VolFract_Nucleus / (1.0 - VolFract_Nucleus))</Function>
+        <Function Name="KFlux_NM_mapping_Nucleus">SurfToVol_NM</Function>
+        <Function Name="Kr_nS22complexes">koff</Function>
+        <Function Name="Kr_nS24complexes">koff</Function>
+        <Function Name="Kr_reaction2">kex</Function>
+        <Function Name="Kr_reaction3">kex</Function>
+        <Function Name="Kr_reaction4">kex</Function>
+        <Function Name="Kr_S22complexes">koff</Function>
+        <Function Name="Kr_S24complexes">koff</Function>
+        <Function Name="PPase_Nucleus">(K_PPase_Nucleus_total / (VolFract_Nucleus * VolFract_Cytoplasm))</Function>
+        <Function Name="S2c_Cytoplasm">(( - (pS2n_Nucleus * VolFract_Nucleus * VolFract_Cytoplasm) - (2.0 * S22n_Nucleus * VolFract_Nucleus * VolFract_Cytoplasm) - (S2n_Nucleus * VolFract_Nucleus * VolFract_Cytoplasm) - (S24n_Nucleus * VolFract_Nucleus * VolFract_Cytoplasm) - (2.0 * S22c_Cytoplasm * (1.0 - VolFract_Nucleus) * VolFract_Cytoplasm) - (S24c_Cytoplasm * (1.0 - VolFract_Nucleus) * VolFract_Cytoplasm) + K_S2c_Cytoplasm_total - (pS2c_Cytoplasm * (1.0 - VolFract_Nucleus) * VolFract_Cytoplasm)) / ((1.0 - VolFract_Nucleus) * VolFract_Cytoplasm))</Function>
+        <Function Name="S4c_Cytoplasm">(( - (S4n_Nucleus * VolFract_Nucleus * VolFract_Cytoplasm) - (S24n_Nucleus * VolFract_Nucleus * VolFract_Cytoplasm) + K_S4c_Cytoplasm_total - (S24c_Cytoplasm * (1.0 - VolFract_Nucleus) * VolFract_Cytoplasm)) / ((1.0 - VolFract_Nucleus) * VolFract_Cytoplasm))</Function>
+        <Function Name="TGFb_Extracellular_Space">(( - (Ract_Membrane * SurfToVol_Membrane * VolFract_Cytoplasm * KMOLE) - (Ractdeg_Cytoplasm * (1.0 - VolFract_Nucleus) * VolFract_Cytoplasm) + K_TGFb_Extracellular_Space_total - (Racti_Cytoplasm * (1.0 - VolFract_Nucleus) * VolFract_Cytoplasm)) / (1.0 - VolFract_Cytoplasm))</Function>
+        <CompartmentSubDomain Name="Compartment">
+          <BoundaryType Boundary="Xm" Type="Value" />
+          <BoundaryType Boundary="Xp" Type="Value" />
+          <BoundaryType Boundary="Ym" Type="Value" />
+          <BoundaryType Boundary="Yp" Type="Value" />
+          <BoundaryType Boundary="Zm" Type="Value" />
+          <BoundaryType Boundary="Zp" Type="Value" />
+          <OdeEquation Name="Racti_Cytoplasm" SolutionType="Unknown">
+            <Rate>((KFlux_Membrane_mapping_Cytoplasm * KMOLE * J_Endocytosis_of_Ract) - (KFlux_Membrane_mapping_Cytoplasm * KMOLE * J_Recycling_of_Ract))</Rate>
+            <Initial>Racti_Cytoplasm_init</Initial>
+          </OdeEquation>
+          <OdeEquation Name="Ri_Cytoplasm" SolutionType="Unknown">
+            <Rate>((KFlux_Membrane_mapping_Cytoplasm * KMOLE * J_Endocytosis_of_R) - (KFlux_Membrane_mapping_Cytoplasm * KMOLE * J_Recycling_of_R))</Rate>
+            <Initial>Ri_Cytoplasm_init</Initial>
+          </OdeEquation>
+          <OdeEquation Name="pS2c_Cytoplasm" SolutionType="Unknown">
+            <Rate>( - (2.0 * J_S22complexes) - (KFlux_NM_mapping_Cytoplasm * KMOLE * J_reaction4) + J_PhosSmad2 - J_S24complexes)</Rate>
+            <Initial>pS2c_Cytoplasm_init</Initial>
+          </OdeEquation>
+          <OdeEquation Name="S24c_Cytoplasm" SolutionType="Unknown">
+            <Rate>(J_S24complexes - (KFlux_NM_mapping_Cytoplasm * KMOLE * J_reaction1))</Rate>
+            <Initial>S24c_Cytoplasm_init</Initial>
+          </OdeEquation>
+          <OdeEquation Name="S22c_Cytoplasm" SolutionType="Unknown">
+            <Rate>(J_S22complexes - (KFlux_NM_mapping_Cytoplasm * KMOLE * J_reaction0))</Rate>
+            <Initial>S22c_Cytoplasm_init</Initial>
+          </OdeEquation>
+          <OdeEquation Name="Ractdeg_Cytoplasm" SolutionType="Unknown">
+            <Rate>(KFlux_Membrane_mapping_Cytoplasm * KMOLE * J_LigandInducedDeg)</Rate>
+            <Initial>Ractdeg_Cytoplasm_init</Initial>
+          </OdeEquation>
+          <OdeEquation Name="S24n_Nucleus" SolutionType="Unknown">
+            <Rate>(J_nS24complexes + (KFlux_NM_mapping_Nucleus * KMOLE * J_reaction1))</Rate>
+            <Initial>S24n_Nucleus_init</Initial>
+          </OdeEquation>
+          <OdeEquation Name="S2n_Nucleus" SolutionType="Unknown">
+            <Rate>((KFlux_NM_mapping_Nucleus * KMOLE * J_reaction2) + J_DephosSmad2)</Rate>
+            <Initial>S2n_Nucleus_init</Initial>
+          </OdeEquation>
+          <OdeEquation Name="S4n_Nucleus" SolutionType="Unknown">
+            <Rate>((KFlux_NM_mapping_Nucleus * KMOLE * J_reaction3) - J_nS24complexes)</Rate>
+            <Initial>S4n_Nucleus_init</Initial>
+          </OdeEquation>
+          <OdeEquation Name="S22n_Nucleus" SolutionType="Unknown">
+            <Rate>(J_nS22complexes + (KFlux_NM_mapping_Nucleus * KMOLE * J_reaction0))</Rate>
+            <Initial>S22n_Nucleus_init</Initial>
+          </OdeEquation>
+          <OdeEquation Name="pS2n_Nucleus" SolutionType="Unknown">
+            <Rate>( - (2.0 * J_nS22complexes) - J_DephosSmad2 + (KFlux_NM_mapping_Nucleus * KMOLE * J_reaction4) - J_nS24complexes)</Rate>
+            <Initial>pS2n_Nucleus_init</Initial>
+          </OdeEquation>
+          <OdeEquation Name="R_Membrane" SolutionType="Unknown">
+            <Rate>((LumpedJ / Size_Membrane) + J_Recycling_of_R - J_TGFbBinding - J_Endocytosis_of_R)</Rate>
+            <Initial>R_Membrane_init</Initial>
+          </OdeEquation>
+          <OdeEquation Name="Ract_Membrane" SolutionType="Unknown">
+            <Rate>(J_Recycling_of_Ract - J_LigandInducedDeg + J_TGFbBinding - J_Endocytosis_of_Ract)</Rate>
+            <Initial>Ract_Membrane_init</Initial>
+          </OdeEquation>
+        </CompartmentSubDomain>
+        <Version Name="Modified Smad Signaling with TGF endocytosis_generated" KeyValue="49872608" BranchId="49869277" Archived="0" Date="10-Oct-2010 21:18:04" FromVersionable="false">
+          <Owner Name="ehewett" Identifier="48847528" />
+          <GroupAccess Type="1" />
+        </Version>
+      </MathDescription>
+      <Simulation Name="Simulation0">
+        <SolverTaskDescription TaskType="Unsteady" UseSymbolicJacobian="false" Solver="Runge-Kutta-Fehlberg (Fifth Order, Variable Time Step)">
+          <TimeBound StartTime="0.0" EndTime="24000.0" />
+          <TimeStep DefaultTime="0.1" MinTime="1.0E-8" MaxTime="1.0" />
+          <ErrorTolerance Absolut="1.0E-9" Relative="1.0E-9" />
+          <OutputOptions KeepEvery="10" KeepAtMost="1000" />
+          <NumberProcessors>1</NumberProcessors>
+        </SolverTaskDescription>
+        <MathOverrides />
+        <Version Name="Simulation0" KeyValue="49872808" BranchId="49869618" Archived="0" Date="10-Oct-2010 21:18:05" FromVersionable="false">
+          <Owner Name="ehewett" Identifier="48847528" />
+          <GroupAccess Type="1" />
+        </Version>
+      </Simulation>
+      <Simulation Name="Simulation1">
+        <SolverTaskDescription TaskType="Unsteady" UseSymbolicJacobian="false" Solver="Runge-Kutta-Fehlberg (Fifth Order, Variable Time Step)">
+          <TimeBound StartTime="0.0" EndTime="24000.0" />
+          <TimeStep DefaultTime="0.1" MinTime="1.0E-8" MaxTime="1.0" />
+          <ErrorTolerance Absolut="1.0E-9" Relative="1.0E-9" />
+          <OutputOptions KeepEvery="10" KeepAtMost="1000" />
+          <NumberProcessors>1</NumberProcessors>
+        </SolverTaskDescription>
+        <MathOverrides>
+          <Constant Name="TGFb_Extracellular_Space_init">0.01</Constant>
+        </MathOverrides>
+        <Version Name="Simulation1" KeyValue="49872810" BranchId="49870130" Archived="0" Date="10-Oct-2010 21:18:05" FromVersionable="false">
+          <Owner Name="ehewett" Identifier="48847528" />
+          <GroupAccess Type="1" />
+        </Version>
+      </Simulation>
+      <Simulation Name="Copy of Simulation1">
+        <SolverTaskDescription TaskType="Unsteady" UseSymbolicJacobian="false" Solver="Runge-Kutta-Fehlberg (Fifth Order, Variable Time Step)">
+          <TimeBound StartTime="0.0" EndTime="12000.0" />
+          <TimeStep DefaultTime="0.1" MinTime="1.0E-8" MaxTime="1.0" />
+          <ErrorTolerance Absolut="1.0E-9" Relative="1.0E-9" />
+          <OutputOptions KeepEvery="10" KeepAtMost="1000" />
+          <NumberProcessors>1</NumberProcessors>
+        </SolverTaskDescription>
+        <MathOverrides>
+          <Constant Name="TGFb_Extracellular_Space_init" ConstantArraySpec="1001">1.0E-4 to 0.01, log, 3 values</Constant>
+        </MathOverrides>
+        <Version Name="Copy of Simulation1" KeyValue="49872812" BranchId="49870390" Archived="0" Date="10-Oct-2010 21:18:05" FromVersionable="false">
+          <Owner Name="ehewett" Identifier="48847528" />
+          <GroupAccess Type="1" />
+        </Version>
+      </Simulation>
+      <Simulation Name="Copy of Simulation1 1">
+        <SolverTaskDescription TaskType="Unsteady" UseSymbolicJacobian="false" Solver="Runge-Kutta-Fehlberg (Fifth Order, Variable Time Step)">
+          <TimeBound StartTime="0.0" EndTime="24000.0" />
+          <TimeStep DefaultTime="0.1" MinTime="1.0E-8" MaxTime="1.0" />
+          <ErrorTolerance Absolut="1.0E-9" Relative="1.0E-9" />
+          <OutputOptions KeepEvery="10" KeepAtMost="1000" />
+          <Constant Name="Kf_LigandInducedDeg">240.0</Constant>
+          <NumberProcessors>1</NumberProcessors>
+        </SolverTaskDescription>
+        <MathOverrides>
+          <Constant Name="TGFb_Extracellular_Space_init">0.01</Constant>
+        </MathOverrides>
+        <Version Name="Copy of Simulation1 1" KeyValue="49872814" BranchId="49870589" Archived="0" Date="10-Oct-2010 21:18:05" FromVersionable="false">
+          <Owner Name="ehewett" Identifier="48847528" />
+          <GroupAccess Type="1" />
+        </Version>
+      </Simulation>
+      <Version Name="Modified Smad Signaling with TGF endocytosis" KeyValue="49872724" BranchId="49869391" Archived="0" Date="10-Oct-2010 21:18:05" FromVersionable="false">
+        <Owner Name="ehewett" Identifier="48847528" />
+        <GroupAccess Type="1" />
+      </Version>
+      <MicroscopeMeasurement Name="fluor">
+        <ConvolutionKernel Type="ProjectionZKernel" />
+      </MicroscopeMeasurement>
+    </SimulationSpec>
+    <SimulationSpec Name="Modified Smad Signaling w/TGFR endocytosis" Stochastic="false" UseConcentration="true" RuleBased="false" MassConservationModelReduction="true" InsufficientIterations="false" InsufficientMaxMolecules="false">
+      <NetworkConstraints RbmMaxIteration="1" RbmMaxMoleculesPerSpecies="10" RbmSpeciesLimit="800" RbmReactionsLimit="2500" />
+      <Annotation />
+      <Geometry Name="non-spatial1565898210" Dimension="0">
+        <Extent X="10.0" Y="10.0" Z="10.0" />
+        <Origin X="0.0" Y="0.0" Z="0.0" />
+        <SubVolume Name="Compartment" Handle="0" Type="Compartmental" KeyValue="49871276" />
+        <Version Name="non-spatial1565898210" KeyValue="49871272" BranchId="49871273" Archived="0" Date="10-Oct-2010 20:18:04" FromVersionable="false">
+          <Owner Name="ehewett" Identifier="48847528" />
+          <GroupAccess Type="1" />
+        </Version>
+      </Geometry>
+      <GeometryContext>
+        <FeatureMapping Feature="Extracellular Space" GeometryClass="Compartment" SubVolume="Compartment" Size="1.0E7">
+          <BoundariesTypes Xm="Flux" Xp="Flux" Ym="Flux" Yp="Flux" Zm="Flux" Zp="Flux" />
+        </FeatureMapping>
+        <FeatureMapping Feature="Cytoplasm" GeometryClass="Compartment" SubVolume="Compartment" Size="200.0">
+          <BoundariesTypes Xm="Flux" Xp="Flux" Ym="Flux" Yp="Flux" Zm="Flux" Zp="Flux" />
+        </FeatureMapping>
+        <FeatureMapping Feature="Nucleus" GeometryClass="Compartment" SubVolume="Compartment" Size="100.0">
+          <BoundariesTypes Xm="Flux" Xp="Flux" Ym="Flux" Yp="Flux" Zm="Flux" Zp="Flux" />
+        </FeatureMapping>
+        <MembraneMapping Membrane="Membrane" SurfaceToVolumeRatio="0.6666666666666666" VolumeFraction="2.999910002699919E-5" Size="200.0" CalculateVoltage="false" SpecificCapacitance="1.0" InitialVoltage="0.0" GeometryClass="Compartment">
+          <BoundariesTypes Xm="Flux" Xp="Flux" Ym="Flux" Yp="Flux" Zm="Flux" Zp="Flux" />
+        </MembraneMapping>
+        <MembraneMapping Membrane="NM" SurfaceToVolumeRatio="1.0" VolumeFraction="0.3333333333333333" Size="100.0" CalculateVoltage="false" SpecificCapacitance="1.0" InitialVoltage="0.0" GeometryClass="Compartment">
+          <BoundariesTypes Xm="Flux" Xp="Flux" Ym="Flux" Yp="Flux" Zm="Flux" Zp="Flux" />
+        </MembraneMapping>
+      </GeometryContext>
+      <ReactionContext>
+        <LocalizedCompoundSpec LocalizedCompoundRef="TGFb_Extracellular_Space" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>0.01</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="Racti_Cytoplasm" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>0.0</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="Ri_Cytoplasm" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>0.0</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="S2c_Cytoplasm" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>0.0605899</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="pS2c_Cytoplasm" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>0.0</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="S4c_Cytoplasm" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>0.050781</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="S24c_Cytoplasm" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>0.0</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="S22c_Cytoplasm" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>0.0</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="Ractdeg_Cytoplasm" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>0.0</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="S24n_Nucleus" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>0.0</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="S2n_Nucleus" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>0.0285148</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="S4n_Nucleus" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>0.0507809</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="S22n_Nucleus" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>0.0</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="PPase_Nucleus" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>0.001</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="pS2n_Nucleus" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>0.0</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="R_Membrane" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>0.001</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="Ract_Membrane" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>0.0</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <ReactionSpec ReactionStepRef="PhosSmad2" ReactionMapping="included" />
+        <ReactionSpec ReactionStepRef="S24complexes" ReactionMapping="included" />
+        <ReactionSpec ReactionStepRef="reaction2" ReactionMapping="included" />
+        <ReactionSpec ReactionStepRef="reaction3" ReactionMapping="included" />
+        <ReactionSpec ReactionStepRef="reaction4" ReactionMapping="included" />
+        <ReactionSpec ReactionStepRef="TGFbBinding" ReactionMapping="included" />
+        <ReactionSpec ReactionStepRef="Endocytosis of R" ReactionMapping="included" />
+        <ReactionSpec ReactionStepRef="Endocytosis of Ract" ReactionMapping="included" />
+        <ReactionSpec ReactionStepRef="LigandInducedDeg" ReactionMapping="included" />
+        <ReactionSpec ReactionStepRef="Recycling of R" ReactionMapping="included" />
+        <ReactionSpec ReactionStepRef="Recycling of Ract" ReactionMapping="included" />
+        <ReactionSpec ReactionStepRef="S22complexes" ReactionMapping="included" />
+        <ReactionSpec ReactionStepRef="nS24complexes" ReactionMapping="included" />
+        <ReactionSpec ReactionStepRef="DephosSmad2" ReactionMapping="included" />
+        <ReactionSpec ReactionStepRef="nS22complexes" ReactionMapping="included" />
+        <ReactionSpec ReactionStepRef="reaction0" ReactionMapping="included" />
+        <ReactionSpec ReactionStepRef="reaction1" ReactionMapping="included" />
+        <ReactionSpec ReactionStepRef="Production of Receptors" ReactionMapping="included" />
+      </ReactionContext>
+      <MathDescription Name="Modified Smad Signaling w/TGFR endocytosis_generated">
+        <Constant Name="_F_">96480.0</Constant>
+        <Constant Name="_F_nmol_">9.648E-5</Constant>
+        <Constant Name="_K_GHK_">1.0E-9</Constant>
+        <Constant Name="_N_pmol_">6.02E11</Constant>
+        <Constant Name="_R_">8314.0</Constant>
+        <Constant Name="_T_">300.0</Constant>
+        <Constant Name="CIF">5.7</Constant>
+        <Constant Name="Endo">180.0</Constant>
+        <Constant Name="K_millivolts_per_volt">1000.0</Constant>
+        <Constant Name="kex">3.3712</Constant>
+        <Constant Name="Kf_DephosSmad2">6.56639</Constant>
+        <Constant Name="Kf_LigandInducedDeg">240.0</Constant>
+        <Constant Name="Kf_PhosSmad2">0.403708</Constant>
+        <Constant Name="Kf_TGFbBinding">74.2356</Constant>
+        <Constant Name="kin">1.5652</Constant>
+        <Constant Name="KMOLE">0.0016611295681063123</Constant>
+        <Constant Name="koff">0.016</Constant>
+        <Constant Name="kon">1.8391</Constant>
+        <Constant Name="Kr_DephosSmad2">0.0</Constant>
+        <Constant Name="Kr_Endocytosis_of_R">0.0</Constant>
+        <Constant Name="Kr_Endocytosis_of_Ract">0.0</Constant>
+        <Constant Name="Kr_LigandInducedDeg">0.0</Constant>
+        <Constant Name="Kr_PhosSmad2">0.0</Constant>
+        <Constant Name="Kr_reaction0">0.0</Constant>
+        <Constant Name="Kr_reaction1">0.0</Constant>
+        <Constant Name="Kr_Recycling_of_R">0.0</Constant>
+        <Constant Name="Kr_Recycling_of_Ract">0.0</Constant>
+        <Constant Name="Kr_TGFbBinding">0.0</Constant>
+        <Constant Name="LumpedJ">360.0</Constant>
+        <Constant Name="PPase_Nucleus_init">0.001</Constant>
+        <Constant Name="pS2c_Cytoplasm_init">0.0</Constant>
+        <Constant Name="pS2n_Nucleus_init">0.0</Constant>
+        <Constant Name="R_Membrane_init">0.001</Constant>
+        <Constant Name="Ract_Membrane_init">0.0</Constant>
+        <Constant Name="Ractdeg_Cytoplasm_init">0.0</Constant>
+        <Constant Name="Racti_Cytoplasm_init">0.0</Constant>
+        <Constant Name="Recyc">1800.0</Constant>
+        <Constant Name="Ri_Cytoplasm_init">0.0</Constant>
+        <Constant Name="S22c_Cytoplasm_init">0.0</Constant>
+        <Constant Name="S22n_Nucleus_init">0.0</Constant>
+        <Constant Name="S24c_Cytoplasm_init">0.0</Constant>
+        <Constant Name="S24n_Nucleus_init">0.0</Constant>
+        <Constant Name="S2c_Cytoplasm_init">0.0605899</Constant>
+        <Constant Name="S2n_Nucleus_init">0.0285148</Constant>
+        <Constant Name="S4c_Cytoplasm_init">0.050781</Constant>
+        <Constant Name="S4n_Nucleus_init">0.0507809</Constant>
+        <Constant Name="Size_Cytoplasm">200.0</Constant>
+        <Constant Name="Size_Extracellular_Space">1.0E7</Constant>
+        <Constant Name="Size_Membrane">200.0</Constant>
+        <Constant Name="Size_NM">100.0</Constant>
+        <Constant Name="Size_Nucleus">100.0</Constant>
+        <Constant Name="SurfToVol_Membrane">0.6666666666666666</Constant>
+        <Constant Name="SurfToVol_NM">1.0</Constant>
+        <Constant Name="TGFb_Extracellular_Space_init">0.01</Constant>
+        <Constant Name="VolFract_Cytoplasm">2.999910002699919E-5</Constant>
+        <Constant Name="VolFract_Nucleus">0.3333333333333333</Constant>
+        <Constant Name="Voltage_Membrane">0.0</Constant>
+        <Constant Name="Voltage_NM">0.0</Constant>
+        <VolumeVariable Name="pS2c_Cytoplasm" />
+        <VolumeVariable Name="pS2n_Nucleus" />
+        <VolumeVariable Name="R_Membrane" />
+        <VolumeVariable Name="Ract_Membrane" />
+        <VolumeVariable Name="Ractdeg_Cytoplasm" />
+        <VolumeVariable Name="Racti_Cytoplasm" />
+        <VolumeVariable Name="Ri_Cytoplasm" />
+        <VolumeVariable Name="S22c_Cytoplasm" />
+        <VolumeVariable Name="S22n_Nucleus" />
+        <VolumeVariable Name="S24c_Cytoplasm" />
+        <VolumeVariable Name="S24n_Nucleus" />
+        <VolumeVariable Name="S2n_Nucleus" />
+        <VolumeVariable Name="S4n_Nucleus" />
+        <Function Name="J_DephosSmad2">((PPase_Nucleus * Kf_DephosSmad2 * pS2n_Nucleus) - (PPase_Nucleus * Kr_DephosSmad2 * S2n_Nucleus))</Function>
+        <Function Name="J_Endocytosis_of_R">((Kf_Endocytosis_of_R * R_Membrane) - (Kr_Endocytosis_of_R * Ri_Cytoplasm))</Function>
+        <Function Name="J_Endocytosis_of_Ract">((Kf_Endocytosis_of_Ract * Ract_Membrane) - (Kr_Endocytosis_of_Ract * Racti_Cytoplasm))</Function>
+        <Function Name="J_LigandInducedDeg">((Kf_LigandInducedDeg * Ract_Membrane) - (Kr_LigandInducedDeg * Ractdeg_Cytoplasm))</Function>
+        <Function Name="J_nS22complexes">((Kf_nS22complexes * pow(pS2n_Nucleus,2.0)) - (Kr_nS22complexes * S22n_Nucleus))</Function>
+        <Function Name="J_nS24complexes">((S4n_Nucleus * Kf_nS24complexes * pS2n_Nucleus) - (Kr_nS24complexes * S24n_Nucleus))</Function>
+        <Function Name="J_PhosSmad2">((S2c_Cytoplasm * Kf_PhosSmad2 * Racti_Cytoplasm) - (Racti_Cytoplasm * Kr_PhosSmad2 * pS2c_Cytoplasm))</Function>
+        <Function Name="J_reaction0">((Kf_reaction0 * S22c_Cytoplasm) - (Kr_reaction0 * S22n_Nucleus))</Function>
+        <Function Name="J_reaction1">((Kf_reaction1 * S24c_Cytoplasm) - (Kr_reaction1 * S24n_Nucleus))</Function>
+        <Function Name="J_reaction2">((Kf_reaction2 * S2c_Cytoplasm) - (Kr_reaction2 * S2n_Nucleus))</Function>
+        <Function Name="J_reaction3">((Kf_reaction3 * S4c_Cytoplasm) - (Kr_reaction3 * S4n_Nucleus))</Function>
+        <Function Name="J_reaction4">((Kf_reaction4 * pS2c_Cytoplasm) - (Kr_reaction4 * pS2n_Nucleus))</Function>
+        <Function Name="J_Recycling_of_R">((Kf_Recycling_of_R * Ri_Cytoplasm) - (Kr_Recycling_of_R * R_Membrane))</Function>
+        <Function Name="J_Recycling_of_Ract">((Kf_Recycling_of_Ract * Racti_Cytoplasm) - (Kr_Recycling_of_Ract * Ract_Membrane))</Function>
+        <Function Name="J_S22complexes">((Kf_S22complexes * pow(pS2c_Cytoplasm,2.0)) - (Kr_S22complexes * S22c_Cytoplasm))</Function>
+        <Function Name="J_S24complexes">((S4c_Cytoplasm * Kf_S24complexes * pS2c_Cytoplasm) - (Kr_S24complexes * S24c_Cytoplasm))</Function>
+        <Function Name="J_TGFbBinding">((TGFb_Extracellular_Space * Kf_TGFbBinding * R_Membrane) - (Kr_TGFbBinding * Ract_Membrane))</Function>
+        <Function Name="K_PPase_Nucleus_total">(PPase_Nucleus_init * VolFract_Nucleus * VolFract_Cytoplasm)</Function>
+        <Function Name="K_S2c_Cytoplasm_total">((pS2n_Nucleus_init * VolFract_Nucleus * VolFract_Cytoplasm) + (2.0 * S22n_Nucleus_init * VolFract_Nucleus * VolFract_Cytoplasm) + (S2n_Nucleus_init * VolFract_Nucleus * VolFract_Cytoplasm) + (S24n_Nucleus_init * VolFract_Nucleus * VolFract_Cytoplasm) + (2.0 * S22c_Cytoplasm_init * (1.0 - VolFract_Nucleus) * VolFract_Cytoplasm) + (S24c_Cytoplasm_init * (1.0 - VolFract_Nucleus) * VolFract_Cytoplasm) + (S2c_Cytoplasm_init * (1.0 - VolFract_Nucleus) * VolFract_Cytoplasm) + (pS2c_Cytoplasm_init * (1.0 - VolFract_Nucleus) * VolFract_Cytoplasm))</Function>
+        <Function Name="K_S4c_Cytoplasm_total">((S4n_Nucleus_init * VolFract_Nucleus * VolFract_Cytoplasm) + (S24n_Nucleus_init * VolFract_Nucleus * VolFract_Cytoplasm) + (S4c_Cytoplasm_init * (1.0 - VolFract_Nucleus) * VolFract_Cytoplasm) + (S24c_Cytoplasm_init * (1.0 - VolFract_Nucleus) * VolFract_Cytoplasm))</Function>
+        <Function Name="K_TGFb_Extracellular_Space_total">((Ract_Membrane_init * SurfToVol_Membrane * VolFract_Cytoplasm * KMOLE) + (Ractdeg_Cytoplasm_init * (1.0 - VolFract_Nucleus) * VolFract_Cytoplasm) + ((1.0 - VolFract_Cytoplasm) * TGFb_Extracellular_Space_init) + (Racti_Cytoplasm_init * (1.0 - VolFract_Nucleus) * VolFract_Cytoplasm))</Function>
+        <Function Name="Kf_Endocytosis_of_R">Endo</Function>
+        <Function Name="Kf_Endocytosis_of_Ract">Endo</Function>
+        <Function Name="Kf_nS22complexes">kon</Function>
+        <Function Name="Kf_nS24complexes">kon</Function>
+        <Function Name="Kf_reaction0">(kin * CIF)</Function>
+        <Function Name="Kf_reaction1">(kin * CIF)</Function>
+        <Function Name="Kf_reaction2">kin</Function>
+        <Function Name="Kf_reaction3">kin</Function>
+        <Function Name="Kf_reaction4">kin</Function>
+        <Function Name="Kf_Recycling_of_R">Recyc</Function>
+        <Function Name="Kf_Recycling_of_Ract">Recyc</Function>
+        <Function Name="Kf_S22complexes">kon</Function>
+        <Function Name="Kf_S24complexes">kon</Function>
+        <Function Name="KFlux_Membrane_mapping_Cytoplasm">(SurfToVol_Membrane / (1.0 - VolFract_Nucleus))</Function>
+        <Function Name="KFlux_Membrane_mapping_Extracellular_Space">(SurfToVol_Membrane * VolFract_Cytoplasm / (1.0 - VolFract_Cytoplasm))</Function>
+        <Function Name="KFlux_NM_mapping_Cytoplasm">(SurfToVol_NM * VolFract_Nucleus / (1.0 - VolFract_Nucleus))</Function>
+        <Function Name="KFlux_NM_mapping_Nucleus">SurfToVol_NM</Function>
+        <Function Name="Kr_nS22complexes">koff</Function>
+        <Function Name="Kr_nS24complexes">koff</Function>
+        <Function Name="Kr_reaction2">kex</Function>
+        <Function Name="Kr_reaction3">kex</Function>
+        <Function Name="Kr_reaction4">kex</Function>
+        <Function Name="Kr_S22complexes">koff</Function>
+        <Function Name="Kr_S24complexes">koff</Function>
+        <Function Name="PPase_Nucleus">(K_PPase_Nucleus_total / (VolFract_Nucleus * VolFract_Cytoplasm))</Function>
+        <Function Name="S2c_Cytoplasm">(( - (pS2n_Nucleus * VolFract_Nucleus * VolFract_Cytoplasm) - (2.0 * S22n_Nucleus * VolFract_Nucleus * VolFract_Cytoplasm) - (S2n_Nucleus * VolFract_Nucleus * VolFract_Cytoplasm) - (S24n_Nucleus * VolFract_Nucleus * VolFract_Cytoplasm) - (2.0 * S22c_Cytoplasm * (1.0 - VolFract_Nucleus) * VolFract_Cytoplasm) - (S24c_Cytoplasm * (1.0 - VolFract_Nucleus) * VolFract_Cytoplasm) + K_S2c_Cytoplasm_total - (pS2c_Cytoplasm * (1.0 - VolFract_Nucleus) * VolFract_Cytoplasm)) / ((1.0 - VolFract_Nucleus) * VolFract_Cytoplasm))</Function>
+        <Function Name="S4c_Cytoplasm">(( - (S4n_Nucleus * VolFract_Nucleus * VolFract_Cytoplasm) - (S24n_Nucleus * VolFract_Nucleus * VolFract_Cytoplasm) + K_S4c_Cytoplasm_total - (S24c_Cytoplasm * (1.0 - VolFract_Nucleus) * VolFract_Cytoplasm)) / ((1.0 - VolFract_Nucleus) * VolFract_Cytoplasm))</Function>
+        <Function Name="TGFb_Extracellular_Space">(( - (Ract_Membrane * SurfToVol_Membrane * VolFract_Cytoplasm * KMOLE) - (Ractdeg_Cytoplasm * (1.0 - VolFract_Nucleus) * VolFract_Cytoplasm) + K_TGFb_Extracellular_Space_total - (Racti_Cytoplasm * (1.0 - VolFract_Nucleus) * VolFract_Cytoplasm)) / (1.0 - VolFract_Cytoplasm))</Function>
+        <CompartmentSubDomain Name="Compartment">
+          <BoundaryType Boundary="Xm" Type="Value" />
+          <BoundaryType Boundary="Xp" Type="Value" />
+          <BoundaryType Boundary="Ym" Type="Value" />
+          <BoundaryType Boundary="Yp" Type="Value" />
+          <BoundaryType Boundary="Zm" Type="Value" />
+          <BoundaryType Boundary="Zp" Type="Value" />
+          <OdeEquation Name="Racti_Cytoplasm" SolutionType="Unknown">
+            <Rate>((KFlux_Membrane_mapping_Cytoplasm * KMOLE * J_Endocytosis_of_Ract) - (KFlux_Membrane_mapping_Cytoplasm * KMOLE * J_Recycling_of_Ract))</Rate>
+            <Initial>Racti_Cytoplasm_init</Initial>
+          </OdeEquation>
+          <OdeEquation Name="Ri_Cytoplasm" SolutionType="Unknown">
+            <Rate>((KFlux_Membrane_mapping_Cytoplasm * KMOLE * J_Endocytosis_of_R) - (KFlux_Membrane_mapping_Cytoplasm * KMOLE * J_Recycling_of_R))</Rate>
+            <Initial>Ri_Cytoplasm_init</Initial>
+          </OdeEquation>
+          <OdeEquation Name="pS2c_Cytoplasm" SolutionType="Unknown">
+            <Rate>( - (2.0 * J_S22complexes) - (KFlux_NM_mapping_Cytoplasm * KMOLE * J_reaction4) + J_PhosSmad2 - J_S24complexes)</Rate>
+            <Initial>pS2c_Cytoplasm_init</Initial>
+          </OdeEquation>
+          <OdeEquation Name="S24c_Cytoplasm" SolutionType="Unknown">
+            <Rate>(J_S24complexes - (KFlux_NM_mapping_Cytoplasm * KMOLE * J_reaction1))</Rate>
+            <Initial>S24c_Cytoplasm_init</Initial>
+          </OdeEquation>
+          <OdeEquation Name="S22c_Cytoplasm" SolutionType="Unknown">
+            <Rate>(J_S22complexes - (KFlux_NM_mapping_Cytoplasm * KMOLE * J_reaction0))</Rate>
+            <Initial>S22c_Cytoplasm_init</Initial>
+          </OdeEquation>
+          <OdeEquation Name="Ractdeg_Cytoplasm" SolutionType="Unknown">
+            <Rate>(KFlux_Membrane_mapping_Cytoplasm * KMOLE * J_LigandInducedDeg)</Rate>
+            <Initial>Ractdeg_Cytoplasm_init</Initial>
+          </OdeEquation>
+          <OdeEquation Name="S24n_Nucleus" SolutionType="Unknown">
+            <Rate>(J_nS24complexes + (KFlux_NM_mapping_Nucleus * KMOLE * J_reaction1))</Rate>
+            <Initial>S24n_Nucleus_init</Initial>
+          </OdeEquation>
+          <OdeEquation Name="S2n_Nucleus" SolutionType="Unknown">
+            <Rate>((KFlux_NM_mapping_Nucleus * KMOLE * J_reaction2) + J_DephosSmad2)</Rate>
+            <Initial>S2n_Nucleus_init</Initial>
+          </OdeEquation>
+          <OdeEquation Name="S4n_Nucleus" SolutionType="Unknown">
+            <Rate>((KFlux_NM_mapping_Nucleus * KMOLE * J_reaction3) - J_nS24complexes)</Rate>
+            <Initial>S4n_Nucleus_init</Initial>
+          </OdeEquation>
+          <OdeEquation Name="S22n_Nucleus" SolutionType="Unknown">
+            <Rate>(J_nS22complexes + (KFlux_NM_mapping_Nucleus * KMOLE * J_reaction0))</Rate>
+            <Initial>S22n_Nucleus_init</Initial>
+          </OdeEquation>
+          <OdeEquation Name="pS2n_Nucleus" SolutionType="Unknown">
+            <Rate>( - (2.0 * J_nS22complexes) - J_DephosSmad2 + (KFlux_NM_mapping_Nucleus * KMOLE * J_reaction4) - J_nS24complexes)</Rate>
+            <Initial>pS2n_Nucleus_init</Initial>
+          </OdeEquation>
+          <OdeEquation Name="R_Membrane" SolutionType="Unknown">
+            <Rate>((LumpedJ / Size_Membrane) + J_Recycling_of_R - J_TGFbBinding - J_Endocytosis_of_R)</Rate>
+            <Initial>R_Membrane_init</Initial>
+          </OdeEquation>
+          <OdeEquation Name="Ract_Membrane" SolutionType="Unknown">
+            <Rate>(J_Recycling_of_Ract - J_LigandInducedDeg + J_TGFbBinding - J_Endocytosis_of_Ract)</Rate>
+            <Initial>Ract_Membrane_init</Initial>
+          </OdeEquation>
+        </CompartmentSubDomain>
+        <Version Name="Modified Smad Signaling w/TGFR endocytosis_generated" KeyValue="49872610" BranchId="49871280" Archived="0" Date="10-Oct-2010 21:18:04" FromVersionable="false">
+          <Owner Name="ehewett" Identifier="48847528" />
+          <GroupAccess Type="1" />
+        </Version>
+      </MathDescription>
+      <Simulation Name="Simulation2">
+        <SolverTaskDescription TaskType="Unsteady" UseSymbolicJacobian="false" Solver="Runge-Kutta-Fehlberg (Fifth Order, Variable Time Step)">
+          <TimeBound StartTime="0.0" EndTime="12000.0" />
+          <TimeStep DefaultTime="0.1" MinTime="1.0E-8" MaxTime="1.0" />
+          <ErrorTolerance Absolut="1.0E-9" Relative="1.0E-9" />
+          <OutputOptions KeepEvery="10" KeepAtMost="1000" />
+          <NumberProcessors>1</NumberProcessors>
+        </SolverTaskDescription>
+        <MathOverrides>
+          <Constant Name="Recyc">0.5</Constant>
+          <Constant Name="Endo">0.05</Constant>
+          <Constant Name="Kf_LigandInducedDeg">0.066667</Constant>
+        </MathOverrides>
+        <Version Name="Simulation2" KeyValue="49872816" BranchId="49871488" Archived="0" Date="10-Oct-2010 21:18:05" FromVersionable="false">
+          <Owner Name="ehewett" Identifier="48847528" />
+          <GroupAccess Type="1" />
+        </Version>
+      </Simulation>
+      <Simulation Name="Simulation3">
+        <SolverTaskDescription TaskType="Unsteady" UseSymbolicJacobian="false" Solver="Runge-Kutta-Fehlberg (Fifth Order, Variable Time Step)">
+          <TimeBound StartTime="0.0" EndTime="24000.0" />
+          <TimeStep DefaultTime="0.1" MinTime="1.0E-8" MaxTime="1.0" />
+          <ErrorTolerance Absolut="1.0E-9" Relative="1.0E-9" />
+          <OutputOptions KeepEvery="10" KeepAtMost="1000" />
+          <NumberProcessors>1</NumberProcessors>
+        </SolverTaskDescription>
+        <MathOverrides />
+        <Version Name="Simulation3" KeyValue="49872867" BranchId="49872548" Archived="0" Date="10-Oct-2010 21:23:39" FromVersionable="false">
+          <Owner Name="ehewett" Identifier="48847528" />
+          <GroupAccess Type="1" />
+        </Version>
+      </Simulation>
+      <Version Name="Modified Smad Signaling w/TGFR endocytosis" KeyValue="49872766" BranchId="49871437" Archived="0" Date="10-Oct-2010 21:18:05" FromVersionable="false">
+        <Owner Name="ehewett" Identifier="48847528" />
+        <GroupAccess Type="1" />
+      </Version>
+      <MicroscopeMeasurement Name="fluor">
+        <ConvolutionKernel Type="ProjectionZKernel" />
+      </MicroscopeMeasurement>
+    </SimulationSpec>
+    <Version Name="SMAD shuttling and TGF endocytosis" KeyValue="49872869" BranchId="49869433" Archived="0" Date="10-Oct-2010 21:23:39" FromVersionable="false">
+      <Owner Name="ehewett" Identifier="48847528" />
+      <GroupAccess Type="0" />
+    </Version>
+    <pathwayModel>
+      <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:bp="http://www.biopax.org/release/biopax-level3.owl#" version="3.0" />
+    </pathwayModel>
+    <relationshipModel>
+      <RMNS version="3.0" />
+    </relationshipModel>
+    <vcmetadata>
+      <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" />
+      <nonrdfAnnotationList />
+      <uriBindingList />
+    </vcmetadata>
+  </BioModel>
+</vcml>
+

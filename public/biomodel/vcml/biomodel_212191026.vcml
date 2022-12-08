@@ -1,0 +1,1684 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--This biomodel was generated in VCML Version Alpha_Version_7.4.0_build_87-->
+<vcml xmlns="http://sourceforge.net/projects/vcell/vcml" Version="Alpha_Version_7.4.0_build_87">
+  <BioModel Name="Orton2009 - ModelBrick_Ras">
+    <Annotation>cloned from 'Orton2009 - ModelBrick_Ras' owned by user mblinov
+cloned from 'Orton2009 - new' owned by user cab15130</Annotation>
+    <Model Name="unnamed">
+      <Annotation>cloned from 'unnamed' owned by user mblinov
+cloned from 'unnamed' owned by user cab15130</Annotation>
+      <ModelParameters>
+        <Parameter Name="km_Ras_act" Role="user defined" Unit="mmol.ml-1">35954.3</Parameter>
+        <Parameter Name="Kcat_Ras_act" Role="user defined" Unit="min-1">32.344</Parameter>
+        <Parameter Name="km_Ras_deact" Role="user defined" Unit="mmol.ml-1">1432410.0</Parameter>
+        <Parameter Name="Kcat_Ras_deact" Role="user defined" Unit="min-1">1509.36</Parameter>
+      </ModelParameters>
+      <Compound Name="species_2">
+        <Annotation>species_2</Annotation>
+      </Compound>
+      <Compound Name="species_4">
+        <Annotation>species_4</Annotation>
+      </Compound>
+      <Compound Name="species_5">
+        <Annotation>species_5</Annotation>
+      </Compound>
+      <Compound Name="species_28">
+        <Annotation>species_28</Annotation>
+      </Compound>
+      <Feature Name="compartment" KeyValue="212191001" />
+      <LocalizedCompound Name="SosActive" SbmlName="SosActive" CompoundRef="species_2" Structure="compartment" OverrideName="true" KeyValue="212191003">
+        <SpeciesPattern>
+          <MolecularTypePattern Index="1">
+            <MolecularType Name="SOS" />
+            <ComponentPattern MolecularComponent="Active" ComponentStatePattern="yes" BondType="-" />
+          </MolecularTypePattern>
+        </SpeciesPattern>
+      </LocalizedCompound>
+      <LocalizedCompound Name="RasActive" SbmlName="RasActive" CompoundRef="species_4" Structure="compartment" OverrideName="true" KeyValue="212191004">
+        <SpeciesPattern>
+          <MolecularTypePattern Index="1">
+            <MolecularType Name="Ras" />
+            <ComponentPattern MolecularComponent="Active" ComponentStatePattern="yes" BondType="-" />
+          </MolecularTypePattern>
+        </SpeciesPattern>
+      </LocalizedCompound>
+      <LocalizedCompound Name="RasInactive" SbmlName="RasInactive" CompoundRef="species_5" Structure="compartment" OverrideName="true" KeyValue="212191005">
+        <SpeciesPattern>
+          <MolecularTypePattern Index="1">
+            <MolecularType Name="Ras" />
+            <ComponentPattern MolecularComponent="Active" ComponentStatePattern="no" BondType="-" />
+          </MolecularTypePattern>
+        </SpeciesPattern>
+      </LocalizedCompound>
+      <LocalizedCompound Name="RasGapActive" SbmlName="RasGapActive" CompoundRef="species_28" Structure="compartment" OverrideName="true" KeyValue="212191006">
+        <SpeciesPattern>
+          <MolecularTypePattern Index="1">
+            <MolecularType Name="Ras" />
+            <ComponentPattern MolecularComponent="Active" ComponentStatePattern="yes" BondType="-" />
+          </MolecularTypePattern>
+          <MolecularTypePattern Index="2">
+            <MolecularType Name="GAP" />
+          </MolecularTypePattern>
+        </SpeciesPattern>
+      </LocalizedCompound>
+      <SimpleReaction Structure="compartment" Name="Ras_Activation" Reversible="false" FluxOption="MolecularOnly" KeyValue="212191007" SbmlName="Ras_Activation">
+        <Reactant LocalizedCompoundRef="RasInactive" Stoichiometry="1" KeyValue="212191008" />
+        <Product LocalizedCompoundRef="RasActive" Stoichiometry="1" KeyValue="212191009" />
+        <Modifier LocalizedCompoundRef="SosActive" />
+        <Kinetics KineticsType="GeneralKinetics">
+          <Parameter Name="J" Role="reaction rate" Unit="mmol.ml-1.min-1">(Kcat_Ras_act * SosActive * RasInactive / (km_Ras_act + RasInactive))</Parameter>
+        </Kinetics>
+      </SimpleReaction>
+      <SimpleReaction Structure="compartment" Name="Ras_Deactivation" Reversible="false" FluxOption="MolecularOnly" KeyValue="212191011" SbmlName="Ras_Deactivation">
+        <Reactant LocalizedCompoundRef="RasActive" Stoichiometry="1" KeyValue="212191012" />
+        <Product LocalizedCompoundRef="RasInactive" Stoichiometry="1" KeyValue="212191013" />
+        <Modifier LocalizedCompoundRef="RasGapActive" />
+        <Kinetics KineticsType="GeneralKinetics">
+          <Parameter Name="J" Role="reaction rate" Unit="mmol.ml-1.min-1">(Kcat_Ras_deact * RasGapActive * RasActive / (km_Ras_deact + RasActive))</Parameter>
+        </Kinetics>
+      </SimpleReaction>
+      <RbmModelContainer>
+        <MolecularTypeList>
+          <MolecularType Name="SOS" AnchorAll="true">
+            <MolecularComponent Name="Active" Index="1">
+              <AllowableState Name="yes" />
+              <AllowableState Name="no" />
+            </MolecularComponent>
+          </MolecularType>
+          <MolecularType Name="Ras" AnchorAll="true">
+            <MolecularComponent Name="Active" Index="1">
+              <AllowableState Name="yes" />
+              <AllowableState Name="no" />
+            </MolecularComponent>
+          </MolecularType>
+          <MolecularType Name="GAP" AnchorAll="true" />
+        </MolecularTypeList>
+        <RbmObservableList>
+          <Observable Name="O0_SOS_tot" ObservableType="Molecules" Sequence="Multimolecular" LengthEqual="2" LengthGreater="1" Structure="compartment">
+            <SpeciesPattern>
+              <MolecularTypePattern Index="1">
+                <MolecularType Name="SOS" />
+                <ComponentPattern MolecularComponent="Active" Any="true" BondType="?" />
+              </MolecularTypePattern>
+            </SpeciesPattern>
+          </Observable>
+          <Observable Name="O0_Ras_tot" ObservableType="Molecules" Sequence="Multimolecular" LengthEqual="2" LengthGreater="1" Structure="compartment">
+            <SpeciesPattern>
+              <MolecularTypePattern Index="1">
+                <MolecularType Name="Ras" />
+                <ComponentPattern MolecularComponent="Active" Any="true" BondType="?" />
+              </MolecularTypePattern>
+            </SpeciesPattern>
+          </Observable>
+          <Observable Name="O0_GAP_tot" ObservableType="Molecules" Sequence="Multimolecular" LengthEqual="2" LengthGreater="1" Structure="compartment">
+            <SpeciesPattern>
+              <MolecularTypePattern Index="1">
+                <MolecularType Name="GAP" />
+              </MolecularTypePattern>
+            </SpeciesPattern>
+          </Observable>
+        </RbmObservableList>
+      </RbmModelContainer>
+      <Diagram Name="compartment_0" Structure="compartment">
+        <SimpleReactionShape NodeReferenceModeAttrTag="full" SimpleReactionRef="Ras_Deactivation" LocationX="246" LocationY="30" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="full" SimpleReactionRef="Ras_Activation" LocationX="126" LocationY="32" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="RasActive" LocationX="183" LocationY="47" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="RasInactive" LocationX="179" LocationY="11" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="SosActive" LocationX="70" LocationY="32" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="RasGapActive" LocationX="327" LocationY="39" />
+      </Diagram>
+      <Version Name="unnamed" KeyValue="212190995" BranchId="212139013" Archived="0" Date="29-Jul-2021 15:25:43" FromVersionable="false">
+        <Owner Name="shreyasinha28" Identifier="210593500" />
+        <GroupAccess Type="1" />
+        <Annotation>cloned from 'unnamed' owned by user mblinov
+cloned from 'unnamed' owned by user cab15130</Annotation>
+      </Version>
+      <ModelUnitSystem VolumeSubstanceUnit="mmol" MembraneSubstanceUnit="mmol" LumpedReactionSubstanceUnit="mmol" VolumeUnit="ml" AreaUnit="m2" LengthUnit="m" TimeUnit="min" />
+    </Model>
+    <SimulationSpec Name="Deterministic" Stochastic="false" UseConcentration="true" RuleBased="false" MassConservationModelReduction="false" InsufficientIterations="false" InsufficientMaxMolecules="false">
+      <NetworkConstraints RbmMaxIteration="3" RbmMaxMoleculesPerSpecies="10" RbmSpeciesLimit="800" RbmReactionsLimit="2500">
+        <MaxStoichiometry MolecularType="SOS" Integer="100" />
+        <MaxStoichiometry MolecularType="Ras" Integer="100" />
+        <MaxStoichiometry MolecularType="GAP" Integer="100" />
+      </NetworkConstraints>
+      <Annotation>cloned from 'Deterministic' owned by user mblinov
+cloned from 'Deterministic' owned by user cab15130</Annotation>
+      <Geometry Name="Compartmental713262596" Dimension="0">
+        <Annotation>cloned from 'Compartmental713262596' owned by user mblinov
+cloned from 'Compartmental' owned by user cab15130</Annotation>
+        <Extent X="10.0" Y="10.0" Z="10.0" />
+        <Origin X="0.0" Y="0.0" Z="0.0" />
+        <SubVolume Name="Compartment" Handle="0" Type="Compartmental" KeyValue="212139008" />
+        <Version Name="Compartmental713262596" KeyValue="212139004" BranchId="212139005" Archived="0" Date="28-Jul-2021 17:49:09" FromVersionable="false">
+          <Owner Name="shreyasinha28" Identifier="210593500" />
+          <GroupAccess Type="1" />
+          <Annotation>cloned from 'Compartmental713262596' owned by user mblinov
+cloned from 'Compartmental' owned by user cab15130</Annotation>
+        </Version>
+      </Geometry>
+      <GeometryContext>
+        <FeatureMapping Feature="compartment" GeometryClass="Compartment" SubVolume="Compartment" Size="1.0">
+          <BoundariesTypes Xm="Flux" Xp="Flux" Ym="Flux" Yp="Flux" Zm="Flux" Zp="Flux" />
+        </FeatureMapping>
+      </GeometryContext>
+      <ReactionContext>
+        <LocalizedCompoundSpec LocalizedCompoundRef="SosActive" ForceConstant="true" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>0.0</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="RasActive" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>0.0</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="RasInactive" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>120000.0</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="RasGapActive" ForceConstant="true" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>120000.0</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <ReactionSpec ReactionStepRef="Ras_Activation" ReactionMapping="included" />
+        <ReactionSpec ReactionStepRef="Ras_Deactivation" ReactionMapping="included" />
+      </ReactionContext>
+      <MathDescription Name="Deterministic_generated">
+        <Annotation>cloned from 'Deterministic_generated' owned by user mblinov
+cloned from 'Deterministic_generated' owned by user cab15130</Annotation>
+        <Constant Name="_F_">96485.3321</Constant>
+        <Constant Name="_F_nmol_">9.64853321E-5</Constant>
+        <Constant Name="_K_GHK_">1.0E-9</Constant>
+        <Constant Name="_N_pmol_">6.02214179E11</Constant>
+        <Constant Name="_PI_">3.141592653589793</Constant>
+        <Constant Name="_R_">8314.46261815</Constant>
+        <Constant Name="_T_">300.0</Constant>
+        <Constant Name="K_millivolts_per_volt">1000.0</Constant>
+        <Constant Name="Kcat_Ras_act">32.344</Constant>
+        <Constant Name="Kcat_Ras_deact">1509.36</Constant>
+        <Constant Name="km_Ras_act">35954.3</Constant>
+        <Constant Name="km_Ras_deact">1432410.0</Constant>
+        <Constant Name="KMOLE">0.001660538783162726</Constant>
+        <Constant Name="RasActive_init_mmol_ml_1">0.0</Constant>
+        <Constant Name="RasGapActive_init_mmol_ml_1">120000.0</Constant>
+        <Constant Name="RasInactive_init_mmol_ml_1">120000.0</Constant>
+        <Constant Name="Size_compartment">1.0</Constant>
+        <Constant Name="SosActive_init_mmol_ml_1">0.0</Constant>
+        <VolumeVariable Name="RasActive" Domain="Compartment" />
+        <VolumeVariable Name="RasInactive" Domain="Compartment" />
+        <Function Name="J_Ras_Activation" Domain="Compartment">(Kcat_Ras_act * SosActive * RasInactive / (km_Ras_act + RasInactive))</Function>
+        <Function Name="J_Ras_Deactivation" Domain="Compartment">(Kcat_Ras_deact * RasGapActive * RasActive / (km_Ras_deact + RasActive))</Function>
+        <Function Name="RasGapActive" Domain="Compartment">RasGapActive_init_mmol_ml_1</Function>
+        <Function Name="SosActive" Domain="Compartment">((40000.0 * t * (t &lt; 0.5)) + (((t &gt;= 0.5) * (t &lt;= 10.0)) * (( - 2080.0 * t) + 21040.0)) + (((t &gt;= 10.0) * (t &lt; 20.0)) * (4587.0 * (1.0 - (0.25 * t)))))</Function>
+        <CompartmentSubDomain Name="Compartment">
+          <BoundaryType Boundary="Xm" Type="Value" />
+          <BoundaryType Boundary="Xp" Type="Value" />
+          <BoundaryType Boundary="Ym" Type="Value" />
+          <BoundaryType Boundary="Yp" Type="Value" />
+          <BoundaryType Boundary="Zm" Type="Value" />
+          <BoundaryType Boundary="Zp" Type="Value" />
+          <OdeEquation Name="RasActive" SolutionType="Unknown">
+            <Rate>(J_Ras_Activation - J_Ras_Deactivation)</Rate>
+            <Initial>RasActive_init_mmol_ml_1</Initial>
+          </OdeEquation>
+          <OdeEquation Name="RasInactive" SolutionType="Unknown">
+            <Rate>( - J_Ras_Activation + J_Ras_Deactivation)</Rate>
+            <Initial>RasInactive_init_mmol_ml_1</Initial>
+          </OdeEquation>
+        </CompartmentSubDomain>
+        <Version Name="Deterministic_generated" KeyValue="212139819" BranchId="212139010" Archived="0" Date="28-Jul-2021 18:00:39" FromVersionable="false">
+          <Owner Name="shreyasinha28" Identifier="210593500" />
+          <GroupAccess Type="1" />
+          <Annotation>cloned from 'Deterministic_generated' owned by user mblinov
+cloned from 'Deterministic_generated' owned by user cab15130</Annotation>
+        </Version>
+      </MathDescription>
+      <Simulation Name="WT">
+        <Annotation>cloned from 'WT' owned by user mblinov
+cloned from '4D' owned by user cab15130</Annotation>
+        <SolverTaskDescription TaskType="Unsteady" UseSymbolicJacobian="false" Solver="Combined Stiff Solver (IDA/CVODE)">
+          <TimeBound StartTime="0.0" EndTime="60.0" />
+          <TimeStep DefaultTime="0.1" MinTime="1.0E-8" MaxTime="1.0" />
+          <ErrorTolerance Absolut="1.0E-9" Relative="1.0E-9" />
+          <OutputOptions KeepEvery="1" KeepAtMost="1000" />
+          <NumberProcessors>1</NumberProcessors>
+        </SolverTaskDescription>
+        <MathOverrides />
+        <Version Name="WT" KeyValue="212139852" BranchId="212139045" Archived="0" Date="28-Jul-2021 18:00:39" FromVersionable="false">
+          <Owner Name="shreyasinha28" Identifier="210593500" />
+          <GroupAccess Type="1" />
+          <Annotation>cloned from 'WT' owned by user mblinov
+cloned from '4D' owned by user cab15130</Annotation>
+        </Version>
+      </Simulation>
+      <AssignmentRules>
+        <AssignmentRule Name="assignmentRule0" AssignmentRuleVariable="SosActive">((40000.0 * t * (t &lt; 0.5)) + (((t &gt;= 0.5) * (t &lt;= 10.0)) * (( - 2080.0 * t) + 21040.0)) + (((t &gt;= 10.0) * (t &lt; 20.0)) * (4587.0 * (1.0 - (0.25 * t)))))</AssignmentRule>
+      </AssignmentRules>
+      <Version Name="Deterministic" KeyValue="212191017" BranchId="212139035" Archived="0" Date="29-Jul-2021 15:25:43" FromVersionable="false">
+        <Owner Name="shreyasinha28" Identifier="210593500" />
+        <GroupAccess Type="1" />
+        <Annotation>cloned from 'Deterministic' owned by user mblinov
+cloned from 'Deterministic' owned by user cab15130</Annotation>
+      </Version>
+      <MicroscopeMeasurement Name="fluor">
+        <ConvolutionKernel Type="ProjectionZKernel" />
+      </MicroscopeMeasurement>
+    </SimulationSpec>
+    <Version Name="Orton2009 - ModelBrick_Ras" KeyValue="212191026" BranchId="212139048" Archived="0" Date="29-Jul-2021 15:25:43" FromVersionable="false">
+      <Owner Name="shreyasinha28" Identifier="210593500" />
+      <GroupAccess Type="0" />
+      <Annotation>cloned from 'Orton2009 - ModelBrick_Ras' owned by user mblinov
+cloned from 'Orton2009 - new' owned by user cab15130</Annotation>
+    </Version>
+    <pathwayModel>
+      <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:bp="http://www.biopax.org/release/biopax-level3.owl#" version="3.0">
+        <DiagramObjectsID xmlns="">BIOMODEL_species_4</DiagramObjectsID>
+        <DiagramObjectsID xmlns="">BIOMODEL_species_3</DiagramObjectsID>
+        <DiagramObjectsID xmlns="">BIOMODEL_species_2</DiagramObjectsID>
+        <DiagramObjectsID xmlns="">BIOMODEL_species_30</DiagramObjectsID>
+        <DiagramObjectsID xmlns="">BIOMODEL_species_1</DiagramObjectsID>
+        <DiagramObjectsID xmlns="">BIOMODEL_reaction_21</DiagramObjectsID>
+        <DiagramObjectsID xmlns="">BIOMODEL_species_8</DiagramObjectsID>
+        <DiagramObjectsID xmlns="">BIOMODEL_species_7</DiagramObjectsID>
+        <DiagramObjectsID xmlns="">BIOMODEL_reaction_20</DiagramObjectsID>
+        <DiagramObjectsID xmlns="">BIOMODEL_species_6</DiagramObjectsID>
+        <DiagramObjectsID xmlns="">BIOMODEL_species_5</DiagramObjectsID>
+        <DiagramObjectsID xmlns="">BIOMODEL_reaction_25</DiagramObjectsID>
+        <DiagramObjectsID xmlns="">BIOMODEL_reaction_24</DiagramObjectsID>
+        <DiagramObjectsID xmlns="">BIOMODEL_reaction_23</DiagramObjectsID>
+        <DiagramObjectsID xmlns="">BIOMODEL_species_9</DiagramObjectsID>
+        <DiagramObjectsID xmlns="">BIOMODEL_reaction_22</DiagramObjectsID>
+        <DiagramObjectsID xmlns="">BIOMODEL_reaction_29</DiagramObjectsID>
+        <DiagramObjectsID xmlns="">BIOMODEL_reaction_28</DiagramObjectsID>
+        <DiagramObjectsID xmlns="">BIOMODEL_reaction_27</DiagramObjectsID>
+        <DiagramObjectsID xmlns="">BIOMODEL_reaction_26</DiagramObjectsID>
+        <DiagramObjectsID xmlns="">BIOMODEL_reaction_19</DiagramObjectsID>
+        <DiagramObjectsID xmlns="">BIOMODEL_species_29</DiagramObjectsID>
+        <DiagramObjectsID xmlns="">BIOMODEL_species_26</DiagramObjectsID>
+        <DiagramObjectsID xmlns="">BIOMODEL_species_25</DiagramObjectsID>
+        <DiagramObjectsID xmlns="">BIOMODEL_species_28</DiagramObjectsID>
+        <DiagramObjectsID xmlns="">BIOMODEL_species_27</DiagramObjectsID>
+        <DiagramObjectsID xmlns="">BIOMODEL_species_22</DiagramObjectsID>
+        <DiagramObjectsID xmlns="">BIOMODEL_species_0</DiagramObjectsID>
+        <DiagramObjectsID xmlns="">BIOMODEL_species_21</DiagramObjectsID>
+        <DiagramObjectsID xmlns="">BIOMODEL_species_24</DiagramObjectsID>
+        <DiagramObjectsID xmlns="">BIOMODEL_species_23</DiagramObjectsID>
+        <DiagramObjectsID xmlns="">BIOMODEL_reaction_2</DiagramObjectsID>
+        <DiagramObjectsID xmlns="">BIOMODEL_reaction_3</DiagramObjectsID>
+        <DiagramObjectsID xmlns="">BIOMODEL_reaction_0</DiagramObjectsID>
+        <DiagramObjectsID xmlns="">BIOMODEL_reaction_1</DiagramObjectsID>
+        <DiagramObjectsID xmlns="">BIOMODEL_reaction_6</DiagramObjectsID>
+        <DiagramObjectsID xmlns="">BIOMODEL_reaction_10</DiagramObjectsID>
+        <DiagramObjectsID xmlns="">BIOMODEL_reaction_7</DiagramObjectsID>
+        <DiagramObjectsID xmlns="">BIOMODEL_reaction_4</DiagramObjectsID>
+        <DiagramObjectsID xmlns="">BIOMODEL_reaction_5</DiagramObjectsID>
+        <DiagramObjectsID xmlns="">BIOMODEL_reaction_14</DiagramObjectsID>
+        <DiagramObjectsID xmlns="">BIOMODEL_reaction_13</DiagramObjectsID>
+        <DiagramObjectsID xmlns="">BIOMODEL_reaction_12</DiagramObjectsID>
+        <DiagramObjectsID xmlns="">BIOMODEL_reaction_11</DiagramObjectsID>
+        <DiagramObjectsID xmlns="">BIOMODEL_reaction_18</DiagramObjectsID>
+        <DiagramObjectsID xmlns="">BIOMODEL_reaction_17</DiagramObjectsID>
+        <DiagramObjectsID xmlns="">BIOMODEL_reaction_16</DiagramObjectsID>
+        <DiagramObjectsID xmlns="">BIOMODEL_reaction_15</DiagramObjectsID>
+        <DiagramObjectsID xmlns="">BIOMODEL_reaction_8</DiagramObjectsID>
+        <DiagramObjectsID xmlns="">BIOMODEL_reaction_9</DiagramObjectsID>
+        <DiagramObjectsID xmlns="">BIOMODEL_species_20</DiagramObjectsID>
+        <DiagramObjectsID xmlns="">BIOMODEL_reaction_30</DiagramObjectsID>
+        <DiagramObjectsID xmlns="">BIOMODEL_species_19</DiagramObjectsID>
+        <DiagramObjectsID xmlns="">BIOMODEL_species_18</DiagramObjectsID>
+        <DiagramObjectsID xmlns="">BIOMODEL_species_15</DiagramObjectsID>
+        <DiagramObjectsID xmlns="">BIOMODEL_species_14</DiagramObjectsID>
+        <DiagramObjectsID xmlns="">BIOMODEL_species_17</DiagramObjectsID>
+        <DiagramObjectsID xmlns="">BIOMODEL_species_16</DiagramObjectsID>
+        <DiagramObjectsID xmlns="">BIOMODEL_species_11</DiagramObjectsID>
+        <DiagramObjectsID xmlns="">BIOMODEL_species_10</DiagramObjectsID>
+        <DiagramObjectsID xmlns="">BIOMODEL_species_13</DiagramObjectsID>
+        <DiagramObjectsID xmlns="">BIOMODEL_species_12</DiagramObjectsID>
+        <bp:BiochemicalReaction rdf:nodeID="BIOMODEL_reaction_9">
+          <bp:name rdf:datatype="http://www.w3.org/2001/XMLSchema#string">reaction_9</bp:name>
+          <bp:xref rdf:nodeID="sbo_SBO:0000029" />
+        </bp:BiochemicalReaction>
+        <bp:BiochemicalReaction rdf:nodeID="BIOMODEL_reaction_28">
+          <bp:name rdf:datatype="http://www.w3.org/2001/XMLSchema#string">reaction_28</bp:name>
+          <bp:xref rdf:nodeID="sbo_SBO:0000001" />
+        </bp:BiochemicalReaction>
+        <bp:PhysicalEntity rdf:nodeID="BIOMODEL_species_26">
+          <bp:name rdf:datatype="http://www.w3.org/2001/XMLSchema#string">species_26</bp:name>
+          <bp:xref rdf:nodeID="GENE_ONTOLOGY_0000159" />
+        </bp:PhysicalEntity>
+        <bp:BiochemicalReaction rdf:nodeID="BIOMODEL_reaction_11">
+          <bp:name rdf:datatype="http://www.w3.org/2001/XMLSchema#string">reaction_11</bp:name>
+          <bp:xref rdf:nodeID="sbo_SBO:0000029" />
+        </bp:BiochemicalReaction>
+        <bp:PhysicalEntity rdf:nodeID="BIOMODEL_species_6">
+          <bp:name rdf:datatype="http://www.w3.org/2001/XMLSchema#string">species_6</bp:name>
+          <bp:xref rdf:nodeID="uniprot_P11345" />
+        </bp:PhysicalEntity>
+        <bp:BiochemicalReaction rdf:nodeID="BIOMODEL_reaction_7">
+          <bp:name rdf:datatype="http://www.w3.org/2001/XMLSchema#string">reaction_7</bp:name>
+          <bp:xref rdf:nodeID="sbo_SBO:0000029" />
+        </bp:BiochemicalReaction>
+        <bp:BiochemicalReaction rdf:nodeID="BIOMODEL_reaction_16">
+          <bp:name rdf:datatype="http://www.w3.org/2001/XMLSchema#string">reaction_16</bp:name>
+          <bp:xref rdf:nodeID="sbo_SBO:0000012" />
+        </bp:BiochemicalReaction>
+        <bp:BiochemicalReaction rdf:nodeID="BIOMODEL_reaction_29">
+          <bp:name rdf:datatype="http://www.w3.org/2001/XMLSchema#string">reaction_29</bp:name>
+          <bp:xref rdf:nodeID="sbo_SBO:0000029" />
+        </bp:BiochemicalReaction>
+        <bp:UnificationXref rdf:nodeID="sbo_SBO:0000001">
+          <bp:db rdf:datatype="http://www.w3.org/2001/XMLSchema#string">SBO</bp:db>
+          <bp:id rdf:datatype="http://www.w3.org/2001/XMLSchema#string">SBO:0000001</bp:id>
+        </bp:UnificationXref>
+        <bp:PhysicalEntity rdf:nodeID="BIOMODEL_species_28">
+          <bp:name rdf:datatype="http://www.w3.org/2001/XMLSchema#string">species_28</bp:name>
+          <bp:xref rdf:nodeID="uniprot_P50904" />
+        </bp:PhysicalEntity>
+        <bp:UnificationXref rdf:nodeID="uniprot_P50904">
+          <bp:db rdf:datatype="http://www.w3.org/2001/XMLSchema#string">UNIPROT</bp:db>
+          <bp:id rdf:datatype="http://www.w3.org/2001/XMLSchema#string">P50904</bp:id>
+        </bp:UnificationXref>
+        <bp:BiochemicalReaction rdf:nodeID="BIOMODEL_reaction_21">
+          <bp:name rdf:datatype="http://www.w3.org/2001/XMLSchema#string">reaction_21</bp:name>
+          <bp:xref rdf:nodeID="sbo_SBO:0000029" />
+        </bp:BiochemicalReaction>
+        <bp:PhysicalEntity rdf:nodeID="BIOMODEL_species_12">
+          <bp:name rdf:datatype="http://www.w3.org/2001/XMLSchema#string">species_12</bp:name>
+          <bp:xref rdf:nodeID="uniprot_Q63531" />
+          <bp:xref rdf:nodeID="uniprot_Q9Z1I2" />
+        </bp:PhysicalEntity>
+        <bp:UnificationXref rdf:nodeID="uniprot_Q63531">
+          <bp:db rdf:datatype="http://www.w3.org/2001/XMLSchema#string">UNIPROT</bp:db>
+          <bp:id rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Q63531</bp:id>
+        </bp:UnificationXref>
+        <bp:PhysicalEntity rdf:nodeID="BIOMODEL_species_8">
+          <bp:name rdf:datatype="http://www.w3.org/2001/XMLSchema#string">species_8</bp:name>
+          <bp:xref rdf:nodeID="uniprot_Q01986" />
+          <bp:xref rdf:nodeID="uniprot_P36506" />
+        </bp:PhysicalEntity>
+        <bp:PhysicalEntity rdf:nodeID="BIOMODEL_species_27">
+          <bp:name rdf:datatype="http://www.w3.org/2001/XMLSchema#string">species_27</bp:name>
+          <bp:xref rdf:nodeID="GENE_ONTOLOGY_1903293" />
+        </bp:PhysicalEntity>
+        <bp:BiochemicalReaction rdf:nodeID="BIOMODEL_reaction_27">
+          <bp:name rdf:datatype="http://www.w3.org/2001/XMLSchema#string">reaction_27</bp:name>
+          <bp:xref rdf:nodeID="sbo_SBO:0000029" />
+        </bp:BiochemicalReaction>
+        <bp:PhysicalEntity rdf:nodeID="BIOMODEL_species_30">
+          <bp:name rdf:datatype="http://www.w3.org/2001/XMLSchema#string">species_30</bp:name>
+          <bp:xref rdf:nodeID="uniprot_Q9QX70" />
+        </bp:PhysicalEntity>
+        <bp:PhysicalEntity rdf:nodeID="BIOMODEL_species_17">
+          <bp:name rdf:datatype="http://www.w3.org/2001/XMLSchema#string">species_17</bp:name>
+          <bp:xref rdf:nodeID="uniprot_P47196" />
+          <bp:xref rdf:nodeID="uniprot_P47197" />
+          <bp:xref rdf:nodeID="uniprot_Q63484" />
+        </bp:PhysicalEntity>
+        <bp:UnificationXref rdf:nodeID="uniprot_P47196">
+          <bp:db rdf:datatype="http://www.w3.org/2001/XMLSchema#string">UNIPROT</bp:db>
+          <bp:id rdf:datatype="http://www.w3.org/2001/XMLSchema#string">P47196</bp:id>
+        </bp:UnificationXref>
+        <bp:UnificationXref rdf:nodeID="uniprot_Q63484">
+          <bp:db rdf:datatype="http://www.w3.org/2001/XMLSchema#string">UNIPROT</bp:db>
+          <bp:id rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Q63484</bp:id>
+        </bp:UnificationXref>
+        <bp:BiochemicalReaction rdf:nodeID="BIOMODEL_reaction_13">
+          <bp:name rdf:datatype="http://www.w3.org/2001/XMLSchema#string">reaction_13</bp:name>
+          <bp:xref rdf:nodeID="sbo_SBO:0000029" />
+        </bp:BiochemicalReaction>
+        <bp:BiochemicalReaction rdf:nodeID="BIOMODEL_reaction_19">
+          <bp:name rdf:datatype="http://www.w3.org/2001/XMLSchema#string">reaction_19</bp:name>
+          <bp:xref rdf:nodeID="sbo_SBO:0000029" />
+        </bp:BiochemicalReaction>
+        <bp:PhysicalEntity rdf:nodeID="BIOMODEL_species_13">
+          <bp:name rdf:datatype="http://www.w3.org/2001/XMLSchema#string">species_13</bp:name>
+          <bp:xref rdf:nodeID="uniprot_Q63531" />
+          <bp:xref rdf:nodeID="uniprot_Q9Z1I2" />
+        </bp:PhysicalEntity>
+        <bp:BiochemicalReaction rdf:nodeID="BIOMODEL_reaction_23">
+          <bp:name rdf:datatype="http://www.w3.org/2001/XMLSchema#string">reaction_23</bp:name>
+          <bp:xref rdf:nodeID="sbo_SBO:0000029" />
+        </bp:BiochemicalReaction>
+        <bp:BiochemicalReaction rdf:nodeID="BIOMODEL_reaction_25">
+          <bp:name rdf:datatype="http://www.w3.org/2001/XMLSchema#string">reaction_25</bp:name>
+          <bp:xref rdf:nodeID="sbo_SBO:0000029" />
+        </bp:BiochemicalReaction>
+        <bp:PhysicalEntity rdf:nodeID="BIOMODEL_species_10">
+          <bp:name rdf:datatype="http://www.w3.org/2001/XMLSchema#string">species_10</bp:name>
+          <bp:xref rdf:nodeID="uniprot_P63086" />
+          <bp:xref rdf:nodeID="uniprot_P21708" />
+        </bp:PhysicalEntity>
+        <bp:BiochemicalReaction rdf:nodeID="BIOMODEL_reaction_22">
+          <bp:name rdf:datatype="http://www.w3.org/2001/XMLSchema#string">reaction_22</bp:name>
+          <bp:xref rdf:nodeID="sbo_SBO:0000012" />
+        </bp:BiochemicalReaction>
+        <bp:BiochemicalReaction rdf:nodeID="BIOMODEL_reaction_15">
+          <bp:name rdf:datatype="http://www.w3.org/2001/XMLSchema#string">reaction_15</bp:name>
+          <bp:xref rdf:nodeID="sbo_SBO:0000029" />
+        </bp:BiochemicalReaction>
+        <bp:PhysicalEntity rdf:nodeID="BIOMODEL_species_5">
+          <bp:name rdf:datatype="http://www.w3.org/2001/XMLSchema#string">species_5</bp:name>
+          <bp:xref rdf:nodeID="interpro_IPR020849" />
+        </bp:PhysicalEntity>
+        <bp:BiochemicalReaction rdf:nodeID="BIOMODEL_reaction_3">
+          <bp:name rdf:datatype="http://www.w3.org/2001/XMLSchema#string">reaction_3</bp:name>
+          <bp:xref rdf:nodeID="sbo_SBO:0000029" />
+        </bp:BiochemicalReaction>
+        <bp:PhysicalEntity rdf:nodeID="BIOMODEL_species_24">
+          <bp:name rdf:datatype="http://www.w3.org/2001/XMLSchema#string">species_24</bp:name>
+          <bp:xref rdf:nodeID="uniprot_F1M9C3" />
+        </bp:PhysicalEntity>
+        <bp:UnificationXref rdf:nodeID="uniprot_F1M9C3">
+          <bp:db rdf:datatype="http://www.w3.org/2001/XMLSchema#string">UNIPROT</bp:db>
+          <bp:id rdf:datatype="http://www.w3.org/2001/XMLSchema#string">F1M9C3</bp:id>
+        </bp:UnificationXref>
+        <bp:UnificationXref rdf:nodeID="GENE_ONTOLOGY_0000159">
+          <bp:db rdf:datatype="http://www.w3.org/2001/XMLSchema#string">GENE_ONTOLOGY</bp:db>
+          <bp:id rdf:datatype="http://www.w3.org/2001/XMLSchema#string">0000159</bp:id>
+        </bp:UnificationXref>
+        <bp:UnificationXref rdf:nodeID="uniprot_Q9Z1I2">
+          <bp:db rdf:datatype="http://www.w3.org/2001/XMLSchema#string">UNIPROT</bp:db>
+          <bp:id rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Q9Z1I2</bp:id>
+        </bp:UnificationXref>
+        <bp:UnificationXref rdf:nodeID="uniprot_P63086">
+          <bp:db rdf:datatype="http://www.w3.org/2001/XMLSchema#string">UNIPROT</bp:db>
+          <bp:id rdf:datatype="http://www.w3.org/2001/XMLSchema#string">P63086</bp:id>
+        </bp:UnificationXref>
+        <bp:PhysicalEntity rdf:nodeID="BIOMODEL_species_23">
+          <bp:name rdf:datatype="http://www.w3.org/2001/XMLSchema#string">species_23</bp:name>
+          <bp:xref rdf:nodeID="uniprot_F1M9C3" />
+        </bp:PhysicalEntity>
+        <bp:PhysicalEntity rdf:nodeID="BIOMODEL_species_18">
+          <bp:name rdf:datatype="http://www.w3.org/2001/XMLSchema#string">species_18</bp:name>
+          <bp:xref rdf:nodeID="uniprot_Q9QX70" />
+        </bp:PhysicalEntity>
+        <bp:PhysicalEntity rdf:nodeID="BIOMODEL_species_29">
+          <bp:name rdf:datatype="http://www.w3.org/2001/XMLSchema#string">species_29</bp:name>
+          <bp:xref rdf:nodeID="uniprot_F1LV89" />
+        </bp:PhysicalEntity>
+        <bp:BiochemicalReaction rdf:nodeID="BIOMODEL_reaction_24">
+          <bp:name rdf:datatype="http://www.w3.org/2001/XMLSchema#string">reaction_24</bp:name>
+          <bp:xref rdf:nodeID="sbo_SBO:0000029" />
+        </bp:BiochemicalReaction>
+        <bp:UnificationXref rdf:nodeID="GENE_ONTOLOGY_1903293">
+          <bp:db rdf:datatype="http://www.w3.org/2001/XMLSchema#string">GENE_ONTOLOGY</bp:db>
+          <bp:id rdf:datatype="http://www.w3.org/2001/XMLSchema#string">1903293</bp:id>
+        </bp:UnificationXref>
+        <bp:PhysicalEntity rdf:nodeID="BIOMODEL_species_14">
+          <bp:name rdf:datatype="http://www.w3.org/2001/XMLSchema#string">species_14</bp:name>
+          <bp:xref rdf:nodeID="uniprot_Q63787" />
+        </bp:PhysicalEntity>
+        <bp:PhysicalEntity rdf:nodeID="BIOMODEL_species_1">
+          <bp:name rdf:datatype="http://www.w3.org/2001/XMLSchema#string">species_1</bp:name>
+          <bp:xref rdf:nodeID="uniprot_Q9QX70" />
+        </bp:PhysicalEntity>
+        <bp:PhysicalEntity rdf:nodeID="BIOMODEL_species_22">
+          <bp:name rdf:datatype="http://www.w3.org/2001/XMLSchema#string">species_22</bp:name>
+          <bp:xref rdf:nodeID="uniprot_Q62636" />
+        </bp:PhysicalEntity>
+        <bp:UnificationXref rdf:nodeID="uniprot_P11345">
+          <bp:db rdf:datatype="http://www.w3.org/2001/XMLSchema#string">UNIPROT</bp:db>
+          <bp:id rdf:datatype="http://www.w3.org/2001/XMLSchema#string">P11345</bp:id>
+        </bp:UnificationXref>
+        <bp:BiochemicalReaction rdf:nodeID="BIOMODEL_reaction_0">
+          <bp:name rdf:datatype="http://www.w3.org/2001/XMLSchema#string">reaction_0</bp:name>
+          <bp:xref rdf:nodeID="sbo_SBO:0000012" />
+        </bp:BiochemicalReaction>
+        <bp:BiochemicalReaction rdf:nodeID="BIOMODEL_reaction_30">
+          <bp:name rdf:datatype="http://www.w3.org/2001/XMLSchema#string">reaction_30</bp:name>
+          <bp:xref rdf:nodeID="sbo_SBO:0000029" />
+        </bp:BiochemicalReaction>
+        <bp:BiochemicalReaction rdf:nodeID="BIOMODEL_reaction_17">
+          <bp:name rdf:datatype="http://www.w3.org/2001/XMLSchema#string">reaction_17</bp:name>
+          <bp:xref rdf:nodeID="sbo_SBO:0000029" />
+        </bp:BiochemicalReaction>
+        <bp:BiochemicalReaction rdf:nodeID="BIOMODEL_reaction_10">
+          <bp:name rdf:datatype="http://www.w3.org/2001/XMLSchema#string">reaction_10</bp:name>
+          <bp:xref rdf:nodeID="sbo_SBO:0000029" />
+        </bp:BiochemicalReaction>
+        <bp:BiochemicalReaction rdf:nodeID="BIOMODEL_reaction_2">
+          <bp:name rdf:datatype="http://www.w3.org/2001/XMLSchema#string">reaction_2</bp:name>
+          <bp:xref rdf:nodeID="sbo_SBO:0000012" />
+        </bp:BiochemicalReaction>
+        <bp:PhysicalEntity rdf:nodeID="BIOMODEL_species_4">
+          <bp:name rdf:datatype="http://www.w3.org/2001/XMLSchema#string">species_4</bp:name>
+          <bp:xref rdf:nodeID="interpro_IPR020849" />
+        </bp:PhysicalEntity>
+        <bp:UnificationXref rdf:nodeID="sbo_SBO:0000029">
+          <bp:db rdf:datatype="http://www.w3.org/2001/XMLSchema#string">SBO</bp:db>
+          <bp:id rdf:datatype="http://www.w3.org/2001/XMLSchema#string">SBO:0000029</bp:id>
+        </bp:UnificationXref>
+        <bp:PhysicalEntity rdf:nodeID="BIOMODEL_species_20">
+          <bp:name rdf:datatype="http://www.w3.org/2001/XMLSchema#string">species_20</bp:name>
+          <bp:xref rdf:nodeID="uniprot_Q9QYV3" />
+        </bp:PhysicalEntity>
+        <bp:UnificationXref rdf:nodeID="uniprot_Q62636">
+          <bp:db rdf:datatype="http://www.w3.org/2001/XMLSchema#string">UNIPROT</bp:db>
+          <bp:id rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Q62636</bp:id>
+        </bp:UnificationXref>
+        <bp:PhysicalEntity rdf:nodeID="BIOMODEL_species_9">
+          <bp:name rdf:datatype="http://www.w3.org/2001/XMLSchema#string">species_9</bp:name>
+          <bp:xref rdf:nodeID="uniprot_Q01986" />
+          <bp:xref rdf:nodeID="uniprot_P36506" />
+        </bp:PhysicalEntity>
+        <bp:BiochemicalReaction rdf:nodeID="BIOMODEL_reaction_26">
+          <bp:name rdf:datatype="http://www.w3.org/2001/XMLSchema#string">reaction_26</bp:name>
+          <bp:xref rdf:nodeID="sbo_SBO:0000029" />
+        </bp:BiochemicalReaction>
+        <bp:BiochemicalReaction rdf:nodeID="BIOMODEL_reaction_14">
+          <bp:name rdf:datatype="http://www.w3.org/2001/XMLSchema#string">reaction_14</bp:name>
+          <bp:xref rdf:nodeID="sbo_SBO:0000029" />
+        </bp:BiochemicalReaction>
+        <bp:UnificationXref rdf:nodeID="uniprot_P47197">
+          <bp:db rdf:datatype="http://www.w3.org/2001/XMLSchema#string">UNIPROT</bp:db>
+          <bp:id rdf:datatype="http://www.w3.org/2001/XMLSchema#string">P47197</bp:id>
+        </bp:UnificationXref>
+        <bp:PhysicalEntity rdf:nodeID="BIOMODEL_species_2">
+          <bp:name rdf:datatype="http://www.w3.org/2001/XMLSchema#string">species_2</bp:name>
+          <bp:xref rdf:nodeID="uniprot_Q9Z1I1" />
+        </bp:PhysicalEntity>
+        <bp:UnificationXref rdf:nodeID="uniprot_Q9Z1I1">
+          <bp:db rdf:datatype="http://www.w3.org/2001/XMLSchema#string">UNIPROT</bp:db>
+          <bp:id rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Q9Z1I1</bp:id>
+        </bp:UnificationXref>
+        <bp:BiochemicalReaction rdf:nodeID="BIOMODEL_reaction_1">
+          <bp:name rdf:datatype="http://www.w3.org/2001/XMLSchema#string">reaction_1</bp:name>
+          <bp:xref rdf:nodeID="sbo_SBO:0000029" />
+        </bp:BiochemicalReaction>
+        <bp:PhysicalEntity rdf:nodeID="BIOMODEL_species_19">
+          <bp:name rdf:datatype="http://www.w3.org/2001/XMLSchema#string">species_19</bp:name>
+          <bp:xref rdf:nodeID="uniprot_Q9QYV3" />
+        </bp:PhysicalEntity>
+        <bp:UnificationXref rdf:nodeID="uniprot_Q01986">
+          <bp:db rdf:datatype="http://www.w3.org/2001/XMLSchema#string">UNIPROT</bp:db>
+          <bp:id rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Q01986</bp:id>
+        </bp:UnificationXref>
+        <bp:PhysicalEntity rdf:nodeID="BIOMODEL_species_21">
+          <bp:name rdf:datatype="http://www.w3.org/2001/XMLSchema#string">species_21</bp:name>
+          <bp:xref rdf:nodeID="uniprot_Q62636" />
+        </bp:PhysicalEntity>
+        <bp:BiochemicalReaction rdf:nodeID="BIOMODEL_reaction_5">
+          <bp:name rdf:datatype="http://www.w3.org/2001/XMLSchema#string">reaction_5</bp:name>
+          <bp:xref rdf:nodeID="sbo_SBO:0000029" />
+        </bp:BiochemicalReaction>
+        <bp:BiochemicalReaction rdf:nodeID="BIOMODEL_reaction_4">
+          <bp:name rdf:datatype="http://www.w3.org/2001/XMLSchema#string">reaction_4</bp:name>
+          <bp:xref rdf:nodeID="sbo_SBO:0000029" />
+        </bp:BiochemicalReaction>
+        <bp:BiochemicalReaction rdf:nodeID="BIOMODEL_reaction_20">
+          <bp:name rdf:datatype="http://www.w3.org/2001/XMLSchema#string">reaction_20</bp:name>
+          <bp:xref rdf:nodeID="sbo_SBO:0000029" />
+        </bp:BiochemicalReaction>
+        <bp:PhysicalEntity rdf:nodeID="BIOMODEL_species_11">
+          <bp:name rdf:datatype="http://www.w3.org/2001/XMLSchema#string">species_11</bp:name>
+          <bp:xref rdf:nodeID="uniprot_P63086" />
+          <bp:xref rdf:nodeID="uniprot_P21708" />
+        </bp:PhysicalEntity>
+        <bp:PhysicalEntity rdf:nodeID="BIOMODEL_species_3">
+          <bp:name rdf:datatype="http://www.w3.org/2001/XMLSchema#string">species_3</bp:name>
+          <bp:xref rdf:nodeID="uniprot_Q9Z1I1" />
+        </bp:PhysicalEntity>
+        <bp:UnificationXref rdf:nodeID="uniprot_Q9QX70">
+          <bp:db rdf:datatype="http://www.w3.org/2001/XMLSchema#string">UNIPROT</bp:db>
+          <bp:id rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Q9QX70</bp:id>
+        </bp:UnificationXref>
+        <bp:PhysicalEntity rdf:nodeID="BIOMODEL_species_16">
+          <bp:name rdf:datatype="http://www.w3.org/2001/XMLSchema#string">species_16</bp:name>
+          <bp:xref rdf:nodeID="uniprot_P47196" />
+          <bp:xref rdf:nodeID="uniprot_P47197" />
+          <bp:xref rdf:nodeID="uniprot_Q63484" />
+        </bp:PhysicalEntity>
+        <bp:BiochemicalReaction rdf:nodeID="BIOMODEL_reaction_12">
+          <bp:name rdf:datatype="http://www.w3.org/2001/XMLSchema#string">reaction_12</bp:name>
+          <bp:xref rdf:nodeID="sbo_SBO:0000012" />
+        </bp:BiochemicalReaction>
+        <bp:UnificationXref rdf:nodeID="sbo_SBO:0000012">
+          <bp:db rdf:datatype="http://www.w3.org/2001/XMLSchema#string">SBO</bp:db>
+          <bp:id rdf:datatype="http://www.w3.org/2001/XMLSchema#string">SBO:0000012</bp:id>
+        </bp:UnificationXref>
+        <bp:BiochemicalReaction rdf:nodeID="BIOMODEL_reaction_18">
+          <bp:name rdf:datatype="http://www.w3.org/2001/XMLSchema#string">reaction_18</bp:name>
+          <bp:xref rdf:nodeID="sbo_SBO:0000012" />
+        </bp:BiochemicalReaction>
+        <bp:PhysicalEntity rdf:nodeID="BIOMODEL_species_0">
+          <bp:name rdf:datatype="http://www.w3.org/2001/XMLSchema#string">species_0</bp:name>
+          <bp:xref rdf:nodeID="uniprot_Q9QX70" />
+        </bp:PhysicalEntity>
+        <bp:PhysicalEntity rdf:nodeID="BIOMODEL_species_25">
+          <bp:name rdf:datatype="http://www.w3.org/2001/XMLSchema#string">species_25</bp:name>
+          <bp:xref rdf:nodeID="uniprot_P07522" />
+        </bp:PhysicalEntity>
+        <bp:UnificationXref rdf:nodeID="uniprot_P07522">
+          <bp:db rdf:datatype="http://www.w3.org/2001/XMLSchema#string">UNIPROT</bp:db>
+          <bp:id rdf:datatype="http://www.w3.org/2001/XMLSchema#string">P07522</bp:id>
+        </bp:UnificationXref>
+        <bp:UnificationXref rdf:nodeID="uniprot_P36506">
+          <bp:db rdf:datatype="http://www.w3.org/2001/XMLSchema#string">UNIPROT</bp:db>
+          <bp:id rdf:datatype="http://www.w3.org/2001/XMLSchema#string">P36506</bp:id>
+        </bp:UnificationXref>
+        <bp:BiochemicalReaction rdf:nodeID="BIOMODEL_reaction_6">
+          <bp:name rdf:datatype="http://www.w3.org/2001/XMLSchema#string">reaction_6</bp:name>
+          <bp:xref rdf:nodeID="sbo_SBO:0000029" />
+        </bp:BiochemicalReaction>
+        <bp:UnificationXref rdf:nodeID="interpro_IPR020849">
+          <bp:db rdf:datatype="http://www.w3.org/2001/XMLSchema#string">INTERPRO</bp:db>
+          <bp:id rdf:datatype="http://www.w3.org/2001/XMLSchema#string">IPR020849</bp:id>
+        </bp:UnificationXref>
+        <bp:UnificationXref rdf:nodeID="uniprot_P21708">
+          <bp:db rdf:datatype="http://www.w3.org/2001/XMLSchema#string">UNIPROT</bp:db>
+          <bp:id rdf:datatype="http://www.w3.org/2001/XMLSchema#string">P21708</bp:id>
+        </bp:UnificationXref>
+        <bp:UnificationXref rdf:nodeID="uniprot_F1LV89">
+          <bp:db rdf:datatype="http://www.w3.org/2001/XMLSchema#string">UNIPROT</bp:db>
+          <bp:id rdf:datatype="http://www.w3.org/2001/XMLSchema#string">F1LV89</bp:id>
+        </bp:UnificationXref>
+        <bp:UnificationXref rdf:nodeID="uniprot_Q9QYV3">
+          <bp:db rdf:datatype="http://www.w3.org/2001/XMLSchema#string">UNIPROT</bp:db>
+          <bp:id rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Q9QYV3</bp:id>
+        </bp:UnificationXref>
+        <bp:PhysicalEntity rdf:nodeID="BIOMODEL_species_15">
+          <bp:name rdf:datatype="http://www.w3.org/2001/XMLSchema#string">species_15</bp:name>
+          <bp:xref rdf:nodeID="uniprot_Q63787" />
+        </bp:PhysicalEntity>
+        <bp:PhysicalEntity rdf:nodeID="BIOMODEL_species_7">
+          <bp:name rdf:datatype="http://www.w3.org/2001/XMLSchema#string">species_7</bp:name>
+          <bp:xref rdf:nodeID="uniprot_P11345" />
+        </bp:PhysicalEntity>
+        <bp:BiochemicalReaction rdf:nodeID="BIOMODEL_reaction_8">
+          <bp:name rdf:datatype="http://www.w3.org/2001/XMLSchema#string">reaction_8</bp:name>
+          <bp:xref rdf:nodeID="sbo_SBO:0000029" />
+        </bp:BiochemicalReaction>
+        <bp:UnificationXref rdf:nodeID="uniprot_Q63787">
+          <bp:db rdf:datatype="http://www.w3.org/2001/XMLSchema#string">UNIPROT</bp:db>
+          <bp:id rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Q63787</bp:id>
+        </bp:UnificationXref>
+      </rdf:RDF>
+    </pathwayModel>
+    <relationshipModel>
+      <RMNS version="3.0">
+        <RelationshipObject bioPaxObjectID="BioPaxObject(BIOMODEL_species_4)" bioModelObjectID="SpeciesContext(RasActive)" />
+        <RelationshipObject bioPaxObjectID="BioPaxObject(BIOMODEL_species_28)" bioModelObjectID="SpeciesContext(RasGapActive)" />
+        <RelationshipObject bioPaxObjectID="BioPaxObject(BIOMODEL_species_2)" bioModelObjectID="SpeciesContext(SosActive)" />
+        <RelationshipObject bioPaxObjectID="BioPaxObject(BIOMODEL_species_5)" bioModelObjectID="SpeciesContext(RasInactive)" />
+        <RelationshipObject bioPaxObjectID="BioPaxObject(BIOMODEL_reaction_4)" bioModelObjectID="ReactionStep(Ras_Deactivation)" />
+        <RelationshipObject bioPaxObjectID="BioPaxObject(BIOMODEL_reaction_3)" bioModelObjectID="ReactionStep(Ras_Activation)" />
+      </RMNS>
+    </relationshipModel>
+    <vcmetadata>
+      <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
+        <rdf:Description rdf:about="http://www.sbml.org/sbml/level2/version4/COPASI0">
+          <bqbiol:hasProperty xmlns:bqbiol="http://biomodels.net/biology-qualifiers/">
+            <rdf:Bag rdf:nodeID="node0">
+              <rdf:_1>
+                <rdf:Description rdf:about="http://identifiers.org/doid/DOID:162" />
+              </rdf:_1>
+            </rdf:Bag>
+          </bqbiol:hasProperty>
+          <bqbiol:hasTaxon xmlns:bqbiol="http://biomodels.net/biology-qualifiers/">
+            <rdf:Bag rdf:nodeID="node1">
+              <rdf:_1>
+                <rdf:Description rdf:about="http://identifiers.org/taxonomy/10116" />
+              </rdf:_1>
+            </rdf:Bag>
+          </bqbiol:hasTaxon>
+          <bqbiol:isVersionOf xmlns:bqbiol="http://biomodels.net/biology-qualifiers/">
+            <rdf:Bag rdf:nodeID="node2">
+              <rdf:_1>
+                <rdf:Description rdf:about="http://identifiers.org/go/GO:0007173" />
+              </rdf:_1>
+            </rdf:Bag>
+          </bqbiol:isVersionOf>
+          <bqbiol:occursIn xmlns:bqbiol="http://biomodels.net/biology-qualifiers/">
+            <rdf:Bag rdf:nodeID="node3">
+              <rdf:_1>
+                <rdf:Description rdf:about="http://identifiers.org/bto/BTO:0001009" />
+              </rdf:_1>
+            </rdf:Bag>
+          </bqbiol:occursIn>
+          <bqmodel:is xmlns:bqmodel="http://biomodels.net/model-qualifiers/">
+            <rdf:Bag rdf:nodeID="node4">
+              <rdf:_1>
+                <rdf:Description rdf:about="http://identifiers.org/biomodels.db/MODEL1611280000" />
+              </rdf:_1>
+            </rdf:Bag>
+          </bqmodel:is>
+          <bqmodel:is xmlns:bqmodel="http://biomodels.net/model-qualifiers/">
+            <rdf:Bag rdf:nodeID="node5">
+              <rdf:_1>
+                <rdf:Description rdf:about="http://identifiers.org/biomodels.db/BIOMD0000000623" />
+              </rdf:_1>
+            </rdf:Bag>
+          </bqmodel:is>
+          <bqmodel:isDerivedFrom xmlns:bqmodel="http://biomodels.net/model-qualifiers/">
+            <rdf:Bag rdf:nodeID="node6">
+              <rdf:_1>
+                <rdf:Description rdf:about="http://identifiers.org/biomodels.db/BIOMD0000000033" />
+              </rdf:_1>
+            </rdf:Bag>
+          </bqmodel:isDerivedFrom>
+          <bqmodel:isDescribedBy xmlns:bqmodel="http://biomodels.net/model-qualifiers/">
+            <rdf:Bag rdf:nodeID="node7">
+              <rdf:_1>
+                <rdf:Description rdf:about="http://identifiers.org/pubmed/19804630" />
+              </rdf:_1>
+            </rdf:Bag>
+          </bqmodel:isDescribedBy>
+          <dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">
+            <rdf:Bag rdf:nodeID="node8">
+              <rdf:_1>
+                <rdf:Description rdf:nodeID="node85">
+                  <vcard:EMAIL xmlns:vcard="http://www.w3.org/2001/vcard-rdf/3.0#" rdf:datatype="http://www.w3.org/2001/XMLSchema#string">tvarusai@ebi.ac.uk</vcard:EMAIL>
+                  <vcard:N xmlns:vcard="http://www.w3.org/2001/vcard-rdf/3.0#">
+                    <rdf:Description rdf:nodeID="node86">
+                      <vcard:Family rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Varusai</vcard:Family>
+                      <vcard:Given rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Thawfeek</vcard:Given>
+                    </rdf:Description>
+                  </vcard:N>
+                  <vcard:ORG xmlns:vcard="http://www.w3.org/2001/vcard-rdf/3.0#">
+                    <rdf:Description rdf:nodeID="node87">
+                      <vcard:Orgname rdf:datatype="http://www.w3.org/2001/XMLSchema#string">EMBL-EBI</vcard:Orgname>
+                    </rdf:Description>
+                  </vcard:ORG>
+                </rdf:Description>
+              </rdf:_1>
+            </rdf:Bag>
+          </dc:creator>
+          <n0:created xmlns:n0="http://purl.org/dc/terms/">
+            <rdf:Description rdf:nodeID="node9">
+              <n0:W3CDTF rdf:datatype="http://www.w3.org/2001/XMLSchema#string">2016-11-28T09:09:16Z</n0:W3CDTF>
+            </rdf:Description>
+          </n0:created>
+          <n0:modified xmlns:n0="http://purl.org/dc/terms/">
+            <rdf:Description rdf:nodeID="node10">
+              <n0:W3CDTF rdf:datatype="http://www.w3.org/2001/XMLSchema#string">2017-01-09T11:54:49Z</n0:W3CDTF>
+            </rdf:Description>
+          </n0:modified>
+        </rdf:Description>
+        <rdf:Description rdf:about="http://www.sbml.org/sbml/level2/version4/COPASI1">
+          <bqmodel:is xmlns:bqmodel="http://biomodels.net/model-qualifiers/">
+            <rdf:Bag rdf:nodeID="node11">
+              <rdf:_1>
+                <rdf:Description rdf:about="urn:miriam:obo.go:GO%3A0005575" />
+              </rdf:_1>
+            </rdf:Bag>
+          </bqmodel:is>
+        </rdf:Description>
+        <rdf:Description rdf:about="http://www.sbml.org/sbml/level2/version4/COPASI10">
+          <bqbiol:isVersionOf xmlns:bqbiol="http://biomodels.net/biology-qualifiers/">
+            <rdf:Bag rdf:nodeID="node12">
+              <rdf:_1>
+                <rdf:Description rdf:about="http://identifiers.org/uniprot/P36506" />
+              </rdf:_1>
+            </rdf:Bag>
+          </bqbiol:isVersionOf>
+          <bqbiol:isVersionOf xmlns:bqbiol="http://biomodels.net/biology-qualifiers/">
+            <rdf:Bag rdf:nodeID="node13">
+              <rdf:_1>
+                <rdf:Description rdf:about="http://identifiers.org/uniprot/Q01986" />
+              </rdf:_1>
+            </rdf:Bag>
+          </bqbiol:isVersionOf>
+        </rdf:Description>
+        <rdf:Description rdf:about="http://www.sbml.org/sbml/level2/version4/COPASI11">
+          <bqbiol:isVersionOf xmlns:bqbiol="http://biomodels.net/biology-qualifiers/">
+            <rdf:Bag rdf:nodeID="node14">
+              <rdf:_1>
+                <rdf:Description rdf:about="http://identifiers.org/uniprot/Q01986" />
+              </rdf:_1>
+            </rdf:Bag>
+          </bqbiol:isVersionOf>
+          <bqbiol:isVersionOf xmlns:bqbiol="http://biomodels.net/biology-qualifiers/">
+            <rdf:Bag rdf:nodeID="node15">
+              <rdf:_1>
+                <rdf:Description rdf:about="http://identifiers.org/uniprot/P36506" />
+              </rdf:_1>
+            </rdf:Bag>
+          </bqbiol:isVersionOf>
+        </rdf:Description>
+        <rdf:Description rdf:about="http://www.sbml.org/sbml/level2/version4/COPASI12">
+          <bqbiol:isVersionOf xmlns:bqbiol="http://biomodels.net/biology-qualifiers/">
+            <rdf:Bag rdf:nodeID="node16">
+              <rdf:_1>
+                <rdf:Description rdf:about="http://identifiers.org/uniprot/P63086" />
+              </rdf:_1>
+            </rdf:Bag>
+          </bqbiol:isVersionOf>
+          <bqbiol:isVersionOf xmlns:bqbiol="http://biomodels.net/biology-qualifiers/">
+            <rdf:Bag rdf:nodeID="node17">
+              <rdf:_1>
+                <rdf:Description rdf:about="http://identifiers.org/uniprot/P21708" />
+              </rdf:_1>
+            </rdf:Bag>
+          </bqbiol:isVersionOf>
+        </rdf:Description>
+        <rdf:Description rdf:about="http://www.sbml.org/sbml/level2/version4/COPASI13">
+          <bqbiol:isVersionOf xmlns:bqbiol="http://biomodels.net/biology-qualifiers/">
+            <rdf:Bag rdf:nodeID="node18">
+              <rdf:_1>
+                <rdf:Description rdf:about="http://identifiers.org/uniprot/P21708" />
+              </rdf:_1>
+            </rdf:Bag>
+          </bqbiol:isVersionOf>
+          <bqbiol:isVersionOf xmlns:bqbiol="http://biomodels.net/biology-qualifiers/">
+            <rdf:Bag rdf:nodeID="node19">
+              <rdf:_1>
+                <rdf:Description rdf:about="http://identifiers.org/uniprot/P63086" />
+              </rdf:_1>
+            </rdf:Bag>
+          </bqbiol:isVersionOf>
+        </rdf:Description>
+        <rdf:Description rdf:about="http://www.sbml.org/sbml/level2/version4/COPASI14">
+          <bqbiol:isVersionOf xmlns:bqbiol="http://biomodels.net/biology-qualifiers/">
+            <rdf:Bag rdf:nodeID="node20">
+              <rdf:_1>
+                <rdf:Description rdf:about="http://identifiers.org/uniprot/Q9Z1I2" />
+              </rdf:_1>
+            </rdf:Bag>
+          </bqbiol:isVersionOf>
+          <bqbiol:isVersionOf xmlns:bqbiol="http://biomodels.net/biology-qualifiers/">
+            <rdf:Bag rdf:nodeID="node21">
+              <rdf:_1>
+                <rdf:Description rdf:about="http://identifiers.org/uniprot/Q63531" />
+              </rdf:_1>
+            </rdf:Bag>
+          </bqbiol:isVersionOf>
+        </rdf:Description>
+        <rdf:Description rdf:about="http://www.sbml.org/sbml/level2/version4/COPASI15">
+          <bqbiol:isVersionOf xmlns:bqbiol="http://biomodels.net/biology-qualifiers/">
+            <rdf:Bag rdf:nodeID="node22">
+              <rdf:_1>
+                <rdf:Description rdf:about="http://identifiers.org/uniprot/Q9Z1I2" />
+              </rdf:_1>
+            </rdf:Bag>
+          </bqbiol:isVersionOf>
+          <bqbiol:isVersionOf xmlns:bqbiol="http://biomodels.net/biology-qualifiers/">
+            <rdf:Bag rdf:nodeID="node23">
+              <rdf:_1>
+                <rdf:Description rdf:about="http://identifiers.org/uniprot/Q63531" />
+              </rdf:_1>
+            </rdf:Bag>
+          </bqbiol:isVersionOf>
+        </rdf:Description>
+        <rdf:Description rdf:about="http://www.sbml.org/sbml/level2/version4/COPASI16">
+          <bqbiol:isVersionOf xmlns:bqbiol="http://biomodels.net/biology-qualifiers/">
+            <rdf:Bag rdf:nodeID="node24">
+              <rdf:_1>
+                <rdf:Description rdf:about="http://identifiers.org/uniprot/Q63787" />
+              </rdf:_1>
+            </rdf:Bag>
+          </bqbiol:isVersionOf>
+        </rdf:Description>
+        <rdf:Description rdf:about="http://www.sbml.org/sbml/level2/version4/COPASI17">
+          <bqbiol:isVersionOf xmlns:bqbiol="http://biomodels.net/biology-qualifiers/">
+            <rdf:Bag rdf:nodeID="node25">
+              <rdf:_1>
+                <rdf:Description rdf:about="http://identifiers.org/uniprot/Q63787" />
+              </rdf:_1>
+            </rdf:Bag>
+          </bqbiol:isVersionOf>
+        </rdf:Description>
+        <rdf:Description rdf:about="http://www.sbml.org/sbml/level2/version4/COPASI18">
+          <bqbiol:isVersionOf xmlns:bqbiol="http://biomodels.net/biology-qualifiers/">
+            <rdf:Bag rdf:nodeID="node26">
+              <rdf:_1>
+                <rdf:Description rdf:about="http://identifiers.org/uniprot/P47196" />
+              </rdf:_1>
+            </rdf:Bag>
+          </bqbiol:isVersionOf>
+          <bqbiol:isVersionOf xmlns:bqbiol="http://biomodels.net/biology-qualifiers/">
+            <rdf:Bag rdf:nodeID="node27">
+              <rdf:_1>
+                <rdf:Description rdf:about="http://identifiers.org/uniprot/P47197" />
+              </rdf:_1>
+            </rdf:Bag>
+          </bqbiol:isVersionOf>
+          <bqbiol:isVersionOf xmlns:bqbiol="http://biomodels.net/biology-qualifiers/">
+            <rdf:Bag rdf:nodeID="node28">
+              <rdf:_1>
+                <rdf:Description rdf:about="http://identifiers.org/uniprot/Q63484" />
+              </rdf:_1>
+            </rdf:Bag>
+          </bqbiol:isVersionOf>
+        </rdf:Description>
+        <rdf:Description rdf:about="http://www.sbml.org/sbml/level2/version4/COPASI19">
+          <bqbiol:isVersionOf xmlns:bqbiol="http://biomodels.net/biology-qualifiers/">
+            <rdf:Bag rdf:nodeID="node29">
+              <rdf:_1>
+                <rdf:Description rdf:about="http://identifiers.org/uniprot/Q63484" />
+              </rdf:_1>
+            </rdf:Bag>
+          </bqbiol:isVersionOf>
+          <bqbiol:isVersionOf xmlns:bqbiol="http://biomodels.net/biology-qualifiers/">
+            <rdf:Bag rdf:nodeID="node30">
+              <rdf:_1>
+                <rdf:Description rdf:about="http://identifiers.org/uniprot/P47197" />
+              </rdf:_1>
+            </rdf:Bag>
+          </bqbiol:isVersionOf>
+          <bqbiol:isVersionOf xmlns:bqbiol="http://biomodels.net/biology-qualifiers/">
+            <rdf:Bag rdf:nodeID="node31">
+              <rdf:_1>
+                <rdf:Description rdf:about="http://identifiers.org/uniprot/P47196" />
+              </rdf:_1>
+            </rdf:Bag>
+          </bqbiol:isVersionOf>
+        </rdf:Description>
+        <rdf:Description rdf:about="http://www.sbml.org/sbml/level2/version4/COPASI2">
+          <bqbiol:isVersionOf xmlns:bqbiol="http://biomodels.net/biology-qualifiers/">
+            <rdf:Bag rdf:nodeID="node32">
+              <rdf:_1>
+                <rdf:Description rdf:about="http://identifiers.org/uniprot/Q9QX70" />
+              </rdf:_1>
+            </rdf:Bag>
+          </bqbiol:isVersionOf>
+          <bqmodel:isDescribedBy xmlns:bqmodel="http://biomodels.net/model-qualifiers/">
+            <rdf:Bag rdf:nodeID="node33">
+              <rdf:_1>
+                <rdf:Description rdf:about="urn:miriam:chebi:74440" />
+              </rdf:_1>
+            </rdf:Bag>
+          </bqmodel:isDescribedBy>
+        </rdf:Description>
+        <rdf:Description rdf:about="http://www.sbml.org/sbml/level2/version4/COPASI20">
+          <bqbiol:isVersionOf xmlns:bqbiol="http://biomodels.net/biology-qualifiers/">
+            <rdf:Bag rdf:nodeID="node34">
+              <rdf:_1>
+                <rdf:Description rdf:about="http://identifiers.org/uniprot/Q9QX70" />
+              </rdf:_1>
+            </rdf:Bag>
+          </bqbiol:isVersionOf>
+        </rdf:Description>
+        <rdf:Description rdf:about="http://www.sbml.org/sbml/level2/version4/COPASI21">
+          <bqbiol:isVersionOf xmlns:bqbiol="http://biomodels.net/biology-qualifiers/">
+            <rdf:Bag rdf:nodeID="node35">
+              <rdf:_1>
+                <rdf:Description rdf:about="http://identifiers.org/uniprot/Q9QYV3" />
+              </rdf:_1>
+            </rdf:Bag>
+          </bqbiol:isVersionOf>
+        </rdf:Description>
+        <rdf:Description rdf:about="http://www.sbml.org/sbml/level2/version4/COPASI22">
+          <bqbiol:isVersionOf xmlns:bqbiol="http://biomodels.net/biology-qualifiers/">
+            <rdf:Bag rdf:nodeID="node36">
+              <rdf:_1>
+                <rdf:Description rdf:about="http://identifiers.org/uniprot/Q9QYV3" />
+              </rdf:_1>
+            </rdf:Bag>
+          </bqbiol:isVersionOf>
+        </rdf:Description>
+        <rdf:Description rdf:about="http://www.sbml.org/sbml/level2/version4/COPASI23">
+          <bqbiol:isVersionOf xmlns:bqbiol="http://biomodels.net/biology-qualifiers/">
+            <rdf:Bag rdf:nodeID="node37">
+              <rdf:_1>
+                <rdf:Description rdf:about="http://identifiers.org/uniprot/Q62636" />
+              </rdf:_1>
+            </rdf:Bag>
+          </bqbiol:isVersionOf>
+        </rdf:Description>
+        <rdf:Description rdf:about="http://www.sbml.org/sbml/level2/version4/COPASI24">
+          <bqbiol:isVersionOf xmlns:bqbiol="http://biomodels.net/biology-qualifiers/">
+            <rdf:Bag rdf:nodeID="node38">
+              <rdf:_1>
+                <rdf:Description rdf:about="http://identifiers.org/uniprot/Q62636" />
+              </rdf:_1>
+            </rdf:Bag>
+          </bqbiol:isVersionOf>
+        </rdf:Description>
+        <rdf:Description rdf:about="http://www.sbml.org/sbml/level2/version4/COPASI25">
+          <bqbiol:isVersionOf xmlns:bqbiol="http://biomodels.net/biology-qualifiers/">
+            <rdf:Bag rdf:nodeID="node39">
+              <rdf:_1>
+                <rdf:Description rdf:about="http://identifiers.org/uniprot/F1M9C3" />
+              </rdf:_1>
+            </rdf:Bag>
+          </bqbiol:isVersionOf>
+        </rdf:Description>
+        <rdf:Description rdf:about="http://www.sbml.org/sbml/level2/version4/COPASI26">
+          <bqbiol:isVersionOf xmlns:bqbiol="http://biomodels.net/biology-qualifiers/">
+            <rdf:Bag rdf:nodeID="node40">
+              <rdf:_1>
+                <rdf:Description rdf:about="http://identifiers.org/uniprot/F1M9C3" />
+              </rdf:_1>
+            </rdf:Bag>
+          </bqbiol:isVersionOf>
+        </rdf:Description>
+        <rdf:Description rdf:about="http://www.sbml.org/sbml/level2/version4/COPASI27">
+          <bqbiol:isVersionOf xmlns:bqbiol="http://biomodels.net/biology-qualifiers/">
+            <rdf:Bag rdf:nodeID="node41">
+              <rdf:_1>
+                <rdf:Description rdf:about="http://identifiers.org/uniprot/P07522" />
+              </rdf:_1>
+            </rdf:Bag>
+          </bqbiol:isVersionOf>
+        </rdf:Description>
+        <rdf:Description rdf:about="http://www.sbml.org/sbml/level2/version4/COPASI28">
+          <bqbiol:isVersionOf xmlns:bqbiol="http://biomodels.net/biology-qualifiers/">
+            <rdf:Bag rdf:nodeID="node42">
+              <rdf:_1>
+                <rdf:Description rdf:about="http://identifiers.org/go/GO:0000159" />
+              </rdf:_1>
+            </rdf:Bag>
+          </bqbiol:isVersionOf>
+        </rdf:Description>
+        <rdf:Description rdf:about="http://www.sbml.org/sbml/level2/version4/COPASI29">
+          <bqbiol:isVersionOf xmlns:bqbiol="http://biomodels.net/biology-qualifiers/">
+            <rdf:Bag rdf:nodeID="node43">
+              <rdf:_1>
+                <rdf:Description rdf:about="http://identifiers.org/go/GO:1903293" />
+              </rdf:_1>
+            </rdf:Bag>
+          </bqbiol:isVersionOf>
+        </rdf:Description>
+        <rdf:Description rdf:about="http://www.sbml.org/sbml/level2/version4/COPASI3">
+          <bqbiol:isVersionOf xmlns:bqbiol="http://biomodels.net/biology-qualifiers/">
+            <rdf:Bag rdf:nodeID="node44">
+              <rdf:_1>
+                <rdf:Description rdf:about="http://identifiers.org/uniprot/Q9QX70" />
+              </rdf:_1>
+            </rdf:Bag>
+          </bqbiol:isVersionOf>
+        </rdf:Description>
+        <rdf:Description rdf:about="http://www.sbml.org/sbml/level2/version4/COPASI30">
+          <bqbiol:isVersionOf xmlns:bqbiol="http://biomodels.net/biology-qualifiers/">
+            <rdf:Bag rdf:nodeID="node45">
+              <rdf:_1>
+                <rdf:Description rdf:about="http://identifiers.org/uniprot/P50904" />
+              </rdf:_1>
+            </rdf:Bag>
+          </bqbiol:isVersionOf>
+        </rdf:Description>
+        <rdf:Description rdf:about="http://www.sbml.org/sbml/level2/version4/COPASI31">
+          <bqbiol:isVersionOf xmlns:bqbiol="http://biomodels.net/biology-qualifiers/">
+            <rdf:Bag rdf:nodeID="node46">
+              <rdf:_1>
+                <rdf:Description rdf:about="http://identifiers.org/uniprot/F1LV89" />
+              </rdf:_1>
+            </rdf:Bag>
+          </bqbiol:isVersionOf>
+        </rdf:Description>
+        <rdf:Description rdf:about="http://www.sbml.org/sbml/level2/version4/COPASI32">
+          <bqbiol:isVersionOf xmlns:bqbiol="http://biomodels.net/biology-qualifiers/">
+            <rdf:Bag rdf:nodeID="node47">
+              <rdf:_1>
+                <rdf:Description rdf:about="http://identifiers.org/uniprot/Q9QX70" />
+              </rdf:_1>
+            </rdf:Bag>
+          </bqbiol:isVersionOf>
+        </rdf:Description>
+        <rdf:Description rdf:about="http://www.sbml.org/sbml/level2/version4/COPASI33">
+          <bqbiol:is xmlns:bqbiol="http://biomodels.net/biology-qualifiers/">
+            <rdf:Bag rdf:nodeID="node48">
+              <rdf:_1>
+                <rdf:Description rdf:about="http://identifiers.org/sbo/SBO:0000012" />
+              </rdf:_1>
+            </rdf:Bag>
+          </bqbiol:is>
+        </rdf:Description>
+        <rdf:Description rdf:about="http://www.sbml.org/sbml/level2/version4/COPASI34">
+          <bqbiol:is xmlns:bqbiol="http://biomodels.net/biology-qualifiers/">
+            <rdf:Bag rdf:nodeID="node49">
+              <rdf:_1>
+                <rdf:Description rdf:about="http://identifiers.org/sbo/SBO:0000029" />
+              </rdf:_1>
+            </rdf:Bag>
+          </bqbiol:is>
+        </rdf:Description>
+        <rdf:Description rdf:about="http://www.sbml.org/sbml/level2/version4/COPASI35">
+          <bqbiol:is xmlns:bqbiol="http://biomodels.net/biology-qualifiers/">
+            <rdf:Bag rdf:nodeID="node50">
+              <rdf:_1>
+                <rdf:Description rdf:about="http://identifiers.org/sbo/SBO:0000012" />
+              </rdf:_1>
+            </rdf:Bag>
+          </bqbiol:is>
+        </rdf:Description>
+        <rdf:Description rdf:about="http://www.sbml.org/sbml/level2/version4/COPASI36">
+          <bqbiol:is xmlns:bqbiol="http://biomodels.net/biology-qualifiers/">
+            <rdf:Bag rdf:nodeID="node51">
+              <rdf:_1>
+                <rdf:Description rdf:about="http://identifiers.org/sbo/SBO:0000029" />
+              </rdf:_1>
+            </rdf:Bag>
+          </bqbiol:is>
+        </rdf:Description>
+        <rdf:Description rdf:about="http://www.sbml.org/sbml/level2/version4/COPASI37">
+          <bqbiol:is xmlns:bqbiol="http://biomodels.net/biology-qualifiers/">
+            <rdf:Bag rdf:nodeID="node52">
+              <rdf:_1>
+                <rdf:Description rdf:about="http://identifiers.org/sbo/SBO:0000029" />
+              </rdf:_1>
+            </rdf:Bag>
+          </bqbiol:is>
+        </rdf:Description>
+        <rdf:Description rdf:about="http://www.sbml.org/sbml/level2/version4/COPASI38">
+          <bqbiol:is xmlns:bqbiol="http://biomodels.net/biology-qualifiers/">
+            <rdf:Bag rdf:nodeID="node53">
+              <rdf:_1>
+                <rdf:Description rdf:about="http://identifiers.org/sbo/SBO:0000029" />
+              </rdf:_1>
+            </rdf:Bag>
+          </bqbiol:is>
+        </rdf:Description>
+        <rdf:Description rdf:about="http://www.sbml.org/sbml/level2/version4/COPASI39">
+          <bqbiol:is xmlns:bqbiol="http://biomodels.net/biology-qualifiers/">
+            <rdf:Bag rdf:nodeID="node54">
+              <rdf:_1>
+                <rdf:Description rdf:about="http://identifiers.org/sbo/SBO:0000029" />
+              </rdf:_1>
+            </rdf:Bag>
+          </bqbiol:is>
+        </rdf:Description>
+        <rdf:Description rdf:about="http://www.sbml.org/sbml/level2/version4/COPASI4">
+          <bqbiol:isVersionOf xmlns:bqbiol="http://biomodels.net/biology-qualifiers/">
+            <rdf:Bag rdf:nodeID="node55">
+              <rdf:_1>
+                <rdf:Description rdf:about="http://identifiers.org/uniprot/Q9Z1I1" />
+              </rdf:_1>
+            </rdf:Bag>
+          </bqbiol:isVersionOf>
+        </rdf:Description>
+        <rdf:Description rdf:about="http://www.sbml.org/sbml/level2/version4/COPASI40">
+          <bqbiol:is xmlns:bqbiol="http://biomodels.net/biology-qualifiers/">
+            <rdf:Bag rdf:nodeID="node56">
+              <rdf:_1>
+                <rdf:Description rdf:about="http://identifiers.org/sbo/SBO:0000029" />
+              </rdf:_1>
+            </rdf:Bag>
+          </bqbiol:is>
+        </rdf:Description>
+        <rdf:Description rdf:about="http://www.sbml.org/sbml/level2/version4/COPASI41">
+          <bqbiol:is xmlns:bqbiol="http://biomodels.net/biology-qualifiers/">
+            <rdf:Bag rdf:nodeID="node57">
+              <rdf:_1>
+                <rdf:Description rdf:about="http://identifiers.org/sbo/SBO:0000029" />
+              </rdf:_1>
+            </rdf:Bag>
+          </bqbiol:is>
+        </rdf:Description>
+        <rdf:Description rdf:about="http://www.sbml.org/sbml/level2/version4/COPASI42">
+          <bqbiol:is xmlns:bqbiol="http://biomodels.net/biology-qualifiers/">
+            <rdf:Bag rdf:nodeID="node58">
+              <rdf:_1>
+                <rdf:Description rdf:about="http://identifiers.org/sbo/SBO:0000029" />
+              </rdf:_1>
+            </rdf:Bag>
+          </bqbiol:is>
+        </rdf:Description>
+        <rdf:Description rdf:about="http://www.sbml.org/sbml/level2/version4/COPASI43">
+          <bqbiol:is xmlns:bqbiol="http://biomodels.net/biology-qualifiers/">
+            <rdf:Bag rdf:nodeID="node59">
+              <rdf:_1>
+                <rdf:Description rdf:about="http://identifiers.org/sbo/SBO:0000029" />
+              </rdf:_1>
+            </rdf:Bag>
+          </bqbiol:is>
+        </rdf:Description>
+        <rdf:Description rdf:about="http://www.sbml.org/sbml/level2/version4/COPASI44">
+          <bqbiol:is xmlns:bqbiol="http://biomodels.net/biology-qualifiers/">
+            <rdf:Bag rdf:nodeID="node60">
+              <rdf:_1>
+                <rdf:Description rdf:about="http://identifiers.org/sbo/SBO:0000029" />
+              </rdf:_1>
+            </rdf:Bag>
+          </bqbiol:is>
+        </rdf:Description>
+        <rdf:Description rdf:about="http://www.sbml.org/sbml/level2/version4/COPASI45">
+          <bqbiol:is xmlns:bqbiol="http://biomodels.net/biology-qualifiers/">
+            <rdf:Bag rdf:nodeID="node61">
+              <rdf:_1>
+                <rdf:Description rdf:about="http://identifiers.org/sbo/SBO:0000012" />
+              </rdf:_1>
+            </rdf:Bag>
+          </bqbiol:is>
+        </rdf:Description>
+        <rdf:Description rdf:about="http://www.sbml.org/sbml/level2/version4/COPASI46">
+          <bqbiol:is xmlns:bqbiol="http://biomodels.net/biology-qualifiers/">
+            <rdf:Bag rdf:nodeID="node62">
+              <rdf:_1>
+                <rdf:Description rdf:about="http://identifiers.org/sbo/SBO:0000029" />
+              </rdf:_1>
+            </rdf:Bag>
+          </bqbiol:is>
+        </rdf:Description>
+        <rdf:Description rdf:about="http://www.sbml.org/sbml/level2/version4/COPASI47">
+          <bqbiol:is xmlns:bqbiol="http://biomodels.net/biology-qualifiers/">
+            <rdf:Bag rdf:nodeID="node63">
+              <rdf:_1>
+                <rdf:Description rdf:about="http://identifiers.org/sbo/SBO:0000029" />
+              </rdf:_1>
+            </rdf:Bag>
+          </bqbiol:is>
+        </rdf:Description>
+        <rdf:Description rdf:about="http://www.sbml.org/sbml/level2/version4/COPASI48">
+          <bqbiol:is xmlns:bqbiol="http://biomodels.net/biology-qualifiers/">
+            <rdf:Bag rdf:nodeID="node64">
+              <rdf:_1>
+                <rdf:Description rdf:about="http://identifiers.org/sbo/SBO:0000029" />
+              </rdf:_1>
+            </rdf:Bag>
+          </bqbiol:is>
+        </rdf:Description>
+        <rdf:Description rdf:about="http://www.sbml.org/sbml/level2/version4/COPASI49">
+          <bqbiol:is xmlns:bqbiol="http://biomodels.net/biology-qualifiers/">
+            <rdf:Bag rdf:nodeID="node65">
+              <rdf:_1>
+                <rdf:Description rdf:about="http://identifiers.org/sbo/SBO:0000012" />
+              </rdf:_1>
+            </rdf:Bag>
+          </bqbiol:is>
+        </rdf:Description>
+        <rdf:Description rdf:about="http://www.sbml.org/sbml/level2/version4/COPASI5">
+          <bqbiol:isVersionOf xmlns:bqbiol="http://biomodels.net/biology-qualifiers/">
+            <rdf:Bag rdf:nodeID="node66">
+              <rdf:_1>
+                <rdf:Description rdf:about="http://identifiers.org/uniprot/Q9Z1I1" />
+              </rdf:_1>
+            </rdf:Bag>
+          </bqbiol:isVersionOf>
+        </rdf:Description>
+        <rdf:Description rdf:about="http://www.sbml.org/sbml/level2/version4/COPASI50">
+          <bqbiol:is xmlns:bqbiol="http://biomodels.net/biology-qualifiers/">
+            <rdf:Bag rdf:nodeID="node67">
+              <rdf:_1>
+                <rdf:Description rdf:about="http://identifiers.org/sbo/SBO:0000029" />
+              </rdf:_1>
+            </rdf:Bag>
+          </bqbiol:is>
+        </rdf:Description>
+        <rdf:Description rdf:about="http://www.sbml.org/sbml/level2/version4/COPASI51">
+          <bqbiol:is xmlns:bqbiol="http://biomodels.net/biology-qualifiers/">
+            <rdf:Bag rdf:nodeID="node68">
+              <rdf:_1>
+                <rdf:Description rdf:about="http://identifiers.org/sbo/SBO:0000012" />
+              </rdf:_1>
+            </rdf:Bag>
+          </bqbiol:is>
+        </rdf:Description>
+        <rdf:Description rdf:about="http://www.sbml.org/sbml/level2/version4/COPASI52">
+          <bqbiol:is xmlns:bqbiol="http://biomodels.net/biology-qualifiers/">
+            <rdf:Bag rdf:nodeID="node69">
+              <rdf:_1>
+                <rdf:Description rdf:about="http://identifiers.org/sbo/SBO:0000029" />
+              </rdf:_1>
+            </rdf:Bag>
+          </bqbiol:is>
+        </rdf:Description>
+        <rdf:Description rdf:about="http://www.sbml.org/sbml/level2/version4/COPASI53">
+          <bqbiol:is xmlns:bqbiol="http://biomodels.net/biology-qualifiers/">
+            <rdf:Bag rdf:nodeID="node70">
+              <rdf:_1>
+                <rdf:Description rdf:about="http://identifiers.org/sbo/SBO:0000029" />
+              </rdf:_1>
+            </rdf:Bag>
+          </bqbiol:is>
+        </rdf:Description>
+        <rdf:Description rdf:about="http://www.sbml.org/sbml/level2/version4/COPASI54">
+          <bqbiol:is xmlns:bqbiol="http://biomodels.net/biology-qualifiers/">
+            <rdf:Bag rdf:nodeID="node71">
+              <rdf:_1>
+                <rdf:Description rdf:about="http://identifiers.org/sbo/SBO:0000029" />
+              </rdf:_1>
+            </rdf:Bag>
+          </bqbiol:is>
+        </rdf:Description>
+        <rdf:Description rdf:about="http://www.sbml.org/sbml/level2/version4/COPASI55">
+          <bqbiol:is xmlns:bqbiol="http://biomodels.net/biology-qualifiers/">
+            <rdf:Bag rdf:nodeID="node72">
+              <rdf:_1>
+                <rdf:Description rdf:about="http://identifiers.org/sbo/SBO:0000012" />
+              </rdf:_1>
+            </rdf:Bag>
+          </bqbiol:is>
+        </rdf:Description>
+        <rdf:Description rdf:about="http://www.sbml.org/sbml/level2/version4/COPASI56">
+          <bqbiol:is xmlns:bqbiol="http://biomodels.net/biology-qualifiers/">
+            <rdf:Bag rdf:nodeID="node73">
+              <rdf:_1>
+                <rdf:Description rdf:about="http://identifiers.org/sbo/SBO:0000029" />
+              </rdf:_1>
+            </rdf:Bag>
+          </bqbiol:is>
+        </rdf:Description>
+        <rdf:Description rdf:about="http://www.sbml.org/sbml/level2/version4/COPASI57">
+          <bqbiol:is xmlns:bqbiol="http://biomodels.net/biology-qualifiers/">
+            <rdf:Bag rdf:nodeID="node74">
+              <rdf:_1>
+                <rdf:Description rdf:about="http://identifiers.org/sbo/SBO:0000029" />
+              </rdf:_1>
+            </rdf:Bag>
+          </bqbiol:is>
+        </rdf:Description>
+        <rdf:Description rdf:about="http://www.sbml.org/sbml/level2/version4/COPASI58">
+          <bqbiol:is xmlns:bqbiol="http://biomodels.net/biology-qualifiers/">
+            <rdf:Bag rdf:nodeID="node75">
+              <rdf:_1>
+                <rdf:Description rdf:about="http://identifiers.org/sbo/SBO:0000029" />
+              </rdf:_1>
+            </rdf:Bag>
+          </bqbiol:is>
+        </rdf:Description>
+        <rdf:Description rdf:about="http://www.sbml.org/sbml/level2/version4/COPASI59">
+          <bqbiol:is xmlns:bqbiol="http://biomodels.net/biology-qualifiers/">
+            <rdf:Bag rdf:nodeID="node76">
+              <rdf:_1>
+                <rdf:Description rdf:about="http://identifiers.org/sbo/SBO:0000029" />
+              </rdf:_1>
+            </rdf:Bag>
+          </bqbiol:is>
+        </rdf:Description>
+        <rdf:Description rdf:about="http://www.sbml.org/sbml/level2/version4/COPASI6">
+          <bqbiol:isVersionOf xmlns:bqbiol="http://biomodels.net/biology-qualifiers/">
+            <rdf:Bag rdf:nodeID="node77">
+              <rdf:_1>
+                <rdf:Description rdf:about="http://identifiers.org/interpro/IPR020849" />
+              </rdf:_1>
+            </rdf:Bag>
+          </bqbiol:isVersionOf>
+        </rdf:Description>
+        <rdf:Description rdf:about="http://www.sbml.org/sbml/level2/version4/COPASI60">
+          <bqbiol:is xmlns:bqbiol="http://biomodels.net/biology-qualifiers/">
+            <rdf:Bag rdf:nodeID="node78">
+              <rdf:_1>
+                <rdf:Description rdf:about="http://identifiers.org/sbo/SBO:0000029" />
+              </rdf:_1>
+            </rdf:Bag>
+          </bqbiol:is>
+        </rdf:Description>
+        <rdf:Description rdf:about="http://www.sbml.org/sbml/level2/version4/COPASI61">
+          <bqbiol:is xmlns:bqbiol="http://biomodels.net/biology-qualifiers/">
+            <rdf:Bag rdf:nodeID="node79">
+              <rdf:_1>
+                <rdf:Description rdf:about="http://identifiers.org/sbo/SBO:0000001" />
+              </rdf:_1>
+            </rdf:Bag>
+          </bqbiol:is>
+        </rdf:Description>
+        <rdf:Description rdf:about="http://www.sbml.org/sbml/level2/version4/COPASI62">
+          <bqbiol:is xmlns:bqbiol="http://biomodels.net/biology-qualifiers/">
+            <rdf:Bag rdf:nodeID="node80">
+              <rdf:_1>
+                <rdf:Description rdf:about="http://identifiers.org/sbo/SBO:0000029" />
+              </rdf:_1>
+            </rdf:Bag>
+          </bqbiol:is>
+        </rdf:Description>
+        <rdf:Description rdf:about="http://www.sbml.org/sbml/level2/version4/COPASI63">
+          <bqbiol:is xmlns:bqbiol="http://biomodels.net/biology-qualifiers/">
+            <rdf:Bag rdf:nodeID="node81">
+              <rdf:_1>
+                <rdf:Description rdf:about="http://identifiers.org/sbo/SBO:0000029" />
+              </rdf:_1>
+            </rdf:Bag>
+          </bqbiol:is>
+        </rdf:Description>
+        <rdf:Description rdf:about="http://www.sbml.org/sbml/level2/version4/COPASI7">
+          <bqbiol:isVersionOf xmlns:bqbiol="http://biomodels.net/biology-qualifiers/">
+            <rdf:Bag rdf:nodeID="node82">
+              <rdf:_1>
+                <rdf:Description rdf:about="http://identifiers.org/interpro/IPR020849" />
+              </rdf:_1>
+            </rdf:Bag>
+          </bqbiol:isVersionOf>
+        </rdf:Description>
+        <rdf:Description rdf:about="http://www.sbml.org/sbml/level2/version4/COPASI8">
+          <bqbiol:isVersionOf xmlns:bqbiol="http://biomodels.net/biology-qualifiers/">
+            <rdf:Bag rdf:nodeID="node83">
+              <rdf:_1>
+                <rdf:Description rdf:about="http://identifiers.org/uniprot/P11345" />
+              </rdf:_1>
+            </rdf:Bag>
+          </bqbiol:isVersionOf>
+        </rdf:Description>
+        <rdf:Description rdf:about="http://www.sbml.org/sbml/level2/version4/COPASI9">
+          <bqbiol:isVersionOf xmlns:bqbiol="http://biomodels.net/biology-qualifiers/">
+            <rdf:Bag rdf:nodeID="node84">
+              <rdf:_1>
+                <rdf:Description rdf:about="http://identifiers.org/uniprot/P11345" />
+              </rdf:_1>
+            </rdf:Bag>
+          </bqbiol:isVersionOf>
+        </rdf:Description>
+      </rdf:RDF>
+      <nonrdfAnnotationList>
+        <nonrdfAnnotation vcid="Species(species_28)">
+          <freetext>&lt;notes&gt;
+          &lt;body xmlns="http://www.w3.org/1999/xhtml"&gt;
+            &lt;pre&gt;Active GTPase of Ras; Initial value taken from Brown et al 2004&lt;/pre&gt;
+          &lt;/body&gt;
+        &lt;/notes&gt;</freetext>
+          <annotationList>
+            <annotation>
+              <COPASI xmlns="http://www.copasi.org/static/sbml">
+                <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:CopasiMT="http://www.copasi.org/RDF/MiriamTerms#" xmlns:dcterms="http://purl.org/dc/terms/">
+                  <rdf:Description rdf:about="#COPASI30">
+                    <dcterms:created>
+                      <rdf:Description>
+                        <dcterms:W3CDTF>2016-11-28T15:50:28Z</dcterms:W3CDTF>
+                      </rdf:Description>
+                    </dcterms:created>
+                    <CopasiMT:isVersionOf rdf:resource="urn:miriam:uniprot:P50904" />
+                  </rdf:Description>
+                </rdf:RDF>
+              </COPASI>
+            </annotation>
+          </annotationList>
+        </nonrdfAnnotation>
+        <nonrdfAnnotation vcid="Structure(compartment)">
+          <freetext>&lt;html&gt;
+  &lt;head&gt;
+
+  &lt;/head&gt;
+  &lt;body xmlns="http://www.w3.org/1999/xhtml"&gt;
+    &lt;pre&gt;Cellular component.&lt;/pre&gt;
+  &lt;/body&gt;
+&lt;/html&gt;</freetext>
+          <annotationList>
+            <annotation>
+              <COPASI xmlns="http://www.copasi.org/static/sbml">
+                <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:CopasiMT="http://www.copasi.org/RDF/MiriamTerms#" xmlns:dcterms="http://purl.org/dc/terms/">
+                  <rdf:Description rdf:about="#COPASI1">
+                    <dcterms:created>
+                      <rdf:Description>
+                        <dcterms:W3CDTF>2016-11-28T10:41:12Z</dcterms:W3CDTF>
+                      </rdf:Description>
+                    </dcterms:created>
+                    <CopasiMT:is rdf:resource="urn:miriam:go:GO:0097234" />
+                  </rdf:Description>
+                </rdf:RDF>
+              </COPASI>
+            </annotation>
+          </annotationList>
+        </nonrdfAnnotation>
+        <nonrdfAnnotation vcid="ReactionStep(Ras_Deactivation)">
+          <freetext>&lt;notes&gt;
+          &lt;body xmlns="http://www.w3.org/1999/xhtml"&gt;
+            &lt;pre&gt;Parameters taken from Brown et al 2004&lt;/pre&gt;
+          &lt;/body&gt;
+        &lt;/notes&gt;</freetext>
+          <annotationList>
+            <annotation>
+              <COPASI xmlns="http://www.copasi.org/static/sbml">
+                <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:CopasiMT="http://www.copasi.org/RDF/MiriamTerms#" xmlns:dcterms="http://purl.org/dc/terms/">
+                  <rdf:Description rdf:about="#COPASI37">
+                    <dcterms:created>
+                      <rdf:Description>
+                        <dcterms:W3CDTF>2016-11-28T16:27:31Z</dcterms:W3CDTF>
+                      </rdf:Description>
+                    </dcterms:created>
+                    <CopasiMT:is rdf:resource="urn:miriam:sbo:SBO:0000029" />
+                  </rdf:Description>
+                </rdf:RDF>
+              </COPASI>
+            </annotation>
+          </annotationList>
+        </nonrdfAnnotation>
+        <nonrdfAnnotation vcid="Species(species_2)">
+          <freetext>&lt;notes&gt;
+          &lt;body xmlns="http://www.w3.org/1999/xhtml"&gt;
+            &lt;pre&gt;Active species of SOS; Initial value taken from Brown et al 2004&lt;/pre&gt;
+          &lt;/body&gt;
+        &lt;/notes&gt;</freetext>
+          <annotationList>
+            <annotation>
+              <COPASI xmlns="http://www.copasi.org/static/sbml">
+                <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:CopasiMT="http://www.copasi.org/RDF/MiriamTerms#" xmlns:dcterms="http://purl.org/dc/terms/">
+                  <rdf:Description rdf:about="#COPASI4">
+                    <dcterms:created>
+                      <rdf:Description>
+                        <dcterms:W3CDTF>2016-11-28T15:50:31Z</dcterms:W3CDTF>
+                      </rdf:Description>
+                    </dcterms:created>
+                    <CopasiMT:isVersionOf rdf:resource="urn:miriam:uniprot:Q9Z1I1" />
+                  </rdf:Description>
+                </rdf:RDF>
+              </COPASI>
+            </annotation>
+          </annotationList>
+        </nonrdfAnnotation>
+        <nonrdfAnnotation vcid="Species(species_4)">
+          <freetext>&lt;notes&gt;
+          &lt;body xmlns="http://www.w3.org/1999/xhtml"&gt;
+            &lt;pre&gt;Active species of Ras; Initial value taken from Brown et al 2004&lt;/pre&gt;
+          &lt;/body&gt;
+        &lt;/notes&gt;</freetext>
+          <annotationList>
+            <annotation>
+              <COPASI xmlns="http://www.copasi.org/static/sbml">
+                <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:CopasiMT="http://www.copasi.org/RDF/MiriamTerms#" xmlns:dcterms="http://purl.org/dc/terms/">
+                  <rdf:Description rdf:about="#COPASI6">
+                    <dcterms:created>
+                      <rdf:Description>
+                        <dcterms:W3CDTF>2016-11-28T15:50:26Z</dcterms:W3CDTF>
+                      </rdf:Description>
+                    </dcterms:created>
+                    <CopasiMT:isVersionOf rdf:resource="urn:miriam:interpro:IPR020849" />
+                  </rdf:Description>
+                </rdf:RDF>
+              </COPASI>
+            </annotation>
+          </annotationList>
+        </nonrdfAnnotation>
+        <nonrdfAnnotation vcid="BioModel(Orton2009 - ModelBrick_Ras)">
+          <freetext>&lt;html&gt;
+  &lt;head&gt;
+    
+  &lt;/head&gt;
+  &lt;body xmlns="http://www.w3.org/1999/xhtml"&gt;
+    &lt;div class="dc:title"&gt;
+      Orton2009 - Modelling cancerous mutations in the EGFR/ERK pathway - EGF 
+      Model
+    &lt;/div&gt;
+    &lt;div class="dc:description"&gt;
+      This model studies the aberrations in ERK signalling for different 
+      cancer mutations. The authors alter a previously existing EGF model 
+      (Brown et al 2004) to include new interactions that better fit empirical 
+      data. Predictions show that the ERK signalling is a robust mechanism 
+      taking different courses for different cancer mutations. Most parameter 
+      values are used from the previous model and the new parameters are 
+      estimated using experimental data performed by the authors on PC12 cells 
+      (adrenal gland, rat). The authors provide an SBML version of the model 
+      in the paper.
+    &lt;/div&gt;
+  &lt;/body&gt;
+&lt;/html&gt;</freetext>
+          <annotationList>
+            <annotation>
+              <COPASI xmlns="http://www.copasi.org/static/sbml">
+                <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:CopasiMT="http://www.copasi.org/RDF/MiriamTerms#" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:vCard="http://www.w3.org/2001/vcard-rdf/3.0#">
+                  <rdf:Description rdf:about="#COPASI0">
+                    <dcterms:created>
+                      <rdf:Description>
+                        <dcterms:W3CDTF>2016-11-28T09:09:16Z</dcterms:W3CDTF>
+                      </rdf:Description>
+                    </dcterms:created>
+                    <dcterms:creator>
+                      <rdf:Description>
+                        <vCard:EMAIL>tvarusai@ebi.ac.uk</vCard:EMAIL>
+                        <vCard:N>
+                          <rdf:Description>
+                            <vCard:Family>Varusai</vCard:Family>
+                            <vCard:Given>Thawfeek</vCard:Given>
+                          </rdf:Description>
+                        </vCard:N>
+                        <vCard:ORG>
+                          <rdf:Description>
+                            <vCard:Orgname>EMBL-EBI</vCard:Orgname>
+                          </rdf:Description>
+                        </vCard:ORG>
+                      </rdf:Description>
+                    </dcterms:creator>
+                    <CopasiMT:isVersionOf rdf:resource="urn:miriam:go:GO:0007173" />
+                  </rdf:Description>
+                </rdf:RDF>
+              </COPASI>
+            </annotation>
+          </annotationList>
+        </nonrdfAnnotation>
+        <nonrdfAnnotation vcid="ReactionStep(Ras_Activation)">
+          <freetext>&lt;notes&gt;
+          &lt;body xmlns="http://www.w3.org/1999/xhtml"&gt;
+            &lt;pre&gt;Parameters taken from Brown et al 2004&lt;/pre&gt;
+          &lt;/body&gt;
+        &lt;/notes&gt;</freetext>
+          <annotationList>
+            <annotation>
+              <COPASI xmlns="http://www.copasi.org/static/sbml">
+                <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:CopasiMT="http://www.copasi.org/RDF/MiriamTerms#" xmlns:dcterms="http://purl.org/dc/terms/">
+                  <rdf:Description rdf:about="#COPASI36">
+                    <dcterms:created>
+                      <rdf:Description>
+                        <dcterms:W3CDTF>2016-11-28T16:27:30Z</dcterms:W3CDTF>
+                      </rdf:Description>
+                    </dcterms:created>
+                    <CopasiMT:is rdf:resource="urn:miriam:sbo:SBO:0000029" />
+                  </rdf:Description>
+                </rdf:RDF>
+              </COPASI>
+            </annotation>
+          </annotationList>
+        </nonrdfAnnotation>
+        <nonrdfAnnotation vcid="Species(species_5)">
+          <freetext>&lt;notes&gt;
+          &lt;body xmlns="http://www.w3.org/1999/xhtml"&gt;
+            &lt;pre&gt;Inactive species of Ras; Initial value taken from Brown et al 2004&lt;/pre&gt;
+          &lt;/body&gt;
+        &lt;/notes&gt;</freetext>
+          <annotationList>
+            <annotation>
+              <COPASI xmlns="http://www.copasi.org/static/sbml">
+                <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:CopasiMT="http://www.copasi.org/RDF/MiriamTerms#" xmlns:dcterms="http://purl.org/dc/terms/">
+                  <rdf:Description rdf:about="#COPASI7">
+                    <dcterms:created>
+                      <rdf:Description>
+                        <dcterms:W3CDTF>2016-11-28T15:50:29Z</dcterms:W3CDTF>
+                      </rdf:Description>
+                    </dcterms:created>
+                    <CopasiMT:isVersionOf rdf:resource="urn:miriam:interpro:IPR020849" />
+                  </rdf:Description>
+                </rdf:RDF>
+              </COPASI>
+            </annotation>
+          </annotationList>
+        </nonrdfAnnotation>
+        <nonrdfAnnotation vcid="SimulationContext(Deterministic)">
+          <freetext>&lt;html&gt;
+  &lt;head&gt;
+    
+  &lt;/head&gt;
+  &lt;body xmlns="http://www.w3.org/1999/xhtml"&gt;
+  &lt;/body&gt;
+&lt;/html&gt;</freetext>
+        </nonrdfAnnotation>
+      </nonrdfAnnotationList>
+      <uriBindingList>
+        <uriBinding uri="http://www.sbml.org/sbml/level2/version4/COPASI30" vcid="Species(species_28)" />
+        <uriBinding uri="http://www.sbml.org/sbml/level2/version4/COPASI1" vcid="Structure(compartment)" />
+        <uriBinding uri="http://www.sbml.org/sbml/level2/version4/COPASI0" vcid="BioModel(Orton2009 - ModelBrick_Ras)" />
+        <uriBinding uri="http://www.sbml.org/sbml/level2/version4/COPASI36" vcid="ReactionStep(Ras_Activation)" />
+        <uriBinding uri="http://www.sbml.org/sbml/level2/version4/COPASI6" vcid="Species(species_4)" />
+        <uriBinding uri="http://www.sbml.org/sbml/level2/version4/COPASI7" vcid="Species(species_5)" />
+        <uriBinding uri="http://www.sbml.org/sbml/level2/version4/COPASI4" vcid="Species(species_2)" />
+        <uriBinding uri="http://www.sbml.org/sbml/level2/version4/COPASI37" vcid="ReactionStep(Ras_Deactivation)" />
+      </uriBindingList>
+    </vcmetadata>
+  </BioModel>
+</vcml>
+

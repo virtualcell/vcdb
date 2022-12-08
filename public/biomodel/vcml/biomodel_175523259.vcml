@@ -1,0 +1,1326 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--This biomodel was generated in VCML Version Alpha_Version_7.4.0_build_87-->
+<vcml xmlns="http://sourceforge.net/projects/vcell/vcml" Version="Alpha_Version_7.4.0_build_87">
+  <BioModel Name="infection_model_simple">
+    <Annotation>cloned from 'infection_model' owned by user Ani</Annotation>
+    <Model Name="model">
+      <Annotation>cloned from 'model' owned by user Ani</Annotation>
+      <ModelParameters>
+        <Parameter Name="Recov_rate" Role="user defined" Unit="s-1">10.0</Parameter>
+        <Parameter Name="contact_rate" Role="user defined" Unit="s-1.uM-1">100.0</Parameter>
+        <Parameter Name="discontact_rate" Role="user defined" Unit="s-1">1000.0</Parameter>
+        <Parameter Name="infection_rate" Role="user defined" Unit="s-1">10000.0</Parameter>
+        <Parameter Name="discontact" Role="user defined" Unit="s-1">10.0</Parameter>
+        <Parameter Name="progression_rate" Role="user defined" Unit="s-1">100.0</Parameter>
+        <Parameter Name="recovery_infection" Role="user defined" Unit="s-1">10.0</Parameter>
+        <Parameter Name="mortality" Role="user defined" Unit="s-1">0.001</Parameter>
+      </ModelParameters>
+      <Compound Name="s0" />
+      <Compound Name="s1" />
+      <Feature Name="c0" KeyValue="175523232" />
+      <LocalizedCompound Name="HP" CompoundRef="s0" Structure="c0" OverrideName="true" KeyValue="175523234">
+        <SpeciesPattern>
+          <MolecularTypePattern Index="1">
+            <MolecularType Name="Human" />
+            <ComponentPattern MolecularComponent="health" ComponentStatePattern="h" BondType="-" />
+            <ComponentPattern MolecularComponent="age" ComponentStatePattern="a50_70" BondType="-" />
+            <ComponentPattern MolecularComponent="cont1" BondType="-" />
+            <ComponentPattern MolecularComponent="cont2" BondType="-" />
+          </MolecularTypePattern>
+        </SpeciesPattern>
+      </LocalizedCompound>
+      <LocalizedCompound Name="IP" CompoundRef="s1" Structure="c0" OverrideName="true" KeyValue="175523235">
+        <SpeciesPattern>
+          <MolecularTypePattern Index="1">
+            <MolecularType Name="Human" />
+            <ComponentPattern MolecularComponent="health" ComponentStatePattern="inf" BondType="-" />
+            <ComponentPattern MolecularComponent="age" ComponentStatePattern="a50_70" BondType="-" />
+            <ComponentPattern MolecularComponent="cont1" BondType="-" />
+            <ComponentPattern MolecularComponent="cont2" BondType="-" />
+          </MolecularTypePattern>
+        </SpeciesPattern>
+      </LocalizedCompound>
+      <RbmModelContainer>
+        <MolecularTypeList>
+          <MolecularType Name="Human" AnchorAll="true">
+            <MolecularComponent Name="health" Index="1">
+              <AllowableState Name="h" />
+              <AllowableState Name="inf" />
+              <AllowableState Name="sick" />
+              <AllowableState Name="rec" />
+              <AllowableState Name="death" />
+            </MolecularComponent>
+            <MolecularComponent Name="age" Index="2">
+              <AllowableState Name="a20_50" />
+              <AllowableState Name="a50_70" />
+              <AllowableState Name="a70_99" />
+            </MolecularComponent>
+            <MolecularComponent Name="cont1" Index="3" />
+            <MolecularComponent Name="cont2" Index="4" />
+          </MolecularType>
+        </MolecularTypeList>
+        <RbmObservableList>
+          <Observable Name="O0_Human_tot" ObservableType="Molecules" Sequence="Multimolecular" LengthEqual="2" LengthGreater="1" Structure="c0">
+            <SpeciesPattern>
+              <MolecularTypePattern Index="1">
+                <MolecularType Name="Human" />
+                <ComponentPattern MolecularComponent="health" Any="true" BondType="?" />
+                <ComponentPattern MolecularComponent="age" Any="true" BondType="?" />
+                <ComponentPattern MolecularComponent="cont1" BondType="?" />
+                <ComponentPattern MolecularComponent="cont2" BondType="?" />
+              </MolecularTypePattern>
+            </SpeciesPattern>
+          </Observable>
+          <Observable Name="O0_Infection" ObservableType="Molecules" Sequence="Multimolecular" LengthEqual="2" LengthGreater="1" Structure="c0">
+            <SpeciesPattern>
+              <MolecularTypePattern Index="1">
+                <MolecularType Name="Human" />
+                <ComponentPattern MolecularComponent="health" ComponentStatePattern="inf" BondType="-" />
+                <ComponentPattern MolecularComponent="age" Any="true" BondType="?" />
+                <ComponentPattern MolecularComponent="cont1" BondType="?" />
+                <ComponentPattern MolecularComponent="cont2" BondType="?" />
+              </MolecularTypePattern>
+            </SpeciesPattern>
+          </Observable>
+          <Observable Name="O0_Mortality" ObservableType="Molecules" Sequence="Multimolecular" LengthEqual="2" LengthGreater="1" Structure="c0">
+            <SpeciesPattern>
+              <MolecularTypePattern Index="1">
+                <MolecularType Name="Human" />
+                <ComponentPattern MolecularComponent="health" ComponentStatePattern="death" BondType="-" />
+                <ComponentPattern MolecularComponent="age" Any="true" BondType="?" />
+                <ComponentPattern MolecularComponent="cont1" BondType="?" />
+                <ComponentPattern MolecularComponent="cont2" BondType="?" />
+              </MolecularTypePattern>
+            </SpeciesPattern>
+          </Observable>
+          <Observable Name="O0_Sick" ObservableType="Molecules" Sequence="Multimolecular" LengthEqual="2" LengthGreater="1" Structure="c0">
+            <SpeciesPattern>
+              <MolecularTypePattern Index="1">
+                <MolecularType Name="Human" />
+                <ComponentPattern MolecularComponent="health" ComponentStatePattern="sick" BondType="-" />
+                <ComponentPattern MolecularComponent="age" Any="true" BondType="?" />
+                <ComponentPattern MolecularComponent="cont1" BondType="?" />
+                <ComponentPattern MolecularComponent="cont2" BondType="?" />
+              </MolecularTypePattern>
+            </SpeciesPattern>
+          </Observable>
+        </RbmObservableList>
+        <ReactionRuleList>
+          <ReactionRule Name="contact_h_h" Structure="c0" ReactionRuleLabel="contact_h_h" ReactionRuleReversible="true">
+            <ReactantPatternsList>
+              <ReactantPattern Structure="c0">
+                <SpeciesPattern>
+                  <MolecularTypePattern ParticipantMatch="1" Index="1">
+                    <MolecularType Name="Human" />
+                    <ComponentPattern MolecularComponent="health" ComponentStatePattern="h" BondType="-" />
+                    <ComponentPattern MolecularComponent="age" Any="true" BondType="?" />
+                    <ComponentPattern MolecularComponent="cont1" BondType="-" />
+                    <ComponentPattern MolecularComponent="cont2" BondType="?" />
+                  </MolecularTypePattern>
+                </SpeciesPattern>
+              </ReactantPattern>
+              <ReactantPattern Structure="c0">
+                <SpeciesPattern>
+                  <MolecularTypePattern ParticipantMatch="2" Index="1">
+                    <MolecularType Name="Human" />
+                    <ComponentPattern MolecularComponent="health" ComponentStatePattern="h" BondType="-" />
+                    <ComponentPattern MolecularComponent="age" Any="true" BondType="?" />
+                    <ComponentPattern MolecularComponent="cont1" BondType="-" />
+                    <ComponentPattern MolecularComponent="cont2" BondType="?" />
+                  </MolecularTypePattern>
+                </SpeciesPattern>
+              </ReactantPattern>
+            </ReactantPatternsList>
+            <ProductPatternsList>
+              <ProductPattern Structure="c0">
+                <SpeciesPattern>
+                  <MolecularTypePattern ParticipantMatch="1" Index="1">
+                    <MolecularType Name="Human" />
+                    <ComponentPattern MolecularComponent="health" ComponentStatePattern="h" BondType="-" />
+                    <ComponentPattern MolecularComponent="age" Any="true" BondType="?" />
+                    <ComponentPattern MolecularComponent="cont1" BondType="1">
+                      <Bond MolecularTypePattern="Human" ComponentPattern="cont1" />
+                    </ComponentPattern>
+                    <ComponentPattern MolecularComponent="cont2" BondType="?" />
+                  </MolecularTypePattern>
+                  <MolecularTypePattern ParticipantMatch="2" Index="2">
+                    <MolecularType Name="Human" />
+                    <ComponentPattern MolecularComponent="health" ComponentStatePattern="h" BondType="-" />
+                    <ComponentPattern MolecularComponent="age" Any="true" BondType="?" />
+                    <ComponentPattern MolecularComponent="cont1" BondType="1">
+                      <Bond MolecularTypePattern="Human" ComponentPattern="cont1" />
+                    </ComponentPattern>
+                    <ComponentPattern MolecularComponent="cont2" BondType="?" />
+                  </MolecularTypePattern>
+                </SpeciesPattern>
+              </ProductPattern>
+            </ProductPatternsList>
+            <Kinetics KineticsType="MassAction">
+              <Parameter Name="ruleRate" Role="RuleRate" Unit="uM.s-1" />
+              <Parameter Name="Kf" Role="MassActionKf" Unit="s-1.uM-1">contact_rate</Parameter>
+              <Parameter Name="Kr" Role="MassActionKr" Unit="s-1">discontact_rate</Parameter>
+            </Kinetics>
+          </ReactionRule>
+          <ReactionRule Name="contact_h_i" Structure="c0" ReactionRuleLabel="contact_h_i" ReactionRuleReversible="true">
+            <ReactantPatternsList>
+              <ReactantPattern Structure="c0">
+                <SpeciesPattern>
+                  <MolecularTypePattern ParticipantMatch="1" Index="1">
+                    <MolecularType Name="Human" />
+                    <ComponentPattern MolecularComponent="health" ComponentStatePattern="h" BondType="-" />
+                    <ComponentPattern MolecularComponent="age" Any="true" BondType="?" />
+                    <ComponentPattern MolecularComponent="cont1" BondType="-" />
+                    <ComponentPattern MolecularComponent="cont2" BondType="?" />
+                  </MolecularTypePattern>
+                </SpeciesPattern>
+              </ReactantPattern>
+              <ReactantPattern Structure="c0">
+                <SpeciesPattern>
+                  <MolecularTypePattern ParticipantMatch="2" Index="1">
+                    <MolecularType Name="Human" />
+                    <ComponentPattern MolecularComponent="health" ComponentStatePattern="inf" BondType="-" />
+                    <ComponentPattern MolecularComponent="age" Any="true" BondType="?" />
+                    <ComponentPattern MolecularComponent="cont1" BondType="-" />
+                    <ComponentPattern MolecularComponent="cont2" BondType="?" />
+                  </MolecularTypePattern>
+                </SpeciesPattern>
+              </ReactantPattern>
+            </ReactantPatternsList>
+            <ProductPatternsList>
+              <ProductPattern Structure="c0">
+                <SpeciesPattern>
+                  <MolecularTypePattern ParticipantMatch="1" Index="1">
+                    <MolecularType Name="Human" />
+                    <ComponentPattern MolecularComponent="health" ComponentStatePattern="h" BondType="-" />
+                    <ComponentPattern MolecularComponent="age" Any="true" BondType="?" />
+                    <ComponentPattern MolecularComponent="cont1" BondType="1">
+                      <Bond MolecularTypePattern="Human" ComponentPattern="cont1" />
+                    </ComponentPattern>
+                    <ComponentPattern MolecularComponent="cont2" BondType="?" />
+                  </MolecularTypePattern>
+                  <MolecularTypePattern ParticipantMatch="2" Index="2">
+                    <MolecularType Name="Human" />
+                    <ComponentPattern MolecularComponent="health" ComponentStatePattern="inf" BondType="-" />
+                    <ComponentPattern MolecularComponent="age" Any="true" BondType="?" />
+                    <ComponentPattern MolecularComponent="cont1" BondType="1">
+                      <Bond MolecularTypePattern="Human" ComponentPattern="cont1" />
+                    </ComponentPattern>
+                    <ComponentPattern MolecularComponent="cont2" BondType="?" />
+                  </MolecularTypePattern>
+                </SpeciesPattern>
+              </ProductPattern>
+            </ProductPatternsList>
+            <Kinetics KineticsType="MassAction">
+              <Parameter Name="ruleRate" Role="RuleRate" Unit="uM.s-1" />
+              <Parameter Name="Kf" Role="MassActionKf" Unit="s-1.uM-1">contact_rate</Parameter>
+              <Parameter Name="Kr" Role="MassActionKr" Unit="s-1">discontact_rate</Parameter>
+            </Kinetics>
+          </ReactionRule>
+          <ReactionRule Name="infection" Structure="c0" ReactionRuleLabel="infection" ReactionRuleReversible="false">
+            <ReactantPatternsList>
+              <ReactantPattern Structure="c0">
+                <SpeciesPattern>
+                  <MolecularTypePattern ParticipantMatch="1" Index="1">
+                    <MolecularType Name="Human" />
+                    <ComponentPattern MolecularComponent="health" ComponentStatePattern="inf" BondType="-" />
+                    <ComponentPattern MolecularComponent="age" Any="true" BondType="?" />
+                    <ComponentPattern MolecularComponent="cont1" BondType="1">
+                      <Bond MolecularTypePattern="Human" ComponentPattern="cont1" />
+                    </ComponentPattern>
+                    <ComponentPattern MolecularComponent="cont2" BondType="?" />
+                  </MolecularTypePattern>
+                  <MolecularTypePattern ParticipantMatch="2" Index="2">
+                    <MolecularType Name="Human" />
+                    <ComponentPattern MolecularComponent="health" ComponentStatePattern="h" BondType="-" />
+                    <ComponentPattern MolecularComponent="age" Any="true" BondType="?" />
+                    <ComponentPattern MolecularComponent="cont1" BondType="1">
+                      <Bond MolecularTypePattern="Human" ComponentPattern="cont1" />
+                    </ComponentPattern>
+                    <ComponentPattern MolecularComponent="cont2" BondType="?" />
+                  </MolecularTypePattern>
+                </SpeciesPattern>
+              </ReactantPattern>
+            </ReactantPatternsList>
+            <ProductPatternsList>
+              <ProductPattern Structure="c0">
+                <SpeciesPattern>
+                  <MolecularTypePattern ParticipantMatch="1" Index="1">
+                    <MolecularType Name="Human" />
+                    <ComponentPattern MolecularComponent="health" ComponentStatePattern="inf" BondType="-" />
+                    <ComponentPattern MolecularComponent="age" Any="true" BondType="?" />
+                    <ComponentPattern MolecularComponent="cont1" BondType="1">
+                      <Bond MolecularTypePattern="Human" ComponentPattern="cont1" />
+                    </ComponentPattern>
+                    <ComponentPattern MolecularComponent="cont2" BondType="?" />
+                  </MolecularTypePattern>
+                  <MolecularTypePattern ParticipantMatch="2" Index="2">
+                    <MolecularType Name="Human" />
+                    <ComponentPattern MolecularComponent="health" ComponentStatePattern="inf" BondType="-" />
+                    <ComponentPattern MolecularComponent="age" Any="true" BondType="?" />
+                    <ComponentPattern MolecularComponent="cont1" BondType="1">
+                      <Bond MolecularTypePattern="Human" ComponentPattern="cont1" />
+                    </ComponentPattern>
+                    <ComponentPattern MolecularComponent="cont2" BondType="?" />
+                  </MolecularTypePattern>
+                </SpeciesPattern>
+              </ProductPattern>
+            </ProductPatternsList>
+            <Kinetics KineticsType="MassAction">
+              <Parameter Name="ruleRate" Role="RuleRate" Unit="uM.s-1" />
+              <Parameter Name="Kf" Role="MassActionKf" Unit="s-1">infection_rate</Parameter>
+              <Parameter Name="Kr" Role="MassActionKr" Unit="s-1">0.0</Parameter>
+            </Kinetics>
+          </ReactionRule>
+          <ReactionRule Name="progression" Structure="c0" ReactionRuleLabel="progression" ReactionRuleReversible="true">
+            <ReactantPatternsList>
+              <ReactantPattern Structure="c0">
+                <SpeciesPattern>
+                  <MolecularTypePattern Index="1">
+                    <MolecularType Name="Human" />
+                    <ComponentPattern MolecularComponent="health" ComponentStatePattern="inf" BondType="-" />
+                    <ComponentPattern MolecularComponent="age" Any="true" BondType="?" />
+                    <ComponentPattern MolecularComponent="cont1" BondType="-" />
+                    <ComponentPattern MolecularComponent="cont2" BondType="?" />
+                  </MolecularTypePattern>
+                </SpeciesPattern>
+              </ReactantPattern>
+            </ReactantPatternsList>
+            <ProductPatternsList>
+              <ProductPattern Structure="c0">
+                <SpeciesPattern>
+                  <MolecularTypePattern Index="1">
+                    <MolecularType Name="Human" />
+                    <ComponentPattern MolecularComponent="health" ComponentStatePattern="sick" BondType="-" />
+                    <ComponentPattern MolecularComponent="age" Any="true" BondType="?" />
+                    <ComponentPattern MolecularComponent="cont1" BondType="-" />
+                    <ComponentPattern MolecularComponent="cont2" BondType="?" />
+                  </MolecularTypePattern>
+                </SpeciesPattern>
+              </ProductPattern>
+            </ProductPatternsList>
+            <Kinetics KineticsType="MassAction">
+              <Parameter Name="ruleRate" Role="RuleRate" Unit="uM.s-1" />
+              <Parameter Name="Kf" Role="MassActionKf" Unit="s-1">progression_rate</Parameter>
+              <Parameter Name="Kr" Role="MassActionKr" Unit="s-1">recovery_infection</Parameter>
+            </Kinetics>
+          </ReactionRule>
+          <ReactionRule Name="death" Structure="c0" ReactionRuleLabel="death" ReactionRuleReversible="false">
+            <ReactantPatternsList>
+              <ReactantPattern Structure="c0">
+                <SpeciesPattern>
+                  <MolecularTypePattern Index="1">
+                    <MolecularType Name="Human" />
+                    <ComponentPattern MolecularComponent="health" ComponentStatePattern="sick" BondType="-" />
+                    <ComponentPattern MolecularComponent="age" Any="true" BondType="?" />
+                    <ComponentPattern MolecularComponent="cont1" BondType="-" />
+                    <ComponentPattern MolecularComponent="cont2" BondType="-" />
+                  </MolecularTypePattern>
+                </SpeciesPattern>
+              </ReactantPattern>
+            </ReactantPatternsList>
+            <ProductPatternsList>
+              <ProductPattern Structure="c0">
+                <SpeciesPattern>
+                  <MolecularTypePattern Index="1">
+                    <MolecularType Name="Human" />
+                    <ComponentPattern MolecularComponent="health" ComponentStatePattern="death" BondType="-" />
+                    <ComponentPattern MolecularComponent="age" Any="true" BondType="?" />
+                    <ComponentPattern MolecularComponent="cont1" BondType="-" />
+                    <ComponentPattern MolecularComponent="cont2" BondType="-" />
+                  </MolecularTypePattern>
+                </SpeciesPattern>
+              </ProductPattern>
+            </ProductPatternsList>
+            <Kinetics KineticsType="MassAction">
+              <Parameter Name="ruleRate" Role="RuleRate" Unit="uM.s-1" />
+              <Parameter Name="Kf" Role="MassActionKf" Unit="s-1">mortality</Parameter>
+              <Parameter Name="Kr" Role="MassActionKr" Unit="s-1">0.0</Parameter>
+            </Kinetics>
+          </ReactionRule>
+          <ReactionRule Name="contact_i_i" Structure="c0" ReactionRuleLabel="contact_i_i" ReactionRuleReversible="true">
+            <ReactantPatternsList>
+              <ReactantPattern Structure="c0">
+                <SpeciesPattern>
+                  <MolecularTypePattern ParticipantMatch="1" Index="1">
+                    <MolecularType Name="Human" />
+                    <ComponentPattern MolecularComponent="health" ComponentStatePattern="inf" BondType="-" />
+                    <ComponentPattern MolecularComponent="age" Any="true" BondType="?" />
+                    <ComponentPattern MolecularComponent="cont1" BondType="-" />
+                    <ComponentPattern MolecularComponent="cont2" BondType="?" />
+                  </MolecularTypePattern>
+                </SpeciesPattern>
+              </ReactantPattern>
+              <ReactantPattern Structure="c0">
+                <SpeciesPattern>
+                  <MolecularTypePattern ParticipantMatch="2" Index="1">
+                    <MolecularType Name="Human" />
+                    <ComponentPattern MolecularComponent="health" ComponentStatePattern="inf" BondType="-" />
+                    <ComponentPattern MolecularComponent="age" Any="true" BondType="?" />
+                    <ComponentPattern MolecularComponent="cont1" BondType="-" />
+                    <ComponentPattern MolecularComponent="cont2" BondType="?" />
+                  </MolecularTypePattern>
+                </SpeciesPattern>
+              </ReactantPattern>
+            </ReactantPatternsList>
+            <ProductPatternsList>
+              <ProductPattern Structure="c0">
+                <SpeciesPattern>
+                  <MolecularTypePattern ParticipantMatch="1" Index="1">
+                    <MolecularType Name="Human" />
+                    <ComponentPattern MolecularComponent="health" ComponentStatePattern="inf" BondType="-" />
+                    <ComponentPattern MolecularComponent="age" Any="true" BondType="?" />
+                    <ComponentPattern MolecularComponent="cont1" BondType="1">
+                      <Bond MolecularTypePattern="Human" ComponentPattern="cont1" />
+                    </ComponentPattern>
+                    <ComponentPattern MolecularComponent="cont2" BondType="?" />
+                  </MolecularTypePattern>
+                  <MolecularTypePattern ParticipantMatch="2" Index="2">
+                    <MolecularType Name="Human" />
+                    <ComponentPattern MolecularComponent="health" ComponentStatePattern="inf" BondType="-" />
+                    <ComponentPattern MolecularComponent="age" Any="true" BondType="?" />
+                    <ComponentPattern MolecularComponent="cont1" BondType="1">
+                      <Bond MolecularTypePattern="Human" ComponentPattern="cont1" />
+                    </ComponentPattern>
+                    <ComponentPattern MolecularComponent="cont2" BondType="?" />
+                  </MolecularTypePattern>
+                </SpeciesPattern>
+              </ProductPattern>
+            </ProductPatternsList>
+            <Kinetics KineticsType="MassAction">
+              <Parameter Name="ruleRate" Role="RuleRate" Unit="uM.s-1" />
+              <Parameter Name="Kf" Role="MassActionKf" Unit="s-1.uM-1">contact_rate</Parameter>
+              <Parameter Name="Kr" Role="MassActionKr" Unit="s-1">discontact_rate</Parameter>
+            </Kinetics>
+          </ReactionRule>
+        </ReactionRuleList>
+      </RbmModelContainer>
+      <Diagram Name="c0" Structure="c0" />
+      <Version Name="model" KeyValue="175523228" BranchId="175521695" Archived="0" Date="23-Mar-2020 17:33:51" FromVersionable="false">
+        <Owner Name="mblinov" Identifier="12487253" />
+        <GroupAccess Type="1" />
+        <Annotation>cloned from 'model' owned by user Ani</Annotation>
+      </Version>
+      <ModelUnitSystem VolumeSubstanceUnit="uM.um3" MembraneSubstanceUnit="molecules" LumpedReactionSubstanceUnit="molecules" VolumeUnit="um3" AreaUnit="um2" LengthUnit="um" TimeUnit="s" />
+    </Model>
+    <SimulationSpec Name="nfsim" Stochastic="false" UseConcentration="false" RuleBased="true" RandomizeInitCondition="false" MassConservationModelReduction="false" InsufficientIterations="false" InsufficientMaxMolecules="false">
+      <NetworkConstraints RbmMaxIteration="3" RbmMaxMoleculesPerSpecies="10" RbmSpeciesLimit="800" RbmReactionsLimit="2500">
+        <MaxStoichiometry MolecularType="Human" Integer="100" />
+      </NetworkConstraints>
+      <Annotation>cloned from 'nfsim' owned by user Ani</Annotation>
+      <Geometry Name="non-spatial1005927927" Dimension="0">
+        <Annotation>cloned from 'non-spatial1005927927' owned by user Ani</Annotation>
+        <Extent X="10.0" Y="10.0" Z="10.0" />
+        <Origin X="0.0" Y="0.0" Z="0.0" />
+        <SubVolume Name="Compartment" Handle="0" Type="Compartmental" KeyValue="175521674" />
+        <Version Name="non-spatial1005927927" KeyValue="175521670" BranchId="175521671" Archived="0" Date="23-Mar-2020 17:06:04" FromVersionable="false">
+          <Owner Name="mblinov" Identifier="12487253" />
+          <GroupAccess Type="1" />
+          <Annotation>cloned from 'non-spatial1005927927' owned by user Ani</Annotation>
+        </Version>
+      </Geometry>
+      <GeometryContext>
+        <FeatureMapping Feature="c0" GeometryClass="Compartment" SubVolume="Compartment" Size="1.0">
+          <BoundariesTypes Xm="Flux" Xp="Flux" Ym="Flux" Yp="Flux" Zm="Flux" Zp="Flux" />
+        </FeatureMapping>
+      </GeometryContext>
+      <ReactionContext>
+        <LocalizedCompoundSpec LocalizedCompoundRef="HP" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialCount>100.0</InitialCount>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="IP" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialCount>1.0</InitialCount>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <ReactionRuleSpecs>
+          <ReactionRuleSpec ReactionRuleRef="contact_h_h" ReactionRuleMapping="included" />
+          <ReactionRuleSpec ReactionRuleRef="contact_h_i" ReactionRuleMapping="included" />
+          <ReactionRuleSpec ReactionRuleRef="infection" ReactionRuleMapping="included" />
+          <ReactionRuleSpec ReactionRuleRef="progression" ReactionRuleMapping="included" />
+          <ReactionRuleSpec ReactionRuleRef="death" ReactionRuleMapping="included" />
+          <ReactionRuleSpec ReactionRuleRef="contact_i_i" ReactionRuleMapping="included" />
+        </ReactionRuleSpecs>
+      </ReactionContext>
+      <MathDescription Name="Application0_generated">
+        <Annotation>cloned from 'Application0_generated' owned by user Ani</Annotation>
+        <ParticleMolecularType Name="Human">
+          <Component Name="health">
+            <AllowableState Name="h" />
+            <AllowableState Name="inf" />
+            <AllowableState Name="sick" />
+            <AllowableState Name="rec" />
+            <AllowableState Name="death" />
+          </Component>
+          <Component Name="age">
+            <AllowableState Name="a20_50" />
+            <AllowableState Name="a50_70" />
+            <AllowableState Name="a70_99" />
+          </Component>
+          <Component Name="cont1" />
+          <Component Name="cont2" />
+        </ParticleMolecularType>
+        <Constant Name="_F_">96485.3321</Constant>
+        <Constant Name="_F_nmol_">9.64853321E-5</Constant>
+        <Constant Name="_N_pmol_">6.02214179E11</Constant>
+        <Constant Name="_PI_">3.141592653589793</Constant>
+        <Constant Name="_R_">8314.46261815</Constant>
+        <Constant Name="_T_">300.0</Constant>
+        <Constant Name="contact_rate">100.0</Constant>
+        <Constant Name="discontact">10.0</Constant>
+        <Constant Name="discontact_rate">1000.0</Constant>
+        <Constant Name="HP_Count_initCount">100.0</Constant>
+        <Constant Name="infection_rate">10000.0</Constant>
+        <Constant Name="IP_Count_initCount">1.0</Constant>
+        <Constant Name="KMOLE">0.001660538783162726</Constant>
+        <Constant Name="mortality">0.001</Constant>
+        <Constant Name="progression_rate">100.0</Constant>
+        <Constant Name="Recov_rate">10.0</Constant>
+        <Constant Name="recovery_infection">10.0</Constant>
+        <Constant Name="Size_c0">1.0</Constant>
+        <VolumeParticleSpeciesPattern Location="c0" Name="speciesPattern0" Domain="Compartment">
+          <MolecularType Name="Human" MatchLabel="*">
+            <Component Name="health" State="*" Bond="?" />
+            <Component Name="age" State="*" Bond="?" />
+            <Component Name="cont1" State="*" Bond="?" />
+            <Component Name="cont2" State="*" Bond="?" />
+          </MolecularType>
+        </VolumeParticleSpeciesPattern>
+        <VolumeParticleSpeciesPattern Location="c0" Name="speciesPattern1" Domain="Compartment">
+          <MolecularType Name="Human" MatchLabel="*">
+            <Component Name="health" State="inf" Bond="-" />
+            <Component Name="age" State="*" Bond="?" />
+            <Component Name="cont1" State="*" Bond="?" />
+            <Component Name="cont2" State="*" Bond="?" />
+          </MolecularType>
+        </VolumeParticleSpeciesPattern>
+        <VolumeParticleSpeciesPattern Location="c0" Name="speciesPattern10" Domain="Compartment">
+          <MolecularType Name="Human" MatchLabel="1">
+            <Component Name="health" State="inf" Bond="-" />
+            <Component Name="age" State="*" Bond="?" />
+            <Component Name="cont1" State="*" Bond="1" />
+            <Component Name="cont2" State="*" Bond="?" />
+          </MolecularType>
+          <MolecularType Name="Human" MatchLabel="2">
+            <Component Name="health" State="inf" Bond="-" />
+            <Component Name="age" State="*" Bond="?" />
+            <Component Name="cont1" State="*" Bond="1" />
+            <Component Name="cont2" State="*" Bond="?" />
+          </MolecularType>
+        </VolumeParticleSpeciesPattern>
+        <VolumeParticleSpeciesPattern Location="c0" Name="speciesPattern11" Domain="Compartment">
+          <MolecularType Name="Human" MatchLabel="*">
+            <Component Name="health" State="inf" Bond="-" />
+            <Component Name="age" State="*" Bond="?" />
+            <Component Name="cont1" State="*" Bond="-" />
+            <Component Name="cont2" State="*" Bond="?" />
+          </MolecularType>
+        </VolumeParticleSpeciesPattern>
+        <VolumeParticleSpeciesPattern Location="c0" Name="speciesPattern12" Domain="Compartment">
+          <MolecularType Name="Human" MatchLabel="*">
+            <Component Name="health" State="sick" Bond="-" />
+            <Component Name="age" State="*" Bond="?" />
+            <Component Name="cont1" State="*" Bond="-" />
+            <Component Name="cont2" State="*" Bond="?" />
+          </MolecularType>
+        </VolumeParticleSpeciesPattern>
+        <VolumeParticleSpeciesPattern Location="c0" Name="speciesPattern13" Domain="Compartment">
+          <MolecularType Name="Human" MatchLabel="*">
+            <Component Name="health" State="sick" Bond="-" />
+            <Component Name="age" State="*" Bond="?" />
+            <Component Name="cont1" State="*" Bond="-" />
+            <Component Name="cont2" State="*" Bond="-" />
+          </MolecularType>
+        </VolumeParticleSpeciesPattern>
+        <VolumeParticleSpeciesPattern Location="c0" Name="speciesPattern14" Domain="Compartment">
+          <MolecularType Name="Human" MatchLabel="*">
+            <Component Name="health" State="death" Bond="-" />
+            <Component Name="age" State="*" Bond="?" />
+            <Component Name="cont1" State="*" Bond="-" />
+            <Component Name="cont2" State="*" Bond="-" />
+          </MolecularType>
+        </VolumeParticleSpeciesPattern>
+        <VolumeParticleSpeciesPattern Location="c0" Name="speciesPattern15" Domain="Compartment">
+          <MolecularType Name="Human" MatchLabel="1">
+            <Component Name="health" State="inf" Bond="-" />
+            <Component Name="age" State="*" Bond="?" />
+            <Component Name="cont1" State="*" Bond="-" />
+            <Component Name="cont2" State="*" Bond="?" />
+          </MolecularType>
+        </VolumeParticleSpeciesPattern>
+        <VolumeParticleSpeciesPattern Location="c0" Name="speciesPattern16" Domain="Compartment">
+          <MolecularType Name="Human" MatchLabel="*">
+            <Component Name="health" State="h" Bond="-" />
+            <Component Name="age" State="a50_70" Bond="-" />
+            <Component Name="cont1" State="*" Bond="-" />
+            <Component Name="cont2" State="*" Bond="-" />
+          </MolecularType>
+        </VolumeParticleSpeciesPattern>
+        <VolumeParticleSpeciesPattern Location="c0" Name="speciesPattern17" Domain="Compartment">
+          <MolecularType Name="Human" MatchLabel="*">
+            <Component Name="health" State="inf" Bond="-" />
+            <Component Name="age" State="a50_70" Bond="-" />
+            <Component Name="cont1" State="*" Bond="-" />
+            <Component Name="cont2" State="*" Bond="-" />
+          </MolecularType>
+        </VolumeParticleSpeciesPattern>
+        <VolumeParticleSpeciesPattern Location="c0" Name="speciesPattern2" Domain="Compartment">
+          <MolecularType Name="Human" MatchLabel="*">
+            <Component Name="health" State="death" Bond="-" />
+            <Component Name="age" State="*" Bond="?" />
+            <Component Name="cont1" State="*" Bond="?" />
+            <Component Name="cont2" State="*" Bond="?" />
+          </MolecularType>
+        </VolumeParticleSpeciesPattern>
+        <VolumeParticleSpeciesPattern Location="c0" Name="speciesPattern3" Domain="Compartment">
+          <MolecularType Name="Human" MatchLabel="*">
+            <Component Name="health" State="sick" Bond="-" />
+            <Component Name="age" State="*" Bond="?" />
+            <Component Name="cont1" State="*" Bond="?" />
+            <Component Name="cont2" State="*" Bond="?" />
+          </MolecularType>
+        </VolumeParticleSpeciesPattern>
+        <VolumeParticleSpeciesPattern Location="c0" Name="speciesPattern4" Domain="Compartment">
+          <MolecularType Name="Human" MatchLabel="1">
+            <Component Name="health" State="h" Bond="-" />
+            <Component Name="age" State="*" Bond="?" />
+            <Component Name="cont1" State="*" Bond="-" />
+            <Component Name="cont2" State="*" Bond="?" />
+          </MolecularType>
+        </VolumeParticleSpeciesPattern>
+        <VolumeParticleSpeciesPattern Location="c0" Name="speciesPattern5" Domain="Compartment">
+          <MolecularType Name="Human" MatchLabel="2">
+            <Component Name="health" State="h" Bond="-" />
+            <Component Name="age" State="*" Bond="?" />
+            <Component Name="cont1" State="*" Bond="-" />
+            <Component Name="cont2" State="*" Bond="?" />
+          </MolecularType>
+        </VolumeParticleSpeciesPattern>
+        <VolumeParticleSpeciesPattern Location="c0" Name="speciesPattern6" Domain="Compartment">
+          <MolecularType Name="Human" MatchLabel="1">
+            <Component Name="health" State="h" Bond="-" />
+            <Component Name="age" State="*" Bond="?" />
+            <Component Name="cont1" State="*" Bond="1" />
+            <Component Name="cont2" State="*" Bond="?" />
+          </MolecularType>
+          <MolecularType Name="Human" MatchLabel="2">
+            <Component Name="health" State="h" Bond="-" />
+            <Component Name="age" State="*" Bond="?" />
+            <Component Name="cont1" State="*" Bond="1" />
+            <Component Name="cont2" State="*" Bond="?" />
+          </MolecularType>
+        </VolumeParticleSpeciesPattern>
+        <VolumeParticleSpeciesPattern Location="c0" Name="speciesPattern7" Domain="Compartment">
+          <MolecularType Name="Human" MatchLabel="2">
+            <Component Name="health" State="inf" Bond="-" />
+            <Component Name="age" State="*" Bond="?" />
+            <Component Name="cont1" State="*" Bond="-" />
+            <Component Name="cont2" State="*" Bond="?" />
+          </MolecularType>
+        </VolumeParticleSpeciesPattern>
+        <VolumeParticleSpeciesPattern Location="c0" Name="speciesPattern8" Domain="Compartment">
+          <MolecularType Name="Human" MatchLabel="1">
+            <Component Name="health" State="h" Bond="-" />
+            <Component Name="age" State="*" Bond="?" />
+            <Component Name="cont1" State="*" Bond="1" />
+            <Component Name="cont2" State="*" Bond="?" />
+          </MolecularType>
+          <MolecularType Name="Human" MatchLabel="2">
+            <Component Name="health" State="inf" Bond="-" />
+            <Component Name="age" State="*" Bond="?" />
+            <Component Name="cont1" State="*" Bond="1" />
+            <Component Name="cont2" State="*" Bond="?" />
+          </MolecularType>
+        </VolumeParticleSpeciesPattern>
+        <VolumeParticleSpeciesPattern Location="c0" Name="speciesPattern9" Domain="Compartment">
+          <MolecularType Name="Human" MatchLabel="1">
+            <Component Name="health" State="inf" Bond="-" />
+            <Component Name="age" State="*" Bond="?" />
+            <Component Name="cont1" State="*" Bond="1" />
+            <Component Name="cont2" State="*" Bond="?" />
+          </MolecularType>
+          <MolecularType Name="Human" MatchLabel="2">
+            <Component Name="health" State="h" Bond="-" />
+            <Component Name="age" State="*" Bond="?" />
+            <Component Name="cont1" State="*" Bond="1" />
+            <Component Name="cont2" State="*" Bond="?" />
+          </MolecularType>
+        </VolumeParticleSpeciesPattern>
+        <VolumeParticleObservable Name="HP_Count" Domain="Compartment" MolecularType="Species" SequenceType="Multimolecular">
+          <VolumeParticleSpeciesPatterns>
+            <VolumeParticleSpeciesPattern Name="speciesPattern16" />
+          </VolumeParticleSpeciesPatterns>
+        </VolumeParticleObservable>
+        <VolumeParticleObservable Name="IP_Count" Domain="Compartment" MolecularType="Species" SequenceType="Multimolecular">
+          <VolumeParticleSpeciesPatterns>
+            <VolumeParticleSpeciesPattern Name="speciesPattern17" />
+          </VolumeParticleSpeciesPatterns>
+        </VolumeParticleObservable>
+        <VolumeParticleObservable Name="O0_Human_tot_Count" Domain="Compartment" MolecularType="Molecules" SequenceType="Multimolecular">
+          <VolumeParticleSpeciesPatterns>
+            <VolumeParticleSpeciesPattern Name="speciesPattern0" />
+          </VolumeParticleSpeciesPatterns>
+        </VolumeParticleObservable>
+        <VolumeParticleObservable Name="O0_Infection_Count" Domain="Compartment" MolecularType="Molecules" SequenceType="Multimolecular">
+          <VolumeParticleSpeciesPatterns>
+            <VolumeParticleSpeciesPattern Name="speciesPattern1" />
+          </VolumeParticleSpeciesPatterns>
+        </VolumeParticleObservable>
+        <VolumeParticleObservable Name="O0_Mortality_Count" Domain="Compartment" MolecularType="Molecules" SequenceType="Multimolecular">
+          <VolumeParticleSpeciesPatterns>
+            <VolumeParticleSpeciesPattern Name="speciesPattern2" />
+          </VolumeParticleSpeciesPatterns>
+        </VolumeParticleObservable>
+        <VolumeParticleObservable Name="O0_Sick_Count" Domain="Compartment" MolecularType="Molecules" SequenceType="Multimolecular">
+          <VolumeParticleSpeciesPatterns>
+            <VolumeParticleSpeciesPattern Name="speciesPattern3" />
+          </VolumeParticleSpeciesPatterns>
+        </VolumeParticleObservable>
+        <Function Name="HP" Domain="Compartment">(HP_Count * (UnitFactor_uM_um3_molecules_neg_1 / Size_c0))</Function>
+        <Function Name="IP" Domain="Compartment">(IP_Count * (UnitFactor_uM_um3_molecules_neg_1 / Size_c0))</Function>
+        <Function Name="Kf_contact_h_h" Domain="Compartment">contact_rate</Function>
+        <Function Name="Kf_contact_h_i" Domain="Compartment">contact_rate</Function>
+        <Function Name="Kf_contact_i_i" Domain="Compartment">contact_rate</Function>
+        <Function Name="Kf_death" Domain="Compartment">mortality</Function>
+        <Function Name="Kf_infection" Domain="Compartment">infection_rate</Function>
+        <Function Name="Kf_progression" Domain="Compartment">progression_rate</Function>
+        <Function Name="Kr_contact_h_h" Domain="Compartment">discontact_rate</Function>
+        <Function Name="Kr_contact_h_i" Domain="Compartment">discontact_rate</Function>
+        <Function Name="Kr_contact_i_i" Domain="Compartment">discontact_rate</Function>
+        <Function Name="Kr_progression" Domain="Compartment">recovery_infection</Function>
+        <Function Name="O0_Human_tot" Domain="Compartment">(O0_Human_tot_Count * (UnitFactor_uM_um3_molecules_neg_1 / Size_c0))</Function>
+        <Function Name="O0_Infection" Domain="Compartment">(O0_Infection_Count * (UnitFactor_uM_um3_molecules_neg_1 / Size_c0))</Function>
+        <Function Name="O0_Mortality" Domain="Compartment">(O0_Mortality_Count * (UnitFactor_uM_um3_molecules_neg_1 / Size_c0))</Function>
+        <Function Name="O0_Sick" Domain="Compartment">(O0_Sick_Count * (UnitFactor_uM_um3_molecules_neg_1 / Size_c0))</Function>
+        <Function Name="P_contact_h_h_probabilityRate" Domain="Compartment">(Kf_contact_h_h * UnitFactor_uM_um3_molecules_neg_1 / Size_c0)</Function>
+        <Function Name="P_contact_h_h_reverse_probabilityRate" Domain="Compartment">Kr_contact_h_h</Function>
+        <Function Name="P_contact_h_i_probabilityRate" Domain="Compartment">(Kf_contact_h_i * UnitFactor_uM_um3_molecules_neg_1 / Size_c0)</Function>
+        <Function Name="P_contact_h_i_reverse_probabilityRate" Domain="Compartment">Kr_contact_h_i</Function>
+        <Function Name="P_contact_i_i_probabilityRate" Domain="Compartment">(Kf_contact_i_i * UnitFactor_uM_um3_molecules_neg_1 / Size_c0)</Function>
+        <Function Name="P_contact_i_i_reverse_probabilityRate" Domain="Compartment">Kr_contact_i_i</Function>
+        <Function Name="P_death_probabilityRate" Domain="Compartment">Kf_death</Function>
+        <Function Name="P_infection_probabilityRate" Domain="Compartment">Kf_infection</Function>
+        <Function Name="P_progression_probabilityRate" Domain="Compartment">Kf_progression</Function>
+        <Function Name="P_progression_reverse_probabilityRate" Domain="Compartment">Kr_progression</Function>
+        <Function Name="UnitFactor_uM_um3_molecules_neg_1">(1000000.0 / 6.02214179E8)</Function>
+        <CompartmentSubDomain Name="Compartment">
+          <BoundaryType Boundary="Xm" Type="Value" />
+          <BoundaryType Boundary="Xp" Type="Value" />
+          <BoundaryType Boundary="Ym" Type="Value" />
+          <BoundaryType Boundary="Yp" Type="Value" />
+          <BoundaryType Boundary="Zm" Type="Value" />
+          <BoundaryType Boundary="Zp" Type="Value" />
+          <ParticleJumpProcess Name="contact_h_h" ProcessSymmetryFactor="0.5">
+            <SelectedParticle Name="speciesPattern4" />
+            <SelectedParticle Name="speciesPattern5" />
+            <MacroscopicRateConstant>P_contact_h_h_probabilityRate</MacroscopicRateConstant>
+            <Effect VarName="speciesPattern4" Operation="destroy" />
+            <Effect VarName="speciesPattern5" Operation="destroy" />
+            <Effect VarName="speciesPattern6" Operation="create" />
+          </ParticleJumpProcess>
+          <ParticleJumpProcess Name="contact_h_h_reverse" ProcessSymmetryFactor="0.5">
+            <SelectedParticle Name="speciesPattern6" />
+            <MacroscopicRateConstant>P_contact_h_h_reverse_probabilityRate</MacroscopicRateConstant>
+            <Effect VarName="speciesPattern4" Operation="create" />
+            <Effect VarName="speciesPattern5" Operation="create" />
+            <Effect VarName="speciesPattern6" Operation="destroy" />
+          </ParticleJumpProcess>
+          <ParticleJumpProcess Name="contact_h_i" ProcessSymmetryFactor="1.0">
+            <SelectedParticle Name="speciesPattern4" />
+            <SelectedParticle Name="speciesPattern7" />
+            <MacroscopicRateConstant>P_contact_h_i_probabilityRate</MacroscopicRateConstant>
+            <Effect VarName="speciesPattern4" Operation="destroy" />
+            <Effect VarName="speciesPattern7" Operation="destroy" />
+            <Effect VarName="speciesPattern8" Operation="create" />
+          </ParticleJumpProcess>
+          <ParticleJumpProcess Name="contact_h_i_reverse" ProcessSymmetryFactor="1.0">
+            <SelectedParticle Name="speciesPattern8" />
+            <MacroscopicRateConstant>P_contact_h_i_reverse_probabilityRate</MacroscopicRateConstant>
+            <Effect VarName="speciesPattern4" Operation="create" />
+            <Effect VarName="speciesPattern7" Operation="create" />
+            <Effect VarName="speciesPattern8" Operation="destroy" />
+          </ParticleJumpProcess>
+          <ParticleJumpProcess Name="infection" ProcessSymmetryFactor="1.0">
+            <SelectedParticle Name="speciesPattern9" />
+            <MacroscopicRateConstant>P_infection_probabilityRate</MacroscopicRateConstant>
+            <Effect VarName="speciesPattern9" Operation="destroy" />
+            <Effect VarName="speciesPattern10" Operation="create" />
+          </ParticleJumpProcess>
+          <ParticleJumpProcess Name="progression" ProcessSymmetryFactor="1.0">
+            <SelectedParticle Name="speciesPattern11" />
+            <MacroscopicRateConstant>P_progression_probabilityRate</MacroscopicRateConstant>
+            <Effect VarName="speciesPattern11" Operation="destroy" />
+            <Effect VarName="speciesPattern12" Operation="create" />
+          </ParticleJumpProcess>
+          <ParticleJumpProcess Name="progression_reverse" ProcessSymmetryFactor="1.0">
+            <SelectedParticle Name="speciesPattern12" />
+            <MacroscopicRateConstant>P_progression_reverse_probabilityRate</MacroscopicRateConstant>
+            <Effect VarName="speciesPattern11" Operation="create" />
+            <Effect VarName="speciesPattern12" Operation="destroy" />
+          </ParticleJumpProcess>
+          <ParticleJumpProcess Name="death" ProcessSymmetryFactor="1.0">
+            <SelectedParticle Name="speciesPattern13" />
+            <MacroscopicRateConstant>P_death_probabilityRate</MacroscopicRateConstant>
+            <Effect VarName="speciesPattern13" Operation="destroy" />
+            <Effect VarName="speciesPattern14" Operation="create" />
+          </ParticleJumpProcess>
+          <ParticleJumpProcess Name="contact_i_i" ProcessSymmetryFactor="0.5">
+            <SelectedParticle Name="speciesPattern15" />
+            <SelectedParticle Name="speciesPattern7" />
+            <MacroscopicRateConstant>P_contact_i_i_probabilityRate</MacroscopicRateConstant>
+            <Effect VarName="speciesPattern15" Operation="destroy" />
+            <Effect VarName="speciesPattern7" Operation="destroy" />
+            <Effect VarName="speciesPattern10" Operation="create" />
+          </ParticleJumpProcess>
+          <ParticleJumpProcess Name="contact_i_i_reverse" ProcessSymmetryFactor="0.5">
+            <SelectedParticle Name="speciesPattern10" />
+            <MacroscopicRateConstant>P_contact_i_i_reverse_probabilityRate</MacroscopicRateConstant>
+            <Effect VarName="speciesPattern15" Operation="create" />
+            <Effect VarName="speciesPattern7" Operation="create" />
+            <Effect VarName="speciesPattern10" Operation="destroy" />
+          </ParticleJumpProcess>
+          <ParticleProperties Name="speciesPattern16">
+            <ParticleInitialCount>
+              <ParticleCount>HP_Count_initCount</ParticleCount>
+              <ParticleLocationX>0.0</ParticleLocationX>
+              <ParticleLocationY>u</ParticleLocationY>
+              <ParticleLocationZ>u</ParticleLocationZ>
+            </ParticleInitialCount>
+            <ParticleDiffusion>0.0</ParticleDiffusion>
+            <ParticleDriftX>0.0</ParticleDriftX>
+            <ParticleDriftY>0.0</ParticleDriftY>
+            <ParticleDriftZ>0.0</ParticleDriftZ>
+          </ParticleProperties>
+          <ParticleProperties Name="speciesPattern17">
+            <ParticleInitialCount>
+              <ParticleCount>IP_Count_initCount</ParticleCount>
+              <ParticleLocationX>0.0</ParticleLocationX>
+              <ParticleLocationY>u</ParticleLocationY>
+              <ParticleLocationZ>u</ParticleLocationZ>
+            </ParticleInitialCount>
+            <ParticleDiffusion>0.0</ParticleDiffusion>
+            <ParticleDriftX>0.0</ParticleDriftX>
+            <ParticleDriftY>0.0</ParticleDriftY>
+            <ParticleDriftZ>0.0</ParticleDriftZ>
+          </ParticleProperties>
+        </CompartmentSubDomain>
+        <Version Name="Application0_generated" KeyValue="175523222" BranchId="175521686" Archived="0" Date="23-Mar-2020 17:33:51" FromVersionable="false">
+          <Owner Name="mblinov" Identifier="12487253" />
+          <GroupAccess Type="1" />
+          <Annotation>cloned from 'Application0_generated' owned by user Ani</Annotation>
+        </Version>
+      </MathDescription>
+      <Simulation Name="Simulation0">
+        <Annotation>cloned from 'Simulation0' owned by user Ani</Annotation>
+        <SolverTaskDescription TaskType="Unsteady" UseSymbolicJacobian="false" Solver="NFSim">
+          <TimeBound StartTime="0.0" EndTime="100.0" />
+          <TimeStep DefaultTime="0.1" MinTime="1.0E-8" MaxTime="1.0" />
+          <ErrorTolerance Absolut="1.0E-9" Relative="1.0E-9" />
+          <OutputOptions OutputTimeStep="1.0" />
+          <NFSimSimulationOptions>
+            <ObservableComputationOff>true</ObservableComputationOff>
+            <PreventIntraBonds>false</PreventIntraBonds>
+            <AggregateBookkeeping>true</AggregateBookkeeping>
+            <MatchComplexes>true</MatchComplexes>
+            <MoleculeDistance>1000</MoleculeDistance>
+            <NumOfTrials>1</NumOfTrials>
+          </NFSimSimulationOptions>
+          <NumberProcessors>1</NumberProcessors>
+        </SolverTaskDescription>
+        <MathOverrides />
+        <Version Name="Simulation0" KeyValue="175523253" BranchId="175521724" Archived="0" Date="23-Mar-2020 17:33:52" FromVersionable="false">
+          <Owner Name="mblinov" Identifier="12487253" />
+          <GroupAccess Type="1" />
+          <Annotation>cloned from 'Simulation0' owned by user Ani</Annotation>
+        </Version>
+      </Simulation>
+      <Version Name="nfsim" KeyValue="175523238" BranchId="175521706" Archived="0" Date="23-Mar-2020 17:33:52" FromVersionable="false">
+        <Owner Name="mblinov" Identifier="12487253" />
+        <GroupAccess Type="1" />
+        <Annotation>cloned from 'nfsim' owned by user Ani</Annotation>
+      </Version>
+      <MicroscopeMeasurement Name="fluor">
+        <ConvolutionKernel Type="ProjectionZKernel" />
+      </MicroscopeMeasurement>
+    </SimulationSpec>
+    <SimulationSpec Name="deter" Stochastic="false" UseConcentration="true" RuleBased="false" MassConservationModelReduction="false" InsufficientIterations="false" InsufficientMaxMolecules="false">
+      <NetworkConstraints RbmMaxIteration="3" RbmMaxMoleculesPerSpecies="10" RbmSpeciesLimit="800" RbmReactionsLimit="2500">
+        <MaxStoichiometry MolecularType="Human" Integer="100" />
+      </NetworkConstraints>
+      <Annotation>cloned from 'deter' owned by user Ani</Annotation>
+      <Geometry Name="non-spatial1803111910" Dimension="0">
+        <Annotation>cloned from 'non-spatial1803111910' owned by user Ani</Annotation>
+        <Extent X="10.0" Y="10.0" Z="10.0" />
+        <Origin X="0.0" Y="0.0" Z="0.0" />
+        <SubVolume Name="Compartment" Handle="0" Type="Compartmental" KeyValue="175521679" />
+        <Version Name="non-spatial1803111910" KeyValue="175521675" BranchId="175521676" Archived="0" Date="23-Mar-2020 17:06:04" FromVersionable="false">
+          <Owner Name="mblinov" Identifier="12487253" />
+          <GroupAccess Type="1" />
+          <Annotation>cloned from 'non-spatial1803111910' owned by user Ani</Annotation>
+        </Version>
+      </Geometry>
+      <GeometryContext>
+        <FeatureMapping Feature="c0" GeometryClass="Compartment" SubVolume="Compartment" Size="50000.0">
+          <BoundariesTypes Xm="Flux" Xp="Flux" Ym="Flux" Yp="Flux" Zm="Flux" Zp="Flux" />
+        </FeatureMapping>
+      </GeometryContext>
+      <ReactionContext>
+        <LocalizedCompoundSpec LocalizedCompoundRef="HP" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>10.0</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="IP" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>0.0</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <ReactionRuleSpecs>
+          <ReactionRuleSpec ReactionRuleRef="contact_h_h" ReactionRuleMapping="included" />
+          <ReactionRuleSpec ReactionRuleRef="contact_h_i" ReactionRuleMapping="included" />
+          <ReactionRuleSpec ReactionRuleRef="infection" ReactionRuleMapping="included" />
+          <ReactionRuleSpec ReactionRuleRef="progression" ReactionRuleMapping="included" />
+          <ReactionRuleSpec ReactionRuleRef="death" ReactionRuleMapping="included" />
+          <ReactionRuleSpec ReactionRuleRef="contact_i_i" ReactionRuleMapping="included" />
+        </ReactionRuleSpecs>
+      </ReactionContext>
+      <MathDescription Name="deter_generated">
+        <Annotation>cloned from 'deter_generated' owned by user Ani</Annotation>
+        <Constant Name="_F_">96485.3321</Constant>
+        <Constant Name="_F_nmol_">9.64853321E-5</Constant>
+        <Constant Name="_K_GHK_">1.0E-9</Constant>
+        <Constant Name="_N_pmol_">6.02214179E11</Constant>
+        <Constant Name="_PI_">3.141592653589793</Constant>
+        <Constant Name="_R_">8314.46261815</Constant>
+        <Constant Name="_T_">300.0</Constant>
+        <Constant Name="contact_rate">100.0</Constant>
+        <Constant Name="discontact">10.0</Constant>
+        <Constant Name="discontact_rate">1000.0</Constant>
+        <Constant Name="HP_init_uM">10.0</Constant>
+        <Constant Name="infection_rate">10000.0</Constant>
+        <Constant Name="IP_init_uM">0.0</Constant>
+        <Constant Name="K_millivolts_per_volt">1000.0</Constant>
+        <Constant Name="KMOLE">0.001660538783162726</Constant>
+        <Constant Name="Kr_contact_h_h_DirectHalf">0.0</Constant>
+        <Constant Name="Kr_contact_h_h_InverseHalf">0.0</Constant>
+        <Constant Name="Kr_contact_h_i_DirectHalf">0.0</Constant>
+        <Constant Name="Kr_contact_h_i_InverseHalf">0.0</Constant>
+        <Constant Name="Kr_contact_i_i_DirectHalf">0.0</Constant>
+        <Constant Name="Kr_contact_i_i_InverseHalf">0.0</Constant>
+        <Constant Name="Kr_death">0.0</Constant>
+        <Constant Name="Kr_infection">0.0</Constant>
+        <Constant Name="Kr_progression_DirectHalf">0.0</Constant>
+        <Constant Name="Kr_progression_InverseHalf">0.0</Constant>
+        <Constant Name="mortality">0.001</Constant>
+        <Constant Name="progression_rate">100.0</Constant>
+        <Constant Name="Recov_rate">10.0</Constant>
+        <Constant Name="recovery_infection">10.0</Constant>
+        <Constant Name="s2_init_uM">0.0</Constant>
+        <Constant Name="s3_init_uM">0.0</Constant>
+        <Constant Name="s4_init_uM">0.0</Constant>
+        <Constant Name="s5_init_uM">0.0</Constant>
+        <Constant Name="s6_init_uM">0.0</Constant>
+        <Constant Name="Size_c0">50000.0</Constant>
+        <VolumeVariable Name="HP" Domain="Compartment" />
+        <VolumeVariable Name="IP" Domain="Compartment" />
+        <VolumeVariable Name="s2" Domain="Compartment" />
+        <VolumeVariable Name="s3" Domain="Compartment" />
+        <VolumeVariable Name="s4" Domain="Compartment" />
+        <VolumeVariable Name="s5" Domain="Compartment" />
+        <VolumeVariable Name="s6" Domain="Compartment" />
+        <Function Name="J_contact_h_h_DirectHalf" Domain="Compartment">((Kf_contact_h_h_DirectHalf * pow(HP,2.0)) - (Kr_contact_h_h_DirectHalf * s2))</Function>
+        <Function Name="J_contact_h_h_InverseHalf" Domain="Compartment">((Kf_contact_h_h_InverseHalf * s2) - (Kr_contact_h_h_InverseHalf * pow(HP,2.0)))</Function>
+        <Function Name="J_contact_h_i_DirectHalf" Domain="Compartment">(((Kf_contact_h_i_DirectHalf * HP) * IP) - (Kr_contact_h_i_DirectHalf * s3))</Function>
+        <Function Name="J_contact_h_i_InverseHalf" Domain="Compartment">((Kf_contact_h_i_InverseHalf * s3) - ((Kr_contact_h_i_InverseHalf * HP) * IP))</Function>
+        <Function Name="J_contact_i_i_DirectHalf" Domain="Compartment">((Kf_contact_i_i_DirectHalf * pow(IP,2.0)) - (Kr_contact_i_i_DirectHalf * s5))</Function>
+        <Function Name="J_contact_i_i_InverseHalf" Domain="Compartment">((Kf_contact_i_i_InverseHalf * s5) - (Kr_contact_i_i_InverseHalf * pow(IP,2.0)))</Function>
+        <Function Name="J_death" Domain="Compartment">((Kf_death * s4) - (Kr_death * s6))</Function>
+        <Function Name="J_infection" Domain="Compartment">((Kf_infection * s3) - (Kr_infection * s5))</Function>
+        <Function Name="J_progression_DirectHalf" Domain="Compartment">((Kf_progression_DirectHalf * IP) - (Kr_progression_DirectHalf * s4))</Function>
+        <Function Name="J_progression_InverseHalf" Domain="Compartment">((Kf_progression_InverseHalf * s4) - (Kr_progression_InverseHalf * IP))</Function>
+        <Function Name="Kf_contact_h_h_DirectHalf" Domain="Compartment">(0.5 * contact_rate)</Function>
+        <Function Name="Kf_contact_h_h_InverseHalf" Domain="Compartment">discontact_rate</Function>
+        <Function Name="Kf_contact_h_i_DirectHalf" Domain="Compartment">contact_rate</Function>
+        <Function Name="Kf_contact_h_i_InverseHalf" Domain="Compartment">discontact_rate</Function>
+        <Function Name="Kf_contact_i_i_DirectHalf" Domain="Compartment">(0.5 * contact_rate)</Function>
+        <Function Name="Kf_contact_i_i_InverseHalf" Domain="Compartment">discontact_rate</Function>
+        <Function Name="Kf_death" Domain="Compartment">mortality</Function>
+        <Function Name="Kf_infection" Domain="Compartment">infection_rate</Function>
+        <Function Name="Kf_progression_DirectHalf" Domain="Compartment">progression_rate</Function>
+        <Function Name="Kf_progression_InverseHalf" Domain="Compartment">recovery_infection</Function>
+        <Function Name="O0_Human_tot">(HP + IP + (2.0 * s2) + (2.0 * s3) + s4 + (2.0 * s5) + s6)</Function>
+        <Function Name="O0_Infection">(IP + s3 + (2.0 * s5))</Function>
+        <Function Name="O0_Mortality">s6</Function>
+        <Function Name="O0_Sick">s4</Function>
+        <CompartmentSubDomain Name="Compartment">
+          <BoundaryType Boundary="Xm" Type="Value" />
+          <BoundaryType Boundary="Xp" Type="Value" />
+          <BoundaryType Boundary="Ym" Type="Value" />
+          <BoundaryType Boundary="Yp" Type="Value" />
+          <BoundaryType Boundary="Zm" Type="Value" />
+          <BoundaryType Boundary="Zp" Type="Value" />
+          <OdeEquation Name="HP" SolutionType="Unknown">
+            <Rate>( - (2.0 * J_contact_h_h_DirectHalf) - J_contact_h_i_DirectHalf + J_contact_h_i_InverseHalf + (2.0 * J_contact_h_h_InverseHalf))</Rate>
+            <Initial>HP_init_uM</Initial>
+          </OdeEquation>
+          <OdeEquation Name="IP" SolutionType="Unknown">
+            <Rate>( - J_contact_h_i_DirectHalf + J_contact_h_i_InverseHalf + (2.0 * J_contact_i_i_InverseHalf) - J_progression_DirectHalf - (2.0 * J_contact_i_i_DirectHalf) + J_progression_InverseHalf)</Rate>
+            <Initial>IP_init_uM</Initial>
+          </OdeEquation>
+          <OdeEquation Name="s2" SolutionType="Unknown">
+            <Rate>(J_contact_h_h_DirectHalf - J_contact_h_h_InverseHalf)</Rate>
+            <Initial>s2_init_uM</Initial>
+          </OdeEquation>
+          <OdeEquation Name="s3" SolutionType="Unknown">
+            <Rate>( - J_infection + J_contact_h_i_DirectHalf - J_contact_h_i_InverseHalf)</Rate>
+            <Initial>s3_init_uM</Initial>
+          </OdeEquation>
+          <OdeEquation Name="s4" SolutionType="Unknown">
+            <Rate>( - J_death + J_progression_DirectHalf - J_progression_InverseHalf)</Rate>
+            <Initial>s4_init_uM</Initial>
+          </OdeEquation>
+          <OdeEquation Name="s5" SolutionType="Unknown">
+            <Rate>(J_infection - J_contact_i_i_InverseHalf + J_contact_i_i_DirectHalf)</Rate>
+            <Initial>s5_init_uM</Initial>
+          </OdeEquation>
+          <OdeEquation Name="s6" SolutionType="Unknown">
+            <Rate>J_death</Rate>
+            <Initial>s6_init_uM</Initial>
+          </OdeEquation>
+        </CompartmentSubDomain>
+        <Version Name="deter_generated" KeyValue="175523224" BranchId="175521689" Archived="0" Date="23-Mar-2020 17:33:51" FromVersionable="false">
+          <Owner Name="mblinov" Identifier="12487253" />
+          <GroupAccess Type="1" />
+          <Annotation>cloned from 'deter_generated' owned by user Ani</Annotation>
+        </Version>
+      </MathDescription>
+      <Simulation Name="Simulation1">
+        <Annotation>cloned from 'Simulation1' owned by user Ani</Annotation>
+        <SolverTaskDescription TaskType="Unsteady" UseSymbolicJacobian="false" Solver="Combined Stiff Solver (IDA/CVODE)">
+          <TimeBound StartTime="0.0" EndTime="1.0" />
+          <TimeStep DefaultTime="0.1" MinTime="1.0E-8" MaxTime="1.0" />
+          <ErrorTolerance Absolut="1.0E-9" Relative="1.0E-9" />
+          <OutputOptions KeepEvery="1" KeepAtMost="1000" />
+          <NumberProcessors>1</NumberProcessors>
+        </SolverTaskDescription>
+        <MathOverrides />
+        <Version Name="Simulation1" KeyValue="175523255" BranchId="175521727" Archived="0" Date="23-Mar-2020 17:33:52" FromVersionable="false">
+          <Owner Name="mblinov" Identifier="12487253" />
+          <GroupAccess Type="1" />
+          <Annotation>cloned from 'Simulation1' owned by user Ani</Annotation>
+        </Version>
+      </Simulation>
+      <Version Name="deter" KeyValue="175523243" BranchId="175521712" Archived="0" Date="23-Mar-2020 17:33:52" FromVersionable="false">
+        <Owner Name="mblinov" Identifier="12487253" />
+        <GroupAccess Type="1" />
+        <Annotation>cloned from 'deter' owned by user Ani</Annotation>
+      </Version>
+      <MicroscopeMeasurement Name="fluor">
+        <ConvolutionKernel Type="ProjectionZKernel" />
+      </MicroscopeMeasurement>
+    </SimulationSpec>
+    <SimulationSpec Name="stochas" Stochastic="true" UseConcentration="false" RandomizeInitCondition="false" RuleBased="false" MassConservationModelReduction="false" InsufficientIterations="false" InsufficientMaxMolecules="false">
+      <NetworkConstraints RbmMaxIteration="3" RbmMaxMoleculesPerSpecies="10" RbmSpeciesLimit="800" RbmReactionsLimit="2500">
+        <MaxStoichiometry MolecularType="Human" Integer="100" />
+      </NetworkConstraints>
+      <Annotation>cloned from 'stochas' owned by user Ani</Annotation>
+      <Geometry Name="non-spatial462204449" Dimension="0">
+        <Annotation>cloned from 'non-spatial462204449' owned by user Ani</Annotation>
+        <Extent X="10.0" Y="10.0" Z="10.0" />
+        <Origin X="0.0" Y="0.0" Z="0.0" />
+        <SubVolume Name="Compartment" Handle="0" Type="Compartmental" KeyValue="175521684" />
+        <Version Name="non-spatial462204449" KeyValue="175521680" BranchId="175521681" Archived="0" Date="23-Mar-2020 17:06:04" FromVersionable="false">
+          <Owner Name="mblinov" Identifier="12487253" />
+          <GroupAccess Type="1" />
+          <Annotation>cloned from 'non-spatial462204449' owned by user Ani</Annotation>
+        </Version>
+      </Geometry>
+      <GeometryContext>
+        <FeatureMapping Feature="c0" GeometryClass="Compartment" SubVolume="Compartment" Size="1.0">
+          <BoundariesTypes Xm="Flux" Xp="Flux" Ym="Flux" Yp="Flux" Zm="Flux" Zp="Flux" />
+        </FeatureMapping>
+      </GeometryContext>
+      <ReactionContext>
+        <LocalizedCompoundSpec LocalizedCompoundRef="HP" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialCount>10.0</InitialCount>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="IP" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialCount>0.0</InitialCount>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <ReactionRuleSpecs>
+          <ReactionRuleSpec ReactionRuleRef="contact_h_h" ReactionRuleMapping="included" />
+          <ReactionRuleSpec ReactionRuleRef="contact_h_i" ReactionRuleMapping="included" />
+          <ReactionRuleSpec ReactionRuleRef="infection" ReactionRuleMapping="included" />
+          <ReactionRuleSpec ReactionRuleRef="progression" ReactionRuleMapping="included" />
+          <ReactionRuleSpec ReactionRuleRef="death" ReactionRuleMapping="included" />
+          <ReactionRuleSpec ReactionRuleRef="contact_i_i" ReactionRuleMapping="included" />
+        </ReactionRuleSpecs>
+      </ReactionContext>
+      <MathDescription Name="stochas_generated">
+        <Annotation>cloned from 'stochas_generated' owned by user Ani</Annotation>
+        <Constant Name="_F_">96485.3321</Constant>
+        <Constant Name="_F_nmol_">9.64853321E-5</Constant>
+        <Constant Name="_N_pmol_">6.02214179E11</Constant>
+        <Constant Name="_PI_">3.141592653589793</Constant>
+        <Constant Name="_R_">8314.46261815</Constant>
+        <Constant Name="_T_">300.0</Constant>
+        <Constant Name="contact_rate">100.0</Constant>
+        <Constant Name="discontact">10.0</Constant>
+        <Constant Name="discontact_rate">1000.0</Constant>
+        <Constant Name="HP_Count_initCount">10.0</Constant>
+        <Constant Name="infection_rate">10000.0</Constant>
+        <Constant Name="IP_Count_initCount">0.0</Constant>
+        <Constant Name="KMOLE">0.001660538783162726</Constant>
+        <Constant Name="Kr_contact_h_h_DirectHalf">0.0</Constant>
+        <Constant Name="Kr_contact_h_h_InverseHalf">0.0</Constant>
+        <Constant Name="Kr_contact_h_i_DirectHalf">0.0</Constant>
+        <Constant Name="Kr_contact_h_i_InverseHalf">0.0</Constant>
+        <Constant Name="Kr_contact_i_i_DirectHalf">0.0</Constant>
+        <Constant Name="Kr_contact_i_i_InverseHalf">0.0</Constant>
+        <Constant Name="Kr_death">0.0</Constant>
+        <Constant Name="Kr_infection">0.0</Constant>
+        <Constant Name="Kr_progression_DirectHalf">0.0</Constant>
+        <Constant Name="Kr_progression_InverseHalf">0.0</Constant>
+        <Constant Name="mortality">0.001</Constant>
+        <Constant Name="progression_rate">100.0</Constant>
+        <Constant Name="Recov_rate">10.0</Constant>
+        <Constant Name="recovery_infection">10.0</Constant>
+        <Constant Name="s2_Count_initCount">0.0</Constant>
+        <Constant Name="s3_Count_initCount">0.0</Constant>
+        <Constant Name="s4_Count_initCount">0.0</Constant>
+        <Constant Name="s5_Count_initCount">0.0</Constant>
+        <Constant Name="s6_Count_initCount">0.0</Constant>
+        <Constant Name="Size_c0">1.0</Constant>
+        <StochasticVolumeVariable Name="HP_Count" />
+        <StochasticVolumeVariable Name="IP_Count" />
+        <StochasticVolumeVariable Name="s2_Count" />
+        <StochasticVolumeVariable Name="s3_Count" />
+        <StochasticVolumeVariable Name="s4_Count" />
+        <StochasticVolumeVariable Name="s5_Count" />
+        <StochasticVolumeVariable Name="s6_Count" />
+        <Function Name="HP" Domain="Compartment">(HP_Count * (UnitFactor_uM_um3_molecules_neg_1 / Size_c0))</Function>
+        <Function Name="IP" Domain="Compartment">(IP_Count * (UnitFactor_uM_um3_molecules_neg_1 / Size_c0))</Function>
+        <Function Name="J_contact_h_h_DirectHalf" Domain="Compartment">((Kf_contact_h_h_DirectHalf * pow(HP,2.0)) - (Kr_contact_h_h_DirectHalf * s2))</Function>
+        <Function Name="J_contact_h_h_InverseHalf" Domain="Compartment">((Kf_contact_h_h_InverseHalf * s2) - (Kr_contact_h_h_InverseHalf * pow(HP,2.0)))</Function>
+        <Function Name="J_contact_h_i_DirectHalf" Domain="Compartment">(((Kf_contact_h_i_DirectHalf * HP) * IP) - (Kr_contact_h_i_DirectHalf * s3))</Function>
+        <Function Name="J_contact_h_i_InverseHalf" Domain="Compartment">((Kf_contact_h_i_InverseHalf * s3) - ((Kr_contact_h_i_InverseHalf * HP) * IP))</Function>
+        <Function Name="J_contact_i_i_DirectHalf" Domain="Compartment">((Kf_contact_i_i_DirectHalf * pow(IP,2.0)) - (Kr_contact_i_i_DirectHalf * s5))</Function>
+        <Function Name="J_contact_i_i_InverseHalf" Domain="Compartment">((Kf_contact_i_i_InverseHalf * s5) - (Kr_contact_i_i_InverseHalf * pow(IP,2.0)))</Function>
+        <Function Name="J_death" Domain="Compartment">((Kf_death * s4) - (Kr_death * s6))</Function>
+        <Function Name="J_infection" Domain="Compartment">((Kf_infection * s3) - (Kr_infection * s5))</Function>
+        <Function Name="J_progression_DirectHalf" Domain="Compartment">((Kf_progression_DirectHalf * IP) - (Kr_progression_DirectHalf * s4))</Function>
+        <Function Name="J_progression_InverseHalf" Domain="Compartment">((Kf_progression_InverseHalf * s4) - (Kr_progression_InverseHalf * IP))</Function>
+        <Function Name="Kf_contact_h_h_DirectHalf" Domain="Compartment">(0.5 * contact_rate)</Function>
+        <Function Name="Kf_contact_h_h_InverseHalf" Domain="Compartment">discontact_rate</Function>
+        <Function Name="Kf_contact_h_i_DirectHalf" Domain="Compartment">contact_rate</Function>
+        <Function Name="Kf_contact_h_i_InverseHalf" Domain="Compartment">discontact_rate</Function>
+        <Function Name="Kf_contact_i_i_DirectHalf" Domain="Compartment">(0.5 * contact_rate)</Function>
+        <Function Name="Kf_contact_i_i_InverseHalf" Domain="Compartment">discontact_rate</Function>
+        <Function Name="Kf_death" Domain="Compartment">mortality</Function>
+        <Function Name="Kf_infection" Domain="Compartment">infection_rate</Function>
+        <Function Name="Kf_progression_DirectHalf" Domain="Compartment">progression_rate</Function>
+        <Function Name="Kf_progression_InverseHalf" Domain="Compartment">recovery_infection</Function>
+        <Function Name="O0_Human_tot" Domain="Compartment">(HP + IP + (2.0 * s2) + (2.0 * s3) + s4 + (2.0 * s5) + s6)</Function>
+        <Function Name="O0_Human_tot_Count" Domain="Compartment">((O0_Human_tot * Size_c0) * UnitFactor_molecules_uM_neg_1_um_neg_3)</Function>
+        <Function Name="O0_Infection" Domain="Compartment">(IP + s3 + (2.0 * s5))</Function>
+        <Function Name="O0_Infection_Count" Domain="Compartment">((O0_Infection * Size_c0) * UnitFactor_molecules_uM_neg_1_um_neg_3)</Function>
+        <Function Name="O0_Mortality" Domain="Compartment">s6</Function>
+        <Function Name="O0_Mortality_Count" Domain="Compartment">((O0_Mortality * Size_c0) * UnitFactor_molecules_uM_neg_1_um_neg_3)</Function>
+        <Function Name="O0_Sick" Domain="Compartment">s4</Function>
+        <Function Name="O0_Sick_Count" Domain="Compartment">((O0_Sick * Size_c0) * UnitFactor_molecules_uM_neg_1_um_neg_3)</Function>
+        <Function Name="P_contact_h_h_DirectHalf_probabilityRate" Domain="Compartment">(0.5 * contact_rate * HP_Count * ( - 1.0 + HP_Count) * UnitFactor_molecules_uM_neg_1_um_neg_3 * UnitFactor_uM_um3_molecules_neg_1 * UnitFactor_uM_um3_molecules_neg_1 / Size_c0)</Function>
+        <Function Name="P_contact_h_h_DirectHalf_reverse_probabilityRate" Domain="Compartment">(Kr_contact_h_h_DirectHalf * s2_Count * UnitFactor_molecules_uM_neg_1_um_neg_3 * UnitFactor_uM_um3_molecules_neg_1)</Function>
+        <Function Name="P_contact_h_h_InverseHalf_probabilityRate" Domain="Compartment">(discontact_rate * s2_Count * UnitFactor_molecules_uM_neg_1_um_neg_3 * UnitFactor_uM_um3_molecules_neg_1)</Function>
+        <Function Name="P_contact_h_h_InverseHalf_reverse_probabilityRate" Domain="Compartment">(Kr_contact_h_h_InverseHalf * HP_Count * ( - 1.0 + HP_Count) * UnitFactor_molecules_uM_neg_1_um_neg_3 * UnitFactor_uM_um3_molecules_neg_1 * UnitFactor_uM_um3_molecules_neg_1 / Size_c0)</Function>
+        <Function Name="P_contact_h_i_DirectHalf_probabilityRate" Domain="Compartment">(contact_rate * HP_Count * IP_Count * UnitFactor_molecules_uM_neg_1_um_neg_3 * UnitFactor_uM_um3_molecules_neg_1 * UnitFactor_uM_um3_molecules_neg_1 / Size_c0)</Function>
+        <Function Name="P_contact_h_i_DirectHalf_reverse_probabilityRate" Domain="Compartment">(Kr_contact_h_i_DirectHalf * s3_Count * UnitFactor_molecules_uM_neg_1_um_neg_3 * UnitFactor_uM_um3_molecules_neg_1)</Function>
+        <Function Name="P_contact_h_i_InverseHalf_probabilityRate" Domain="Compartment">(discontact_rate * s3_Count * UnitFactor_molecules_uM_neg_1_um_neg_3 * UnitFactor_uM_um3_molecules_neg_1)</Function>
+        <Function Name="P_contact_h_i_InverseHalf_reverse_probabilityRate" Domain="Compartment">(Kr_contact_h_i_InverseHalf * HP_Count * IP_Count * UnitFactor_molecules_uM_neg_1_um_neg_3 * UnitFactor_uM_um3_molecules_neg_1 * UnitFactor_uM_um3_molecules_neg_1 / Size_c0)</Function>
+        <Function Name="P_contact_i_i_DirectHalf_probabilityRate" Domain="Compartment">(0.5 * contact_rate * IP_Count * ( - 1.0 + IP_Count) * UnitFactor_molecules_uM_neg_1_um_neg_3 * UnitFactor_uM_um3_molecules_neg_1 * UnitFactor_uM_um3_molecules_neg_1 / Size_c0)</Function>
+        <Function Name="P_contact_i_i_DirectHalf_reverse_probabilityRate" Domain="Compartment">(Kr_contact_i_i_DirectHalf * s5_Count * UnitFactor_molecules_uM_neg_1_um_neg_3 * UnitFactor_uM_um3_molecules_neg_1)</Function>
+        <Function Name="P_contact_i_i_InverseHalf_probabilityRate" Domain="Compartment">(discontact_rate * s5_Count * UnitFactor_molecules_uM_neg_1_um_neg_3 * UnitFactor_uM_um3_molecules_neg_1)</Function>
+        <Function Name="P_contact_i_i_InverseHalf_reverse_probabilityRate" Domain="Compartment">(Kr_contact_i_i_InverseHalf * IP_Count * ( - 1.0 + IP_Count) * UnitFactor_molecules_uM_neg_1_um_neg_3 * UnitFactor_uM_um3_molecules_neg_1 * UnitFactor_uM_um3_molecules_neg_1 / Size_c0)</Function>
+        <Function Name="P_death_probabilityRate" Domain="Compartment">(mortality * s4_Count * UnitFactor_molecules_uM_neg_1_um_neg_3 * UnitFactor_uM_um3_molecules_neg_1)</Function>
+        <Function Name="P_death_reverse_probabilityRate" Domain="Compartment">(Kr_death * s6_Count * UnitFactor_molecules_uM_neg_1_um_neg_3 * UnitFactor_uM_um3_molecules_neg_1)</Function>
+        <Function Name="P_infection_probabilityRate" Domain="Compartment">(infection_rate * s3_Count * UnitFactor_molecules_uM_neg_1_um_neg_3 * UnitFactor_uM_um3_molecules_neg_1)</Function>
+        <Function Name="P_infection_reverse_probabilityRate" Domain="Compartment">(Kr_infection * s5_Count * UnitFactor_molecules_uM_neg_1_um_neg_3 * UnitFactor_uM_um3_molecules_neg_1)</Function>
+        <Function Name="P_progression_DirectHalf_probabilityRate" Domain="Compartment">(progression_rate * IP_Count * UnitFactor_molecules_uM_neg_1_um_neg_3 * UnitFactor_uM_um3_molecules_neg_1)</Function>
+        <Function Name="P_progression_DirectHalf_reverse_probabilityRate" Domain="Compartment">(Kr_progression_DirectHalf * s4_Count * UnitFactor_molecules_uM_neg_1_um_neg_3 * UnitFactor_uM_um3_molecules_neg_1)</Function>
+        <Function Name="P_progression_InverseHalf_probabilityRate" Domain="Compartment">(recovery_infection * s4_Count * UnitFactor_molecules_uM_neg_1_um_neg_3 * UnitFactor_uM_um3_molecules_neg_1)</Function>
+        <Function Name="P_progression_InverseHalf_reverse_probabilityRate" Domain="Compartment">(Kr_progression_InverseHalf * IP_Count * UnitFactor_molecules_uM_neg_1_um_neg_3 * UnitFactor_uM_um3_molecules_neg_1)</Function>
+        <Function Name="s2" Domain="Compartment">(s2_Count * (UnitFactor_uM_um3_molecules_neg_1 / Size_c0))</Function>
+        <Function Name="s3" Domain="Compartment">(s3_Count * (UnitFactor_uM_um3_molecules_neg_1 / Size_c0))</Function>
+        <Function Name="s4" Domain="Compartment">(s4_Count * (UnitFactor_uM_um3_molecules_neg_1 / Size_c0))</Function>
+        <Function Name="s5" Domain="Compartment">(s5_Count * (UnitFactor_uM_um3_molecules_neg_1 / Size_c0))</Function>
+        <Function Name="s6" Domain="Compartment">(s6_Count * (UnitFactor_uM_um3_molecules_neg_1 / Size_c0))</Function>
+        <Function Name="UnitFactor_molecules_uM_neg_1_um_neg_3">(6.02214179E8 / 1000000.0)</Function>
+        <Function Name="UnitFactor_uM_um3_molecules_neg_1">(1000000.0 / 6.02214179E8)</Function>
+        <CompartmentSubDomain Name="Compartment">
+          <BoundaryType Boundary="Xm" Type="Value" />
+          <BoundaryType Boundary="Xp" Type="Value" />
+          <BoundaryType Boundary="Ym" Type="Value" />
+          <BoundaryType Boundary="Yp" Type="Value" />
+          <BoundaryType Boundary="Zm" Type="Value" />
+          <BoundaryType Boundary="Zp" Type="Value" />
+          <VariableInitialCount Name="HP_Count">HP_Count_initCount</VariableInitialCount>
+          <VariableInitialCount Name="IP_Count">IP_Count_initCount</VariableInitialCount>
+          <VariableInitialCount Name="s2_Count">s2_Count_initCount</VariableInitialCount>
+          <VariableInitialCount Name="s3_Count">s3_Count_initCount</VariableInitialCount>
+          <VariableInitialCount Name="s4_Count">s4_Count_initCount</VariableInitialCount>
+          <VariableInitialCount Name="s5_Count">s5_Count_initCount</VariableInitialCount>
+          <VariableInitialCount Name="s6_Count">s6_Count_initCount</VariableInitialCount>
+          <JumpProcess Name="infection">
+            <ProbabilityRate>P_infection_probabilityRate</ProbabilityRate>
+            <Effect VarName="s3_Count" Operation="inc">-1.0</Effect>
+            <Effect VarName="s5_Count" Operation="inc">1.0</Effect>
+          </JumpProcess>
+          <JumpProcess Name="infection_reverse">
+            <ProbabilityRate>P_infection_reverse_probabilityRate</ProbabilityRate>
+            <Effect VarName="s3_Count" Operation="inc">1.0</Effect>
+            <Effect VarName="s5_Count" Operation="inc">-1.0</Effect>
+          </JumpProcess>
+          <JumpProcess Name="contact_h_h_DirectHalf">
+            <ProbabilityRate>P_contact_h_h_DirectHalf_probabilityRate</ProbabilityRate>
+            <Effect VarName="HP_Count" Operation="inc">-2.0</Effect>
+            <Effect VarName="s2_Count" Operation="inc">1.0</Effect>
+          </JumpProcess>
+          <JumpProcess Name="contact_h_h_DirectHalf_reverse">
+            <ProbabilityRate>P_contact_h_h_DirectHalf_reverse_probabilityRate</ProbabilityRate>
+            <Effect VarName="HP_Count" Operation="inc">2.0</Effect>
+            <Effect VarName="s2_Count" Operation="inc">-1.0</Effect>
+          </JumpProcess>
+          <JumpProcess Name="contact_h_i_DirectHalf">
+            <ProbabilityRate>P_contact_h_i_DirectHalf_probabilityRate</ProbabilityRate>
+            <Effect VarName="HP_Count" Operation="inc">-1.0</Effect>
+            <Effect VarName="IP_Count" Operation="inc">-1.0</Effect>
+            <Effect VarName="s3_Count" Operation="inc">1.0</Effect>
+          </JumpProcess>
+          <JumpProcess Name="contact_h_i_DirectHalf_reverse">
+            <ProbabilityRate>P_contact_h_i_DirectHalf_reverse_probabilityRate</ProbabilityRate>
+            <Effect VarName="HP_Count" Operation="inc">1.0</Effect>
+            <Effect VarName="IP_Count" Operation="inc">1.0</Effect>
+            <Effect VarName="s3_Count" Operation="inc">-1.0</Effect>
+          </JumpProcess>
+          <JumpProcess Name="contact_h_i_InverseHalf">
+            <ProbabilityRate>P_contact_h_i_InverseHalf_probabilityRate</ProbabilityRate>
+            <Effect VarName="s3_Count" Operation="inc">-1.0</Effect>
+            <Effect VarName="HP_Count" Operation="inc">1.0</Effect>
+            <Effect VarName="IP_Count" Operation="inc">1.0</Effect>
+          </JumpProcess>
+          <JumpProcess Name="contact_h_i_InverseHalf_reverse">
+            <ProbabilityRate>P_contact_h_i_InverseHalf_reverse_probabilityRate</ProbabilityRate>
+            <Effect VarName="s3_Count" Operation="inc">1.0</Effect>
+            <Effect VarName="HP_Count" Operation="inc">-1.0</Effect>
+            <Effect VarName="IP_Count" Operation="inc">-1.0</Effect>
+          </JumpProcess>
+          <JumpProcess Name="death">
+            <ProbabilityRate>P_death_probabilityRate</ProbabilityRate>
+            <Effect VarName="s4_Count" Operation="inc">-1.0</Effect>
+            <Effect VarName="s6_Count" Operation="inc">1.0</Effect>
+          </JumpProcess>
+          <JumpProcess Name="death_reverse">
+            <ProbabilityRate>P_death_reverse_probabilityRate</ProbabilityRate>
+            <Effect VarName="s4_Count" Operation="inc">1.0</Effect>
+            <Effect VarName="s6_Count" Operation="inc">-1.0</Effect>
+          </JumpProcess>
+          <JumpProcess Name="contact_h_h_InverseHalf">
+            <ProbabilityRate>P_contact_h_h_InverseHalf_probabilityRate</ProbabilityRate>
+            <Effect VarName="s2_Count" Operation="inc">-1.0</Effect>
+            <Effect VarName="HP_Count" Operation="inc">2.0</Effect>
+          </JumpProcess>
+          <JumpProcess Name="contact_h_h_InverseHalf_reverse">
+            <ProbabilityRate>P_contact_h_h_InverseHalf_reverse_probabilityRate</ProbabilityRate>
+            <Effect VarName="s2_Count" Operation="inc">1.0</Effect>
+            <Effect VarName="HP_Count" Operation="inc">-2.0</Effect>
+          </JumpProcess>
+          <JumpProcess Name="contact_i_i_InverseHalf">
+            <ProbabilityRate>P_contact_i_i_InverseHalf_probabilityRate</ProbabilityRate>
+            <Effect VarName="s5_Count" Operation="inc">-1.0</Effect>
+            <Effect VarName="IP_Count" Operation="inc">2.0</Effect>
+          </JumpProcess>
+          <JumpProcess Name="contact_i_i_InverseHalf_reverse">
+            <ProbabilityRate>P_contact_i_i_InverseHalf_reverse_probabilityRate</ProbabilityRate>
+            <Effect VarName="s5_Count" Operation="inc">1.0</Effect>
+            <Effect VarName="IP_Count" Operation="inc">-2.0</Effect>
+          </JumpProcess>
+          <JumpProcess Name="progression_DirectHalf">
+            <ProbabilityRate>P_progression_DirectHalf_probabilityRate</ProbabilityRate>
+            <Effect VarName="IP_Count" Operation="inc">-1.0</Effect>
+            <Effect VarName="s4_Count" Operation="inc">1.0</Effect>
+          </JumpProcess>
+          <JumpProcess Name="progression_DirectHalf_reverse">
+            <ProbabilityRate>P_progression_DirectHalf_reverse_probabilityRate</ProbabilityRate>
+            <Effect VarName="IP_Count" Operation="inc">1.0</Effect>
+            <Effect VarName="s4_Count" Operation="inc">-1.0</Effect>
+          </JumpProcess>
+          <JumpProcess Name="contact_i_i_DirectHalf">
+            <ProbabilityRate>P_contact_i_i_DirectHalf_probabilityRate</ProbabilityRate>
+            <Effect VarName="IP_Count" Operation="inc">-2.0</Effect>
+            <Effect VarName="s5_Count" Operation="inc">1.0</Effect>
+          </JumpProcess>
+          <JumpProcess Name="contact_i_i_DirectHalf_reverse">
+            <ProbabilityRate>P_contact_i_i_DirectHalf_reverse_probabilityRate</ProbabilityRate>
+            <Effect VarName="IP_Count" Operation="inc">2.0</Effect>
+            <Effect VarName="s5_Count" Operation="inc">-1.0</Effect>
+          </JumpProcess>
+          <JumpProcess Name="progression_InverseHalf">
+            <ProbabilityRate>P_progression_InverseHalf_probabilityRate</ProbabilityRate>
+            <Effect VarName="s4_Count" Operation="inc">-1.0</Effect>
+            <Effect VarName="IP_Count" Operation="inc">1.0</Effect>
+          </JumpProcess>
+          <JumpProcess Name="progression_InverseHalf_reverse">
+            <ProbabilityRate>P_progression_InverseHalf_reverse_probabilityRate</ProbabilityRate>
+            <Effect VarName="s4_Count" Operation="inc">1.0</Effect>
+            <Effect VarName="IP_Count" Operation="inc">-1.0</Effect>
+          </JumpProcess>
+        </CompartmentSubDomain>
+        <Version Name="stochas_generated" KeyValue="175523226" BranchId="175521692" Archived="0" Date="23-Mar-2020 17:33:51" FromVersionable="false">
+          <Owner Name="mblinov" Identifier="12487253" />
+          <GroupAccess Type="1" />
+          <Annotation>cloned from 'stochas_generated' owned by user Ani</Annotation>
+        </Version>
+      </MathDescription>
+      <Simulation Name="Simulation2">
+        <Annotation>cloned from 'Simulation2' owned by user Ani</Annotation>
+        <SolverTaskDescription TaskType="Unsteady" UseSymbolicJacobian="false" Solver="Gibson (Next Reaction Stochastic Method)">
+          <TimeBound StartTime="0.0" EndTime="1.0" />
+          <TimeStep DefaultTime="0.1" MinTime="1.0E-8" MaxTime="1.0" />
+          <ErrorTolerance Absolut="1.0E-9" Relative="1.0E-8" />
+          <StochSimOptions UseCustomSeed="false" NumberOfTrial="1" Histogram="false" />
+          <OutputOptions OutputTimeStep="0.05" />
+          <NumberProcessors>1</NumberProcessors>
+        </SolverTaskDescription>
+        <MathOverrides />
+        <Version Name="Simulation2" KeyValue="175523257" BranchId="175521730" Archived="0" Date="23-Mar-2020 17:33:52" FromVersionable="false">
+          <Owner Name="mblinov" Identifier="12487253" />
+          <GroupAccess Type="1" />
+          <Annotation>cloned from 'Simulation2' owned by user Ani</Annotation>
+        </Version>
+      </Simulation>
+      <Version Name="stochas" KeyValue="175523248" BranchId="175521718" Archived="0" Date="23-Mar-2020 17:33:52" FromVersionable="false">
+        <Owner Name="mblinov" Identifier="12487253" />
+        <GroupAccess Type="1" />
+        <Annotation>cloned from 'stochas' owned by user Ani</Annotation>
+      </Version>
+      <MicroscopeMeasurement Name="fluor">
+        <ConvolutionKernel Type="ProjectionZKernel" />
+      </MicroscopeMeasurement>
+    </SimulationSpec>
+    <Version Name="infection_model_simple" KeyValue="175523259" BranchId="175521733" Archived="0" Date="23-Mar-2020 17:33:52" FromVersionable="false">
+      <Owner Name="mblinov" Identifier="12487253" />
+      <GroupAccess Type="1" />
+      <Annotation>cloned from 'infection_model' owned by user Ani</Annotation>
+    </Version>
+    <pathwayModel>
+      <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:bp="http://www.biopax.org/release/biopax-level3.owl#" version="3.0" />
+    </pathwayModel>
+    <relationshipModel>
+      <RMNS version="3.0" />
+    </relationshipModel>
+    <vcmetadata>
+      <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" />
+      <nonrdfAnnotationList />
+      <uriBindingList />
+    </vcmetadata>
+  </BioModel>
+</vcml>
+

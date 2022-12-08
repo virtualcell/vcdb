@@ -1,0 +1,1089 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--This biomodel was generated in VCML Version Alpha_Version_7.4.0_build_87-->
+<vcml xmlns="http://sourceforge.net/projects/vcell/vcml" Version="Alpha_Version_7.4.0_build_87">
+  <BioModel Name="Diffusion in Cell geometries and a dish">
+    <Model Name="unnamed">
+      <Compound Name="Bk">
+        <Annotation>Bk</Annotation>
+      </Compound>
+      <Feature Name="Air" KeyValue="109362854" />
+      <Feature Name="Dish" KeyValue="109362856" />
+      <Membrane InsideFeature="Dish" OutsideFeature="Air" PositiveFeature="Dish" NegativeFeature="Air" MembraneVoltage="Voltage_Surface" Name="Surface" KeyValue="109362858" />
+      <LocalizedCompound Name="Bk_Dish" CompoundRef="Bk" Structure="Dish" OverrideName="true" KeyValue="109362860" />
+      <Diagram Name="unnamed" Structure="Air" />
+      <Diagram Name="Membrane0" Structure="Surface" />
+      <Diagram Name="Feature0" Structure="Dish" />
+      <Version Name="unnamed" KeyValue="109362851" BranchId="4268729" Archived="0" Date="27-Feb-2017 08:49:40" FromVersionable="false">
+        <Owner Name="les" Identifier="6" />
+        <GroupAccess Type="1" />
+      </Version>
+      <ModelUnitSystem VolumeSubstanceUnit="uM.um3" MembraneSubstanceUnit="molecules" LumpedReactionSubstanceUnit="molecules" VolumeUnit="um3" AreaUnit="um2" LengthUnit="um" TimeUnit="s" />
+    </Model>
+    <SimulationSpec Name="Bk Diffusion" Stochastic="false" UseConcentration="true" RuleBased="false" MassConservationModelReduction="true" InsufficientIterations="false" InsufficientMaxMolecules="false" CharacteristicSize="189.39506935376534">
+      <NetworkConstraints RbmMaxIteration="3" RbmMaxMoleculesPerSpecies="10" RbmSpeciesLimit="800" RbmReactionsLimit="2500" />
+      <Annotation />
+      <Geometry Name="Culture dish" Dimension="3">
+        <Extent X="40000.0" Y="40000.0" Z="3500.0" />
+        <Origin X="-20000.0" Y="-20000.0" Z="-3500.0" />
+        <SubVolume Name="chamber" Handle="1" Type="Analytical" KeyValue="60223253">
+          <AnalyticExpression>((z &gt;  - 3118.0) &amp;&amp; (z &lt; 0.0) &amp;&amp; (((x * x) + (y * y)) &lt; 3.0625E8))</AnalyticExpression>
+        </SubVolume>
+        <SubVolume Name="air" Handle="0" Type="Analytical" KeyValue="60223254">
+          <AnalyticExpression>1.0</AnalyticExpression>
+        </SubVolume>
+        <SurfaceClass Name="air_chamber_membrane" SubVolume1Ref="air" SubVolume2Ref="chamber" KeyValue="60223255" />
+        <SurfaceDescription NumSamplesX="50" NumSamplesY="50" NumSamplesZ="50" CutoffFrequency="0.3">
+          <VolumeRegion Name="air0" RegionID="0" SubVolume="air" Size="2.6608436960790146E12" Unit="um3" />
+          <VolumeRegion Name="chamber1" RegionID="1" SubVolume="chamber" Size="2.9391563039209854E12" Unit="um3" />
+          <MembraneRegion Name="membrane_air0_chamber1" VolumeRegion1="chamber1" VolumeRegion2="air0" Size="2.2098210225929756E9" Unit="um2" />
+        </SurfaceDescription>
+        <Version Name="Culture dish" KeyValue="60223250" BranchId="4268240" Archived="0" Date="14-Sep-2011 16:48:53" FromVersionable="false">
+          <Owner Name="les" Identifier="6" />
+          <GroupAccess Type="1" />
+        </Version>
+      </Geometry>
+      <GeometryContext>
+        <FeatureMapping Feature="Air" GeometryClass="air" SubVolume="air" VolumePerUnitVolume="1.0">
+          <BoundariesTypes Xm="Flux" Xp="Flux" Ym="Flux" Yp="Flux" Zm="Flux" Zp="Flux" />
+        </FeatureMapping>
+        <FeatureMapping Feature="Dish" GeometryClass="chamber" SubVolume="chamber" VolumePerUnitVolume="1.0">
+          <BoundariesTypes Xm="Flux" Xp="Flux" Ym="Flux" Yp="Flux" Zm="Flux" Zp="Flux" />
+        </FeatureMapping>
+        <MembraneMapping Membrane="Surface" SurfaceToVolumeRatio="1.0" VolumeFraction="0.2" AreaPerUnitArea="1.0" CalculateVoltage="false" SpecificCapacitance="0.01" InitialVoltage="0.0" GeometryClass="air_chamber_membrane">
+          <BoundariesTypes Xm="Flux" Xp="Flux" Ym="Flux" Yp="Flux" Zm="Flux" Zp="Flux" />
+        </MembraneMapping>
+      </GeometryContext>
+      <ReactionContext>
+        <LocalizedCompoundSpec LocalizedCompoundRef="Bk_Dish" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>(120.0 * ((((x * x) + (y * y) + pow((3118.0 + z),2.0)) &lt; 4774225.0) &amp;&amp; (z &gt;  - 3118.0)))</InitialConcentration>
+          <Diffusion>100.0</Diffusion>
+          <Boundaries Xm="0.0" Xp="0.0" Ym="0.0" Yp="0.0" Zm="0.0" Zp="0.0" />
+        </LocalizedCompoundSpec>
+      </ReactionContext>
+      <MathDescription Name="Bk Diffusion">
+        <Constant Name="_F_">96485.3321</Constant>
+        <Constant Name="_F_nmol_">9.64853321E-5</Constant>
+        <Constant Name="_K_GHK_">1.0E-9</Constant>
+        <Constant Name="_N_pmol_">6.02214179E11</Constant>
+        <Constant Name="_PI_">3.141592653589793</Constant>
+        <Constant Name="_R_">8314.46261815</Constant>
+        <Constant Name="_T_">300.0</Constant>
+        <Constant Name="AreaPerUnitArea_Surface">1.0</Constant>
+        <Constant Name="Bk_Dish_boundaryXm">0.0</Constant>
+        <Constant Name="Bk_Dish_boundaryXp">0.0</Constant>
+        <Constant Name="Bk_Dish_boundaryYm">0.0</Constant>
+        <Constant Name="Bk_Dish_boundaryYp">0.0</Constant>
+        <Constant Name="Bk_Dish_boundaryZm">0.0</Constant>
+        <Constant Name="Bk_Dish_boundaryZp">0.0</Constant>
+        <Constant Name="Bk_Dish_diffusionRate">100.0</Constant>
+        <Constant Name="K_millivolts_per_volt">1000.0</Constant>
+        <Constant Name="KMOLE">0.001660538783162726</Constant>
+        <Constant Name="Voltage_Surface">0.0</Constant>
+        <Constant Name="VolumePerUnitVolume_Air">1.0</Constant>
+        <Constant Name="VolumePerUnitVolume_Dish">1.0</Constant>
+        <VolumeVariable Name="Bk_Dish" Domain="chamber" />
+        <Function Name="Bk_Dish_init_uM" Domain="chamber">(120.0 * ((((x * x) + (y * y) + pow((3118.0 + z),2.0)) &lt; 4774225.0) &amp;&amp; (z &gt;  - 3118.0)))</Function>
+        <Function Name="Size_Air" Domain="air">(VolumePerUnitVolume_Air * vcRegionVolume('air'))</Function>
+        <Function Name="Size_Dish" Domain="chamber">(VolumePerUnitVolume_Dish * vcRegionVolume('chamber'))</Function>
+        <Function Name="Size_Surface" Domain="air_chamber_membrane">(AreaPerUnitArea_Surface * vcRegionArea('air_chamber_membrane'))</Function>
+        <Function Name="sobj_chamber1_air0_size" Domain="air_chamber_membrane">vcRegionArea('air_chamber_membrane')</Function>
+        <Function Name="vobj_air0_size" Domain="air">vcRegionVolume('air')</Function>
+        <Function Name="vobj_chamber1_size" Domain="chamber">vcRegionVolume('chamber')</Function>
+        <CompartmentSubDomain Name="chamber">
+          <BoundaryType Boundary="Xm" Type="Flux" />
+          <BoundaryType Boundary="Xp" Type="Flux" />
+          <BoundaryType Boundary="Ym" Type="Flux" />
+          <BoundaryType Boundary="Yp" Type="Flux" />
+          <BoundaryType Boundary="Zm" Type="Flux" />
+          <BoundaryType Boundary="Zp" Type="Flux" />
+          <PdeEquation Name="Bk_Dish" SolutionType="Unknown">
+            <Boundaries Xm="Bk_Dish_boundaryXm" Xp="Bk_Dish_boundaryXp" Ym="Bk_Dish_boundaryYm" Yp="Bk_Dish_boundaryYp" Zm="Bk_Dish_boundaryZm" Zp="Bk_Dish_boundaryZp" />
+            <Rate>0.0</Rate>
+            <Diffusion>Bk_Dish_diffusionRate</Diffusion>
+            <Initial>Bk_Dish_init_uM</Initial>
+          </PdeEquation>
+        </CompartmentSubDomain>
+        <CompartmentSubDomain Name="air">
+          <BoundaryType Boundary="Xm" Type="Flux" />
+          <BoundaryType Boundary="Xp" Type="Flux" />
+          <BoundaryType Boundary="Ym" Type="Flux" />
+          <BoundaryType Boundary="Yp" Type="Flux" />
+          <BoundaryType Boundary="Zm" Type="Flux" />
+          <BoundaryType Boundary="Zp" Type="Flux" />
+        </CompartmentSubDomain>
+        <MembraneSubDomain Name="air_chamber_membrane" InsideCompartment="chamber" OutsideCompartment="air">
+          <BoundaryType Boundary="Xm" Type="Value" />
+          <BoundaryType Boundary="Xp" Type="Value" />
+          <BoundaryType Boundary="Ym" Type="Value" />
+          <BoundaryType Boundary="Yp" Type="Value" />
+          <BoundaryType Boundary="Zm" Type="Value" />
+          <BoundaryType Boundary="Zp" Type="Value" />
+          <JumpCondition Name="Bk_Dish">
+            <InFlux>0.0</InFlux>
+            <OutFlux>0.0</OutFlux>
+          </JumpCondition>
+        </MembraneSubDomain>
+        <Version Name="Bk Diffusion" KeyValue="149362313" BranchId="4268745" Archived="0" Date="27-Jan-2019 18:40:54" FromVersionable="false">
+          <Owner Name="les" Identifier="6" />
+          <GroupAccess Type="1" />
+        </Version>
+      </MathDescription>
+      <Simulation Name="D=varied, t= 2.8hours (1e4s)">
+        <SolverTaskDescription TaskType="Unsteady" UseSymbolicJacobian="false" Solver="Sundials Stiff PDE Solver (Variable Time Step)">
+          <TimeBound StartTime="0.0" EndTime="10000.0" />
+          <TimeStep DefaultTime="0.0" MinTime="0.0" MaxTime="10.0" />
+          <ErrorTolerance Absolut="1.0E-9" Relative="1.0E-7" />
+          <OutputOptions OutputTimeStep="500.0" />
+          <SundialsSolverOptions>
+            <maxOrderAdvection>2</maxOrderAdvection>
+          </SundialsSolverOptions>
+          <NumberProcessors>1</NumberProcessors>
+        </SolverTaskDescription>
+        <MathOverrides>
+          <Constant Name="Bk_Dish_diffusionRate" ConstantArraySpec="1000">"1.0", "10.0", "100.0", "1000.0", "10000.0"</Constant>
+        </MathOverrides>
+        <MeshSpecification>
+          <Size X="206" Y="206" Z="18" />
+        </MeshSpecification>
+        <Version Name="D=varied, t= 2.8hours (1e4s)" KeyValue="149362361" BranchId="38096392" Archived="0" Date="27-Jan-2019 18:40:56" FromVersionable="false">
+          <Owner Name="les" Identifier="6" />
+          <GroupAccess Type="1" />
+          <ParentSimRef KeyValue="60223326" />
+        </Version>
+      </Simulation>
+      <Simulation Name="D=100, t= 3years (1e8s)">
+        <SolverTaskDescription TaskType="Unsteady" UseSymbolicJacobian="false" Solver="Sundials Stiff PDE Solver (Variable Time Step)">
+          <TimeBound StartTime="0.0" EndTime="1.0E8" />
+          <TimeStep DefaultTime="0.0" MinTime="0.0" MaxTime="100.0" />
+          <ErrorTolerance Absolut="1.0E-7" Relative="1.0E-5" />
+          <OutputOptions OutputTimeStep="1.0E7" />
+          <SundialsSolverOptions>
+            <maxOrderAdvection>2</maxOrderAdvection>
+          </SundialsSolverOptions>
+          <NumberProcessors>1</NumberProcessors>
+        </SolverTaskDescription>
+        <MathOverrides />
+        <MeshSpecification>
+          <Size X="206" Y="206" Z="18" />
+        </MeshSpecification>
+        <Version Name="D=100, t= 3years (1e8s)" KeyValue="149362363" BranchId="38195627" Archived="0" Date="27-Jan-2019 18:40:56" FromVersionable="false">
+          <Owner Name="les" Identifier="6" />
+          <GroupAccess Type="1" />
+        </Version>
+      </Simulation>
+      <SpatialObjects>
+        <SpatialObject Name="vobj_air0" Type="Volume" subVolume="air" regionId="0">
+          <QuantityCategoryList>
+            <QuantityCategory Name="VolumeCentroid" Enabled="false" />
+            <QuantityCategory Name="InteriorVelocity" Enabled="false" />
+            <QuantityCategory Name="VolumeRegionSize" Enabled="true" />
+          </QuantityCategoryList>
+        </SpatialObject>
+        <SpatialObject Name="vobj_chamber1" Type="Volume" subVolume="chamber" regionId="1">
+          <QuantityCategoryList>
+            <QuantityCategory Name="VolumeCentroid" Enabled="false" />
+            <QuantityCategory Name="InteriorVelocity" Enabled="false" />
+            <QuantityCategory Name="VolumeRegionSize" Enabled="true" />
+          </QuantityCategoryList>
+        </SpatialObject>
+        <SpatialObject Name="sobj_chamber1_air0" Type="Surface" subVolumeInside="chamber" regionIdInside="1" subVolumeOutside="air" regionIdOutside="0">
+          <QuantityCategoryList>
+            <QuantityCategory Name="SurfaceNormal" Enabled="false" />
+            <QuantityCategory Name="SurfaceVelocity" Enabled="false" />
+            <QuantityCategory Name="DistanceToSurface" Enabled="false" />
+            <QuantityCategory Name="DirectionToSurface" Enabled="false" />
+            <QuantityCategory Name="SurfaceSize" Enabled="true" />
+          </QuantityCategoryList>
+        </SpatialObject>
+      </SpatialObjects>
+      <Version Name="Bk Diffusion" KeyValue="149362325" BranchId="4268743" Archived="0" Date="27-Jan-2019 18:40:55" FromVersionable="false">
+        <Owner Name="les" Identifier="6" />
+        <GroupAccess Type="1" />
+      </Version>
+      <MicroscopeMeasurement Name="fluor">
+        <ConvolutionKernel Type="ProjectionZKernel" />
+      </MicroscopeMeasurement>
+    </SimulationSpec>
+    <SimulationSpec Name="small cylinder" Stochastic="false" UseConcentration="true" RuleBased="false" MassConservationModelReduction="true" InsufficientIterations="false" InsufficientMaxMolecules="false" CharacteristicSize="189.39506935376534">
+      <NetworkConstraints RbmMaxIteration="3" RbmMaxMoleculesPerSpecies="10" RbmSpeciesLimit="800" RbmReactionsLimit="2500" />
+      <Annotation>(copied from Bk Diffusion)</Annotation>
+      <Geometry Name="Cylinder 3D 4?m diameter 10?m length" Dimension="3">
+        <Extent X="10.0" Y="5.0" Z="5.0" />
+        <Origin X="0.0" Y="0.0" Z="0.0" />
+        <SubVolume Name="subdomain1" Handle="1" Type="Analytical" KeyValue="70525760">
+          <AnalyticExpression>((x &gt;= 0.0) &amp;&amp; (x &lt;= 10.0) &amp;&amp; ((((2.5 - y) ^ 2.0) + ((2.5 - z) ^ 2.0)) &lt; 4.0))</AnalyticExpression>
+        </SubVolume>
+        <SubVolume Name="subdomain0" Handle="0" Type="Analytical" KeyValue="70525761">
+          <AnalyticExpression>1.0</AnalyticExpression>
+        </SubVolume>
+        <SurfaceClass Name="subdomain0_subdomain1_membrane" SubVolume1Ref="subdomain0" SubVolume2Ref="subdomain1" KeyValue="70525762" />
+        <SurfaceDescription NumSamplesX="100" NumSamplesY="100" NumSamplesZ="100" CutoffFrequency="0.3">
+          <VolumeRegion Name="subdomain00" RegionID="0" SubVolume="subdomain0" Size="124.50260177532905" Unit="um3" />
+          <VolumeRegion Name="subdomain11" RegionID="1" SubVolume="subdomain1" Size="125.49739822467095" Unit="um3" />
+          <MembraneRegion Name="membrane_subdomain00_subdomain11" VolumeRegion1="subdomain11" VolumeRegion2="subdomain00" Size="126.1775648410109" Unit="um2" />
+        </SurfaceDescription>
+        <Version Name="Cylinder 3D 4?m diameter 10?m length" KeyValue="70525757" BranchId="38195580" Archived="0" Date="06-Jul-2012 19:06:20" FromVersionable="false">
+          <Owner Name="les" Identifier="6" />
+          <GroupAccess Type="1" />
+        </Version>
+      </Geometry>
+      <GeometryContext>
+        <FeatureMapping Feature="Air" GeometryClass="subdomain0" SubVolume="subdomain0" VolumePerUnitVolume="1.0">
+          <BoundariesTypes Xm="Flux" Xp="Flux" Ym="Flux" Yp="Flux" Zm="Flux" Zp="Flux" />
+        </FeatureMapping>
+        <FeatureMapping Feature="Dish" GeometryClass="subdomain1" SubVolume="subdomain1" VolumePerUnitVolume="1.0">
+          <BoundariesTypes Xm="Flux" Xp="Flux" Ym="Flux" Yp="Flux" Zm="Flux" Zp="Flux" />
+        </FeatureMapping>
+        <MembraneMapping Membrane="Surface" SurfaceToVolumeRatio="1.0" VolumeFraction="0.2" AreaPerUnitArea="1.0" CalculateVoltage="false" SpecificCapacitance="1.0" InitialVoltage="0.0" GeometryClass="subdomain0_subdomain1_membrane">
+          <BoundariesTypes Xm="Flux" Xp="Flux" Ym="Flux" Yp="Flux" Zm="Flux" Zp="Flux" />
+        </MembraneMapping>
+      </GeometryContext>
+      <ReactionContext>
+        <LocalizedCompoundSpec LocalizedCompoundRef="Bk_Dish" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>(100.0 * (x &lt; 2.0))</InitialConcentration>
+          <Diffusion>100.0</Diffusion>
+          <Boundaries Xm="0.0" Xp="0.0" Ym="0.0" Yp="0.0" Zm="0.0" Zp="0.0" />
+        </LocalizedCompoundSpec>
+      </ReactionContext>
+      <MathDescription Name="small cylinder_generated">
+        <Constant Name="_F_">96485.3321</Constant>
+        <Constant Name="_F_nmol_">9.64853321E-5</Constant>
+        <Constant Name="_K_GHK_">1.0E-9</Constant>
+        <Constant Name="_N_pmol_">6.02214179E11</Constant>
+        <Constant Name="_PI_">3.141592653589793</Constant>
+        <Constant Name="_R_">8314.46261815</Constant>
+        <Constant Name="_T_">300.0</Constant>
+        <Constant Name="AreaPerUnitArea_Surface">1.0</Constant>
+        <Constant Name="Bk_Dish_boundaryXm">0.0</Constant>
+        <Constant Name="Bk_Dish_boundaryXp">0.0</Constant>
+        <Constant Name="Bk_Dish_boundaryYm">0.0</Constant>
+        <Constant Name="Bk_Dish_boundaryYp">0.0</Constant>
+        <Constant Name="Bk_Dish_boundaryZm">0.0</Constant>
+        <Constant Name="Bk_Dish_boundaryZp">0.0</Constant>
+        <Constant Name="Bk_Dish_diffusionRate">100.0</Constant>
+        <Constant Name="K_millivolts_per_volt">1000.0</Constant>
+        <Constant Name="KMOLE">0.001660538783162726</Constant>
+        <Constant Name="Voltage_Surface">0.0</Constant>
+        <Constant Name="VolumePerUnitVolume_Air">1.0</Constant>
+        <Constant Name="VolumePerUnitVolume_Dish">1.0</Constant>
+        <VolumeVariable Name="Bk_Dish" Domain="subdomain1" />
+        <Function Name="Bk_Dish_init_uM" Domain="subdomain1">(100.0 * (x &lt; 2.0))</Function>
+        <Function Name="Size_Air" Domain="subdomain0">(VolumePerUnitVolume_Air * vcRegionVolume('subdomain0'))</Function>
+        <Function Name="Size_Dish" Domain="subdomain1">(VolumePerUnitVolume_Dish * vcRegionVolume('subdomain1'))</Function>
+        <Function Name="Size_Surface" Domain="subdomain0_subdomain1_membrane">(AreaPerUnitArea_Surface * vcRegionArea('subdomain0_subdomain1_membrane'))</Function>
+        <Function Name="sobj_subdomain11_subdomain00_size" Domain="subdomain0_subdomain1_membrane">vcRegionArea('subdomain0_subdomain1_membrane')</Function>
+        <Function Name="vobj_subdomain00_size" Domain="subdomain0">vcRegionVolume('subdomain0')</Function>
+        <Function Name="vobj_subdomain11_size" Domain="subdomain1">vcRegionVolume('subdomain1')</Function>
+        <CompartmentSubDomain Name="subdomain1">
+          <BoundaryType Boundary="Xm" Type="Flux" />
+          <BoundaryType Boundary="Xp" Type="Flux" />
+          <BoundaryType Boundary="Ym" Type="Flux" />
+          <BoundaryType Boundary="Yp" Type="Flux" />
+          <BoundaryType Boundary="Zm" Type="Flux" />
+          <BoundaryType Boundary="Zp" Type="Flux" />
+          <PdeEquation Name="Bk_Dish" SolutionType="Unknown">
+            <Boundaries Xm="Bk_Dish_boundaryXm" Xp="Bk_Dish_boundaryXp" Ym="Bk_Dish_boundaryYm" Yp="Bk_Dish_boundaryYp" Zm="Bk_Dish_boundaryZm" Zp="Bk_Dish_boundaryZp" />
+            <Rate>0.0</Rate>
+            <Diffusion>Bk_Dish_diffusionRate</Diffusion>
+            <Initial>Bk_Dish_init_uM</Initial>
+          </PdeEquation>
+        </CompartmentSubDomain>
+        <CompartmentSubDomain Name="subdomain0">
+          <BoundaryType Boundary="Xm" Type="Flux" />
+          <BoundaryType Boundary="Xp" Type="Flux" />
+          <BoundaryType Boundary="Ym" Type="Flux" />
+          <BoundaryType Boundary="Yp" Type="Flux" />
+          <BoundaryType Boundary="Zm" Type="Flux" />
+          <BoundaryType Boundary="Zp" Type="Flux" />
+        </CompartmentSubDomain>
+        <MembraneSubDomain Name="subdomain0_subdomain1_membrane" InsideCompartment="subdomain1" OutsideCompartment="subdomain0">
+          <BoundaryType Boundary="Xm" Type="Value" />
+          <BoundaryType Boundary="Xp" Type="Value" />
+          <BoundaryType Boundary="Ym" Type="Value" />
+          <BoundaryType Boundary="Yp" Type="Value" />
+          <BoundaryType Boundary="Zm" Type="Value" />
+          <BoundaryType Boundary="Zp" Type="Value" />
+          <JumpCondition Name="Bk_Dish">
+            <InFlux>0.0</InFlux>
+            <OutFlux>0.0</OutFlux>
+          </JumpCondition>
+        </MembraneSubDomain>
+        <Version Name="small cylinder_generated" KeyValue="149362315" BranchId="38195617" Archived="0" Date="27-Jan-2019 18:40:55" FromVersionable="false">
+          <Owner Name="les" Identifier="6" />
+          <GroupAccess Type="1" />
+        </Version>
+      </MathDescription>
+      <Simulation Name="Simulation0">
+        <SolverTaskDescription TaskType="Unsteady" UseSymbolicJacobian="false" Solver="Sundials Stiff PDE Solver (Variable Time Step)">
+          <TimeBound StartTime="0.0" EndTime="10.0" />
+          <TimeStep DefaultTime="0.0" MinTime="0.0" MaxTime="1.0" />
+          <ErrorTolerance Absolut="1.0E-9" Relative="1.0E-7" />
+          <OutputOptions OutputTimeStep="0.1" />
+          <SundialsSolverOptions>
+            <maxOrderAdvection>2</maxOrderAdvection>
+          </SundialsSolverOptions>
+          <NumberProcessors>1</NumberProcessors>
+        </SolverTaskDescription>
+        <MathOverrides>
+          <Constant Name="Bk_Dish_diffusionRate" ConstantArraySpec="1000">"5.0", "100.0", "500.0"</Constant>
+        </MathOverrides>
+        <MeshSpecification>
+          <Size X="80" Y="40" Z="40" />
+        </MeshSpecification>
+        <Version Name="Simulation0" KeyValue="149362365" BranchId="38195630" Archived="0" Date="27-Jan-2019 18:40:56" FromVersionable="false">
+          <Owner Name="les" Identifier="6" />
+          <GroupAccess Type="1" />
+          <ParentSimRef KeyValue="70525808" />
+        </Version>
+      </Simulation>
+      <SpatialObjects>
+        <SpatialObject Name="vobj_subdomain00" Type="Volume" subVolume="subdomain0" regionId="0">
+          <QuantityCategoryList>
+            <QuantityCategory Name="VolumeCentroid" Enabled="false" />
+            <QuantityCategory Name="InteriorVelocity" Enabled="false" />
+            <QuantityCategory Name="VolumeRegionSize" Enabled="true" />
+          </QuantityCategoryList>
+        </SpatialObject>
+        <SpatialObject Name="vobj_subdomain11" Type="Volume" subVolume="subdomain1" regionId="1">
+          <QuantityCategoryList>
+            <QuantityCategory Name="VolumeCentroid" Enabled="false" />
+            <QuantityCategory Name="InteriorVelocity" Enabled="false" />
+            <QuantityCategory Name="VolumeRegionSize" Enabled="true" />
+          </QuantityCategoryList>
+        </SpatialObject>
+        <SpatialObject Name="sobj_subdomain11_subdomain00" Type="Surface" subVolumeInside="subdomain1" regionIdInside="1" subVolumeOutside="subdomain0" regionIdOutside="0">
+          <QuantityCategoryList>
+            <QuantityCategory Name="SurfaceNormal" Enabled="false" />
+            <QuantityCategory Name="SurfaceVelocity" Enabled="false" />
+            <QuantityCategory Name="DistanceToSurface" Enabled="false" />
+            <QuantityCategory Name="DirectionToSurface" Enabled="false" />
+            <QuantityCategory Name="SurfaceSize" Enabled="true" />
+          </QuantityCategoryList>
+        </SpatialObject>
+      </SpatialObjects>
+      <Version Name="small cylinder" KeyValue="149362331" BranchId="38195620" Archived="0" Date="27-Jan-2019 18:40:55" FromVersionable="false">
+        <Owner Name="les" Identifier="6" />
+        <GroupAccess Type="1" />
+        <Annotation>(copied from Bk Diffusion)</Annotation>
+      </Version>
+      <MicroscopeMeasurement Name="fluor">
+        <ConvolutionKernel Type="ProjectionZKernel" />
+      </MicroscopeMeasurement>
+    </SimulationSpec>
+    <SimulationSpec Name="long cylinder" Stochastic="false" UseConcentration="true" RuleBased="false" MassConservationModelReduction="true" InsufficientIterations="false" InsufficientMaxMolecules="false" CharacteristicSize="189.39506935376534">
+      <NetworkConstraints RbmMaxIteration="3" RbmMaxMoleculesPerSpecies="10" RbmSpeciesLimit="800" RbmReactionsLimit="2500" />
+      <Annotation>(copied from small cylinder) (copied from Bk Diffusion)</Annotation>
+      <Geometry Name="Cylinder 3D 4?m diameter 200?m length" Dimension="3">
+        <Extent X="200.0" Y="5.0" Z="5.0" />
+        <Origin X="0.0" Y="0.0" Z="0.0" />
+        <SubVolume Name="subdomain1" Handle="1" Type="Analytical" KeyValue="70525770">
+          <AnalyticExpression>((x &gt;= 0.0) &amp;&amp; (x &lt;= 200.0) &amp;&amp; ((((2.5 - y) ^ 2.0) + ((2.5 - z) ^ 2.0)) &lt; 4.0))</AnalyticExpression>
+        </SubVolume>
+        <SubVolume Name="subdomain0" Handle="0" Type="Analytical" KeyValue="70525771">
+          <AnalyticExpression>1.0</AnalyticExpression>
+        </SubVolume>
+        <SurfaceClass Name="subdomain0_subdomain1_membrane" SubVolume1Ref="subdomain0" SubVolume2Ref="subdomain1" KeyValue="70525772" />
+        <SurfaceDescription NumSamplesX="100" NumSamplesY="100" NumSamplesZ="100" CutoffFrequency="0.3">
+          <VolumeRegion Name="subdomain00" RegionID="0" SubVolume="subdomain0" Size="2490.0520355065814" Unit="um3" />
+          <VolumeRegion Name="subdomain11" RegionID="1" SubVolume="subdomain1" Size="2509.94796449342" Unit="um3" />
+          <MembraneRegion Name="membrane_subdomain00_subdomain11" VolumeRegion1="subdomain11" VolumeRegion2="subdomain00" Size="2523.5512968197195" Unit="um2" />
+        </SurfaceDescription>
+        <Version Name="Cylinder 3D 4?m diameter 200?m length" KeyValue="70525767" BranchId="38195661" Archived="0" Date="06-Jul-2012 19:06:21" FromVersionable="false">
+          <Owner Name="les" Identifier="6" />
+          <GroupAccess Type="1" />
+        </Version>
+      </Geometry>
+      <GeometryContext>
+        <FeatureMapping Feature="Air" GeometryClass="subdomain0" SubVolume="subdomain0" VolumePerUnitVolume="1.0">
+          <BoundariesTypes Xm="Flux" Xp="Flux" Ym="Flux" Yp="Flux" Zm="Flux" Zp="Flux" />
+        </FeatureMapping>
+        <FeatureMapping Feature="Dish" GeometryClass="subdomain1" SubVolume="subdomain1" VolumePerUnitVolume="1.0">
+          <BoundariesTypes Xm="Flux" Xp="Flux" Ym="Flux" Yp="Flux" Zm="Flux" Zp="Flux" />
+        </FeatureMapping>
+        <MembraneMapping Membrane="Surface" SurfaceToVolumeRatio="1.0" VolumeFraction="0.2" AreaPerUnitArea="1.0" CalculateVoltage="false" SpecificCapacitance="1.0" InitialVoltage="0.0" GeometryClass="subdomain0_subdomain1_membrane">
+          <BoundariesTypes Xm="Flux" Xp="Flux" Ym="Flux" Yp="Flux" Zm="Flux" Zp="Flux" />
+        </MembraneMapping>
+      </GeometryContext>
+      <ReactionContext>
+        <LocalizedCompoundSpec LocalizedCompoundRef="Bk_Dish" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>(100.0 * (x &lt; 2.0))</InitialConcentration>
+          <Diffusion>100.0</Diffusion>
+          <Boundaries Xm="0.0" Xp="0.0" Ym="0.0" Yp="0.0" Zm="0.0" Zp="0.0" />
+        </LocalizedCompoundSpec>
+      </ReactionContext>
+      <MathDescription Name="long cylinder_generated">
+        <Constant Name="_F_">96485.3321</Constant>
+        <Constant Name="_F_nmol_">9.64853321E-5</Constant>
+        <Constant Name="_K_GHK_">1.0E-9</Constant>
+        <Constant Name="_N_pmol_">6.02214179E11</Constant>
+        <Constant Name="_PI_">3.141592653589793</Constant>
+        <Constant Name="_R_">8314.46261815</Constant>
+        <Constant Name="_T_">300.0</Constant>
+        <Constant Name="AreaPerUnitArea_Surface">1.0</Constant>
+        <Constant Name="Bk_Dish_boundaryXm">0.0</Constant>
+        <Constant Name="Bk_Dish_boundaryXp">0.0</Constant>
+        <Constant Name="Bk_Dish_boundaryYm">0.0</Constant>
+        <Constant Name="Bk_Dish_boundaryYp">0.0</Constant>
+        <Constant Name="Bk_Dish_boundaryZm">0.0</Constant>
+        <Constant Name="Bk_Dish_boundaryZp">0.0</Constant>
+        <Constant Name="Bk_Dish_diffusionRate">100.0</Constant>
+        <Constant Name="K_millivolts_per_volt">1000.0</Constant>
+        <Constant Name="KMOLE">0.001660538783162726</Constant>
+        <Constant Name="Voltage_Surface">0.0</Constant>
+        <Constant Name="VolumePerUnitVolume_Air">1.0</Constant>
+        <Constant Name="VolumePerUnitVolume_Dish">1.0</Constant>
+        <VolumeVariable Name="Bk_Dish" Domain="subdomain1" />
+        <Function Name="Bk_Dish_init_uM" Domain="subdomain1">(100.0 * (x &lt; 2.0))</Function>
+        <Function Name="Size_Air" Domain="subdomain0">(VolumePerUnitVolume_Air * vcRegionVolume('subdomain0'))</Function>
+        <Function Name="Size_Dish" Domain="subdomain1">(VolumePerUnitVolume_Dish * vcRegionVolume('subdomain1'))</Function>
+        <Function Name="Size_Surface" Domain="subdomain0_subdomain1_membrane">(AreaPerUnitArea_Surface * vcRegionArea('subdomain0_subdomain1_membrane'))</Function>
+        <Function Name="sobj_subdomain11_subdomain00_size" Domain="subdomain0_subdomain1_membrane">vcRegionArea('subdomain0_subdomain1_membrane')</Function>
+        <Function Name="vobj_subdomain00_size" Domain="subdomain0">vcRegionVolume('subdomain0')</Function>
+        <Function Name="vobj_subdomain11_size" Domain="subdomain1">vcRegionVolume('subdomain1')</Function>
+        <CompartmentSubDomain Name="subdomain1">
+          <BoundaryType Boundary="Xm" Type="Flux" />
+          <BoundaryType Boundary="Xp" Type="Flux" />
+          <BoundaryType Boundary="Ym" Type="Flux" />
+          <BoundaryType Boundary="Yp" Type="Flux" />
+          <BoundaryType Boundary="Zm" Type="Flux" />
+          <BoundaryType Boundary="Zp" Type="Flux" />
+          <PdeEquation Name="Bk_Dish" SolutionType="Unknown">
+            <Boundaries Xm="Bk_Dish_boundaryXm" Xp="Bk_Dish_boundaryXp" Ym="Bk_Dish_boundaryYm" Yp="Bk_Dish_boundaryYp" Zm="Bk_Dish_boundaryZm" Zp="Bk_Dish_boundaryZp" />
+            <Rate>0.0</Rate>
+            <Diffusion>Bk_Dish_diffusionRate</Diffusion>
+            <Initial>Bk_Dish_init_uM</Initial>
+          </PdeEquation>
+        </CompartmentSubDomain>
+        <CompartmentSubDomain Name="subdomain0">
+          <BoundaryType Boundary="Xm" Type="Flux" />
+          <BoundaryType Boundary="Xp" Type="Flux" />
+          <BoundaryType Boundary="Ym" Type="Flux" />
+          <BoundaryType Boundary="Yp" Type="Flux" />
+          <BoundaryType Boundary="Zm" Type="Flux" />
+          <BoundaryType Boundary="Zp" Type="Flux" />
+        </CompartmentSubDomain>
+        <MembraneSubDomain Name="subdomain0_subdomain1_membrane" InsideCompartment="subdomain1" OutsideCompartment="subdomain0">
+          <BoundaryType Boundary="Xm" Type="Value" />
+          <BoundaryType Boundary="Xp" Type="Value" />
+          <BoundaryType Boundary="Ym" Type="Value" />
+          <BoundaryType Boundary="Yp" Type="Value" />
+          <BoundaryType Boundary="Zm" Type="Value" />
+          <BoundaryType Boundary="Zp" Type="Value" />
+          <JumpCondition Name="Bk_Dish">
+            <InFlux>0.0</InFlux>
+            <OutFlux>0.0</OutFlux>
+          </JumpCondition>
+        </MembraneSubDomain>
+        <Version Name="long cylinder_generated" KeyValue="149362317" BranchId="38195696" Archived="0" Date="27-Jan-2019 18:40:55" FromVersionable="false">
+          <Owner Name="les" Identifier="6" />
+          <GroupAccess Type="1" />
+        </Version>
+      </MathDescription>
+      <Simulation Name="long dendrite">
+        <SolverTaskDescription TaskType="Unsteady" UseSymbolicJacobian="false" Solver="Sundials Stiff PDE Solver (Variable Time Step)">
+          <TimeBound StartTime="0.0" EndTime="60.0" />
+          <TimeStep DefaultTime="0.0" MinTime="0.0" MaxTime="1.0" />
+          <ErrorTolerance Absolut="1.0E-9" Relative="1.0E-7" />
+          <OutputOptions OutputTimeStep="1.0" />
+          <SundialsSolverOptions>
+            <maxOrderAdvection>2</maxOrderAdvection>
+          </SundialsSolverOptions>
+          <NumberProcessors>1</NumberProcessors>
+        </SolverTaskDescription>
+        <MathOverrides>
+          <Constant Name="Bk_Dish_diffusionRate" ConstantArraySpec="1000">"5.0", "100.0", "500.0"</Constant>
+        </MathOverrides>
+        <MeshSpecification>
+          <Size X="600" Y="15" Z="15" />
+        </MeshSpecification>
+        <Version Name="long dendrite" KeyValue="149362367" BranchId="38195706" Archived="0" Date="27-Jan-2019 18:40:56" FromVersionable="false">
+          <Owner Name="les" Identifier="6" />
+          <GroupAccess Type="1" />
+          <ParentSimRef KeyValue="70525810" />
+        </Version>
+      </Simulation>
+      <SpatialObjects>
+        <SpatialObject Name="vobj_subdomain00" Type="Volume" subVolume="subdomain0" regionId="0">
+          <QuantityCategoryList>
+            <QuantityCategory Name="VolumeCentroid" Enabled="false" />
+            <QuantityCategory Name="InteriorVelocity" Enabled="false" />
+            <QuantityCategory Name="VolumeRegionSize" Enabled="true" />
+          </QuantityCategoryList>
+        </SpatialObject>
+        <SpatialObject Name="vobj_subdomain11" Type="Volume" subVolume="subdomain1" regionId="1">
+          <QuantityCategoryList>
+            <QuantityCategory Name="VolumeCentroid" Enabled="false" />
+            <QuantityCategory Name="InteriorVelocity" Enabled="false" />
+            <QuantityCategory Name="VolumeRegionSize" Enabled="true" />
+          </QuantityCategoryList>
+        </SpatialObject>
+        <SpatialObject Name="sobj_subdomain11_subdomain00" Type="Surface" subVolumeInside="subdomain1" regionIdInside="1" subVolumeOutside="subdomain0" regionIdOutside="0">
+          <QuantityCategoryList>
+            <QuantityCategory Name="SurfaceNormal" Enabled="false" />
+            <QuantityCategory Name="SurfaceVelocity" Enabled="false" />
+            <QuantityCategory Name="DistanceToSurface" Enabled="false" />
+            <QuantityCategory Name="DirectionToSurface" Enabled="false" />
+            <QuantityCategory Name="SurfaceSize" Enabled="true" />
+          </QuantityCategoryList>
+        </SpatialObject>
+      </SpatialObjects>
+      <Version Name="long cylinder" KeyValue="149362337" BranchId="38195699" Archived="0" Date="27-Jan-2019 18:40:55" FromVersionable="false">
+        <Owner Name="les" Identifier="6" />
+        <GroupAccess Type="1" />
+        <Annotation>(copied from small cylinder) (copied from Bk Diffusion)</Annotation>
+      </Version>
+      <MicroscopeMeasurement Name="fluor">
+        <ConvolutionKernel Type="ProjectionZKernel" />
+      </MicroscopeMeasurement>
+    </SimulationSpec>
+    <SimulationSpec Name=" Bk Diffusion 2cm diam" Stochastic="false" UseConcentration="true" RuleBased="false" MassConservationModelReduction="true" InsufficientIterations="false" InsufficientMaxMolecules="false" CharacteristicSize="189.39506935376534">
+      <NetworkConstraints RbmMaxIteration="3" RbmMaxMoleculesPerSpecies="10" RbmSpeciesLimit="800" RbmReactionsLimit="2500" />
+      <Annotation>(copied from Bk Diffusion)</Annotation>
+      <Geometry Name="Culture dish" Dimension="3">
+        <Extent X="40000.0" Y="40000.0" Z="3500.0" />
+        <Origin X="-20000.0" Y="-20000.0" Z="-3500.0" />
+        <SubVolume Name="chamber" Handle="1" Type="Analytical" KeyValue="60223283">
+          <AnalyticExpression>((z &gt;  - 3118.0) &amp;&amp; (z &lt; 0.0) &amp;&amp; (((x * x) + (y * y)) &lt; 1.0E8))</AnalyticExpression>
+        </SubVolume>
+        <SubVolume Name="air" Handle="0" Type="Analytical" KeyValue="60223284">
+          <AnalyticExpression>1.0</AnalyticExpression>
+        </SubVolume>
+        <SurfaceClass Name="air_chamber_membrane" SubVolume1Ref="air" SubVolume2Ref="chamber" KeyValue="60223285" />
+        <SurfaceDescription NumSamplesX="229" NumSamplesY="229" NumSamplesZ="20" CutoffFrequency="0.3">
+          <VolumeRegion Name="air0" RegionID="0" SubVolume="air" Size="4.676055790445644E12" Unit="um3" />
+          <VolumeRegion Name="chamber1" RegionID="1" SubVolume="chamber" Size="9.239442095543569E11" Unit="um3" />
+          <MembraneRegion Name="membrane_air0_chamber1" VolumeRegion1="chamber1" VolumeRegion2="air0" Size="7.910967456936493E8" Unit="um2" />
+        </SurfaceDescription>
+        <Version Name="Culture dish" KeyValue="60223280" BranchId="4268240" Archived="0" Date="14-Sep-2011 16:48:54" FromVersionable="false">
+          <Owner Name="les" Identifier="6" />
+          <GroupAccess Type="1" />
+        </Version>
+      </Geometry>
+      <GeometryContext>
+        <FeatureMapping Feature="Air" GeometryClass="air" SubVolume="air" VolumePerUnitVolume="1.0">
+          <BoundariesTypes Xm="Flux" Xp="Flux" Ym="Flux" Yp="Flux" Zm="Flux" Zp="Flux" />
+        </FeatureMapping>
+        <FeatureMapping Feature="Dish" GeometryClass="chamber" SubVolume="chamber" VolumePerUnitVolume="1.0">
+          <BoundariesTypes Xm="Flux" Xp="Flux" Ym="Flux" Yp="Flux" Zm="Flux" Zp="Flux" />
+        </FeatureMapping>
+        <MembraneMapping Membrane="Surface" SurfaceToVolumeRatio="1.0" VolumeFraction="0.2" AreaPerUnitArea="1.0" CalculateVoltage="false" SpecificCapacitance="0.01" InitialVoltage="0.0" GeometryClass="air_chamber_membrane">
+          <BoundariesTypes Xm="Flux" Xp="Flux" Ym="Flux" Yp="Flux" Zm="Flux" Zp="Flux" />
+        </MembraneMapping>
+      </GeometryContext>
+      <ReactionContext>
+        <LocalizedCompoundSpec LocalizedCompoundRef="Bk_Dish" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>(120.0 * (((((8500.0 + x) * (8500.0 + x)) + (y * y) + pow((3118.0 + z),2.0)) &lt; 4774225.0) &amp;&amp; (z &gt;  - 3118.0)))</InitialConcentration>
+          <Diffusion>100.0</Diffusion>
+          <Boundaries Xm="0.0" Xp="0.0" Ym="0.0" Yp="0.0" Zm="0.0" Zp="0.0" />
+        </LocalizedCompoundSpec>
+      </ReactionContext>
+      <MathDescription Name="Copy of Bk Diffusion_generated">
+        <Constant Name="_F_">96485.3321</Constant>
+        <Constant Name="_F_nmol_">9.64853321E-5</Constant>
+        <Constant Name="_K_GHK_">1.0E-9</Constant>
+        <Constant Name="_N_pmol_">6.02214179E11</Constant>
+        <Constant Name="_PI_">3.141592653589793</Constant>
+        <Constant Name="_R_">8314.46261815</Constant>
+        <Constant Name="_T_">300.0</Constant>
+        <Constant Name="AreaPerUnitArea_Surface">1.0</Constant>
+        <Constant Name="Bk_Dish_boundaryXm">0.0</Constant>
+        <Constant Name="Bk_Dish_boundaryXp">0.0</Constant>
+        <Constant Name="Bk_Dish_boundaryYm">0.0</Constant>
+        <Constant Name="Bk_Dish_boundaryYp">0.0</Constant>
+        <Constant Name="Bk_Dish_boundaryZm">0.0</Constant>
+        <Constant Name="Bk_Dish_boundaryZp">0.0</Constant>
+        <Constant Name="Bk_Dish_diffusionRate">100.0</Constant>
+        <Constant Name="K_millivolts_per_volt">1000.0</Constant>
+        <Constant Name="KMOLE">0.001660538783162726</Constant>
+        <Constant Name="Voltage_Surface">0.0</Constant>
+        <Constant Name="VolumePerUnitVolume_Air">1.0</Constant>
+        <Constant Name="VolumePerUnitVolume_Dish">1.0</Constant>
+        <VolumeVariable Name="Bk_Dish" Domain="chamber" />
+        <Function Name="Bk_Dish_init_uM" Domain="chamber">(120.0 * (((((8500.0 + x) * (8500.0 + x)) + (y * y) + pow((3118.0 + z),2.0)) &lt; 4774225.0) &amp;&amp; (z &gt;  - 3118.0)))</Function>
+        <Function Name="Size_Air" Domain="air">(VolumePerUnitVolume_Air * vcRegionVolume('air'))</Function>
+        <Function Name="Size_Dish" Domain="chamber">(VolumePerUnitVolume_Dish * vcRegionVolume('chamber'))</Function>
+        <Function Name="Size_Surface" Domain="air_chamber_membrane">(AreaPerUnitArea_Surface * vcRegionArea('air_chamber_membrane'))</Function>
+        <Function Name="sobj_chamber1_air0_size" Domain="air_chamber_membrane">vcRegionArea('air_chamber_membrane')</Function>
+        <Function Name="vobj_air0_size" Domain="air">vcRegionVolume('air')</Function>
+        <Function Name="vobj_chamber1_size" Domain="chamber">vcRegionVolume('chamber')</Function>
+        <CompartmentSubDomain Name="chamber">
+          <BoundaryType Boundary="Xm" Type="Flux" />
+          <BoundaryType Boundary="Xp" Type="Flux" />
+          <BoundaryType Boundary="Ym" Type="Flux" />
+          <BoundaryType Boundary="Yp" Type="Flux" />
+          <BoundaryType Boundary="Zm" Type="Flux" />
+          <BoundaryType Boundary="Zp" Type="Flux" />
+          <PdeEquation Name="Bk_Dish" SolutionType="Unknown">
+            <Boundaries Xm="Bk_Dish_boundaryXm" Xp="Bk_Dish_boundaryXp" Ym="Bk_Dish_boundaryYm" Yp="Bk_Dish_boundaryYp" Zm="Bk_Dish_boundaryZm" Zp="Bk_Dish_boundaryZp" />
+            <Rate>0.0</Rate>
+            <Diffusion>Bk_Dish_diffusionRate</Diffusion>
+            <Initial>Bk_Dish_init_uM</Initial>
+          </PdeEquation>
+        </CompartmentSubDomain>
+        <CompartmentSubDomain Name="air">
+          <BoundaryType Boundary="Xm" Type="Flux" />
+          <BoundaryType Boundary="Xp" Type="Flux" />
+          <BoundaryType Boundary="Ym" Type="Flux" />
+          <BoundaryType Boundary="Yp" Type="Flux" />
+          <BoundaryType Boundary="Zm" Type="Flux" />
+          <BoundaryType Boundary="Zp" Type="Flux" />
+        </CompartmentSubDomain>
+        <MembraneSubDomain Name="air_chamber_membrane" InsideCompartment="chamber" OutsideCompartment="air">
+          <BoundaryType Boundary="Xm" Type="Value" />
+          <BoundaryType Boundary="Xp" Type="Value" />
+          <BoundaryType Boundary="Ym" Type="Value" />
+          <BoundaryType Boundary="Yp" Type="Value" />
+          <BoundaryType Boundary="Zm" Type="Value" />
+          <BoundaryType Boundary="Zp" Type="Value" />
+          <JumpCondition Name="Bk_Dish">
+            <InFlux>0.0</InFlux>
+            <OutFlux>0.0</OutFlux>
+          </JumpCondition>
+        </MembraneSubDomain>
+        <Version Name="Copy of Bk Diffusion_generated" KeyValue="149362319" BranchId="60223297" Archived="0" Date="27-Jan-2019 18:40:55" FromVersionable="false">
+          <Owner Name="les" Identifier="6" />
+          <GroupAccess Type="1" />
+        </Version>
+      </MathDescription>
+      <Simulation Name="Effect of D">
+        <SolverTaskDescription TaskType="Unsteady" UseSymbolicJacobian="false" Solver="Sundials Stiff PDE Solver (Variable Time Step)">
+          <TimeBound StartTime="0.0" EndTime="10000.0" />
+          <TimeStep DefaultTime="0.0" MinTime="0.0" MaxTime="10.0" />
+          <ErrorTolerance Absolut="1.0E-9" Relative="1.0E-7" />
+          <OutputOptions OutputTimeStep="500.0" />
+          <SundialsSolverOptions>
+            <maxOrderAdvection>2</maxOrderAdvection>
+          </SundialsSolverOptions>
+          <NumberProcessors>1</NumberProcessors>
+        </SolverTaskDescription>
+        <MathOverrides>
+          <Constant Name="Bk_Dish_diffusionRate" ConstantArraySpec="1000">"1.0", "10.0", "100.0", "1000.0", "10000.0"</Constant>
+        </MathOverrides>
+        <MeshSpecification>
+          <Size X="206" Y="206" Z="18" />
+        </MeshSpecification>
+        <Version Name="Effect of D" KeyValue="149362369" BranchId="149362370" Archived="0" Date="27-Jan-2019 18:40:56" FromVersionable="false">
+          <Owner Name="les" Identifier="6" />
+          <GroupAccess Type="1" />
+        </Version>
+      </Simulation>
+      <SpatialObjects>
+        <SpatialObject Name="vobj_air0" Type="Volume" subVolume="air" regionId="0">
+          <QuantityCategoryList>
+            <QuantityCategory Name="VolumeCentroid" Enabled="false" />
+            <QuantityCategory Name="InteriorVelocity" Enabled="false" />
+            <QuantityCategory Name="VolumeRegionSize" Enabled="true" />
+          </QuantityCategoryList>
+        </SpatialObject>
+        <SpatialObject Name="vobj_chamber1" Type="Volume" subVolume="chamber" regionId="1">
+          <QuantityCategoryList>
+            <QuantityCategory Name="VolumeCentroid" Enabled="false" />
+            <QuantityCategory Name="InteriorVelocity" Enabled="false" />
+            <QuantityCategory Name="VolumeRegionSize" Enabled="true" />
+          </QuantityCategoryList>
+        </SpatialObject>
+        <SpatialObject Name="sobj_chamber1_air0" Type="Surface" subVolumeInside="chamber" regionIdInside="1" subVolumeOutside="air" regionIdOutside="0">
+          <QuantityCategoryList>
+            <QuantityCategory Name="SurfaceNormal" Enabled="false" />
+            <QuantityCategory Name="SurfaceVelocity" Enabled="false" />
+            <QuantityCategory Name="DistanceToSurface" Enabled="false" />
+            <QuantityCategory Name="DirectionToSurface" Enabled="false" />
+            <QuantityCategory Name="SurfaceSize" Enabled="true" />
+          </QuantityCategoryList>
+        </SpatialObject>
+      </SpatialObjects>
+      <Version Name=" Bk Diffusion 2cm diam" KeyValue="149362343" BranchId="60223318" Archived="0" Date="27-Jan-2019 18:40:56" FromVersionable="false">
+        <Owner Name="les" Identifier="6" />
+        <GroupAccess Type="1" />
+        <Annotation>(copied from Bk Diffusion)</Annotation>
+      </Version>
+      <MicroscopeMeasurement Name="fluor">
+        <ConvolutionKernel Type="ProjectionZKernel" />
+      </MicroscopeMeasurement>
+    </SimulationSpec>
+    <SimulationSpec Name=" Bk Diffusion 2cm diam, .5ml" Stochastic="false" UseConcentration="true" RuleBased="false" MassConservationModelReduction="true" InsufficientIterations="false" InsufficientMaxMolecules="false" CharacteristicSize="96.20067014794427">
+      <NetworkConstraints RbmMaxIteration="3" RbmMaxMoleculesPerSpecies="10" RbmSpeciesLimit="800" RbmReactionsLimit="2500" />
+      <Annotation>(copied from  Bk Diffusion 2cm diam) (copied from Bk Diffusion)</Annotation>
+      <Geometry Name="Culture dish" Dimension="3">
+        <Extent X="21000.0" Y="21000.0" Z="2000.0" />
+        <Origin X="-10500.0" Y="-10500.0" Z="-2000.0" />
+        <SubVolume Name="chamber" Handle="1" Type="Analytical" KeyValue="60228253">
+          <AnalyticExpression>((z &gt;  - 1592.0) &amp;&amp; (z &lt; 0.0) &amp;&amp; (((x * x) + (y * y)) &lt; 1.0E8))</AnalyticExpression>
+        </SubVolume>
+        <SubVolume Name="air" Handle="0" Type="Analytical" KeyValue="60228254">
+          <AnalyticExpression>1.0</AnalyticExpression>
+        </SubVolume>
+        <SurfaceClass Name="air_chamber_membrane" SubVolume1Ref="air" SubVolume2Ref="chamber" KeyValue="60228255" />
+        <SurfaceDescription NumSamplesX="229" NumSamplesY="229" NumSamplesZ="20" CutoffFrequency="0.3">
+          <VolumeRegion Name="air0" RegionID="0" SubVolume="air" Size="3.858428524566263E11" Unit="um3" />
+          <VolumeRegion Name="chamber1" RegionID="1" SubVolume="chamber" Size="4.9615714754337366E11" Unit="um3" />
+          <MembraneRegion Name="membrane_air0_chamber1" VolumeRegion1="chamber1" VolumeRegion2="air0" Size="7.163541167775781E8" Unit="um2" />
+        </SurfaceDescription>
+        <Version Name="Culture dish" KeyValue="60228250" BranchId="4268240" Archived="0" Date="15-Sep-2011 08:48:51" FromVersionable="false">
+          <Owner Name="les" Identifier="6" />
+          <GroupAccess Type="1" />
+        </Version>
+      </Geometry>
+      <GeometryContext>
+        <FeatureMapping Feature="Air" GeometryClass="air" SubVolume="air" VolumePerUnitVolume="1.0">
+          <BoundariesTypes Xm="Flux" Xp="Flux" Ym="Flux" Yp="Flux" Zm="Flux" Zp="Flux" />
+        </FeatureMapping>
+        <FeatureMapping Feature="Dish" GeometryClass="chamber" SubVolume="chamber" VolumePerUnitVolume="1.0">
+          <BoundariesTypes Xm="Flux" Xp="Flux" Ym="Flux" Yp="Flux" Zm="Flux" Zp="Flux" />
+        </FeatureMapping>
+        <MembraneMapping Membrane="Surface" SurfaceToVolumeRatio="1.0" VolumeFraction="0.2" AreaPerUnitArea="1.0" CalculateVoltage="false" SpecificCapacitance="0.01" InitialVoltage="0.0" GeometryClass="air_chamber_membrane">
+          <BoundariesTypes Xm="Flux" Xp="Flux" Ym="Flux" Yp="Flux" Zm="Flux" Zp="Flux" />
+        </MembraneMapping>
+      </GeometryContext>
+      <ReactionContext>
+        <LocalizedCompoundSpec LocalizedCompoundRef="Bk_Dish" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>(1000.0 * ((((9300.0 + x) * (9300.0 + x)) + (y * y) + pow((700.0 + z),2.0)) &lt; 384400.0))</InitialConcentration>
+          <Diffusion>100.0</Diffusion>
+          <Boundaries Xm="0.0" Xp="0.0" Ym="0.0" Yp="0.0" Zm="0.0" Zp="0.0" />
+        </LocalizedCompoundSpec>
+      </ReactionContext>
+      <MathDescription Name="Copy of  Bk Diffusion 2cm diam_generated">
+        <Constant Name="_F_">96485.3321</Constant>
+        <Constant Name="_F_nmol_">9.64853321E-5</Constant>
+        <Constant Name="_K_GHK_">1.0E-9</Constant>
+        <Constant Name="_N_pmol_">6.02214179E11</Constant>
+        <Constant Name="_PI_">3.141592653589793</Constant>
+        <Constant Name="_R_">8314.46261815</Constant>
+        <Constant Name="_T_">300.0</Constant>
+        <Constant Name="AreaPerUnitArea_Surface">1.0</Constant>
+        <Constant Name="Bk_Dish_boundaryXm">0.0</Constant>
+        <Constant Name="Bk_Dish_boundaryXp">0.0</Constant>
+        <Constant Name="Bk_Dish_boundaryYm">0.0</Constant>
+        <Constant Name="Bk_Dish_boundaryYp">0.0</Constant>
+        <Constant Name="Bk_Dish_boundaryZm">0.0</Constant>
+        <Constant Name="Bk_Dish_boundaryZp">0.0</Constant>
+        <Constant Name="Bk_Dish_diffusionRate">100.0</Constant>
+        <Constant Name="K_millivolts_per_volt">1000.0</Constant>
+        <Constant Name="KMOLE">0.001660538783162726</Constant>
+        <Constant Name="Voltage_Surface">0.0</Constant>
+        <Constant Name="VolumePerUnitVolume_Air">1.0</Constant>
+        <Constant Name="VolumePerUnitVolume_Dish">1.0</Constant>
+        <VolumeVariable Name="Bk_Dish" Domain="chamber" />
+        <Function Name="Bk_Dish_init_uM" Domain="chamber">(1000.0 * ((((9300.0 + x) * (9300.0 + x)) + (y * y) + pow((700.0 + z),2.0)) &lt; 384400.0))</Function>
+        <Function Name="Size_Air" Domain="air">(VolumePerUnitVolume_Air * vcRegionVolume('air'))</Function>
+        <Function Name="Size_Dish" Domain="chamber">(VolumePerUnitVolume_Dish * vcRegionVolume('chamber'))</Function>
+        <Function Name="Size_Surface" Domain="air_chamber_membrane">(AreaPerUnitArea_Surface * vcRegionArea('air_chamber_membrane'))</Function>
+        <Function Name="sobj_chamber1_air0_size" Domain="air_chamber_membrane">vcRegionArea('air_chamber_membrane')</Function>
+        <Function Name="vobj_air0_size" Domain="air">vcRegionVolume('air')</Function>
+        <Function Name="vobj_chamber1_size" Domain="chamber">vcRegionVolume('chamber')</Function>
+        <CompartmentSubDomain Name="chamber">
+          <BoundaryType Boundary="Xm" Type="Flux" />
+          <BoundaryType Boundary="Xp" Type="Flux" />
+          <BoundaryType Boundary="Ym" Type="Flux" />
+          <BoundaryType Boundary="Yp" Type="Flux" />
+          <BoundaryType Boundary="Zm" Type="Flux" />
+          <BoundaryType Boundary="Zp" Type="Flux" />
+          <PdeEquation Name="Bk_Dish" SolutionType="Unknown">
+            <Boundaries Xm="Bk_Dish_boundaryXm" Xp="Bk_Dish_boundaryXp" Ym="Bk_Dish_boundaryYm" Yp="Bk_Dish_boundaryYp" Zm="Bk_Dish_boundaryZm" Zp="Bk_Dish_boundaryZp" />
+            <Rate>0.0</Rate>
+            <Diffusion>Bk_Dish_diffusionRate</Diffusion>
+            <Initial>Bk_Dish_init_uM</Initial>
+          </PdeEquation>
+        </CompartmentSubDomain>
+        <CompartmentSubDomain Name="air">
+          <BoundaryType Boundary="Xm" Type="Flux" />
+          <BoundaryType Boundary="Xp" Type="Flux" />
+          <BoundaryType Boundary="Ym" Type="Flux" />
+          <BoundaryType Boundary="Yp" Type="Flux" />
+          <BoundaryType Boundary="Zm" Type="Flux" />
+          <BoundaryType Boundary="Zp" Type="Flux" />
+        </CompartmentSubDomain>
+        <MembraneSubDomain Name="air_chamber_membrane" InsideCompartment="chamber" OutsideCompartment="air">
+          <BoundaryType Boundary="Xm" Type="Value" />
+          <BoundaryType Boundary="Xp" Type="Value" />
+          <BoundaryType Boundary="Ym" Type="Value" />
+          <BoundaryType Boundary="Yp" Type="Value" />
+          <BoundaryType Boundary="Zm" Type="Value" />
+          <BoundaryType Boundary="Zp" Type="Value" />
+          <JumpCondition Name="Bk_Dish">
+            <InFlux>0.0</InFlux>
+            <OutFlux>0.0</OutFlux>
+          </JumpCondition>
+        </MembraneSubDomain>
+        <Version Name="Copy of  Bk Diffusion 2cm diam_generated" KeyValue="149362321" BranchId="60228261" Archived="0" Date="27-Jan-2019 18:40:55" FromVersionable="false">
+          <Owner Name="les" Identifier="6" />
+          <GroupAccess Type="1" />
+        </Version>
+      </MathDescription>
+      <Simulation Name="smaller drop">
+        <SolverTaskDescription TaskType="Unsteady" UseSymbolicJacobian="false" Solver="Sundials Stiff PDE Solver (Variable Time Step)">
+          <TimeBound StartTime="0.0" EndTime="10000.0" />
+          <TimeStep DefaultTime="0.0" MinTime="0.0" MaxTime="10.0" />
+          <ErrorTolerance Absolut="1.0E-9" Relative="1.0E-7" />
+          <OutputOptions OutputTimeStep="500.0" />
+          <SundialsSolverOptions>
+            <maxOrderAdvection>2</maxOrderAdvection>
+          </SundialsSolverOptions>
+          <NumberProcessors>1</NumberProcessors>
+        </SolverTaskDescription>
+        <MathOverrides>
+          <Constant Name="Bk_Dish_diffusionRate" ConstantArraySpec="1000">"1.0", "10.0", "100.0", "1000.0", "10000.0"</Constant>
+        </MathOverrides>
+        <MeshSpecification>
+          <Size X="206" Y="206" Z="20" />
+        </MeshSpecification>
+        <Version Name="smaller drop" KeyValue="149362646" BranchId="149362647" Archived="0" Date="27-Jan-2019 18:45:36" FromVersionable="false">
+          <Owner Name="les" Identifier="6" />
+          <GroupAccess Type="1" />
+        </Version>
+      </Simulation>
+      <Simulation Name="Simulation6">
+        <SolverTaskDescription TaskType="Unsteady" UseSymbolicJacobian="false" Solver="Sundials Stiff PDE Solver (Variable Time Step)">
+          <TimeBound StartTime="0.0" EndTime="100000.0" />
+          <TimeStep DefaultTime="0.0" MinTime="0.0" MaxTime="100.0" />
+          <ErrorTolerance Absolut="1.0E-7" Relative="1.0E-5" />
+          <OutputOptions OutputTimeStep="2000.0" />
+          <SundialsSolverOptions>
+            <maxOrderAdvection>2</maxOrderAdvection>
+          </SundialsSolverOptions>
+          <NumberProcessors>1</NumberProcessors>
+        </SolverTaskDescription>
+        <MathOverrides>
+          <Constant Name="Bk_Dish_diffusionRate">1000.0</Constant>
+        </MathOverrides>
+        <MeshSpecification>
+          <Size X="210" Y="210" Z="21" />
+        </MeshSpecification>
+        <Version Name="Simulation6" KeyValue="149362374" BranchId="60228277" Archived="0" Date="27-Jan-2019 18:40:56" FromVersionable="false">
+          <Owner Name="les" Identifier="6" />
+          <GroupAccess Type="1" />
+          <ParentSimRef KeyValue="60229440" />
+        </Version>
+      </Simulation>
+      <SpatialObjects>
+        <SpatialObject Name="vobj_air0" Type="Volume" subVolume="air" regionId="0">
+          <QuantityCategoryList>
+            <QuantityCategory Name="VolumeCentroid" Enabled="false" />
+            <QuantityCategory Name="InteriorVelocity" Enabled="false" />
+            <QuantityCategory Name="VolumeRegionSize" Enabled="true" />
+          </QuantityCategoryList>
+        </SpatialObject>
+        <SpatialObject Name="vobj_chamber1" Type="Volume" subVolume="chamber" regionId="1">
+          <QuantityCategoryList>
+            <QuantityCategory Name="VolumeCentroid" Enabled="false" />
+            <QuantityCategory Name="InteriorVelocity" Enabled="false" />
+            <QuantityCategory Name="VolumeRegionSize" Enabled="true" />
+          </QuantityCategoryList>
+        </SpatialObject>
+        <SpatialObject Name="sobj_chamber1_air0" Type="Surface" subVolumeInside="chamber" regionIdInside="1" subVolumeOutside="air" regionIdOutside="0">
+          <QuantityCategoryList>
+            <QuantityCategory Name="SurfaceNormal" Enabled="false" />
+            <QuantityCategory Name="SurfaceVelocity" Enabled="false" />
+            <QuantityCategory Name="DistanceToSurface" Enabled="false" />
+            <QuantityCategory Name="DirectionToSurface" Enabled="false" />
+            <QuantityCategory Name="SurfaceSize" Enabled="true" />
+          </QuantityCategoryList>
+        </SpatialObject>
+      </SpatialObjects>
+      <Version Name=" Bk Diffusion 2cm diam, .5ml" KeyValue="149362349" BranchId="60228264" Archived="0" Date="27-Jan-2019 18:40:56" FromVersionable="false">
+        <Owner Name="les" Identifier="6" />
+        <GroupAccess Type="1" />
+        <Annotation>(copied from  Bk Diffusion 2cm diam) (copied from Bk Diffusion)</Annotation>
+      </Version>
+      <MicroscopeMeasurement Name="fluor">
+        <ConvolutionKernel Type="ProjectionZKernel" />
+      </MicroscopeMeasurement>
+    </SimulationSpec>
+    <SimulationSpec Name="From edge of cell" Stochastic="false" UseConcentration="true" RuleBased="false" MassConservationModelReduction="true" InsufficientIterations="false" InsufficientMaxMolecules="false" CharacteristicSize="0.21846637607913225">
+      <NetworkConstraints RbmMaxIteration="3" RbmMaxMoleculesPerSpecies="10" RbmSpeciesLimit="800" RbmReactionsLimit="2500" />
+      <Annotation>(copied from Bk Diffusion)</Annotation>
+      <Geometry Name="Geometry1334283649" Dimension="3">
+        <Extent X="21.0" Y="21.0" Z="21.0" />
+        <Origin X="-10.5" Y="-10.5" Z="-10.5" />
+        <SubVolume Name="subdomain1" Handle="1" Type="Analytical" KeyValue="84204233">
+          <AnalyticExpression>(((x ^ 2.0) + (y ^ 2.0) + (z ^ 2.0)) &lt; 100.0)</AnalyticExpression>
+        </SubVolume>
+        <SubVolume Name="subdomain0" Handle="0" Type="Analytical" KeyValue="84204234">
+          <AnalyticExpression>1.0</AnalyticExpression>
+        </SubVolume>
+        <SurfaceClass Name="subdomain0_subdomain1_membrane" SubVolume1Ref="subdomain0" SubVolume2Ref="subdomain1" KeyValue="84204235" />
+        <SurfaceDescription NumSamplesX="101" NumSamplesY="101" NumSamplesZ="101" CutoffFrequency="0.3">
+          <VolumeRegion Name="subdomain00" RegionID="0" SubVolume="subdomain0" Size="5068.369341" Unit="um3" />
+          <VolumeRegion Name="subdomain11" RegionID="1" SubVolume="subdomain1" Size="4192.630659" Unit="um3" />
+          <MembraneRegion Name="membrane_subdomain00_subdomain11" VolumeRegion1="subdomain11" VolumeRegion2="subdomain00" Size="1257.212161719373" Unit="um2" />
+        </SurfaceDescription>
+        <Version Name="Geometry1334283649" KeyValue="84204229" BranchId="84204230" Archived="0" Date="12-Sep-2013 09:39:48" FromVersionable="false">
+          <Owner Name="les" Identifier="6" />
+          <GroupAccess Type="1" />
+        </Version>
+      </Geometry>
+      <GeometryContext>
+        <FeatureMapping Feature="Air" GeometryClass="subdomain0" SubVolume="subdomain0" Size="50000.0" VolumePerUnitVolume="1.0">
+          <BoundariesTypes Xm="Flux" Xp="Flux" Ym="Flux" Yp="Flux" Zm="Flux" Zp="Flux" />
+        </FeatureMapping>
+        <FeatureMapping Feature="Dish" GeometryClass="subdomain1" SubVolume="subdomain1" Size="5000.0" VolumePerUnitVolume="1.0">
+          <BoundariesTypes Xm="Flux" Xp="Flux" Ym="Flux" Yp="Flux" Zm="Flux" Zp="Flux" />
+        </FeatureMapping>
+        <MembraneMapping Membrane="Surface" Size="1414.0" AreaPerUnitArea="1.0" AreaPerUnitVolume="1.0" CalculateVoltage="false" SpecificCapacitance="1.0" InitialVoltage="0.0" GeometryClass="subdomain0_subdomain1_membrane">
+          <BoundariesTypes Xm="Flux" Xp="Flux" Ym="Flux" Yp="Flux" Zm="Flux" Zp="Flux" />
+        </MembraneMapping>
+      </GeometryContext>
+      <ReactionContext>
+        <LocalizedCompoundSpec LocalizedCompoundRef="Bk_Dish" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>(1000.0 * ((((9.0 + x) ^ 2.0) + (y ^ 2.0) + (z ^ 2.0)) &lt; 0.25))</InitialConcentration>
+          <Diffusion>1000.0</Diffusion>
+          <Boundaries Xm="0.0" Xp="0.0" Ym="0.0" Yp="0.0" Zm="0.0" Zp="0.0" />
+        </LocalizedCompoundSpec>
+      </ReactionContext>
+      <MathDescription Name="Copy of Bk Diffusion_generated">
+        <Constant Name="_F_">96485.3321</Constant>
+        <Constant Name="_F_nmol_">9.64853321E-5</Constant>
+        <Constant Name="_K_GHK_">1.0E-9</Constant>
+        <Constant Name="_N_pmol_">6.02214179E11</Constant>
+        <Constant Name="_PI_">3.141592653589793</Constant>
+        <Constant Name="_R_">8314.46261815</Constant>
+        <Constant Name="_T_">300.0</Constant>
+        <Constant Name="AreaPerUnitArea_Surface">1.0</Constant>
+        <Constant Name="Bk_Dish_boundaryXm">0.0</Constant>
+        <Constant Name="Bk_Dish_boundaryXp">0.0</Constant>
+        <Constant Name="Bk_Dish_boundaryYm">0.0</Constant>
+        <Constant Name="Bk_Dish_boundaryYp">0.0</Constant>
+        <Constant Name="Bk_Dish_boundaryZm">0.0</Constant>
+        <Constant Name="Bk_Dish_boundaryZp">0.0</Constant>
+        <Constant Name="Bk_Dish_diffusionRate">1000.0</Constant>
+        <Constant Name="K_millivolts_per_volt">1000.0</Constant>
+        <Constant Name="KMOLE">0.001660538783162726</Constant>
+        <Constant Name="Voltage_Surface">0.0</Constant>
+        <Constant Name="VolumePerUnitVolume_Air">1.0</Constant>
+        <Constant Name="VolumePerUnitVolume_Dish">1.0</Constant>
+        <VolumeVariable Name="Bk_Dish" Domain="subdomain1" />
+        <Function Name="Bk_Dish_init_uM" Domain="subdomain1">(1000.0 * ((((9.0 + x) ^ 2.0) + (y ^ 2.0) + (z ^ 2.0)) &lt; 0.25))</Function>
+        <Function Name="Size_Air" Domain="subdomain0">(VolumePerUnitVolume_Air * vcRegionVolume('subdomain0'))</Function>
+        <Function Name="Size_Dish" Domain="subdomain1">(VolumePerUnitVolume_Dish * vcRegionVolume('subdomain1'))</Function>
+        <Function Name="Size_Surface" Domain="subdomain0_subdomain1_membrane">(AreaPerUnitArea_Surface * vcRegionArea('subdomain0_subdomain1_membrane'))</Function>
+        <Function Name="sobj_subdomain11_subdomain00_size" Domain="subdomain0_subdomain1_membrane">vcRegionArea('subdomain0_subdomain1_membrane')</Function>
+        <Function Name="UnitFactor_molecules_um_neg_3_uM_neg_1">(6.02214179E8 / 1000000.0)</Function>
+        <Function Name="vobj_subdomain00_size" Domain="subdomain0">vcRegionVolume('subdomain0')</Function>
+        <Function Name="vobj_subdomain11_size" Domain="subdomain1">vcRegionVolume('subdomain1')</Function>
+        <CompartmentSubDomain Name="subdomain1">
+          <BoundaryType Boundary="Xm" Type="Flux" />
+          <BoundaryType Boundary="Xp" Type="Flux" />
+          <BoundaryType Boundary="Ym" Type="Flux" />
+          <BoundaryType Boundary="Yp" Type="Flux" />
+          <BoundaryType Boundary="Zm" Type="Flux" />
+          <BoundaryType Boundary="Zp" Type="Flux" />
+          <PdeEquation Name="Bk_Dish" SolutionType="Unknown">
+            <Boundaries Xm="Bk_Dish_boundaryXm" Xp="Bk_Dish_boundaryXp" Ym="Bk_Dish_boundaryYm" Yp="Bk_Dish_boundaryYp" Zm="Bk_Dish_boundaryZm" Zp="Bk_Dish_boundaryZp" />
+            <Rate>0.0</Rate>
+            <Diffusion>Bk_Dish_diffusionRate</Diffusion>
+            <Initial>Bk_Dish_init_uM</Initial>
+          </PdeEquation>
+        </CompartmentSubDomain>
+        <CompartmentSubDomain Name="subdomain0">
+          <BoundaryType Boundary="Xm" Type="Flux" />
+          <BoundaryType Boundary="Xp" Type="Flux" />
+          <BoundaryType Boundary="Ym" Type="Flux" />
+          <BoundaryType Boundary="Yp" Type="Flux" />
+          <BoundaryType Boundary="Zm" Type="Flux" />
+          <BoundaryType Boundary="Zp" Type="Flux" />
+        </CompartmentSubDomain>
+        <MembraneSubDomain Name="subdomain0_subdomain1_membrane" InsideCompartment="subdomain1" OutsideCompartment="subdomain0">
+          <BoundaryType Boundary="Xm" Type="Value" />
+          <BoundaryType Boundary="Xp" Type="Value" />
+          <BoundaryType Boundary="Ym" Type="Value" />
+          <BoundaryType Boundary="Yp" Type="Value" />
+          <BoundaryType Boundary="Zm" Type="Value" />
+          <BoundaryType Boundary="Zp" Type="Value" />
+          <JumpCondition Name="Bk_Dish">
+            <InFlux>0.0</InFlux>
+            <OutFlux>0.0</OutFlux>
+          </JumpCondition>
+        </MembraneSubDomain>
+        <Version Name="Copy of Bk Diffusion_generated" KeyValue="149362323" BranchId="70525787" Archived="0" Date="27-Jan-2019 18:40:55" FromVersionable="false">
+          <Owner Name="les" Identifier="6" />
+          <GroupAccess Type="1" />
+        </Version>
+        <PostProcessing>
+          <Convolution Name="fluor">
+            <Kernel Type="Gaussian">
+              <SigmaXY>0.3</SigmaXY>
+              <SigmaZ>1.5</SigmaZ>
+            </Kernel>
+            <VolumeFunction>(UnitFactor_molecules_um_neg_3_uM_neg_1 * Bk_Dish)</VolumeFunction>
+            <MembraneFunction>0.0</MembraneFunction>
+          </Convolution>
+        </PostProcessing>
+      </MathDescription>
+      <Simulation Name="Small spot on side of cell">
+        <SolverTaskDescription TaskType="Unsteady" UseSymbolicJacobian="false" Solver="Sundials Stiff PDE Solver (Variable Time Step)">
+          <TimeBound StartTime="0.0" EndTime="10.0" />
+          <TimeStep DefaultTime="0.1" MinTime="0.0" MaxTime="0.1" />
+          <ErrorTolerance Absolut="1.0E-9" Relative="1.0E-7" />
+          <OutputOptions OutputTimeStep="1.0" />
+          <SundialsSolverOptions>
+            <maxOrderAdvection>2</maxOrderAdvection>
+          </SundialsSolverOptions>
+          <NumberProcessors>1</NumberProcessors>
+        </SolverTaskDescription>
+        <MathOverrides>
+          <Constant Name="Bk_Dish_diffusionRate" ConstantArraySpec="1001">0.1 to 1000.0, log, 5 values</Constant>
+        </MathOverrides>
+        <MeshSpecification>
+          <Size X="101" Y="101" Z="101" />
+        </MeshSpecification>
+        <Version Name="Small spot on side of cell" KeyValue="199947424" BranchId="149362920" Archived="0" Date="08-Feb-2021 18:55:44" FromVersionable="false">
+          <Owner Name="les" Identifier="6" />
+          <GroupAccess Type="1" />
+        </Version>
+      </Simulation>
+      <SpatialObjects>
+        <SpatialObject Name="vobj_subdomain00" Type="Volume" subVolume="subdomain0" regionId="0">
+          <QuantityCategoryList>
+            <QuantityCategory Name="VolumeCentroid" Enabled="false" />
+            <QuantityCategory Name="InteriorVelocity" Enabled="false" />
+            <QuantityCategory Name="VolumeRegionSize" Enabled="true" />
+          </QuantityCategoryList>
+        </SpatialObject>
+        <SpatialObject Name="vobj_subdomain11" Type="Volume" subVolume="subdomain1" regionId="1">
+          <QuantityCategoryList>
+            <QuantityCategory Name="VolumeCentroid" Enabled="false" />
+            <QuantityCategory Name="InteriorVelocity" Enabled="false" />
+            <QuantityCategory Name="VolumeRegionSize" Enabled="true" />
+          </QuantityCategoryList>
+        </SpatialObject>
+        <SpatialObject Name="sobj_subdomain11_subdomain00" Type="Surface" subVolumeInside="subdomain1" regionIdInside="1" subVolumeOutside="subdomain0" regionIdOutside="0">
+          <QuantityCategoryList>
+            <QuantityCategory Name="SurfaceNormal" Enabled="false" />
+            <QuantityCategory Name="SurfaceVelocity" Enabled="false" />
+            <QuantityCategory Name="DistanceToSurface" Enabled="false" />
+            <QuantityCategory Name="DirectionToSurface" Enabled="false" />
+            <QuantityCategory Name="SurfaceSize" Enabled="true" />
+          </QuantityCategoryList>
+        </SpatialObject>
+      </SpatialObjects>
+      <Version Name="From edge of cell" KeyValue="199947418" BranchId="84204337" Archived="0" Date="08-Feb-2021 18:55:44" FromVersionable="false">
+        <Owner Name="les" Identifier="6" />
+        <GroupAccess Type="1" />
+        <Annotation>(copied from Bk Diffusion)</Annotation>
+      </Version>
+      <MicroscopeMeasurement Name="fluor">
+        <FluorescenceSpecies Name="Bk_Dish" />
+        <ConvolutionKernel Type="GaussianConvolutionKernel">
+          <SigmaXY>0.3</SigmaXY>
+          <SigmaZ>1.5</SigmaZ>
+        </ConvolutionKernel>
+      </MicroscopeMeasurement>
+    </SimulationSpec>
+    <Version Name="Diffusion in Cell geometries and a dish" KeyValue="199947426" BranchId="84204207" Archived="0" Date="08-Feb-2021 18:55:44" FromVersionable="false">
+      <Owner Name="les" Identifier="6" />
+      <GroupAccess Type="0" />
+    </Version>
+    <pathwayModel>
+      <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:bp="http://www.biopax.org/release/biopax-level3.owl#" version="3.0" />
+    </pathwayModel>
+    <relationshipModel>
+      <RMNS version="3.0" />
+    </relationshipModel>
+    <vcmetadata>
+      <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" />
+      <nonrdfAnnotationList />
+      <uriBindingList />
+    </vcmetadata>
+  </BioModel>
+</vcml>
+

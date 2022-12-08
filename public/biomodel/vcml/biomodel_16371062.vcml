@@ -1,0 +1,727 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--This biomodel was generated in VCML Version Alpha_Version_7.4.0_build_87-->
+<vcml xmlns="http://sourceforge.net/projects/vcell/vcml" Version="Alpha_Version_7.4.0_build_87">
+  <BioModel Name="Rac-Rho">
+    <Model Name="unnamed">
+      <Compound Name="Stressfibres" />
+      <Compound Name="Integrin" />
+      <Compound Name="Rho" />
+      <Compound Name="Rac" />
+      <Feature Name="Cell" KeyValue="15698526" />
+      <Feature Name="EC" KeyValue="15698524" />
+      <Membrane InsideFeature="Cell" OutsideFeature="EC" PositiveFeature="Cell" NegativeFeature="EC" MembraneVoltage="Voltage_Plasmamembrane" Name="Plasmamembrane" KeyValue="15698525" />
+      <LocalizedCompound Name="Stressfibres_Cell" CompoundRef="Stressfibres" Structure="Cell" OverrideName="true" KeyValue="15698530" />
+      <LocalizedCompound Name="Integrin_Cell" CompoundRef="Integrin" Structure="Cell" OverrideName="true" KeyValue="15698531" />
+      <LocalizedCompound Name="Rho_Cell" CompoundRef="Rho" Structure="Cell" OverrideName="true" KeyValue="15698532" />
+      <LocalizedCompound Name="Rac_Cell" CompoundRef="Rac" Structure="Cell" OverrideName="true" KeyValue="15698533" />
+      <SimpleReaction Structure="Cell" Name="Racproduction" Reversible="true" FluxOption="MolecularOnly" KeyValue="15698534">
+        <Product LocalizedCompoundRef="Rac_Cell" Stoichiometry="1" KeyValue="15698535" />
+        <Modifier LocalizedCompoundRef="Integrin_Cell" />
+        <Kinetics KineticsType="GeneralKinetics">
+          <Parameter Name="J" Role="reaction rate" Unit="uM.s-1">((Integrin_Cell * kintegrinrac) + (krac * Rac_Cell))</Parameter>
+          <Parameter Name="kintegrinrac" Role="user defined" Unit="s-1">0.8</Parameter>
+          <Parameter Name="krac" Role="user defined" Unit="s-1">-0.8</Parameter>
+        </Kinetics>
+      </SimpleReaction>
+      <SimpleReaction Structure="Cell" Name="Integrinproduction" Reversible="true" FluxOption="MolecularOnly" KeyValue="15698537">
+        <Product LocalizedCompoundRef="Integrin_Cell" Stoichiometry="1" KeyValue="15698538" />
+        <Modifier LocalizedCompoundRef="Stressfibres_Cell" />
+        <Kinetics KineticsType="GeneralKinetics">
+          <Parameter Name="J" Role="reaction rate" Unit="uM.s-1">((kstressfibers * Stressfibres_Cell) + (kintegrin * Integrin_Cell))</Parameter>
+          <Parameter Name="kintegrin" Role="user defined" Unit="s-1">-0.05</Parameter>
+          <Parameter Name="kstressfibers" Role="user defined" Unit="s-1">0.05</Parameter>
+        </Kinetics>
+      </SimpleReaction>
+      <SimpleReaction Structure="Cell" Name="Rhoproduction" Reversible="true" FluxOption="MolecularOnly" KeyValue="15698540">
+        <Product LocalizedCompoundRef="Rho_Cell" Stoichiometry="1" KeyValue="15698541" />
+        <Modifier LocalizedCompoundRef="Integrin_Cell" />
+        <Modifier LocalizedCompoundRef="Rac_Cell" />
+        <Kinetics KineticsType="GeneralKinetics">
+          <Parameter Name="J" Role="reaction rate" Unit="uM.s-1">((kintegrinrho * Integrin_Cell) + (krho * Rho_Cell) + (Rac_Cell * krac))</Parameter>
+          <Parameter Name="kintegrinrho" Role="user defined" Unit="s-1">0.5</Parameter>
+          <Parameter Name="krac" Role="user defined" Unit="s-1">-0.8</Parameter>
+          <Parameter Name="krho" Role="user defined" Unit="s-1">-0.5</Parameter>
+        </Kinetics>
+      </SimpleReaction>
+      <SimpleReaction Structure="Cell" Name="Stressfibersproduction" Reversible="true" FluxOption="MolecularOnly" KeyValue="15698544">
+        <Product LocalizedCompoundRef="Stressfibres_Cell" Stoichiometry="1" KeyValue="15698545" />
+        <Modifier LocalizedCompoundRef="Rho_Cell" />
+        <Modifier LocalizedCompoundRef="Rac_Cell" />
+        <Kinetics KineticsType="GeneralKinetics">
+          <Parameter Name="J" Role="reaction rate" Unit="uM.s-1">((krho * Rho_Cell) + (kstress * Stressfibres_Cell) + (Rac_Cell * krac))</Parameter>
+          <Parameter Name="krac" Role="user defined" Unit="s-1">-0.8</Parameter>
+          <Parameter Name="krho" Role="user defined" Unit="s-1">0.1</Parameter>
+          <Parameter Name="kstress" Role="user defined" Unit="s-1">-0.1</Parameter>
+        </Kinetics>
+      </SimpleReaction>
+      <Diagram Name="Unnamed compartment" Structure="EC" />
+      <Diagram Name="Plasmamembrane" Structure="Plasmamembrane" />
+      <Diagram Name="Cell" Structure="Cell">
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="Stressfibres_Cell" LocationX="277" LocationY="316" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="Integrin_Cell" LocationX="279" LocationY="68" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="Rho_Cell" LocationX="208" LocationY="182" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="Rac_Cell" LocationX="359" LocationY="179" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="full" SimpleReactionRef="Racproduction" LocationX="343" LocationY="113" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="full" SimpleReactionRef="Integrinproduction" LocationX="92" LocationY="156" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="full" SimpleReactionRef="Rhoproduction" LocationX="246" LocationY="136" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="full" SimpleReactionRef="Stressfibersproduction" LocationX="277" LocationY="250" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="Stressfibres_Cell" LocationX="277" LocationY="316" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="Integrin_Cell" LocationX="279" LocationY="68" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="Rho_Cell" LocationX="208" LocationY="182" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="Rac_Cell" LocationX="359" LocationY="179" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="molecule" SimpleReactionRef="Racproduction" LocationX="343" LocationY="113" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="molecule" SimpleReactionRef="Integrinproduction" LocationX="92" LocationY="156" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="molecule" SimpleReactionRef="Rhoproduction" LocationX="246" LocationY="136" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="molecule" SimpleReactionRef="Stressfibersproduction" LocationX="277" LocationY="250" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="Stressfibres_Cell" LocationX="277" LocationY="316" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="Integrin_Cell" LocationX="279" LocationY="68" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="Rho_Cell" LocationX="208" LocationY="182" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="Rac_Cell" LocationX="359" LocationY="179" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="rule" SimpleReactionRef="Racproduction" LocationX="343" LocationY="113" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="rule" SimpleReactionRef="Integrinproduction" LocationX="92" LocationY="156" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="rule" SimpleReactionRef="Rhoproduction" LocationX="246" LocationY="136" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="rule" SimpleReactionRef="Stressfibersproduction" LocationX="277" LocationY="250" />
+      </Diagram>
+      <Version Name="unnamed" KeyValue="15698518" BranchId="14357760" Archived="0" Date="29-Dec-2005 11:18:54" FromVersionable="false">
+        <Owner Name="sibex" Identifier="14258982" />
+        <GroupAccess Type="1" />
+      </Version>
+      <ModelUnitSystem VolumeSubstanceUnit="uM.um3" MembraneSubstanceUnit="molecules" LumpedReactionSubstanceUnit="molecules" VolumeUnit="um3" AreaUnit="um2" LengthUnit="um" TimeUnit="s" />
+    </Model>
+    <SimulationSpec Name="Application1" Stochastic="false" UseConcentration="true" RuleBased="false" MassConservationModelReduction="true" InsufficientIterations="false" InsufficientMaxMolecules="false" CharacteristicSize="0.04561394691467284">
+      <NetworkConstraints RbmMaxIteration="1" RbmMaxMoleculesPerSpecies="10" RbmSpeciesLimit="800" RbmReactionsLimit="2500" />
+      <Annotation />
+      <Geometry Name="RichtigeFRAP_Kreis" Dimension="2">
+        <Extent X="22.0" Y="22.0" Z="10.0" />
+        <Origin X="-11.0" Y="-11.0" Z="0.0" />
+        <SubVolume Name="subVolume0" Handle="1" Type="Analytical" KeyValue="14323695">
+          <AnalyticExpression>(((x * x) + (y * y)) &lt; 100.0)</AnalyticExpression>
+        </SubVolume>
+        <SubVolume Name="subVolume1" Handle="0" Type="Analytical" KeyValue="14323696">
+          <AnalyticExpression>1.0</AnalyticExpression>
+        </SubVolume>
+        <SurfaceClass Name="subVolume0_subVolume1_membrane" SubVolume1Ref="subVolume0" SubVolume2Ref="subVolume1" />
+        <SurfaceDescription NumSamplesX="101" NumSamplesY="101" NumSamplesZ="1" CutoffFrequency="0.3">
+          <VolumeRegion Name="subVolume10" RegionID="0" SubVolume="subVolume1" Size="169.3516" Unit="um2" />
+          <VolumeRegion Name="subVolume01" RegionID="1" SubVolume="subVolume0" Size="314.6484" Unit="um2" />
+          <MembraneRegion Name="membrane_subVolume10_subVolume01" VolumeRegion1="subVolume01" VolumeRegion2="subVolume10" Size="62.390022313005524" Unit="um" />
+        </SurfaceDescription>
+        <Version Name="RichtigeFRAP_Kreis" KeyValue="14323691" BranchId="14323692" Archived="0" Date="19-Oct-2005 08:45:05" FromVersionable="false">
+          <Owner Name="sibex" Identifier="14258982" />
+          <GroupAccess Type="1" />
+        </Version>
+      </Geometry>
+      <GeometryContext>
+        <FeatureMapping Feature="Cell" GeometryClass="subVolume0" SubVolume="subVolume0">
+          <BoundariesTypes Xm="Flux" Xp="Flux" Ym="Flux" Yp="Flux" Zm="Flux" Zp="Flux" />
+        </FeatureMapping>
+        <FeatureMapping Feature="EC" GeometryClass="subVolume1" SubVolume="subVolume1">
+          <BoundariesTypes Xm="Flux" Xp="Flux" Ym="Flux" Yp="Flux" Zm="Flux" Zp="Flux" />
+        </FeatureMapping>
+        <MembraneMapping Membrane="Plasmamembrane" SurfaceToVolumeRatio="1.0" VolumeFraction="0.2" CalculateVoltage="false" SpecificCapacitance="1.0" InitialVoltage="0.0" GeometryClass="subVolume0_subVolume1_membrane">
+          <BoundariesTypes Xm="Flux" Xp="Flux" Ym="Flux" Yp="Flux" Zm="Flux" Zp="Flux" />
+        </MembraneMapping>
+      </GeometryContext>
+      <ReactionContext>
+        <LocalizedCompoundSpec LocalizedCompoundRef="Stressfibres_Cell" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>0.0</InitialConcentration>
+          <Diffusion>0.5</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="Integrin_Cell" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>1.0</InitialConcentration>
+          <Diffusion>0.5</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="Rho_Cell" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>0.0</InitialConcentration>
+          <Diffusion>0.5</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="Rac_Cell" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>0.0</InitialConcentration>
+          <Diffusion>0.5</Diffusion>
+        </LocalizedCompoundSpec>
+        <ReactionSpec ReactionStepRef="Racproduction" ReactionMapping="included" />
+        <ReactionSpec ReactionStepRef="Integrinproduction" ReactionMapping="included" />
+        <ReactionSpec ReactionStepRef="Rhoproduction" ReactionMapping="included" />
+        <ReactionSpec ReactionStepRef="Stressfibersproduction" ReactionMapping="included" />
+      </ReactionContext>
+      <MathDescription Name="��_generated">
+        <Constant Name="_F_">96480.0</Constant>
+        <Constant Name="_F_nmol_">9.648E-5</Constant>
+        <Constant Name="_K_GHK_">1.0E-9</Constant>
+        <Constant Name="_N_pmol_">6.02E11</Constant>
+        <Constant Name="_R_">8314.0</Constant>
+        <Constant Name="_T_">300.0</Constant>
+        <Constant Name="Integrin_Cell_diffusionRate">0.5</Constant>
+        <Constant Name="Integrin_Cell_init">1.0</Constant>
+        <Constant Name="K_millivolts_per_volt">1000.0</Constant>
+        <Constant Name="kintegrin">-0.05</Constant>
+        <Constant Name="kintegrinrac">0.8</Constant>
+        <Constant Name="kintegrinrho">0.5</Constant>
+        <Constant Name="KMOLE">0.0016611295681063123</Constant>
+        <Constant Name="krac_Racproduction">-0.8</Constant>
+        <Constant Name="krac_Rhoproduction">-0.8</Constant>
+        <Constant Name="krac_Stressfibersproduction">-0.8</Constant>
+        <Constant Name="krho_Rhoproduction">-0.5</Constant>
+        <Constant Name="krho_Stressfibersproduction">0.1</Constant>
+        <Constant Name="kstress">-0.1</Constant>
+        <Constant Name="kstressfibers">0.05</Constant>
+        <Constant Name="Rac_Cell_diffusionRate">0.5</Constant>
+        <Constant Name="Rac_Cell_init">0.0</Constant>
+        <Constant Name="Rho_Cell_diffusionRate">0.5</Constant>
+        <Constant Name="Rho_Cell_init">0.0</Constant>
+        <Constant Name="Stressfibres_Cell_diffusionRate">0.5</Constant>
+        <Constant Name="Stressfibres_Cell_init">0.0</Constant>
+        <VolumeVariable Name="Integrin" />
+        <VolumeVariable Name="Rac" />
+        <VolumeVariable Name="Rho" />
+        <VolumeVariable Name="Stressfibres" />
+        <Function Name="J_Integrinproduction">((kstressfibers * Stressfibres) + (kintegrin * Integrin))</Function>
+        <Function Name="J_Racproduction">((Integrin * kintegrinrac) + (krac_Racproduction * Rac))</Function>
+        <Function Name="J_Rhoproduction">((kintegrinrho * Integrin) + (krho_Rhoproduction * Rho) + (Rac * krac_Rhoproduction))</Function>
+        <Function Name="J_Stressfibersproduction">((krho_Stressfibersproduction * Rho) + (kstress * Stressfibres) + (Rac * krac_Stressfibersproduction))</Function>
+        <Function Name="Voltage_Plasmamembrane">0.0</Function>
+        <CompartmentSubDomain Name="subVolume0">
+          <BoundaryType Boundary="Xm" Type="Flux" />
+          <BoundaryType Boundary="Xp" Type="Flux" />
+          <BoundaryType Boundary="Ym" Type="Flux" />
+          <BoundaryType Boundary="Yp" Type="Flux" />
+          <BoundaryType Boundary="Zm" Type="Value" />
+          <BoundaryType Boundary="Zp" Type="Value" />
+          <PdeEquation Name="Stressfibres" SolutionType="Unknown">
+            <Rate>J_Stressfibersproduction</Rate>
+            <Diffusion>Stressfibres_Cell_diffusionRate</Diffusion>
+            <Initial>Stressfibres_Cell_init</Initial>
+          </PdeEquation>
+          <PdeEquation Name="Integrin" SolutionType="Unknown">
+            <Rate>J_Integrinproduction</Rate>
+            <Diffusion>Integrin_Cell_diffusionRate</Diffusion>
+            <Initial>Integrin_Cell_init</Initial>
+          </PdeEquation>
+          <PdeEquation Name="Rho" SolutionType="Unknown">
+            <Rate>J_Rhoproduction</Rate>
+            <Diffusion>Rho_Cell_diffusionRate</Diffusion>
+            <Initial>Rho_Cell_init</Initial>
+          </PdeEquation>
+          <PdeEquation Name="Rac" SolutionType="Unknown">
+            <Rate>J_Racproduction</Rate>
+            <Diffusion>Rac_Cell_diffusionRate</Diffusion>
+            <Initial>Rac_Cell_init</Initial>
+          </PdeEquation>
+        </CompartmentSubDomain>
+        <CompartmentSubDomain Name="subVolume1">
+          <BoundaryType Boundary="Xm" Type="Flux" />
+          <BoundaryType Boundary="Xp" Type="Flux" />
+          <BoundaryType Boundary="Ym" Type="Flux" />
+          <BoundaryType Boundary="Yp" Type="Flux" />
+          <BoundaryType Boundary="Zm" Type="Value" />
+          <BoundaryType Boundary="Zp" Type="Value" />
+          <PdeEquation Name="Stressfibres" SolutionType="Unknown">
+            <Rate>0.0</Rate>
+            <Diffusion>Stressfibres_Cell_diffusionRate</Diffusion>
+            <Initial>0.0</Initial>
+          </PdeEquation>
+          <PdeEquation Name="Integrin" SolutionType="Unknown">
+            <Rate>0.0</Rate>
+            <Diffusion>Integrin_Cell_diffusionRate</Diffusion>
+            <Initial>0.0</Initial>
+          </PdeEquation>
+          <PdeEquation Name="Rho" SolutionType="Unknown">
+            <Rate>0.0</Rate>
+            <Diffusion>Rho_Cell_diffusionRate</Diffusion>
+            <Initial>0.0</Initial>
+          </PdeEquation>
+          <PdeEquation Name="Rac" SolutionType="Unknown">
+            <Rate>0.0</Rate>
+            <Diffusion>Rac_Cell_diffusionRate</Diffusion>
+            <Initial>0.0</Initial>
+          </PdeEquation>
+        </CompartmentSubDomain>
+        <MembraneSubDomain Name="subVolume0_subVolume1_membrane" InsideCompartment="subVolume0" OutsideCompartment="subVolume1">
+          <BoundaryType Boundary="Xm" Type="Value" />
+          <BoundaryType Boundary="Xp" Type="Value" />
+          <BoundaryType Boundary="Ym" Type="Value" />
+          <BoundaryType Boundary="Yp" Type="Value" />
+          <BoundaryType Boundary="Zm" Type="Value" />
+          <BoundaryType Boundary="Zp" Type="Value" />
+          <JumpCondition Name="Stressfibres">
+            <InFlux>0.0</InFlux>
+            <OutFlux>0.0</OutFlux>
+          </JumpCondition>
+          <JumpCondition Name="Integrin">
+            <InFlux>0.0</InFlux>
+            <OutFlux>0.0</OutFlux>
+          </JumpCondition>
+          <JumpCondition Name="Rho">
+            <InFlux>0.0</InFlux>
+            <OutFlux>0.0</OutFlux>
+          </JumpCondition>
+          <JumpCondition Name="Rac">
+            <InFlux>0.0</InFlux>
+            <OutFlux>0.0</OutFlux>
+          </JumpCondition>
+        </MembraneSubDomain>
+        <Version Name="��_generated" KeyValue="16370993" BranchId="14358021" Archived="0" Date="04-Feb-2006 11:11:12" FromVersionable="false">
+          <Owner Name="sibex" Identifier="14258982" />
+          <GroupAccess Type="1" />
+        </Version>
+      </MathDescription>
+      <Simulation Name="AbfalMc">
+        <SolverTaskDescription TaskType="Unsteady" UseSymbolicJacobian="false" Solver="Finite Volume, Regular Grid">
+          <TimeBound StartTime="0.0" EndTime="100.0" />
+          <TimeStep DefaultTime="0.2" MinTime="1.0E-8" MaxTime="1.0" />
+          <ErrorTolerance Absolut="1.0E-9" Relative="1.0E-9" />
+          <OutputOptions KeepEvery="1" KeepAtMost="1000" />
+          <NumberProcessors>1</NumberProcessors>
+        </SolverTaskDescription>
+        <MathOverrides />
+        <MeshSpecification>
+          <Size X="51" Y="51" Z="1" />
+        </MeshSpecification>
+        <Version Name="AbfalMc" KeyValue="16371023" BranchId="15021138" Archived="0" Date="04-Feb-2006 11:11:12" FromVersionable="false">
+          <Owner Name="sibex" Identifier="14258982" />
+          <GroupAccess Type="1" />
+          <ParentSimRef KeyValue="15698577" />
+        </Version>
+      </Simulation>
+      <Simulation Name="05.11.28">
+        <SolverTaskDescription TaskType="Unsteady" UseSymbolicJacobian="false" Solver="Finite Volume, Regular Grid">
+          <TimeBound StartTime="0.0" EndTime="100.0" />
+          <TimeStep DefaultTime="0.4" MinTime="1.0E-8" MaxTime="1.0" />
+          <ErrorTolerance Absolut="1.0E-9" Relative="1.0E-9" />
+          <OutputOptions KeepEvery="1" KeepAtMost="1000" />
+          <NumberProcessors>1</NumberProcessors>
+        </SolverTaskDescription>
+        <MathOverrides>
+          <Constant Name="krho_Stressfibersproduction">0.02</Constant>
+        </MathOverrides>
+        <MeshSpecification>
+          <Size X="51" Y="51" Z="1" />
+        </MeshSpecification>
+        <Version Name="05.11.28" KeyValue="16371025" BranchId="15021141" Archived="0" Date="04-Feb-2006 11:11:12" FromVersionable="false">
+          <Owner Name="sibex" Identifier="14258982" />
+          <GroupAccess Type="1" />
+          <ParentSimRef KeyValue="15698579" />
+        </Version>
+      </Simulation>
+      <Simulation Name="Copy of Simulation1">
+        <SolverTaskDescription TaskType="Unsteady" UseSymbolicJacobian="false" Solver="Finite Volume, Regular Grid">
+          <TimeBound StartTime="0.0" EndTime="20.0" />
+          <TimeStep DefaultTime="0.1" MinTime="1.0E-8" MaxTime="1.0" />
+          <ErrorTolerance Absolut="1.0E-9" Relative="1.0E-9" />
+          <OutputOptions KeepEvery="1" KeepAtMost="1000" />
+          <NumberProcessors>1</NumberProcessors>
+        </SolverTaskDescription>
+        <MathOverrides>
+          <Constant Name="kintegrin">0.05</Constant>
+        </MathOverrides>
+        <MeshSpecification>
+          <Size X="51" Y="51" Z="1" />
+        </MeshSpecification>
+        <Version Name="Copy of Simulation1" KeyValue="16371027" BranchId="14908408" Archived="0" Date="04-Feb-2006 11:11:12" FromVersionable="false">
+          <Owner Name="sibex" Identifier="14258982" />
+          <GroupAccess Type="1" />
+          <ParentSimRef KeyValue="15698581" />
+        </Version>
+      </Simulation>
+      <Simulation Name="Copy of 05.11.28">
+        <SolverTaskDescription TaskType="Unsteady" UseSymbolicJacobian="false" Solver="Finite Volume, Regular Grid">
+          <TimeBound StartTime="0.0" EndTime="100.0" />
+          <TimeStep DefaultTime="0.4" MinTime="1.0E-8" MaxTime="1.0" />
+          <ErrorTolerance Absolut="1.0E-9" Relative="1.0E-9" />
+          <OutputOptions KeepEvery="1" KeepAtMost="1000" />
+          <NumberProcessors>1</NumberProcessors>
+        </SolverTaskDescription>
+        <MathOverrides>
+          <Constant Name="Stressfibres_Cell_init">4.0</Constant>
+          <Constant Name="Rac_Cell_init">4.0</Constant>
+          <Constant Name="krho_Stressfibersproduction">0.02</Constant>
+          <Constant Name="Rho_Cell_init">4.0</Constant>
+        </MathOverrides>
+        <MeshSpecification>
+          <Size X="51" Y="51" Z="1" />
+        </MeshSpecification>
+        <Version Name="Copy of 05.11.28" KeyValue="16371029" BranchId="15040739" Archived="0" Date="04-Feb-2006 11:11:12" FromVersionable="false">
+          <Owner Name="sibex" Identifier="14258982" />
+          <GroupAccess Type="1" />
+          <ParentSimRef KeyValue="15698583" />
+        </Version>
+      </Simulation>
+      <Simulation Name="Copy of 05.11.28 1">
+        <SolverTaskDescription TaskType="Unsteady" UseSymbolicJacobian="false" Solver="Finite Volume, Regular Grid">
+          <TimeBound StartTime="0.0" EndTime="100.0" />
+          <TimeStep DefaultTime="0.4" MinTime="1.0E-8" MaxTime="1.0" />
+          <ErrorTolerance Absolut="1.0E-9" Relative="1.0E-9" />
+          <OutputOptions KeepEvery="1" KeepAtMost="1000" />
+          <NumberProcessors>1</NumberProcessors>
+        </SolverTaskDescription>
+        <MathOverrides>
+          <Constant Name="krac_Stressfibersproduction">-0.5</Constant>
+          <Constant Name="krac_Racproduction">-0.5</Constant>
+          <Constant Name="krac_Rhoproduction">-0.5</Constant>
+          <Constant Name="krho_Stressfibersproduction">0.02</Constant>
+          <Constant Name="kintegrinrac">0.5</Constant>
+        </MathOverrides>
+        <MeshSpecification>
+          <Size X="51" Y="51" Z="1" />
+        </MeshSpecification>
+        <Version Name="Copy of 05.11.28 1" KeyValue="16371031" BranchId="15041961" Archived="0" Date="04-Feb-2006 11:11:12" FromVersionable="false">
+          <Owner Name="sibex" Identifier="14258982" />
+          <GroupAccess Type="1" />
+          <ParentSimRef KeyValue="15698585" />
+        </Version>
+      </Simulation>
+      <Simulation Name="05.11.28k6">
+        <SolverTaskDescription TaskType="Unsteady" UseSymbolicJacobian="false" Solver="Finite Volume, Regular Grid">
+          <TimeBound StartTime="0.0" EndTime="100.0" />
+          <TimeStep DefaultTime="0.4" MinTime="1.0E-8" MaxTime="1.0" />
+          <ErrorTolerance Absolut="1.0E-9" Relative="1.0E-9" />
+          <OutputOptions KeepEvery="1" KeepAtMost="1000" />
+          <NumberProcessors>1</NumberProcessors>
+        </SolverTaskDescription>
+        <MathOverrides />
+        <MeshSpecification>
+          <Size X="51" Y="51" Z="1" />
+        </MeshSpecification>
+        <Version Name="05.11.28k6" KeyValue="16371033" BranchId="15086501" Archived="0" Date="04-Feb-2006 11:11:12" FromVersionable="false">
+          <Owner Name="sibex" Identifier="14258982" />
+          <GroupAccess Type="1" />
+          <ParentSimRef KeyValue="15698587" />
+        </Version>
+      </Simulation>
+      <Simulation Name="Copy of 05.11.28k6">
+        <SolverTaskDescription TaskType="Unsteady" UseSymbolicJacobian="false" Solver="Finite Volume, Regular Grid">
+          <TimeBound StartTime="0.0" EndTime="100.0" />
+          <TimeStep DefaultTime="1.0" MinTime="1.0E-8" MaxTime="1.0" />
+          <ErrorTolerance Absolut="1.0E-9" Relative="1.0E-9" />
+          <OutputOptions KeepEvery="1" KeepAtMost="1000" />
+          <NumberProcessors>1</NumberProcessors>
+        </SolverTaskDescription>
+        <MathOverrides />
+        <MeshSpecification>
+          <Size X="51" Y="51" Z="1" />
+        </MeshSpecification>
+        <Version Name="Copy of 05.11.28k6" KeyValue="16371035" BranchId="15086532" Archived="0" Date="04-Feb-2006 11:11:12" FromVersionable="false">
+          <Owner Name="sibex" Identifier="14258982" />
+          <GroupAccess Type="1" />
+          <ParentSimRef KeyValue="15698589" />
+        </Version>
+      </Simulation>
+      <SpatialObjects>
+        <SpatialObject Name="vobj_subVolume10" Type="Volume" subVolume="subVolume1" regionId="0">
+          <QuantityCategoryList>
+            <QuantityCategory Name="VolumeCentroid" Enabled="false" />
+            <QuantityCategory Name="InteriorVelocity" Enabled="false" />
+            <QuantityCategory Name="VolumeRegionSize" Enabled="true" />
+          </QuantityCategoryList>
+        </SpatialObject>
+        <SpatialObject Name="vobj_subVolume01" Type="Volume" subVolume="subVolume0" regionId="1">
+          <QuantityCategoryList>
+            <QuantityCategory Name="VolumeCentroid" Enabled="false" />
+            <QuantityCategory Name="InteriorVelocity" Enabled="false" />
+            <QuantityCategory Name="VolumeRegionSize" Enabled="true" />
+          </QuantityCategoryList>
+        </SpatialObject>
+        <SpatialObject Name="sobj_subVolume01_subVolume10" Type="Surface" subVolumeInside="subVolume0" regionIdInside="1" subVolumeOutside="subVolume1" regionIdOutside="0">
+          <QuantityCategoryList>
+            <QuantityCategory Name="SurfaceNormal" Enabled="false" />
+            <QuantityCategory Name="SurfaceVelocity" Enabled="false" />
+            <QuantityCategory Name="DistanceToSurface" Enabled="false" />
+            <QuantityCategory Name="DirectionToSurface" Enabled="false" />
+            <QuantityCategory Name="SurfaceSize" Enabled="true" />
+          </QuantityCategoryList>
+        </SpatialObject>
+      </SpatialObjects>
+      <Version Name="Application1" KeyValue="16370997" BranchId="16209184" Archived="0" Date="04-Feb-2006 11:11:12" FromVersionable="false">
+        <Owner Name="sibex" Identifier="14258982" />
+        <GroupAccess Type="1" />
+      </Version>
+      <MicroscopeMeasurement Name="fluor">
+        <ConvolutionKernel Type="ProjectionZKernel" />
+      </MicroscopeMeasurement>
+    </SimulationSpec>
+    <SimulationSpec Name="Spatial" Stochastic="false" UseConcentration="true" RuleBased="false" MassConservationModelReduction="true" InsufficientIterations="false" InsufficientMaxMolecules="false" CharacteristicSize="0.04561394691467284">
+      <NetworkConstraints RbmMaxIteration="1" RbmMaxMoleculesPerSpecies="10" RbmSpeciesLimit="800" RbmReactionsLimit="2500" />
+      <Annotation />
+      <Geometry Name="RichtigeFRAP_Kreis" Dimension="2">
+        <Extent X="22.0" Y="22.0" Z="10.0" />
+        <Origin X="-11.0" Y="-11.0" Z="0.0" />
+        <SubVolume Name="subVolume0" Handle="1" Type="Analytical" KeyValue="14323695">
+          <AnalyticExpression>(((x * x) + (y * y)) &lt; 100.0)</AnalyticExpression>
+        </SubVolume>
+        <SubVolume Name="subVolume1" Handle="0" Type="Analytical" KeyValue="14323696">
+          <AnalyticExpression>1.0</AnalyticExpression>
+        </SubVolume>
+        <SurfaceClass Name="subVolume0_subVolume1_membrane" SubVolume1Ref="subVolume0" SubVolume2Ref="subVolume1" />
+        <SurfaceDescription NumSamplesX="101" NumSamplesY="101" NumSamplesZ="1" CutoffFrequency="0.3">
+          <VolumeRegion Name="subVolume10" RegionID="0" SubVolume="subVolume1" Size="169.3516" Unit="um2" />
+          <VolumeRegion Name="subVolume01" RegionID="1" SubVolume="subVolume0" Size="314.6484" Unit="um2" />
+          <MembraneRegion Name="membrane_subVolume10_subVolume01" VolumeRegion1="subVolume01" VolumeRegion2="subVolume10" Size="62.390022313005524" Unit="um" />
+        </SurfaceDescription>
+        <Version Name="RichtigeFRAP_Kreis" KeyValue="14323691" BranchId="14323692" Archived="0" Date="19-Oct-2005 08:45:05" FromVersionable="false">
+          <Owner Name="sibex" Identifier="14258982" />
+          <GroupAccess Type="1" />
+        </Version>
+      </Geometry>
+      <GeometryContext>
+        <FeatureMapping Feature="Cell" GeometryClass="subVolume0" SubVolume="subVolume0">
+          <BoundariesTypes Xm="Flux" Xp="Flux" Ym="Flux" Yp="Flux" Zm="Flux" Zp="Flux" />
+        </FeatureMapping>
+        <FeatureMapping Feature="EC" GeometryClass="subVolume1" SubVolume="subVolume1">
+          <BoundariesTypes Xm="Flux" Xp="Flux" Ym="Flux" Yp="Flux" Zm="Flux" Zp="Flux" />
+        </FeatureMapping>
+        <MembraneMapping Membrane="Plasmamembrane" SurfaceToVolumeRatio="1.0" VolumeFraction="0.2" CalculateVoltage="false" SpecificCapacitance="1.0" InitialVoltage="0.0" GeometryClass="subVolume0_subVolume1_membrane">
+          <BoundariesTypes Xm="Flux" Xp="Flux" Ym="Flux" Yp="Flux" Zm="Flux" Zp="Flux" />
+        </MembraneMapping>
+      </GeometryContext>
+      <ReactionContext>
+        <LocalizedCompoundSpec LocalizedCompoundRef="Stressfibres_Cell" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>0.0</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="Integrin_Cell" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>(((x &gt; 6.4) &amp;&amp; (x &lt; 6.8) &amp;&amp; (y &gt; 6.4) &amp;&amp; (y &lt; 6.8)) + ((x &gt; 6.4) &amp;&amp; (x &lt; 6.8) &amp;&amp; (y &gt;  - 6.8) &amp;&amp; (y &lt;  - 6.4)) + ((x &gt;  - 6.8) &amp;&amp; (x &lt;  - 6.4) &amp;&amp; (y &gt; 6.4) &amp;&amp; (y &lt; 6.8)) + ((x &gt;  - 6.8) &amp;&amp; (x &lt;  - 6.4) &amp;&amp; (y &gt;  - 6.8) &amp;&amp; (y &lt;  - 6.4)))</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="Rho_Cell" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>0.0</InitialConcentration>
+          <Diffusion>1.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="Rac_Cell" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>0.0</InitialConcentration>
+          <Diffusion>1.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <ReactionSpec ReactionStepRef="Racproduction" ReactionMapping="included" />
+        <ReactionSpec ReactionStepRef="Integrinproduction" ReactionMapping="included" />
+        <ReactionSpec ReactionStepRef="Rhoproduction" ReactionMapping="included" />
+        <ReactionSpec ReactionStepRef="Stressfibersproduction" ReactionMapping="included" />
+      </ReactionContext>
+      <MathDescription Name="����_generated">
+        <Constant Name="_F_">96480.0</Constant>
+        <Constant Name="_F_nmol_">9.648E-5</Constant>
+        <Constant Name="_K_GHK_">1.0E-9</Constant>
+        <Constant Name="_N_pmol_">6.02E11</Constant>
+        <Constant Name="_R_">8314.0</Constant>
+        <Constant Name="_T_">300.0</Constant>
+        <Constant Name="K_millivolts_per_volt">1000.0</Constant>
+        <Constant Name="kintegrin">-0.05</Constant>
+        <Constant Name="kintegrinrac">0.8</Constant>
+        <Constant Name="kintegrinrho">0.5</Constant>
+        <Constant Name="KMOLE">0.0016611295681063123</Constant>
+        <Constant Name="krac_Racproduction">-0.8</Constant>
+        <Constant Name="krac_Rhoproduction">-0.8</Constant>
+        <Constant Name="krac_Stressfibersproduction">-0.8</Constant>
+        <Constant Name="krho_Rhoproduction">-0.5</Constant>
+        <Constant Name="krho_Stressfibersproduction">0.1</Constant>
+        <Constant Name="kstress">-0.1</Constant>
+        <Constant Name="kstressfibers">0.05</Constant>
+        <Constant Name="Rac_Cell_diffusionRate">1.0</Constant>
+        <Constant Name="Rac_Cell_init">0.0</Constant>
+        <Constant Name="Rho_Cell_diffusionRate">1.0</Constant>
+        <Constant Name="Rho_Cell_init">0.0</Constant>
+        <Constant Name="Stressfibres_Cell_init">0.0</Constant>
+        <VolumeVariable Name="Integrin" />
+        <VolumeVariable Name="Rac" />
+        <VolumeVariable Name="Rho" />
+        <VolumeVariable Name="Stressfibres" />
+        <Function Name="Integrin_Cell_init">(((x &gt; 6.4) &amp;&amp; (x &lt; 6.8) &amp;&amp; (y &gt; 6.4) &amp;&amp; (y &lt; 6.8)) + ((x &gt; 6.4) &amp;&amp; (x &lt; 6.8) &amp;&amp; (y &gt;  - 6.8) &amp;&amp; (y &lt;  - 6.4)) + ((x &gt;  - 6.8) &amp;&amp; (x &lt;  - 6.4) &amp;&amp; (y &gt; 6.4) &amp;&amp; (y &lt; 6.8)) + ((x &gt;  - 6.8) &amp;&amp; (x &lt;  - 6.4) &amp;&amp; (y &gt;  - 6.8) &amp;&amp; (y &lt;  - 6.4)))</Function>
+        <Function Name="J_Integrinproduction">((kstressfibers * Stressfibres) + (kintegrin * Integrin))</Function>
+        <Function Name="J_Racproduction">((Integrin * kintegrinrac) + (krac_Racproduction * Rac))</Function>
+        <Function Name="J_Rhoproduction">((kintegrinrho * Integrin) + (krho_Rhoproduction * Rho) + (Rac * krac_Rhoproduction))</Function>
+        <Function Name="J_Stressfibersproduction">((krho_Stressfibersproduction * Rho) + (kstress * Stressfibres) + (Rac * krac_Stressfibersproduction))</Function>
+        <Function Name="Voltage_Plasmamembrane">0.0</Function>
+        <CompartmentSubDomain Name="subVolume0">
+          <BoundaryType Boundary="Xm" Type="Flux" />
+          <BoundaryType Boundary="Xp" Type="Flux" />
+          <BoundaryType Boundary="Ym" Type="Flux" />
+          <BoundaryType Boundary="Yp" Type="Flux" />
+          <BoundaryType Boundary="Zm" Type="Value" />
+          <BoundaryType Boundary="Zp" Type="Value" />
+          <OdeEquation Name="Stressfibres" SolutionType="Unknown">
+            <Rate>J_Stressfibersproduction</Rate>
+            <Initial>Stressfibres_Cell_init</Initial>
+          </OdeEquation>
+          <OdeEquation Name="Integrin" SolutionType="Unknown">
+            <Rate>J_Integrinproduction</Rate>
+            <Initial>Integrin_Cell_init</Initial>
+          </OdeEquation>
+          <PdeEquation Name="Rho" SolutionType="Unknown">
+            <Rate>J_Rhoproduction</Rate>
+            <Diffusion>Rho_Cell_diffusionRate</Diffusion>
+            <Initial>Rho_Cell_init</Initial>
+          </PdeEquation>
+          <PdeEquation Name="Rac" SolutionType="Unknown">
+            <Rate>J_Racproduction</Rate>
+            <Diffusion>Rac_Cell_diffusionRate</Diffusion>
+            <Initial>Rac_Cell_init</Initial>
+          </PdeEquation>
+        </CompartmentSubDomain>
+        <CompartmentSubDomain Name="subVolume1">
+          <BoundaryType Boundary="Xm" Type="Flux" />
+          <BoundaryType Boundary="Xp" Type="Flux" />
+          <BoundaryType Boundary="Ym" Type="Flux" />
+          <BoundaryType Boundary="Yp" Type="Flux" />
+          <BoundaryType Boundary="Zm" Type="Value" />
+          <BoundaryType Boundary="Zp" Type="Value" />
+          <OdeEquation Name="Stressfibres" SolutionType="Unknown">
+            <Rate>0.0</Rate>
+            <Initial>0.0</Initial>
+          </OdeEquation>
+          <OdeEquation Name="Integrin" SolutionType="Unknown">
+            <Rate>0.0</Rate>
+            <Initial>0.0</Initial>
+          </OdeEquation>
+          <PdeEquation Name="Rho" SolutionType="Unknown">
+            <Rate>0.0</Rate>
+            <Diffusion>Rho_Cell_diffusionRate</Diffusion>
+            <Initial>0.0</Initial>
+          </PdeEquation>
+          <PdeEquation Name="Rac" SolutionType="Unknown">
+            <Rate>0.0</Rate>
+            <Diffusion>Rac_Cell_diffusionRate</Diffusion>
+            <Initial>0.0</Initial>
+          </PdeEquation>
+        </CompartmentSubDomain>
+        <MembraneSubDomain Name="subVolume0_subVolume1_membrane" InsideCompartment="subVolume0" OutsideCompartment="subVolume1">
+          <BoundaryType Boundary="Xm" Type="Value" />
+          <BoundaryType Boundary="Xp" Type="Value" />
+          <BoundaryType Boundary="Ym" Type="Value" />
+          <BoundaryType Boundary="Yp" Type="Value" />
+          <BoundaryType Boundary="Zm" Type="Value" />
+          <BoundaryType Boundary="Zp" Type="Value" />
+          <JumpCondition Name="Rho">
+            <InFlux>0.0</InFlux>
+            <OutFlux>0.0</OutFlux>
+          </JumpCondition>
+          <JumpCondition Name="Rac">
+            <InFlux>0.0</InFlux>
+            <OutFlux>0.0</OutFlux>
+          </JumpCondition>
+        </MembraneSubDomain>
+        <Version Name="����_generated" KeyValue="16370995" BranchId="15182406" Archived="0" Date="04-Feb-2006 11:11:12" FromVersionable="false">
+          <Owner Name="sibex" Identifier="14258982" />
+          <GroupAccess Type="1" />
+        </Version>
+      </MathDescription>
+      <Simulation Name="50-0.2">
+        <SolverTaskDescription TaskType="Unsteady" UseSymbolicJacobian="false" Solver="Finite Volume, Regular Grid">
+          <TimeBound StartTime="0.0" EndTime="50.0" />
+          <TimeStep DefaultTime="0.2" MinTime="1.0E-8" MaxTime="1.0" />
+          <ErrorTolerance Absolut="1.0E-9" Relative="1.0E-9" />
+          <OutputOptions KeepEvery="1" KeepAtMost="1000" />
+          <NumberProcessors>1</NumberProcessors>
+        </SolverTaskDescription>
+        <MathOverrides />
+        <MeshSpecification>
+          <Size X="51" Y="51" Z="1" />
+        </MeshSpecification>
+        <Version Name="50-0.2" KeyValue="16371037" BranchId="15197243" Archived="0" Date="04-Feb-2006 11:11:12" FromVersionable="false">
+          <Owner Name="sibex" Identifier="14258982" />
+          <GroupAccess Type="1" />
+          <ParentSimRef KeyValue="16311456" />
+        </Version>
+      </Simulation>
+      <Simulation Name="130-0.2">
+        <SolverTaskDescription TaskType="Unsteady" UseSymbolicJacobian="false" Solver="Finite Volume, Regular Grid">
+          <TimeBound StartTime="0.0" EndTime="130.0" />
+          <TimeStep DefaultTime="1.0" MinTime="1.0E-8" MaxTime="1.0" />
+          <ErrorTolerance Absolut="1.0E-9" Relative="1.0E-9" />
+          <OutputOptions KeepEvery="1" KeepAtMost="1000" />
+          <NumberProcessors>1</NumberProcessors>
+        </SolverTaskDescription>
+        <MathOverrides />
+        <MeshSpecification>
+          <Size X="80" Y="80" Z="1" />
+        </MeshSpecification>
+        <Version Name="130-0.2" KeyValue="16371039" BranchId="16311459" Archived="0" Date="04-Feb-2006 11:11:13" FromVersionable="false">
+          <Owner Name="sibex" Identifier="14258982" />
+          <GroupAccess Type="1" />
+          <ParentSimRef KeyValue="16311458" />
+        </Version>
+      </Simulation>
+      <Simulation Name="200-0.2">
+        <SolverTaskDescription TaskType="Unsteady" UseSymbolicJacobian="false" Solver="Finite Volume, Regular Grid">
+          <TimeBound StartTime="0.0" EndTime="200.0" />
+          <TimeStep DefaultTime="0.6" MinTime="1.0E-8" MaxTime="1.0" />
+          <ErrorTolerance Absolut="1.0E-9" Relative="1.0E-9" />
+          <OutputOptions KeepEvery="1" KeepAtMost="1000" />
+          <NumberProcessors>1</NumberProcessors>
+        </SolverTaskDescription>
+        <MathOverrides />
+        <MeshSpecification>
+          <Size X="100" Y="100" Z="1" />
+        </MeshSpecification>
+        <Version Name="200-0.2" KeyValue="16371041" BranchId="16311462" Archived="0" Date="04-Feb-2006 11:11:13" FromVersionable="false">
+          <Owner Name="sibex" Identifier="14258982" />
+          <GroupAccess Type="1" />
+          <ParentSimRef KeyValue="16311461" />
+        </Version>
+      </Simulation>
+      <Simulation Name="500-0.2">
+        <SolverTaskDescription TaskType="Unsteady" UseSymbolicJacobian="false" Solver="Finite Volume, Regular Grid">
+          <TimeBound StartTime="0.0" EndTime="500.0" />
+          <TimeStep DefaultTime="1.0" MinTime="1.0E-8" MaxTime="1.0" />
+          <ErrorTolerance Absolut="1.0E-9" Relative="1.0E-9" />
+          <OutputOptions KeepEvery="1" KeepAtMost="1000" />
+          <NumberProcessors>1</NumberProcessors>
+        </SolverTaskDescription>
+        <MathOverrides />
+        <MeshSpecification>
+          <Size X="100" Y="100" Z="1" />
+        </MeshSpecification>
+        <Version Name="500-0.2" KeyValue="16371043" BranchId="16311465" Archived="0" Date="04-Feb-2006 11:11:13" FromVersionable="false">
+          <Owner Name="sibex" Identifier="14258982" />
+          <GroupAccess Type="1" />
+          <ParentSimRef KeyValue="16311464" />
+        </Version>
+      </Simulation>
+      <SpatialObjects>
+        <SpatialObject Name="vobj_subVolume10" Type="Volume" subVolume="subVolume1" regionId="0">
+          <QuantityCategoryList>
+            <QuantityCategory Name="VolumeCentroid" Enabled="false" />
+            <QuantityCategory Name="InteriorVelocity" Enabled="false" />
+            <QuantityCategory Name="VolumeRegionSize" Enabled="true" />
+          </QuantityCategoryList>
+        </SpatialObject>
+        <SpatialObject Name="vobj_subVolume01" Type="Volume" subVolume="subVolume0" regionId="1">
+          <QuantityCategoryList>
+            <QuantityCategory Name="VolumeCentroid" Enabled="false" />
+            <QuantityCategory Name="InteriorVelocity" Enabled="false" />
+            <QuantityCategory Name="VolumeRegionSize" Enabled="true" />
+          </QuantityCategoryList>
+        </SpatialObject>
+        <SpatialObject Name="sobj_subVolume01_subVolume10" Type="Surface" subVolumeInside="subVolume0" regionIdInside="1" subVolumeOutside="subVolume1" regionIdOutside="0">
+          <QuantityCategoryList>
+            <QuantityCategory Name="SurfaceNormal" Enabled="false" />
+            <QuantityCategory Name="SurfaceVelocity" Enabled="false" />
+            <QuantityCategory Name="DistanceToSurface" Enabled="false" />
+            <QuantityCategory Name="DirectionToSurface" Enabled="false" />
+            <QuantityCategory Name="SurfaceSize" Enabled="true" />
+          </QuantityCategoryList>
+        </SpatialObject>
+      </SpatialObjects>
+      <Version Name="Spatial" KeyValue="16371010" BranchId="15190163" Archived="0" Date="04-Feb-2006 11:11:12" FromVersionable="false">
+        <Owner Name="sibex" Identifier="14258982" />
+        <GroupAccess Type="1" />
+      </Version>
+      <MicroscopeMeasurement Name="fluor">
+        <ConvolutionKernel Type="ProjectionZKernel" />
+      </MicroscopeMeasurement>
+    </SimulationSpec>
+    <Version Name="Rac-Rho" KeyValue="16371062" BranchId="16371063" Archived="0" Date="04-Feb-2006 11:15:50" FromVersionable="false">
+      <Owner Name="sibex" Identifier="14258982" />
+      <GroupAccess Type="0" />
+    </Version>
+    <pathwayModel>
+      <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:bp="http://www.biopax.org/release/biopax-level3.owl#" version="3.0" />
+    </pathwayModel>
+    <relationshipModel>
+      <RMNS version="3.0" />
+    </relationshipModel>
+    <vcmetadata>
+      <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" />
+      <nonrdfAnnotationList />
+      <uriBindingList />
+    </vcmetadata>
+  </BioModel>
+</vcml>
+

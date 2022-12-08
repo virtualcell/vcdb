@@ -1,0 +1,272 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--This biomodel was generated in VCML Version Alpha_Version_7.4.0_build_87-->
+<vcml xmlns="http://sourceforge.net/projects/vcell/vcml" Version="Alpha_Version_7.4.0_build_87">
+  <BioModel Name="practice1">
+    <Model Name="unnamed">
+      <Compound Name="Ca">
+        <Annotation>Calcium</Annotation>
+      </Compound>
+      <Compound Name="CaCh" />
+      <Compound Name="CaPump" />
+      <Compound Name="CaBP" />
+      <Compound Name="CaBPB" />
+      <Compound Name="B" />
+      <Compound Name="CaB" />
+      <Feature Name="EC" KeyValue="6633798" />
+      <Feature Name="C" KeyValue="6633801" />
+      <Feature Name="N" KeyValue="6633805" />
+      <Membrane InsideFeature="C" OutsideFeature="EC" PositiveFeature="C" NegativeFeature="EC" MembraneVoltage="Voltage_PM" Name="PM" KeyValue="6633800" />
+      <Membrane InsideFeature="N" OutsideFeature="C" PositiveFeature="N" NegativeFeature="C" MembraneVoltage="Voltage_NM" Name="NM" KeyValue="6633804" />
+      <LocalizedCompound Name="Ca_EC" CompoundRef="Ca" Structure="EC" OverrideName="true" KeyValue="6633808" />
+      <LocalizedCompound Name="CaCh_PM" CompoundRef="CaCh" Structure="PM" OverrideName="true" KeyValue="6633809" />
+      <LocalizedCompound Name="CaPump_PM" CompoundRef="CaPump" Structure="PM" OverrideName="true" KeyValue="6633810" />
+      <LocalizedCompound Name="Ca_C" CompoundRef="Ca" Structure="C" OverrideName="true" KeyValue="6633811" />
+      <LocalizedCompound Name="CaBP_C" CompoundRef="CaBP" Structure="C" OverrideName="true" KeyValue="6633812" />
+      <LocalizedCompound Name="CaBPB_C" CompoundRef="CaBPB" Structure="C" OverrideName="true" KeyValue="6633813" />
+      <LocalizedCompound Name="B_C" CompoundRef="B" Structure="C" OverrideName="true" KeyValue="6633814" />
+      <LocalizedCompound Name="CaB_C" CompoundRef="CaB" Structure="C" OverrideName="true" KeyValue="6633815" />
+      <LocalizedCompound Name="Ca_N" CompoundRef="Ca" Structure="N" OverrideName="true" KeyValue="6633816" />
+      <LocalizedCompound Name="CaBP_N" CompoundRef="CaBP" Structure="N" OverrideName="true" KeyValue="6633817" />
+      <LocalizedCompound Name="CaBPB_N" CompoundRef="CaBPB" Structure="N" OverrideName="true" KeyValue="6633818" />
+      <SimpleReaction Structure="C" Name="CalciumCalbindin&gt;BoundCytosol" Reversible="true" FluxOption="MolecularOnly" KeyValue="6633831">
+        <Reactant LocalizedCompoundRef="Ca_C" Stoichiometry="1" KeyValue="6633832" />
+        <Reactant LocalizedCompoundRef="CaBP_C" Stoichiometry="1" KeyValue="6633833" />
+        <Product LocalizedCompoundRef="CaBPB_C" Stoichiometry="1" KeyValue="6633834" />
+        <Kinetics KineticsType="MassAction">
+          <Parameter Name="J" Role="reaction rate" Unit="uM.s-1">(((Kf_CalciumCalbindin_BoundCytosol * Ca_C) * CaBP_C) - (Kr_CalciumCalbindin_BoundCytosol * CaBPB_C))</Parameter>
+          <Parameter Name="Kf_CalciumCalbindin_BoundCytosol" Role="forward rate constant" Unit="s-1.uM-1">20.0</Parameter>
+          <Parameter Name="Kr_CalciumCalbindin_BoundCytosol" Role="reverse rate constant" Unit="s-1">8.6</Parameter>
+        </Kinetics>
+      </SimpleReaction>
+      <SimpleReaction Structure="N" Name="CalciumCalbindin&gt;BoundNucleus" Reversible="true" FluxOption="MolecularOnly" KeyValue="6633844">
+        <Reactant LocalizedCompoundRef="Ca_N" Stoichiometry="1" KeyValue="6633845" />
+        <Reactant LocalizedCompoundRef="CaBP_N" Stoichiometry="1" KeyValue="6633846" />
+        <Product LocalizedCompoundRef="CaBPB_N" Stoichiometry="1" KeyValue="6633847" />
+        <Kinetics KineticsType="MassAction">
+          <Parameter Name="J" Role="reaction rate" Unit="uM.s-1">(((Kf_CalciumCalbindin_BoundNucleus * Ca_N) * CaBP_N) - (Kr_CalciumCalbindin_BoundNucleus * CaBPB_N))</Parameter>
+          <Parameter Name="Kf_CalciumCalbindin_BoundNucleus" Role="forward rate constant" Unit="s-1.uM-1">20.0</Parameter>
+          <Parameter Name="Kr_CalciumCalbindin_BoundNucleus" Role="reverse rate constant" Unit="s-1">8.6</Parameter>
+        </Kinetics>
+      </SimpleReaction>
+      <SimpleReaction Structure="C" Name="CalciumBuffer&gt;BoundCytosol" Reversible="true" FluxOption="MolecularOnly" KeyValue="6633827">
+        <Reactant LocalizedCompoundRef="B_C" Stoichiometry="1" KeyValue="6633828" />
+        <Reactant LocalizedCompoundRef="Ca_C" Stoichiometry="1" KeyValue="6633829" />
+        <Product LocalizedCompoundRef="CaB_C" Stoichiometry="1" KeyValue="6633830" />
+        <Kinetics KineticsType="MassAction">
+          <Parameter Name="J" Role="reaction rate" Unit="uM.s-1">(((Kf_CalciumBuffer_BoundCytosol * B_C) * Ca_C) - (Kr_CalciumBuffer_BoundCytosol * CaB_C))</Parameter>
+          <Parameter Name="Kf_CalciumBuffer_BoundCytosol" Role="forward rate constant" Unit="s-1.uM-1">0.1</Parameter>
+          <Parameter Name="Kr_CalciumBuffer_BoundCytosol" Role="reverse rate constant" Unit="s-1">1.0</Parameter>
+        </Kinetics>
+      </SimpleReaction>
+      <FluxStep Name="Ca_channel" Structure="PM" Reversible="true" FluxOption="MolecularOnly" KeyValue="6633819">
+        <Reactant LocalizedCompoundRef="Ca_EC" Stoichiometry="1" />
+        <Product LocalizedCompoundRef="Ca_C" Stoichiometry="1" />
+        <Modifier LocalizedCompoundRef="CaCh_PM" />
+        <Kinetics KineticsType="GeneralKinetics">
+          <Parameter Name="J_Ca_channel" Role="reaction rate" Unit="uM.um.s-1">(J0 * Kc * (Ca_EC - Ca_C) * CaCh_PM / (Kc + Ca_C))</Parameter>
+          <Parameter Name="I" Role="inward current density" Unit="pA.um-2">0.0</Parameter>
+          <Parameter Name="netValence" Role="net charge valence" Unit="1">0.0</Parameter>
+          <Parameter Name="J0" Role="user defined" Unit="um3.molecules-1.s-1">0.014</Parameter>
+          <Parameter Name="Kc" Role="user defined" Unit="uM">0.5</Parameter>
+        </Kinetics>
+      </FluxStep>
+      <FluxStep Name="Calbindin" Structure="NM" Reversible="true" FluxOption="MolecularOnly" KeyValue="6633838">
+        <Reactant LocalizedCompoundRef="CaBP_C" Stoichiometry="1" />
+        <Product LocalizedCompoundRef="CaBP_N" Stoichiometry="1" />
+        <Kinetics KineticsType="GeneralKinetics">
+          <Parameter Name="J_Calbindin" Role="reaction rate" Unit="uM.um.s-1">(Pcalbindin * (CaBP_C - CaBP_N))</Parameter>
+          <Parameter Name="I" Role="inward current density" Unit="pA.um-2">0.0</Parameter>
+          <Parameter Name="netValence" Role="net charge valence" Unit="1">0.0</Parameter>
+          <Parameter Name="Pcalbindin" Role="user defined" Unit="um.s-1">30.0</Parameter>
+        </Kinetics>
+      </FluxStep>
+      <FluxStep Name="CalbindinBound" Structure="NM" Reversible="true" FluxOption="MolecularOnly" KeyValue="6633841">
+        <Reactant LocalizedCompoundRef="CaBPB_C" Stoichiometry="1" />
+        <Product LocalizedCompoundRef="CaBPB_N" Stoichiometry="1" />
+        <Kinetics KineticsType="GeneralKinetics">
+          <Parameter Name="J_CalbindinBound" Role="reaction rate" Unit="uM.um.s-1">(Pcalbindin_bound * (CaBPB_C - CaBPB_N))</Parameter>
+          <Parameter Name="I" Role="inward current density" Unit="pA.um-2">0.0</Parameter>
+          <Parameter Name="netValence" Role="net charge valence" Unit="1">0.0</Parameter>
+          <Parameter Name="Pcalbindin_bound" Role="user defined" Unit="um.s-1">30.0</Parameter>
+        </Kinetics>
+      </FluxStep>
+      <FluxStep Name="CaPump" Structure="PM" Reversible="true" FluxOption="MolecularOnly" KeyValue="6633823">
+        <Reactant LocalizedCompoundRef="Ca_EC" Stoichiometry="1" />
+        <Product LocalizedCompoundRef="Ca_C" Stoichiometry="1" />
+        <Modifier LocalizedCompoundRef="CaPump_PM" />
+        <Kinetics KineticsType="GeneralKinetics">
+          <Parameter Name="J_Ca_Pump" Role="reaction rate" Unit="uM.um.s-1">(CaPump_PM * Vmax * kP * (Ca_C - (Ca_Rest / (Ca_C + kP))) * (Ca_C &gt; Ca_Rest) / (Ca_Rest + kP))</Parameter>
+          <Parameter Name="I" Role="inward current density" Unit="pA.um-2">0.0</Parameter>
+          <Parameter Name="netValence" Role="net charge valence" Unit="1">0.0</Parameter>
+          <Parameter Name="kP" Role="user defined" Unit="tbd">0.25</Parameter>
+          <Parameter Name="Vmax" Role="user defined" Unit="tbd">-4000.0</Parameter>
+          <Parameter Name="Ca_Rest" Role="user defined" Unit="tbd">0.1</Parameter>
+        </Kinetics>
+      </FluxStep>
+      <FluxStep Name="Calcium" Structure="NM" Reversible="true" FluxOption="MolecularOnly" KeyValue="6633835">
+        <Reactant LocalizedCompoundRef="Ca_C" Stoichiometry="1" />
+        <Product LocalizedCompoundRef="Ca_N" Stoichiometry="1" />
+        <Kinetics KineticsType="GeneralKinetics">
+          <Parameter Name="J_Calcium" Role="reaction rate" Unit="uM.um.s-1">(Pcalcium * (Ca_C - Ca_N))</Parameter>
+          <Parameter Name="I" Role="inward current density" Unit="pA.um-2">0.0</Parameter>
+          <Parameter Name="netValence" Role="net charge valence" Unit="1">0.0</Parameter>
+          <Parameter Name="Pcalcium" Role="user defined" Unit="um.s-1">150.0</Parameter>
+        </Kinetics>
+      </FluxStep>
+      <Diagram Name="unnamed" Structure="EC" />
+      <Diagram Name="PM" Structure="PM">
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="CaCh_PM" LocationX="47" LocationY="25" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="CaPump_PM" LocationX="110" LocationY="110" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="Ca_C" LocationX="23" LocationY="180" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="Calbindin_C" LocationX="34" LocationY="42" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="CaBP_C" LocationX="56" LocationY="273" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="Calbindin_bound_C" LocationX="49" LocationY="209" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="CaBPB_C" LocationX="66" LocationY="141" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="Endogenous_Buffer_C" LocationX="41" LocationY="111" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="B_C" LocationX="19" LocationY="140" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="Endogenous_Buffer_Bound_C" LocationX="37" LocationY="80" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="CaB_C" LocationX="45" LocationY="237" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="Ca_EC" LocationX="47" LocationY="25" />
+        <FluxReactionShape NodeReferenceModeAttrTag="full" FluxReactionRef="Ca_channel" LocationX="72" LocationY="55" />
+        <FluxReactionShape NodeReferenceModeAttrTag="full" FluxReactionRef="CaPump" LocationX="105" LocationY="159" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="CaCh_PM" LocationX="47" LocationY="25" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="CaPump_PM" LocationX="110" LocationY="110" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="Ca_C" LocationX="23" LocationY="180" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="Calbindin_C" LocationX="34" LocationY="42" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="CaBP_C" LocationX="56" LocationY="273" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="Calbindin_bound_C" LocationX="49" LocationY="209" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="CaBPB_C" LocationX="66" LocationY="141" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="Endogenous_Buffer_C" LocationX="41" LocationY="111" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="B_C" LocationX="19" LocationY="140" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="Endogenous_Buffer_Bound_C" LocationX="37" LocationY="80" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="CaB_C" LocationX="45" LocationY="237" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="Ca_EC" LocationX="47" LocationY="25" />
+        <FluxReactionShape NodeReferenceModeAttrTag="molecule" FluxReactionRef="Ca_channel" LocationX="72" LocationY="55" />
+        <FluxReactionShape NodeReferenceModeAttrTag="molecule" FluxReactionRef="CaPump" LocationX="105" LocationY="159" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="CaCh_PM" LocationX="47" LocationY="25" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="CaPump_PM" LocationX="110" LocationY="110" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="Ca_C" LocationX="23" LocationY="180" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="Calbindin_C" LocationX="34" LocationY="42" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="CaBP_C" LocationX="56" LocationY="273" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="Calbindin_bound_C" LocationX="49" LocationY="209" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="CaBPB_C" LocationX="66" LocationY="141" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="Endogenous_Buffer_C" LocationX="41" LocationY="111" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="B_C" LocationX="19" LocationY="140" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="Endogenous_Buffer_Bound_C" LocationX="37" LocationY="80" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="CaB_C" LocationX="45" LocationY="237" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="Ca_EC" LocationX="47" LocationY="25" />
+        <FluxReactionShape NodeReferenceModeAttrTag="rule" FluxReactionRef="Ca_channel" LocationX="72" LocationY="55" />
+        <FluxReactionShape NodeReferenceModeAttrTag="rule" FluxReactionRef="CaPump" LocationX="105" LocationY="159" />
+      </Diagram>
+      <Diagram Name="C" Structure="C">
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="Ca_C" LocationX="12" LocationY="111" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="Calbindin_C" LocationX="93" LocationY="46" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="CaBP_C" LocationX="20" LocationY="191" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="Calbindin_bound_C" LocationX="133" LocationY="20" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="CaBPB_C" LocationX="351" LocationY="226" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="Endogenous_Buffer_C" LocationX="20" LocationY="53" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="B_C" LocationX="21" LocationY="151" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="Endogenous_Buffer_Bound_C" LocationX="42" LocationY="17" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="CaB_C" LocationX="406" LocationY="125" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="full" SimpleReactionRef="CalciumBuffer&gt;BoundCytosol" LocationX="248" LocationY="101" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="full" SimpleReactionRef="reaction0" LocationX="224" LocationY="213" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="Ca_C" LocationX="12" LocationY="111" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="Calbindin_C" LocationX="93" LocationY="46" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="CaBP_C" LocationX="20" LocationY="191" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="Calbindin_bound_C" LocationX="133" LocationY="20" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="CaBPB_C" LocationX="351" LocationY="226" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="Endogenous_Buffer_C" LocationX="20" LocationY="53" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="B_C" LocationX="21" LocationY="151" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="Endogenous_Buffer_Bound_C" LocationX="42" LocationY="17" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="CaB_C" LocationX="406" LocationY="125" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="molecule" SimpleReactionRef="CalciumBuffer&gt;BoundCytosol" LocationX="248" LocationY="101" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="molecule" SimpleReactionRef="reaction0" LocationX="224" LocationY="213" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="Ca_C" LocationX="12" LocationY="111" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="Calbindin_C" LocationX="93" LocationY="46" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="CaBP_C" LocationX="20" LocationY="191" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="Calbindin_bound_C" LocationX="133" LocationY="20" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="CaBPB_C" LocationX="351" LocationY="226" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="Endogenous_Buffer_C" LocationX="20" LocationY="53" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="B_C" LocationX="21" LocationY="151" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="Endogenous_Buffer_Bound_C" LocationX="42" LocationY="17" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="CaB_C" LocationX="406" LocationY="125" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="rule" SimpleReactionRef="CalciumBuffer&gt;BoundCytosol" LocationX="248" LocationY="101" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="rule" SimpleReactionRef="reaction0" LocationX="224" LocationY="213" />
+      </Diagram>
+      <Diagram Name="NM" Structure="NM">
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="Ca_N" LocationX="39" LocationY="117" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="CaBP_N" LocationX="42" LocationY="164" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="CaBPB_N" LocationX="33" LocationY="46" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="Ca_C" LocationX="37" LocationY="43" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="CaBP_C" LocationX="78" LocationY="210" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="CaBPB_C" LocationX="57" LocationY="162" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="B_C" LocationX="86" LocationY="64" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="CaB_C" LocationX="92" LocationY="27" />
+        <FluxReactionShape NodeReferenceModeAttrTag="full" FluxReactionRef="Calcium" LocationX="120" LocationY="93" />
+        <FluxReactionShape NodeReferenceModeAttrTag="full" FluxReactionRef="Calbindin" LocationX="97" LocationY="183" />
+        <FluxReactionShape NodeReferenceModeAttrTag="full" FluxReactionRef="CalbindinBound" LocationX="51" LocationY="43" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="Ca_N" LocationX="39" LocationY="117" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="CaBP_N" LocationX="42" LocationY="164" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="CaBPB_N" LocationX="33" LocationY="46" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="Ca_C" LocationX="37" LocationY="43" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="CaBP_C" LocationX="78" LocationY="210" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="CaBPB_C" LocationX="57" LocationY="162" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="B_C" LocationX="86" LocationY="64" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="CaB_C" LocationX="92" LocationY="27" />
+        <FluxReactionShape NodeReferenceModeAttrTag="molecule" FluxReactionRef="Calcium" LocationX="120" LocationY="93" />
+        <FluxReactionShape NodeReferenceModeAttrTag="molecule" FluxReactionRef="Calbindin" LocationX="97" LocationY="183" />
+        <FluxReactionShape NodeReferenceModeAttrTag="molecule" FluxReactionRef="CalbindinBound" LocationX="51" LocationY="43" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="Ca_N" LocationX="39" LocationY="117" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="CaBP_N" LocationX="42" LocationY="164" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="CaBPB_N" LocationX="33" LocationY="46" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="Ca_C" LocationX="37" LocationY="43" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="CaBP_C" LocationX="78" LocationY="210" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="CaBPB_C" LocationX="57" LocationY="162" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="B_C" LocationX="86" LocationY="64" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="CaB_C" LocationX="92" LocationY="27" />
+        <FluxReactionShape NodeReferenceModeAttrTag="rule" FluxReactionRef="Calcium" LocationX="120" LocationY="93" />
+        <FluxReactionShape NodeReferenceModeAttrTag="rule" FluxReactionRef="Calbindin" LocationX="97" LocationY="183" />
+        <FluxReactionShape NodeReferenceModeAttrTag="rule" FluxReactionRef="CalbindinBound" LocationX="51" LocationY="43" />
+      </Diagram>
+      <Diagram Name="N" Structure="N">
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="Ca_N" LocationX="50" LocationY="67" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="CaBP_N" LocationX="60" LocationY="152" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="CaBPB_N" LocationX="391" LocationY="111" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="full" SimpleReactionRef="reaction0" LocationX="222" LocationY="113" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="Ca_N" LocationX="50" LocationY="67" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="CaBP_N" LocationX="60" LocationY="152" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="CaBPB_N" LocationX="391" LocationY="111" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="molecule" SimpleReactionRef="reaction0" LocationX="222" LocationY="113" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="Ca_N" LocationX="50" LocationY="67" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="CaBP_N" LocationX="60" LocationY="152" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="CaBPB_N" LocationX="391" LocationY="111" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="rule" SimpleReactionRef="reaction0" LocationX="222" LocationY="113" />
+      </Diagram>
+      <Version Name="unnamed" KeyValue="6633790" BranchId="6630261" Archived="0" Date="09-Jan-2004 11:37:00" FromVersionable="false">
+        <Owner Name="garnham1" Identifier="6630258" />
+        <GroupAccess Type="1" />
+      </Version>
+      <ModelUnitSystem VolumeSubstanceUnit="uM.um3" MembraneSubstanceUnit="molecules" LumpedReactionSubstanceUnit="molecules" VolumeUnit="um3" AreaUnit="um2" LengthUnit="um" TimeUnit="s" />
+    </Model>
+    <Version Name="practice1" KeyValue="6633854" BranchId="6630305" Archived="0" Date="09-Jan-2004 11:37:16" FromVersionable="false">
+      <Owner Name="garnham1" Identifier="6630258" />
+      <GroupAccess Type="0" />
+    </Version>
+    <pathwayModel>
+      <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:bp="http://www.biopax.org/release/biopax-level3.owl#" version="3.0" />
+    </pathwayModel>
+    <relationshipModel>
+      <RMNS version="3.0" />
+    </relationshipModel>
+    <vcmetadata>
+      <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" />
+      <nonrdfAnnotationList>
+        <nonrdfAnnotation vcid="Species(Ca)">
+          <freetext>Calcium</freetext>
+        </nonrdfAnnotation>
+      </nonrdfAnnotationList>
+      <uriBindingList />
+    </vcmetadata>
+  </BioModel>
+</vcml>
+

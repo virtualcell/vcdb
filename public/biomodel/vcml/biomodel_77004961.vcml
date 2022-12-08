@@ -1,0 +1,935 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--This biomodel was generated in VCML Version Alpha_Version_7.4.0_build_87-->
+<vcml xmlns="http://sourceforge.net/projects/vcell/vcml" Version="Alpha_Version_7.4.0_build_87">
+  <BioModel Name="CaMKII Dimer v2.0">
+    <Model Name="C:\Users\pmichalski\.vcell\BioNetGen\vcell_bng_22877\vcell_bng_22877">
+      <ModelParameters>
+        <Parameter Name="kon" Role="user defined" Unit="uM-1.s-1">30.0</Parameter>
+        <Parameter Name="koff" Role="user defined" Unit="s-1">2.0</Parameter>
+        <Parameter Name="rauto1" Role="user defined" Unit="s-1">1.0</Parameter>
+        <Parameter Name="rauto2" Role="user defined" Unit="s-1">0.5</Parameter>
+        <Parameter Name="CaMKIItot" Role="user defined" Unit="uM">1.0</Parameter>
+        <Parameter Name="CaMtot" Role="user defined" Unit="uM">1.0</Parameter>
+        <Parameter Name="InitialConc1" Role="user defined" Unit="uM">(0.5 * CaMKIItot)</Parameter>
+        <Parameter Name="Group_AutoInhibitedCaMKII" Role="user defined" Unit="uM">((2.0 * Kou_Kou) + Kcu_Kou + Kcp_Kou)</Parameter>
+        <Parameter Name="Group_PhosphoT286" Role="user defined" Unit="uM">(Kcp_Kcu + Kcp_Kou + (2.0 * Kcp_Kcp))</Parameter>
+        <Parameter Name="Group_ActiveCaMKII" Role="user defined" Unit="uM">(Kcu_Kou + (2.0 * Kcu_Kcu) + (2.0 * Kcp_Kcu) + Kcp_Kou + (2.0 * Kcp_Kcp))</Parameter>
+        <Parameter Name="Group_AllCaM" Role="user defined" Unit="uM">(C + Kcu_Kou + (2.0 * Kcu_Kcu) + (2.0 * Kcp_Kcu) + Kcp_Kou + (2.0 * Kcp_Kcp))</Parameter>
+        <Parameter Name="Group_AllCaMKII" Role="user defined" Unit="uM">((2.0 * Kou_Kou) + (2.0 * Kcu_Kou) + (2.0 * Kcu_Kcu) + (2.0 * Kcp_Kcu) + (2.0 * Kcp_Kou) + (2.0 * Kcp_Kcp))</Parameter>
+        <Parameter Name="FracAutoInhibited" Role="user defined" Unit="1">(Group_AutoInhibitedCaMKII / CaMKIItot)</Parameter>
+        <Parameter Name="FracPhosphoCaMKII" Role="user defined" Unit="1">(Group_PhosphoT286 / CaMKIItot)</Parameter>
+        <Parameter Name="FracActiveCaMKII" Role="user defined" Unit="1">(Group_ActiveCaMKII / CaMKIItot)</Parameter>
+        <Parameter Name="T0" Role="user defined" Unit="s">1.0</Parameter>
+        <Parameter Name="T1" Role="user defined" Unit="s">1.0</Parameter>
+        <Parameter Name="N" Role="user defined" Unit="1">12.0</Parameter>
+        <Parameter Name="FracAutoActivity" Role="user defined" Unit="1">(0.8 * FracPhosphoCaMKII)</Parameter>
+        <Parameter Name="alpha" Role="user defined" Unit="1">1.0</Parameter>
+        <Parameter Name="koff_low" Role="user defined" Unit="s-1">(2.2 * alpha)</Parameter>
+        <Parameter Name="koff_high" Role="user defined" Unit="s-1">(6.32 * alpha)</Parameter>
+        <Parameter Name="r_high" Role="user defined" Unit="s-1">1.0</Parameter>
+        <Parameter Name="r_low" Role="user defined" Unit="s-1">0.0</Parameter>
+      </ModelParameters>
+      <Compound Name="Kcu_Kou">
+        <Annotation>Kcu_Kou</Annotation>
+      </Compound>
+      <Compound Name="Kcu_Kcu">
+        <Annotation>Kcu_Kcu</Annotation>
+      </Compound>
+      <Compound Name="Kcp_Kcu">
+        <Annotation>Kcp_Kcu</Annotation>
+      </Compound>
+      <Compound Name="Kcp_Kou">
+        <Annotation>Kcp_Kou</Annotation>
+      </Compound>
+      <Compound Name="Kcp_Kcp">
+        <Annotation>Kcp_Kcp</Annotation>
+      </Compound>
+      <Compound Name="C">
+        <Annotation>C</Annotation>
+      </Compound>
+      <Compound Name="Kou_Kou">
+        <Annotation>Kou_Kou</Annotation>
+      </Compound>
+      <Feature Name="cell" KeyValue="76028294" />
+      <LocalizedCompound Name="Kcu_Kou" CompoundRef="Kcu_Kou" Structure="cell" OverrideName="true" KeyValue="76028296" />
+      <LocalizedCompound Name="Kcu_Kcu" CompoundRef="Kcu_Kcu" Structure="cell" OverrideName="true" KeyValue="76028297" />
+      <LocalizedCompound Name="Kcp_Kcu" CompoundRef="Kcp_Kcu" Structure="cell" OverrideName="true" KeyValue="76028298" />
+      <LocalizedCompound Name="Kcp_Kou" CompoundRef="Kcp_Kou" Structure="cell" OverrideName="true" KeyValue="76028299" />
+      <LocalizedCompound Name="Kcp_Kcp" CompoundRef="Kcp_Kcp" Structure="cell" OverrideName="true" KeyValue="76028300" />
+      <LocalizedCompound Name="C" CompoundRef="C" Structure="cell" OverrideName="true" KeyValue="76028301" />
+      <LocalizedCompound Name="Kou_Kou" CompoundRef="Kou_Kou" Structure="cell" OverrideName="true" KeyValue="76028302" />
+      <SimpleReaction Structure="cell" Name="R1" Reversible="true" FluxOption="MolecularOnly" KeyValue="76028303">
+        <Reactant LocalizedCompoundRef="Kou_Kou" Stoichiometry="1" KeyValue="76028304" />
+        <Reactant LocalizedCompoundRef="C" Stoichiometry="1" KeyValue="76028305" />
+        <Product LocalizedCompoundRef="Kcu_Kou" Stoichiometry="1" KeyValue="76028306" />
+        <Kinetics KineticsType="GeneralKinetics">
+          <Parameter Name="J" Role="reaction rate" Unit="uM.s-1">((2.0 * kon * C * Kou_Kou) - (koff * Kcu_Kou))</Parameter>
+        </Kinetics>
+      </SimpleReaction>
+      <SimpleReaction Structure="cell" Name="R2" Reversible="true" FluxOption="MolecularOnly" KeyValue="76028307">
+        <Reactant LocalizedCompoundRef="C" Stoichiometry="1" KeyValue="76028308" />
+        <Reactant LocalizedCompoundRef="Kcu_Kou" Stoichiometry="1" KeyValue="76028309" />
+        <Product LocalizedCompoundRef="Kcu_Kcu" Stoichiometry="1" KeyValue="76028310" />
+        <Kinetics KineticsType="GeneralKinetics">
+          <Parameter Name="J" Role="reaction rate" Unit="uM.s-1">((kon * C * Kcu_Kou) - (2.0 * koff * Kcu_Kcu))</Parameter>
+        </Kinetics>
+      </SimpleReaction>
+      <SimpleReaction Structure="cell" Name="R5" Reversible="true" FluxOption="MolecularOnly" KeyValue="76028311">
+        <Reactant LocalizedCompoundRef="Kcu_Kcu" Stoichiometry="1" KeyValue="76028312" />
+        <Product LocalizedCompoundRef="Kcp_Kcu" Stoichiometry="1" KeyValue="76028313" />
+        <Kinetics KineticsType="GeneralKinetics">
+          <Parameter Name="J" Role="reaction rate" Unit="uM.s-1">(2.0 * rauto1 * Kcu_Kcu)</Parameter>
+        </Kinetics>
+      </SimpleReaction>
+      <SimpleReaction Structure="cell" Name="R6" Reversible="true" FluxOption="MolecularOnly" KeyValue="76028314">
+        <Reactant LocalizedCompoundRef="Kcp_Kcu" Stoichiometry="1" KeyValue="76028315" />
+        <Product LocalizedCompoundRef="C" Stoichiometry="1" KeyValue="76028316" />
+        <Product LocalizedCompoundRef="Kcp_Kou" Stoichiometry="1" KeyValue="76028317" />
+        <Kinetics KineticsType="GeneralKinetics">
+          <Parameter Name="J" Role="reaction rate" Unit="uM.s-1">((koff * Kcp_Kcu) - (kon * C * Kcp_Kou))</Parameter>
+        </Kinetics>
+      </SimpleReaction>
+      <SimpleReaction Structure="cell" Name="R7" Reversible="true" FluxOption="MolecularOnly" KeyValue="76028318">
+        <Reactant LocalizedCompoundRef="Kcp_Kcu" Stoichiometry="1" KeyValue="76028319" />
+        <Product LocalizedCompoundRef="Kcp_Kcp" Stoichiometry="1" KeyValue="76028320" />
+        <Kinetics KineticsType="GeneralKinetics">
+          <Parameter Name="J" Role="reaction rate" Unit="uM.s-1">(rauto2 * Kcp_Kcu)</Parameter>
+        </Kinetics>
+      </SimpleReaction>
+      <Diagram Name="cell" Structure="cell">
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="Kcu_Kcu" LocationX="234" LocationY="143" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="Kcp_Kcp" LocationX="439" LocationY="134" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="Kou_Kou" LocationX="17" LocationY="144" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="Kcu_Kou" LocationX="123" LocationY="144" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="full" SimpleReactionRef="R5" LocationX="285" LocationY="146" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="full" SimpleReactionRef="R7" LocationX="385" LocationY="143" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="Kcp_Kou" LocationX="327" LocationY="65" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="C" LocationX="119" LocationY="88" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="full" SimpleReactionRef="R6" LocationX="330" LocationY="110" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="full" SimpleReactionRef="R2" LocationX="184" LocationY="144" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="full" SimpleReactionRef="R1" LocationX="75" LocationY="147" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="Kcp_Kcu" LocationX="327" LocationY="146" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="Kcu_Kcu" LocationX="234" LocationY="143" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="Kcp_Kcp" LocationX="439" LocationY="134" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="Kou_Kou" LocationX="17" LocationY="144" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="Kcu_Kou" LocationX="123" LocationY="144" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="molecule" SimpleReactionRef="R5" LocationX="285" LocationY="146" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="molecule" SimpleReactionRef="R7" LocationX="385" LocationY="143" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="Kcp_Kou" LocationX="327" LocationY="65" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="C" LocationX="119" LocationY="88" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="molecule" SimpleReactionRef="R6" LocationX="330" LocationY="110" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="molecule" SimpleReactionRef="R2" LocationX="184" LocationY="144" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="molecule" SimpleReactionRef="R1" LocationX="75" LocationY="147" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="Kcp_Kcu" LocationX="327" LocationY="146" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="Kcu_Kcu" LocationX="234" LocationY="143" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="Kcp_Kcp" LocationX="439" LocationY="134" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="Kou_Kou" LocationX="17" LocationY="144" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="Kcu_Kou" LocationX="123" LocationY="144" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="rule" SimpleReactionRef="R5" LocationX="285" LocationY="146" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="rule" SimpleReactionRef="R7" LocationX="385" LocationY="143" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="Kcp_Kou" LocationX="327" LocationY="65" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="C" LocationX="119" LocationY="88" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="rule" SimpleReactionRef="R6" LocationX="330" LocationY="110" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="rule" SimpleReactionRef="R2" LocationX="184" LocationY="144" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="rule" SimpleReactionRef="R1" LocationX="75" LocationY="147" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="Kcp_Kcu" LocationX="327" LocationY="146" />
+      </Diagram>
+      <Version Name="C:\Users\pmichalski\.vcell\BioNetGen\vcell_bng_22877\vcell_bng_22877" KeyValue="76028285" BranchId="60497982" Archived="0" Date="18-Oct-2012 15:35:40" FromVersionable="false">
+        <Owner Name="pjmichal" Identifier="45073070" />
+        <GroupAccess Type="1" />
+      </Version>
+      <ModelUnitSystem VolumeSubstanceUnit="uM.um3" MembraneSubstanceUnit="molecules" LumpedReactionSubstanceUnit="molecules" VolumeUnit="um3" AreaUnit="um2" LengthUnit="um" TimeUnit="s" />
+    </Model>
+    <SimulationSpec Name="CaM buffered" Stochastic="false" UseConcentration="true" RuleBased="false" MassConservationModelReduction="true" InsufficientIterations="false" InsufficientMaxMolecules="false">
+      <NetworkConstraints RbmMaxIteration="1" RbmMaxMoleculesPerSpecies="10" RbmSpeciesLimit="800" RbmReactionsLimit="2500" />
+      <Annotation />
+      <Geometry Name="Compartmental1246627326" Dimension="0">
+        <Extent X="10.0" Y="10.0" Z="10.0" />
+        <Origin X="0.0" Y="0.0" Z="0.0" />
+        <SubVolume Name="Compartment" Handle="0" Type="Compartmental" KeyValue="60497977" />
+        <Version Name="Compartmental1246627326" KeyValue="60497973" BranchId="60497974" Archived="0" Date="07-Oct-2011 11:52:50" FromVersionable="false">
+          <Owner Name="pjmichal" Identifier="45073070" />
+          <GroupAccess Type="1" />
+        </Version>
+      </Geometry>
+      <GeometryContext>
+        <FeatureMapping Feature="cell" GeometryClass="Compartment" SubVolume="Compartment" Size="1.0000000000000001E15">
+          <BoundariesTypes Xm="Flux" Xp="Flux" Ym="Flux" Yp="Flux" Zm="Flux" Zp="Flux" />
+        </FeatureMapping>
+      </GeometryContext>
+      <ReactionContext>
+        <LocalizedCompoundSpec LocalizedCompoundRef="Kcu_Kou" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>0.0</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="Kcu_Kcu" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>0.0</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="Kcp_Kcu" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>0.0</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="Kcp_Kou" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>0.0</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="Kcp_Kcp" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>0.0</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="C" ForceConstant="true" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>CaMtot</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="Kou_Kou" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>(0.5 * CaMKIItot)</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <ReactionSpec ReactionStepRef="R1" ReactionMapping="included" />
+        <ReactionSpec ReactionStepRef="R2" ReactionMapping="included" />
+        <ReactionSpec ReactionStepRef="R5" ReactionMapping="included" />
+        <ReactionSpec ReactionStepRef="R6" ReactionMapping="included" />
+        <ReactionSpec ReactionStepRef="R7" ReactionMapping="included" />
+      </ReactionContext>
+      <MathDescription Name="C:\Users\pmichalski\.vcell\BioNetGen\vcell_bng_22877\vcell_bng_22877_Compartmental_generated">
+        <Constant Name="_F_">96480.0</Constant>
+        <Constant Name="_F_nmol_">9.648E-5</Constant>
+        <Constant Name="_K_GHK_">1.0E-9</Constant>
+        <Constant Name="_N_pmol_">6.02E11</Constant>
+        <Constant Name="_PI_">3.141592653589793</Constant>
+        <Constant Name="_R_">8314.0</Constant>
+        <Constant Name="_T_">300.0</Constant>
+        <Constant Name="alpha">1.0</Constant>
+        <Constant Name="CaMKIItot">1.0</Constant>
+        <Constant Name="CaMtot">1.0</Constant>
+        <Constant Name="K_millivolts_per_volt">1000.0</Constant>
+        <Constant Name="Kcp_Kcp_init_uM">0.0</Constant>
+        <Constant Name="Kcp_Kcu_init_uM">0.0</Constant>
+        <Constant Name="Kcp_Kou_init_uM">0.0</Constant>
+        <Constant Name="Kcu_Kcu_init_uM">0.0</Constant>
+        <Constant Name="Kcu_Kou_init_uM">0.0</Constant>
+        <Constant Name="KMOLE">0.0016611295681063123</Constant>
+        <Constant Name="koff">2.0</Constant>
+        <Constant Name="kon">30.0</Constant>
+        <Constant Name="N">12.0</Constant>
+        <Constant Name="r_high">1.0</Constant>
+        <Constant Name="r_low">0.0</Constant>
+        <Constant Name="rauto1">1.0</Constant>
+        <Constant Name="rauto2">0.5</Constant>
+        <Constant Name="Size_cell">1.0000000000000001E15</Constant>
+        <Constant Name="T0">1.0</Constant>
+        <Constant Name="T1">1.0</Constant>
+        <VolumeVariable Name="Kcp_Kcp" Domain="Compartment" />
+        <VolumeVariable Name="Kcp_Kcu" Domain="Compartment" />
+        <VolumeVariable Name="Kcp_Kou" Domain="Compartment" />
+        <VolumeVariable Name="Kcu_Kcu" Domain="Compartment" />
+        <VolumeVariable Name="Kou_Kou" Domain="Compartment" />
+        <Function Name="C" Domain="Compartment">CaMtot</Function>
+        <Function Name="C_init_uM" Domain="Compartment">CaMtot</Function>
+        <Function Name="FracActiveCaMKII">(Group_ActiveCaMKII / CaMKIItot)</Function>
+        <Function Name="FracAutoActivity">(0.8 * FracPhosphoCaMKII)</Function>
+        <Function Name="FracAutoInhibited">(Group_AutoInhibitedCaMKII / CaMKIItot)</Function>
+        <Function Name="FracPhosphoCaMKII">(Group_PhosphoT286 / CaMKIItot)</Function>
+        <Function Name="Group_ActiveCaMKII">(Kcu_Kou + (2.0 * Kcu_Kcu) + (2.0 * Kcp_Kcu) + Kcp_Kou + (2.0 * Kcp_Kcp))</Function>
+        <Function Name="Group_AllCaM">(C + Kcu_Kou + (2.0 * Kcu_Kcu) + (2.0 * Kcp_Kcu) + Kcp_Kou + (2.0 * Kcp_Kcp))</Function>
+        <Function Name="Group_AllCaMKII">((2.0 * Kou_Kou) + (2.0 * Kcu_Kou) + (2.0 * Kcu_Kcu) + (2.0 * Kcp_Kcu) + (2.0 * Kcp_Kou) + (2.0 * Kcp_Kcp))</Function>
+        <Function Name="Group_AutoInhibitedCaMKII">((2.0 * Kou_Kou) + Kcu_Kou + Kcp_Kou)</Function>
+        <Function Name="Group_PhosphoT286">(Kcp_Kcu + Kcp_Kou + (2.0 * Kcp_Kcp))</Function>
+        <Function Name="InitialConc1">(0.5 * CaMKIItot)</Function>
+        <Function Name="J_R1" Domain="Compartment">((2.0 * kon * C * Kou_Kou) - (koff * Kcu_Kou))</Function>
+        <Function Name="J_R2" Domain="Compartment">((kon * C * Kcu_Kou) - (2.0 * koff * Kcu_Kcu))</Function>
+        <Function Name="J_R5" Domain="Compartment">(2.0 * rauto1 * Kcu_Kcu)</Function>
+        <Function Name="J_R6" Domain="Compartment">((koff * Kcp_Kcu) - (kon * C * Kcp_Kou))</Function>
+        <Function Name="J_R7" Domain="Compartment">(rauto2 * Kcp_Kcu)</Function>
+        <Function Name="K_Kcu_Kou_total" Domain="Compartment">((Size_cell * Kou_Kou_init_uM) + (Size_cell * Kcp_Kcp_init_uM) + (Size_cell * Kcp_Kou_init_uM) + (Size_cell * Kcp_Kcu_init_uM) + (Size_cell * Kcu_Kou_init_uM) + (Size_cell * Kcu_Kcu_init_uM))</Function>
+        <Function Name="Kcu_Kou" Domain="Compartment">(( - (Size_cell * Kou_Kou) - (Size_cell * Kcp_Kcp) - (Size_cell * Kcp_Kou) - (Size_cell * Kcp_Kcu) + K_Kcu_Kou_total - (Size_cell * Kcu_Kcu)) / Size_cell)</Function>
+        <Function Name="koff_high">(6.32 * alpha)</Function>
+        <Function Name="koff_low">(2.2 * alpha)</Function>
+        <Function Name="Kou_Kou_init_uM" Domain="Compartment">(0.5 * CaMKIItot)</Function>
+        <CompartmentSubDomain Name="Compartment">
+          <BoundaryType Boundary="Xm" Type="Value" />
+          <BoundaryType Boundary="Xp" Type="Value" />
+          <BoundaryType Boundary="Ym" Type="Value" />
+          <BoundaryType Boundary="Yp" Type="Value" />
+          <BoundaryType Boundary="Zm" Type="Value" />
+          <BoundaryType Boundary="Zp" Type="Value" />
+          <OdeEquation Name="Kcu_Kcu" SolutionType="Unknown">
+            <Rate>(J_R2 - J_R5)</Rate>
+            <Initial>Kcu_Kcu_init_uM</Initial>
+          </OdeEquation>
+          <OdeEquation Name="Kcp_Kcu" SolutionType="Unknown">
+            <Rate>( - J_R7 + J_R5 - J_R6)</Rate>
+            <Initial>Kcp_Kcu_init_uM</Initial>
+          </OdeEquation>
+          <OdeEquation Name="Kcp_Kou" SolutionType="Unknown">
+            <Rate>J_R6</Rate>
+            <Initial>Kcp_Kou_init_uM</Initial>
+          </OdeEquation>
+          <OdeEquation Name="Kcp_Kcp" SolutionType="Unknown">
+            <Rate>J_R7</Rate>
+            <Initial>Kcp_Kcp_init_uM</Initial>
+          </OdeEquation>
+          <OdeEquation Name="Kou_Kou" SolutionType="Unknown">
+            <Rate>- J_R1</Rate>
+            <Initial>Kou_Kou_init_uM</Initial>
+          </OdeEquation>
+        </CompartmentSubDomain>
+        <Version Name="C:\Users\pmichalski\.vcell\BioNetGen\vcell_bng_22877\vcell_bng_22877_Compartmental_generated" KeyValue="76028281" BranchId="60497979" Archived="0" Date="18-Oct-2012 15:35:40" FromVersionable="false">
+          <Owner Name="pjmichal" Identifier="45073070" />
+          <GroupAccess Type="1" />
+        </Version>
+      </MathDescription>
+      <Simulation Name="Autophos Reaction, Scan CaM, Scan kon, r1=r2">
+        <SolverTaskDescription TaskType="Unsteady" UseSymbolicJacobian="false" Solver="Combined Stiff Solver (IDA/CVODE)">
+          <TimeBound StartTime="0.0" EndTime="6.0" />
+          <TimeStep DefaultTime="0.1" MinTime="1.0E-8" MaxTime="0.1" />
+          <ErrorTolerance Absolut="1.0E-9" Relative="1.0E-9" />
+          <OutputOptions OutputTimeStep="0.25" />
+          <NumberProcessors>1</NumberProcessors>
+        </SolverTaskDescription>
+        <MathOverrides>
+          <Constant Name="CaMtot" ConstantArraySpec="1000">"0.001", "0.002", "0.005", "0.01", "0.02", "0.05", "0.1", "0.2", "0.5", "1.0", "2.0", "5.0", "10.0", "20.0"</Constant>
+          <Constant Name="kon" ConstantArraySpec="1000">"0.1", "1.0", "2.0", "5.0", "10.0", "20.0", "30.0"</Constant>
+          <Constant Name="rauto2">1.0</Constant>
+          <Constant Name="koff">(0.06667 * kon)</Constant>
+          <Constant Name="CaMKIItot">0.005</Constant>
+        </MathOverrides>
+        <Version Name="Autophos Reaction, Scan CaM, Scan kon, r1=r2" KeyValue="76028353" BranchId="60508794" Archived="0" Date="18-Oct-2012 15:35:41" FromVersionable="false">
+          <Owner Name="pjmichal" Identifier="45073070" />
+          <GroupAccess Type="1" />
+          <ParentSimRef KeyValue="76016230" />
+        </Version>
+      </Simulation>
+      <Simulation Name="Autophos Reaction, Scan CaM, r1=r2 - short time">
+        <SolverTaskDescription TaskType="Unsteady" UseSymbolicJacobian="false" Solver="Combined Stiff Solver (IDA/CVODE)">
+          <TimeBound StartTime="0.0" EndTime="1.0" />
+          <TimeStep DefaultTime="0.1" MinTime="1.0E-8" MaxTime="0.1" />
+          <ErrorTolerance Absolut="1.0E-9" Relative="1.0E-9" />
+          <OutputOptions OutputTimeStep="0.05" />
+          <NumberProcessors>1</NumberProcessors>
+        </SolverTaskDescription>
+        <MathOverrides>
+          <Constant Name="CaMtot" ConstantArraySpec="1000">"0.01", "0.02", "0.05", "0.1", "0.2", "0.5", "1.0", "2.0", "5.0", "10.0", "20.0", "50.0", "100.0", "200.0", "500.0", "1000.0"</Constant>
+          <Constant Name="rauto2">1.0</Constant>
+          <Constant Name="kon">1.0</Constant>
+          <Constant Name="koff">(0.06667 * kon)</Constant>
+          <Constant Name="CaMKIItot">0.005</Constant>
+        </MathOverrides>
+        <Version Name="Autophos Reaction, Scan CaM, r1=r2 - short time" KeyValue="76028355" BranchId="60606304" Archived="0" Date="18-Oct-2012 15:35:41" FromVersionable="false">
+          <Owner Name="pjmichal" Identifier="45073070" />
+          <GroupAccess Type="1" />
+          <ParentSimRef KeyValue="60606303" />
+        </Version>
+      </Simulation>
+      <Simulation Name="Autophos Reaction, Scan CaM, Scan r2 - short time">
+        <SolverTaskDescription TaskType="Unsteady" UseSymbolicJacobian="false" Solver="Combined Stiff Solver (IDA/CVODE)">
+          <TimeBound StartTime="0.0" EndTime="1.0" />
+          <TimeStep DefaultTime="0.1" MinTime="1.0E-8" MaxTime="0.1" />
+          <ErrorTolerance Absolut="1.0E-9" Relative="1.0E-9" />
+          <OutputOptions OutputTimeStep="0.1" />
+          <NumberProcessors>1</NumberProcessors>
+        </SolverTaskDescription>
+        <MathOverrides>
+          <Constant Name="CaMtot" ConstantArraySpec="1000">"0.01", "0.02", "0.05", "0.1", "0.2", "0.5", "1.0", "2.0", "5.0", "10.0", "20.0", "50.0", "100.0", "200.0", "500.0", "1000.0"</Constant>
+          <Constant Name="rauto2" ConstantArraySpec="1000">"0.0", "0.001", "0.01", "0.1", "0.2", "0.5"</Constant>
+          <Constant Name="kon">1.0</Constant>
+          <Constant Name="koff">(0.06667 * kon)</Constant>
+          <Constant Name="CaMKIItot">0.005</Constant>
+        </MathOverrides>
+        <Version Name="Autophos Reaction, Scan CaM, Scan r2 - short time" KeyValue="76028357" BranchId="60533829" Archived="0" Date="18-Oct-2012 15:35:41" FromVersionable="false">
+          <Owner Name="pjmichal" Identifier="45073070" />
+          <GroupAccess Type="1" />
+          <ParentSimRef KeyValue="60533828" />
+        </Version>
+      </Simulation>
+      <Simulation Name="Autophos Reaction, Scan CaM, Scan r2 - long time">
+        <SolverTaskDescription TaskType="Unsteady" UseSymbolicJacobian="false" Solver="Combined Stiff Solver (IDA/CVODE)">
+          <TimeBound StartTime="0.0" EndTime="6.0" />
+          <TimeStep DefaultTime="0.1" MinTime="1.0E-8" MaxTime="0.1" />
+          <ErrorTolerance Absolut="1.0E-9" Relative="1.0E-9" />
+          <OutputOptions OutputTimeStep="0.25" />
+          <NumberProcessors>1</NumberProcessors>
+        </SolverTaskDescription>
+        <MathOverrides>
+          <Constant Name="rauto2" ConstantArraySpec="1000">"0.6", "0.7", "0.8", "0.9", "0.99", "1.0"</Constant>
+          <Constant Name="kon">1.0</Constant>
+          <Constant Name="CaMtot">2.0</Constant>
+          <Constant Name="koff">(0.06667 * kon)</Constant>
+          <Constant Name="CaMKIItot">0.005</Constant>
+        </MathOverrides>
+        <Version Name="Autophos Reaction, Scan CaM, Scan r2 - long time" KeyValue="76028359" BranchId="60679098" Archived="0" Date="18-Oct-2012 15:35:41" FromVersionable="false">
+          <Owner Name="pjmichal" Identifier="45073070" />
+          <GroupAccess Type="1" />
+          <ParentSimRef KeyValue="60679097" />
+        </Version>
+      </Simulation>
+      <Simulation Name="Timing CPU">
+        <Annotation>I'm determining the CPU time needed for 1 standard run.</Annotation>
+        <SolverTaskDescription TaskType="Unsteady" UseSymbolicJacobian="false" Solver="Combined Stiff Solver (IDA/CVODE)">
+          <TimeBound StartTime="0.0" EndTime="10000.0" />
+          <TimeStep DefaultTime="0.1" MinTime="1.0E-8" MaxTime="0.1" />
+          <ErrorTolerance Absolut="1.0E-9" Relative="1.0E-9" />
+          <OutputOptions OutputTimeStep="1000.0" />
+          <NumberProcessors>1</NumberProcessors>
+        </SolverTaskDescription>
+        <MathOverrides>
+          <Constant Name="rauto2">1.0</Constant>
+          <Constant Name="kon">1.0</Constant>
+          <Constant Name="CaMtot">0.01</Constant>
+          <Constant Name="koff">(0.06667 * kon)</Constant>
+          <Constant Name="CaMKIItot">0.005</Constant>
+        </MathOverrides>
+        <Version Name="Timing CPU" KeyValue="76028361" BranchId="61350381" Archived="0" Date="18-Oct-2012 15:35:41" FromVersionable="false">
+          <Owner Name="pjmichal" Identifier="45073070" />
+          <GroupAccess Type="1" />
+          <Annotation>I'm determining the CPU time needed for 1 standard run.</Annotation>
+          <ParentSimRef KeyValue="61352492" />
+        </Version>
+      </Simulation>
+      <Simulation Name="Copy of Timing CPU">
+        <Annotation>I'm determining the CPU time needed for 1 standard run.</Annotation>
+        <SolverTaskDescription TaskType="Unsteady" UseSymbolicJacobian="false" Solver="Combined Stiff Solver (IDA/CVODE)">
+          <TimeBound StartTime="0.0" EndTime="10000.0" />
+          <TimeStep DefaultTime="0.1" MinTime="1.0E-8" MaxTime="0.1" />
+          <ErrorTolerance Absolut="1.0E-9" Relative="1.0E-9" />
+          <OutputOptions OutputTimeStep="1000.0" />
+          <NumberProcessors>1</NumberProcessors>
+        </SolverTaskDescription>
+        <MathOverrides>
+          <Constant Name="rauto2">rauto1</Constant>
+          <Constant Name="kon">1.0</Constant>
+          <Constant Name="CaMtot">0.01</Constant>
+          <Constant Name="rauto1">0.005</Constant>
+          <Constant Name="koff">(0.06667 * kon)</Constant>
+          <Constant Name="CaMKIItot">0.005</Constant>
+        </MathOverrides>
+        <Version Name="Copy of Timing CPU" KeyValue="76028363" BranchId="61367852" Archived="0" Date="18-Oct-2012 15:35:41" FromVersionable="false">
+          <Owner Name="pjmichal" Identifier="45073070" />
+          <GroupAccess Type="1" />
+          <Annotation>I'm determining the CPU time needed for 1 standard run.</Annotation>
+          <ParentSimRef KeyValue="61367910" />
+        </Version>
+      </Simulation>
+      <Simulation Name="300 seconds sim">
+        <SolverTaskDescription TaskType="Unsteady" UseSymbolicJacobian="false" Solver="Combined Stiff Solver (IDA/CVODE)">
+          <TimeBound StartTime="0.0" EndTime="300.0" />
+          <TimeStep DefaultTime="0.1" MinTime="1.0E-8" MaxTime="1.0" />
+          <ErrorTolerance Absolut="1.0E-9" Relative="1.0E-9" />
+          <OutputOptions OutputTimeStep="5.0" />
+          <NumberProcessors>1</NumberProcessors>
+        </SolverTaskDescription>
+        <MathOverrides>
+          <Constant Name="CaMtot" ConstantArraySpec="1000">"0.001", "0.002", "0.004"</Constant>
+          <Constant Name="rauto2">1.0</Constant>
+        </MathOverrides>
+        <Version Name="300 seconds sim" KeyValue="76028365" BranchId="74849003" Archived="0" Date="18-Oct-2012 15:35:41" FromVersionable="false">
+          <Owner Name="pjmichal" Identifier="45073070" />
+          <GroupAccess Type="1" />
+          <ParentSimRef KeyValue="74849359" />
+        </Version>
+      </Simulation>
+      <Simulation Name=" Autophos, Scan CaM,r1=r2">
+        <SolverTaskDescription TaskType="Unsteady" UseSymbolicJacobian="false" Solver="Combined Stiff Solver (IDA/CVODE)">
+          <TimeBound StartTime="0.0" EndTime="6.0" />
+          <TimeStep DefaultTime="0.1" MinTime="1.0E-8" MaxTime="0.1" />
+          <ErrorTolerance Absolut="1.0E-9" Relative="1.0E-9" />
+          <OutputOptions OutputTimeStep="0.25" />
+          <NumberProcessors>1</NumberProcessors>
+        </SolverTaskDescription>
+        <MathOverrides>
+          <Constant Name="CaMtot" ConstantArraySpec="1000">"0.001", "0.002", "0.005", "0.01", "0.02", "0.05", "0.1", "0.2", "0.5", "1.0", "2.0", "5.0", "10.0", "20.0"</Constant>
+          <Constant Name="rauto2">1.0</Constant>
+          <Constant Name="kon">3.0</Constant>
+          <Constant Name="koff">(0.06667 * kon)</Constant>
+          <Constant Name="CaMKIItot">0.005</Constant>
+        </MathOverrides>
+        <Version Name=" Autophos, Scan CaM,r1=r2" KeyValue="76028367" BranchId="76019344" Archived="0" Date="18-Oct-2012 15:35:41" FromVersionable="false">
+          <Owner Name="pjmichal" Identifier="45073070" />
+          <GroupAccess Type="1" />
+          <ParentSimRef KeyValue="76019343" />
+        </Version>
+      </Simulation>
+      <Simulation Name="Copy of  Autophos, Scan CaM,r1=r2">
+        <SolverTaskDescription TaskType="Unsteady" UseSymbolicJacobian="false" Solver="Combined Stiff Solver (IDA/CVODE)">
+          <TimeBound StartTime="0.0" EndTime="100.0" />
+          <TimeStep DefaultTime="0.1" MinTime="1.0E-8" MaxTime="0.1" />
+          <ErrorTolerance Absolut="1.0E-9" Relative="1.0E-9" />
+          <OutputOptions OutputTimeStep="2.0" />
+          <NumberProcessors>1</NumberProcessors>
+        </SolverTaskDescription>
+        <MathOverrides>
+          <Constant Name="CaMtot" ConstantArraySpec="1000">"0.001", "0.002", "0.005", "0.01", "0.02", "0.05", "0.1", "0.2", "0.5", "1.0", "2.0", "5.0", "10.0", "20.0"</Constant>
+          <Constant Name="kon">0.3</Constant>
+          <Constant Name="rauto2">1.0</Constant>
+          <Constant Name="koff">(0.06667 * kon)</Constant>
+          <Constant Name="CaMKIItot">0.005</Constant>
+        </MathOverrides>
+        <Version Name="Copy of  Autophos, Scan CaM,r1=r2" KeyValue="76028369" BranchId="76020777" Archived="0" Date="18-Oct-2012 15:35:41" FromVersionable="false">
+          <Owner Name="pjmichal" Identifier="45073070" />
+          <GroupAccess Type="1" />
+          <ParentSimRef KeyValue="76020816" />
+        </Version>
+      </Simulation>
+      <Version Name="CaM buffered" KeyValue="76028323" BranchId="60505354" Archived="0" Date="18-Oct-2012 15:35:41" FromVersionable="false">
+        <Owner Name="pjmichal" Identifier="45073070" />
+        <GroupAccess Type="1" />
+      </Version>
+      <MicroscopeMeasurement Name="fluor">
+        <ConvolutionKernel Type="ProjectionZKernel" />
+      </MicroscopeMeasurement>
+    </SimulationSpec>
+    <SimulationSpec Name="CaM buffered, pulses" Stochastic="false" UseConcentration="true" RuleBased="false" MassConservationModelReduction="true" InsufficientIterations="false" InsufficientMaxMolecules="false">
+      <NetworkConstraints RbmMaxIteration="1" RbmMaxMoleculesPerSpecies="10" RbmSpeciesLimit="800" RbmReactionsLimit="2500" />
+      <Annotation />
+      <Geometry Name="non-spatial328885291" Dimension="0">
+        <Extent X="10.0" Y="10.0" Z="10.0" />
+        <Origin X="0.0" Y="0.0" Z="0.0" />
+        <SubVolume Name="Compartment" Handle="0" Type="Compartmental" KeyValue="60540548" />
+        <Version Name="non-spatial328885291" KeyValue="60540544" BranchId="60540545" Archived="0" Date="11-Oct-2011 14:35:29" FromVersionable="false">
+          <Owner Name="pjmichal" Identifier="45073070" />
+          <GroupAccess Type="1" />
+        </Version>
+      </Geometry>
+      <GeometryContext>
+        <FeatureMapping Feature="cell" GeometryClass="Compartment" SubVolume="Compartment" Size="50000.0">
+          <BoundariesTypes Xm="Flux" Xp="Flux" Ym="Flux" Yp="Flux" Zm="Flux" Zp="Flux" />
+        </FeatureMapping>
+      </GeometryContext>
+      <ReactionContext>
+        <LocalizedCompoundSpec LocalizedCompoundRef="Kcu_Kou" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>0.0</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="Kcu_Kcu" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>0.0</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="Kcp_Kcu" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>0.0</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="Kcp_Kou" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>0.0</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="Kcp_Kcp" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>0.0</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="C" ForceConstant="true" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>CaMtot</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="Kou_Kou" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>(0.5 * CaMKIItot)</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <ReactionSpec ReactionStepRef="R1" ReactionMapping="included" />
+        <ReactionSpec ReactionStepRef="R2" ReactionMapping="included" />
+        <ReactionSpec ReactionStepRef="R5" ReactionMapping="included" />
+        <ReactionSpec ReactionStepRef="R6" ReactionMapping="included" />
+        <ReactionSpec ReactionStepRef="R7" ReactionMapping="included" />
+      </ReactionContext>
+      <MathDescription Name="CaM buffered, 1000 ms pulses_generated">
+        <Constant Name="_F_">96480.0</Constant>
+        <Constant Name="_F_nmol_">9.648E-5</Constant>
+        <Constant Name="_K_GHK_">1.0E-9</Constant>
+        <Constant Name="_N_pmol_">6.02E11</Constant>
+        <Constant Name="_PI_">3.141592653589793</Constant>
+        <Constant Name="_R_">8314.0</Constant>
+        <Constant Name="_T_">300.0</Constant>
+        <Constant Name="alpha">1.0</Constant>
+        <Constant Name="CaMKIItot">1.0</Constant>
+        <Constant Name="CaMtot">1.0</Constant>
+        <Constant Name="K_millivolts_per_volt">1000.0</Constant>
+        <Constant Name="Kcp_Kcp_init_uM">0.0</Constant>
+        <Constant Name="Kcp_Kcu_init_uM">0.0</Constant>
+        <Constant Name="Kcp_Kou_init_uM">0.0</Constant>
+        <Constant Name="Kcu_Kcu_init_uM">0.0</Constant>
+        <Constant Name="Kcu_Kou_init_uM">0.0</Constant>
+        <Constant Name="KMOLE">0.0016611295681063123</Constant>
+        <Constant Name="koff_init">2.0</Constant>
+        <Constant Name="kon">30.0</Constant>
+        <Constant Name="N">12.0</Constant>
+        <Constant Name="r_high">1.0</Constant>
+        <Constant Name="r_low">0.0</Constant>
+        <Constant Name="rauto1_init">1.0</Constant>
+        <Constant Name="rauto2_init">0.5</Constant>
+        <Constant Name="Size_cell">50000.0</Constant>
+        <Constant Name="T0">1.0</Constant>
+        <Constant Name="T1">1.0</Constant>
+        <VolumeVariable Name="C" Domain="Compartment" />
+        <VolumeVariable Name="Kcp_Kcp" Domain="Compartment" />
+        <VolumeVariable Name="Kcp_Kcu" Domain="Compartment" />
+        <VolumeVariable Name="Kcp_Kou" Domain="Compartment" />
+        <VolumeVariable Name="Kcu_Kcu" Domain="Compartment" />
+        <VolumeVariable Name="koff" />
+        <VolumeVariable Name="Kou_Kou" Domain="Compartment" />
+        <VolumeVariable Name="rauto1" />
+        <VolumeVariable Name="rauto2" />
+        <Function Name="C_init_uM" Domain="Compartment">CaMtot</Function>
+        <Function Name="FracActiveCaMKII">(Group_ActiveCaMKII / CaMKIItot)</Function>
+        <Function Name="FracAutoActivity">(0.8 * FracPhosphoCaMKII)</Function>
+        <Function Name="FracAutoInhibited">(Group_AutoInhibitedCaMKII / CaMKIItot)</Function>
+        <Function Name="FracPhosphoCaMKII">(Group_PhosphoT286 / CaMKIItot)</Function>
+        <Function Name="Group_ActiveCaMKII">(Kcu_Kou + (2.0 * Kcu_Kcu) + (2.0 * Kcp_Kcu) + Kcp_Kou + (2.0 * Kcp_Kcp))</Function>
+        <Function Name="Group_AllCaM">(C + Kcu_Kou + (2.0 * Kcu_Kcu) + (2.0 * Kcp_Kcu) + Kcp_Kou + (2.0 * Kcp_Kcp))</Function>
+        <Function Name="Group_AllCaMKII">((2.0 * Kou_Kou) + (2.0 * Kcu_Kou) + (2.0 * Kcu_Kcu) + (2.0 * Kcp_Kcu) + (2.0 * Kcp_Kou) + (2.0 * Kcp_Kcp))</Function>
+        <Function Name="Group_AutoInhibitedCaMKII">((2.0 * Kou_Kou) + Kcu_Kou + Kcp_Kou)</Function>
+        <Function Name="Group_PhosphoT286">(Kcp_Kcu + Kcp_Kou + (2.0 * Kcp_Kcp))</Function>
+        <Function Name="InitialConc1">(0.5 * CaMKIItot)</Function>
+        <Function Name="J_R1" Domain="Compartment">((2.0 * kon * C * Kou_Kou) - (koff * Kcu_Kou))</Function>
+        <Function Name="J_R2" Domain="Compartment">((kon * C * Kcu_Kou) - (2.0 * koff * Kcu_Kcu))</Function>
+        <Function Name="J_R5" Domain="Compartment">(2.0 * rauto1 * Kcu_Kcu)</Function>
+        <Function Name="J_R6" Domain="Compartment">((koff * Kcp_Kcu) - (kon * C * Kcp_Kou))</Function>
+        <Function Name="J_R7" Domain="Compartment">(rauto2 * Kcp_Kcu)</Function>
+        <Function Name="K_Kcu_Kou_total" Domain="Compartment">((Size_cell * Kou_Kou_init_uM) + (Size_cell * Kcp_Kcp_init_uM) + (Size_cell * Kcp_Kou_init_uM) + (Size_cell * Kcp_Kcu_init_uM) + (Size_cell * Kcu_Kou_init_uM) + (Size_cell * Kcu_Kcu_init_uM))</Function>
+        <Function Name="Kcu_Kou" Domain="Compartment">(( - (Size_cell * Kou_Kou) - (Size_cell * Kcp_Kcp) - (Size_cell * Kcp_Kou) - (Size_cell * Kcp_Kcu) + K_Kcu_Kou_total - (Size_cell * Kcu_Kcu)) / Size_cell)</Function>
+        <Function Name="koff_high">(6.32 * alpha)</Function>
+        <Function Name="koff_low">(2.2 * alpha)</Function>
+        <Function Name="Kou_Kou_init_uM" Domain="Compartment">(0.5 * CaMKIItot)</Function>
+        <CompartmentSubDomain Name="Compartment">
+          <BoundaryType Boundary="Xm" Type="Value" />
+          <BoundaryType Boundary="Xp" Type="Value" />
+          <BoundaryType Boundary="Ym" Type="Value" />
+          <BoundaryType Boundary="Yp" Type="Value" />
+          <BoundaryType Boundary="Zm" Type="Value" />
+          <BoundaryType Boundary="Zp" Type="Value" />
+          <OdeEquation Name="Kcu_Kcu" SolutionType="Unknown">
+            <Rate>(J_R2 - J_R5)</Rate>
+            <Initial>Kcu_Kcu_init_uM</Initial>
+          </OdeEquation>
+          <OdeEquation Name="Kcp_Kcu" SolutionType="Unknown">
+            <Rate>( - J_R7 + J_R5 - J_R6)</Rate>
+            <Initial>Kcp_Kcu_init_uM</Initial>
+          </OdeEquation>
+          <OdeEquation Name="Kcp_Kou" SolutionType="Unknown">
+            <Rate>J_R6</Rate>
+            <Initial>Kcp_Kou_init_uM</Initial>
+          </OdeEquation>
+          <OdeEquation Name="Kcp_Kcp" SolutionType="Unknown">
+            <Rate>J_R7</Rate>
+            <Initial>Kcp_Kcp_init_uM</Initial>
+          </OdeEquation>
+          <OdeEquation Name="C" SolutionType="Unknown">
+            <Rate>0.0</Rate>
+            <Initial>C_init_uM</Initial>
+          </OdeEquation>
+          <OdeEquation Name="Kou_Kou" SolutionType="Unknown">
+            <Rate>- J_R1</Rate>
+            <Initial>Kou_Kou_init_uM</Initial>
+          </OdeEquation>
+          <OdeEquation Name="rauto2" SolutionType="Unknown">
+            <Rate>0.0</Rate>
+            <Initial>rauto2_init</Initial>
+          </OdeEquation>
+          <OdeEquation Name="rauto1" SolutionType="Unknown">
+            <Rate>0.0</Rate>
+            <Initial>rauto1_init</Initial>
+          </OdeEquation>
+          <OdeEquation Name="koff" SolutionType="Unknown">
+            <Rate>0.0</Rate>
+            <Initial>koff_init</Initial>
+          </OdeEquation>
+        </CompartmentSubDomain>
+        <Version Name="CaM buffered, 1000 ms pulses_generated" KeyValue="76028283" BranchId="60540552" Archived="0" Date="18-Oct-2012 15:35:40" FromVersionable="false">
+          <Owner Name="pjmichal" Identifier="45073070" />
+          <GroupAccess Type="1" />
+        </Version>
+        <Event Name="event0">
+          <Trigger>((t &lt; (N * (T0 + T1))) &amp;&amp; (max((T0 / (T0 + T1)), ((t / (T0 + T1)) - floor((t / (T0 + T1))))) &gt; (T0 / (T0 + T1))))</Trigger>
+          <EventAssignment Variable="C">0.0</EventAssignment>
+          <EventAssignment Variable="koff">koff_high</EventAssignment>
+          <EventAssignment Variable="rauto1">r_low</EventAssignment>
+          <EventAssignment Variable="rauto2">r_low</EventAssignment>
+        </Event>
+        <Event Name="event1">
+          <Trigger>((t &lt; (N * (T0 + T1))) &amp;&amp; (max((T0 / (T0 + T1)), ((t / (T0 + T1)) - floor((t / (T0 + T1))))) == (T0 / (T0 + T1))))</Trigger>
+          <EventAssignment Variable="C">CaMtot</EventAssignment>
+          <EventAssignment Variable="koff">koff_low</EventAssignment>
+          <EventAssignment Variable="rauto1">r_high</EventAssignment>
+          <EventAssignment Variable="rauto2">r_high</EventAssignment>
+        </Event>
+        <Event Name="event2">
+          <Trigger>(t &gt;= (N * (T0 + T1)))</Trigger>
+          <EventAssignment Variable="C">0.0</EventAssignment>
+          <EventAssignment Variable="koff">koff_high</EventAssignment>
+          <EventAssignment Variable="rauto1">r_low</EventAssignment>
+          <EventAssignment Variable="rauto2">r_low</EventAssignment>
+        </Event>
+      </MathDescription>
+      <Simulation Name="1000 ms pulses">
+        <SolverTaskDescription TaskType="Unsteady" UseSymbolicJacobian="false" Solver="Combined Stiff Solver (IDA/CVODE)">
+          <TimeBound StartTime="0.0" EndTime="70.0" />
+          <TimeStep DefaultTime="0.1" MinTime="1.0E-8" MaxTime="1.0E-4" />
+          <ErrorTolerance Absolut="1.0E-9" Relative="1.0E-9" />
+          <OutputOptions KeepEvery="100" KeepAtMost="10000" />
+          <NumberProcessors>1</NumberProcessors>
+        </SolverTaskDescription>
+        <MathOverrides>
+          <Constant Name="CaMtot">0.2</Constant>
+          <Constant Name="kon">1.0</Constant>
+          <Constant Name="koff_init">(0.06667 * kon)</Constant>
+          <Constant Name="T1" ConstantArraySpec="1000">"0.001", "0.01", "0.1", "0.25", "0.5", "1.0", "2.0", "3.0", "4.0", "9.0"</Constant>
+          <Constant Name="N">6.0</Constant>
+          <Constant Name="CaMKIItot">0.005</Constant>
+        </MathOverrides>
+        <Version Name="1000 ms pulses" KeyValue="76028371" BranchId="60541348" Archived="0" Date="18-Oct-2012 15:35:41" FromVersionable="false">
+          <Owner Name="pjmichal" Identifier="45073070" />
+          <GroupAccess Type="1" />
+        </Version>
+      </Simulation>
+      <Simulation Name="500 ms pulses">
+        <SolverTaskDescription TaskType="Unsteady" UseSymbolicJacobian="false" Solver="Combined Stiff Solver (IDA/CVODE)">
+          <TimeBound StartTime="0.0" EndTime="150.0" />
+          <TimeStep DefaultTime="0.1" MinTime="1.0E-8" MaxTime="1.0E-4" />
+          <ErrorTolerance Absolut="1.0E-9" Relative="1.0E-9" />
+          <OutputOptions KeepEvery="100" KeepAtMost="10000" />
+          <NumberProcessors>1</NumberProcessors>
+        </SolverTaskDescription>
+        <MathOverrides>
+          <Constant Name="CaMtot">0.2</Constant>
+          <Constant Name="kon">1.0</Constant>
+          <Constant Name="koff_init">(0.06667 * kon)</Constant>
+          <Constant Name="T1" ConstantArraySpec="1000">"0.001", "0.01", "0.1", "0.25", "0.5", "0.75", "1.0", "2.0", "3.0", "4.5", "9.5"</Constant>
+          <Constant Name="T0">0.5</Constant>
+          <Constant Name="CaMKIItot">0.005</Constant>
+        </MathOverrides>
+        <Version Name="500 ms pulses" KeyValue="76028373" BranchId="60541407" Archived="0" Date="18-Oct-2012 15:35:41" FromVersionable="false">
+          <Owner Name="pjmichal" Identifier="45073070" />
+          <GroupAccess Type="1" />
+        </Version>
+      </Simulation>
+      <Simulation Name="200 ms pulses">
+        <SolverTaskDescription TaskType="Unsteady" UseSymbolicJacobian="false" Solver="Combined Stiff Solver (IDA/CVODE)">
+          <TimeBound StartTime="0.0" EndTime="350.0" />
+          <TimeStep DefaultTime="0.1" MinTime="1.0E-8" MaxTime="1.0E-4" />
+          <ErrorTolerance Absolut="1.0E-9" Relative="1.0E-9" />
+          <OutputOptions KeepEvery="100" KeepAtMost="10000" />
+          <NumberProcessors>1</NumberProcessors>
+        </SolverTaskDescription>
+        <MathOverrides>
+          <Constant Name="CaMtot">0.2</Constant>
+          <Constant Name="kon">1.0</Constant>
+          <Constant Name="koff_init">(0.06667 * kon)</Constant>
+          <Constant Name="T1" ConstantArraySpec="1000">"0.001", "0.01", "0.05", "0.1", "0.2", "0.3", "0.5", "0.8", "1.0", "2.0", "3.0", "4.8", "9.8"</Constant>
+          <Constant Name="N">30.0</Constant>
+          <Constant Name="T0">0.2</Constant>
+          <Constant Name="CaMKIItot">0.005</Constant>
+        </MathOverrides>
+        <Version Name="200 ms pulses" KeyValue="76028375" BranchId="60541490" Archived="0" Date="18-Oct-2012 15:35:41" FromVersionable="false">
+          <Owner Name="pjmichal" Identifier="45073070" />
+          <GroupAccess Type="1" />
+        </Version>
+      </Simulation>
+      <Simulation Name="80 ms pulses">
+        <SolverTaskDescription TaskType="Unsteady" UseSymbolicJacobian="false" Solver="Combined Stiff Solver (IDA/CVODE)">
+          <TimeBound StartTime="0.0" EndTime="900.0" />
+          <TimeStep DefaultTime="0.1" MinTime="1.0E-8" MaxTime="1.0E-4" />
+          <ErrorTolerance Absolut="1.0E-9" Relative="1.0E-9" />
+          <OutputOptions KeepEvery="150" KeepAtMost="10000" />
+          <NumberProcessors>1</NumberProcessors>
+        </SolverTaskDescription>
+        <MathOverrides>
+          <Constant Name="CaMtot">0.2</Constant>
+          <Constant Name="kon">1.0</Constant>
+          <Constant Name="koff_init">(0.06667 * kon)</Constant>
+          <Constant Name="T1" ConstantArraySpec="1000">"0.001", "0.01", "0.02", "0.04", "0.08", "0.1", "0.12", "0.22", "0.32", "0.5", "0.8", "0.92", "1.0", "2.0", "3.0", "4.92", "9.92"</Constant>
+          <Constant Name="N">75.0</Constant>
+          <Constant Name="T0">0.08</Constant>
+          <Constant Name="CaMKIItot">0.005</Constant>
+        </MathOverrides>
+        <Version Name="80 ms pulses" KeyValue="76028377" BranchId="60541554" Archived="0" Date="18-Oct-2012 15:35:41" FromVersionable="false">
+          <Owner Name="pjmichal" Identifier="45073070" />
+          <GroupAccess Type="1" />
+        </Version>
+      </Simulation>
+      <Simulation Name="Copy of 1000 ms pulses">
+        <SolverTaskDescription TaskType="Unsteady" UseSymbolicJacobian="false" Solver="Combined Stiff Solver (IDA/CVODE)">
+          <TimeBound StartTime="0.0" EndTime="70.0" />
+          <TimeStep DefaultTime="0.1" MinTime="1.0E-8" MaxTime="1.0E-4" />
+          <ErrorTolerance Absolut="1.0E-9" Relative="1.0E-9" />
+          <OutputOptions OutputTimeStep="1.256" />
+          <NumberProcessors>1</NumberProcessors>
+        </SolverTaskDescription>
+        <MathOverrides>
+          <Constant Name="rauto2_init">1.0</Constant>
+          <Constant Name="kon">4.0</Constant>
+          <Constant Name="CaMtot">0.1</Constant>
+          <Constant Name="koff_init">(2.2 * alpha)</Constant>
+          <Constant Name="T1" ConstantArraySpec="1000">"0.001", "0.01", "0.1", "0.25", "0.5", "1.0", "2.0", "3.0", "4.0", "9.0"</Constant>
+          <Constant Name="alpha">0.3</Constant>
+          <Constant Name="N">6.0</Constant>
+        </MathOverrides>
+        <Version Name="Copy of 1000 ms pulses" KeyValue="76036951" BranchId="60541899" Archived="0" Date="18-Oct-2012 16:28:24" FromVersionable="false">
+          <Owner Name="pjmichal" Identifier="45073070" />
+          <GroupAccess Type="1" />
+        </Version>
+      </Simulation>
+      <Simulation Name="Copy of 500 ms pulses">
+        <SolverTaskDescription TaskType="Unsteady" UseSymbolicJacobian="false" Solver="Combined Stiff Solver (IDA/CVODE)">
+          <TimeBound StartTime="0.0" EndTime="150.0" />
+          <TimeStep DefaultTime="0.1" MinTime="1.0E-8" MaxTime="1.0E-4" />
+          <ErrorTolerance Absolut="1.0E-9" Relative="1.0E-9" />
+          <OutputOptions OutputTimeStep="2.345" />
+          <NumberProcessors>1</NumberProcessors>
+        </SolverTaskDescription>
+        <MathOverrides>
+          <Constant Name="rauto2_init">1.0</Constant>
+          <Constant Name="CaMtot">0.1</Constant>
+          <Constant Name="kon">4.0</Constant>
+          <Constant Name="koff_init">(2.2 * alpha)</Constant>
+          <Constant Name="T1" ConstantArraySpec="1000">"0.001", "0.01", "0.1", "0.25", "0.5", "0.75", "1.0", "2.0", "3.0", "4.5", "9.5"</Constant>
+          <Constant Name="alpha">0.3</Constant>
+          <Constant Name="T0">0.5</Constant>
+        </MathOverrides>
+        <Version Name="Copy of 500 ms pulses" KeyValue="76037070" BranchId="60542108" Archived="0" Date="18-Oct-2012 16:39:57" FromVersionable="false">
+          <Owner Name="pjmichal" Identifier="45073070" />
+          <GroupAccess Type="1" />
+        </Version>
+      </Simulation>
+      <Simulation Name="Copy of 200 ms pulses">
+        <SolverTaskDescription TaskType="Unsteady" UseSymbolicJacobian="false" Solver="Combined Stiff Solver (IDA/CVODE)">
+          <TimeBound StartTime="0.0" EndTime="350.0" />
+          <TimeStep DefaultTime="0.1" MinTime="1.0E-8" MaxTime="1.0E-4" />
+          <ErrorTolerance Absolut="1.0E-9" Relative="1.0E-9" />
+          <OutputOptions OutputTimeStep="3.337" />
+          <NumberProcessors>1</NumberProcessors>
+        </SolverTaskDescription>
+        <MathOverrides>
+          <Constant Name="rauto2_init">1.0</Constant>
+          <Constant Name="kon">4.0</Constant>
+          <Constant Name="CaMtot">0.1</Constant>
+          <Constant Name="koff_init">(2.2 * alpha)</Constant>
+          <Constant Name="T1" ConstantArraySpec="1000">"0.001", "0.01", "0.05", "0.1", "0.2", "0.3", "0.5", "0.8", "1.0", "2.0", "3.0", "4.8", "9.8"</Constant>
+          <Constant Name="alpha">0.3</Constant>
+          <Constant Name="T0">0.2</Constant>
+          <Constant Name="N">30.0</Constant>
+        </MathOverrides>
+        <Version Name="Copy of 200 ms pulses" KeyValue="76037157" BranchId="60542111" Archived="0" Date="18-Oct-2012 16:42:17" FromVersionable="false">
+          <Owner Name="pjmichal" Identifier="45073070" />
+          <GroupAccess Type="1" />
+        </Version>
+      </Simulation>
+      <Simulation Name="Copy of 80 ms pulses">
+        <SolverTaskDescription TaskType="Unsteady" UseSymbolicJacobian="false" Solver="Combined Stiff Solver (IDA/CVODE)">
+          <TimeBound StartTime="0.0" EndTime="900.0" />
+          <TimeStep DefaultTime="0.1" MinTime="1.0E-8" MaxTime="1.0E-4" />
+          <ErrorTolerance Absolut="1.0E-9" Relative="1.0E-9" />
+          <OutputOptions OutputTimeStep="7.9277" />
+          <NumberProcessors>1</NumberProcessors>
+        </SolverTaskDescription>
+        <MathOverrides>
+          <Constant Name="rauto2_init">1.0</Constant>
+          <Constant Name="kon">4.0</Constant>
+          <Constant Name="CaMtot">0.1</Constant>
+          <Constant Name="koff_init">(2.2 * alpha)</Constant>
+          <Constant Name="T1" ConstantArraySpec="1000">"0.001", "0.01", "0.02", "0.04", "0.08", "0.1", "0.12", "0.22", "0.32", "0.5", "0.8", "0.92", "1.0", "2.0", "3.0", "4.92", "9.92"</Constant>
+          <Constant Name="alpha">0.3</Constant>
+          <Constant Name="T0">0.08</Constant>
+          <Constant Name="N">75.0</Constant>
+        </MathOverrides>
+        <Version Name="Copy of 80 ms pulses" KeyValue="76037473" BranchId="60542114" Archived="0" Date="18-Oct-2012 16:43:22" FromVersionable="false">
+          <Owner Name="pjmichal" Identifier="45073070" />
+          <GroupAccess Type="1" />
+        </Version>
+      </Simulation>
+      <Simulation Name="100 nM CaM, 0.2 s pulses, 1 Hz">
+        <SolverTaskDescription TaskType="Unsteady" UseSymbolicJacobian="false" Solver="Combined Stiff Solver (IDA/CVODE)">
+          <TimeBound StartTime="0.0" EndTime="100.0" />
+          <TimeStep DefaultTime="0.1" MinTime="1.0E-8" MaxTime="0.05" />
+          <ErrorTolerance Absolut="1.0E-9" Relative="1.0E-9" />
+          <OutputOptions OutputTimeStep="0.1001" />
+          <NumberProcessors>1</NumberProcessors>
+        </SolverTaskDescription>
+        <MathOverrides>
+          <Constant Name="rauto2_init">1.0</Constant>
+          <Constant Name="CaMtot">0.1</Constant>
+          <Constant Name="kon">4.0</Constant>
+          <Constant Name="koff_init">(2.2 * alpha)</Constant>
+          <Constant Name="alpha">0.3</Constant>
+          <Constant Name="T1">0.8</Constant>
+          <Constant Name="T0">0.2</Constant>
+          <Constant Name="N">100.0</Constant>
+        </MathOverrides>
+        <Version Name="100 nM CaM, 0.2 s pulses, 1 Hz" KeyValue="76032582" BranchId="76021688" Archived="0" Date="18-Oct-2012 15:44:16" FromVersionable="false">
+          <Owner Name="pjmichal" Identifier="45073070" />
+          <GroupAccess Type="1" />
+        </Version>
+      </Simulation>
+      <Simulation Name="100 nM CaM, 0.2 s pulses, 2.5 Hz">
+        <SolverTaskDescription TaskType="Unsteady" UseSymbolicJacobian="false" Solver="Combined Stiff Solver (IDA/CVODE)">
+          <TimeBound StartTime="0.0" EndTime="41.0" />
+          <TimeStep DefaultTime="0.1" MinTime="1.0E-8" MaxTime="0.05" />
+          <ErrorTolerance Absolut="1.0E-9" Relative="1.0E-9" />
+          <OutputOptions OutputTimeStep="0.1001" />
+          <NumberProcessors>1</NumberProcessors>
+        </SolverTaskDescription>
+        <MathOverrides>
+          <Constant Name="rauto2_init">1.0</Constant>
+          <Constant Name="kon">4.0</Constant>
+          <Constant Name="CaMtot">0.1</Constant>
+          <Constant Name="koff_init">(2.2 * alpha)</Constant>
+          <Constant Name="T1">0.2</Constant>
+          <Constant Name="alpha">0.3</Constant>
+          <Constant Name="N">100.0</Constant>
+          <Constant Name="T0">0.2</Constant>
+        </MathOverrides>
+        <Version Name="100 nM CaM, 0.2 s pulses, 2.5 Hz" KeyValue="76036790" BranchId="76035627" Archived="0" Date="18-Oct-2012 16:05:22" FromVersionable="false">
+          <Owner Name="pjmichal" Identifier="45073070" />
+          <GroupAccess Type="1" />
+        </Version>
+      </Simulation>
+      <BioEvents>
+        <BioEvent Name="event0" TriggerType="GeneralTrigger" UseValuesFromTriggerTime="true">
+          <Parameter Name="delay" Role="TriggerDelay" Unit="s">0.0</Parameter>
+          <Parameter Name="triggerFunction" Role="GeneralTriggerFunction" Unit="1">((t &lt; (N * (T0 + T1))) &amp;&amp; (max((T0 / (T0 + T1)), ((t / (T0 + T1)) - floor((t / (T0 + T1))))) &gt; (T0 / (T0 + T1))))</Parameter>
+          <EventAssignment Variable="C">0.0</EventAssignment>
+          <EventAssignment Variable="koff">koff_high</EventAssignment>
+          <EventAssignment Variable="rauto1">r_low</EventAssignment>
+          <EventAssignment Variable="rauto2">r_low</EventAssignment>
+        </BioEvent>
+        <BioEvent Name="event1" TriggerType="GeneralTrigger" UseValuesFromTriggerTime="true">
+          <Parameter Name="delay" Role="TriggerDelay" Unit="s">0.0</Parameter>
+          <Parameter Name="triggerFunction" Role="GeneralTriggerFunction" Unit="1">((t &lt; (N * (T0 + T1))) &amp;&amp; (max((T0 / (T0 + T1)), ((t / (T0 + T1)) - floor((t / (T0 + T1))))) == (T0 / (T0 + T1))))</Parameter>
+          <EventAssignment Variable="C">CaMtot</EventAssignment>
+          <EventAssignment Variable="koff">koff_low</EventAssignment>
+          <EventAssignment Variable="rauto1">r_high</EventAssignment>
+          <EventAssignment Variable="rauto2">r_high</EventAssignment>
+        </BioEvent>
+        <BioEvent Name="event2" TriggerType="GeneralTrigger" UseValuesFromTriggerTime="true">
+          <Parameter Name="delay" Role="TriggerDelay" Unit="s">0.0</Parameter>
+          <Parameter Name="triggerFunction" Role="GeneralTriggerFunction" Unit="1">(t &gt;= (N * (T0 + T1)))</Parameter>
+          <EventAssignment Variable="C">0.0</EventAssignment>
+          <EventAssignment Variable="koff">koff_high</EventAssignment>
+          <EventAssignment Variable="rauto1">r_low</EventAssignment>
+          <EventAssignment Variable="rauto2">r_low</EventAssignment>
+        </BioEvent>
+      </BioEvents>
+      <Version Name="CaM buffered, pulses" KeyValue="76028338" BranchId="60541332" Archived="0" Date="18-Oct-2012 15:35:41" FromVersionable="false">
+        <Owner Name="pjmichal" Identifier="45073070" />
+        <GroupAccess Type="1" />
+      </Version>
+      <MicroscopeMeasurement Name="fluor">
+        <ConvolutionKernel Type="ProjectionZKernel" />
+      </MicroscopeMeasurement>
+    </SimulationSpec>
+    <Version Name="CaMKII Dimer v2.0" KeyValue="77004961" BranchId="77004962" Archived="0" Date="20-Nov-2012 17:42:56" FromVersionable="false">
+      <Owner Name="pjmichal" Identifier="45073070" />
+      <GroupAccess Type="1" />
+    </Version>
+    <pathwayModel>
+      <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:bp="http://www.biopax.org/release/biopax-level3.owl#" version="3.0" />
+    </pathwayModel>
+    <relationshipModel>
+      <RMNS version="3.0" />
+    </relationshipModel>
+    <vcmetadata>
+      <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" />
+      <nonrdfAnnotationList />
+      <uriBindingList />
+    </vcmetadata>
+  </BioModel>
+</vcml>
+

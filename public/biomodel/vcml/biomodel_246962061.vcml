@@ -1,0 +1,496 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--This biomodel was generated in VCML Version Alpha_Version_7.4.0_build_87-->
+<vcml xmlns="http://sourceforge.net/projects/vcell/vcml" Version="Alpha_Version_7.4.0_build_87">
+  <BioModel Name="Lamin-SS_dual_binding">
+    <Model Name="model">
+      <Compound Name="s0" />
+      <Compound Name="s1" />
+      <Compound Name="s2" />
+      <Compound Name="s4" />
+      <Compound Name="s3" />
+      <Compound Name="s5" />
+      <Compound Name="s6" />
+      <Compound Name="s7" />
+      <Compound Name="s8" />
+      <Compound Name="s9" />
+      <Feature Name="Nucleoplasm" KeyValue="195156339" />
+      <Feature Name="Cytoplasm" KeyValue="195156341" />
+      <LocalizedCompound Name="Free_sensor" CompoundRef="s0" Structure="Nucleoplasm" OverrideName="true" KeyValue="195156343" />
+      <LocalizedCompound Name="Bound_sensor_single" CompoundRef="s1" Structure="Nucleoplasm" OverrideName="true" KeyValue="195156344" />
+      <LocalizedCompound Name="Lamin_binding_site" CompoundRef="s2" Structure="Nucleoplasm" OverrideName="true" KeyValue="195156345" />
+      <LocalizedCompound Name="Bound_sensor_dual" CompoundRef="s4" Structure="Nucleoplasm" OverrideName="true" KeyValue="195156346" />
+      <LocalizedCompound Name="Bleach_laser" CompoundRef="s3" Structure="Nucleoplasm" OverrideName="true" KeyValue="195156347" />
+      <LocalizedCompound Name="Bleached_bound_sensor_dual" CompoundRef="s5" Structure="Nucleoplasm" OverrideName="true" KeyValue="195156348" />
+      <LocalizedCompound Name="Bleached_bound_sensor_single" CompoundRef="s6" Structure="Nucleoplasm" OverrideName="true" KeyValue="195156349" />
+      <LocalizedCompound Name="Bleached_free_sensor" CompoundRef="s7" Structure="Nucleoplasm" OverrideName="true" KeyValue="195156350" />
+      <LocalizedCompound Name="Bleach_ROI" CompoundRef="s8" Structure="Nucleoplasm" OverrideName="true" KeyValue="195156351" />
+      <LocalizedCompound Name="ROI_nucleus" CompoundRef="s9" Structure="Nucleoplasm" OverrideName="true" KeyValue="195156352" />
+      <SimpleReaction Structure="Nucleoplasm" Name="Single_binding" Reversible="true" FluxOption="MolecularOnly" KeyValue="195156353">
+        <Reactant LocalizedCompoundRef="Lamin_binding_site" Stoichiometry="1" KeyValue="195156354" />
+        <Reactant LocalizedCompoundRef="Free_sensor" Stoichiometry="1" KeyValue="195156355" />
+        <Product LocalizedCompoundRef="Bound_sensor_single" Stoichiometry="1" KeyValue="195156356" />
+        <Kinetics KineticsType="MassAction">
+          <Parameter Name="J" Role="reaction rate" Unit="uM.s-1">(((Kf * Lamin_binding_site) * Free_sensor) - (Kr * Bound_sensor_single))</Parameter>
+          <Parameter Name="Kf" Role="forward rate constant" Unit="s-1.uM-1">1.2</Parameter>
+          <Parameter Name="Kr" Role="reverse rate constant" Unit="s-1">0.6</Parameter>
+        </Kinetics>
+      </SimpleReaction>
+      <SimpleReaction Structure="Nucleoplasm" Name="Dual_binding" Reversible="true" FluxOption="MolecularOnly" KeyValue="195156357">
+        <Reactant LocalizedCompoundRef="Bound_sensor_single" Stoichiometry="1" KeyValue="195156358" />
+        <Product LocalizedCompoundRef="Bound_sensor_dual" Stoichiometry="1" KeyValue="195156359" />
+        <Kinetics KineticsType="MassAction">
+          <Parameter Name="J" Role="reaction rate" Unit="uM.s-1">((Kf * Bound_sensor_single) - (Kr * Bound_sensor_dual))</Parameter>
+          <Parameter Name="Kf" Role="forward rate constant" Unit="s-1">0.0055</Parameter>
+          <Parameter Name="Kr" Role="reverse rate constant" Unit="s-1">0.033</Parameter>
+        </Kinetics>
+      </SimpleReaction>
+      <SimpleReaction Structure="Nucleoplasm" Name="Dual_bleaching" Reversible="true" FluxOption="MolecularOnly" KeyValue="195156360">
+        <Reactant LocalizedCompoundRef="Bound_sensor_dual" Stoichiometry="1" KeyValue="195156361" />
+        <Reactant LocalizedCompoundRef="Bleach_laser" Stoichiometry="1" KeyValue="195156362" />
+        <Product LocalizedCompoundRef="Bleached_bound_sensor_dual" Stoichiometry="1" KeyValue="195156363" />
+        <Kinetics KineticsType="GeneralKinetics">
+          <Parameter Name="J" Role="reaction rate" Unit="uM.s-1">(Vmax * Bound_sensor_dual * Bleach_laser * ((t &gt; 1.0) &amp;&amp; (t &lt; 1.1)))</Parameter>
+          <Parameter Name="Vmax" Role="user defined" Unit="s-1">0.015</Parameter>
+        </Kinetics>
+      </SimpleReaction>
+      <SimpleReaction Structure="Nucleoplasm" Name="Single_bleaching" Reversible="true" FluxOption="MolecularOnly" KeyValue="195156364">
+        <Reactant LocalizedCompoundRef="Bound_sensor_single" Stoichiometry="1" KeyValue="195156365" />
+        <Reactant LocalizedCompoundRef="Bleach_laser" Stoichiometry="1" KeyValue="195156366" />
+        <Product LocalizedCompoundRef="Bleached_bound_sensor_single" Stoichiometry="1" KeyValue="195156367" />
+        <Kinetics KineticsType="GeneralKinetics">
+          <Parameter Name="J" Role="reaction rate" Unit="uM.s-1">(Vmax * Bound_sensor_single * Bleach_laser * ((t &gt; 1.0) &amp;&amp; (t &lt; 1.1)))</Parameter>
+          <Parameter Name="Vmax" Role="user defined" Unit="s-1">0.015</Parameter>
+        </Kinetics>
+      </SimpleReaction>
+      <SimpleReaction Structure="Nucleoplasm" Name="Free_bleaching" Reversible="true" FluxOption="MolecularOnly" KeyValue="195156368">
+        <Reactant LocalizedCompoundRef="Free_sensor" Stoichiometry="1" KeyValue="195156369" />
+        <Reactant LocalizedCompoundRef="Bleach_laser" Stoichiometry="1" KeyValue="195156370" />
+        <Product LocalizedCompoundRef="Bleached_free_sensor" Stoichiometry="1" KeyValue="195156371" />
+        <Kinetics KineticsType="GeneralKinetics">
+          <Parameter Name="J" Role="reaction rate" Unit="uM.s-1">(Vmax * Free_sensor * Bleach_laser * ((t &gt; 1.0) &amp;&amp; (t &lt; 1.1)))</Parameter>
+          <Parameter Name="Vmax" Role="user defined" Unit="s-1">0.06</Parameter>
+        </Kinetics>
+      </SimpleReaction>
+      <SimpleReaction Structure="Nucleoplasm" Name="Bleached_dual_binding" Reversible="true" FluxOption="MolecularOnly" KeyValue="195156372">
+        <Reactant LocalizedCompoundRef="Bleached_bound_sensor_single" Stoichiometry="1" KeyValue="195156373" />
+        <Product LocalizedCompoundRef="Bleached_bound_sensor_dual" Stoichiometry="1" KeyValue="195156374" />
+        <Kinetics KineticsType="MassAction">
+          <Parameter Name="J" Role="reaction rate" Unit="uM.s-1">((Kf * Bleached_bound_sensor_single) - (Kr * Bleached_bound_sensor_dual))</Parameter>
+          <Parameter Name="Kf" Role="forward rate constant" Unit="s-1">0.0055</Parameter>
+          <Parameter Name="Kr" Role="reverse rate constant" Unit="s-1">0.033</Parameter>
+        </Kinetics>
+      </SimpleReaction>
+      <SimpleReaction Structure="Nucleoplasm" Name="Bleached_single_binding" Reversible="true" FluxOption="MolecularOnly" KeyValue="195156375">
+        <Reactant LocalizedCompoundRef="Lamin_binding_site" Stoichiometry="1" KeyValue="195156376" />
+        <Reactant LocalizedCompoundRef="Bleached_free_sensor" Stoichiometry="1" KeyValue="195156377" />
+        <Product LocalizedCompoundRef="Bleached_bound_sensor_single" Stoichiometry="1" KeyValue="195156378" />
+        <Kinetics KineticsType="MassAction">
+          <Parameter Name="J" Role="reaction rate" Unit="uM.s-1">(((Kf * Lamin_binding_site) * Bleached_free_sensor) - (Kr * Bleached_bound_sensor_single))</Parameter>
+          <Parameter Name="Kf" Role="forward rate constant" Unit="s-1.uM-1">1.2</Parameter>
+          <Parameter Name="Kr" Role="reverse rate constant" Unit="s-1">0.6</Parameter>
+        </Kinetics>
+      </SimpleReaction>
+      <Diagram Name="c0" Structure="Nucleoplasm">
+        <SimpleReactionShape NodeReferenceModeAttrTag="full" SimpleReactionRef="Single_bleaching" LocationX="240" LocationY="162" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="full" SimpleReactionRef="Free_bleaching" LocationX="227" LocationY="351" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="full" SimpleReactionRef="Single_binding" LocationX="79" LocationY="257" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="full" SimpleReactionRef="Dual_bleaching" LocationX="237" LocationY="38" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="full" SimpleReactionRef="Bleached_single_binding" LocationX="358" LocationY="266" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="ROI_nucleus" LocationX="314" LocationY="214" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="Free_sensor" LocationX="72" LocationY="353" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="Bleached_bound_sensor_dual" LocationX="381" LocationY="39" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="Bound_sensor_dual" LocationX="103" LocationY="39" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="Bleached_bound_sensor_single" LocationX="363" LocationY="159" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="Bleached_free_sensor" LocationX="371" LocationY="359" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="Bound_sensor_single" LocationX="79" LocationY="151" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="Lamin_binding_site" LocationX="230" LocationY="254" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="Bleach_laser" LocationX="135" LocationY="198" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="full" SimpleReactionRef="Bleached_dual_binding" LocationX="374" LocationY="100" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="Bleach_ROI" LocationX="276" LocationY="103" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="full" SimpleReactionRef="Dual_binding" LocationX="94" LocationY="93" />
+      </Diagram>
+      <Diagram Name="c0" Structure="Cytoplasm">
+        <SimpleReactionShape NodeReferenceModeAttrTag="full" SimpleReactionRef="Single_bleaching" LocationX="240" LocationY="162" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="full" SimpleReactionRef="Free_bleaching" LocationX="227" LocationY="351" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="full" SimpleReactionRef="Single_binding" LocationX="79" LocationY="257" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="full" SimpleReactionRef="Dual_bleaching" LocationX="237" LocationY="38" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="full" SimpleReactionRef="Bleached_single_binding" LocationX="358" LocationY="266" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="ROI_nucleus" LocationX="314" LocationY="214" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="Free_sensor" LocationX="72" LocationY="353" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="Bleached_bound_sensor_dual" LocationX="381" LocationY="39" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="Bound_sensor_dual" LocationX="103" LocationY="39" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="Bleached_bound_sensor_single" LocationX="363" LocationY="159" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="Bleached_free_sensor" LocationX="371" LocationY="359" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="Bound_sensor_single" LocationX="79" LocationY="151" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="Lamin_binding_site" LocationX="230" LocationY="254" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="Bleach_laser" LocationX="135" LocationY="198" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="full" SimpleReactionRef="Bleached_dual_binding" LocationX="374" LocationY="100" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="Bleach_ROI" LocationX="276" LocationY="103" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="full" SimpleReactionRef="Dual_binding" LocationX="94" LocationY="93" />
+      </Diagram>
+      <Version Name="model" KeyValue="195156327" BranchId="194816126" Archived="0" Date="01-Dec-2020 06:28:51" FromVersionable="false">
+        <Owner Name="teihalai" Identifier="16867732" />
+        <GroupAccess Type="1" />
+      </Version>
+      <ModelUnitSystem VolumeSubstanceUnit="uM.um3" MembraneSubstanceUnit="molecules" LumpedReactionSubstanceUnit="molecules" VolumeUnit="um3" AreaUnit="um2" LengthUnit="um" TimeUnit="s" />
+    </Model>
+    <SimulationSpec Name="FRAP" Stochastic="false" UseConcentration="true" RuleBased="false" MassConservationModelReduction="false" InsufficientIterations="false" InsufficientMaxMolecules="false" CharacteristicSize="0.19801980198019803">
+      <NetworkConstraints RbmMaxIteration="3" RbmMaxMoleculesPerSpecies="10" RbmSpeciesLimit="800" RbmReactionsLimit="2500" />
+      <Annotation />
+      <Geometry Name="geom_20201130_211021" Dimension="2">
+        <Annotation>NoName</Annotation>
+        <Extent X="64.0" Y="64.0" Z="1.0" />
+        <Origin X="0.0" Y="0.0" Z="0.0" />
+        <Image Name="img_20201130_211021">
+          <Annotation>NoName</Annotation>
+          <ImageData X="258" Y="258" Z="1" CompressedSize="315">789CEDD0010D003010C4A074F3EFF9851C48A0E6FD71060C183060C0800103060C183060C0800103060C183060C080010306EA8D3360C0800103060C183060C0800103060C183060C0800103060C183060C0800103060C183060C0800103060C183060C0800103060C183060C0800103060C183060C0800103060C183060C0800103060C183060C0800103060C183060C0800103060C183060C0800103060C183060C0800103060C183060C0800103060C183060C0800103060C183060C0800103060C183060C0800103060C183060C0800103060C183060C0800103060C183060C0800103060C183060C0800103060C183060C0800103060C183060C0800103060C183060C0800103060C183060C0800103060C183060C0800103060C183060C0800103060C183060C0800103060C183060C08001037185941E23</ImageData>
+          <PixelClass Name="Background" ImagePixelValue="1" KeyValue="195118578" />
+          <PixelClass Name="Nucleus" ImagePixelValue="2" KeyValue="195118579" />
+          <PixelClass Name="Cytoplasm" ImagePixelValue="3" KeyValue="195118580" />
+          <Version Name="img_20201130_211021" KeyValue="195118572" BranchId="195118573" Archived="0" Date="30-Nov-2020 19:11:11" FromVersionable="false">
+            <Owner Name="teihalai" Identifier="16867732" />
+            <GroupAccess Type="1" />
+            <Annotation>NoName</Annotation>
+          </Version>
+        </Image>
+        <SubVolume Name="Background" Handle="0" Type="Image" ImagePixelValue="1" KeyValue="195118584" />
+        <SubVolume Name="Nucleus" Handle="1" Type="Image" ImagePixelValue="2" KeyValue="195118585" />
+        <SubVolume Name="Cytoplasm" Handle="2" Type="Image" ImagePixelValue="3" KeyValue="195118586" />
+        <SurfaceClass Name="Background_Cytoplasm_membrane" SubVolume1Ref="Background" SubVolume2Ref="Cytoplasm" KeyValue="195118587" />
+        <SurfaceClass Name="Cytoplasm_Nucleus_membrane" SubVolume1Ref="Cytoplasm" SubVolume2Ref="Nucleus" KeyValue="195118588" />
+        <SurfaceClass Name="Background_Nucleus_membrane" SubVolume1Ref="Background" SubVolume2Ref="Nucleus" KeyValue="195118589" />
+        <SurfaceDescription NumSamplesX="258" NumSamplesY="258" NumSamplesZ="1" CutoffFrequency="0.3">
+          <VolumeRegion Name="Background0" RegionID="0" SubVolume="Background" Size="31.81347181637875" Unit="um2" />
+          <VolumeRegion Name="Cytoplasm1" RegionID="1" SubVolume="Cytoplasm" Size="412.768944268649" Unit="um2" />
+          <VolumeRegion Name="Nucleus2" RegionID="2" SubVolume="Nucleus" Size="3651.417583914972" Unit="um2" />
+          <MembraneRegion Name="membrane_Background0_Cytoplasm1" VolumeRegion1="Cytoplasm1" VolumeRegion2="Background0" Size="76.25808337352913" Unit="um" />
+          <MembraneRegion Name="membrane_Cytoplasm1_Nucleus2" VolumeRegion1="Nucleus2" VolumeRegion2="Cytoplasm1" Size="63.5598479350979" Unit="um" />
+          <MembraneRegion Name="membrane_Background0_Nucleus2" VolumeRegion1="Nucleus2" VolumeRegion2="Background0" Size="177.86119621399567" Unit="um" />
+        </SurfaceDescription>
+        <Version Name="geom_20201130_211021" KeyValue="195118581" BranchId="195118582" Archived="0" Date="30-Nov-2020 19:11:11" FromVersionable="false">
+          <Owner Name="teihalai" Identifier="16867732" />
+          <GroupAccess Type="1" />
+          <Annotation>NoName</Annotation>
+        </Version>
+      </Geometry>
+      <GeometryContext>
+        <FeatureMapping Feature="Nucleoplasm" GeometryClass="Nucleus" SubVolume="Nucleus" Size="50000.0" VolumePerUnitVolume="1.0">
+          <BoundariesTypes Xm="Flux" Xp="Flux" Ym="Flux" Yp="Flux" Zm="Flux" Zp="Flux" />
+        </FeatureMapping>
+        <FeatureMapping Feature="Cytoplasm" GeometryClass="Cytoplasm" SubVolume="Cytoplasm" Size="50000.0" VolumePerUnitVolume="1.0">
+          <BoundariesTypes Xm="Flux" Xp="Flux" Ym="Flux" Yp="Flux" Zm="Flux" Zp="Flux" />
+        </FeatureMapping>
+      </GeometryContext>
+      <ReactionContext>
+        <LocalizedCompoundSpec LocalizedCompoundRef="Free_sensor" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>0.3</InitialConcentration>
+          <Diffusion>17.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="Bound_sensor_single" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>(((x &gt; 0.0) * (x &lt; 64.0) * (y &gt; 6.6) * (y &lt; 7.0)) * 0.6)</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="Lamin_binding_site" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>(((x &gt; 0.0) * (x &lt; 64.0) * (y &gt; 6.6) * (y &lt; 7.0)) * 1.0)</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="Bound_sensor_dual" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>(((x &gt; 0.0) * (x &lt; 64.0) * (y &gt; 6.6) * (y &lt; 7.0)) * 0.1)</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="Bleach_laser" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>(((x &gt; 27.0) * (x &lt; 37.0) * (y &gt; 6.6) * (y &lt; 7.0)) * 1000.0)</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="Bleached_bound_sensor_dual" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>0.0</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="Bleached_bound_sensor_single" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>0.0</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="Bleached_free_sensor" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>0.0</InitialConcentration>
+          <Diffusion>17.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="Bleach_ROI" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>(((x &gt; 27.0) * (x &lt; 37.0) * (y &gt; 6.6) * (y &lt; 7.0)) * 1.0)</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="ROI_nucleus" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>1.0</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <ReactionSpec ReactionStepRef="Single_binding" ReactionMapping="included" />
+        <ReactionSpec ReactionStepRef="Dual_binding" ReactionMapping="included" />
+        <ReactionSpec ReactionStepRef="Dual_bleaching" ReactionMapping="included" />
+        <ReactionSpec ReactionStepRef="Single_bleaching" ReactionMapping="included" />
+        <ReactionSpec ReactionStepRef="Free_bleaching" ReactionMapping="included" />
+        <ReactionSpec ReactionStepRef="Bleached_dual_binding" ReactionMapping="included" />
+        <ReactionSpec ReactionStepRef="Bleached_single_binding" ReactionMapping="included" />
+      </ReactionContext>
+      <MathDescription Name="FRAP_generated">
+        <Constant Name="_F_">96485.3321</Constant>
+        <Constant Name="_F_nmol_">9.64853321E-5</Constant>
+        <Constant Name="_K_GHK_">1.0E-9</Constant>
+        <Constant Name="_N_pmol_">6.02214179E11</Constant>
+        <Constant Name="_PI_">3.141592653589793</Constant>
+        <Constant Name="_R_">8314.46261815</Constant>
+        <Constant Name="_T_">300.0</Constant>
+        <Constant Name="Bleached_bound_sensor_dual_init_uM">0.0</Constant>
+        <Constant Name="Bleached_bound_sensor_single_init_uM">0.0</Constant>
+        <Constant Name="Bleached_free_sensor_diffusionRate">17.0</Constant>
+        <Constant Name="Bleached_free_sensor_init_uM">0.0</Constant>
+        <Constant Name="Free_sensor_diffusionRate">17.0</Constant>
+        <Constant Name="Free_sensor_init_uM">0.3</Constant>
+        <Constant Name="K_millivolts_per_volt">1000.0</Constant>
+        <Constant Name="Kf_Bleached_dual_binding">0.0055</Constant>
+        <Constant Name="Kf_Bleached_single_binding">1.2</Constant>
+        <Constant Name="Kf_Dual_binding">0.0055</Constant>
+        <Constant Name="Kf_Single_binding">1.2</Constant>
+        <Constant Name="KMOLE">0.001660538783162726</Constant>
+        <Constant Name="Kr_Bleached_dual_binding">0.033</Constant>
+        <Constant Name="Kr_Bleached_single_binding">0.6</Constant>
+        <Constant Name="Kr_Dual_binding">0.033</Constant>
+        <Constant Name="Kr_Single_binding">0.6</Constant>
+        <Constant Name="ROI_nucleus_init_uM">1.0</Constant>
+        <Constant Name="Vmax_Dual_bleaching">0.015</Constant>
+        <Constant Name="Vmax_Free_bleaching">0.06</Constant>
+        <Constant Name="Vmax_Single_bleaching">0.015</Constant>
+        <Constant Name="VolumePerUnitVolume_Cytoplasm">1.0</Constant>
+        <Constant Name="VolumePerUnitVolume_Nucleoplasm">1.0</Constant>
+        <VolumeVariable Name="Bleach_laser" Domain="Nucleus" />
+        <VolumeVariable Name="Bleach_ROI" Domain="Nucleus" />
+        <VolumeVariable Name="Bleached_bound_sensor_dual" Domain="Nucleus" />
+        <VolumeVariable Name="Bleached_bound_sensor_single" Domain="Nucleus" />
+        <VolumeVariable Name="Bleached_free_sensor" Domain="Nucleus" />
+        <VolumeVariable Name="Bound_sensor_dual" Domain="Nucleus" />
+        <VolumeVariable Name="Bound_sensor_single" Domain="Nucleus" />
+        <VolumeVariable Name="Free_sensor" Domain="Nucleus" />
+        <VolumeVariable Name="Lamin_binding_site" Domain="Nucleus" />
+        <VolumeVariable Name="ROI_nucleus" Domain="Nucleus" />
+        <Function Name="Bleach_laser_init_uM" Domain="Nucleus">(((x &gt; 27.0) * (x &lt; 37.0) * (y &gt; 6.6) * (y &lt; 7.0)) * 1000.0)</Function>
+        <Function Name="Bleach_ROI_init_uM" Domain="Nucleus">(((x &gt; 27.0) * (x &lt; 37.0) * (y &gt; 6.6) * (y &lt; 7.0)) * 1.0)</Function>
+        <Function Name="Bound_sensor_dual_init_uM" Domain="Nucleus">(((x &gt; 0.0) * (x &lt; 64.0) * (y &gt; 6.6) * (y &lt; 7.0)) * 0.1)</Function>
+        <Function Name="Bound_sensor_single_init_uM" Domain="Nucleus">(((x &gt; 0.0) * (x &lt; 64.0) * (y &gt; 6.6) * (y &lt; 7.0)) * 0.6)</Function>
+        <Function Name="J_Bleached_dual_binding" Domain="Nucleus">((Kf_Bleached_dual_binding * Bleached_bound_sensor_single) - (Kr_Bleached_dual_binding * Bleached_bound_sensor_dual))</Function>
+        <Function Name="J_Bleached_single_binding" Domain="Nucleus">(((Kf_Bleached_single_binding * Lamin_binding_site) * Bleached_free_sensor) - (Kr_Bleached_single_binding * Bleached_bound_sensor_single))</Function>
+        <Function Name="J_Dual_binding" Domain="Nucleus">((Kf_Dual_binding * Bound_sensor_single) - (Kr_Dual_binding * Bound_sensor_dual))</Function>
+        <Function Name="J_Dual_bleaching" Domain="Nucleus">(Vmax_Dual_bleaching * Bound_sensor_dual * Bleach_laser * ((t &gt; 1.0) &amp;&amp; (t &lt; 1.1)))</Function>
+        <Function Name="J_Free_bleaching" Domain="Nucleus">(Vmax_Free_bleaching * Free_sensor * Bleach_laser * ((t &gt; 1.0) &amp;&amp; (t &lt; 1.1)))</Function>
+        <Function Name="J_Single_binding" Domain="Nucleus">(((Kf_Single_binding * Lamin_binding_site) * Free_sensor) - (Kr_Single_binding * Bound_sensor_single))</Function>
+        <Function Name="J_Single_bleaching" Domain="Nucleus">(Vmax_Single_bleaching * Bound_sensor_single * Bleach_laser * ((t &gt; 1.0) &amp;&amp; (t &lt; 1.1)))</Function>
+        <Function Name="Lamin_binding_site_init_uM" Domain="Nucleus">(((x &gt; 0.0) * (x &lt; 64.0) * (y &gt; 6.6) * (y &lt; 7.0)) * 1.0)</Function>
+        <Function Name="Size_Cytoplasm" Domain="Cytoplasm">(VolumePerUnitVolume_Cytoplasm * vcRegionVolume('Cytoplasm'))</Function>
+        <Function Name="Size_Nucleoplasm" Domain="Nucleus">(VolumePerUnitVolume_Nucleoplasm * vcRegionVolume('Nucleus'))</Function>
+        <Function Name="sobj_Cytoplasm1_Background0_size" Domain="Background_Cytoplasm_membrane">vcRegionArea('Background_Cytoplasm_membrane')</Function>
+        <Function Name="sobj_Nucleus2_Background0_size" Domain="Background_Nucleus_membrane">vcRegionArea('Background_Nucleus_membrane')</Function>
+        <Function Name="sobj_Nucleus2_Cytoplasm1_size" Domain="Cytoplasm_Nucleus_membrane">vcRegionArea('Cytoplasm_Nucleus_membrane')</Function>
+        <Function Name="vobj_Background0_size" Domain="Background">vcRegionVolume('Background')</Function>
+        <Function Name="vobj_Cytoplasm1_size" Domain="Cytoplasm">vcRegionVolume('Cytoplasm')</Function>
+        <Function Name="vobj_Nucleus2_size" Domain="Nucleus">vcRegionVolume('Nucleus')</Function>
+        <CompartmentSubDomain Name="Background">
+          <BoundaryType Boundary="Xm" Type="Value" />
+          <BoundaryType Boundary="Xp" Type="Value" />
+          <BoundaryType Boundary="Ym" Type="Value" />
+          <BoundaryType Boundary="Yp" Type="Value" />
+          <BoundaryType Boundary="Zm" Type="Value" />
+          <BoundaryType Boundary="Zp" Type="Value" />
+        </CompartmentSubDomain>
+        <CompartmentSubDomain Name="Nucleus">
+          <BoundaryType Boundary="Xm" Type="Flux" />
+          <BoundaryType Boundary="Xp" Type="Flux" />
+          <BoundaryType Boundary="Ym" Type="Flux" />
+          <BoundaryType Boundary="Yp" Type="Flux" />
+          <BoundaryType Boundary="Zm" Type="Value" />
+          <BoundaryType Boundary="Zp" Type="Value" />
+          <OdeEquation Name="Bound_sensor_single" SolutionType="Unknown">
+            <Rate>(J_Single_binding - J_Dual_binding - J_Single_bleaching)</Rate>
+            <Initial>Bound_sensor_single_init_uM</Initial>
+          </OdeEquation>
+          <OdeEquation Name="Lamin_binding_site" SolutionType="Unknown">
+            <Rate>( - J_Single_binding - J_Bleached_single_binding)</Rate>
+            <Initial>Lamin_binding_site_init_uM</Initial>
+          </OdeEquation>
+          <OdeEquation Name="Bound_sensor_dual" SolutionType="Unknown">
+            <Rate>(J_Dual_binding - J_Dual_bleaching)</Rate>
+            <Initial>Bound_sensor_dual_init_uM</Initial>
+          </OdeEquation>
+          <OdeEquation Name="Bleach_laser" SolutionType="Unknown">
+            <Rate>( - J_Dual_bleaching - J_Single_bleaching - J_Free_bleaching)</Rate>
+            <Initial>Bleach_laser_init_uM</Initial>
+          </OdeEquation>
+          <OdeEquation Name="Bleached_bound_sensor_dual" SolutionType="Unknown">
+            <Rate>(J_Dual_bleaching + J_Bleached_dual_binding)</Rate>
+            <Initial>Bleached_bound_sensor_dual_init_uM</Initial>
+          </OdeEquation>
+          <OdeEquation Name="Bleached_bound_sensor_single" SolutionType="Unknown">
+            <Rate>(J_Single_bleaching - J_Bleached_dual_binding + J_Bleached_single_binding)</Rate>
+            <Initial>Bleached_bound_sensor_single_init_uM</Initial>
+          </OdeEquation>
+          <OdeEquation Name="Bleach_ROI" SolutionType="Unknown">
+            <Rate>0.0</Rate>
+            <Initial>Bleach_ROI_init_uM</Initial>
+          </OdeEquation>
+          <OdeEquation Name="ROI_nucleus" SolutionType="Unknown">
+            <Rate>0.0</Rate>
+            <Initial>ROI_nucleus_init_uM</Initial>
+          </OdeEquation>
+          <PdeEquation Name="Free_sensor" SolutionType="Unknown">
+            <Rate>( - J_Single_binding - J_Free_bleaching)</Rate>
+            <Diffusion>Free_sensor_diffusionRate</Diffusion>
+            <Initial>Free_sensor_init_uM</Initial>
+          </PdeEquation>
+          <PdeEquation Name="Bleached_free_sensor" SolutionType="Unknown">
+            <Rate>(J_Free_bleaching - J_Bleached_single_binding)</Rate>
+            <Diffusion>Bleached_free_sensor_diffusionRate</Diffusion>
+            <Initial>Bleached_free_sensor_init_uM</Initial>
+          </PdeEquation>
+        </CompartmentSubDomain>
+        <CompartmentSubDomain Name="Cytoplasm">
+          <BoundaryType Boundary="Xm" Type="Flux" />
+          <BoundaryType Boundary="Xp" Type="Flux" />
+          <BoundaryType Boundary="Ym" Type="Flux" />
+          <BoundaryType Boundary="Yp" Type="Flux" />
+          <BoundaryType Boundary="Zm" Type="Value" />
+          <BoundaryType Boundary="Zp" Type="Value" />
+        </CompartmentSubDomain>
+        <MembraneSubDomain Name="Background_Cytoplasm_membrane" InsideCompartment="Background" OutsideCompartment="Cytoplasm">
+          <BoundaryType Boundary="Xm" Type="Value" />
+          <BoundaryType Boundary="Xp" Type="Value" />
+          <BoundaryType Boundary="Ym" Type="Value" />
+          <BoundaryType Boundary="Yp" Type="Value" />
+          <BoundaryType Boundary="Zm" Type="Value" />
+          <BoundaryType Boundary="Zp" Type="Value" />
+        </MembraneSubDomain>
+        <MembraneSubDomain Name="Cytoplasm_Nucleus_membrane" InsideCompartment="Cytoplasm" OutsideCompartment="Nucleus">
+          <BoundaryType Boundary="Xm" Type="Value" />
+          <BoundaryType Boundary="Xp" Type="Value" />
+          <BoundaryType Boundary="Ym" Type="Value" />
+          <BoundaryType Boundary="Yp" Type="Value" />
+          <BoundaryType Boundary="Zm" Type="Value" />
+          <BoundaryType Boundary="Zp" Type="Value" />
+          <JumpCondition Name="Free_sensor">
+            <InFlux>0.0</InFlux>
+            <OutFlux>0.0</OutFlux>
+          </JumpCondition>
+          <JumpCondition Name="Bleached_free_sensor">
+            <InFlux>0.0</InFlux>
+            <OutFlux>0.0</OutFlux>
+          </JumpCondition>
+        </MembraneSubDomain>
+        <MembraneSubDomain Name="Background_Nucleus_membrane" InsideCompartment="Background" OutsideCompartment="Nucleus">
+          <BoundaryType Boundary="Xm" Type="Value" />
+          <BoundaryType Boundary="Xp" Type="Value" />
+          <BoundaryType Boundary="Ym" Type="Value" />
+          <BoundaryType Boundary="Yp" Type="Value" />
+          <BoundaryType Boundary="Zm" Type="Value" />
+          <BoundaryType Boundary="Zp" Type="Value" />
+          <JumpCondition Name="Free_sensor">
+            <InFlux>0.0</InFlux>
+            <OutFlux>0.0</OutFlux>
+          </JumpCondition>
+          <JumpCondition Name="Bleached_free_sensor">
+            <InFlux>0.0</InFlux>
+            <OutFlux>0.0</OutFlux>
+          </JumpCondition>
+        </MembraneSubDomain>
+        <Version Name="FRAP_generated" KeyValue="246962036" BranchId="194816123" Archived="0" Date="08-Nov-2022 15:53:32" FromVersionable="false">
+          <Owner Name="teihalai" Identifier="16867732" />
+          <GroupAccess Type="1" />
+        </Version>
+      </MathDescription>
+      <Simulation Name="Simulation0">
+        <SolverTaskDescription TaskType="Unsteady" UseSymbolicJacobian="false" Solver="Finite Volume Standalone, Regular Grid">
+          <TimeBound StartTime="0.0" EndTime="60.0" />
+          <TimeStep DefaultTime="0.05" MinTime="0.0" MaxTime="0.05" />
+          <ErrorTolerance Absolut="1.0E-9" Relative="1.0E-8" />
+          <OutputOptions OutputTimeStep="0.25" />
+          <NumberProcessors>1</NumberProcessors>
+        </SolverTaskDescription>
+        <MathOverrides />
+        <MeshSpecification>
+          <Size X="256" Y="256" Z="1" />
+        </MeshSpecification>
+        <Version Name="Simulation0" KeyValue="246962059" BranchId="194816158" Archived="0" Date="08-Nov-2022 15:53:33" FromVersionable="false">
+          <Owner Name="teihalai" Identifier="16867732" />
+          <GroupAccess Type="1" />
+        </Version>
+      </Simulation>
+      <SpatialObjects>
+        <SpatialObject Name="vobj_Background0" Type="Volume" subVolume="Background" regionId="0">
+          <QuantityCategoryList>
+            <QuantityCategory Name="VolumeCentroid" Enabled="false" />
+            <QuantityCategory Name="InteriorVelocity" Enabled="false" />
+            <QuantityCategory Name="VolumeRegionSize" Enabled="true" />
+          </QuantityCategoryList>
+        </SpatialObject>
+        <SpatialObject Name="vobj_Cytoplasm1" Type="Volume" subVolume="Cytoplasm" regionId="1">
+          <QuantityCategoryList>
+            <QuantityCategory Name="VolumeCentroid" Enabled="false" />
+            <QuantityCategory Name="InteriorVelocity" Enabled="false" />
+            <QuantityCategory Name="VolumeRegionSize" Enabled="true" />
+          </QuantityCategoryList>
+        </SpatialObject>
+        <SpatialObject Name="vobj_Nucleus2" Type="Volume" subVolume="Nucleus" regionId="2">
+          <QuantityCategoryList>
+            <QuantityCategory Name="VolumeCentroid" Enabled="false" />
+            <QuantityCategory Name="InteriorVelocity" Enabled="false" />
+            <QuantityCategory Name="VolumeRegionSize" Enabled="true" />
+          </QuantityCategoryList>
+        </SpatialObject>
+        <SpatialObject Name="sobj_Cytoplasm1_Background0" Type="Surface" subVolumeInside="Cytoplasm" regionIdInside="1" subVolumeOutside="Background" regionIdOutside="0">
+          <QuantityCategoryList>
+            <QuantityCategory Name="SurfaceNormal" Enabled="false" />
+            <QuantityCategory Name="SurfaceVelocity" Enabled="false" />
+            <QuantityCategory Name="DistanceToSurface" Enabled="false" />
+            <QuantityCategory Name="DirectionToSurface" Enabled="false" />
+            <QuantityCategory Name="SurfaceSize" Enabled="true" />
+          </QuantityCategoryList>
+        </SpatialObject>
+        <SpatialObject Name="sobj_Nucleus2_Cytoplasm1" Type="Surface" subVolumeInside="Nucleus" regionIdInside="2" subVolumeOutside="Cytoplasm" regionIdOutside="1">
+          <QuantityCategoryList>
+            <QuantityCategory Name="SurfaceNormal" Enabled="false" />
+            <QuantityCategory Name="SurfaceVelocity" Enabled="false" />
+            <QuantityCategory Name="DistanceToSurface" Enabled="false" />
+            <QuantityCategory Name="DirectionToSurface" Enabled="false" />
+            <QuantityCategory Name="SurfaceSize" Enabled="true" />
+          </QuantityCategoryList>
+        </SpatialObject>
+        <SpatialObject Name="sobj_Nucleus2_Background0" Type="Surface" subVolumeInside="Nucleus" regionIdInside="2" subVolumeOutside="Background" regionIdOutside="0">
+          <QuantityCategoryList>
+            <QuantityCategory Name="SurfaceNormal" Enabled="false" />
+            <QuantityCategory Name="SurfaceVelocity" Enabled="false" />
+            <QuantityCategory Name="DistanceToSurface" Enabled="false" />
+            <QuantityCategory Name="DirectionToSurface" Enabled="false" />
+            <QuantityCategory Name="SurfaceSize" Enabled="true" />
+          </QuantityCategoryList>
+        </SpatialObject>
+      </SpatialObjects>
+      <Version Name="FRAP" KeyValue="246962038" BranchId="194816148" Archived="0" Date="08-Nov-2022 15:53:33" FromVersionable="false">
+        <Owner Name="teihalai" Identifier="16867732" />
+        <GroupAccess Type="1" />
+      </Version>
+      <MicroscopeMeasurement Name="fluor">
+        <ConvolutionKernel Type="ProjectionZKernel" />
+      </MicroscopeMeasurement>
+    </SimulationSpec>
+    <Version Name="Lamin-SS_dual_binding" KeyValue="246962061" BranchId="228026652" Archived="0" Date="08-Nov-2022 15:53:33" FromVersionable="false">
+      <Owner Name="teihalai" Identifier="16867732" />
+      <GroupAccess Type="0" />
+    </Version>
+    <pathwayModel>
+      <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:bp="http://www.biopax.org/release/biopax-level3.owl#" version="3.0" />
+    </pathwayModel>
+    <relationshipModel>
+      <RMNS version="3.0" />
+    </relationshipModel>
+    <vcmetadata>
+      <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" />
+      <nonrdfAnnotationList />
+      <uriBindingList />
+    </vcmetadata>
+  </BioModel>
+</vcml>
+

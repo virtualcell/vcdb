@@ -1,0 +1,363 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--This biomodel was generated in VCML Version Alpha_Version_7.4.0_build_87-->
+<vcml xmlns="http://sourceforge.net/projects/vcell/vcml" Version="Alpha_Version_7.4.0_build_87">
+  <BioModel Name="Flux vs Current">
+    <Annotation>cloned from 'test-JHL3' owned by user nasrin</Annotation>
+    <Model Name="unnamed">
+      <Annotation>cloned from 'unnamed' owned by user nasrin</Annotation>
+      <ModelParameters>
+        <Parameter Name="Cond" Role="user defined" Unit="nS.um-2">1.867E-6</Parameter>
+      </ModelParameters>
+      <Compound Name="s0" />
+      <Compound Name="s1" />
+      <Feature Name="Matrix" KeyValue="100717441" />
+      <Feature Name="cyto" KeyValue="100717443" />
+      <Membrane PositiveFeature="Matrix" NegativeFeature="cyto" MembraneVoltage="Voltage_Mito_Memb" Name="Mito_Memb" KeyValue="100717445" />
+      <LocalizedCompound Name="H_cyto" CompoundRef="s0" Structure="cyto" OverrideName="true" KeyValue="100717447" />
+      <LocalizedCompound Name="H_mito" CompoundRef="s1" Structure="Matrix" OverrideName="true" KeyValue="100717448" />
+      <FluxStep Name="JFlux" Structure="Mito_Memb" Reversible="true" FluxOption="MolecularAndElectrical" KeyValue="100717449">
+        <Reactant LocalizedCompoundRef="H_mito" Stoichiometry="1" KeyValue="100717450" />
+        <Product LocalizedCompoundRef="H_cyto" Stoichiometry="1" KeyValue="100717451" />
+        <Kinetics KineticsType="GeneralKinetics">
+          <Parameter Name="J" Role="reaction rate" Unit="uM.um.s-1">- ((Cond / (_F_ * unitFactor)) * ( - Voltage_Mito_Memb + ((_R_ * _T_ / _F_) * log((H_cyto / H_mito)))))</Parameter>
+          <Parameter Name="I" Role="inward current density" Unit="pA.um-2">- ((netValence * _F_ * J) * unitFactor)</Parameter>
+          <Parameter Name="netValence" Role="net charge valence" Unit="1">1.0</Parameter>
+          <Parameter Name="unitFactor" Role="electrical unit factor" Unit="pA.s.mol.um-3.uM-1.C-1">(1.0 / 1.0E9)</Parameter>
+        </Kinetics>
+      </FluxStep>
+      <FluxStep Name="NS_Current" Structure="Mito_Memb" Reversible="true" FluxOption="MolecularAndElectrical" KeyValue="100717452">
+        <Reactant LocalizedCompoundRef="H_mito" Stoichiometry="1" KeyValue="100717453" />
+        <Product LocalizedCompoundRef="H_cyto" Stoichiometry="1" KeyValue="100717454" />
+        <Kinetics KineticsType="NernstKinetics">
+          <Parameter Name="I" Role="inward current density" Unit="pA.um-2">(C * ((((_R_ * _T_) / (carrierValence * _F_)) * log((H_cyto / H_mito))) - Voltage_Mito_Memb))</Parameter>
+          <Parameter Name="J" Role="reaction rate" Unit="uM.um.s-1">- ((I / (carrierValence * _F_)) * unitFactor)</Parameter>
+          <Parameter Name="carrierValence" Role="flux carrier valence" Unit="1">1.0</Parameter>
+          <Parameter Name="C" Role="conductivity" Unit="nS.um-2">Cond</Parameter>
+          <Parameter Name="unitFactor" Role="electrical unit factor" Unit="uM.um3.C.s-1.pA-1.mol-1">(1.0E9 / 1.0)</Parameter>
+        </Kinetics>
+      </FluxStep>
+      <Diagram Name="c1" Structure="cyto">
+        <FluxReactionShape NodeReferenceModeAttrTag="full" FluxReactionRef="NS_Current" LocationX="49" LocationY="77" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="H_mito" LocationX="47" LocationY="123" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="H_cyto" LocationX="137" LocationY="129" />
+        <FluxReactionShape NodeReferenceModeAttrTag="full" FluxReactionRef="JFlux" LocationX="37" LocationY="121" />
+        <FluxReactionShape NodeReferenceModeAttrTag="molecule" FluxReactionRef="NS_Current" LocationX="49" LocationY="77" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="H_mito" LocationX="47" LocationY="123" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="H_cyto" LocationX="137" LocationY="129" />
+        <FluxReactionShape NodeReferenceModeAttrTag="molecule" FluxReactionRef="JFlux" LocationX="37" LocationY="121" />
+        <FluxReactionShape NodeReferenceModeAttrTag="rule" FluxReactionRef="NS_Current" LocationX="49" LocationY="77" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="H_mito" LocationX="47" LocationY="123" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="H_cyto" LocationX="137" LocationY="129" />
+        <FluxReactionShape NodeReferenceModeAttrTag="rule" FluxReactionRef="JFlux" LocationX="37" LocationY="121" />
+      </Diagram>
+      <Diagram Name="m0" Structure="Mito_Memb">
+        <FluxReactionShape NodeReferenceModeAttrTag="full" FluxReactionRef="NS_Current" LocationX="49" LocationY="77" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="H_mito" LocationX="47" LocationY="123" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="H_cyto" LocationX="137" LocationY="129" />
+        <FluxReactionShape NodeReferenceModeAttrTag="full" FluxReactionRef="JFlux" LocationX="37" LocationY="121" />
+        <FluxReactionShape NodeReferenceModeAttrTag="molecule" FluxReactionRef="NS_Current" LocationX="49" LocationY="77" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="H_mito" LocationX="47" LocationY="123" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="H_cyto" LocationX="137" LocationY="129" />
+        <FluxReactionShape NodeReferenceModeAttrTag="molecule" FluxReactionRef="JFlux" LocationX="37" LocationY="121" />
+        <FluxReactionShape NodeReferenceModeAttrTag="rule" FluxReactionRef="NS_Current" LocationX="49" LocationY="77" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="H_mito" LocationX="47" LocationY="123" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="H_cyto" LocationX="137" LocationY="129" />
+        <FluxReactionShape NodeReferenceModeAttrTag="rule" FluxReactionRef="JFlux" LocationX="37" LocationY="121" />
+      </Diagram>
+      <Diagram Name="c0" Structure="Matrix">
+        <FluxReactionShape NodeReferenceModeAttrTag="full" FluxReactionRef="NS_Current" LocationX="49" LocationY="77" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="H_mito" LocationX="47" LocationY="123" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="H_cyto" LocationX="137" LocationY="129" />
+        <FluxReactionShape NodeReferenceModeAttrTag="full" FluxReactionRef="JFlux" LocationX="37" LocationY="121" />
+        <FluxReactionShape NodeReferenceModeAttrTag="molecule" FluxReactionRef="NS_Current" LocationX="49" LocationY="77" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="H_mito" LocationX="47" LocationY="123" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="H_cyto" LocationX="137" LocationY="129" />
+        <FluxReactionShape NodeReferenceModeAttrTag="molecule" FluxReactionRef="JFlux" LocationX="37" LocationY="121" />
+        <FluxReactionShape NodeReferenceModeAttrTag="rule" FluxReactionRef="NS_Current" LocationX="49" LocationY="77" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="H_mito" LocationX="47" LocationY="123" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="H_cyto" LocationX="137" LocationY="129" />
+        <FluxReactionShape NodeReferenceModeAttrTag="rule" FluxReactionRef="JFlux" LocationX="37" LocationY="121" />
+      </Diagram>
+      <Version Name="unnamed" KeyValue="100717436" BranchId="100717437" Archived="0" Date="03-Jun-2016 16:26:47" FromVersionable="false">
+        <Owner Name="les" Identifier="6" />
+        <GroupAccess Type="1" />
+        <Annotation>cloned from 'unnamed' owned by user nasrin</Annotation>
+      </Version>
+      <ModelUnitSystem VolumeSubstanceUnit="uM.um3" MembraneSubstanceUnit="molecules" LumpedReactionSubstanceUnit="molecules" VolumeUnit="um3" AreaUnit="um2" LengthUnit="um" TimeUnit="s" />
+    </Model>
+    <SimulationSpec Name="Current" Stochastic="false" UseConcentration="true" RuleBased="false" MassConservationModelReduction="true" InsufficientIterations="false" InsufficientMaxMolecules="false">
+      <NetworkConstraints RbmMaxIteration="3" RbmMaxMoleculesPerSpecies="10" RbmSpeciesLimit="800" RbmReactionsLimit="2500" />
+      <Annotation>cloned from 'Application0' owned by user nasrin</Annotation>
+      <Geometry Name="non-spatial1999406376" Dimension="0">
+        <Annotation>cloned from 'non-spatial1999406376' owned by user nasrin</Annotation>
+        <Extent X="10.0" Y="10.0" Z="10.0" />
+        <Origin X="0.0" Y="0.0" Z="0.0" />
+        <SubVolume Name="Compartment" Handle="0" Type="Compartmental" KeyValue="100717424" />
+        <Version Name="non-spatial1999406376" KeyValue="100717420" BranchId="100717421" Archived="0" Date="03-Jun-2016 16:26:47" FromVersionable="false">
+          <Owner Name="les" Identifier="6" />
+          <GroupAccess Type="1" />
+          <Annotation>cloned from 'non-spatial1999406376' owned by user nasrin</Annotation>
+        </Version>
+      </Geometry>
+      <GeometryContext>
+        <FeatureMapping Feature="Matrix" GeometryClass="Compartment" SubVolume="Compartment" Size="1.0">
+          <BoundariesTypes Xm="Flux" Xp="Flux" Ym="Flux" Yp="Flux" Zm="Flux" Zp="Flux" />
+        </FeatureMapping>
+        <FeatureMapping Feature="cyto" GeometryClass="Compartment" SubVolume="Compartment" Size="1.0">
+          <BoundariesTypes Xm="Flux" Xp="Flux" Ym="Flux" Yp="Flux" Zm="Flux" Zp="Flux" />
+        </FeatureMapping>
+        <MembraneMapping Membrane="Mito_Memb" Size="1.0" CalculateVoltage="true" SpecificCapacitance="0.35" InitialVoltage="-190.0" GeometryClass="Compartment">
+          <BoundariesTypes Xm="Flux" Xp="Flux" Ym="Flux" Yp="Flux" Zm="Flux" Zp="Flux" />
+        </MembraneMapping>
+      </GeometryContext>
+      <ReactionContext>
+        <LocalizedCompoundSpec LocalizedCompoundRef="H_mito" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>0.9</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="H_cyto" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>0.1</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <ReactionSpec ReactionStepRef="JFlux" ReactionMapping="excluded" />
+        <ReactionSpec ReactionStepRef="NS_Current" ReactionMapping="included" />
+      </ReactionContext>
+      <MathDescription Name="Application0_generated">
+        <Annotation>cloned from 'Application0_generated' owned by user nasrin</Annotation>
+        <Constant Name="_F_">96480.0</Constant>
+        <Constant Name="_F_nmol_">9.648E-5</Constant>
+        <Constant Name="_K_GHK_">1.0E-9</Constant>
+        <Constant Name="_N_pmol_">6.02E11</Constant>
+        <Constant Name="_PI_">3.141592653589793</Constant>
+        <Constant Name="_R_">8314.0</Constant>
+        <Constant Name="_T_">300.0</Constant>
+        <Constant Name="C_Mito_Memb">0.35</Constant>
+        <Constant Name="carrierValence">1.0</Constant>
+        <Constant Name="Cond">1.867E-6</Constant>
+        <Constant Name="H_cyto_init_uM">0.1</Constant>
+        <Constant Name="H_mito_init_uM">0.9</Constant>
+        <Constant Name="I_Mito_Memb">0.0</Constant>
+        <Constant Name="K_millivolts_per_volt">1000.0</Constant>
+        <Constant Name="KMOLE">(1.0 / 602.0)</Constant>
+        <Constant Name="Size_cyto">1.0</Constant>
+        <Constant Name="Size_Matrix">1.0</Constant>
+        <Constant Name="Size_Mito_Memb">1.0</Constant>
+        <Constant Name="Voltage_Mito_Memb_init">-190.0</Constant>
+        <VolumeVariable Name="H_cyto" Domain="Compartment" />
+        <VolumeVariable Name="Voltage_Mito_Memb" Domain="Compartment" />
+        <Function Name="C" Domain="Compartment">Cond</Function>
+        <Function Name="device_Mito_Memb.Capacitance" Domain="Compartment">(C_Mito_Memb * Size_Mito_Memb)</Function>
+        <Function Name="F_Mito_Memb" Domain="Compartment">- (I_NS_Current * Size_Mito_Memb)</Function>
+        <Function Name="H_mito" Domain="Compartment">((K_H_mito_total - (Size_cyto * H_cyto)) / Size_Matrix)</Function>
+        <Function Name="I_NS_Current" Domain="Compartment">(C * ((((_R_ * _T_) / (carrierValence * _F_)) * log((H_cyto / H_mito))) - Voltage_Mito_Memb))</Function>
+        <Function Name="J_NS_Current" Domain="Compartment">- ((I_NS_Current / (carrierValence * _F_)) * unitFactor_NS_Current)</Function>
+        <Function Name="K_H_mito_total" Domain="Compartment">((Size_Matrix * H_mito_init_uM) + (Size_cyto * H_cyto_init_uM))</Function>
+        <Function Name="KFlux_Mito_Memb_cyto" Domain="Compartment">(Size_Mito_Memb / Size_cyto)</Function>
+        <Function Name="KFlux_Mito_Memb_Matrix" Domain="Compartment">(Size_Mito_Memb / Size_Matrix)</Function>
+        <Function Name="UnitFactor_mV_pF_s_neg_1_pA_neg_1">(1000.0 / 1.0)</Function>
+        <Function Name="unitFactor_NS_Current" Domain="Compartment">(1.0E9 / 1.0)</Function>
+        <CompartmentSubDomain Name="Compartment">
+          <BoundaryType Boundary="Xm" Type="Value" />
+          <BoundaryType Boundary="Xp" Type="Value" />
+          <BoundaryType Boundary="Ym" Type="Value" />
+          <BoundaryType Boundary="Yp" Type="Value" />
+          <BoundaryType Boundary="Zm" Type="Value" />
+          <BoundaryType Boundary="Zp" Type="Value" />
+          <OdeEquation Name="H_cyto" SolutionType="Unknown">
+            <Rate>(KFlux_Mito_Memb_cyto * J_NS_Current)</Rate>
+            <Initial>H_cyto_init_uM</Initial>
+          </OdeEquation>
+          <OdeEquation Name="Voltage_Mito_Memb" SolutionType="Unknown">
+            <Rate>((UnitFactor_mV_pF_s_neg_1_pA_neg_1 / device_Mito_Memb.Capacitance) * (I_Mito_Memb + (I_NS_Current * Size_Mito_Memb)))</Rate>
+            <Initial>Voltage_Mito_Memb_init</Initial>
+          </OdeEquation>
+        </CompartmentSubDomain>
+        <Version Name="Application0_generated" KeyValue="100717430" BranchId="100717431" Archived="0" Date="03-Jun-2016 16:26:47" FromVersionable="false">
+          <Owner Name="les" Identifier="6" />
+          <GroupAccess Type="1" />
+          <Annotation>cloned from 'Application0_generated' owned by user nasrin</Annotation>
+        </Version>
+      </MathDescription>
+      <Simulation Name="Simulation1">
+        <SolverTaskDescription TaskType="Unsteady" UseSymbolicJacobian="false" Solver="Combined Stiff Solver (IDA/CVODE)">
+          <TimeBound StartTime="0.0" EndTime="1000.0" />
+          <TimeStep DefaultTime="0.1" MinTime="1.0E-8" MaxTime="1.0" />
+          <ErrorTolerance Absolut="1.0E-9" Relative="1.0E-9" />
+          <OutputOptions KeepEvery="1" KeepAtMost="1000" />
+          <NumberProcessors>1</NumberProcessors>
+        </SolverTaskDescription>
+        <MathOverrides />
+        <Version Name="Simulation1" KeyValue="100717482" BranchId="100717483" Archived="0" Date="03-Jun-2016 16:26:48" FromVersionable="false">
+          <Owner Name="les" Identifier="6" />
+          <GroupAccess Type="1" />
+        </Version>
+      </Simulation>
+      <Simulation Name="Copy of Simulation1">
+        <SolverTaskDescription TaskType="Unsteady" UseSymbolicJacobian="false" Solver="Combined Stiff Solver (IDA/CVODE)">
+          <TimeBound StartTime="0.0" EndTime="1.0" />
+          <TimeStep DefaultTime="0.1" MinTime="1.0E-8" MaxTime="1.0" />
+          <ErrorTolerance Absolut="1.0E-9" Relative="1.0E-9" />
+          <OutputOptions KeepEvery="1" KeepAtMost="1000" />
+          <NumberProcessors>1</NumberProcessors>
+        </SolverTaskDescription>
+        <MathOverrides />
+        <Version Name="Copy of Simulation1" KeyValue="100717485" BranchId="100717486" Archived="0" Date="03-Jun-2016 16:26:48" FromVersionable="false">
+          <Owner Name="les" Identifier="6" />
+          <GroupAccess Type="1" />
+        </Version>
+      </Simulation>
+      <Version Name="Current" KeyValue="100717853" BranchId="100717854" Archived="0" Date="03-Jun-2016 16:42:37" FromVersionable="false">
+        <Owner Name="les" Identifier="6" />
+        <GroupAccess Type="1" />
+        <Annotation>cloned from 'Application0' owned by user nasrin</Annotation>
+      </Version>
+      <MicroscopeMeasurement Name="fluor">
+        <ConvolutionKernel Type="ProjectionZKernel" />
+      </MicroscopeMeasurement>
+    </SimulationSpec>
+    <SimulationSpec Name="Molecular Flux" Stochastic="false" UseConcentration="true" RuleBased="false" MassConservationModelReduction="true" InsufficientIterations="false" InsufficientMaxMolecules="false">
+      <NetworkConstraints RbmMaxIteration="3" RbmMaxMoleculesPerSpecies="10" RbmSpeciesLimit="800" RbmReactionsLimit="2500" />
+      <Annotation>(copied from Application0)</Annotation>
+      <Geometry Name="non-spatial309286573" Dimension="0">
+        <Annotation>cloned from 'non-spatial1999406376' owned by user nasrin</Annotation>
+        <Extent X="10.0" Y="10.0" Z="10.0" />
+        <Origin X="0.0" Y="0.0" Z="0.0" />
+        <SubVolume Name="Compartment" Handle="0" Type="Compartmental" KeyValue="100717429" />
+        <Version Name="non-spatial309286573" KeyValue="100717425" BranchId="100717426" Archived="0" Date="03-Jun-2016 16:26:47" FromVersionable="false">
+          <Owner Name="les" Identifier="6" />
+          <GroupAccess Type="1" />
+          <Annotation>cloned from 'non-spatial1999406376' owned by user nasrin</Annotation>
+        </Version>
+      </Geometry>
+      <GeometryContext>
+        <FeatureMapping Feature="Matrix" GeometryClass="Compartment" SubVolume="Compartment" Size="1.0">
+          <BoundariesTypes Xm="Flux" Xp="Flux" Ym="Flux" Yp="Flux" Zm="Flux" Zp="Flux" />
+        </FeatureMapping>
+        <FeatureMapping Feature="cyto" GeometryClass="Compartment" SubVolume="Compartment" Size="1.0">
+          <BoundariesTypes Xm="Flux" Xp="Flux" Ym="Flux" Yp="Flux" Zm="Flux" Zp="Flux" />
+        </FeatureMapping>
+        <MembraneMapping Membrane="Mito_Memb" Size="1.0" CalculateVoltage="true" SpecificCapacitance="0.35" InitialVoltage="-190.0" GeometryClass="Compartment">
+          <BoundariesTypes Xm="Flux" Xp="Flux" Ym="Flux" Yp="Flux" Zm="Flux" Zp="Flux" />
+        </MembraneMapping>
+      </GeometryContext>
+      <ReactionContext>
+        <LocalizedCompoundSpec LocalizedCompoundRef="H_mito" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>0.9</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="H_cyto" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>0.1</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <ReactionSpec ReactionStepRef="JFlux" ReactionMapping="included" />
+        <ReactionSpec ReactionStepRef="NS_Current" ReactionMapping="excluded" />
+      </ReactionContext>
+      <MathDescription Name="Copy of Application0_generated">
+        <Constant Name="_F_">96480.0</Constant>
+        <Constant Name="_F_nmol_">9.648E-5</Constant>
+        <Constant Name="_K_GHK_">1.0E-9</Constant>
+        <Constant Name="_N_pmol_">6.02E11</Constant>
+        <Constant Name="_PI_">3.141592653589793</Constant>
+        <Constant Name="_R_">8314.0</Constant>
+        <Constant Name="_T_">300.0</Constant>
+        <Constant Name="C_Mito_Memb">0.35</Constant>
+        <Constant Name="Cond">1.867E-6</Constant>
+        <Constant Name="H_cyto_init_uM">0.1</Constant>
+        <Constant Name="H_mito_init_uM">0.9</Constant>
+        <Constant Name="I_Mito_Memb">0.0</Constant>
+        <Constant Name="K_millivolts_per_volt">1000.0</Constant>
+        <Constant Name="KMOLE">(1.0 / 602.0)</Constant>
+        <Constant Name="netValence">1.0</Constant>
+        <Constant Name="Size_cyto">1.0</Constant>
+        <Constant Name="Size_Matrix">1.0</Constant>
+        <Constant Name="Size_Mito_Memb">1.0</Constant>
+        <Constant Name="Voltage_Mito_Memb_init">-190.0</Constant>
+        <VolumeVariable Name="H_cyto" Domain="Compartment" />
+        <VolumeVariable Name="Voltage_Mito_Memb" Domain="Compartment" />
+        <Function Name="device_Mito_Memb.Capacitance" Domain="Compartment">(C_Mito_Memb * Size_Mito_Memb)</Function>
+        <Function Name="F_Mito_Memb" Domain="Compartment">- (I_JFlux * Size_Mito_Memb)</Function>
+        <Function Name="H_mito" Domain="Compartment">((K_H_mito_total - (Size_cyto * H_cyto)) / Size_Matrix)</Function>
+        <Function Name="I_JFlux" Domain="Compartment">- ((netValence * _F_ * J_JFlux) * unitFactor_JFlux)</Function>
+        <Function Name="J_JFlux" Domain="Compartment">- ((Cond / (_F_ * unitFactor_JFlux)) * ( - Voltage_Mito_Memb + ((_R_ * _T_ / _F_) * log((H_cyto / H_mito)))))</Function>
+        <Function Name="K_H_mito_total" Domain="Compartment">((Size_Matrix * H_mito_init_uM) + (Size_cyto * H_cyto_init_uM))</Function>
+        <Function Name="KFlux_Mito_Memb_cyto" Domain="Compartment">(Size_Mito_Memb / Size_cyto)</Function>
+        <Function Name="KFlux_Mito_Memb_Matrix" Domain="Compartment">(Size_Mito_Memb / Size_Matrix)</Function>
+        <Function Name="unitFactor_JFlux" Domain="Compartment">(1.0 / 9.99999999E8)</Function>
+        <Function Name="UnitFactor_mV_pF_s_neg_1_pA_neg_1">(1000.0 / 1.0)</Function>
+        <CompartmentSubDomain Name="Compartment">
+          <BoundaryType Boundary="Xm" Type="Value" />
+          <BoundaryType Boundary="Xp" Type="Value" />
+          <BoundaryType Boundary="Ym" Type="Value" />
+          <BoundaryType Boundary="Yp" Type="Value" />
+          <BoundaryType Boundary="Zm" Type="Value" />
+          <BoundaryType Boundary="Zp" Type="Value" />
+          <OdeEquation Name="H_cyto" SolutionType="Unknown">
+            <Rate>(KFlux_Mito_Memb_cyto * J_JFlux)</Rate>
+            <Initial>H_cyto_init_uM</Initial>
+          </OdeEquation>
+          <OdeEquation Name="Voltage_Mito_Memb" SolutionType="Unknown">
+            <Rate>((UnitFactor_mV_pF_s_neg_1_pA_neg_1 / device_Mito_Memb.Capacitance) * (I_Mito_Memb + (I_JFlux * Size_Mito_Memb)))</Rate>
+            <Initial>Voltage_Mito_Memb_init</Initial>
+          </OdeEquation>
+        </CompartmentSubDomain>
+        <Version Name="Copy of Application0_generated" KeyValue="100717433" BranchId="100717434" Archived="0" Date="03-Jun-2016 16:26:47" FromVersionable="false">
+          <Owner Name="les" Identifier="6" />
+          <GroupAccess Type="1" />
+        </Version>
+      </MathDescription>
+      <Simulation Name="Simulation3">
+        <SolverTaskDescription TaskType="Unsteady" UseSymbolicJacobian="false" Solver="Combined Stiff Solver (IDA/CVODE)">
+          <TimeBound StartTime="0.0" EndTime="1000.0" />
+          <TimeStep DefaultTime="0.1" MinTime="1.0E-8" MaxTime="1.0" />
+          <ErrorTolerance Absolut="1.0E-9" Relative="1.0E-9" />
+          <OutputOptions KeepEvery="1" KeepAtMost="1000" />
+          <NumberProcessors>1</NumberProcessors>
+        </SolverTaskDescription>
+        <MathOverrides />
+        <Version Name="Simulation3" KeyValue="100717491" BranchId="100717492" Archived="0" Date="03-Jun-2016 16:26:48" FromVersionable="false">
+          <Owner Name="les" Identifier="6" />
+          <GroupAccess Type="1" />
+        </Version>
+      </Simulation>
+      <Simulation Name="Copy of Simulation3">
+        <SolverTaskDescription TaskType="Unsteady" UseSymbolicJacobian="false" Solver="Combined Stiff Solver (IDA/CVODE)">
+          <TimeBound StartTime="0.0" EndTime="1.0" />
+          <TimeStep DefaultTime="0.1" MinTime="1.0E-8" MaxTime="1.0" />
+          <ErrorTolerance Absolut="1.0E-9" Relative="1.0E-9" />
+          <OutputOptions KeepEvery="1" KeepAtMost="1000" />
+          <NumberProcessors>1</NumberProcessors>
+        </SolverTaskDescription>
+        <MathOverrides />
+        <Version Name="Copy of Simulation3" KeyValue="100717494" BranchId="100717495" Archived="0" Date="03-Jun-2016 16:26:48" FromVersionable="false">
+          <Owner Name="les" Identifier="6" />
+          <GroupAccess Type="1" />
+        </Version>
+      </Simulation>
+      <Version Name="Molecular Flux" KeyValue="100717863" BranchId="100717864" Archived="0" Date="03-Jun-2016 16:42:37" FromVersionable="false">
+        <Owner Name="les" Identifier="6" />
+        <GroupAccess Type="1" />
+        <Annotation>(copied from Application0)</Annotation>
+      </Version>
+      <MicroscopeMeasurement Name="fluor">
+        <ConvolutionKernel Type="ProjectionZKernel" />
+      </MicroscopeMeasurement>
+    </SimulationSpec>
+    <Version Name="Flux vs Current" KeyValue="100717873" BranchId="100717547" Archived="0" Date="03-Jun-2016 16:42:37" FromVersionable="false">
+      <Owner Name="les" Identifier="6" />
+      <GroupAccess Type="0" />
+      <Annotation>cloned from 'test-JHL3' owned by user nasrin</Annotation>
+    </Version>
+    <pathwayModel>
+      <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:bp="http://www.biopax.org/release/biopax-level3.owl#" version="3.0" />
+    </pathwayModel>
+    <relationshipModel>
+      <RMNS version="3.0" />
+    </relationshipModel>
+    <vcmetadata>
+      <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" />
+      <nonrdfAnnotationList />
+      <uriBindingList />
+    </vcmetadata>
+  </BioModel>
+</vcml>
+

@@ -1,0 +1,318 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--This biomodel was generated in VCML Version Alpha_Version_7.4.0_build_87-->
+<vcml xmlns="http://sourceforge.net/projects/vcell/vcml" Version="Alpha_Version_7.4.0_build_87">
+  <BioModel Name="CSHLTut">
+    <Model Name="unnamed">
+      <Compound Name="s0" />
+      <Compound Name="s1" />
+      <Compound Name="s2" />
+      <Compound Name="s3" />
+      <Feature Name="nuc" KeyValue="93926397" />
+      <Feature Name="EC" KeyValue="93926399" />
+      <Feature Name="cyt" KeyValue="93926401" />
+      <Membrane MembraneVoltage="Voltage_pm" Name="pm" KeyValue="93926403" />
+      <Membrane MembraneVoltage="Voltage_nm" Name="nm" KeyValue="93926405" />
+      <LocalizedCompound Name="RanNuc" CompoundRef="s0" Structure="nuc" OverrideName="true" KeyValue="93926407" />
+      <LocalizedCompound Name="RanCyt" CompoundRef="s1" Structure="cyt" OverrideName="true" KeyValue="93926408" />
+      <LocalizedCompound Name="EmptyRan" CompoundRef="s2" Structure="cyt" OverrideName="true" KeyValue="93926409" />
+      <LocalizedCompound Name="Cargo" CompoundRef="s3" Structure="cyt" OverrideName="true" KeyValue="93926410" />
+      <SimpleReaction Structure="nuc" Name="r0" Reversible="true" FluxOption="MolecularOnly" KeyValue="93926411">
+        <Kinetics KineticsType="MassAction">
+          <Parameter Name="J" Role="reaction rate" Unit="uM.s-1">0.0</Parameter>
+          <Parameter Name="Kf" Role="forward rate constant" Unit="uM.s-1">0.0</Parameter>
+          <Parameter Name="Kr" Role="reverse rate constant" Unit="uM.s-1">0.0</Parameter>
+        </Kinetics>
+      </SimpleReaction>
+      <SimpleReaction Structure="cyt" Name="r1" Reversible="true" FluxOption="MolecularOnly" KeyValue="93926412">
+        <Reactant LocalizedCompoundRef="RanCyt" Stoichiometry="1" KeyValue="93926413" />
+        <Product LocalizedCompoundRef="EmptyRan" Stoichiometry="1" KeyValue="93926414" />
+        <Product LocalizedCompoundRef="Cargo" Stoichiometry="1" KeyValue="93926415" />
+        <Kinetics KineticsType="MassAction">
+          <Parameter Name="J" Role="reaction rate" Unit="uM.s-1">((Kf * RanCyt) - ((Kr * EmptyRan) * Cargo))</Parameter>
+          <Parameter Name="Kf" Role="forward rate constant" Unit="s-1">1.0</Parameter>
+          <Parameter Name="Kr" Role="reverse rate constant" Unit="s-1.uM-1">1000.0</Parameter>
+        </Kinetics>
+      </SimpleReaction>
+      <FluxStep Name="flux0" Structure="nm" Reversible="true" FluxOption="MolecularOnly" KeyValue="93926416">
+        <Reactant LocalizedCompoundRef="RanCyt" Stoichiometry="1" KeyValue="93926417" />
+        <Product LocalizedCompoundRef="RanNuc" Stoichiometry="1" KeyValue="93926418" />
+        <Kinetics KineticsType="GeneralPermeabilityKinetics">
+          <Parameter Name="I" Role="inward current density" Unit="pA.um-2">0.0</Parameter>
+          <Parameter Name="J" Role="reaction rate" Unit="uM.um.s-1">(P * (RanCyt - RanNuc))</Parameter>
+          <Parameter Name="carrierValence" Role="flux carrier valence" Unit="1">1.0</Parameter>
+          <Parameter Name="P" Role="permeability" Unit="um.s-1">2.0</Parameter>
+        </Kinetics>
+      </FluxStep>
+      <Diagram Name="c1" Structure="EC">
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="Cargo" LocationX="141" LocationY="36" />
+        <FluxReactionShape NodeReferenceModeAttrTag="full" FluxReactionRef="flux0" LocationX="52" LocationY="130" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="RanCyt" LocationX="101" LocationY="120" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="full" SimpleReactionRef="r1" LocationX="50" LocationY="111" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="full" SimpleReactionRef="r0" LocationX="127" LocationY="34" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="RanNuc" LocationX="100" LocationY="108" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="EmptyRan" LocationX="32" LocationY="35" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="Cargo" LocationX="141" LocationY="36" />
+        <FluxReactionShape NodeReferenceModeAttrTag="molecule" FluxReactionRef="flux0" LocationX="52" LocationY="130" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="RanCyt" LocationX="101" LocationY="120" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="molecule" SimpleReactionRef="r1" LocationX="50" LocationY="111" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="molecule" SimpleReactionRef="r0" LocationX="127" LocationY="34" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="RanNuc" LocationX="100" LocationY="108" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="EmptyRan" LocationX="32" LocationY="35" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="Cargo" LocationX="141" LocationY="36" />
+        <FluxReactionShape NodeReferenceModeAttrTag="rule" FluxReactionRef="flux0" LocationX="52" LocationY="130" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="RanCyt" LocationX="101" LocationY="120" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="rule" SimpleReactionRef="r1" LocationX="50" LocationY="111" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="rule" SimpleReactionRef="r0" LocationX="127" LocationY="34" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="RanNuc" LocationX="100" LocationY="108" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="EmptyRan" LocationX="32" LocationY="35" />
+      </Diagram>
+      <Diagram Name="m0" Structure="pm">
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="Cargo" LocationX="141" LocationY="36" />
+        <FluxReactionShape NodeReferenceModeAttrTag="full" FluxReactionRef="flux0" LocationX="52" LocationY="130" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="RanCyt" LocationX="101" LocationY="120" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="full" SimpleReactionRef="r1" LocationX="50" LocationY="111" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="full" SimpleReactionRef="r0" LocationX="127" LocationY="34" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="RanNuc" LocationX="100" LocationY="108" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="EmptyRan" LocationX="32" LocationY="35" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="Cargo" LocationX="141" LocationY="36" />
+        <FluxReactionShape NodeReferenceModeAttrTag="molecule" FluxReactionRef="flux0" LocationX="52" LocationY="130" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="RanCyt" LocationX="101" LocationY="120" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="molecule" SimpleReactionRef="r1" LocationX="50" LocationY="111" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="molecule" SimpleReactionRef="r0" LocationX="127" LocationY="34" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="RanNuc" LocationX="100" LocationY="108" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="EmptyRan" LocationX="32" LocationY="35" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="Cargo" LocationX="141" LocationY="36" />
+        <FluxReactionShape NodeReferenceModeAttrTag="rule" FluxReactionRef="flux0" LocationX="52" LocationY="130" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="RanCyt" LocationX="101" LocationY="120" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="rule" SimpleReactionRef="r1" LocationX="50" LocationY="111" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="rule" SimpleReactionRef="r0" LocationX="127" LocationY="34" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="RanNuc" LocationX="100" LocationY="108" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="EmptyRan" LocationX="32" LocationY="35" />
+      </Diagram>
+      <Diagram Name="c2" Structure="cyt">
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="Cargo" LocationX="141" LocationY="36" />
+        <FluxReactionShape NodeReferenceModeAttrTag="full" FluxReactionRef="flux0" LocationX="52" LocationY="130" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="RanCyt" LocationX="101" LocationY="120" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="full" SimpleReactionRef="r1" LocationX="50" LocationY="111" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="full" SimpleReactionRef="r0" LocationX="127" LocationY="34" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="RanNuc" LocationX="100" LocationY="108" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="EmptyRan" LocationX="32" LocationY="35" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="Cargo" LocationX="141" LocationY="36" />
+        <FluxReactionShape NodeReferenceModeAttrTag="molecule" FluxReactionRef="flux0" LocationX="52" LocationY="130" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="RanCyt" LocationX="101" LocationY="120" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="molecule" SimpleReactionRef="r1" LocationX="50" LocationY="111" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="molecule" SimpleReactionRef="r0" LocationX="127" LocationY="34" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="RanNuc" LocationX="100" LocationY="108" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="EmptyRan" LocationX="32" LocationY="35" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="Cargo" LocationX="141" LocationY="36" />
+        <FluxReactionShape NodeReferenceModeAttrTag="rule" FluxReactionRef="flux0" LocationX="52" LocationY="130" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="RanCyt" LocationX="101" LocationY="120" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="rule" SimpleReactionRef="r1" LocationX="50" LocationY="111" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="rule" SimpleReactionRef="r0" LocationX="127" LocationY="34" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="RanNuc" LocationX="100" LocationY="108" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="EmptyRan" LocationX="32" LocationY="35" />
+      </Diagram>
+      <Diagram Name="m0" Structure="nm">
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="Cargo" LocationX="141" LocationY="36" />
+        <FluxReactionShape NodeReferenceModeAttrTag="full" FluxReactionRef="flux0" LocationX="52" LocationY="130" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="RanCyt" LocationX="101" LocationY="120" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="full" SimpleReactionRef="r1" LocationX="50" LocationY="111" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="full" SimpleReactionRef="r0" LocationX="127" LocationY="34" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="RanNuc" LocationX="100" LocationY="108" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="EmptyRan" LocationX="32" LocationY="35" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="Cargo" LocationX="141" LocationY="36" />
+        <FluxReactionShape NodeReferenceModeAttrTag="molecule" FluxReactionRef="flux0" LocationX="52" LocationY="130" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="RanCyt" LocationX="101" LocationY="120" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="molecule" SimpleReactionRef="r1" LocationX="50" LocationY="111" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="molecule" SimpleReactionRef="r0" LocationX="127" LocationY="34" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="RanNuc" LocationX="100" LocationY="108" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="EmptyRan" LocationX="32" LocationY="35" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="Cargo" LocationX="141" LocationY="36" />
+        <FluxReactionShape NodeReferenceModeAttrTag="rule" FluxReactionRef="flux0" LocationX="52" LocationY="130" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="RanCyt" LocationX="101" LocationY="120" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="rule" SimpleReactionRef="r1" LocationX="50" LocationY="111" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="rule" SimpleReactionRef="r0" LocationX="127" LocationY="34" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="RanNuc" LocationX="100" LocationY="108" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="EmptyRan" LocationX="32" LocationY="35" />
+      </Diagram>
+      <Diagram Name="c0" Structure="nuc">
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="Cargo" LocationX="141" LocationY="36" />
+        <FluxReactionShape NodeReferenceModeAttrTag="full" FluxReactionRef="flux0" LocationX="52" LocationY="130" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="RanCyt" LocationX="101" LocationY="120" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="full" SimpleReactionRef="r1" LocationX="50" LocationY="111" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="full" SimpleReactionRef="r0" LocationX="127" LocationY="34" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="RanNuc" LocationX="100" LocationY="108" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="EmptyRan" LocationX="32" LocationY="35" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="Cargo" LocationX="141" LocationY="36" />
+        <FluxReactionShape NodeReferenceModeAttrTag="molecule" FluxReactionRef="flux0" LocationX="52" LocationY="130" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="RanCyt" LocationX="101" LocationY="120" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="molecule" SimpleReactionRef="r1" LocationX="50" LocationY="111" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="molecule" SimpleReactionRef="r0" LocationX="127" LocationY="34" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="RanNuc" LocationX="100" LocationY="108" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="EmptyRan" LocationX="32" LocationY="35" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="Cargo" LocationX="141" LocationY="36" />
+        <FluxReactionShape NodeReferenceModeAttrTag="rule" FluxReactionRef="flux0" LocationX="52" LocationY="130" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="RanCyt" LocationX="101" LocationY="120" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="rule" SimpleReactionRef="r1" LocationX="50" LocationY="111" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="rule" SimpleReactionRef="r0" LocationX="127" LocationY="34" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="RanNuc" LocationX="100" LocationY="108" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="EmptyRan" LocationX="32" LocationY="35" />
+      </Diagram>
+      <Version Name="unnamed" KeyValue="93926390" BranchId="93926391" Archived="0" Date="03-Mar-2015 09:49:43" FromVersionable="false">
+        <Owner Name="cihanka" Identifier="93926185" />
+        <GroupAccess Type="1" />
+      </Version>
+      <ModelUnitSystem VolumeSubstanceUnit="uM.um3" MembraneSubstanceUnit="molecules" LumpedReactionSubstanceUnit="molecules" VolumeUnit="um3" AreaUnit="um2" LengthUnit="um" TimeUnit="s" />
+    </Model>
+    <SimulationSpec Name="FirstODE" Stochastic="false" UseConcentration="true" RuleBased="false" MassConservationModelReduction="true" InsufficientIterations="false" InsufficientMaxMolecules="false">
+      <NetworkConstraints RbmMaxIteration="1" RbmMaxMoleculesPerSpecies="10" RbmSpeciesLimit="800" RbmReactionsLimit="2500" />
+      <Annotation />
+      <Geometry Name="non-spatial" Dimension="0">
+        <Extent X="10.0" Y="10.0" Z="10.0" />
+        <Origin X="0.0" Y="0.0" Z="0.0" />
+        <SubVolume Name="Compartment" Handle="0" Type="Compartmental" KeyValue="93926386" />
+        <Version Name="non-spatial" KeyValue="93926382" BranchId="93926383" Archived="0" Date="03-Mar-2015 09:49:43" FromVersionable="false">
+          <Owner Name="cihanka" Identifier="93926185" />
+          <GroupAccess Type="1" />
+        </Version>
+      </Geometry>
+      <GeometryContext>
+        <FeatureMapping Feature="nuc" GeometryClass="Compartment" SubVolume="Compartment" Size="5000.0">
+          <BoundariesTypes Xm="Flux" Xp="Flux" Ym="Flux" Yp="Flux" Zm="Flux" Zp="Flux" />
+        </FeatureMapping>
+        <FeatureMapping Feature="EC" GeometryClass="Compartment" SubVolume="Compartment" Size="50000.0">
+          <BoundariesTypes Xm="Flux" Xp="Flux" Ym="Flux" Yp="Flux" Zm="Flux" Zp="Flux" />
+        </FeatureMapping>
+        <FeatureMapping Feature="cyt" GeometryClass="Compartment" SubVolume="Compartment" Size="50000.0">
+          <BoundariesTypes Xm="Flux" Xp="Flux" Ym="Flux" Yp="Flux" Zm="Flux" Zp="Flux" />
+        </FeatureMapping>
+        <MembraneMapping Membrane="pm" Size="6563.0" CalculateVoltage="false" SpecificCapacitance="1.0" InitialVoltage="0.0" GeometryClass="Compartment">
+          <BoundariesTypes Xm="Flux" Xp="Flux" Ym="Flux" Yp="Flux" Zm="Flux" Zp="Flux" />
+        </MembraneMapping>
+        <MembraneMapping Membrane="nm" Size="656.0" CalculateVoltage="false" SpecificCapacitance="1.0" InitialVoltage="0.0" GeometryClass="Compartment">
+          <BoundariesTypes Xm="Flux" Xp="Flux" Ym="Flux" Yp="Flux" Zm="Flux" Zp="Flux" />
+        </MembraneMapping>
+      </GeometryContext>
+      <ReactionContext>
+        <LocalizedCompoundSpec LocalizedCompoundRef="RanNuc" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>4.5E-5</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="RanCyt" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>0.0</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="EmptyRan" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>0.0</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="Cargo" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>0.0</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <ReactionSpec ReactionStepRef="r0" ReactionMapping="included" />
+        <ReactionSpec ReactionStepRef="r1" ReactionMapping="included" />
+        <ReactionSpec ReactionStepRef="flux0" ReactionMapping="included" />
+      </ReactionContext>
+      <MathDescription Name="FirstODE_generated">
+        <Constant Name="_F_">96480.0</Constant>
+        <Constant Name="_F_nmol_">9.648E-5</Constant>
+        <Constant Name="_K_GHK_">1.0E-9</Constant>
+        <Constant Name="_N_pmol_">6.02E11</Constant>
+        <Constant Name="_PI_">3.141592653589793</Constant>
+        <Constant Name="_R_">8314.0</Constant>
+        <Constant Name="_T_">300.0</Constant>
+        <Constant Name="Cargo_init_uM">0.0</Constant>
+        <Constant Name="carrierValence">1.0</Constant>
+        <Constant Name="EmptyRan_init_uM">0.0</Constant>
+        <Constant Name="J_r0">0.0</Constant>
+        <Constant Name="K_millivolts_per_volt">1000.0</Constant>
+        <Constant Name="Kf_r0">0.0</Constant>
+        <Constant Name="Kf_r1">1.0</Constant>
+        <Constant Name="KMOLE">(1.0 / 602.0)</Constant>
+        <Constant Name="Kr_r0">0.0</Constant>
+        <Constant Name="Kr_r1">1000.0</Constant>
+        <Constant Name="P">2.0</Constant>
+        <Constant Name="RanCyt_init_uM">0.0</Constant>
+        <Constant Name="RanNuc_init_uM">4.5E-5</Constant>
+        <Constant Name="Size_cyt">50000.0</Constant>
+        <Constant Name="Size_EC">50000.0</Constant>
+        <Constant Name="Size_nm">656.0</Constant>
+        <Constant Name="Size_nuc">5000.0</Constant>
+        <Constant Name="Size_pm">6563.0</Constant>
+        <Constant Name="Voltage_nm">0.0</Constant>
+        <Constant Name="Voltage_pm">0.0</Constant>
+        <VolumeVariable Name="Cargo" Domain="Compartment" />
+        <VolumeVariable Name="RanCyt" Domain="Compartment" />
+        <Function Name="EmptyRan" Domain="Compartment">((K_EmptyRan_total + (Size_cyt * Cargo)) / Size_cyt)</Function>
+        <Function Name="J_flux0" Domain="Compartment">(P * (RanCyt - RanNuc))</Function>
+        <Function Name="J_r1" Domain="Compartment">((Kf_r1 * RanCyt) - ((Kr_r1 * EmptyRan) * Cargo))</Function>
+        <Function Name="K_EmptyRan_total" Domain="Compartment">((Size_cyt * EmptyRan_init_uM) - (Size_cyt * Cargo_init_uM))</Function>
+        <Function Name="K_RanNuc_total" Domain="Compartment">((Size_cyt * Cargo_init_uM) + (Size_nuc * RanNuc_init_uM) + (Size_cyt * RanCyt_init_uM))</Function>
+        <Function Name="KFlux_nm_cyt" Domain="Compartment">(Size_nm / Size_cyt)</Function>
+        <Function Name="KFlux_nm_nuc" Domain="Compartment">(Size_nm / Size_nuc)</Function>
+        <Function Name="RanNuc" Domain="Compartment">(( - (Size_cyt * Cargo) + K_RanNuc_total - (Size_cyt * RanCyt)) / Size_nuc)</Function>
+        <CompartmentSubDomain Name="Compartment">
+          <BoundaryType Boundary="Xm" Type="Value" />
+          <BoundaryType Boundary="Xp" Type="Value" />
+          <BoundaryType Boundary="Ym" Type="Value" />
+          <BoundaryType Boundary="Yp" Type="Value" />
+          <BoundaryType Boundary="Zm" Type="Value" />
+          <BoundaryType Boundary="Zp" Type="Value" />
+          <OdeEquation Name="RanCyt" SolutionType="Unknown">
+            <Rate>( - (KFlux_nm_cyt * J_flux0) - J_r1)</Rate>
+            <Initial>RanCyt_init_uM</Initial>
+          </OdeEquation>
+          <OdeEquation Name="Cargo" SolutionType="Unknown">
+            <Rate>J_r1</Rate>
+            <Initial>Cargo_init_uM</Initial>
+          </OdeEquation>
+        </CompartmentSubDomain>
+        <Version Name="FirstODE_generated" KeyValue="93926387" BranchId="93926388" Archived="0" Date="03-Mar-2015 09:49:43" FromVersionable="false">
+          <Owner Name="cihanka" Identifier="93926185" />
+          <GroupAccess Type="1" />
+        </Version>
+      </MathDescription>
+      <Simulation Name="Simulation0">
+        <SolverTaskDescription TaskType="Unsteady" UseSymbolicJacobian="false" Solver="Combined Stiff Solver (IDA/CVODE)">
+          <TimeBound StartTime="0.0" EndTime="15.0" />
+          <TimeStep DefaultTime="0.1" MinTime="1.0E-8" MaxTime="1.0" />
+          <ErrorTolerance Absolut="1.0E-9" Relative="1.0E-9" />
+          <OutputOptions OutputTimeStep="0.2" />
+          <NumberProcessors>1</NumberProcessors>
+        </SolverTaskDescription>
+        <MathOverrides>
+          <Constant Name="Kr_r1">(Kf_r1 / 1000.0)</Constant>
+          <Constant Name="Kf_r1" ConstantArraySpec="1001">0.1 to 10.0, log, 3 values</Constant>
+        </MathOverrides>
+        <Version Name="Simulation0" KeyValue="93926442" BranchId="93926443" Archived="0" Date="03-Mar-2015 09:49:43" FromVersionable="false">
+          <Owner Name="cihanka" Identifier="93926185" />
+          <GroupAccess Type="1" />
+        </Version>
+      </Simulation>
+      <Version Name="FirstODE" KeyValue="93926426" BranchId="93926427" Archived="0" Date="03-Mar-2015 09:49:43" FromVersionable="false">
+        <Owner Name="cihanka" Identifier="93926185" />
+        <GroupAccess Type="1" />
+      </Version>
+      <MicroscopeMeasurement Name="fluor">
+        <ConvolutionKernel Type="ProjectionZKernel" />
+      </MicroscopeMeasurement>
+    </SimulationSpec>
+    <Version Name="CSHLTut" KeyValue="93926445" BranchId="93926446" Archived="0" Date="03-Mar-2015 09:49:43" FromVersionable="false">
+      <Owner Name="cihanka" Identifier="93926185" />
+      <GroupAccess Type="1" />
+    </Version>
+    <pathwayModel>
+      <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:bp="http://www.biopax.org/release/biopax-level3.owl#" version="3.0" />
+    </pathwayModel>
+    <relationshipModel>
+      <RMNS version="3.0" />
+    </relationshipModel>
+    <vcmetadata>
+      <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" />
+      <nonrdfAnnotationList />
+      <uriBindingList />
+    </vcmetadata>
+  </BioModel>
+</vcml>
+

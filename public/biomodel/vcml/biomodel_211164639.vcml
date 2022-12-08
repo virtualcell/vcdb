@@ -1,0 +1,454 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--This biomodel was generated in VCML Version Alpha_Version_7.4.0_build_87-->
+<vcml xmlns="http://sourceforge.net/projects/vcell/vcml" Version="Alpha_Version_7.4.0_build_87">
+  <BioModel Name="CM_PM12648679_MB3::Protein_phosphorylation_sigmoidal">
+    <Annotation>cloned from 'CM_PM12648679_MB3::Protein_phosphorylation_sigmoidal' owned by user ModelBrick
+cloned from 'Tyson_2003_1c' owned by user mblinov</Annotation>
+    <Model Name="model">
+      <Annotation>cloned from 'model' owned by user ModelBrick
+cloned from 'model' owned by user mblinov</Annotation>
+      <ModelParameters>
+        <Parameter Name="km_Protein_phos_sig" Role="user defined" Unit="uM">1.0</Parameter>
+        <Parameter Name="Vmax_Protein_phos_sig" Role="user defined" Unit="uM.s-1">S</Parameter>
+        <Parameter Name="km_Protein_dephos_sig" Role="user defined" Unit="uM">1.0</Parameter>
+        <Parameter Name="Vmax_Protein_dephos_sig" Role="user defined" Unit="uM.s-1">1.0</Parameter>
+      </ModelParameters>
+      <Compound Name="s5" />
+      <Compound Name="s6" />
+      <Compound Name="s7" />
+      <Feature Name="c0" KeyValue="211164525" />
+      <LocalizedCompound Name="S" CompoundRef="s5" Structure="c0" OverrideName="true" KeyValue="211164527">
+        <SpeciesPattern>
+          <MolecularTypePattern Index="1">
+            <MolecularType Name="S" />
+          </MolecularTypePattern>
+        </SpeciesPattern>
+      </LocalizedCompound>
+      <LocalizedCompound Name="R" CompoundRef="s6" Structure="c0" OverrideName="true" KeyValue="211164528">
+        <SpeciesPattern>
+          <MolecularTypePattern Index="1">
+            <MolecularType Name="R" />
+            <ComponentPattern MolecularComponent="mod" ComponentStatePattern="U" BondType="-" />
+          </MolecularTypePattern>
+        </SpeciesPattern>
+      </LocalizedCompound>
+      <LocalizedCompound Name="PR" CompoundRef="s7" Structure="c0" OverrideName="true" KeyValue="211164529">
+        <SpeciesPattern>
+          <MolecularTypePattern Index="1">
+            <MolecularType Name="R" />
+            <ComponentPattern MolecularComponent="mod" ComponentStatePattern="P" BondType="-" />
+          </MolecularTypePattern>
+        </SpeciesPattern>
+      </LocalizedCompound>
+      <SimpleReaction Structure="c0" Name="protein_phos" Reversible="false" FluxOption="MolecularOnly" KeyValue="211164530">
+        <Reactant LocalizedCompoundRef="R" Stoichiometry="1" KeyValue="211164531" />
+        <Product LocalizedCompoundRef="PR" Stoichiometry="1" KeyValue="211164532" />
+        <Kinetics KineticsType="HMMIrreversible">
+          <Parameter Name="J" Role="reaction rate" Unit="uM.s-1">((Vmax * R) / (Km + R))</Parameter>
+          <Parameter Name="Km" Role="Km (1/2 max)" Unit="uM">km_Protein_phos_sig</Parameter>
+          <Parameter Name="Vmax" Role="max reaction rate" Unit="uM.s-1">Vmax_Protein_phos_sig</Parameter>
+        </Kinetics>
+      </SimpleReaction>
+      <SimpleReaction Structure="c0" Name="protein_dephos" Reversible="true" FluxOption="MolecularOnly" KeyValue="211164533">
+        <Reactant LocalizedCompoundRef="PR" Stoichiometry="1" KeyValue="211164534" />
+        <Product LocalizedCompoundRef="R" Stoichiometry="1" KeyValue="211164535" />
+        <Kinetics KineticsType="HMMIrreversible">
+          <Parameter Name="J" Role="reaction rate" Unit="uM.s-1">((Vmax * PR) / (Km + PR))</Parameter>
+          <Parameter Name="Km" Role="Km (1/2 max)" Unit="uM">km_Protein_dephos_sig</Parameter>
+          <Parameter Name="Vmax" Role="max reaction rate" Unit="uM.s-1">Vmax_Protein_dephos_sig</Parameter>
+        </Kinetics>
+      </SimpleReaction>
+      <RbmModelContainer>
+        <MolecularTypeList>
+          <MolecularType Name="R" AnchorAll="true">
+            <MolecularComponent Name="mod" Index="1">
+              <AllowableState Name="P" />
+              <AllowableState Name="U" />
+            </MolecularComponent>
+          </MolecularType>
+          <MolecularType Name="S" AnchorAll="true" />
+        </MolecularTypeList>
+        <RbmObservableList>
+          <Observable Name="O0_R_tot" ObservableType="Molecules" Sequence="Multimolecular" LengthEqual="2" LengthGreater="1" Structure="c0">
+            <SpeciesPattern>
+              <MolecularTypePattern Index="1">
+                <MolecularType Name="R" />
+                <ComponentPattern MolecularComponent="mod" Any="true" BondType="?" />
+              </MolecularTypePattern>
+            </SpeciesPattern>
+          </Observable>
+          <Observable Name="O0_S_tot" ObservableType="Molecules" Sequence="Multimolecular" LengthEqual="2" LengthGreater="1" Structure="c0">
+            <SpeciesPattern>
+              <MolecularTypePattern Index="1">
+                <MolecularType Name="S" />
+              </MolecularTypePattern>
+            </SpeciesPattern>
+          </Observable>
+        </RbmObservableList>
+      </RbmModelContainer>
+      <Diagram Name="c0" Structure="c0">
+        <SimpleReactionShape NodeReferenceModeAttrTag="full" SimpleReactionRef="protein_phos" LocationX="222" LocationY="138" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="PR" LocationX="328" LocationY="152" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="R" LocationX="127" LocationY="164" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="S" LocationX="218" LocationY="92" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="full" SimpleReactionRef="protein_dephos" LocationX="236" LocationY="200" />
+      </Diagram>
+      <Version Name="model" KeyValue="211164520" BranchId="211164256" Archived="0" Date="14-Jul-2021 17:50:10" FromVersionable="false">
+        <Owner Name="Sanyu" Identifier="210592880" />
+        <GroupAccess Type="1" />
+        <Annotation>cloned from 'model' owned by user ModelBrick
+cloned from 'model' owned by user mblinov</Annotation>
+      </Version>
+      <ModelUnitSystem VolumeSubstanceUnit="uM.um3" MembraneSubstanceUnit="molecules" LumpedReactionSubstanceUnit="molecules" VolumeUnit="um3" AreaUnit="um2" LengthUnit="um" TimeUnit="s" />
+    </Model>
+    <SimulationSpec Name="Sigmoidal" Stochastic="false" UseConcentration="true" RuleBased="false" MassConservationModelReduction="true" InsufficientIterations="false" InsufficientMaxMolecules="false">
+      <NetworkConstraints RbmMaxIteration="3" RbmMaxMoleculesPerSpecies="10" RbmSpeciesLimit="800" RbmReactionsLimit="2500">
+        <MaxStoichiometry MolecularType="R" Integer="100" />
+        <MaxStoichiometry MolecularType="S" Integer="100" />
+      </NetworkConstraints>
+      <Annotation>cloned from 'Sigmoidal' owned by user ModelBrick</Annotation>
+      <Geometry Name="non-spatial1604575605" Dimension="0">
+        <Annotation>cloned from 'non-spatial1604575605' owned by user ModelBrick
+cloned from 'non-spatial1604575605' owned by user mblinov</Annotation>
+        <Extent X="10.0" Y="10.0" Z="10.0" />
+        <Origin X="0.0" Y="0.0" Z="0.0" />
+        <SubVolume Name="Compartment" Handle="0" Type="Compartmental" KeyValue="211164251" />
+        <Version Name="non-spatial1604575605" KeyValue="211164247" BranchId="211164248" Archived="0" Date="14-Jul-2021 17:44:43" FromVersionable="false">
+          <Owner Name="Sanyu" Identifier="210592880" />
+          <GroupAccess Type="1" />
+          <Annotation>cloned from 'non-spatial1604575605' owned by user ModelBrick
+cloned from 'non-spatial1604575605' owned by user mblinov</Annotation>
+        </Version>
+      </Geometry>
+      <GeometryContext>
+        <FeatureMapping Feature="c0" GeometryClass="Compartment" SubVolume="Compartment" Size="50000.0">
+          <BoundariesTypes Xm="Flux" Xp="Flux" Ym="Flux" Yp="Flux" Zm="Flux" Zp="Flux" />
+        </FeatureMapping>
+      </GeometryContext>
+      <ReactionContext>
+        <LocalizedCompoundSpec LocalizedCompoundRef="S" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>t</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="R" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>1.0</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="PR" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>0.0</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <ReactionSpec ReactionStepRef="protein_phos" ReactionMapping="included" />
+        <ReactionSpec ReactionStepRef="protein_dephos" ReactionMapping="included" />
+      </ReactionContext>
+      <MathDescription Name="c_Sigmoidal_generated">
+        <Annotation>cloned from 'c_Sigmoidal_generated' owned by user ModelBrick
+cloned from 'c_Sigmoidal_generated' owned by user mblinov</Annotation>
+        <Constant Name="_F_">96485.3321</Constant>
+        <Constant Name="_F_nmol_">9.64853321E-5</Constant>
+        <Constant Name="_K_GHK_">1.0E-9</Constant>
+        <Constant Name="_N_pmol_">6.02214179E11</Constant>
+        <Constant Name="_PI_">3.141592653589793</Constant>
+        <Constant Name="_R_">8314.46261815</Constant>
+        <Constant Name="_T_">300.0</Constant>
+        <Constant Name="K_millivolts_per_volt">1000.0</Constant>
+        <Constant Name="km_Protein_dephos_sig">1.0</Constant>
+        <Constant Name="km_Protein_phos_sig">1.0</Constant>
+        <Constant Name="KMOLE">0.001660538783162726</Constant>
+        <Constant Name="PR_init_uM">0.0</Constant>
+        <Constant Name="R_init_uM">1.0</Constant>
+        <Constant Name="Size_c0">50000.0</Constant>
+        <Constant Name="Vmax_Protein_dephos_sig">1.0</Constant>
+        <VolumeVariable Name="PR" Domain="Compartment" />
+        <Function Name="J_protein_dephos" Domain="Compartment">((Vmax_protein_dephos * PR) / (Km_protein_dephos + PR))</Function>
+        <Function Name="J_protein_phos" Domain="Compartment">((Vmax_protein_phos * R) / (Km_protein_phos + R))</Function>
+        <Function Name="K_R_total" Domain="Compartment">((Size_c0 * R_init_uM) + (Size_c0 * PR_init_uM))</Function>
+        <Function Name="K_S_total" Domain="Compartment">(Size_c0 * S_init_uM)</Function>
+        <Function Name="Km_protein_dephos" Domain="Compartment">km_Protein_dephos_sig</Function>
+        <Function Name="Km_protein_phos" Domain="Compartment">km_Protein_phos_sig</Function>
+        <Function Name="R" Domain="Compartment">((K_R_total - (Size_c0 * PR)) / Size_c0)</Function>
+        <Function Name="S" Domain="Compartment">(K_S_total / Size_c0)</Function>
+        <Function Name="S_init_uM" Domain="Compartment">t</Function>
+        <Function Name="Vmax_protein_dephos" Domain="Compartment">Vmax_Protein_dephos_sig</Function>
+        <Function Name="Vmax_protein_phos" Domain="Compartment">Vmax_Protein_phos_sig</Function>
+        <Function Name="Vmax_Protein_phos_sig">S</Function>
+        <CompartmentSubDomain Name="Compartment">
+          <BoundaryType Boundary="Xm" Type="Value" />
+          <BoundaryType Boundary="Xp" Type="Value" />
+          <BoundaryType Boundary="Ym" Type="Value" />
+          <BoundaryType Boundary="Yp" Type="Value" />
+          <BoundaryType Boundary="Zm" Type="Value" />
+          <BoundaryType Boundary="Zp" Type="Value" />
+          <OdeEquation Name="PR" SolutionType="Unknown">
+            <Rate>(J_protein_phos - J_protein_dephos)</Rate>
+            <Initial>PR_init_uM</Initial>
+          </OdeEquation>
+        </CompartmentSubDomain>
+        <Version Name="c_Sigmoidal_generated" KeyValue="211164518" BranchId="211164253" Archived="0" Date="14-Jul-2021 17:50:10" FromVersionable="false">
+          <Owner Name="Sanyu" Identifier="210592880" />
+          <GroupAccess Type="1" />
+          <Annotation>cloned from 'c_Sigmoidal_generated' owned by user ModelBrick
+cloned from 'c_Sigmoidal_generated' owned by user mblinov</Annotation>
+        </Version>
+      </MathDescription>
+      <Simulation Name="Simulation0">
+        <Annotation>cloned from 'Simulation0' owned by user ModelBrick</Annotation>
+        <SolverTaskDescription TaskType="Unsteady" UseSymbolicJacobian="false" Solver="Combined Stiff Solver (IDA/CVODE)">
+          <TimeBound StartTime="0.0" EndTime="10.0" />
+          <TimeStep DefaultTime="0.1" MinTime="1.0E-8" MaxTime="1.0" />
+          <ErrorTolerance Absolut="1.0E-9" Relative="1.0E-9" />
+          <OutputOptions KeepEvery="1" KeepAtMost="1000" />
+          <NumberProcessors>1</NumberProcessors>
+        </SolverTaskDescription>
+        <MathOverrides>
+          <Constant Name="Vmax_protein_dephos" ConstantArraySpec="1001">0.1 to 10.0, 10 values</Constant>
+        </MathOverrides>
+        <Version Name="Simulation0" KeyValue="211164546" BranchId="211164284" Archived="0" Date="14-Jul-2021 17:50:10" FromVersionable="false">
+          <Owner Name="Sanyu" Identifier="210592880" />
+          <GroupAccess Type="1" />
+          <Annotation>cloned from 'Simulation0' owned by user ModelBrick</Annotation>
+        </Version>
+      </Simulation>
+      <Version Name="Sigmoidal" KeyValue="211164631" BranchId="211164275" Archived="0" Date="14-Jul-2021 17:51:28" FromVersionable="false">
+        <Owner Name="Sanyu" Identifier="210592880" />
+        <GroupAccess Type="1" />
+        <Annotation>cloned from 'Sigmoidal' owned by user ModelBrick</Annotation>
+      </Version>
+      <MicroscopeMeasurement Name="fluor">
+        <ConvolutionKernel Type="ProjectionZKernel" />
+      </MicroscopeMeasurement>
+    </SimulationSpec>
+    <Version Name="CM_PM12648679_MB3::Protein_phosphorylation_sigmoidal" KeyValue="211164639" BranchId="211164287" Archived="0" Date="14-Jul-2021 17:51:28" FromVersionable="false">
+      <Owner Name="Sanyu" Identifier="210592880" />
+      <GroupAccess Type="0" />
+      <Annotation>cloned from 'CM_PM12648679_MB3::Protein_phosphorylation_sigmoidal' owned by user ModelBrick
+cloned from 'Tyson_2003_1c' owned by user mblinov</Annotation>
+    </Version>
+    <pathwayModel>
+      <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:bp="http://www.biopax.org/release/biopax-level3.owl#" version="3.0" />
+    </pathwayModel>
+    <relationshipModel>
+      <RMNS version="3.0" />
+    </relationshipModel>
+    <vcmetadata>
+      <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
+        <rdf:Description rdf:about="http://sourceforge.net/projects/vcell/vcml/cbit.vcell.biomodel.BioModel/metaid_49572951">
+          <bqbiol:hasProperty xmlns:bqbiol="http://biomodels.net/biology-qualifiers/">
+            <rdf:Bag rdf:nodeID="node0">
+              <rdf:_1>
+                <rdf:Description rdf:about="urn:miriam:mamo:MAMO_0000046" />
+              </rdf:_1>
+            </rdf:Bag>
+          </bqbiol:hasProperty>
+          <bqbiol:isVersionOf xmlns:bqbiol="http://biomodels.net/biology-qualifiers/">
+            <rdf:Bag rdf:nodeID="node1">
+              <rdf:_1>
+                <rdf:Description rdf:about="urn:miriam:obo.go:GO%3A0042325" />
+              </rdf:_1>
+            </rdf:Bag>
+          </bqbiol:isVersionOf>
+          <bqmodel:isDescribedBy xmlns:bqmodel="http://biomodels.net/model-qualifiers/">
+            <rdf:Bag rdf:nodeID="node2">
+              <rdf:_1>
+                <rdf:Description rdf:about="urn:miriam:doi:10.1016%2Fs0955-0674%2803%2900017-6+" />
+              </rdf:_1>
+            </rdf:Bag>
+          </bqmodel:isDescribedBy>
+          <bqmodel:isDescribedBy xmlns:bqmodel="http://biomodels.net/model-qualifiers/">
+            <rdf:Bag rdf:nodeID="node3">
+              <rdf:_1>
+                <rdf:Description rdf:about="urn:miriam:pubmed:12648679" />
+              </rdf:_1>
+            </rdf:Bag>
+          </bqmodel:isDescribedBy>
+        </rdf:Description>
+        <rdf:Description rdf:about="http://sourceforge.net/projects/vcell/vcml/cbit.vcell.model.Feature/metaid_1720873253">
+          <bqbiol:isVersionOf xmlns:bqbiol="http://biomodels.net/biology-qualifiers/">
+            <rdf:Bag rdf:nodeID="node4">
+              <rdf:_1>
+                <rdf:Description rdf:about="urn:miriam:obo.go:GO%3A0005623" />
+              </rdf:_1>
+            </rdf:Bag>
+          </bqbiol:isVersionOf>
+        </rdf:Description>
+        <rdf:Description rdf:about="http://sourceforge.net/projects/vcell/vcml/cbit.vcell.model.SimpleReaction/metaid_1312272599">
+          <bqbiol:isVersionOf xmlns:bqbiol="http://biomodels.net/biology-qualifiers/">
+            <rdf:Bag rdf:nodeID="node5">
+              <rdf:_1>
+                <rdf:Description rdf:about="urn:miriam:obo.go:GO%3A0042325" />
+              </rdf:_1>
+            </rdf:Bag>
+          </bqbiol:isVersionOf>
+          <bqbiol:isVersionOf xmlns:bqbiol="http://biomodels.net/biology-qualifiers/">
+            <rdf:Bag rdf:nodeID="node6">
+              <rdf:_1>
+                <rdf:Description rdf:about="urn:miriam:obo.go:GO%3A0006468" />
+              </rdf:_1>
+            </rdf:Bag>
+          </bqbiol:isVersionOf>
+        </rdf:Description>
+        <rdf:Description rdf:about="http://sourceforge.net/projects/vcell/vcml/cbit.vcell.model.SimpleReaction/metaid_1713861560">
+          <bqbiol:isVersionOf xmlns:bqbiol="http://biomodels.net/biology-qualifiers/">
+            <rdf:Bag rdf:nodeID="node7">
+              <rdf:_1>
+                <rdf:Description rdf:about="urn:miriam:obo.go:GO%3A0006470" />
+              </rdf:_1>
+            </rdf:Bag>
+          </bqbiol:isVersionOf>
+        </rdf:Description>
+        <rdf:Description rdf:about="http://sourceforge.net/projects/vcell/vcml/cbit.vcell.model.Species/metaid_1037128794">
+          <bqbiol:isVersionOf xmlns:bqbiol="http://biomodels.net/biology-qualifiers/">
+            <rdf:Bag rdf:nodeID="node8">
+              <rdf:_1>
+                <rdf:Description rdf:about="urn:miriam:kegg.compound:C00562" />
+              </rdf:_1>
+            </rdf:Bag>
+          </bqbiol:isVersionOf>
+        </rdf:Description>
+        <rdf:Description rdf:about="http://sourceforge.net/projects/vcell/vcml/cbit.vcell.model.Species/metaid_1141174230">
+          <bqbiol:isVersionOf xmlns:bqbiol="http://biomodels.net/biology-qualifiers/">
+            <rdf:Bag rdf:nodeID="node9">
+              <rdf:_1>
+                <rdf:Description rdf:about="urn:miriam:chebi:CHEBI%3A36080" />
+              </rdf:_1>
+            </rdf:Bag>
+          </bqbiol:isVersionOf>
+        </rdf:Description>
+        <rdf:Description rdf:about="http://sourceforge.net/projects/vcell/vcml/org.vcell.model.rbm.MolecularType/metaid_773723683">
+          <bqbiol:isVersionOf xmlns:bqbiol="http://biomodels.net/biology-qualifiers/">
+            <rdf:Bag rdf:nodeID="node10">
+              <rdf:_1>
+                <rdf:Description rdf:about="urn:miriam:chebi:CHEBI%3A36080" />
+              </rdf:_1>
+            </rdf:Bag>
+          </bqbiol:isVersionOf>
+        </rdf:Description>
+      </rdf:RDF>
+      <nonrdfAnnotationList>
+        <nonrdfAnnotation vcid="Species(s6)">
+          <freetext>&lt;html&gt;&#xD;
+  &lt;head&gt;&#xD;
+&#xD;
+  &lt;/head&gt;&#xD;
+  &lt;body&gt;&#xD;
+    &lt;p style="margin-top: 0"&gt;&#xD;
+      response magnitude. For example, R could be the concentration of protein.&#xD;
+    &lt;/p&gt;&#xD;
+  &lt;/body&gt;&#xD;
+&lt;/html&gt;</freetext>
+        </nonrdfAnnotation>
+        <nonrdfAnnotation vcid="MolecularType(S)">
+          <freetext>&lt;html&gt;&#xD;
+  &lt;head&gt;&#xD;
+    &#xD;
+  &lt;/head&gt;&#xD;
+  &lt;body&gt;&#xD;
+    &lt;p style="margin-top: 0"&gt;&#xD;
+      S = signal strength. For example, S could be the concentration of mRNA.&#xD;
+    &lt;/p&gt;&#xD;
+  &lt;/body&gt;&#xD;
+&lt;/html&gt;</freetext>
+        </nonrdfAnnotation>
+        <nonrdfAnnotation vcid="Species(s5)">
+          <freetext>&lt;html&gt;&#xD;
+  &lt;head&gt;&#xD;
+    &#xD;
+  &lt;/head&gt;&#xD;
+  &lt;body&gt;&#xD;
+    &lt;p style="margin-top: 0"&gt;&#xD;
+      signal strength. For example, S could be the concentration of mRNA.&#xD;
+    &lt;/p&gt;&#xD;
+  &lt;/body&gt;&#xD;
+&lt;/html&gt;</freetext>
+        </nonrdfAnnotation>
+        <nonrdfAnnotation vcid="BioModel(CM_PM12648679_MB3::Protein_phosphorylation_sigmoidal)">
+          <freetext>&lt;html&gt;&#xD;
+  &lt;head&gt;&#xD;
+    &#xD;
+  &lt;/head&gt;&#xD;
+  &lt;body&gt;&#xD;
+    &lt;p style="margin-top: 0in"&gt;&#xD;
+      This ModelBrick from the article, &amp;quot;&lt;i&gt;Sniffers, buzzers, toggles &#xD;
+      and blinkers&lt;/i&gt;&amp;#8230;&amp;quot; describes protein phosphorylation and &#xD;
+      dephosphorylation reactions governed by Michelis-Menten kinetics, &#xD;
+      yielding a sigmoidal signal-response curve.&#xD;
+    &lt;/p&gt;&#xD;
+  &lt;/body&gt;&#xD;
+&lt;/html&gt;</freetext>
+        </nonrdfAnnotation>
+        <nonrdfAnnotation vcid="Species(s7)">
+          <freetext>&lt;html&gt;&#xD;
+  &lt;head&gt;&#xD;
+    &#xD;
+  &lt;/head&gt;&#xD;
+  &lt;body&gt;&#xD;
+    &lt;p style="margin-top: 0"&gt;&#xD;
+      phosphorylated form of the response element. The phosphorylated form of &#xD;
+      R is supposed to be the active form.&#xD;
+    &lt;/p&gt;&#xD;
+  &lt;/body&gt;&#xD;
+&lt;/html&gt;</freetext>
+        </nonrdfAnnotation>
+        <nonrdfAnnotation vcid="ReactionStep(protein_dephos)">
+          <freetext>&lt;html&gt;&#xD;
+  &lt;head&gt;&#xD;
+    &#xD;
+  &lt;/head&gt;&#xD;
+  &lt;body&gt;&#xD;
+    &lt;p style="margin-top: 0"&gt;&#xD;
+      Dephosphorylation of the response element.&#xD;
+    &lt;/p&gt;&#xD;
+  &lt;/body&gt;&#xD;
+&lt;/html&gt;</freetext>
+        </nonrdfAnnotation>
+        <nonrdfAnnotation vcid="MolecularType(R)">
+          <freetext>&lt;html&gt;&#xD;
+  &lt;head&gt;&#xD;
+    &#xD;
+  &lt;/head&gt;&#xD;
+  &lt;body&gt;&#xD;
+    &lt;p style="margin-top: 0"&gt;&#xD;
+      response magnitude. For example, R could be the concentration of &#xD;
+      protein. The phosphorylated form of R is supposed to be the active form.&#xD;
+    &lt;/p&gt;&#xD;
+  &lt;/body&gt;&#xD;
+&lt;/html&gt;</freetext>
+        </nonrdfAnnotation>
+        <nonrdfAnnotation vcid="Structure(c0)">
+          <freetext>&lt;html&gt;&#xD;
+  &lt;head&gt;&#xD;
+&#xD;
+  &lt;/head&gt;&#xD;
+  &lt;body&gt;&#xD;
+    &lt;p style="margin-top: 0"&gt;&#xD;
+      Type of cell.&#xD;
+    &lt;/p&gt;&#xD;
+  &lt;/body&gt;&#xD;
+&lt;/html&gt;</freetext>
+        </nonrdfAnnotation>
+        <nonrdfAnnotation vcid="ReactionStep(protein_phos)">
+          <freetext>&lt;html&gt;&#xD;
+  &lt;head&gt;&#xD;
+    &#xD;
+  &lt;/head&gt;&#xD;
+  &lt;body&gt;&#xD;
+    &lt;p style="margin-top: 0"&gt;&#xD;
+      Phosphorylation of the response element.&#xD;
+    &lt;/p&gt;&#xD;
+  &lt;/body&gt;&#xD;
+&lt;/html&gt;</freetext>
+        </nonrdfAnnotation>
+      </nonrdfAnnotationList>
+      <uriBindingList>
+        <uriBinding uri="http://sourceforge.net/projects/vcell/vcml/cbit.vcell.model.Species/metaid_1037128794" vcid="Species(s7)" />
+        <uriBinding uri="http://sourceforge.net/projects/vcell/vcml/cbit.vcell.biomodel.BioModel/metaid_49572951" vcid="BioModel(CM_PM12648679_MB3::Protein_phosphorylation_sigmoidal)" />
+        <uriBinding uri="http://sourceforge.net/projects/vcell/vcml/cbit.vcell.model.SimpleReaction/metaid_1713861560" vcid="ReactionStep(protein_dephos)" />
+        <uriBinding uri="http://sourceforge.net/projects/vcell/vcml/org.vcell.model.rbm.MolecularType/metaid_773723683" vcid="MolecularType(R)" />
+        <uriBinding uri="http://sourceforge.net/projects/vcell/vcml/cbit.vcell.model.Feature/metaid_1720873253" vcid="Structure(c0)" />
+        <uriBinding uri="http://sourceforge.net/projects/vcell/vcml/cbit.vcell.model.Species/metaid_1141174230" vcid="Species(s6)" />
+        <uriBinding uri="http://sourceforge.net/projects/vcell/vcml/cbit.vcell.model.SimpleReaction/metaid_1312272599" vcid="ReactionStep(protein_phos)" />
+      </uriBindingList>
+    </vcmetadata>
+  </BioModel>
+</vcml>
+

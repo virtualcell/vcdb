@@ -1,0 +1,705 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--This biomodel was generated in VCML Version Alpha_Version_7.4.0_build_87-->
+<vcml xmlns="http://sourceforge.net/projects/vcell/vcml" Version="Alpha_Version_7.4.0_build_87">
+  <BioModel Name="legi-sten-cen-changebottomshreshold">
+    <Model Name="model">
+      <Compound Name="s0" />
+      <Compound Name="s1" />
+      <Compound Name="s2" />
+      <Compound Name="s3" />
+      <Compound Name="s4" />
+      <Compound Name="s5" />
+      <Compound Name="s6" />
+      <Compound Name="s7" />
+      <Compound Name="s8" />
+      <Compound Name="s9" />
+      <Compound Name="s10" />
+      <Compound Name="s11" />
+      <Compound Name="s12" />
+      <Compound Name="s13" />
+      <Compound Name="s14" />
+      <Compound Name="s15" />
+      <Feature Name="EC" KeyValue="165018032" />
+      <Feature Name="IC" KeyValue="165018034" />
+      <Membrane MembraneVoltage="Voltage_CM" Name="CM" KeyValue="165018036" />
+      <LocalizedCompound Name="L" CompoundRef="s0" Structure="EC" OverrideName="true" KeyValue="165018038" />
+      <LocalizedCompound Name="L_source" CompoundRef="s1" Structure="EC" OverrideName="true" KeyValue="165018039" />
+      <LocalizedCompound Name="R" CompoundRef="s2" Structure="CM" OverrideName="true" KeyValue="165018040" />
+      <LocalizedCompound Name="C" CompoundRef="s3" Structure="CM" OverrideName="true" KeyValue="165018041" />
+      <LocalizedCompound Name="In" CompoundRef="s4" Structure="IC" OverrideName="true" KeyValue="165018042" />
+      <LocalizedCompound Name="InA" CompoundRef="s5" Structure="IC" OverrideName="true" KeyValue="165018043" />
+      <LocalizedCompound Name="E" CompoundRef="s6" Structure="CM" OverrideName="true" KeyValue="165018044" />
+      <LocalizedCompound Name="EA" CompoundRef="s7" Structure="CM" OverrideName="true" KeyValue="165018045" />
+      <LocalizedCompound Name="BS" CompoundRef="s8" Structure="CM" OverrideName="true" KeyValue="165018046" />
+      <LocalizedCompound Name="BSA" CompoundRef="s9" Structure="CM" OverrideName="true" KeyValue="165018047" />
+      <LocalizedCompound Name="PI3K" CompoundRef="s10" Structure="IC" OverrideName="true" KeyValue="165018048" />
+      <LocalizedCompound Name="PI3KA" CompoundRef="s11" Structure="CM" OverrideName="true" KeyValue="165018049" />
+      <LocalizedCompound Name="Rs" CompoundRef="s12" Structure="CM" OverrideName="true" KeyValue="165018050" />
+      <LocalizedCompound Name="Fs" CompoundRef="s13" Structure="CM" OverrideName="true" KeyValue="165018051" />
+      <LocalizedCompound Name="Fc" CompoundRef="s14" Structure="CM" OverrideName="true" KeyValue="165018052" />
+      <LocalizedCompound Name="Rc" CompoundRef="s15" Structure="CM" OverrideName="true" KeyValue="165018053" />
+      <SimpleReaction Structure="EC" Name="r0" Reversible="true" FluxOption="MolecularOnly" KeyValue="165018054">
+        <Reactant LocalizedCompoundRef="L_source" Stoichiometry="1" KeyValue="165018055" />
+        <Product LocalizedCompoundRef="L" Stoichiometry="1" KeyValue="165018056" />
+        <Kinetics KineticsType="GeneralKinetics">
+          <Parameter Name="J" Role="reaction rate" Unit="uM.s-1">((kf * L_source) - (kr * L))</Parameter>
+          <Parameter Name="kr" Role="user defined" Unit="s-1">1.0</Parameter>
+          <Parameter Name="kf" Role="user defined" Unit="s-1">1.0</Parameter>
+        </Kinetics>
+      </SimpleReaction>
+      <SimpleReaction Structure="CM" Name="r1" Reversible="true" FluxOption="MolecularOnly" KeyValue="165018057">
+        <Reactant LocalizedCompoundRef="L" Stoichiometry="1" KeyValue="165018058" />
+        <Reactant LocalizedCompoundRef="R" Stoichiometry="1" KeyValue="165018059" />
+        <Product LocalizedCompoundRef="C" Stoichiometry="1" KeyValue="165018060" />
+        <Kinetics KineticsType="MassAction">
+          <Parameter Name="J" Role="reaction rate" Unit="molecules.um-2.s-1">(((Kf * L) * R) - (Kr * C))</Parameter>
+          <Parameter Name="I" Role="inward current density" Unit="pA.um-2">0.0</Parameter>
+          <Parameter Name="netValence" Role="net charge valence" Unit="1">1.0</Parameter>
+          <Parameter Name="Kf" Role="forward rate constant" Unit="s-1.uM-1">1.66</Parameter>
+          <Parameter Name="Kr" Role="reverse rate constant" Unit="s-1">0.39</Parameter>
+        </Kinetics>
+      </SimpleReaction>
+      <SimpleReaction Structure="CM" Name="r2" Reversible="true" FluxOption="MolecularOnly" KeyValue="165018061">
+        <Reactant LocalizedCompoundRef="E" Stoichiometry="1" KeyValue="165018062" />
+        <Product LocalizedCompoundRef="EA" Stoichiometry="1" KeyValue="165018063" />
+        <Modifier LocalizedCompoundRef="C" />
+        <Kinetics KineticsType="GeneralKinetics">
+          <Parameter Name="J" Role="reaction rate" Unit="molecules.um-2.s-1">((kf * E * C) - (kr * EA))</Parameter>
+          <Parameter Name="I" Role="inward current density" Unit="pA.um-2">0.0</Parameter>
+          <Parameter Name="netValence" Role="net charge valence" Unit="1">1.0</Parameter>
+          <Parameter Name="kr" Role="user defined" Unit="s-1">1.0</Parameter>
+          <Parameter Name="kf" Role="user defined" Unit="um2.s-1.molecules-1">0.001</Parameter>
+        </Kinetics>
+      </SimpleReaction>
+      <SimpleReaction Structure="CM" Name="r3" Reversible="true" FluxOption="MolecularOnly" KeyValue="165018065">
+        <Reactant LocalizedCompoundRef="In" Stoichiometry="1" KeyValue="165018066" />
+        <Product LocalizedCompoundRef="InA" Stoichiometry="1" KeyValue="165018067" />
+        <Modifier LocalizedCompoundRef="C" />
+        <Kinetics KineticsType="GeneralKinetics">
+          <Parameter Name="J" Role="reaction rate" Unit="molecules.um-2.s-1">((kf * In * C) - (kr * InA))</Parameter>
+          <Parameter Name="I" Role="inward current density" Unit="pA.um-2">0.0</Parameter>
+          <Parameter Name="netValence" Role="net charge valence" Unit="1">1.0</Parameter>
+          <Parameter Name="kr" Role="user defined" Unit="molecules.um-2.s-1.uM-1">10.0</Parameter>
+          <Parameter Name="kf" Role="user defined" Unit="s-1.uM-1">0.01</Parameter>
+        </Kinetics>
+      </SimpleReaction>
+      <SimpleReaction Structure="CM" Name="r4" Reversible="true" FluxOption="MolecularOnly" KeyValue="165018069">
+        <Reactant LocalizedCompoundRef="BS" Stoichiometry="1" KeyValue="165018070" />
+        <Product LocalizedCompoundRef="BSA" Stoichiometry="1" KeyValue="165018071" />
+        <Modifier LocalizedCompoundRef="EA" />
+        <Modifier LocalizedCompoundRef="InA" />
+        <Kinetics KineticsType="GeneralKinetics">
+          <Parameter Name="J" Role="reaction rate" Unit="molecules.um-2.s-1">((kf * BS * EA) - (kr * BSA * InA))</Parameter>
+          <Parameter Name="I" Role="inward current density" Unit="pA.um-2">0.0</Parameter>
+          <Parameter Name="netValence" Role="net charge valence" Unit="1">1.0</Parameter>
+          <Parameter Name="kr" Role="user defined" Unit="s-1.uM-1">100.0</Parameter>
+          <Parameter Name="kf" Role="user defined" Unit="um2.s-1.molecules-1">0.02</Parameter>
+        </Kinetics>
+      </SimpleReaction>
+      <SimpleReaction Structure="CM" Name="r5" Reversible="true" FluxOption="MolecularOnly" KeyValue="165018074">
+        <Reactant LocalizedCompoundRef="PI3K" Stoichiometry="1" KeyValue="165018075" />
+        <Reactant LocalizedCompoundRef="BSA" Stoichiometry="1" KeyValue="165018076" />
+        <Product LocalizedCompoundRef="PI3KA" Stoichiometry="1" KeyValue="165018077" />
+        <Kinetics KineticsType="MassAction">
+          <Parameter Name="J" Role="reaction rate" Unit="molecules.um-2.s-1">(((Kf * PI3K) * BSA) - (Kr * PI3KA))</Parameter>
+          <Parameter Name="I" Role="inward current density" Unit="pA.um-2">0.0</Parameter>
+          <Parameter Name="netValence" Role="net charge valence" Unit="1">1.0</Parameter>
+          <Parameter Name="Kf" Role="forward rate constant" Unit="s-1.uM-1">2.0</Parameter>
+          <Parameter Name="Kr" Role="reverse rate constant" Unit="s-1">1.0</Parameter>
+        </Kinetics>
+      </SimpleReaction>
+      <SimpleReaction Structure="CM" Name="r6" Reversible="true" FluxOption="MolecularOnly" KeyValue="165018078">
+        <Reactant LocalizedCompoundRef="Fs" Stoichiometry="1" KeyValue="165018079" />
+        <Product LocalizedCompoundRef="Rs" Stoichiometry="1" KeyValue="165018080" />
+        <Kinetics KineticsType="GeneralKinetics">
+          <Parameter Name="J" Role="reaction rate" Unit="molecules.um-2.s-1">(eps * ( - Rs + (c1s * Fs)))</Parameter>
+          <Parameter Name="I" Role="inward current density" Unit="pA.um-2">0.0</Parameter>
+          <Parameter Name="netValence" Role="net charge valence" Unit="1">1.0</Parameter>
+          <Parameter Name="c1s" Role="user defined" Unit="1">60.0</Parameter>
+          <Parameter Name="eps" Role="user defined" Unit="s-1">0.1</Parameter>
+        </Kinetics>
+      </SimpleReaction>
+      <SimpleReaction Structure="CM" Name="r7" Reversible="true" FluxOption="MolecularOnly" KeyValue="165018081">
+        <Reactant LocalizedCompoundRef="Fs" Stoichiometry="1" KeyValue="165018082" />
+        <Product LocalizedCompoundRef="Fs" Stoichiometry="1" KeyValue="165018083" />
+        <Product LocalizedCompoundRef="Fs" Stoichiometry="1" KeyValue="165018084" />
+        <Modifier LocalizedCompoundRef="Rs" />
+        <Modifier LocalizedCompoundRef="PI3KA" />
+        <Kinetics KineticsType="GeneralKinetics">
+          <Parameter Name="J" Role="reaction rate" Unit="molecules.um-2.s-1">( - (a2s * (Rs - (ks * (PI3KA - P0))) * Fs) - (a1s * Fs) + (a3s * Fs * Fs / ((a4s * a4s) + (Fs * Fs))) + a5s)</Parameter>
+          <Parameter Name="I" Role="inward current density" Unit="pA.um-2">0.0</Parameter>
+          <Parameter Name="netValence" Role="net charge valence" Unit="1">1.0</Parameter>
+          <Parameter Name="P0" Role="user defined" Unit="molecules.um-2">(4.0 - (1.5 * (z == 8.0)))</Parameter>
+          <Parameter Name="a3s" Role="user defined" Unit="molecules.s-1.um-2">650.0</Parameter>
+          <Parameter Name="a4s" Role="user defined" Unit="tbd">1.44</Parameter>
+          <Parameter Name="a1s" Role="user defined" Unit="s-1">0.167</Parameter>
+          <Parameter Name="a2s" Role="user defined" Unit="um2.s-1.molecules-1">16.67</Parameter>
+          <Parameter Name="ks" Role="user defined" Unit="1">2.0</Parameter>
+          <Parameter Name="a5s" Role="user defined" Unit="molecules.um-2.s-1">1.47</Parameter>
+        </Kinetics>
+      </SimpleReaction>
+      <SimpleReaction Structure="CM" Name="r8" Reversible="true" FluxOption="MolecularOnly" KeyValue="165018087">
+        <Reactant LocalizedCompoundRef="Fc" Stoichiometry="1" KeyValue="165018088" />
+        <Product LocalizedCompoundRef="Fc" Stoichiometry="1" KeyValue="165018089" />
+        <Product LocalizedCompoundRef="Fc" Stoichiometry="1" KeyValue="165018090" />
+        <Modifier LocalizedCompoundRef="Rc" />
+        <Modifier LocalizedCompoundRef="Rs" />
+        <Kinetics KineticsType="GeneralKinetics">
+          <Parameter Name="J" Role="reaction rate" Unit="molecules.um-2.s-1">(( - a1c * Fc) - (a2c * (Rc - (Sc * (Rs - Ro))) * Fc) + ((a3c * Fc * Fc) / ((a4c * a4c) + (Fc * Fc))) + a5c)</Parameter>
+          <Parameter Name="I" Role="inward current density" Unit="pA.um-2">0.0</Parameter>
+          <Parameter Name="netValence" Role="net charge valence" Unit="1">1.0</Parameter>
+          <Parameter Name="Sc" Role="user defined" Unit="1">2.0</Parameter>
+          <Parameter Name="a3c" Role="user defined" Unit="molecules.s-1.um-2">550.0</Parameter>
+          <Parameter Name="a4c" Role="user defined" Unit="tbd">1.44</Parameter>
+          <Parameter Name="a1c" Role="user defined" Unit="s-1">0.167</Parameter>
+          <Parameter Name="a2c" Role="user defined" Unit="um2.s-1.molecules-1">16.67</Parameter>
+          <Parameter Name="Ro" Role="user defined" Unit="molecules.um-2">3.0</Parameter>
+          <Parameter Name="a5c" Role="user defined" Unit="molecules.um-2.s-1">1.47</Parameter>
+        </Kinetics>
+      </SimpleReaction>
+      <SimpleReaction Structure="CM" Name="r9" Reversible="true" FluxOption="MolecularOnly" KeyValue="165018093">
+        <Reactant LocalizedCompoundRef="Fc" Stoichiometry="1" KeyValue="165018094" />
+        <Product LocalizedCompoundRef="Rc" Stoichiometry="1" KeyValue="165018095" />
+        <Kinetics KineticsType="GeneralKinetics">
+          <Parameter Name="J" Role="reaction rate" Unit="molecules.um-2.s-1">(epsc * ( - Rc + (C1c * Fc)))</Parameter>
+          <Parameter Name="I" Role="inward current density" Unit="pA.um-2">0.0</Parameter>
+          <Parameter Name="netValence" Role="net charge valence" Unit="1">1.0</Parameter>
+          <Parameter Name="epsc" Role="user defined" Unit="s-1">0.3</Parameter>
+          <Parameter Name="C1c" Role="user defined" Unit="1">50.0</Parameter>
+        </Kinetics>
+      </SimpleReaction>
+      <Diagram Name="c0" Structure="EC">
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="L_source" LocationX="136" LocationY="200" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="E" LocationX="22" LocationY="190" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="full" SimpleReactionRef="r2" LocationX="86" LocationY="200" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="full" SimpleReactionRef="r0" LocationX="143" LocationY="152" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="PI3KA" LocationX="270" LocationY="393" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="C" LocationX="71" LocationY="111" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="full" SimpleReactionRef="r8" LocationX="162" LocationY="604" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="PI3K" LocationX="66" LocationY="265" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="full" SimpleReactionRef="r3" LocationX="295" LocationY="67" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="Fs" LocationX="44" LocationY="495" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="L" LocationX="134" LocationY="90" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="full" SimpleReactionRef="r1" LocationX="14" LocationY="108" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="Rc" LocationX="286" LocationY="675" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="BSA" LocationX="213" LocationY="263" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="BS" LocationX="252" LocationY="137" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="full" SimpleReactionRef="r5" LocationX="294" LocationY="321" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="Rs" LocationX="292" LocationY="500" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="full" SimpleReactionRef="r7" LocationX="159" LocationY="436" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="Fc" LocationX="52" LocationY="671" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="InA" LocationX="52" LocationY="184" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="full" SimpleReactionRef="r6" LocationX="127" LocationY="546" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="full" SimpleReactionRef="r4" LocationX="251" LocationY="198" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="R" LocationX="36" LocationY="39" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="full" SimpleReactionRef="r9" LocationX="96" LocationY="715" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="EA" LocationX="133" LocationY="195" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="In" LocationX="46" LocationY="42" />
+      </Diagram>
+      <Diagram Name="m0" Structure="CM">
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="L_source" LocationX="136" LocationY="200" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="E" LocationX="22" LocationY="190" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="full" SimpleReactionRef="r2" LocationX="86" LocationY="200" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="full" SimpleReactionRef="r0" LocationX="143" LocationY="152" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="PI3KA" LocationX="270" LocationY="393" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="C" LocationX="71" LocationY="111" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="full" SimpleReactionRef="r8" LocationX="162" LocationY="604" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="PI3K" LocationX="66" LocationY="265" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="full" SimpleReactionRef="r3" LocationX="295" LocationY="67" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="Fs" LocationX="44" LocationY="495" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="L" LocationX="134" LocationY="90" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="full" SimpleReactionRef="r1" LocationX="14" LocationY="108" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="Rc" LocationX="286" LocationY="675" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="BSA" LocationX="213" LocationY="263" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="BS" LocationX="252" LocationY="137" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="full" SimpleReactionRef="r5" LocationX="294" LocationY="321" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="Rs" LocationX="292" LocationY="500" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="full" SimpleReactionRef="r7" LocationX="159" LocationY="436" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="Fc" LocationX="52" LocationY="671" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="InA" LocationX="52" LocationY="184" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="full" SimpleReactionRef="r6" LocationX="127" LocationY="546" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="full" SimpleReactionRef="r4" LocationX="251" LocationY="198" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="R" LocationX="36" LocationY="39" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="full" SimpleReactionRef="r9" LocationX="96" LocationY="715" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="EA" LocationX="133" LocationY="195" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="In" LocationX="46" LocationY="42" />
+      </Diagram>
+      <Diagram Name="c1" Structure="IC">
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="L_source" LocationX="136" LocationY="200" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="E" LocationX="22" LocationY="190" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="full" SimpleReactionRef="r2" LocationX="86" LocationY="200" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="full" SimpleReactionRef="r0" LocationX="143" LocationY="152" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="PI3KA" LocationX="270" LocationY="393" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="C" LocationX="71" LocationY="111" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="full" SimpleReactionRef="r8" LocationX="162" LocationY="604" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="PI3K" LocationX="66" LocationY="265" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="full" SimpleReactionRef="r3" LocationX="295" LocationY="67" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="Fs" LocationX="44" LocationY="495" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="L" LocationX="134" LocationY="90" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="full" SimpleReactionRef="r1" LocationX="14" LocationY="108" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="Rc" LocationX="286" LocationY="675" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="BSA" LocationX="213" LocationY="263" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="BS" LocationX="252" LocationY="137" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="full" SimpleReactionRef="r5" LocationX="294" LocationY="321" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="Rs" LocationX="292" LocationY="500" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="full" SimpleReactionRef="r7" LocationX="159" LocationY="436" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="Fc" LocationX="52" LocationY="671" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="InA" LocationX="52" LocationY="184" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="full" SimpleReactionRef="r6" LocationX="127" LocationY="546" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="full" SimpleReactionRef="r4" LocationX="251" LocationY="198" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="R" LocationX="36" LocationY="39" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="full" SimpleReactionRef="r9" LocationX="96" LocationY="715" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="EA" LocationX="133" LocationY="195" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="In" LocationX="46" LocationY="42" />
+      </Diagram>
+      <Version Name="model" KeyValue="165018014" BranchId="164558828" Archived="0" Date="27-Aug-2019 14:19:52" FromVersionable="false">
+        <Owner Name="ZixiangLuo" Identifier="160437509" />
+        <GroupAccess Type="1" />
+      </Version>
+      <ModelUnitSystem VolumeSubstanceUnit="uM.um3" MembraneSubstanceUnit="molecules" LumpedReactionSubstanceUnit="molecules" VolumeUnit="um3" AreaUnit="um2" LengthUnit="um" TimeUnit="s" />
+    </Model>
+    <SimulationSpec Name="hemi-needle3D-lowbottom" Stochastic="false" UseConcentration="true" RuleBased="false" MassConservationModelReduction="true" InsufficientIterations="false" InsufficientMaxMolecules="false" CharacteristicSize="0.1333108159835553">
+      <NetworkConstraints RbmMaxIteration="3" RbmMaxMoleculesPerSpecies="10" RbmSpeciesLimit="800" RbmReactionsLimit="2500" />
+      <Annotation>(copied from needle3D) (copied from needle) (copied from Application0)</Annotation>
+      <Geometry Name="Geometry7" Dimension="3">
+        <Extent X="15.0" Y="15.0" Z="9.0" />
+        <Origin X="0.0" Y="0.0" Z="0.0" />
+        <SubVolume Name="IC" Handle="1" Type="Analytical" KeyValue="165020667">
+          <AnalyticExpression>((((((x - 6.0) ^ 2.0) + ((y - 6.0) ^ 2.0) + ((z - 8.0) ^ 2.0)) &lt; 25.0) &amp;&amp; (z &lt; 8.0)) + ((z == 8.0) &amp;&amp; ((((x - 6.0) ^ 2.0) + ((y - 6.0) ^ 2.0)) &lt; 25.0)))</AnalyticExpression>
+        </SubVolume>
+        <SubVolume Name="EC" Handle="0" Type="Analytical" KeyValue="165020668">
+          <AnalyticExpression>1.0</AnalyticExpression>
+        </SubVolume>
+        <SurfaceClass Name="EC_IC_membrane" SubVolume1Ref="EC" SubVolume2Ref="IC" KeyValue="165020669" />
+        <SurfaceDescription NumSamplesX="101" NumSamplesY="101" NumSamplesZ="101" CutoffFrequency="0.3">
+          <VolumeRegion Name="EC0" RegionID="0" SubVolume="EC" Size="1765.9316249999997" Unit="um3" />
+          <VolumeRegion Name="IC1" RegionID="1" SubVolume="IC" Size="259.068375" Unit="um3" />
+          <MembraneRegion Name="membrane_EC0_IC1" VolumeRegion1="IC1" VolumeRegion2="EC0" Size="231.32809524321374" Unit="um2" />
+        </SurfaceDescription>
+        <Version Name="Geometry7" KeyValue="165020664" BranchId="162733877" Archived="0" Date="27-Aug-2019 15:13:32" FromVersionable="false">
+          <Owner Name="ZixiangLuo" Identifier="160437509" />
+          <GroupAccess Type="1" />
+        </Version>
+      </Geometry>
+      <GeometryContext>
+        <FeatureMapping Feature="EC" GeometryClass="EC" SubVolume="EC" Size="50000.0" VolumePerUnitVolume="1.0">
+          <BoundariesTypes Xm="Flux" Xp="Flux" Ym="Flux" Yp="Flux" Zm="Flux" Zp="Flux" />
+        </FeatureMapping>
+        <FeatureMapping Feature="IC" GeometryClass="IC" SubVolume="IC" Size="50000.0" VolumePerUnitVolume="1.0">
+          <BoundariesTypes Xm="Flux" Xp="Flux" Ym="Flux" Yp="Flux" Zm="Flux" Zp="Flux" />
+        </FeatureMapping>
+        <MembraneMapping Membrane="CM" Size="6563.0" AreaPerUnitArea="1.0" CalculateVoltage="false" SpecificCapacitance="1.0" InitialVoltage="0.0" GeometryClass="EC_IC_membrane">
+          <BoundariesTypes Xm="Flux" Xp="Flux" Ym="Flux" Yp="Flux" Zm="Flux" Zp="Flux" />
+        </MembraneMapping>
+      </GeometryContext>
+      <ReactionContext>
+        <LocalizedCompoundSpec LocalizedCompoundRef="L" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>0.0</InitialConcentration>
+          <Diffusion>120.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="L_source" ForceConstant="true" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>((0.1 + (200.0 * (t &gt; 50.0))) * ((((x - 15.0) ^ 2.0) + ((y - 15.0) ^ 2.0) + ((z - 8.0) ^ 2.0)) &lt; 1.0))</InitialConcentration>
+          <Diffusion>10.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="In" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>0.3</InitialConcentration>
+          <Diffusion>10.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="InA" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>0.0</InitialConcentration>
+          <Diffusion>13.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="PI3K" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>0.2</InitialConcentration>
+          <Diffusion>10.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="R" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>200.0</InitialConcentration>
+          <Diffusion>0.1</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="C" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>0.0</InitialConcentration>
+          <Diffusion>0.05</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="E" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>100.0</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="EA" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>0.0</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="BS" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>100.0</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="BSA" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>0.0</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="PI3KA" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>0.0</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="Rs" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>0.5</InitialConcentration>
+          <Diffusion>1.5</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="Fs" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>0.5</InitialConcentration>
+          <Diffusion>2.2</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="Fc" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>0.5</InitialConcentration>
+          <Diffusion>1.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="Rc" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>0.5</InitialConcentration>
+          <Diffusion>1.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <ReactionSpec ReactionStepRef="r0" ReactionMapping="included" />
+        <ReactionSpec ReactionStepRef="r1" ReactionMapping="included" />
+        <ReactionSpec ReactionStepRef="r2" ReactionMapping="included" />
+        <ReactionSpec ReactionStepRef="r3" ReactionMapping="included" />
+        <ReactionSpec ReactionStepRef="r4" ReactionMapping="included" />
+        <ReactionSpec ReactionStepRef="r5" ReactionMapping="included" />
+        <ReactionSpec ReactionStepRef="r6" ReactionMapping="included" />
+        <ReactionSpec ReactionStepRef="r7" ReactionMapping="included" />
+        <ReactionSpec ReactionStepRef="r8" ReactionMapping="included" />
+        <ReactionSpec ReactionStepRef="r9" ReactionMapping="included" />
+      </ReactionContext>
+      <MathDescription Name="Copy of needle3D_generated">
+        <Constant Name="_F_">96480.0</Constant>
+        <Constant Name="_F_nmol_">9.648E-5</Constant>
+        <Constant Name="_K_GHK_">1.0E-9</Constant>
+        <Constant Name="_N_pmol_">6.02E11</Constant>
+        <Constant Name="_PI_">3.141592653589793</Constant>
+        <Constant Name="_R_">8314.0</Constant>
+        <Constant Name="_T_">300.0</Constant>
+        <Constant Name="a1c">0.167</Constant>
+        <Constant Name="a1s">0.167</Constant>
+        <Constant Name="a2c">16.67</Constant>
+        <Constant Name="a2s">16.67</Constant>
+        <Constant Name="a3c">550.0</Constant>
+        <Constant Name="a3s">650.0</Constant>
+        <Constant Name="a4c">1.44</Constant>
+        <Constant Name="a4s">1.44</Constant>
+        <Constant Name="a5c">1.47</Constant>
+        <Constant Name="a5s">1.47</Constant>
+        <Constant Name="AreaPerUnitArea_CM">1.0</Constant>
+        <Constant Name="BS_init_molecules_um_2">100.0</Constant>
+        <Constant Name="BSA_init_molecules_um_2">0.0</Constant>
+        <Constant Name="C1c">50.0</Constant>
+        <Constant Name="c1s">60.0</Constant>
+        <Constant Name="C_diffusionRate">0.05</Constant>
+        <Constant Name="C_init_molecules_um_2">0.0</Constant>
+        <Constant Name="E_init_molecules_um_2">100.0</Constant>
+        <Constant Name="EA_init_molecules_um_2">0.0</Constant>
+        <Constant Name="eps">0.1</Constant>
+        <Constant Name="epsc">0.3</Constant>
+        <Constant Name="Fc_diffusionRate">1.0</Constant>
+        <Constant Name="Fc_init_molecules_um_2">0.5</Constant>
+        <Constant Name="Fs_diffusionRate">2.2</Constant>
+        <Constant Name="Fs_init_molecules_um_2">0.5</Constant>
+        <Constant Name="In_diffusionRate">10.0</Constant>
+        <Constant Name="In_init_uM">0.3</Constant>
+        <Constant Name="InA_diffusionRate">13.0</Constant>
+        <Constant Name="InA_init_uM">0.0</Constant>
+        <Constant Name="K_millivolts_per_volt">1000.0</Constant>
+        <Constant Name="kf_r0">1.0</Constant>
+        <Constant Name="Kf_r1">1.66</Constant>
+        <Constant Name="kf_r2">0.001</Constant>
+        <Constant Name="kf_r3">0.01</Constant>
+        <Constant Name="kf_r4">0.02</Constant>
+        <Constant Name="Kf_r5">2.0</Constant>
+        <Constant Name="KMOLE">(1.0 / 602.0)</Constant>
+        <Constant Name="kr_r0">1.0</Constant>
+        <Constant Name="Kr_r1">0.39</Constant>
+        <Constant Name="kr_r2">1.0</Constant>
+        <Constant Name="kr_r3">10.0</Constant>
+        <Constant Name="kr_r4">100.0</Constant>
+        <Constant Name="Kr_r5">1.0</Constant>
+        <Constant Name="ks">2.0</Constant>
+        <Constant Name="L_diffusionRate">120.0</Constant>
+        <Constant Name="L_init_uM">0.0</Constant>
+        <Constant Name="netValence_r1">1.0</Constant>
+        <Constant Name="netValence_r2">1.0</Constant>
+        <Constant Name="netValence_r3">1.0</Constant>
+        <Constant Name="netValence_r4">1.0</Constant>
+        <Constant Name="netValence_r5">1.0</Constant>
+        <Constant Name="netValence_r6">1.0</Constant>
+        <Constant Name="netValence_r7">1.0</Constant>
+        <Constant Name="netValence_r8">1.0</Constant>
+        <Constant Name="netValence_r9">1.0</Constant>
+        <Constant Name="PI3K_diffusionRate">10.0</Constant>
+        <Constant Name="PI3K_init_uM">0.2</Constant>
+        <Constant Name="PI3KA_init_molecules_um_2">0.0</Constant>
+        <Constant Name="R_diffusionRate">0.1</Constant>
+        <Constant Name="R_init_molecules_um_2">200.0</Constant>
+        <Constant Name="Rc_diffusionRate">1.0</Constant>
+        <Constant Name="Rc_init_molecules_um_2">0.5</Constant>
+        <Constant Name="Ro">3.0</Constant>
+        <Constant Name="Rs_diffusionRate">1.5</Constant>
+        <Constant Name="Rs_init_molecules_um_2">0.5</Constant>
+        <Constant Name="Sc">2.0</Constant>
+        <Constant Name="Voltage_CM">0.0</Constant>
+        <Constant Name="VolumePerUnitVolume_EC">1.0</Constant>
+        <Constant Name="VolumePerUnitVolume_IC">1.0</Constant>
+        <MembraneVariable Name="BSA" Domain="EC_IC_membrane" />
+        <MembraneVariable Name="C" Domain="EC_IC_membrane" />
+        <MembraneVariable Name="EA" Domain="EC_IC_membrane" />
+        <MembraneVariable Name="Fc" Domain="EC_IC_membrane" />
+        <MembraneVariable Name="Fs" Domain="EC_IC_membrane" />
+        <VolumeVariable Name="In" Domain="IC" />
+        <VolumeVariable Name="InA" Domain="IC" />
+        <VolumeVariable Name="L" Domain="EC" />
+        <VolumeVariable Name="PI3K" Domain="IC" />
+        <MembraneVariable Name="PI3KA" Domain="EC_IC_membrane" />
+        <MembraneVariable Name="R" Domain="EC_IC_membrane" />
+        <MembraneVariable Name="Rc" Domain="EC_IC_membrane" />
+        <MembraneVariable Name="Rs" Domain="EC_IC_membrane" />
+        <Function Name="BS" Domain="EC_IC_membrane">((K_BS_total - (AreaPerUnitArea_CM * BSA) - (AreaPerUnitArea_CM * PI3KA)) / AreaPerUnitArea_CM)</Function>
+        <Function Name="E" Domain="EC_IC_membrane">((K_E_total - (AreaPerUnitArea_CM * EA)) / AreaPerUnitArea_CM)</Function>
+        <Function Name="J_r0" Domain="EC">((kf_r0 * L_source) - (kr_r0 * L))</Function>
+        <Function Name="J_r1" Domain="EC_IC_membrane">(((Kf_r1 * L) * R) - (Kr_r1 * C))</Function>
+        <Function Name="J_r2" Domain="EC_IC_membrane">((kf_r2 * E * C) - (kr_r2 * EA))</Function>
+        <Function Name="J_r3" Domain="EC_IC_membrane">((kf_r3 * In * C) - (kr_r3 * InA))</Function>
+        <Function Name="J_r4" Domain="EC_IC_membrane">((kf_r4 * BS * EA) - (kr_r4 * BSA * InA))</Function>
+        <Function Name="J_r5" Domain="EC_IC_membrane">(((Kf_r5 * PI3K) * BSA) - (Kr_r5 * PI3KA))</Function>
+        <Function Name="J_r6" Domain="EC_IC_membrane">(eps * ( - Rs + (c1s * Fs)))</Function>
+        <Function Name="J_r7" Domain="EC_IC_membrane">( - (a2s * (Rs - (ks * (PI3KA - P0))) * Fs) - (a1s * Fs) + (a3s * Fs * Fs / ((a4s * a4s) + (Fs * Fs))) + a5s)</Function>
+        <Function Name="J_r8" Domain="EC_IC_membrane">(( - a1c * Fc) - (a2c * (Rc - (Sc * (Rs - Ro))) * Fc) + ((a3c * Fc * Fc) / ((a4c * a4c) + (Fc * Fc))) + a5c)</Function>
+        <Function Name="J_r9" Domain="EC_IC_membrane">(epsc * ( - Rc + (C1c * Fc)))</Function>
+        <Function Name="K_BS_total" Domain="EC_IC_membrane">((AreaPerUnitArea_CM * BS_init_molecules_um_2) + (AreaPerUnitArea_CM * BSA_init_molecules_um_2) + (AreaPerUnitArea_CM * PI3KA_init_molecules_um_2))</Function>
+        <Function Name="K_E_total" Domain="EC_IC_membrane">((AreaPerUnitArea_CM * E_init_molecules_um_2) + (AreaPerUnitArea_CM * EA_init_molecules_um_2))</Function>
+        <Function Name="KFlux_CM_EC" Domain="EC_IC_membrane">(AreaPerUnitArea_CM / VolumePerUnitVolume_EC)</Function>
+        <Function Name="KFlux_CM_IC" Domain="EC_IC_membrane">(AreaPerUnitArea_CM / VolumePerUnitVolume_IC)</Function>
+        <Function Name="L_source" Domain="EC">L_source_init_uM</Function>
+        <Function Name="L_source_init_uM" Domain="EC">((0.1 + (200.0 * (t &gt; 50.0))) * ((((x - 15.0) ^ 2.0) + ((y - 15.0) ^ 2.0) + ((z - 8.0) ^ 2.0)) &lt; 1.0))</Function>
+        <Function Name="P0" Domain="EC_IC_membrane">(4.0 - (1.5 * (z == 8.0)))</Function>
+        <Function Name="Size_CM" Domain="EC_IC_membrane">(AreaPerUnitArea_CM * vcRegionArea('EC_IC_membrane'))</Function>
+        <Function Name="Size_EC" Domain="EC">(VolumePerUnitVolume_EC * vcRegionVolume('EC'))</Function>
+        <Function Name="Size_IC" Domain="IC">(VolumePerUnitVolume_IC * vcRegionVolume('IC'))</Function>
+        <Function Name="sobj_IC1_EC0_size" Domain="EC_IC_membrane">vcRegionArea('EC_IC_membrane')</Function>
+        <Function Name="UnitFactor_uM_um3_molecules_neg_1">(1.0 / 602.0)</Function>
+        <Function Name="vobj_EC0_size" Domain="EC">vcRegionVolume('EC')</Function>
+        <Function Name="vobj_IC1_size" Domain="IC">vcRegionVolume('IC')</Function>
+        <CompartmentSubDomain Name="IC">
+          <BoundaryType Boundary="Xm" Type="Flux" />
+          <BoundaryType Boundary="Xp" Type="Flux" />
+          <BoundaryType Boundary="Ym" Type="Flux" />
+          <BoundaryType Boundary="Yp" Type="Flux" />
+          <BoundaryType Boundary="Zm" Type="Flux" />
+          <BoundaryType Boundary="Zp" Type="Flux" />
+          <PdeEquation Name="In" SolutionType="Unknown">
+            <Rate>0.0</Rate>
+            <Diffusion>In_diffusionRate</Diffusion>
+            <Initial>In_init_uM</Initial>
+          </PdeEquation>
+          <PdeEquation Name="InA" SolutionType="Unknown">
+            <Rate>0.0</Rate>
+            <Diffusion>InA_diffusionRate</Diffusion>
+            <Initial>InA_init_uM</Initial>
+          </PdeEquation>
+          <PdeEquation Name="PI3K" SolutionType="Unknown">
+            <Rate>0.0</Rate>
+            <Diffusion>PI3K_diffusionRate</Diffusion>
+            <Initial>PI3K_init_uM</Initial>
+          </PdeEquation>
+        </CompartmentSubDomain>
+        <CompartmentSubDomain Name="EC">
+          <BoundaryType Boundary="Xm" Type="Flux" />
+          <BoundaryType Boundary="Xp" Type="Flux" />
+          <BoundaryType Boundary="Ym" Type="Flux" />
+          <BoundaryType Boundary="Yp" Type="Flux" />
+          <BoundaryType Boundary="Zm" Type="Flux" />
+          <BoundaryType Boundary="Zp" Type="Flux" />
+          <PdeEquation Name="L" SolutionType="Unknown">
+            <Rate>J_r0</Rate>
+            <Diffusion>L_diffusionRate</Diffusion>
+            <Initial>L_init_uM</Initial>
+          </PdeEquation>
+        </CompartmentSubDomain>
+        <MembraneSubDomain Name="EC_IC_membrane" InsideCompartment="EC" OutsideCompartment="IC">
+          <BoundaryType Boundary="Xm" Type="Value" />
+          <BoundaryType Boundary="Xp" Type="Value" />
+          <BoundaryType Boundary="Ym" Type="Value" />
+          <BoundaryType Boundary="Yp" Type="Value" />
+          <BoundaryType Boundary="Zm" Type="Value" />
+          <BoundaryType Boundary="Zp" Type="Value" />
+          <OdeEquation Name="EA" SolutionType="Unknown">
+            <Rate>J_r2</Rate>
+            <Initial>EA_init_molecules_um_2</Initial>
+          </OdeEquation>
+          <OdeEquation Name="BSA" SolutionType="Unknown">
+            <Rate>(J_r4 - J_r5)</Rate>
+            <Initial>BSA_init_molecules_um_2</Initial>
+          </OdeEquation>
+          <OdeEquation Name="PI3KA" SolutionType="Unknown">
+            <Rate>J_r5</Rate>
+            <Initial>PI3KA_init_molecules_um_2</Initial>
+          </OdeEquation>
+          <PdeEquation Name="R" SolutionType="Unknown">
+            <Rate>- J_r1</Rate>
+            <Diffusion>R_diffusionRate</Diffusion>
+            <Initial>R_init_molecules_um_2</Initial>
+          </PdeEquation>
+          <PdeEquation Name="C" SolutionType="Unknown">
+            <Rate>J_r1</Rate>
+            <Diffusion>C_diffusionRate</Diffusion>
+            <Initial>C_init_molecules_um_2</Initial>
+          </PdeEquation>
+          <PdeEquation Name="Rs" SolutionType="Unknown">
+            <Rate>J_r6</Rate>
+            <Diffusion>Rs_diffusionRate</Diffusion>
+            <Initial>Rs_init_molecules_um_2</Initial>
+          </PdeEquation>
+          <PdeEquation Name="Fs" SolutionType="Unknown">
+            <Rate>( - J_r6 + J_r7)</Rate>
+            <Diffusion>Fs_diffusionRate</Diffusion>
+            <Initial>Fs_init_molecules_um_2</Initial>
+          </PdeEquation>
+          <PdeEquation Name="Fc" SolutionType="Unknown">
+            <Rate>(J_r8 - J_r9)</Rate>
+            <Diffusion>Fc_diffusionRate</Diffusion>
+            <Initial>Fc_init_molecules_um_2</Initial>
+          </PdeEquation>
+          <PdeEquation Name="Rc" SolutionType="Unknown">
+            <Rate>J_r9</Rate>
+            <Diffusion>Rc_diffusionRate</Diffusion>
+            <Initial>Rc_init_molecules_um_2</Initial>
+          </PdeEquation>
+          <JumpCondition Name="L">
+            <InFlux>- (UnitFactor_uM_um3_molecules_neg_1 * KFlux_CM_EC * J_r1)</InFlux>
+            <OutFlux>0.0</OutFlux>
+          </JumpCondition>
+          <JumpCondition Name="In">
+            <InFlux>0.0</InFlux>
+            <OutFlux>- (UnitFactor_uM_um3_molecules_neg_1 * KFlux_CM_IC * J_r3)</OutFlux>
+          </JumpCondition>
+          <JumpCondition Name="InA">
+            <InFlux>0.0</InFlux>
+            <OutFlux>(UnitFactor_uM_um3_molecules_neg_1 * KFlux_CM_IC * J_r3)</OutFlux>
+          </JumpCondition>
+          <JumpCondition Name="PI3K">
+            <InFlux>0.0</InFlux>
+            <OutFlux>- (UnitFactor_uM_um3_molecules_neg_1 * KFlux_CM_IC * J_r5)</OutFlux>
+          </JumpCondition>
+        </MembraneSubDomain>
+        <Version Name="Copy of needle3D_generated" KeyValue="165035548" BranchId="164673671" Archived="0" Date="27-Aug-2019 19:52:04" FromVersionable="false">
+          <Owner Name="ZixiangLuo" Identifier="160437509" />
+          <GroupAccess Type="1" />
+        </Version>
+      </MathDescription>
+      <Simulation Name="Simulation4">
+        <SolverTaskDescription TaskType="Unsteady" UseSymbolicJacobian="false" Solver="Sundials Stiff PDE Solver (Variable Time Step)">
+          <TimeBound StartTime="0.0" EndTime="400.0" />
+          <TimeStep DefaultTime="0.05" MinTime="0.0" MaxTime="1.0" />
+          <ErrorTolerance Absolut="1.0E-9" Relative="1.0E-7" />
+          <OutputOptions OutputTimeStep="5.0" />
+          <SundialsSolverOptions>
+            <maxOrderAdvection>2</maxOrderAdvection>
+          </SundialsSolverOptions>
+          <NumberProcessors>1</NumberProcessors>
+        </SolverTaskDescription>
+        <MathOverrides />
+        <MeshSpecification>
+          <Size X="51" Y="51" Z="28" />
+        </MeshSpecification>
+        <Version Name="Simulation4" KeyValue="165035581" BranchId="164673706" Archived="0" Date="27-Aug-2019 19:52:04" FromVersionable="false">
+          <Owner Name="ZixiangLuo" Identifier="160437509" />
+          <GroupAccess Type="1" />
+        </Version>
+      </Simulation>
+      <Simulation Name="fineSimulation4">
+        <SolverTaskDescription TaskType="Unsteady" UseSymbolicJacobian="false" Solver="Sundials Stiff PDE Solver (Variable Time Step)">
+          <TimeBound StartTime="0.0" EndTime="120.0" />
+          <TimeStep DefaultTime="0.05" MinTime="0.0" MaxTime="0.01" />
+          <ErrorTolerance Absolut="1.0E-9" Relative="1.0E-7" />
+          <OutputOptions OutputTimeStep="0.01" />
+          <SundialsSolverOptions>
+            <maxOrderAdvection>2</maxOrderAdvection>
+          </SundialsSolverOptions>
+          <NumberProcessors>1</NumberProcessors>
+        </SolverTaskDescription>
+        <MathOverrides />
+        <MeshSpecification>
+          <Size X="51" Y="51" Z="28" />
+        </MeshSpecification>
+        <Version Name="fineSimulation4" KeyValue="165035583" BranchId="165035584" Archived="0" Date="27-Aug-2019 19:52:04" FromVersionable="false">
+          <Owner Name="ZixiangLuo" Identifier="160437509" />
+          <GroupAccess Type="1" />
+        </Version>
+      </Simulation>
+      <Simulation Name="Copy of fineSimulation4">
+        <SolverTaskDescription TaskType="Unsteady" UseSymbolicJacobian="false" Solver="Sundials Stiff PDE Solver (Variable Time Step)">
+          <TimeBound StartTime="0.0" EndTime="120.0" />
+          <TimeStep DefaultTime="0.05" MinTime="0.0" MaxTime="0.01" />
+          <ErrorTolerance Absolut="1.0E-9" Relative="1.0E-7" />
+          <OutputOptions OutputTimeStep="0.1" />
+          <SundialsSolverOptions>
+            <maxOrderAdvection>2</maxOrderAdvection>
+          </SundialsSolverOptions>
+          <NumberProcessors>1</NumberProcessors>
+        </SolverTaskDescription>
+        <MathOverrides />
+        <MeshSpecification>
+          <Size X="51" Y="51" Z="28" />
+        </MeshSpecification>
+        <Version Name="Copy of fineSimulation4" KeyValue="165106411" BranchId="165106412" Archived="0" Date="28-Aug-2019 18:51:41" FromVersionable="false">
+          <Owner Name="ZixiangLuo" Identifier="160437509" />
+          <GroupAccess Type="1" />
+        </Version>
+      </Simulation>
+      <SpatialObjects>
+        <SpatialObject Name="vobj_EC0" Type="Volume" subVolume="EC" regionId="0">
+          <QuantityCategoryList>
+            <QuantityCategory Name="VolumeCentroid" Enabled="false" />
+            <QuantityCategory Name="InteriorVelocity" Enabled="false" />
+            <QuantityCategory Name="VolumeRegionSize" Enabled="true" />
+          </QuantityCategoryList>
+        </SpatialObject>
+        <SpatialObject Name="vobj_IC1" Type="Volume" subVolume="IC" regionId="1">
+          <QuantityCategoryList>
+            <QuantityCategory Name="VolumeCentroid" Enabled="false" />
+            <QuantityCategory Name="InteriorVelocity" Enabled="false" />
+            <QuantityCategory Name="VolumeRegionSize" Enabled="true" />
+          </QuantityCategoryList>
+        </SpatialObject>
+        <SpatialObject Name="sobj_IC1_EC0" Type="Surface" subVolumeInside="IC" regionIdInside="1" subVolumeOutside="EC" regionIdOutside="0">
+          <QuantityCategoryList>
+            <QuantityCategory Name="SurfaceNormal" Enabled="false" />
+            <QuantityCategory Name="SurfaceVelocity" Enabled="false" />
+            <QuantityCategory Name="DistanceToSurface" Enabled="false" />
+            <QuantityCategory Name="DirectionToSurface" Enabled="false" />
+            <QuantityCategory Name="SurfaceSize" Enabled="true" />
+          </QuantityCategoryList>
+        </SpatialObject>
+      </SpatialObjects>
+      <Version Name="hemi-needle3D-lowbottom" KeyValue="165035550" BranchId="165018100" Archived="0" Date="27-Aug-2019 19:52:04" FromVersionable="false">
+        <Owner Name="ZixiangLuo" Identifier="160437509" />
+        <GroupAccess Type="1" />
+        <Annotation>(copied from needle3D) (copied from needle) (copied from Application0)</Annotation>
+      </Version>
+      <MicroscopeMeasurement Name="fluor">
+        <ConvolutionKernel Type="ProjectionZKernel" />
+      </MicroscopeMeasurement>
+    </SimulationSpec>
+    <Version Name="legi-sten-cen-changebottomshreshold" KeyValue="165250936" BranchId="165250937" Archived="0" Date="30-Aug-2019 14:03:18" FromVersionable="false">
+      <Owner Name="ZixiangLuo" Identifier="160437509" />
+      <GroupAccess Type="1" />
+    </Version>
+    <pathwayModel>
+      <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:bp="http://www.biopax.org/release/biopax-level3.owl#" version="3.0" />
+    </pathwayModel>
+    <relationshipModel>
+      <RMNS version="3.0" />
+    </relationshipModel>
+    <vcmetadata>
+      <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" />
+      <nonrdfAnnotationList />
+      <uriBindingList />
+    </vcmetadata>
+  </BioModel>
+</vcml>
+

@@ -1,0 +1,424 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--This biomodel was generated in VCML Version Alpha_Version_7.4.0_build_87-->
+<vcml xmlns="http://sourceforge.net/projects/vcell/vcml" Version="Alpha_Version_7.4.0_build_87">
+  <BioModel Name="CSHL 2011 Exercise 5">
+    <Model Name="unnamed">
+      <Compound Name="Ca" />
+      <Compound Name="B" />
+      <Compound Name="CaB" />
+      <Compound Name="B1" />
+      <Compound Name="CaB1" />
+      <Feature Name="cell" KeyValue="58133745" />
+      <Feature Name="ER" KeyValue="58133748" />
+      <Feature Name="EC" KeyValue="58133743" />
+      <Membrane InsideFeature="ER" OutsideFeature="cell" PositiveFeature="ER" NegativeFeature="cell" MembraneVoltage="Voltage_ER_mb" Name="ER_mb" KeyValue="58133747" />
+      <Membrane InsideFeature="cell" OutsideFeature="EC" PositiveFeature="cell" NegativeFeature="EC" MembraneVoltage="Voltage_PM" Name="PM" KeyValue="58133744" />
+      <LocalizedCompound Name="Ca" CompoundRef="Ca" Structure="cell" OverrideName="true" KeyValue="58133753" />
+      <LocalizedCompound Name="B" CompoundRef="B" Structure="cell" OverrideName="true" KeyValue="58133754" />
+      <LocalizedCompound Name="CaB" CompoundRef="CaB" Structure="cell" OverrideName="true" KeyValue="58133755" />
+      <LocalizedCompound Name="Ca_ER" CompoundRef="Ca" Structure="ER" OverrideName="true" KeyValue="58133756" />
+      <LocalizedCompound Name="B_ER" CompoundRef="B1" Structure="ER" OverrideName="true" KeyValue="58133757" />
+      <LocalizedCompound Name="CaB_ER" CompoundRef="CaB1" Structure="ER" OverrideName="true" KeyValue="58133758" />
+      <SimpleReaction Structure="ER" Name="ER_buffering" Reversible="true" FluxOption="MolecularOnly" KeyValue="58133763">
+        <Reactant LocalizedCompoundRef="B_ER" Stoichiometry="1" KeyValue="58133764" />
+        <Reactant LocalizedCompoundRef="Ca_ER" Stoichiometry="1" KeyValue="58133765" />
+        <Product LocalizedCompoundRef="CaB_ER" Stoichiometry="1" KeyValue="58133766" />
+        <Kinetics KineticsType="MassAction">
+          <Parameter Name="J" Role="reaction rate" Unit="uM.s-1">(((Kf * B_ER) * Ca_ER) - (Kr * CaB_ER))</Parameter>
+          <Parameter Name="Kf" Role="forward rate constant" Unit="s-1.uM-1">200.0</Parameter>
+          <Parameter Name="Kr" Role="reverse rate constant" Unit="s-1">(KD * Kf)</Parameter>
+          <Parameter Name="KD" Role="user defined" Unit="uM">100.0</Parameter>
+        </Kinetics>
+      </SimpleReaction>
+      <SimpleReaction Structure="cell" Name="buffering" Reversible="true" FluxOption="MolecularOnly" KeyValue="58133759">
+        <Reactant LocalizedCompoundRef="Ca" Stoichiometry="1" KeyValue="58133760" />
+        <Reactant LocalizedCompoundRef="B" Stoichiometry="1" KeyValue="58133761" />
+        <Product LocalizedCompoundRef="CaB" Stoichiometry="1" KeyValue="58133762" />
+        <Kinetics KineticsType="MassAction">
+          <Parameter Name="J" Role="reaction rate" Unit="uM.s-1">(((Kf * Ca) * B) - (Kr * CaB))</Parameter>
+          <Parameter Name="Kf" Role="forward rate constant" Unit="s-1.uM-1">200.0</Parameter>
+          <Parameter Name="Kr" Role="reverse rate constant" Unit="s-1">(KD * Kf)</Parameter>
+          <Parameter Name="KD" Role="user defined" Unit="uM">10.0</Parameter>
+        </Kinetics>
+      </SimpleReaction>
+      <FluxStep Name="perm+pump" Structure="ER_mb" Reversible="true" FluxOption="MolecularOnly" KeyValue="58133767">
+        <Reactant LocalizedCompoundRef="Ca" Stoichiometry="1" />
+        <Product LocalizedCompoundRef="Ca_ER" Stoichiometry="1" />
+        <Kinetics KineticsType="GeneralKinetics">
+          <Parameter Name="J" Role="reaction rate" Unit="uM.um.s-1">((perm * (Ca - Ca_ER)) + (Vmax * Ca / (Km + Ca)))</Parameter>
+          <Parameter Name="I" Role="inward current density" Unit="pA.um-2">0.0</Parameter>
+          <Parameter Name="netValence" Role="net charge valence" Unit="1">0.0</Parameter>
+          <Parameter Name="Km" Role="user defined" Unit="uM">1.0</Parameter>
+          <Parameter Name="perm" Role="user defined" Unit="um.s-1">20.0</Parameter>
+          <Parameter Name="Vmax" Role="user defined" Unit="uM.um.s-1">0.0</Parameter>
+        </Kinetics>
+      </FluxStep>
+      <Diagram Name="c0" Structure="EC">
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="Ca" LocationX="470" LocationY="219" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="CaB" LocationX="371" LocationY="100" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="Ca1" LocationX="146" LocationY="148" />
+        <FluxReactionShape NodeReferenceModeAttrTag="full" FluxReactionRef="perm+pump" LocationX="78" LocationY="167" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="B" LocationX="215" LocationY="34" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="Ca_ER" LocationX="79" LocationY="107" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="full" SimpleReactionRef="buffering" LocationX="14" LocationY="94" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="B_ER" LocationX="124" LocationY="88" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="full" SimpleReactionRef="ER_buffering" LocationX="79" LocationY="141" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="CaB_ER" LocationX="89" LocationY="171" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="Ca" LocationX="470" LocationY="219" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="CaB" LocationX="371" LocationY="100" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="Ca1" LocationX="146" LocationY="148" />
+        <FluxReactionShape NodeReferenceModeAttrTag="molecule" FluxReactionRef="perm+pump" LocationX="78" LocationY="167" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="B" LocationX="215" LocationY="34" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="Ca_ER" LocationX="79" LocationY="107" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="molecule" SimpleReactionRef="buffering" LocationX="14" LocationY="94" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="B_ER" LocationX="124" LocationY="88" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="molecule" SimpleReactionRef="ER_buffering" LocationX="79" LocationY="141" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="CaB_ER" LocationX="89" LocationY="171" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="Ca" LocationX="470" LocationY="219" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="CaB" LocationX="371" LocationY="100" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="Ca1" LocationX="146" LocationY="148" />
+        <FluxReactionShape NodeReferenceModeAttrTag="rule" FluxReactionRef="perm+pump" LocationX="78" LocationY="167" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="B" LocationX="215" LocationY="34" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="Ca_ER" LocationX="79" LocationY="107" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="rule" SimpleReactionRef="buffering" LocationX="14" LocationY="94" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="B_ER" LocationX="124" LocationY="88" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="rule" SimpleReactionRef="ER_buffering" LocationX="79" LocationY="141" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="CaB_ER" LocationX="89" LocationY="171" />
+      </Diagram>
+      <Diagram Name="Membrane0" Structure="PM">
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="Ca" LocationX="470" LocationY="219" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="CaB" LocationX="371" LocationY="100" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="Ca1" LocationX="146" LocationY="148" />
+        <FluxReactionShape NodeReferenceModeAttrTag="full" FluxReactionRef="perm+pump" LocationX="78" LocationY="167" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="B" LocationX="215" LocationY="34" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="Ca_ER" LocationX="79" LocationY="107" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="full" SimpleReactionRef="buffering" LocationX="14" LocationY="94" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="B_ER" LocationX="124" LocationY="88" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="full" SimpleReactionRef="ER_buffering" LocationX="79" LocationY="141" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="CaB_ER" LocationX="89" LocationY="171" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="Ca" LocationX="470" LocationY="219" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="CaB" LocationX="371" LocationY="100" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="Ca1" LocationX="146" LocationY="148" />
+        <FluxReactionShape NodeReferenceModeAttrTag="molecule" FluxReactionRef="perm+pump" LocationX="78" LocationY="167" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="B" LocationX="215" LocationY="34" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="Ca_ER" LocationX="79" LocationY="107" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="molecule" SimpleReactionRef="buffering" LocationX="14" LocationY="94" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="B_ER" LocationX="124" LocationY="88" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="molecule" SimpleReactionRef="ER_buffering" LocationX="79" LocationY="141" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="CaB_ER" LocationX="89" LocationY="171" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="Ca" LocationX="470" LocationY="219" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="CaB" LocationX="371" LocationY="100" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="Ca1" LocationX="146" LocationY="148" />
+        <FluxReactionShape NodeReferenceModeAttrTag="rule" FluxReactionRef="perm+pump" LocationX="78" LocationY="167" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="B" LocationX="215" LocationY="34" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="Ca_ER" LocationX="79" LocationY="107" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="rule" SimpleReactionRef="buffering" LocationX="14" LocationY="94" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="B_ER" LocationX="124" LocationY="88" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="rule" SimpleReactionRef="ER_buffering" LocationX="79" LocationY="141" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="CaB_ER" LocationX="89" LocationY="171" />
+      </Diagram>
+      <Diagram Name="c0" Structure="cell">
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="Ca" LocationX="470" LocationY="219" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="CaB" LocationX="371" LocationY="100" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="Ca1" LocationX="146" LocationY="148" />
+        <FluxReactionShape NodeReferenceModeAttrTag="full" FluxReactionRef="perm+pump" LocationX="78" LocationY="167" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="B" LocationX="215" LocationY="34" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="Ca_ER" LocationX="79" LocationY="107" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="full" SimpleReactionRef="buffering" LocationX="14" LocationY="94" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="B_ER" LocationX="124" LocationY="88" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="full" SimpleReactionRef="ER_buffering" LocationX="79" LocationY="141" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="CaB_ER" LocationX="89" LocationY="171" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="Ca" LocationX="470" LocationY="219" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="CaB" LocationX="371" LocationY="100" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="Ca1" LocationX="146" LocationY="148" />
+        <FluxReactionShape NodeReferenceModeAttrTag="molecule" FluxReactionRef="perm+pump" LocationX="78" LocationY="167" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="B" LocationX="215" LocationY="34" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="Ca_ER" LocationX="79" LocationY="107" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="molecule" SimpleReactionRef="buffering" LocationX="14" LocationY="94" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="B_ER" LocationX="124" LocationY="88" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="molecule" SimpleReactionRef="ER_buffering" LocationX="79" LocationY="141" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="CaB_ER" LocationX="89" LocationY="171" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="Ca" LocationX="470" LocationY="219" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="CaB" LocationX="371" LocationY="100" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="Ca1" LocationX="146" LocationY="148" />
+        <FluxReactionShape NodeReferenceModeAttrTag="rule" FluxReactionRef="perm+pump" LocationX="78" LocationY="167" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="B" LocationX="215" LocationY="34" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="Ca_ER" LocationX="79" LocationY="107" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="rule" SimpleReactionRef="buffering" LocationX="14" LocationY="94" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="B_ER" LocationX="124" LocationY="88" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="rule" SimpleReactionRef="ER_buffering" LocationX="79" LocationY="141" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="CaB_ER" LocationX="89" LocationY="171" />
+      </Diagram>
+      <Diagram Name="Membrane0" Structure="ER_mb">
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="Ca" LocationX="470" LocationY="219" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="CaB" LocationX="371" LocationY="100" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="Ca1" LocationX="146" LocationY="148" />
+        <FluxReactionShape NodeReferenceModeAttrTag="full" FluxReactionRef="perm+pump" LocationX="78" LocationY="167" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="B" LocationX="215" LocationY="34" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="Ca_ER" LocationX="79" LocationY="107" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="full" SimpleReactionRef="buffering" LocationX="14" LocationY="94" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="B_ER" LocationX="124" LocationY="88" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="full" SimpleReactionRef="ER_buffering" LocationX="79" LocationY="141" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="CaB_ER" LocationX="89" LocationY="171" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="Ca" LocationX="470" LocationY="219" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="CaB" LocationX="371" LocationY="100" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="Ca1" LocationX="146" LocationY="148" />
+        <FluxReactionShape NodeReferenceModeAttrTag="molecule" FluxReactionRef="perm+pump" LocationX="78" LocationY="167" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="B" LocationX="215" LocationY="34" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="Ca_ER" LocationX="79" LocationY="107" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="molecule" SimpleReactionRef="buffering" LocationX="14" LocationY="94" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="B_ER" LocationX="124" LocationY="88" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="molecule" SimpleReactionRef="ER_buffering" LocationX="79" LocationY="141" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="CaB_ER" LocationX="89" LocationY="171" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="Ca" LocationX="470" LocationY="219" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="CaB" LocationX="371" LocationY="100" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="Ca1" LocationX="146" LocationY="148" />
+        <FluxReactionShape NodeReferenceModeAttrTag="rule" FluxReactionRef="perm+pump" LocationX="78" LocationY="167" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="B" LocationX="215" LocationY="34" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="Ca_ER" LocationX="79" LocationY="107" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="rule" SimpleReactionRef="buffering" LocationX="14" LocationY="94" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="B_ER" LocationX="124" LocationY="88" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="rule" SimpleReactionRef="ER_buffering" LocationX="79" LocationY="141" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="CaB_ER" LocationX="89" LocationY="171" />
+      </Diagram>
+      <Diagram Name="c0" Structure="ER">
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="Ca" LocationX="470" LocationY="219" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="CaB" LocationX="371" LocationY="100" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="Ca1" LocationX="146" LocationY="148" />
+        <FluxReactionShape NodeReferenceModeAttrTag="full" FluxReactionRef="perm+pump" LocationX="78" LocationY="167" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="B" LocationX="215" LocationY="34" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="Ca_ER" LocationX="79" LocationY="107" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="full" SimpleReactionRef="buffering" LocationX="14" LocationY="94" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="B_ER" LocationX="124" LocationY="88" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="full" SimpleReactionRef="ER_buffering" LocationX="79" LocationY="141" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="CaB_ER" LocationX="89" LocationY="171" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="Ca" LocationX="470" LocationY="219" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="CaB" LocationX="371" LocationY="100" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="Ca1" LocationX="146" LocationY="148" />
+        <FluxReactionShape NodeReferenceModeAttrTag="molecule" FluxReactionRef="perm+pump" LocationX="78" LocationY="167" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="B" LocationX="215" LocationY="34" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="Ca_ER" LocationX="79" LocationY="107" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="molecule" SimpleReactionRef="buffering" LocationX="14" LocationY="94" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="B_ER" LocationX="124" LocationY="88" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="molecule" SimpleReactionRef="ER_buffering" LocationX="79" LocationY="141" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="CaB_ER" LocationX="89" LocationY="171" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="Ca" LocationX="470" LocationY="219" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="CaB" LocationX="371" LocationY="100" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="Ca1" LocationX="146" LocationY="148" />
+        <FluxReactionShape NodeReferenceModeAttrTag="rule" FluxReactionRef="perm+pump" LocationX="78" LocationY="167" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="B" LocationX="215" LocationY="34" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="Ca_ER" LocationX="79" LocationY="107" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="rule" SimpleReactionRef="buffering" LocationX="14" LocationY="94" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="B_ER" LocationX="124" LocationY="88" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="rule" SimpleReactionRef="ER_buffering" LocationX="79" LocationY="141" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="CaB_ER" LocationX="89" LocationY="171" />
+      </Diagram>
+      <Version Name="unnamed" KeyValue="58133735" BranchId="58133736" Archived="0" Date="03-Jul-2011 17:48:32" FromVersionable="false">
+        <Owner Name="ion" Identifier="81" />
+        <GroupAccess Type="1" />
+      </Version>
+      <ModelUnitSystem VolumeSubstanceUnit="uM.um3" MembraneSubstanceUnit="molecules" LumpedReactionSubstanceUnit="molecules" VolumeUnit="um3" AreaUnit="um2" LengthUnit="um" TimeUnit="s" />
+    </Model>
+    <SimulationSpec Name="equilibration" Stochastic="false" UseConcentration="true" RuleBased="false" MassConservationModelReduction="true" InsufficientIterations="false" InsufficientMaxMolecules="false">
+      <NetworkConstraints RbmMaxIteration="1" RbmMaxMoleculesPerSpecies="10" RbmSpeciesLimit="800" RbmReactionsLimit="2500" />
+      <Annotation />
+      <Geometry Name="non-spatial273426105" Dimension="0">
+        <Extent X="10.0" Y="10.0" Z="10.0" />
+        <Origin X="0.0" Y="0.0" Z="0.0" />
+        <SubVolume Name="Compartment" Handle="0" Type="Compartmental" KeyValue="58133784" />
+        <Version Name="non-spatial273426105" KeyValue="58133780" BranchId="58133781" Archived="0" Date="03-Jul-2011 17:51:49" FromVersionable="false">
+          <Owner Name="ion" Identifier="81" />
+          <GroupAccess Type="1" />
+        </Version>
+      </Geometry>
+      <GeometryContext>
+        <FeatureMapping Feature="cell" GeometryClass="Compartment" SubVolume="Compartment" Size="50000.0">
+          <BoundariesTypes Xm="Flux" Xp="Flux" Ym="Flux" Yp="Flux" Zm="Flux" Zp="Flux" />
+        </FeatureMapping>
+        <FeatureMapping Feature="ER" GeometryClass="Compartment" SubVolume="Compartment" Size="5000.0">
+          <BoundariesTypes Xm="Flux" Xp="Flux" Ym="Flux" Yp="Flux" Zm="Flux" Zp="Flux" />
+        </FeatureMapping>
+        <FeatureMapping Feature="EC" GeometryClass="Compartment" SubVolume="Compartment" Size="500000.0">
+          <BoundariesTypes Xm="Flux" Xp="Flux" Ym="Flux" Yp="Flux" Zm="Flux" Zp="Flux" />
+        </FeatureMapping>
+        <MembraneMapping Membrane="ER_mb" SurfaceToVolumeRatio="0.01" VolumeFraction="0.09090909090909091" Size="50.0" CalculateVoltage="false" SpecificCapacitance="1.0" InitialVoltage="0.0" GeometryClass="Compartment">
+          <BoundariesTypes Xm="Flux" Xp="Flux" Ym="Flux" Yp="Flux" Zm="Flux" Zp="Flux" />
+        </MembraneMapping>
+        <MembraneMapping Membrane="PM" SurfaceToVolumeRatio="0.09090909090909091" VolumeFraction="0.0990990990990991" Size="5000.0" CalculateVoltage="false" SpecificCapacitance="1.0" InitialVoltage="0.0" GeometryClass="Compartment">
+          <BoundariesTypes Xm="Flux" Xp="Flux" Ym="Flux" Yp="Flux" Zm="Flux" Zp="Flux" />
+        </MembraneMapping>
+      </GeometryContext>
+      <ReactionContext>
+        <LocalizedCompoundSpec LocalizedCompoundRef="Ca" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>10.0</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="B" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>100.0</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="CaB" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>0.0</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="Ca_ER" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>100.0</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="B_ER" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>500.0</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="CaB_ER" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>0.0</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <ReactionSpec ReactionStepRef="ER_buffering" ReactionMapping="included" />
+        <ReactionSpec ReactionStepRef="perm+pump" ReactionMapping="included" />
+        <ReactionSpec ReactionStepRef="buffering" ReactionMapping="included" />
+      </ReactionContext>
+      <MathDescription Name="equilibration_generated">
+        <Constant Name="_F_">96480.0</Constant>
+        <Constant Name="_F_nmol_">9.648E-5</Constant>
+        <Constant Name="_K_GHK_">1.0E-9</Constant>
+        <Constant Name="_N_pmol_">6.02E11</Constant>
+        <Constant Name="_R_">8314.0</Constant>
+        <Constant Name="_T_">300.0</Constant>
+        <Constant Name="B_ER_init">500.0</Constant>
+        <Constant Name="B_init">100.0</Constant>
+        <Constant Name="Ca_ER_init">100.0</Constant>
+        <Constant Name="Ca_init">10.0</Constant>
+        <Constant Name="CaB_ER_init">0.0</Constant>
+        <Constant Name="CaB_init">0.0</Constant>
+        <Constant Name="K_millivolts_per_volt">1000.0</Constant>
+        <Constant Name="KD_buffering">10.0</Constant>
+        <Constant Name="KD_ER_buffering">100.0</Constant>
+        <Constant Name="Kf_buffering">200.0</Constant>
+        <Constant Name="Kf_ER_buffering">200.0</Constant>
+        <Constant Name="Km">1.0</Constant>
+        <Constant Name="KMOLE">0.0016611295681063123</Constant>
+        <Constant Name="perm">20.0</Constant>
+        <Constant Name="Size_cell">50000.0</Constant>
+        <Constant Name="Size_EC">500000.0</Constant>
+        <Constant Name="Size_ER">5000.0</Constant>
+        <Constant Name="Size_ER_mb">50.0</Constant>
+        <Constant Name="Size_PM">5000.0</Constant>
+        <Constant Name="Vmax">0.0</Constant>
+        <Constant Name="Voltage_ER_mb">0.0</Constant>
+        <Constant Name="Voltage_PM">0.0</Constant>
+        <VolumeVariable Name="Ca_ER" Domain="Compartment" />
+        <VolumeVariable Name="CaB" Domain="Compartment" />
+        <VolumeVariable Name="CaB_ER" Domain="Compartment" />
+        <Function Name="B" Domain="Compartment">((K_B_total - (Size_cell * CaB)) / Size_cell)</Function>
+        <Function Name="B_ER" Domain="Compartment">((K_B_ER_total - (Size_ER * CaB_ER)) / Size_ER)</Function>
+        <Function Name="Ca" Domain="Compartment">(( - (Size_ER * CaB_ER) - (Size_ER * Ca_ER) + K_Ca_total - (Size_cell * CaB)) / Size_cell)</Function>
+        <Function Name="J_buffering" Domain="Compartment">((B * Kf_buffering * Ca) - (Kr_buffering * CaB))</Function>
+        <Function Name="J_ER_buffering" Domain="Compartment">((Ca_ER * Kf_ER_buffering * B_ER) - (Kr_ER_buffering * CaB_ER))</Function>
+        <Function Name="J_perm_pump" Domain="Compartment">((perm * (Ca - Ca_ER)) + (Vmax * Ca / (Km + Ca)))</Function>
+        <Function Name="K_B_ER_total" Domain="Compartment">((Size_ER * B_ER_init) + (Size_ER * CaB_ER_init))</Function>
+        <Function Name="K_B_total" Domain="Compartment">((Size_cell * B_init) + (Size_cell * CaB_init))</Function>
+        <Function Name="K_Ca_total" Domain="Compartment">((Size_ER * CaB_ER_init) + (Size_ER * Ca_ER_init) + (Size_cell * Ca_init) + (Size_cell * CaB_init))</Function>
+        <Function Name="KFlux_ER_mb_cell" Domain="Compartment">(Size_ER_mb / Size_cell)</Function>
+        <Function Name="KFlux_ER_mb_ER" Domain="Compartment">(Size_ER_mb / Size_ER)</Function>
+        <Function Name="KFlux_PM_cell" Domain="Compartment">(Size_PM / Size_cell)</Function>
+        <Function Name="KFlux_PM_EC" Domain="Compartment">(Size_PM / Size_EC)</Function>
+        <Function Name="Kr_buffering" Domain="Compartment">(KD_buffering * Kf_buffering)</Function>
+        <Function Name="Kr_ER_buffering" Domain="Compartment">(KD_ER_buffering * Kf_ER_buffering)</Function>
+        <CompartmentSubDomain Name="Compartment">
+          <BoundaryType Boundary="Xm" Type="Value" />
+          <BoundaryType Boundary="Xp" Type="Value" />
+          <BoundaryType Boundary="Ym" Type="Value" />
+          <BoundaryType Boundary="Yp" Type="Value" />
+          <BoundaryType Boundary="Zm" Type="Value" />
+          <BoundaryType Boundary="Zp" Type="Value" />
+          <OdeEquation Name="CaB" SolutionType="Unknown">
+            <Rate>J_buffering</Rate>
+            <Initial>CaB_init</Initial>
+          </OdeEquation>
+          <OdeEquation Name="Ca_ER" SolutionType="Unknown">
+            <Rate>( - J_ER_buffering + (KFlux_ER_mb_ER * J_perm_pump))</Rate>
+            <Initial>Ca_ER_init</Initial>
+          </OdeEquation>
+          <OdeEquation Name="CaB_ER" SolutionType="Unknown">
+            <Rate>J_ER_buffering</Rate>
+            <Initial>CaB_ER_init</Initial>
+          </OdeEquation>
+        </CompartmentSubDomain>
+        <Version Name="equilibration_generated" KeyValue="58133935" BranchId="58133786" Archived="0" Date="03-Jul-2011 17:59:45" FromVersionable="false">
+          <Owner Name="ion" Identifier="81" />
+          <GroupAccess Type="1" />
+        </Version>
+      </MathDescription>
+      <Simulation Name="default - no pump">
+        <SolverTaskDescription TaskType="Unsteady" UseSymbolicJacobian="false" Solver="Combined Stiff Solver (IDA/CVODE)">
+          <TimeBound StartTime="0.0" EndTime="50.0" />
+          <TimeStep DefaultTime="0.1" MinTime="1.0E-8" MaxTime="1.0" />
+          <ErrorTolerance Absolut="1.0E-9" Relative="1.0E-9" />
+          <OutputOptions KeepEvery="1" KeepAtMost="1000" />
+          <NumberProcessors>1</NumberProcessors>
+        </SolverTaskDescription>
+        <MathOverrides />
+        <Version Name="default - no pump" KeyValue="58133900" BranchId="58133806" Archived="0" Date="03-Jul-2011 17:56:56" FromVersionable="false">
+          <Owner Name="ion" Identifier="81" />
+          <GroupAccess Type="1" />
+        </Version>
+      </Simulation>
+      <Simulation Name="scan for different affinities">
+        <SolverTaskDescription TaskType="Unsteady" UseSymbolicJacobian="false" Solver="Combined Stiff Solver (IDA/CVODE)">
+          <TimeBound StartTime="0.0" EndTime="50.0" />
+          <TimeStep DefaultTime="0.1" MinTime="1.0E-8" MaxTime="1.0" />
+          <ErrorTolerance Absolut="1.0E-9" Relative="1.0E-9" />
+          <OutputOptions KeepEvery="1" KeepAtMost="1000" />
+          <NumberProcessors>1</NumberProcessors>
+        </SolverTaskDescription>
+        <MathOverrides>
+          <Constant Name="KD_buffering" ConstantArraySpec="1001">1.0 to 100.0, log, 3 values</Constant>
+          <Constant Name="KD_ER_buffering" ConstantArraySpec="1001">10.0 to 1000.0, log, 3 values</Constant>
+        </MathOverrides>
+        <Version Name="scan for different affinities" KeyValue="58133902" BranchId="58133903" Archived="0" Date="03-Jul-2011 17:56:56" FromVersionable="false">
+          <Owner Name="ion" Identifier="81" />
+          <GroupAccess Type="1" />
+        </Version>
+      </Simulation>
+      <Simulation Name="turn on pump">
+        <SolverTaskDescription TaskType="Unsteady" UseSymbolicJacobian="false" Solver="Combined Stiff Solver (IDA/CVODE)">
+          <TimeBound StartTime="0.0" EndTime="50.0" />
+          <TimeStep DefaultTime="0.1" MinTime="1.0E-8" MaxTime="1.0" />
+          <ErrorTolerance Absolut="1.0E-9" Relative="1.0E-9" />
+          <OutputOptions KeepEvery="1" KeepAtMost="1000" />
+          <NumberProcessors>1</NumberProcessors>
+        </SolverTaskDescription>
+        <MathOverrides>
+          <Constant Name="Vmax" ConstantArraySpec="1001">10.0 to 1000.0, log, 3 values</Constant>
+        </MathOverrides>
+        <Version Name="turn on pump" KeyValue="58133953" BranchId="58133906" Archived="0" Date="03-Jul-2011 17:59:45" FromVersionable="false">
+          <Owner Name="ion" Identifier="81" />
+          <GroupAccess Type="1" />
+        </Version>
+      </Simulation>
+      <Version Name="equilibration" KeyValue="58133937" BranchId="58133789" Archived="0" Date="03-Jul-2011 17:59:45" FromVersionable="false">
+        <Owner Name="ion" Identifier="81" />
+        <GroupAccess Type="1" />
+      </Version>
+      <MicroscopeMeasurement Name="fluor">
+        <ConvolutionKernel Type="ProjectionZKernel" />
+      </MicroscopeMeasurement>
+    </SimulationSpec>
+    <Version Name="CSHL 2011 Exercise 5" KeyValue="58133955" BranchId="58133776" Archived="0" Date="03-Jul-2011 17:59:45" FromVersionable="false">
+      <Owner Name="ion" Identifier="81" />
+      <GroupAccess Type="1" />
+    </Version>
+    <pathwayModel>
+      <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:bp="http://www.biopax.org/release/biopax-level3.owl#" version="3.0" />
+    </pathwayModel>
+    <relationshipModel>
+      <RMNS version="3.0" />
+    </relationshipModel>
+    <vcmetadata>
+      <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" />
+      <nonrdfAnnotationList />
+      <uriBindingList />
+    </vcmetadata>
+  </BioModel>
+</vcml>
+

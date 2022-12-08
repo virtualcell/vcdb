@@ -1,0 +1,1260 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--This biomodel was generated in VCML Version Alpha_Version_7.4.0_build_87-->
+<vcml xmlns="http://sourceforge.net/projects/vcell/vcml" Version="Alpha_Version_7.4.0_build_87">
+  <BioModel Name="vcell_rule_based_tutorial">
+    <Model Name="model">
+      <Compound Name="s0" />
+      <Compound Name="s1" />
+      <Compound Name="s2" />
+      <Compound Name="s3" />
+      <Compound Name="s4" />
+      <Feature Name="Cell" KeyValue="190504435" />
+      <LocalizedCompound Name="R" CompoundRef="s0" Structure="Cell" OverrideName="true" KeyValue="190504437">
+        <SpeciesPattern>
+          <MolecularTypePattern Index="1">
+            <MolecularType Name="EGFR" />
+            <ComponentPattern MolecularComponent="ecd" BondType="-" />
+            <ComponentPattern MolecularComponent="tmd" BondType="-" />
+            <ComponentPattern MolecularComponent="Y1" ComponentStatePattern="u" BondType="-" />
+            <ComponentPattern MolecularComponent="Y2" ComponentStatePattern="u" BondType="-" />
+          </MolecularTypePattern>
+        </SpeciesPattern>
+      </LocalizedCompound>
+      <LocalizedCompound Name="L" CompoundRef="s1" Structure="Cell" OverrideName="true" KeyValue="190504438">
+        <SpeciesPattern>
+          <MolecularTypePattern Index="1">
+            <MolecularType Name="EGF" />
+            <ComponentPattern MolecularComponent="Site" BondType="-" />
+          </MolecularTypePattern>
+        </SpeciesPattern>
+      </LocalizedCompound>
+      <LocalizedCompound Name="Grb2" CompoundRef="s2" Structure="Cell" OverrideName="true" KeyValue="190504439">
+        <SpeciesPattern>
+          <MolecularTypePattern Index="1">
+            <MolecularType Name="Grb2" />
+            <ComponentPattern MolecularComponent="sh2" BondType="-" />
+          </MolecularTypePattern>
+        </SpeciesPattern>
+      </LocalizedCompound>
+      <LocalizedCompound Name="ShcP" CompoundRef="s3" Structure="Cell" OverrideName="true" KeyValue="190504440">
+        <SpeciesPattern>
+          <MolecularTypePattern Index="1">
+            <MolecularType Name="Shc" />
+            <ComponentPattern MolecularComponent="sh3" BondType="-" />
+            <ComponentPattern MolecularComponent="Y" ComponentStatePattern="p" BondType="-" />
+          </MolecularTypePattern>
+        </SpeciesPattern>
+      </LocalizedCompound>
+      <LocalizedCompound Name="ShcU" CompoundRef="s4" Structure="Cell" OverrideName="true" KeyValue="190504441">
+        <SpeciesPattern>
+          <MolecularTypePattern Index="1">
+            <MolecularType Name="Shc" />
+            <ComponentPattern MolecularComponent="sh3" BondType="-" />
+            <ComponentPattern MolecularComponent="Y" ComponentStatePattern="u" BondType="-" />
+          </MolecularTypePattern>
+        </SpeciesPattern>
+      </LocalizedCompound>
+      <SimpleReaction Structure="Cell" Name="Shc_dephosph" Reversible="false" FluxOption="MolecularOnly" KeyValue="190504442">
+        <Reactant LocalizedCompoundRef="ShcP" Stoichiometry="1" KeyValue="190504443" />
+        <Product LocalizedCompoundRef="ShcU" Stoichiometry="1" KeyValue="190504444" />
+        <Kinetics KineticsType="MassAction">
+          <Parameter Name="J" Role="reaction rate" Unit="nM.s-1">((Kf * ShcP) - (Kr * ShcU))</Parameter>
+          <Parameter Name="Kf" Role="forward rate constant" Unit="s-1">0.005</Parameter>
+          <Parameter Name="Kr" Role="reverse rate constant" Unit="s-1">0.0</Parameter>
+        </Kinetics>
+      </SimpleReaction>
+      <RbmModelContainer>
+        <MolecularTypeList>
+          <MolecularType Name="EGF" AnchorAll="true">
+            <MolecularComponent Name="Site" Index="1" />
+          </MolecularType>
+          <MolecularType Name="EGFR" AnchorAll="true">
+            <MolecularComponent Name="ecd" Index="1" />
+            <MolecularComponent Name="tmd" Index="2" />
+            <MolecularComponent Name="Y1" Index="3">
+              <AllowableState Name="u" />
+              <AllowableState Name="p" />
+            </MolecularComponent>
+            <MolecularComponent Name="Y2" Index="4">
+              <AllowableState Name="u" />
+              <AllowableState Name="p" />
+            </MolecularComponent>
+          </MolecularType>
+          <MolecularType Name="Grb2" AnchorAll="true">
+            <MolecularComponent Name="sh2" Index="1" />
+          </MolecularType>
+          <MolecularType Name="Shc" AnchorAll="true">
+            <MolecularComponent Name="sh3" Index="1" />
+            <MolecularComponent Name="Y" Index="2">
+              <AllowableState Name="u" />
+              <AllowableState Name="p" />
+            </MolecularComponent>
+          </MolecularType>
+        </MolecularTypeList>
+        <RbmObservableList>
+          <Observable Name="O0_EGF_tot" ObservableType="Molecules" Sequence="Multimolecular" LengthEqual="2" LengthGreater="1" Structure="Cell">
+            <SpeciesPattern>
+              <MolecularTypePattern Index="1">
+                <MolecularType Name="EGF" />
+                <ComponentPattern MolecularComponent="Site" BondType="?" />
+              </MolecularTypePattern>
+            </SpeciesPattern>
+          </Observable>
+          <Observable Name="O0_EGFR_tot" ObservableType="Molecules" Sequence="Multimolecular" LengthEqual="2" LengthGreater="1" Structure="Cell">
+            <SpeciesPattern>
+              <MolecularTypePattern Index="1">
+                <MolecularType Name="EGFR" />
+                <ComponentPattern MolecularComponent="ecd" BondType="?" />
+                <ComponentPattern MolecularComponent="tmd" BondType="?" />
+                <ComponentPattern MolecularComponent="Y1" Any="true" BondType="?" />
+                <ComponentPattern MolecularComponent="Y2" Any="true" BondType="?" />
+              </MolecularTypePattern>
+            </SpeciesPattern>
+          </Observable>
+          <Observable Name="O0_Grb2_tot" ObservableType="Molecules" Sequence="Multimolecular" LengthEqual="2" LengthGreater="1" Structure="Cell">
+            <SpeciesPattern>
+              <MolecularTypePattern Index="1">
+                <MolecularType Name="Grb2" />
+                <ComponentPattern MolecularComponent="sh2" BondType="?" />
+              </MolecularTypePattern>
+            </SpeciesPattern>
+          </Observable>
+          <Observable Name="O0_Shc_tot" ObservableType="Molecules" Sequence="Multimolecular" LengthEqual="2" LengthGreater="1" Structure="Cell">
+            <SpeciesPattern>
+              <MolecularTypePattern Index="1">
+                <MolecularType Name="Shc" />
+                <ComponentPattern MolecularComponent="sh3" BondType="?" />
+                <ComponentPattern MolecularComponent="Y" Any="true" BondType="?" />
+              </MolecularTypePattern>
+            </SpeciesPattern>
+          </Observable>
+          <Observable Name="Dimers" ObservableType="Molecules" Sequence="Multimolecular" LengthEqual="2" LengthGreater="1" Structure="Cell">
+            <SpeciesPattern>
+              <MolecularTypePattern Index="1">
+                <MolecularType Name="EGFR" />
+                <ComponentPattern MolecularComponent="ecd" BondType="?" />
+                <ComponentPattern MolecularComponent="tmd" BondType="+" />
+                <ComponentPattern MolecularComponent="Y1" Any="true" BondType="?" />
+                <ComponentPattern MolecularComponent="Y2" Any="true" BondType="?" />
+              </MolecularTypePattern>
+            </SpeciesPattern>
+          </Observable>
+          <Observable Name="Dimers_s" ObservableType="Species" Sequence="Multimolecular" LengthEqual="2" LengthGreater="1" Structure="Cell">
+            <SpeciesPattern>
+              <MolecularTypePattern Index="1">
+                <MolecularType Name="EGFR" />
+                <ComponentPattern MolecularComponent="ecd" BondType="?" />
+                <ComponentPattern MolecularComponent="tmd" BondType="+" />
+                <ComponentPattern MolecularComponent="Y1" Any="true" BondType="?" />
+                <ComponentPattern MolecularComponent="Y2" Any="true" BondType="?" />
+              </MolecularTypePattern>
+            </SpeciesPattern>
+          </Observable>
+          <Observable Name="Y1" ObservableType="Molecules" Sequence="Multimolecular" LengthEqual="2" LengthGreater="1" Structure="Cell">
+            <SpeciesPattern>
+              <MolecularTypePattern Index="1">
+                <MolecularType Name="EGFR" />
+                <ComponentPattern MolecularComponent="ecd" BondType="?" />
+                <ComponentPattern MolecularComponent="tmd" BondType="?" />
+                <ComponentPattern MolecularComponent="Y1" ComponentStatePattern="p" BondType="?" />
+                <ComponentPattern MolecularComponent="Y2" Any="true" BondType="?" />
+              </MolecularTypePattern>
+            </SpeciesPattern>
+          </Observable>
+          <Observable Name="Y2" ObservableType="Molecules" Sequence="Multimolecular" LengthEqual="2" LengthGreater="1" Structure="Cell">
+            <SpeciesPattern>
+              <MolecularTypePattern Index="1">
+                <MolecularType Name="EGFR" />
+                <ComponentPattern MolecularComponent="ecd" BondType="?" />
+                <ComponentPattern MolecularComponent="tmd" BondType="?" />
+                <ComponentPattern MolecularComponent="Y1" Any="true" BondType="?" />
+                <ComponentPattern MolecularComponent="Y2" ComponentStatePattern="p" BondType="?" />
+              </MolecularTypePattern>
+            </SpeciesPattern>
+          </Observable>
+          <Observable Name="Y_total" ObservableType="Molecules" Sequence="Multimolecular" LengthEqual="2" LengthGreater="1" Structure="Cell">
+            <SpeciesPattern>
+              <MolecularTypePattern Index="1">
+                <MolecularType Name="EGFR" />
+                <ComponentPattern MolecularComponent="ecd" BondType="?" />
+                <ComponentPattern MolecularComponent="tmd" BondType="?" />
+                <ComponentPattern MolecularComponent="Y1" ComponentStatePattern="p" BondType="?" />
+                <ComponentPattern MolecularComponent="Y2" Any="true" BondType="?" />
+              </MolecularTypePattern>
+            </SpeciesPattern>
+            <SpeciesPattern>
+              <MolecularTypePattern Index="1">
+                <MolecularType Name="EGFR" />
+                <ComponentPattern MolecularComponent="ecd" BondType="?" />
+                <ComponentPattern MolecularComponent="tmd" BondType="?" />
+                <ComponentPattern MolecularComponent="Y1" Any="true" BondType="?" />
+                <ComponentPattern MolecularComponent="Y2" ComponentStatePattern="p" BondType="?" />
+              </MolecularTypePattern>
+            </SpeciesPattern>
+          </Observable>
+        </RbmObservableList>
+        <ReactionRuleList>
+          <ReactionRule Name="ligand_bind" Structure="Cell" ReactionRuleLabel="ligand_bind" ReactionRuleReversible="true">
+            <ReactantPatternsList>
+              <ReactantPattern Structure="Cell">
+                <SpeciesPattern>
+                  <MolecularTypePattern Index="1">
+                    <MolecularType Name="EGFR" />
+                    <ComponentPattern MolecularComponent="ecd" BondType="-" />
+                    <ComponentPattern MolecularComponent="tmd" BondType="-" />
+                    <ComponentPattern MolecularComponent="Y1" Any="true" BondType="?" />
+                    <ComponentPattern MolecularComponent="Y2" Any="true" BondType="?" />
+                  </MolecularTypePattern>
+                </SpeciesPattern>
+              </ReactantPattern>
+              <ReactantPattern Structure="Cell">
+                <SpeciesPattern>
+                  <MolecularTypePattern Index="1">
+                    <MolecularType Name="EGF" />
+                    <ComponentPattern MolecularComponent="Site" BondType="-" />
+                  </MolecularTypePattern>
+                </SpeciesPattern>
+              </ReactantPattern>
+            </ReactantPatternsList>
+            <ProductPatternsList>
+              <ProductPattern Structure="Cell">
+                <SpeciesPattern>
+                  <MolecularTypePattern Index="1">
+                    <MolecularType Name="EGFR" />
+                    <ComponentPattern MolecularComponent="ecd" BondType="-" />
+                    <ComponentPattern MolecularComponent="tmd" BondType="1">
+                      <Bond MolecularTypePattern="EGF" ComponentPattern="Site" />
+                    </ComponentPattern>
+                    <ComponentPattern MolecularComponent="Y1" Any="true" BondType="?" />
+                    <ComponentPattern MolecularComponent="Y2" Any="true" BondType="?" />
+                  </MolecularTypePattern>
+                  <MolecularTypePattern Index="2">
+                    <MolecularType Name="EGF" />
+                    <ComponentPattern MolecularComponent="Site" BondType="1">
+                      <Bond MolecularTypePattern="EGFR" ComponentPattern="tmd" />
+                    </ComponentPattern>
+                  </MolecularTypePattern>
+                </SpeciesPattern>
+              </ProductPattern>
+            </ProductPatternsList>
+            <Kinetics KineticsType="MassAction">
+              <Parameter Name="ruleRate" Role="RuleRate" Unit="nM.s-1" />
+              <Parameter Name="Kf" Role="MassActionKf" Unit="s-1.nM-1">0.003</Parameter>
+              <Parameter Name="Kr" Role="MassActionKr" Unit="s-1">0.06</Parameter>
+            </Kinetics>
+          </ReactionRule>
+          <ReactionRule Name="dimeriz" Structure="Cell" ReactionRuleLabel="dimeriz" ReactionRuleReversible="true">
+            <ReactantPatternsList>
+              <ReactantPattern Structure="Cell">
+                <SpeciesPattern>
+                  <MolecularTypePattern ParticipantMatch="1" Index="1">
+                    <MolecularType Name="EGFR" />
+                    <ComponentPattern MolecularComponent="ecd" BondType="+" />
+                    <ComponentPattern MolecularComponent="tmd" BondType="-" />
+                    <ComponentPattern MolecularComponent="Y1" Any="true" BondType="?" />
+                    <ComponentPattern MolecularComponent="Y2" Any="true" BondType="?" />
+                  </MolecularTypePattern>
+                </SpeciesPattern>
+              </ReactantPattern>
+              <ReactantPattern Structure="Cell">
+                <SpeciesPattern>
+                  <MolecularTypePattern ParticipantMatch="2" Index="1">
+                    <MolecularType Name="EGFR" />
+                    <ComponentPattern MolecularComponent="ecd" BondType="+" />
+                    <ComponentPattern MolecularComponent="tmd" BondType="-" />
+                    <ComponentPattern MolecularComponent="Y1" Any="true" BondType="?" />
+                    <ComponentPattern MolecularComponent="Y2" Any="true" BondType="?" />
+                  </MolecularTypePattern>
+                </SpeciesPattern>
+              </ReactantPattern>
+            </ReactantPatternsList>
+            <ProductPatternsList>
+              <ProductPattern Structure="Cell">
+                <SpeciesPattern>
+                  <MolecularTypePattern ParticipantMatch="1" Index="1">
+                    <MolecularType Name="EGFR" />
+                    <ComponentPattern MolecularComponent="ecd" BondType="+" />
+                    <ComponentPattern MolecularComponent="tmd" BondType="1">
+                      <Bond MolecularTypePattern="EGFR" ComponentPattern="tmd" />
+                    </ComponentPattern>
+                    <ComponentPattern MolecularComponent="Y1" Any="true" BondType="?" />
+                    <ComponentPattern MolecularComponent="Y2" Any="true" BondType="?" />
+                  </MolecularTypePattern>
+                  <MolecularTypePattern ParticipantMatch="2" Index="2">
+                    <MolecularType Name="EGFR" />
+                    <ComponentPattern MolecularComponent="ecd" BondType="+" />
+                    <ComponentPattern MolecularComponent="tmd" BondType="1">
+                      <Bond MolecularTypePattern="EGFR" ComponentPattern="tmd" />
+                    </ComponentPattern>
+                    <ComponentPattern MolecularComponent="Y1" Any="true" BondType="?" />
+                    <ComponentPattern MolecularComponent="Y2" Any="true" BondType="?" />
+                  </MolecularTypePattern>
+                </SpeciesPattern>
+              </ProductPattern>
+            </ProductPatternsList>
+            <Kinetics KineticsType="MassAction">
+              <Parameter Name="ruleRate" Role="RuleRate" Unit="nM.s-1" />
+              <Parameter Name="Kf" Role="MassActionKf" Unit="s-1.nM-1">0.001</Parameter>
+              <Parameter Name="Kr" Role="MassActionKr" Unit="s-1">0.1</Parameter>
+            </Kinetics>
+          </ReactionRule>
+          <ReactionRule Name="Y1_phosph" Structure="Cell" ReactionRuleLabel="Y1_phosph" ReactionRuleReversible="false">
+            <ReactantPatternsList>
+              <ReactantPattern Structure="Cell">
+                <SpeciesPattern>
+                  <MolecularTypePattern Index="1">
+                    <MolecularType Name="EGFR" />
+                    <ComponentPattern MolecularComponent="ecd" BondType="?" />
+                    <ComponentPattern MolecularComponent="tmd" BondType="+" />
+                    <ComponentPattern MolecularComponent="Y1" ComponentStatePattern="u" BondType="-" />
+                    <ComponentPattern MolecularComponent="Y2" Any="true" BondType="?" />
+                  </MolecularTypePattern>
+                </SpeciesPattern>
+              </ReactantPattern>
+            </ReactantPatternsList>
+            <ProductPatternsList>
+              <ProductPattern Structure="Cell">
+                <SpeciesPattern>
+                  <MolecularTypePattern Index="1">
+                    <MolecularType Name="EGFR" />
+                    <ComponentPattern MolecularComponent="ecd" BondType="?" />
+                    <ComponentPattern MolecularComponent="tmd" BondType="+" />
+                    <ComponentPattern MolecularComponent="Y1" ComponentStatePattern="p" BondType="-" />
+                    <ComponentPattern MolecularComponent="Y2" Any="true" BondType="?" />
+                  </MolecularTypePattern>
+                </SpeciesPattern>
+              </ProductPattern>
+            </ProductPatternsList>
+            <Kinetics KineticsType="MassAction">
+              <Parameter Name="ruleRate" Role="RuleRate" Unit="nM.s-1" />
+              <Parameter Name="Kf" Role="MassActionKf" Unit="s-1">0.5</Parameter>
+              <Parameter Name="Kr" Role="MassActionKr" Unit="s-1">0.0</Parameter>
+            </Kinetics>
+          </ReactionRule>
+          <ReactionRule Name="Y1_dephosph" Structure="Cell" ReactionRuleLabel="Y1_dephosph" ReactionRuleReversible="false">
+            <ReactantPatternsList>
+              <ReactantPattern Structure="Cell">
+                <SpeciesPattern>
+                  <MolecularTypePattern Index="1">
+                    <MolecularType Name="EGFR" />
+                    <ComponentPattern MolecularComponent="ecd" BondType="?" />
+                    <ComponentPattern MolecularComponent="tmd" BondType="+" />
+                    <ComponentPattern MolecularComponent="Y1" ComponentStatePattern="p" BondType="-" />
+                    <ComponentPattern MolecularComponent="Y2" Any="true" BondType="?" />
+                  </MolecularTypePattern>
+                </SpeciesPattern>
+              </ReactantPattern>
+            </ReactantPatternsList>
+            <ProductPatternsList>
+              <ProductPattern Structure="Cell">
+                <SpeciesPattern>
+                  <MolecularTypePattern Index="1">
+                    <MolecularType Name="EGFR" />
+                    <ComponentPattern MolecularComponent="ecd" BondType="?" />
+                    <ComponentPattern MolecularComponent="tmd" BondType="+" />
+                    <ComponentPattern MolecularComponent="Y1" ComponentStatePattern="u" BondType="-" />
+                    <ComponentPattern MolecularComponent="Y2" Any="true" BondType="?" />
+                  </MolecularTypePattern>
+                </SpeciesPattern>
+              </ProductPattern>
+            </ProductPatternsList>
+            <Kinetics KineticsType="MassAction">
+              <Parameter Name="ruleRate" Role="RuleRate" Unit="nM.s-1" />
+              <Parameter Name="Kf" Role="MassActionKf" Unit="s-1">4.5</Parameter>
+              <Parameter Name="Kr" Role="MassActionKr" Unit="s-1">0.0</Parameter>
+            </Kinetics>
+          </ReactionRule>
+          <ReactionRule Name="Y2_phosph" Structure="Cell" ReactionRuleLabel="Y2_phosph" ReactionRuleReversible="false">
+            <ReactantPatternsList>
+              <ReactantPattern Structure="Cell">
+                <SpeciesPattern>
+                  <MolecularTypePattern Index="1">
+                    <MolecularType Name="EGFR" />
+                    <ComponentPattern MolecularComponent="ecd" BondType="?" />
+                    <ComponentPattern MolecularComponent="tmd" BondType="+" />
+                    <ComponentPattern MolecularComponent="Y1" Any="true" BondType="?" />
+                    <ComponentPattern MolecularComponent="Y2" ComponentStatePattern="u" BondType="-" />
+                  </MolecularTypePattern>
+                </SpeciesPattern>
+              </ReactantPattern>
+            </ReactantPatternsList>
+            <ProductPatternsList>
+              <ProductPattern Structure="Cell">
+                <SpeciesPattern>
+                  <MolecularTypePattern Index="1">
+                    <MolecularType Name="EGFR" />
+                    <ComponentPattern MolecularComponent="ecd" BondType="?" />
+                    <ComponentPattern MolecularComponent="tmd" BondType="+" />
+                    <ComponentPattern MolecularComponent="Y1" Any="true" BondType="?" />
+                    <ComponentPattern MolecularComponent="Y2" ComponentStatePattern="p" BondType="-" />
+                  </MolecularTypePattern>
+                </SpeciesPattern>
+              </ProductPattern>
+            </ProductPatternsList>
+            <Kinetics KineticsType="MassAction">
+              <Parameter Name="ruleRate" Role="RuleRate" Unit="nM.s-1" />
+              <Parameter Name="Kf" Role="MassActionKf" Unit="s-1">0.5</Parameter>
+              <Parameter Name="Kr" Role="MassActionKr" Unit="s-1">0.0</Parameter>
+            </Kinetics>
+          </ReactionRule>
+          <ReactionRule Name="Y2_dephosph" Structure="Cell" ReactionRuleLabel="Y2_dephosph" ReactionRuleReversible="false">
+            <ReactantPatternsList>
+              <ReactantPattern Structure="Cell">
+                <SpeciesPattern>
+                  <MolecularTypePattern Index="1">
+                    <MolecularType Name="EGFR" />
+                    <ComponentPattern MolecularComponent="ecd" BondType="?" />
+                    <ComponentPattern MolecularComponent="tmd" BondType="+" />
+                    <ComponentPattern MolecularComponent="Y1" Any="true" BondType="?" />
+                    <ComponentPattern MolecularComponent="Y2" ComponentStatePattern="p" BondType="-" />
+                  </MolecularTypePattern>
+                </SpeciesPattern>
+              </ReactantPattern>
+            </ReactantPatternsList>
+            <ProductPatternsList>
+              <ProductPattern Structure="Cell">
+                <SpeciesPattern>
+                  <MolecularTypePattern Index="1">
+                    <MolecularType Name="EGFR" />
+                    <ComponentPattern MolecularComponent="ecd" BondType="?" />
+                    <ComponentPattern MolecularComponent="tmd" BondType="+" />
+                    <ComponentPattern MolecularComponent="Y1" Any="true" BondType="?" />
+                    <ComponentPattern MolecularComponent="Y2" ComponentStatePattern="u" BondType="-" />
+                  </MolecularTypePattern>
+                </SpeciesPattern>
+              </ProductPattern>
+            </ProductPatternsList>
+            <Kinetics KineticsType="MassAction">
+              <Parameter Name="ruleRate" Role="RuleRate" Unit="nM.s-1" />
+              <Parameter Name="Kf" Role="MassActionKf" Unit="s-1">4.5</Parameter>
+              <Parameter Name="Kr" Role="MassActionKr" Unit="s-1">0.0</Parameter>
+            </Kinetics>
+          </ReactionRule>
+          <ReactionRule Name="R_Grb2_interaction" Structure="Cell" ReactionRuleLabel="R_Grb2_interaction" ReactionRuleReversible="true">
+            <ReactantPatternsList>
+              <ReactantPattern Structure="Cell">
+                <SpeciesPattern>
+                  <MolecularTypePattern Index="1">
+                    <MolecularType Name="EGFR" />
+                    <ComponentPattern MolecularComponent="ecd" BondType="?" />
+                    <ComponentPattern MolecularComponent="tmd" BondType="?" />
+                    <ComponentPattern MolecularComponent="Y1" ComponentStatePattern="p" BondType="-" />
+                    <ComponentPattern MolecularComponent="Y2" Any="true" BondType="?" />
+                  </MolecularTypePattern>
+                </SpeciesPattern>
+              </ReactantPattern>
+              <ReactantPattern Structure="Cell">
+                <SpeciesPattern>
+                  <MolecularTypePattern Index="1">
+                    <MolecularType Name="Grb2" />
+                    <ComponentPattern MolecularComponent="sh2" BondType="-" />
+                  </MolecularTypePattern>
+                </SpeciesPattern>
+              </ReactantPattern>
+            </ReactantPatternsList>
+            <ProductPatternsList>
+              <ProductPattern Structure="Cell">
+                <SpeciesPattern>
+                  <MolecularTypePattern Index="1">
+                    <MolecularType Name="EGFR" />
+                    <ComponentPattern MolecularComponent="ecd" BondType="?" />
+                    <ComponentPattern MolecularComponent="tmd" BondType="?" />
+                    <ComponentPattern MolecularComponent="Y1" ComponentStatePattern="p" BondType="1">
+                      <Bond MolecularTypePattern="Grb2" ComponentPattern="sh2" />
+                    </ComponentPattern>
+                    <ComponentPattern MolecularComponent="Y2" Any="true" BondType="?" />
+                  </MolecularTypePattern>
+                  <MolecularTypePattern Index="2">
+                    <MolecularType Name="Grb2" />
+                    <ComponentPattern MolecularComponent="sh2" BondType="1">
+                      <Bond MolecularTypePattern="EGFR" ComponentPattern="Y1" />
+                    </ComponentPattern>
+                  </MolecularTypePattern>
+                </SpeciesPattern>
+              </ProductPattern>
+            </ProductPatternsList>
+            <Kinetics KineticsType="MassAction">
+              <Parameter Name="ruleRate" Role="RuleRate" Unit="nM.s-1" />
+              <Parameter Name="Kf" Role="MassActionKf" Unit="s-1.nM-1">0.001</Parameter>
+              <Parameter Name="Kr" Role="MassActionKr" Unit="s-1">0.05</Parameter>
+            </Kinetics>
+          </ReactionRule>
+          <ReactionRule Name="R_ShcP_interaction" Structure="Cell" ReactionRuleLabel="R_ShcP_interaction" ReactionRuleReversible="true">
+            <ReactantPatternsList>
+              <ReactantPattern Structure="Cell">
+                <SpeciesPattern>
+                  <MolecularTypePattern Index="1">
+                    <MolecularType Name="EGFR" />
+                    <ComponentPattern MolecularComponent="ecd" BondType="?" />
+                    <ComponentPattern MolecularComponent="tmd" BondType="?" />
+                    <ComponentPattern MolecularComponent="Y1" Any="true" BondType="?" />
+                    <ComponentPattern MolecularComponent="Y2" ComponentStatePattern="p" BondType="-" />
+                  </MolecularTypePattern>
+                </SpeciesPattern>
+              </ReactantPattern>
+              <ReactantPattern Structure="Cell">
+                <SpeciesPattern>
+                  <MolecularTypePattern Index="1">
+                    <MolecularType Name="Shc" />
+                    <ComponentPattern MolecularComponent="sh3" BondType="-" />
+                    <ComponentPattern MolecularComponent="Y" ComponentStatePattern="p" BondType="-" />
+                  </MolecularTypePattern>
+                </SpeciesPattern>
+              </ReactantPattern>
+            </ReactantPatternsList>
+            <ProductPatternsList>
+              <ProductPattern Structure="Cell">
+                <SpeciesPattern>
+                  <MolecularTypePattern Index="1">
+                    <MolecularType Name="EGFR" />
+                    <ComponentPattern MolecularComponent="ecd" BondType="?" />
+                    <ComponentPattern MolecularComponent="tmd" BondType="?" />
+                    <ComponentPattern MolecularComponent="Y1" Any="true" BondType="?" />
+                    <ComponentPattern MolecularComponent="Y2" ComponentStatePattern="p" BondType="1">
+                      <Bond MolecularTypePattern="Shc" ComponentPattern="sh3" />
+                    </ComponentPattern>
+                  </MolecularTypePattern>
+                  <MolecularTypePattern Index="2">
+                    <MolecularType Name="Shc" />
+                    <ComponentPattern MolecularComponent="sh3" BondType="1">
+                      <Bond MolecularTypePattern="EGFR" ComponentPattern="Y2" />
+                    </ComponentPattern>
+                    <ComponentPattern MolecularComponent="Y" ComponentStatePattern="p" BondType="-" />
+                  </MolecularTypePattern>
+                </SpeciesPattern>
+              </ProductPattern>
+            </ProductPatternsList>
+            <Kinetics KineticsType="MassAction">
+              <Parameter Name="ruleRate" Role="RuleRate" Unit="nM.s-1" />
+              <Parameter Name="Kf" Role="MassActionKf" Unit="s-1.nM-1">4.5E-4</Parameter>
+              <Parameter Name="Kr" Role="MassActionKr" Unit="s-1">0.3</Parameter>
+            </Kinetics>
+          </ReactionRule>
+          <ReactionRule Name="R_ShcU_interaction" Structure="Cell" ReactionRuleLabel="R_ShcU_interaction" ReactionRuleReversible="true">
+            <ReactantPatternsList>
+              <ReactantPattern Structure="Cell">
+                <SpeciesPattern>
+                  <MolecularTypePattern Index="1">
+                    <MolecularType Name="EGFR" />
+                    <ComponentPattern MolecularComponent="ecd" BondType="?" />
+                    <ComponentPattern MolecularComponent="tmd" BondType="?" />
+                    <ComponentPattern MolecularComponent="Y1" Any="true" BondType="?" />
+                    <ComponentPattern MolecularComponent="Y2" ComponentStatePattern="p" BondType="-" />
+                  </MolecularTypePattern>
+                </SpeciesPattern>
+              </ReactantPattern>
+              <ReactantPattern Structure="Cell">
+                <SpeciesPattern>
+                  <MolecularTypePattern Index="1">
+                    <MolecularType Name="Shc" />
+                    <ComponentPattern MolecularComponent="sh3" BondType="-" />
+                    <ComponentPattern MolecularComponent="Y" ComponentStatePattern="u" BondType="-" />
+                  </MolecularTypePattern>
+                </SpeciesPattern>
+              </ReactantPattern>
+            </ReactantPatternsList>
+            <ProductPatternsList>
+              <ProductPattern Structure="Cell">
+                <SpeciesPattern>
+                  <MolecularTypePattern Index="1">
+                    <MolecularType Name="EGFR" />
+                    <ComponentPattern MolecularComponent="ecd" BondType="?" />
+                    <ComponentPattern MolecularComponent="tmd" BondType="?" />
+                    <ComponentPattern MolecularComponent="Y1" Any="true" BondType="?" />
+                    <ComponentPattern MolecularComponent="Y2" ComponentStatePattern="p" BondType="1">
+                      <Bond MolecularTypePattern="Shc" ComponentPattern="sh3" />
+                    </ComponentPattern>
+                  </MolecularTypePattern>
+                  <MolecularTypePattern Index="2">
+                    <MolecularType Name="Shc" />
+                    <ComponentPattern MolecularComponent="sh3" BondType="1">
+                      <Bond MolecularTypePattern="EGFR" ComponentPattern="Y2" />
+                    </ComponentPattern>
+                    <ComponentPattern MolecularComponent="Y" ComponentStatePattern="u" BondType="-" />
+                  </MolecularTypePattern>
+                </SpeciesPattern>
+              </ProductPattern>
+            </ProductPatternsList>
+            <Kinetics KineticsType="MassAction">
+              <Parameter Name="ruleRate" Role="RuleRate" Unit="nM.s-1" />
+              <Parameter Name="Kf" Role="MassActionKf" Unit="s-1.nM-1">0.045</Parameter>
+              <Parameter Name="Kr" Role="MassActionKr" Unit="s-1">0.6</Parameter>
+            </Kinetics>
+          </ReactionRule>
+          <ReactionRule Name="Shc_phosph" Structure="Cell" ReactionRuleLabel="Shc_phosph" ReactionRuleReversible="false">
+            <ReactantPatternsList>
+              <ReactantPattern Structure="Cell">
+                <SpeciesPattern>
+                  <MolecularTypePattern Index="1">
+                    <MolecularType Name="EGFR" />
+                    <ComponentPattern MolecularComponent="ecd" BondType="?" />
+                    <ComponentPattern MolecularComponent="tmd" BondType="?" />
+                    <ComponentPattern MolecularComponent="Y1" Any="true" BondType="?" />
+                    <ComponentPattern MolecularComponent="Y2" ComponentStatePattern="p" BondType="1">
+                      <Bond MolecularTypePattern="Shc" ComponentPattern="sh3" />
+                    </ComponentPattern>
+                  </MolecularTypePattern>
+                  <MolecularTypePattern Index="2">
+                    <MolecularType Name="Shc" />
+                    <ComponentPattern MolecularComponent="sh3" BondType="1">
+                      <Bond MolecularTypePattern="EGFR" ComponentPattern="Y2" />
+                    </ComponentPattern>
+                    <ComponentPattern MolecularComponent="Y" ComponentStatePattern="u" BondType="-" />
+                  </MolecularTypePattern>
+                </SpeciesPattern>
+              </ReactantPattern>
+            </ReactantPatternsList>
+            <ProductPatternsList>
+              <ProductPattern Structure="Cell">
+                <SpeciesPattern>
+                  <MolecularTypePattern Index="1">
+                    <MolecularType Name="EGFR" />
+                    <ComponentPattern MolecularComponent="ecd" BondType="?" />
+                    <ComponentPattern MolecularComponent="tmd" BondType="?" />
+                    <ComponentPattern MolecularComponent="Y1" Any="true" BondType="?" />
+                    <ComponentPattern MolecularComponent="Y2" ComponentStatePattern="p" BondType="1">
+                      <Bond MolecularTypePattern="Shc" ComponentPattern="sh3" />
+                    </ComponentPattern>
+                  </MolecularTypePattern>
+                  <MolecularTypePattern Index="2">
+                    <MolecularType Name="Shc" />
+                    <ComponentPattern MolecularComponent="sh3" BondType="1">
+                      <Bond MolecularTypePattern="EGFR" ComponentPattern="Y2" />
+                    </ComponentPattern>
+                    <ComponentPattern MolecularComponent="Y" ComponentStatePattern="p" BondType="-" />
+                  </MolecularTypePattern>
+                </SpeciesPattern>
+              </ProductPattern>
+            </ProductPatternsList>
+            <Kinetics KineticsType="MassAction">
+              <Parameter Name="ruleRate" Role="RuleRate" Unit="nM.s-1" />
+              <Parameter Name="Kf" Role="MassActionKf" Unit="s-1">3.0</Parameter>
+              <Parameter Name="Kr" Role="MassActionKr" Unit="s-1">0.0</Parameter>
+            </Kinetics>
+          </ReactionRule>
+        </ReactionRuleList>
+      </RbmModelContainer>
+      <Diagram Name="c0" Structure="Cell">
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="ShP" LocationX="148" LocationY="34" />
+        <ReactionRuleShapeTag NodeReferenceModeAttrTag="full" ReactionRuleRef2AttrTag="ligand_bind" LocationX="224" LocationY="198" />
+        <ReactionRuleShapeTag NodeReferenceModeAttrTag="full" ReactionRuleRef2AttrTag="R_Grb2_interaction" LocationX="59" LocationY="39" />
+        <ReactionRuleShapeTag NodeReferenceModeAttrTag="full" ReactionRuleRef2AttrTag="Y1_phosph" LocationX="398" LocationY="126" />
+        <ReactionRuleShapeTag NodeReferenceModeAttrTag="full" ReactionRuleRef2AttrTag="Y1_dephosph" LocationX="452" LocationY="130" />
+        <RuleParticipantFullShapeTag NodeReferenceModeAttrTag="full" RuleParticipantRefAttrTag="EGFR(Y2~u,tmd!+)" LocationX="124" LocationY="106" />
+        <RuleParticipantFullShapeTag NodeReferenceModeAttrTag="full" RuleParticipantRefAttrTag="EGFR(Y1~p,tmd!+)" LocationX="423" LocationY="102" />
+        <RuleParticipantFullShapeTag NodeReferenceModeAttrTag="full" RuleParticipantRefAttrTag="EGF(Site!1).EGFR(ecd,tmd!1)" LocationX="242" LocationY="220" />
+        <RuleParticipantFullShapeTag NodeReferenceModeAttrTag="full" RuleParticipantRefAttrTag="EGFR(ecd!+,tmd)%1" LocationX="295" LocationY="197" />
+        <ReactionRuleShapeTag NodeReferenceModeAttrTag="full" ReactionRuleRef2AttrTag="Y2_dephosph" LocationX="155" LocationY="132" />
+        <RuleParticipantFullShapeTag NodeReferenceModeAttrTag="full" RuleParticipantRefAttrTag="Shc(Y~p,sh3)" LocationX="222" LocationY="107" />
+        <RuleParticipantFullShapeTag NodeReferenceModeAttrTag="full" RuleParticipantRefAttrTag="EGFR(Y2~p!1).Shc(Y~u,sh3!1)" LocationX="196" LocationY="49" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="Grb2" LocationX="470" LocationY="34" />
+        <ReactionRuleShapeTag NodeReferenceModeAttrTag="full" ReactionRuleRef2AttrTag="R_ShcP_interaction" LocationX="257" LocationY="81" />
+        <RuleParticipantFullShapeTag NodeReferenceModeAttrTag="full" RuleParticipantRefAttrTag="EGF(Site)" LocationX="179" LocationY="188" />
+        <RuleParticipantFullShapeTag NodeReferenceModeAttrTag="full" RuleParticipantRefAttrTag="EGFR(Y2~p)" LocationX="241" LocationY="115" />
+        <RuleParticipantFullShapeTag NodeReferenceModeAttrTag="full" RuleParticipantRefAttrTag="EGFR(ecd,tmd)" LocationX="193" LocationY="220" />
+        <RuleParticipantFullShapeTag NodeReferenceModeAttrTag="full" RuleParticipantRefAttrTag="EGFR(Y2~p!1).Shc(Y~p,sh3!1)" LocationX="259" LocationY="40" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="ShcP" LocationX="351" LocationY="77" />
+        <RuleParticipantFullShapeTag NodeReferenceModeAttrTag="full" RuleParticipantRefAttrTag="EGFR(Y1~p)" LocationX="93" LocationY="34" />
+        <RuleParticipantFullShapeTag NodeReferenceModeAttrTag="full" RuleParticipantRefAttrTag="EGFR(ecd!+,tmd!1)%1.EGFR(ecd!+,tmd!1)%2" LocationX="325" LocationY="130" />
+        <ReactionRuleShapeTag NodeReferenceModeAttrTag="full" ReactionRuleRef2AttrTag="dimeriz" LocationX="330" LocationY="170" />
+        <ReactionRuleShapeTag NodeReferenceModeAttrTag="full" ReactionRuleRef2AttrTag="Y2_phosph" LocationX="103" LocationY="134" />
+        <RuleParticipantFullShapeTag NodeReferenceModeAttrTag="full" RuleParticipantRefAttrTag="EGFR(Y2~p,tmd!+)" LocationX="122" LocationY="156" />
+        <RuleParticipantFullShapeTag NodeReferenceModeAttrTag="full" RuleParticipantRefAttrTag="EGFR(Y1~u,tmd!+)" LocationX="419" LocationY="150" />
+        <RuleParticipantFullShapeTag NodeReferenceModeAttrTag="full" RuleParticipantRefAttrTag="Shc(Y~u,sh3)" LocationX="255" LocationY="103" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="R" LocationX="14" LocationY="173" />
+        <RuleParticipantFullShapeTag NodeReferenceModeAttrTag="full" RuleParticipantRefAttrTag="EGFR(ecd!+,tmd)%2" LocationX="341" LocationY="202" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="full" SimpleReactionRef="Shc_dephosph" LocationX="346" LocationY="45" />
+        <ReactionRuleShapeTag NodeReferenceModeAttrTag="full" ReactionRuleRef2AttrTag="Shc_phosph" LocationX="235" LocationY="35" />
+        <RuleParticipantFullShapeTag NodeReferenceModeAttrTag="full" RuleParticipantRefAttrTag="EGFR(Y1~p!1).Grb2(sh2!1)" LocationX="14" LocationY="34" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="L" LocationX="470" LocationY="220" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="ShcU" LocationX="374" LocationY="34" />
+        <ReactionRuleShapeTag NodeReferenceModeAttrTag="full" ReactionRuleRef2AttrTag="R_ShcU_interaction" LocationX="224" LocationY="87" />
+        <RuleParticipantFullShapeTag NodeReferenceModeAttrTag="full" RuleParticipantRefAttrTag="Grb2(sh2)" LocationX="39" LocationY="74" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="Grb2" LocationX="17" LocationY="184" />
+        <RuleParticipantShortShapeTag NodeReferenceModeAttrTag="molecule" RuleParticipantRefAttrTag="EGF(Site)" LocationX="260" LocationY="39" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="L" LocationX="400" LocationY="77" />
+        <ReactionRuleShapeTag NodeReferenceModeAttrTag="molecule" ReactionRuleRef2AttrTag="Y1_phosph" LocationX="164" LocationY="131" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="R" LocationX="392" LocationY="220" />
+        <RuleParticipantShortShapeTag NodeReferenceModeAttrTag="molecule" RuleParticipantRefAttrTag="EGF(Site!1).EGFR(ecd,tmd!1)" LocationX="181" LocationY="34" />
+        <RuleParticipantShortShapeTag NodeReferenceModeAttrTag="molecule" RuleParticipantRefAttrTag="EGFR(ecd!+,tmd!1)%1.EGFR(ecd!+,tmd!1)%2" LocationX="301" LocationY="128" />
+        <ReactionRuleShapeTag NodeReferenceModeAttrTag="molecule" ReactionRuleRef2AttrTag="Y1_dephosph" LocationX="212" LocationY="172" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="ShcP" LocationX="470" LocationY="149" />
+        <ReactionRuleShapeTag NodeReferenceModeAttrTag="molecule" ReactionRuleRef2AttrTag="ligand_bind" LocationX="229" LocationY="56" />
+        <ReactionRuleShapeTag NodeReferenceModeAttrTag="molecule" ReactionRuleRef2AttrTag="dimerization" LocationX="274" LocationY="145" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="ShcU" LocationX="14" LocationY="83" />
+      </Diagram>
+      <Version Name="model" KeyValue="190504428" BranchId="190426552" Archived="0" Date="30-Sep-2020 15:40:13" FromVersionable="false">
+        <Owner Name="pariksheet" Identifier="188567844" />
+        <GroupAccess Type="1" />
+      </Version>
+      <ModelUnitSystem VolumeSubstanceUnit="nM.um3" MembraneSubstanceUnit="molecules" LumpedReactionSubstanceUnit="molecules" VolumeUnit="um3" AreaUnit="um2" LengthUnit="um" TimeUnit="s" />
+    </Model>
+    <SimulationSpec Name="Application0" Stochastic="false" UseConcentration="true" RuleBased="false" MassConservationModelReduction="false" InsufficientIterations="false" InsufficientMaxMolecules="false">
+      <NetworkConstraints RbmMaxIteration="12" RbmMaxMoleculesPerSpecies="12" RbmSpeciesLimit="800" RbmReactionsLimit="2500">
+        <MaxStoichiometry MolecularType="EGF" Integer="100" />
+        <MaxStoichiometry MolecularType="EGFR" Integer="100" />
+        <MaxStoichiometry MolecularType="Grb2" Integer="100" />
+        <MaxStoichiometry MolecularType="Shc" Integer="100" />
+      </NetworkConstraints>
+      <Annotation />
+      <Geometry Name="non-spatial" Dimension="0">
+        <Extent X="10.0" Y="10.0" Z="10.0" />
+        <Origin X="0.0" Y="0.0" Z="0.0" />
+        <SubVolume Name="Compartment" Handle="0" Type="Compartmental" KeyValue="190504424" />
+        <Version Name="non-spatial" KeyValue="190504420" BranchId="190504421" Archived="0" Date="30-Sep-2020 15:40:13" FromVersionable="false">
+          <Owner Name="pariksheet" Identifier="188567844" />
+          <GroupAccess Type="1" />
+        </Version>
+      </Geometry>
+      <GeometryContext>
+        <FeatureMapping Feature="Cell" GeometryClass="Compartment" SubVolume="Compartment" Size="50000.0">
+          <BoundariesTypes Xm="Flux" Xp="Flux" Ym="Flux" Yp="Flux" Zm="Flux" Zp="Flux" />
+        </FeatureMapping>
+      </GeometryContext>
+      <ReactionContext>
+        <LocalizedCompoundSpec LocalizedCompoundRef="R" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>100.0</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="L" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>680.0</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="Grb2" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>58.0</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="ShcP" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>0.0</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="ShcU" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>150.0</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <ReactionSpec ReactionStepRef="Shc_dephosph" ReactionMapping="included" />
+        <ReactionRuleSpecs>
+          <ReactionRuleSpec ReactionRuleRef="ligand_bind" ReactionRuleMapping="included" />
+          <ReactionRuleSpec ReactionRuleRef="dimeriz" ReactionRuleMapping="included" />
+          <ReactionRuleSpec ReactionRuleRef="Y1_phosph" ReactionRuleMapping="included" />
+          <ReactionRuleSpec ReactionRuleRef="Y1_dephosph" ReactionRuleMapping="included" />
+          <ReactionRuleSpec ReactionRuleRef="Y2_phosph" ReactionRuleMapping="included" />
+          <ReactionRuleSpec ReactionRuleRef="Y2_dephosph" ReactionRuleMapping="included" />
+          <ReactionRuleSpec ReactionRuleRef="R_Grb2_interaction" ReactionRuleMapping="included" />
+          <ReactionRuleSpec ReactionRuleRef="R_ShcP_interaction" ReactionRuleMapping="included" />
+          <ReactionRuleSpec ReactionRuleRef="R_ShcU_interaction" ReactionRuleMapping="included" />
+          <ReactionRuleSpec ReactionRuleRef="Shc_phosph" ReactionRuleMapping="included" />
+        </ReactionRuleSpecs>
+      </ReactionContext>
+      <MathDescription Name="Application0_generated">
+        <Constant Name="_F_">96485.3321</Constant>
+        <Constant Name="_F_nmol_">9.64853321E-5</Constant>
+        <Constant Name="_K_GHK_">1.0E-9</Constant>
+        <Constant Name="_N_pmol_">6.02214179E11</Constant>
+        <Constant Name="_PI_">3.141592653589793</Constant>
+        <Constant Name="_R_">8314.46261815</Constant>
+        <Constant Name="_T_">300.0</Constant>
+        <Constant Name="Grb2_init_nM">58.0</Constant>
+        <Constant Name="K_millivolts_per_volt">1000.0</Constant>
+        <Constant Name="Kf_ligand_bind_DirectHalf_0">0.003</Constant>
+        <Constant Name="Kf_ligand_bind_DirectHalf_1">0.003</Constant>
+        <Constant Name="Kf_ligand_bind_DirectHalf_10">0.003</Constant>
+        <Constant Name="Kf_ligand_bind_DirectHalf_11">0.003</Constant>
+        <Constant Name="Kf_ligand_bind_DirectHalf_2">0.003</Constant>
+        <Constant Name="Kf_ligand_bind_DirectHalf_3">0.003</Constant>
+        <Constant Name="Kf_ligand_bind_DirectHalf_4">0.003</Constant>
+        <Constant Name="Kf_ligand_bind_DirectHalf_5">0.003</Constant>
+        <Constant Name="Kf_ligand_bind_DirectHalf_6">0.003</Constant>
+        <Constant Name="Kf_ligand_bind_DirectHalf_7">0.003</Constant>
+        <Constant Name="Kf_ligand_bind_DirectHalf_8">0.003</Constant>
+        <Constant Name="Kf_ligand_bind_DirectHalf_9">0.003</Constant>
+        <Constant Name="Kf_ligand_bind_InverseHalf_0">0.06</Constant>
+        <Constant Name="Kf_ligand_bind_InverseHalf_1">0.06</Constant>
+        <Constant Name="Kf_ligand_bind_InverseHalf_10">0.06</Constant>
+        <Constant Name="Kf_ligand_bind_InverseHalf_11">0.06</Constant>
+        <Constant Name="Kf_ligand_bind_InverseHalf_2">0.06</Constant>
+        <Constant Name="Kf_ligand_bind_InverseHalf_3">0.06</Constant>
+        <Constant Name="Kf_ligand_bind_InverseHalf_4">0.06</Constant>
+        <Constant Name="Kf_ligand_bind_InverseHalf_5">0.06</Constant>
+        <Constant Name="Kf_ligand_bind_InverseHalf_6">0.06</Constant>
+        <Constant Name="Kf_ligand_bind_InverseHalf_7">0.06</Constant>
+        <Constant Name="Kf_ligand_bind_InverseHalf_8">0.06</Constant>
+        <Constant Name="Kf_ligand_bind_InverseHalf_9">0.06</Constant>
+        <Constant Name="Kf_R_Grb2_interaction_DirectHalf_0">0.001</Constant>
+        <Constant Name="Kf_R_Grb2_interaction_DirectHalf_1">0.001</Constant>
+        <Constant Name="Kf_R_Grb2_interaction_DirectHalf_2">0.001</Constant>
+        <Constant Name="Kf_R_Grb2_interaction_DirectHalf_3">0.001</Constant>
+        <Constant Name="Kf_R_Grb2_interaction_DirectHalf_4">0.001</Constant>
+        <Constant Name="Kf_R_Grb2_interaction_DirectHalf_5">0.001</Constant>
+        <Constant Name="Kf_R_Grb2_interaction_DirectHalf_6">0.001</Constant>
+        <Constant Name="Kf_R_Grb2_interaction_DirectHalf_7">0.001</Constant>
+        <Constant Name="Kf_R_Grb2_interaction_InverseHalf_0">0.05</Constant>
+        <Constant Name="Kf_R_Grb2_interaction_InverseHalf_1">0.05</Constant>
+        <Constant Name="Kf_R_Grb2_interaction_InverseHalf_2">0.05</Constant>
+        <Constant Name="Kf_R_Grb2_interaction_InverseHalf_3">0.05</Constant>
+        <Constant Name="Kf_R_Grb2_interaction_InverseHalf_4">0.05</Constant>
+        <Constant Name="Kf_R_Grb2_interaction_InverseHalf_5">0.05</Constant>
+        <Constant Name="Kf_R_Grb2_interaction_InverseHalf_6">0.05</Constant>
+        <Constant Name="Kf_R_Grb2_interaction_InverseHalf_7">0.05</Constant>
+        <Constant Name="Kf_R_ShcP_interaction_DirectHalf_0">4.5E-4</Constant>
+        <Constant Name="Kf_R_ShcP_interaction_DirectHalf_1">4.5E-4</Constant>
+        <Constant Name="Kf_R_ShcP_interaction_DirectHalf_2">4.5E-4</Constant>
+        <Constant Name="Kf_R_ShcP_interaction_DirectHalf_3">4.5E-4</Constant>
+        <Constant Name="Kf_R_ShcP_interaction_DirectHalf_4">4.5E-4</Constant>
+        <Constant Name="Kf_R_ShcP_interaction_DirectHalf_5">4.5E-4</Constant>
+        <Constant Name="Kf_R_ShcP_interaction_InverseHalf_0">0.3</Constant>
+        <Constant Name="Kf_R_ShcP_interaction_InverseHalf_1">0.3</Constant>
+        <Constant Name="Kf_R_ShcP_interaction_InverseHalf_2">0.3</Constant>
+        <Constant Name="Kf_R_ShcP_interaction_InverseHalf_3">0.3</Constant>
+        <Constant Name="Kf_R_ShcP_interaction_InverseHalf_4">0.3</Constant>
+        <Constant Name="Kf_R_ShcP_interaction_InverseHalf_5">0.3</Constant>
+        <Constant Name="Kf_R_ShcU_interaction_DirectHalf_0">0.045</Constant>
+        <Constant Name="Kf_R_ShcU_interaction_DirectHalf_1">0.045</Constant>
+        <Constant Name="Kf_R_ShcU_interaction_DirectHalf_2">0.045</Constant>
+        <Constant Name="Kf_R_ShcU_interaction_DirectHalf_3">0.045</Constant>
+        <Constant Name="Kf_R_ShcU_interaction_DirectHalf_4">0.045</Constant>
+        <Constant Name="Kf_R_ShcU_interaction_DirectHalf_5">0.045</Constant>
+        <Constant Name="Kf_R_ShcU_interaction_InverseHalf_0">0.6</Constant>
+        <Constant Name="Kf_R_ShcU_interaction_InverseHalf_1">0.6</Constant>
+        <Constant Name="Kf_R_ShcU_interaction_InverseHalf_2">0.6</Constant>
+        <Constant Name="Kf_R_ShcU_interaction_InverseHalf_3">0.6</Constant>
+        <Constant Name="Kf_R_ShcU_interaction_InverseHalf_4">0.6</Constant>
+        <Constant Name="Kf_R_ShcU_interaction_InverseHalf_5">0.6</Constant>
+        <Constant Name="Kf_Shc_dephosph">0.005</Constant>
+        <Constant Name="Kf_Shc_phosph_0">3.0</Constant>
+        <Constant Name="Kf_Shc_phosph_1">3.0</Constant>
+        <Constant Name="Kf_Shc_phosph_2">3.0</Constant>
+        <Constant Name="Kf_Shc_phosph_3">3.0</Constant>
+        <Constant Name="Kf_Shc_phosph_4">3.0</Constant>
+        <Constant Name="Kf_Shc_phosph_5">3.0</Constant>
+        <Constant Name="Kf_Y1_dephosph_0">4.5</Constant>
+        <Constant Name="Kf_Y1_dephosph_1">4.5</Constant>
+        <Constant Name="Kf_Y1_dephosph_2">4.5</Constant>
+        <Constant Name="Kf_Y1_dephosph_3">4.5</Constant>
+        <Constant Name="Kf_Y1_phosph_0">0.5</Constant>
+        <Constant Name="Kf_Y1_phosph_1">0.5</Constant>
+        <Constant Name="Kf_Y1_phosph_2">0.5</Constant>
+        <Constant Name="Kf_Y1_phosph_3">0.5</Constant>
+        <Constant Name="Kf_Y2_dephosph_0">4.5</Constant>
+        <Constant Name="Kf_Y2_dephosph_1">4.5</Constant>
+        <Constant Name="Kf_Y2_dephosph_2">4.5</Constant>
+        <Constant Name="Kf_Y2_phosph_0">0.5</Constant>
+        <Constant Name="Kf_Y2_phosph_1">0.5</Constant>
+        <Constant Name="Kf_Y2_phosph_2">0.5</Constant>
+        <Constant Name="KMOLE">0.001660538783162726</Constant>
+        <Constant Name="Kr_ligand_bind_DirectHalf_0">0.0</Constant>
+        <Constant Name="Kr_ligand_bind_DirectHalf_1">0.0</Constant>
+        <Constant Name="Kr_ligand_bind_DirectHalf_10">0.0</Constant>
+        <Constant Name="Kr_ligand_bind_DirectHalf_11">0.0</Constant>
+        <Constant Name="Kr_ligand_bind_DirectHalf_2">0.0</Constant>
+        <Constant Name="Kr_ligand_bind_DirectHalf_3">0.0</Constant>
+        <Constant Name="Kr_ligand_bind_DirectHalf_4">0.0</Constant>
+        <Constant Name="Kr_ligand_bind_DirectHalf_5">0.0</Constant>
+        <Constant Name="Kr_ligand_bind_DirectHalf_6">0.0</Constant>
+        <Constant Name="Kr_ligand_bind_DirectHalf_7">0.0</Constant>
+        <Constant Name="Kr_ligand_bind_DirectHalf_8">0.0</Constant>
+        <Constant Name="Kr_ligand_bind_DirectHalf_9">0.0</Constant>
+        <Constant Name="Kr_ligand_bind_InverseHalf_0">0.0</Constant>
+        <Constant Name="Kr_ligand_bind_InverseHalf_1">0.0</Constant>
+        <Constant Name="Kr_ligand_bind_InverseHalf_10">0.0</Constant>
+        <Constant Name="Kr_ligand_bind_InverseHalf_11">0.0</Constant>
+        <Constant Name="Kr_ligand_bind_InverseHalf_2">0.0</Constant>
+        <Constant Name="Kr_ligand_bind_InverseHalf_3">0.0</Constant>
+        <Constant Name="Kr_ligand_bind_InverseHalf_4">0.0</Constant>
+        <Constant Name="Kr_ligand_bind_InverseHalf_5">0.0</Constant>
+        <Constant Name="Kr_ligand_bind_InverseHalf_6">0.0</Constant>
+        <Constant Name="Kr_ligand_bind_InverseHalf_7">0.0</Constant>
+        <Constant Name="Kr_ligand_bind_InverseHalf_8">0.0</Constant>
+        <Constant Name="Kr_ligand_bind_InverseHalf_9">0.0</Constant>
+        <Constant Name="Kr_R_Grb2_interaction_DirectHalf_0">0.0</Constant>
+        <Constant Name="Kr_R_Grb2_interaction_DirectHalf_1">0.0</Constant>
+        <Constant Name="Kr_R_Grb2_interaction_DirectHalf_2">0.0</Constant>
+        <Constant Name="Kr_R_Grb2_interaction_DirectHalf_3">0.0</Constant>
+        <Constant Name="Kr_R_Grb2_interaction_DirectHalf_4">0.0</Constant>
+        <Constant Name="Kr_R_Grb2_interaction_DirectHalf_5">0.0</Constant>
+        <Constant Name="Kr_R_Grb2_interaction_DirectHalf_6">0.0</Constant>
+        <Constant Name="Kr_R_Grb2_interaction_DirectHalf_7">0.0</Constant>
+        <Constant Name="Kr_R_Grb2_interaction_InverseHalf_0">0.0</Constant>
+        <Constant Name="Kr_R_Grb2_interaction_InverseHalf_1">0.0</Constant>
+        <Constant Name="Kr_R_Grb2_interaction_InverseHalf_2">0.0</Constant>
+        <Constant Name="Kr_R_Grb2_interaction_InverseHalf_3">0.0</Constant>
+        <Constant Name="Kr_R_Grb2_interaction_InverseHalf_4">0.0</Constant>
+        <Constant Name="Kr_R_Grb2_interaction_InverseHalf_5">0.0</Constant>
+        <Constant Name="Kr_R_Grb2_interaction_InverseHalf_6">0.0</Constant>
+        <Constant Name="Kr_R_Grb2_interaction_InverseHalf_7">0.0</Constant>
+        <Constant Name="Kr_R_ShcP_interaction_DirectHalf_0">0.0</Constant>
+        <Constant Name="Kr_R_ShcP_interaction_DirectHalf_1">0.0</Constant>
+        <Constant Name="Kr_R_ShcP_interaction_DirectHalf_2">0.0</Constant>
+        <Constant Name="Kr_R_ShcP_interaction_DirectHalf_3">0.0</Constant>
+        <Constant Name="Kr_R_ShcP_interaction_DirectHalf_4">0.0</Constant>
+        <Constant Name="Kr_R_ShcP_interaction_DirectHalf_5">0.0</Constant>
+        <Constant Name="Kr_R_ShcP_interaction_InverseHalf_0">0.0</Constant>
+        <Constant Name="Kr_R_ShcP_interaction_InverseHalf_1">0.0</Constant>
+        <Constant Name="Kr_R_ShcP_interaction_InverseHalf_2">0.0</Constant>
+        <Constant Name="Kr_R_ShcP_interaction_InverseHalf_3">0.0</Constant>
+        <Constant Name="Kr_R_ShcP_interaction_InverseHalf_4">0.0</Constant>
+        <Constant Name="Kr_R_ShcP_interaction_InverseHalf_5">0.0</Constant>
+        <Constant Name="Kr_R_ShcU_interaction_DirectHalf_0">0.0</Constant>
+        <Constant Name="Kr_R_ShcU_interaction_DirectHalf_1">0.0</Constant>
+        <Constant Name="Kr_R_ShcU_interaction_DirectHalf_2">0.0</Constant>
+        <Constant Name="Kr_R_ShcU_interaction_DirectHalf_3">0.0</Constant>
+        <Constant Name="Kr_R_ShcU_interaction_DirectHalf_4">0.0</Constant>
+        <Constant Name="Kr_R_ShcU_interaction_DirectHalf_5">0.0</Constant>
+        <Constant Name="Kr_R_ShcU_interaction_InverseHalf_0">0.0</Constant>
+        <Constant Name="Kr_R_ShcU_interaction_InverseHalf_1">0.0</Constant>
+        <Constant Name="Kr_R_ShcU_interaction_InverseHalf_2">0.0</Constant>
+        <Constant Name="Kr_R_ShcU_interaction_InverseHalf_3">0.0</Constant>
+        <Constant Name="Kr_R_ShcU_interaction_InverseHalf_4">0.0</Constant>
+        <Constant Name="Kr_R_ShcU_interaction_InverseHalf_5">0.0</Constant>
+        <Constant Name="Kr_Shc_dephosph">0.0</Constant>
+        <Constant Name="Kr_Shc_phosph_0">0.0</Constant>
+        <Constant Name="Kr_Shc_phosph_1">0.0</Constant>
+        <Constant Name="Kr_Shc_phosph_2">0.0</Constant>
+        <Constant Name="Kr_Shc_phosph_3">0.0</Constant>
+        <Constant Name="Kr_Shc_phosph_4">0.0</Constant>
+        <Constant Name="Kr_Shc_phosph_5">0.0</Constant>
+        <Constant Name="Kr_Y1_dephosph_0">0.0</Constant>
+        <Constant Name="Kr_Y1_dephosph_1">0.0</Constant>
+        <Constant Name="Kr_Y1_dephosph_2">0.0</Constant>
+        <Constant Name="Kr_Y1_dephosph_3">0.0</Constant>
+        <Constant Name="Kr_Y1_phosph_0">0.0</Constant>
+        <Constant Name="Kr_Y1_phosph_1">0.0</Constant>
+        <Constant Name="Kr_Y1_phosph_2">0.0</Constant>
+        <Constant Name="Kr_Y1_phosph_3">0.0</Constant>
+        <Constant Name="Kr_Y2_dephosph_0">0.0</Constant>
+        <Constant Name="Kr_Y2_dephosph_1">0.0</Constant>
+        <Constant Name="Kr_Y2_dephosph_2">0.0</Constant>
+        <Constant Name="Kr_Y2_phosph_0">0.0</Constant>
+        <Constant Name="Kr_Y2_phosph_1">0.0</Constant>
+        <Constant Name="Kr_Y2_phosph_2">0.0</Constant>
+        <Constant Name="L_init_nM">680.0</Constant>
+        <Constant Name="R_init_nM">100.0</Constant>
+        <Constant Name="s10_init_nM">0.0</Constant>
+        <Constant Name="s11_init_nM">0.0</Constant>
+        <Constant Name="s12_init_nM">0.0</Constant>
+        <Constant Name="s13_init_nM">0.0</Constant>
+        <Constant Name="s14_init_nM">0.0</Constant>
+        <Constant Name="s15_init_nM">0.0</Constant>
+        <Constant Name="s16_init_nM">0.0</Constant>
+        <Constant Name="s17_init_nM">0.0</Constant>
+        <Constant Name="s18_init_nM">0.0</Constant>
+        <Constant Name="s19_init_nM">0.0</Constant>
+        <Constant Name="s20_init_nM">0.0</Constant>
+        <Constant Name="s21_init_nM">0.0</Constant>
+        <Constant Name="s22_init_nM">0.0</Constant>
+        <Constant Name="s23_init_nM">0.0</Constant>
+        <Constant Name="s24_init_nM">0.0</Constant>
+        <Constant Name="s25_init_nM">0.0</Constant>
+        <Constant Name="s26_init_nM">0.0</Constant>
+        <Constant Name="s27_init_nM">0.0</Constant>
+        <Constant Name="s5_init_nM">0.0</Constant>
+        <Constant Name="s6_init_nM">0.0</Constant>
+        <Constant Name="s7_init_nM">0.0</Constant>
+        <Constant Name="s8_init_nM">0.0</Constant>
+        <Constant Name="s9_init_nM">0.0</Constant>
+        <Constant Name="ShcP_init_nM">0.0</Constant>
+        <Constant Name="ShcU_init_nM">150.0</Constant>
+        <Constant Name="Size_Cell">50000.0</Constant>
+        <VolumeVariable Name="Grb2" Domain="Compartment" />
+        <VolumeVariable Name="L" Domain="Compartment" />
+        <VolumeVariable Name="R" Domain="Compartment" />
+        <VolumeVariable Name="s10" Domain="Compartment" />
+        <VolumeVariable Name="s11" Domain="Compartment" />
+        <VolumeVariable Name="s12" Domain="Compartment" />
+        <VolumeVariable Name="s13" Domain="Compartment" />
+        <VolumeVariable Name="s14" Domain="Compartment" />
+        <VolumeVariable Name="s15" Domain="Compartment" />
+        <VolumeVariable Name="s16" Domain="Compartment" />
+        <VolumeVariable Name="s17" Domain="Compartment" />
+        <VolumeVariable Name="s18" Domain="Compartment" />
+        <VolumeVariable Name="s19" Domain="Compartment" />
+        <VolumeVariable Name="s20" Domain="Compartment" />
+        <VolumeVariable Name="s21" Domain="Compartment" />
+        <VolumeVariable Name="s22" Domain="Compartment" />
+        <VolumeVariable Name="s23" Domain="Compartment" />
+        <VolumeVariable Name="s24" Domain="Compartment" />
+        <VolumeVariable Name="s25" Domain="Compartment" />
+        <VolumeVariable Name="s26" Domain="Compartment" />
+        <VolumeVariable Name="s27" Domain="Compartment" />
+        <VolumeVariable Name="s5" Domain="Compartment" />
+        <VolumeVariable Name="s6" Domain="Compartment" />
+        <VolumeVariable Name="s7" Domain="Compartment" />
+        <VolumeVariable Name="s8" Domain="Compartment" />
+        <VolumeVariable Name="s9" Domain="Compartment" />
+        <VolumeVariable Name="ShcP" Domain="Compartment" />
+        <VolumeVariable Name="ShcU" Domain="Compartment" />
+        <Function Name="Dimers">(s5 + s6 + s7 + s10 + s11 + s12 + s13 + s18 + s19 + s20 + s24 + s25)</Function>
+        <Function Name="Dimers_s">(s5 + s6 + s7 + s10 + s11 + s12 + s13 + s18 + s19 + s20 + s24 + s25)</Function>
+        <Function Name="J_ligand_bind_DirectHalf_0" Domain="Compartment">(((Kf_ligand_bind_DirectHalf_0 * R) * L) - (Kr_ligand_bind_DirectHalf_0 * s5))</Function>
+        <Function Name="J_ligand_bind_DirectHalf_1" Domain="Compartment">(((Kf_ligand_bind_DirectHalf_1 * L) * s8) - (Kr_ligand_bind_DirectHalf_1 * s6))</Function>
+        <Function Name="J_ligand_bind_DirectHalf_10" Domain="Compartment">(((Kf_ligand_bind_DirectHalf_10 * L) * s26) - (Kr_ligand_bind_DirectHalf_10 * s24))</Function>
+        <Function Name="J_ligand_bind_DirectHalf_11" Domain="Compartment">(((Kf_ligand_bind_DirectHalf_11 * L) * s27) - (Kr_ligand_bind_DirectHalf_11 * s25))</Function>
+        <Function Name="J_ligand_bind_DirectHalf_2" Domain="Compartment">(((Kf_ligand_bind_DirectHalf_2 * L) * s9) - (Kr_ligand_bind_DirectHalf_2 * s7))</Function>
+        <Function Name="J_ligand_bind_DirectHalf_3" Domain="Compartment">(((Kf_ligand_bind_DirectHalf_3 * L) * s14) - (Kr_ligand_bind_DirectHalf_3 * s10))</Function>
+        <Function Name="J_ligand_bind_DirectHalf_4" Domain="Compartment">(((Kf_ligand_bind_DirectHalf_4 * L) * s15) - (Kr_ligand_bind_DirectHalf_4 * s11))</Function>
+        <Function Name="J_ligand_bind_DirectHalf_5" Domain="Compartment">(((Kf_ligand_bind_DirectHalf_5 * L) * s16) - (Kr_ligand_bind_DirectHalf_5 * s12))</Function>
+        <Function Name="J_ligand_bind_DirectHalf_6" Domain="Compartment">(((Kf_ligand_bind_DirectHalf_6 * L) * s17) - (Kr_ligand_bind_DirectHalf_6 * s13))</Function>
+        <Function Name="J_ligand_bind_DirectHalf_7" Domain="Compartment">(((Kf_ligand_bind_DirectHalf_7 * L) * s21) - (Kr_ligand_bind_DirectHalf_7 * s18))</Function>
+        <Function Name="J_ligand_bind_DirectHalf_8" Domain="Compartment">(((Kf_ligand_bind_DirectHalf_8 * L) * s22) - (Kr_ligand_bind_DirectHalf_8 * s19))</Function>
+        <Function Name="J_ligand_bind_DirectHalf_9" Domain="Compartment">(((Kf_ligand_bind_DirectHalf_9 * L) * s23) - (Kr_ligand_bind_DirectHalf_9 * s20))</Function>
+        <Function Name="J_ligand_bind_InverseHalf_0" Domain="Compartment">((Kf_ligand_bind_InverseHalf_0 * s5) - ((Kr_ligand_bind_InverseHalf_0 * R) * L))</Function>
+        <Function Name="J_ligand_bind_InverseHalf_1" Domain="Compartment">((Kf_ligand_bind_InverseHalf_1 * s6) - ((Kr_ligand_bind_InverseHalf_1 * L) * s8))</Function>
+        <Function Name="J_ligand_bind_InverseHalf_10" Domain="Compartment">((Kf_ligand_bind_InverseHalf_10 * s24) - ((Kr_ligand_bind_InverseHalf_10 * L) * s26))</Function>
+        <Function Name="J_ligand_bind_InverseHalf_11" Domain="Compartment">((Kf_ligand_bind_InverseHalf_11 * s25) - ((Kr_ligand_bind_InverseHalf_11 * L) * s27))</Function>
+        <Function Name="J_ligand_bind_InverseHalf_2" Domain="Compartment">((Kf_ligand_bind_InverseHalf_2 * s7) - ((Kr_ligand_bind_InverseHalf_2 * L) * s9))</Function>
+        <Function Name="J_ligand_bind_InverseHalf_3" Domain="Compartment">((Kf_ligand_bind_InverseHalf_3 * s10) - ((Kr_ligand_bind_InverseHalf_3 * L) * s14))</Function>
+        <Function Name="J_ligand_bind_InverseHalf_4" Domain="Compartment">((Kf_ligand_bind_InverseHalf_4 * s11) - ((Kr_ligand_bind_InverseHalf_4 * L) * s15))</Function>
+        <Function Name="J_ligand_bind_InverseHalf_5" Domain="Compartment">((Kf_ligand_bind_InverseHalf_5 * s12) - ((Kr_ligand_bind_InverseHalf_5 * L) * s16))</Function>
+        <Function Name="J_ligand_bind_InverseHalf_6" Domain="Compartment">((Kf_ligand_bind_InverseHalf_6 * s13) - ((Kr_ligand_bind_InverseHalf_6 * L) * s17))</Function>
+        <Function Name="J_ligand_bind_InverseHalf_7" Domain="Compartment">((Kf_ligand_bind_InverseHalf_7 * s18) - ((Kr_ligand_bind_InverseHalf_7 * L) * s21))</Function>
+        <Function Name="J_ligand_bind_InverseHalf_8" Domain="Compartment">((Kf_ligand_bind_InverseHalf_8 * s19) - ((Kr_ligand_bind_InverseHalf_8 * L) * s22))</Function>
+        <Function Name="J_ligand_bind_InverseHalf_9" Domain="Compartment">((Kf_ligand_bind_InverseHalf_9 * s20) - ((Kr_ligand_bind_InverseHalf_9 * L) * s23))</Function>
+        <Function Name="J_R_Grb2_interaction_DirectHalf_0" Domain="Compartment">(((Kf_R_Grb2_interaction_DirectHalf_0 * Grb2) * s6) - (Kr_R_Grb2_interaction_DirectHalf_0 * s11))</Function>
+        <Function Name="J_R_Grb2_interaction_DirectHalf_1" Domain="Compartment">(((Kf_R_Grb2_interaction_DirectHalf_1 * Grb2) * s8) - (Kr_R_Grb2_interaction_DirectHalf_1 * s15))</Function>
+        <Function Name="J_R_Grb2_interaction_DirectHalf_2" Domain="Compartment">(((Kf_R_Grb2_interaction_DirectHalf_2 * Grb2) * s10) - (Kr_R_Grb2_interaction_DirectHalf_2 * s20))</Function>
+        <Function Name="J_R_Grb2_interaction_DirectHalf_3" Domain="Compartment">(((Kf_R_Grb2_interaction_DirectHalf_3 * Grb2) * s14) - (Kr_R_Grb2_interaction_DirectHalf_3 * s23))</Function>
+        <Function Name="J_R_Grb2_interaction_DirectHalf_4" Domain="Compartment">(((Kf_R_Grb2_interaction_DirectHalf_4 * Grb2) * s18) - (Kr_R_Grb2_interaction_DirectHalf_4 * s24))</Function>
+        <Function Name="J_R_Grb2_interaction_DirectHalf_5" Domain="Compartment">(((Kf_R_Grb2_interaction_DirectHalf_5 * Grb2) * s19) - (Kr_R_Grb2_interaction_DirectHalf_5 * s25))</Function>
+        <Function Name="J_R_Grb2_interaction_DirectHalf_6" Domain="Compartment">(((Kf_R_Grb2_interaction_DirectHalf_6 * Grb2) * s21) - (Kr_R_Grb2_interaction_DirectHalf_6 * s26))</Function>
+        <Function Name="J_R_Grb2_interaction_DirectHalf_7" Domain="Compartment">(((Kf_R_Grb2_interaction_DirectHalf_7 * Grb2) * s22) - (Kr_R_Grb2_interaction_DirectHalf_7 * s27))</Function>
+        <Function Name="J_R_Grb2_interaction_InverseHalf_0" Domain="Compartment">((Kf_R_Grb2_interaction_InverseHalf_0 * s11) - ((Kr_R_Grb2_interaction_InverseHalf_0 * Grb2) * s6))</Function>
+        <Function Name="J_R_Grb2_interaction_InverseHalf_1" Domain="Compartment">((Kf_R_Grb2_interaction_InverseHalf_1 * s15) - ((Kr_R_Grb2_interaction_InverseHalf_1 * Grb2) * s8))</Function>
+        <Function Name="J_R_Grb2_interaction_InverseHalf_2" Domain="Compartment">((Kf_R_Grb2_interaction_InverseHalf_2 * s20) - ((Kr_R_Grb2_interaction_InverseHalf_2 * Grb2) * s10))</Function>
+        <Function Name="J_R_Grb2_interaction_InverseHalf_3" Domain="Compartment">((Kf_R_Grb2_interaction_InverseHalf_3 * s23) - ((Kr_R_Grb2_interaction_InverseHalf_3 * Grb2) * s14))</Function>
+        <Function Name="J_R_Grb2_interaction_InverseHalf_4" Domain="Compartment">((Kf_R_Grb2_interaction_InverseHalf_4 * s24) - ((Kr_R_Grb2_interaction_InverseHalf_4 * Grb2) * s18))</Function>
+        <Function Name="J_R_Grb2_interaction_InverseHalf_5" Domain="Compartment">((Kf_R_Grb2_interaction_InverseHalf_5 * s25) - ((Kr_R_Grb2_interaction_InverseHalf_5 * Grb2) * s19))</Function>
+        <Function Name="J_R_Grb2_interaction_InverseHalf_6" Domain="Compartment">((Kf_R_Grb2_interaction_InverseHalf_6 * s26) - ((Kr_R_Grb2_interaction_InverseHalf_6 * Grb2) * s21))</Function>
+        <Function Name="J_R_Grb2_interaction_InverseHalf_7" Domain="Compartment">((Kf_R_Grb2_interaction_InverseHalf_7 * s27) - ((Kr_R_Grb2_interaction_InverseHalf_7 * Grb2) * s22))</Function>
+        <Function Name="J_R_ShcP_interaction_DirectHalf_0" Domain="Compartment">(((Kf_R_ShcP_interaction_DirectHalf_0 * ShcP) * s7) - (Kr_R_ShcP_interaction_DirectHalf_0 * s12))</Function>
+        <Function Name="J_R_ShcP_interaction_DirectHalf_1" Domain="Compartment">(((Kf_R_ShcP_interaction_DirectHalf_1 * ShcP) * s9) - (Kr_R_ShcP_interaction_DirectHalf_1 * s16))</Function>
+        <Function Name="J_R_ShcP_interaction_DirectHalf_2" Domain="Compartment">(((Kf_R_ShcP_interaction_DirectHalf_2 * ShcP) * s10) - (Kr_R_ShcP_interaction_DirectHalf_2 * s18))</Function>
+        <Function Name="J_R_ShcP_interaction_DirectHalf_3" Domain="Compartment">(((Kf_R_ShcP_interaction_DirectHalf_3 * ShcP) * s14) - (Kr_R_ShcP_interaction_DirectHalf_3 * s21))</Function>
+        <Function Name="J_R_ShcP_interaction_DirectHalf_4" Domain="Compartment">(((Kf_R_ShcP_interaction_DirectHalf_4 * ShcP) * s20) - (Kr_R_ShcP_interaction_DirectHalf_4 * s24))</Function>
+        <Function Name="J_R_ShcP_interaction_DirectHalf_5" Domain="Compartment">(((Kf_R_ShcP_interaction_DirectHalf_5 * ShcP) * s23) - (Kr_R_ShcP_interaction_DirectHalf_5 * s26))</Function>
+        <Function Name="J_R_ShcP_interaction_InverseHalf_0" Domain="Compartment">((Kf_R_ShcP_interaction_InverseHalf_0 * s12) - ((Kr_R_ShcP_interaction_InverseHalf_0 * ShcP) * s7))</Function>
+        <Function Name="J_R_ShcP_interaction_InverseHalf_1" Domain="Compartment">((Kf_R_ShcP_interaction_InverseHalf_1 * s16) - ((Kr_R_ShcP_interaction_InverseHalf_1 * ShcP) * s9))</Function>
+        <Function Name="J_R_ShcP_interaction_InverseHalf_2" Domain="Compartment">((Kf_R_ShcP_interaction_InverseHalf_2 * s18) - ((Kr_R_ShcP_interaction_InverseHalf_2 * ShcP) * s10))</Function>
+        <Function Name="J_R_ShcP_interaction_InverseHalf_3" Domain="Compartment">((Kf_R_ShcP_interaction_InverseHalf_3 * s21) - ((Kr_R_ShcP_interaction_InverseHalf_3 * ShcP) * s14))</Function>
+        <Function Name="J_R_ShcP_interaction_InverseHalf_4" Domain="Compartment">((Kf_R_ShcP_interaction_InverseHalf_4 * s24) - ((Kr_R_ShcP_interaction_InverseHalf_4 * ShcP) * s20))</Function>
+        <Function Name="J_R_ShcP_interaction_InverseHalf_5" Domain="Compartment">((Kf_R_ShcP_interaction_InverseHalf_5 * s26) - ((Kr_R_ShcP_interaction_InverseHalf_5 * ShcP) * s23))</Function>
+        <Function Name="J_R_ShcU_interaction_DirectHalf_0" Domain="Compartment">(((Kf_R_ShcU_interaction_DirectHalf_0 * ShcU) * s7) - (Kr_R_ShcU_interaction_DirectHalf_0 * s13))</Function>
+        <Function Name="J_R_ShcU_interaction_DirectHalf_1" Domain="Compartment">(((Kf_R_ShcU_interaction_DirectHalf_1 * ShcU) * s9) - (Kr_R_ShcU_interaction_DirectHalf_1 * s17))</Function>
+        <Function Name="J_R_ShcU_interaction_DirectHalf_2" Domain="Compartment">(((Kf_R_ShcU_interaction_DirectHalf_2 * ShcU) * s10) - (Kr_R_ShcU_interaction_DirectHalf_2 * s19))</Function>
+        <Function Name="J_R_ShcU_interaction_DirectHalf_3" Domain="Compartment">(((Kf_R_ShcU_interaction_DirectHalf_3 * ShcU) * s14) - (Kr_R_ShcU_interaction_DirectHalf_3 * s22))</Function>
+        <Function Name="J_R_ShcU_interaction_DirectHalf_4" Domain="Compartment">(((Kf_R_ShcU_interaction_DirectHalf_4 * ShcU) * s20) - (Kr_R_ShcU_interaction_DirectHalf_4 * s25))</Function>
+        <Function Name="J_R_ShcU_interaction_DirectHalf_5" Domain="Compartment">(((Kf_R_ShcU_interaction_DirectHalf_5 * ShcU) * s23) - (Kr_R_ShcU_interaction_DirectHalf_5 * s27))</Function>
+        <Function Name="J_R_ShcU_interaction_InverseHalf_0" Domain="Compartment">((Kf_R_ShcU_interaction_InverseHalf_0 * s13) - ((Kr_R_ShcU_interaction_InverseHalf_0 * ShcU) * s7))</Function>
+        <Function Name="J_R_ShcU_interaction_InverseHalf_1" Domain="Compartment">((Kf_R_ShcU_interaction_InverseHalf_1 * s17) - ((Kr_R_ShcU_interaction_InverseHalf_1 * ShcU) * s9))</Function>
+        <Function Name="J_R_ShcU_interaction_InverseHalf_2" Domain="Compartment">((Kf_R_ShcU_interaction_InverseHalf_2 * s19) - ((Kr_R_ShcU_interaction_InverseHalf_2 * ShcU) * s10))</Function>
+        <Function Name="J_R_ShcU_interaction_InverseHalf_3" Domain="Compartment">((Kf_R_ShcU_interaction_InverseHalf_3 * s22) - ((Kr_R_ShcU_interaction_InverseHalf_3 * ShcU) * s14))</Function>
+        <Function Name="J_R_ShcU_interaction_InverseHalf_4" Domain="Compartment">((Kf_R_ShcU_interaction_InverseHalf_4 * s25) - ((Kr_R_ShcU_interaction_InverseHalf_4 * ShcU) * s20))</Function>
+        <Function Name="J_R_ShcU_interaction_InverseHalf_5" Domain="Compartment">((Kf_R_ShcU_interaction_InverseHalf_5 * s27) - ((Kr_R_ShcU_interaction_InverseHalf_5 * ShcU) * s23))</Function>
+        <Function Name="J_Shc_dephosph" Domain="Compartment">((Kf_Shc_dephosph * ShcP) - (Kr_Shc_dephosph * ShcU))</Function>
+        <Function Name="J_Shc_phosph_0" Domain="Compartment">((Kf_Shc_phosph_0 * s13) - (Kr_Shc_phosph_0 * s12))</Function>
+        <Function Name="J_Shc_phosph_1" Domain="Compartment">((Kf_Shc_phosph_1 * s17) - (Kr_Shc_phosph_1 * s16))</Function>
+        <Function Name="J_Shc_phosph_2" Domain="Compartment">((Kf_Shc_phosph_2 * s19) - (Kr_Shc_phosph_2 * s18))</Function>
+        <Function Name="J_Shc_phosph_3" Domain="Compartment">((Kf_Shc_phosph_3 * s22) - (Kr_Shc_phosph_3 * s21))</Function>
+        <Function Name="J_Shc_phosph_4" Domain="Compartment">((Kf_Shc_phosph_4 * s25) - (Kr_Shc_phosph_4 * s24))</Function>
+        <Function Name="J_Shc_phosph_5" Domain="Compartment">((Kf_Shc_phosph_5 * s27) - (Kr_Shc_phosph_5 * s26))</Function>
+        <Function Name="J_Y1_dephosph_0" Domain="Compartment">((Kf_Y1_dephosph_0 * s6) - (Kr_Y1_dephosph_0 * s5))</Function>
+        <Function Name="J_Y1_dephosph_1" Domain="Compartment">((Kf_Y1_dephosph_1 * s10) - (Kr_Y1_dephosph_1 * s7))</Function>
+        <Function Name="J_Y1_dephosph_2" Domain="Compartment">((Kf_Y1_dephosph_2 * s18) - (Kr_Y1_dephosph_2 * s12))</Function>
+        <Function Name="J_Y1_dephosph_3" Domain="Compartment">((Kf_Y1_dephosph_3 * s19) - (Kr_Y1_dephosph_3 * s13))</Function>
+        <Function Name="J_Y1_phosph_0" Domain="Compartment">((Kf_Y1_phosph_0 * s5) - (Kr_Y1_phosph_0 * s6))</Function>
+        <Function Name="J_Y1_phosph_1" Domain="Compartment">((Kf_Y1_phosph_1 * s7) - (Kr_Y1_phosph_1 * s10))</Function>
+        <Function Name="J_Y1_phosph_2" Domain="Compartment">((Kf_Y1_phosph_2 * s12) - (Kr_Y1_phosph_2 * s18))</Function>
+        <Function Name="J_Y1_phosph_3" Domain="Compartment">((Kf_Y1_phosph_3 * s13) - (Kr_Y1_phosph_3 * s19))</Function>
+        <Function Name="J_Y2_dephosph_0" Domain="Compartment">((Kf_Y2_dephosph_0 * s7) - (Kr_Y2_dephosph_0 * s5))</Function>
+        <Function Name="J_Y2_dephosph_1" Domain="Compartment">((Kf_Y2_dephosph_1 * s10) - (Kr_Y2_dephosph_1 * s6))</Function>
+        <Function Name="J_Y2_dephosph_2" Domain="Compartment">((Kf_Y2_dephosph_2 * s20) - (Kr_Y2_dephosph_2 * s11))</Function>
+        <Function Name="J_Y2_phosph_0" Domain="Compartment">((Kf_Y2_phosph_0 * s5) - (Kr_Y2_phosph_0 * s7))</Function>
+        <Function Name="J_Y2_phosph_1" Domain="Compartment">((Kf_Y2_phosph_1 * s6) - (Kr_Y2_phosph_1 * s10))</Function>
+        <Function Name="J_Y2_phosph_2" Domain="Compartment">((Kf_Y2_phosph_2 * s11) - (Kr_Y2_phosph_2 * s20))</Function>
+        <Function Name="O0_EGF_tot">(L + s5 + s6 + s7 + s10 + s11 + s12 + s13 + s18 + s19 + s20 + s24 + s25)</Function>
+        <Function Name="O0_EGFR_tot">(R + s5 + s6 + s7 + s8 + s9 + s10 + s11 + s12 + s13 + s14 + s15 + s16 + s17 + s18 + s19 + s20 + s21 + s22 + s23 + s24 + s25 + s26 + s27)</Function>
+        <Function Name="O0_Grb2_tot">(Grb2 + s11 + s15 + s20 + s23 + s24 + s25 + s26 + s27)</Function>
+        <Function Name="O0_Shc_tot">(ShcP + ShcU + s12 + s13 + s16 + s17 + s18 + s19 + s21 + s22 + s24 + s25 + s26 + s27)</Function>
+        <Function Name="Y1">(s6 + s8 + s10 + s11 + s14 + s15 + s18 + s19 + s20 + s21 + s22 + s23 + s24 + s25 + s26 + s27)</Function>
+        <Function Name="Y2">(s7 + s9 + s10 + s12 + s13 + s14 + s16 + s17 + s18 + s19 + s20 + s21 + s22 + s23 + s24 + s25 + s26 + s27)</Function>
+        <Function Name="Y_total">(s6 + s7 + s8 + s9 + (2.0 * s10) + s11 + s12 + s13 + (2.0 * s14) + s15 + s16 + s17 + (2.0 * s18) + (2.0 * s19) + (2.0 * s20) + (2.0 * s21) + (2.0 * s22) + (2.0 * s23) + (2.0 * s24) + (2.0 * s25) + (2.0 * s26) + (2.0 * s27))</Function>
+        <CompartmentSubDomain Name="Compartment">
+          <BoundaryType Boundary="Xm" Type="Value" />
+          <BoundaryType Boundary="Xp" Type="Value" />
+          <BoundaryType Boundary="Ym" Type="Value" />
+          <BoundaryType Boundary="Yp" Type="Value" />
+          <BoundaryType Boundary="Zm" Type="Value" />
+          <BoundaryType Boundary="Zp" Type="Value" />
+          <OdeEquation Name="R" SolutionType="Unknown">
+            <Rate>(J_ligand_bind_InverseHalf_0 - J_ligand_bind_DirectHalf_0)</Rate>
+            <Initial>R_init_nM</Initial>
+          </OdeEquation>
+          <OdeEquation Name="L" SolutionType="Unknown">
+            <Rate>(J_ligand_bind_InverseHalf_3 + J_ligand_bind_InverseHalf_2 + J_ligand_bind_InverseHalf_1 + J_ligand_bind_InverseHalf_0 - J_ligand_bind_DirectHalf_10 + J_ligand_bind_InverseHalf_9 - J_ligand_bind_DirectHalf_11 + J_ligand_bind_InverseHalf_8 + J_ligand_bind_InverseHalf_7 + J_ligand_bind_InverseHalf_6 + J_ligand_bind_InverseHalf_5 + J_ligand_bind_InverseHalf_4 - J_ligand_bind_DirectHalf_5 - J_ligand_bind_DirectHalf_6 - J_ligand_bind_DirectHalf_3 - J_ligand_bind_DirectHalf_4 - J_ligand_bind_DirectHalf_9 - J_ligand_bind_DirectHalf_7 - J_ligand_bind_DirectHalf_8 + J_ligand_bind_InverseHalf_10 + J_ligand_bind_InverseHalf_11 - J_ligand_bind_DirectHalf_1 - J_ligand_bind_DirectHalf_2 - J_ligand_bind_DirectHalf_0)</Rate>
+            <Initial>L_init_nM</Initial>
+          </OdeEquation>
+          <OdeEquation Name="Grb2" SolutionType="Unknown">
+            <Rate>( - J_R_Grb2_interaction_DirectHalf_2 - J_R_Grb2_interaction_DirectHalf_1 - J_R_Grb2_interaction_DirectHalf_0 - J_R_Grb2_interaction_DirectHalf_6 - J_R_Grb2_interaction_DirectHalf_5 - J_R_Grb2_interaction_DirectHalf_4 - J_R_Grb2_interaction_DirectHalf_3 - J_R_Grb2_interaction_DirectHalf_7 + J_R_Grb2_interaction_InverseHalf_6 + J_R_Grb2_interaction_InverseHalf_7 + J_R_Grb2_interaction_InverseHalf_4 + J_R_Grb2_interaction_InverseHalf_5 + J_R_Grb2_interaction_InverseHalf_2 + J_R_Grb2_interaction_InverseHalf_3 + J_R_Grb2_interaction_InverseHalf_0 + J_R_Grb2_interaction_InverseHalf_1)</Rate>
+            <Initial>Grb2_init_nM</Initial>
+          </OdeEquation>
+          <OdeEquation Name="ShcP" SolutionType="Unknown">
+            <Rate>( - J_Shc_dephosph + J_R_ShcP_interaction_InverseHalf_0 + J_R_ShcP_interaction_InverseHalf_1 + J_R_ShcP_interaction_InverseHalf_2 + J_R_ShcP_interaction_InverseHalf_3 + J_R_ShcP_interaction_InverseHalf_4 + J_R_ShcP_interaction_InverseHalf_5 - J_R_ShcP_interaction_DirectHalf_0 - J_R_ShcP_interaction_DirectHalf_1 - J_R_ShcP_interaction_DirectHalf_2 - J_R_ShcP_interaction_DirectHalf_3 - J_R_ShcP_interaction_DirectHalf_4 - J_R_ShcP_interaction_DirectHalf_5)</Rate>
+            <Initial>ShcP_init_nM</Initial>
+          </OdeEquation>
+          <OdeEquation Name="ShcU" SolutionType="Unknown">
+            <Rate>(J_Shc_dephosph + J_R_ShcU_interaction_InverseHalf_5 - J_R_ShcU_interaction_DirectHalf_5 + J_R_ShcU_interaction_InverseHalf_4 - J_R_ShcU_interaction_DirectHalf_4 - J_R_ShcU_interaction_DirectHalf_3 - J_R_ShcU_interaction_DirectHalf_2 - J_R_ShcU_interaction_DirectHalf_1 - J_R_ShcU_interaction_DirectHalf_0 + J_R_ShcU_interaction_InverseHalf_1 + J_R_ShcU_interaction_InverseHalf_0 + J_R_ShcU_interaction_InverseHalf_3 + J_R_ShcU_interaction_InverseHalf_2)</Rate>
+            <Initial>ShcU_init_nM</Initial>
+          </OdeEquation>
+          <OdeEquation Name="s5" SolutionType="Unknown">
+            <Rate>( - J_Y1_phosph_0 - J_ligand_bind_InverseHalf_0 - J_Y2_phosph_0 + J_Y1_dephosph_0 + J_Y2_dephosph_0 + J_ligand_bind_DirectHalf_0)</Rate>
+            <Initial>s5_init_nM</Initial>
+          </OdeEquation>
+          <OdeEquation Name="s6" SolutionType="Unknown">
+            <Rate>(J_Y1_phosph_0 - J_ligand_bind_InverseHalf_1 - J_Y2_phosph_1 - J_Y1_dephosph_0 + J_Y2_dephosph_1 - J_R_Grb2_interaction_DirectHalf_0 + J_R_Grb2_interaction_InverseHalf_0 + J_ligand_bind_DirectHalf_1)</Rate>
+            <Initial>s6_init_nM</Initial>
+          </OdeEquation>
+          <OdeEquation Name="s7" SolutionType="Unknown">
+            <Rate>( - J_R_ShcU_interaction_DirectHalf_0 - J_Y1_phosph_1 - J_ligand_bind_InverseHalf_2 + J_Y1_dephosph_1 + J_Y2_phosph_0 - J_Y2_dephosph_0 + J_R_ShcP_interaction_InverseHalf_0 + J_R_ShcU_interaction_InverseHalf_0 - J_R_ShcP_interaction_DirectHalf_0 + J_ligand_bind_DirectHalf_2)</Rate>
+            <Initial>s7_init_nM</Initial>
+          </OdeEquation>
+          <OdeEquation Name="s8" SolutionType="Unknown">
+            <Rate>(J_ligand_bind_InverseHalf_1 - J_R_Grb2_interaction_DirectHalf_1 + J_R_Grb2_interaction_InverseHalf_1 - J_ligand_bind_DirectHalf_1)</Rate>
+            <Initial>s8_init_nM</Initial>
+          </OdeEquation>
+          <OdeEquation Name="s9" SolutionType="Unknown">
+            <Rate>( - J_R_ShcU_interaction_DirectHalf_1 + J_ligand_bind_InverseHalf_2 + J_R_ShcP_interaction_InverseHalf_1 + J_R_ShcU_interaction_InverseHalf_1 - J_R_ShcP_interaction_DirectHalf_1 - J_ligand_bind_DirectHalf_2)</Rate>
+            <Initial>s9_init_nM</Initial>
+          </OdeEquation>
+          <OdeEquation Name="s10" SolutionType="Unknown">
+            <Rate>( - J_R_ShcU_interaction_DirectHalf_2 + J_Y1_phosph_1 - J_ligand_bind_InverseHalf_3 + J_Y2_phosph_1 - J_Y1_dephosph_1 - J_R_Grb2_interaction_DirectHalf_2 - J_Y2_dephosph_1 + J_ligand_bind_DirectHalf_3 + J_R_ShcP_interaction_InverseHalf_2 + J_R_Grb2_interaction_InverseHalf_2 + J_R_ShcU_interaction_InverseHalf_2 - J_R_ShcP_interaction_DirectHalf_2)</Rate>
+            <Initial>s10_init_nM</Initial>
+          </OdeEquation>
+          <OdeEquation Name="s11" SolutionType="Unknown">
+            <Rate>( - J_Y2_phosph_2 - J_ligand_bind_InverseHalf_4 + J_Y2_dephosph_2 + J_R_Grb2_interaction_DirectHalf_0 + J_ligand_bind_DirectHalf_4 - J_R_Grb2_interaction_InverseHalf_0)</Rate>
+            <Initial>s11_init_nM</Initial>
+          </OdeEquation>
+          <OdeEquation Name="s12" SolutionType="Unknown">
+            <Rate>( - J_Y1_phosph_2 + J_Y1_dephosph_2 - J_ligand_bind_InverseHalf_5 + J_ligand_bind_DirectHalf_5 - J_R_ShcP_interaction_InverseHalf_0 + J_Shc_phosph_0 + J_R_ShcP_interaction_DirectHalf_0)</Rate>
+            <Initial>s12_init_nM</Initial>
+          </OdeEquation>
+          <OdeEquation Name="s13" SolutionType="Unknown">
+            <Rate>(J_R_ShcU_interaction_DirectHalf_0 - J_Y1_phosph_3 + J_Y1_dephosph_3 - J_ligand_bind_InverseHalf_6 + J_ligand_bind_DirectHalf_6 - J_Shc_phosph_0 - J_R_ShcU_interaction_InverseHalf_0)</Rate>
+            <Initial>s13_init_nM</Initial>
+          </OdeEquation>
+          <OdeEquation Name="s14" SolutionType="Unknown">
+            <Rate>( - J_R_ShcU_interaction_DirectHalf_3 + J_ligand_bind_InverseHalf_3 - J_ligand_bind_DirectHalf_3 - J_R_Grb2_interaction_DirectHalf_3 + J_R_ShcP_interaction_InverseHalf_3 + J_R_Grb2_interaction_InverseHalf_3 + J_R_ShcU_interaction_InverseHalf_3 - J_R_ShcP_interaction_DirectHalf_3)</Rate>
+            <Initial>s14_init_nM</Initial>
+          </OdeEquation>
+          <OdeEquation Name="s15" SolutionType="Unknown">
+            <Rate>(J_ligand_bind_InverseHalf_4 + J_R_Grb2_interaction_DirectHalf_1 - J_ligand_bind_DirectHalf_4 - J_R_Grb2_interaction_InverseHalf_1)</Rate>
+            <Initial>s15_init_nM</Initial>
+          </OdeEquation>
+          <OdeEquation Name="s16" SolutionType="Unknown">
+            <Rate>(J_ligand_bind_InverseHalf_5 - J_ligand_bind_DirectHalf_5 - J_R_ShcP_interaction_InverseHalf_1 + J_Shc_phosph_1 + J_R_ShcP_interaction_DirectHalf_1)</Rate>
+            <Initial>s16_init_nM</Initial>
+          </OdeEquation>
+          <OdeEquation Name="s17" SolutionType="Unknown">
+            <Rate>(J_R_ShcU_interaction_DirectHalf_1 + J_ligand_bind_InverseHalf_6 - J_ligand_bind_DirectHalf_6 - J_Shc_phosph_1 - J_R_ShcU_interaction_InverseHalf_1)</Rate>
+            <Initial>s17_init_nM</Initial>
+          </OdeEquation>
+          <OdeEquation Name="s18" SolutionType="Unknown">
+            <Rate>(J_Y1_phosph_2 - J_Y1_dephosph_2 - J_ligand_bind_InverseHalf_7 + J_ligand_bind_DirectHalf_7 - J_R_Grb2_interaction_DirectHalf_4 - J_R_ShcP_interaction_InverseHalf_2 + J_Shc_phosph_2 + J_R_Grb2_interaction_InverseHalf_4 + J_R_ShcP_interaction_DirectHalf_2)</Rate>
+            <Initial>s18_init_nM</Initial>
+          </OdeEquation>
+          <OdeEquation Name="s19" SolutionType="Unknown">
+            <Rate>(J_R_ShcU_interaction_DirectHalf_2 + J_Y1_phosph_3 - J_Y1_dephosph_3 - J_ligand_bind_InverseHalf_8 - J_R_Grb2_interaction_DirectHalf_5 + J_ligand_bind_DirectHalf_8 - J_Shc_phosph_2 + J_R_Grb2_interaction_InverseHalf_5 - J_R_ShcU_interaction_InverseHalf_2)</Rate>
+            <Initial>s19_init_nM</Initial>
+          </OdeEquation>
+          <OdeEquation Name="s20" SolutionType="Unknown">
+            <Rate>(J_R_ShcU_interaction_InverseHalf_4 - J_R_ShcU_interaction_DirectHalf_4 + J_Y2_phosph_2 - J_ligand_bind_InverseHalf_9 + J_R_Grb2_interaction_DirectHalf_2 - J_Y2_dephosph_2 + J_ligand_bind_DirectHalf_9 + J_R_ShcP_interaction_InverseHalf_4 - J_R_Grb2_interaction_InverseHalf_2 - J_R_ShcP_interaction_DirectHalf_4)</Rate>
+            <Initial>s20_init_nM</Initial>
+          </OdeEquation>
+          <OdeEquation Name="s21" SolutionType="Unknown">
+            <Rate>(J_ligand_bind_InverseHalf_7 - J_R_Grb2_interaction_DirectHalf_6 - J_ligand_bind_DirectHalf_7 - J_R_ShcP_interaction_InverseHalf_3 + J_Shc_phosph_3 + J_R_Grb2_interaction_InverseHalf_6 + J_R_ShcP_interaction_DirectHalf_3)</Rate>
+            <Initial>s21_init_nM</Initial>
+          </OdeEquation>
+          <OdeEquation Name="s22" SolutionType="Unknown">
+            <Rate>(J_R_ShcU_interaction_DirectHalf_3 + J_ligand_bind_InverseHalf_8 - J_ligand_bind_DirectHalf_8 - J_R_Grb2_interaction_DirectHalf_7 - J_Shc_phosph_3 + J_R_Grb2_interaction_InverseHalf_7 - J_R_ShcU_interaction_InverseHalf_3)</Rate>
+            <Initial>s22_init_nM</Initial>
+          </OdeEquation>
+          <OdeEquation Name="s23" SolutionType="Unknown">
+            <Rate>(J_R_ShcU_interaction_InverseHalf_5 - J_R_ShcU_interaction_DirectHalf_5 + J_ligand_bind_InverseHalf_9 - J_ligand_bind_DirectHalf_9 + J_R_Grb2_interaction_DirectHalf_3 + J_R_ShcP_interaction_InverseHalf_5 - J_R_Grb2_interaction_InverseHalf_3 - J_R_ShcP_interaction_DirectHalf_5)</Rate>
+            <Initial>s23_init_nM</Initial>
+          </OdeEquation>
+          <OdeEquation Name="s24" SolutionType="Unknown">
+            <Rate>(J_ligand_bind_DirectHalf_10 + J_R_Grb2_interaction_DirectHalf_4 - J_R_ShcP_interaction_InverseHalf_4 + J_Shc_phosph_4 - J_ligand_bind_InverseHalf_10 - J_R_Grb2_interaction_InverseHalf_4 + J_R_ShcP_interaction_DirectHalf_4)</Rate>
+            <Initial>s24_init_nM</Initial>
+          </OdeEquation>
+          <OdeEquation Name="s25" SolutionType="Unknown">
+            <Rate>( - J_R_ShcU_interaction_InverseHalf_4 + J_R_ShcU_interaction_DirectHalf_4 + J_ligand_bind_DirectHalf_11 + J_R_Grb2_interaction_DirectHalf_5 - J_Shc_phosph_4 - J_R_Grb2_interaction_InverseHalf_5 - J_ligand_bind_InverseHalf_11)</Rate>
+            <Initial>s25_init_nM</Initial>
+          </OdeEquation>
+          <OdeEquation Name="s26" SolutionType="Unknown">
+            <Rate>( - J_ligand_bind_DirectHalf_10 + J_R_Grb2_interaction_DirectHalf_6 - J_R_ShcP_interaction_InverseHalf_5 + J_Shc_phosph_5 + J_ligand_bind_InverseHalf_10 - J_R_Grb2_interaction_InverseHalf_6 + J_R_ShcP_interaction_DirectHalf_5)</Rate>
+            <Initial>s26_init_nM</Initial>
+          </OdeEquation>
+          <OdeEquation Name="s27" SolutionType="Unknown">
+            <Rate>( - J_R_ShcU_interaction_InverseHalf_5 + J_R_ShcU_interaction_DirectHalf_5 - J_ligand_bind_DirectHalf_11 + J_R_Grb2_interaction_DirectHalf_7 - J_Shc_phosph_5 - J_R_Grb2_interaction_InverseHalf_7 + J_ligand_bind_InverseHalf_11)</Rate>
+            <Initial>s27_init_nM</Initial>
+          </OdeEquation>
+        </CompartmentSubDomain>
+        <Version Name="Application0_generated" KeyValue="190505181" BranchId="190504426" Archived="0" Date="30-Sep-2020 15:46:17" FromVersionable="false">
+          <Owner Name="pariksheet" Identifier="188567844" />
+          <GroupAccess Type="1" />
+        </Version>
+      </MathDescription>
+      <Simulation Name="Simulation0">
+        <SolverTaskDescription TaskType="Unsteady" UseSymbolicJacobian="false" Solver="Combined Stiff Solver (IDA/CVODE)">
+          <TimeBound StartTime="0.0" EndTime="120.0" />
+          <TimeStep DefaultTime="0.1" MinTime="1.0E-8" MaxTime="1.0" />
+          <ErrorTolerance Absolut="1.0E-9" Relative="1.0E-9" />
+          <OutputOptions KeepEvery="1" KeepAtMost="1000" />
+          <NumberProcessors>1</NumberProcessors>
+        </SolverTaskDescription>
+        <MathOverrides>
+          <Constant Name="R_init_nM" ConstantArraySpec="1000">"20.0", "5.0", "2.0"</Constant>
+        </MathOverrides>
+        <Version Name="Simulation0" KeyValue="190505213" BranchId="190505193" Archived="0" Date="30-Sep-2020 15:46:40" FromVersionable="false">
+          <Owner Name="pariksheet" Identifier="188567844" />
+          <GroupAccess Type="1" />
+        </Version>
+      </Simulation>
+      <Version Name="Application0" KeyValue="190505204" BranchId="190504447" Archived="0" Date="30-Sep-2020 15:46:40" FromVersionable="false">
+        <Owner Name="pariksheet" Identifier="188567844" />
+        <GroupAccess Type="1" />
+      </Version>
+      <MicroscopeMeasurement Name="fluor">
+        <ConvolutionKernel Type="ProjectionZKernel" />
+      </MicroscopeMeasurement>
+    </SimulationSpec>
+    <Version Name="vcell_rule_based_tutorial" KeyValue="190505215" BranchId="190426558" Archived="0" Date="30-Sep-2020 15:46:40" FromVersionable="false">
+      <Owner Name="pariksheet" Identifier="188567844" />
+      <GroupAccess Type="0" />
+    </Version>
+    <pathwayModel>
+      <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:bp="http://www.biopax.org/release/biopax-level3.owl#" version="3.0" />
+    </pathwayModel>
+    <relationshipModel>
+      <RMNS version="3.0" />
+    </relationshipModel>
+    <vcmetadata>
+      <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" />
+      <nonrdfAnnotationList>
+        <nonrdfAnnotation vcid="MolecularType(Shc)">
+          <freetext>&lt;html&gt;
+  &lt;head&gt;
+
+  &lt;/head&gt;
+  &lt;body&gt;
+    &lt;p style="margin-top: 0"&gt;
+      Adapter protein Shc.  Binds to EGFR phosphotyrosines through sh2 
+      domains, can be phosphorylated at phosphite Y.
+    &lt;/p&gt;
+  &lt;/body&gt;
+&lt;/html&gt;</freetext>
+        </nonrdfAnnotation>
+      </nonrdfAnnotationList>
+      <uriBindingList />
+    </vcmetadata>
+  </BioModel>
+</vcml>
+

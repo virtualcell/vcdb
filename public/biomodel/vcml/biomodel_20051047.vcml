@@ -1,0 +1,374 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--This biomodel was generated in VCML Version Alpha_Version_7.4.0_build_87-->
+<vcml xmlns="http://sourceforge.net/projects/vcell/vcml" Version="Alpha_Version_7.4.0_build_87">
+  <BioModel Name="Terminal01">
+    <Model Name="unnamed">
+      <Compound Name="B" />
+      <Compound Name="CaB" />
+      <Compound Name="FI" />
+      <Compound Name="Ca" />
+      <Compound Name="CaCh" />
+      <Compound Name="CaFI" />
+      <Feature Name="EC" KeyValue="20051002" />
+      <Feature Name="Terminal" KeyValue="20051004" />
+      <Membrane InsideFeature="Terminal" OutsideFeature="EC" PositiveFeature="Terminal" NegativeFeature="EC" MembraneVoltage="Voltage_PM" Name="PM" KeyValue="20051003" />
+      <LocalizedCompound Name="B_Terminal" CompoundRef="B" Structure="Terminal" OverrideName="true" KeyValue="20051008" />
+      <LocalizedCompound Name="CaB_Terminal" CompoundRef="CaB" Structure="Terminal" OverrideName="true" KeyValue="20051009" />
+      <LocalizedCompound Name="FI_Terminal" CompoundRef="FI" Structure="Terminal" OverrideName="true" KeyValue="20051010" />
+      <LocalizedCompound Name="Ca_EC" CompoundRef="Ca" Structure="EC" OverrideName="true" KeyValue="20051011" />
+      <LocalizedCompound Name="CaCh_PM" CompoundRef="CaCh" Structure="PM" OverrideName="true" KeyValue="20051012" />
+      <LocalizedCompound Name="Ca_Terminal" CompoundRef="Ca" Structure="Terminal" OverrideName="true" KeyValue="20051013" />
+      <LocalizedCompound Name="CaFI_Terminal" CompoundRef="CaFI" Structure="Terminal" OverrideName="true" KeyValue="20051014" />
+      <SimpleReaction Structure="Terminal" Name="Ca_FI_Binding_Fluo4" Reversible="true" FluxOption="MolecularOnly" KeyValue="20051015">
+        <Reactant LocalizedCompoundRef="Ca_Terminal" Stoichiometry="1" KeyValue="20051016" />
+        <Reactant LocalizedCompoundRef="FI_Terminal" Stoichiometry="1" KeyValue="20051017" />
+        <Product LocalizedCompoundRef="CaFI_Terminal" Stoichiometry="1" KeyValue="20051018" />
+        <Kinetics KineticsType="MassAction">
+          <Parameter Name="J_CaFI" Role="reaction rate" Unit="uM.s-1">(((Kf_CaFI * Ca_Terminal) * FI_Terminal) - (Kr_CaFI * CaFI_Terminal))</Parameter>
+          <Parameter Name="Kf_CaFI" Role="forward rate constant" Unit="s-1.uM-1">600.0</Parameter>
+          <Parameter Name="Kr_CaFI" Role="reverse rate constant" Unit="s-1">210.0</Parameter>
+        </Kinetics>
+      </SimpleReaction>
+      <SimpleReaction Structure="Terminal" Name="Ca_Buffer_Binding_Calbindin" Reversible="true" FluxOption="MolecularOnly" KeyValue="20051019">
+        <Reactant LocalizedCompoundRef="B_Terminal" Stoichiometry="1" KeyValue="20051020" />
+        <Reactant LocalizedCompoundRef="Ca_Terminal" Stoichiometry="1" KeyValue="20051021" />
+        <Product LocalizedCompoundRef="CaB_Terminal" Stoichiometry="1" KeyValue="20051022" />
+        <Kinetics KineticsType="MassAction">
+          <Parameter Name="J_CaB" Role="reaction rate" Unit="uM.s-1">(((Kf_CaB * B_Terminal) * Ca_Terminal) - (Kr_CaB * CaB_Terminal))</Parameter>
+          <Parameter Name="Kf_CaB" Role="forward rate constant" Unit="s-1.uM-1">30.0</Parameter>
+          <Parameter Name="Kr_CaB" Role="reverse rate constant" Unit="s-1">9.0</Parameter>
+        </Kinetics>
+      </SimpleReaction>
+      <FluxStep Name="CaChannel" Structure="PM" Reversible="true" FluxOption="MolecularOnly" KeyValue="20051023">
+        <Reactant LocalizedCompoundRef="Ca_EC" Stoichiometry="1" />
+        <Product LocalizedCompoundRef="Ca_Terminal" Stoichiometry="1" />
+        <Kinetics KineticsType="GeneralKinetics">
+          <Parameter Name="J" Role="reaction rate" Unit="uM.um.s-1">(4000000.0 * Ca_EC * exp( - (2000000.0 * (t - t0) * (t - t0))))</Parameter>
+          <Parameter Name="I" Role="inward current density" Unit="pA.um-2">0.0</Parameter>
+          <Parameter Name="netValence" Role="net charge valence" Unit="1">2.0</Parameter>
+          <Parameter Name="t0" Role="user defined" Unit="s">0.002</Parameter>
+        </Kinetics>
+      </FluxStep>
+      <Diagram Name="Terminal" Structure="Terminal">
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="B_Terminal" LocationX="40" LocationY="198" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="CaB_Terminal" LocationX="370" LocationY="169" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="FI_Terminal" LocationX="36" LocationY="50" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="CaFI_Terminal" LocationX="373" LocationY="81" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="Ca_Terminal" LocationX="37" LocationY="123" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="full" SimpleReactionRef="Ca_FI_Binding_Fluo4" LocationX="229" LocationY="80" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="full" SimpleReactionRef="Ca_Buffer_Binding_Calbindin" LocationX="239" LocationY="166" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="B_Terminal" LocationX="40" LocationY="198" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="CaB_Terminal" LocationX="370" LocationY="169" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="FI_Terminal" LocationX="36" LocationY="50" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="CaFI_Terminal" LocationX="373" LocationY="81" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="Ca_Terminal" LocationX="37" LocationY="123" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="molecule" SimpleReactionRef="Ca_FI_Binding_Fluo4" LocationX="229" LocationY="80" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="molecule" SimpleReactionRef="Ca_Buffer_Binding_Calbindin" LocationX="239" LocationY="166" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="B_Terminal" LocationX="40" LocationY="198" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="CaB_Terminal" LocationX="370" LocationY="169" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="FI_Terminal" LocationX="36" LocationY="50" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="CaFI_Terminal" LocationX="373" LocationY="81" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="Ca_Terminal" LocationX="37" LocationY="123" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="rule" SimpleReactionRef="Ca_FI_Binding_Fluo4" LocationX="229" LocationY="80" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="rule" SimpleReactionRef="Ca_Buffer_Binding_Calbindin" LocationX="239" LocationY="166" />
+      </Diagram>
+      <Diagram Name="Unnamed compartment" Structure="EC" />
+      <Diagram Name="PlasmaMembrane" Structure="PM">
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="CaCh_PM" LocationX="180" LocationY="136" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="B_Terminal" LocationX="32" LocationY="190" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="CaB_Terminal" LocationX="36" LocationY="295" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="FI_Terminal" LocationX="27" LocationY="147" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="Ca_Terminal" LocationX="20" LocationY="78" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="CaFI_Terminal" LocationX="35" LocationY="388" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="Ca_EC" LocationX="50" LocationY="76" />
+        <FluxReactionShape NodeReferenceModeAttrTag="full" FluxReactionRef="CaChannel" LocationX="156" LocationY="75" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="CaCh_PM" LocationX="180" LocationY="136" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="B_Terminal" LocationX="32" LocationY="190" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="CaB_Terminal" LocationX="36" LocationY="295" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="FI_Terminal" LocationX="27" LocationY="147" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="Ca_Terminal" LocationX="20" LocationY="78" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="CaFI_Terminal" LocationX="35" LocationY="388" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="Ca_EC" LocationX="50" LocationY="76" />
+        <FluxReactionShape NodeReferenceModeAttrTag="molecule" FluxReactionRef="CaChannel" LocationX="156" LocationY="75" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="CaCh_PM" LocationX="180" LocationY="136" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="B_Terminal" LocationX="32" LocationY="190" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="CaB_Terminal" LocationX="36" LocationY="295" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="FI_Terminal" LocationX="27" LocationY="147" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="Ca_Terminal" LocationX="20" LocationY="78" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="CaFI_Terminal" LocationX="35" LocationY="388" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="Ca_EC" LocationX="50" LocationY="76" />
+        <FluxReactionShape NodeReferenceModeAttrTag="rule" FluxReactionRef="CaChannel" LocationX="156" LocationY="75" />
+      </Diagram>
+      <Version Name="unnamed" KeyValue="20050994" BranchId="20037118" Archived="0" Date="17-Nov-2006 17:39:17" FromVersionable="false">
+        <Owner Name="drusakov" Identifier="19899569" />
+        <GroupAccess Type="1" />
+      </Version>
+      <ModelUnitSystem VolumeSubstanceUnit="uM.um3" MembraneSubstanceUnit="molecules" LumpedReactionSubstanceUnit="molecules" VolumeUnit="um3" AreaUnit="um2" LengthUnit="um" TimeUnit="s" />
+    </Model>
+    <SimulationSpec Name="Terminal01" Stochastic="false" UseConcentration="true" RuleBased="false" MassConservationModelReduction="true" InsufficientIterations="false" InsufficientMaxMolecules="false" CharacteristicSize="0.020806321531345928">
+      <NetworkConstraints RbmMaxIteration="1" RbmMaxMoleculesPerSpecies="10" RbmSpeciesLimit="800" RbmReactionsLimit="2500" />
+      <Annotation />
+      <Geometry Name="Terminal" Dimension="3">
+        <Extent X="2.0" Y="2.0" Z="2.0" />
+        <Origin X="-1.0" Y="-1.0" Z="-1.0" />
+        <SubVolume Name="Terminal" Handle="0" Type="Analytical" KeyValue="20037197">
+          <AnalyticExpression>((pow(x,2.0) + pow(y,2.0) + pow(z,2.0)) &lt; 0.25)</AnalyticExpression>
+        </SubVolume>
+        <SubVolume Name="EC" Handle="1" Type="Analytical" KeyValue="20037198">
+          <AnalyticExpression>1.0</AnalyticExpression>
+        </SubVolume>
+        <SurfaceClass Name="EC_Terminal_membrane" SubVolume1Ref="EC" SubVolume2Ref="Terminal" />
+        <SurfaceDescription NumSamplesX="100" NumSamplesY="100" NumSamplesZ="100" CutoffFrequency="0.4">
+          <VolumeRegion Name="Terminal1" RegionID="1" SubVolume="Terminal" Size="0.522527592010298" Unit="um3" />
+          <VolumeRegion Name="EC0" RegionID="0" SubVolume="EC" Size="7.477472407989704" Unit="um3" />
+          <MembraneRegion Name="membrane_EC0_Terminal1" VolumeRegion1="Terminal1" VolumeRegion2="EC0" Size="3.081261919545881" Unit="um2" />
+        </SurfaceDescription>
+        <Version Name="Terminal" KeyValue="20037194" BranchId="20037185" Archived="0" Date="15-Nov-2006 12:59:20" FromVersionable="false">
+          <Owner Name="drusakov" Identifier="19899569" />
+          <GroupAccess Type="1" />
+        </Version>
+      </Geometry>
+      <GeometryContext>
+        <FeatureMapping Feature="EC" GeometryClass="EC" SubVolume="EC">
+          <BoundariesTypes Xm="Value" Xp="Value" Ym="Value" Yp="Value" Zm="Value" Zp="Value" />
+        </FeatureMapping>
+        <FeatureMapping Feature="Terminal" GeometryClass="Terminal" SubVolume="Terminal">
+          <BoundariesTypes Xm="Value" Xp="Value" Ym="Value" Yp="Value" Zm="Value" Zp="Value" />
+        </FeatureMapping>
+        <MembraneMapping Membrane="PM" SurfaceToVolumeRatio="1.0" VolumeFraction="0.2" CalculateVoltage="false" SpecificCapacitance="1.0" InitialVoltage="0.0" GeometryClass="EC_Terminal_membrane">
+          <BoundariesTypes Xm="Value" Xp="Value" Ym="Value" Yp="Value" Zm="Value" Zp="Value" />
+        </MembraneMapping>
+      </GeometryContext>
+      <ReactionContext>
+        <LocalizedCompoundSpec LocalizedCompoundRef="Ca_EC" ForceConstant="true" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>(0.1 * (z &lt; 0.025) * (z &gt;  - 0.025) * (y &gt; 0.0) * (x &lt; 0.025) * (x &gt;  - 0.025))</InitialConcentration>
+          <Diffusion>300.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="B_Terminal" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>160.0</InitialConcentration>
+          <Diffusion>60.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="CaB_Terminal" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>43.0</InitialConcentration>
+          <Diffusion>60.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="FI_Terminal" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>200.0</InitialConcentration>
+          <Diffusion>10.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="Ca_Terminal" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>0.1</InitialConcentration>
+          <Diffusion>300.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="CaFI_Terminal" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>57.0</InitialConcentration>
+          <Diffusion>10.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="CaCh_PM" ForceConstant="true" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>((z &lt; 0.025) * (z &gt;  - 0.025) * (y &gt; 0.0) * (x &lt; 0.025) * (x &gt;  - 0.025))</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+          <Boundaries Xm="0.0" Xp="0.0" Ym="0.0" Yp="0.0" Zm="0.0" Zp="0.0" />
+        </LocalizedCompoundSpec>
+        <ReactionSpec ReactionStepRef="Ca_FI_Binding_Fluo4" ReactionMapping="excluded" />
+        <ReactionSpec ReactionStepRef="Ca_Buffer_Binding_Calbindin" ReactionMapping="excluded" />
+        <ReactionSpec ReactionStepRef="CaChannel" ReactionMapping="included" />
+      </ReactionContext>
+      <MathDescription Name="Terminal01_generated">
+        <Constant Name="_F_">96480.0</Constant>
+        <Constant Name="_F_nmol_">9.648E-5</Constant>
+        <Constant Name="_K_GHK_">1.0E-9</Constant>
+        <Constant Name="_N_pmol_">6.02E11</Constant>
+        <Constant Name="_R_">8314.0</Constant>
+        <Constant Name="_T_">300.0</Constant>
+        <Constant Name="B_Terminal_diffusionRate">60.0</Constant>
+        <Constant Name="B_Terminal_init">160.0</Constant>
+        <Constant Name="Ca_EC_diffusionRate">300.0</Constant>
+        <Constant Name="Ca_Terminal_diffusionRate">300.0</Constant>
+        <Constant Name="Ca_Terminal_init">0.1</Constant>
+        <Constant Name="CaB_Terminal_diffusionRate">60.0</Constant>
+        <Constant Name="CaB_Terminal_init">43.0</Constant>
+        <Constant Name="CaFI_Terminal_diffusionRate">10.0</Constant>
+        <Constant Name="CaFI_Terminal_init">57.0</Constant>
+        <Constant Name="FI_Terminal_diffusionRate">10.0</Constant>
+        <Constant Name="FI_Terminal_init">200.0</Constant>
+        <Constant Name="K_millivolts_per_volt">1000.0</Constant>
+        <Constant Name="KMOLE">0.0016611295681063123</Constant>
+        <Constant Name="t0">0.002</Constant>
+        <Constant Name="Voltage_PM">0.0</Constant>
+        <VolumeVariable Name="B" />
+        <VolumeVariable Name="Ca" />
+        <VolumeVariable Name="CaB" />
+        <VolumeVariable Name="CaFI" />
+        <VolumeVariable Name="FI" />
+        <Function Name="Ca_EC">(0.1 * (z &lt; 0.025) * (z &gt;  - 0.025) * (y &gt; 0.0) * (x &lt; 0.025) * (x &gt;  - 0.025))</Function>
+        <Function Name="Ca_EC_init">(0.1 * (z &lt; 0.025) * (z &gt;  - 0.025) * (y &gt; 0.0) * (x &lt; 0.025) * (x &gt;  - 0.025))</Function>
+        <Function Name="CaCh_PM">((z &lt; 0.025) * (z &gt;  - 0.025) * (y &gt; 0.0) * (x &lt; 0.025) * (x &gt;  - 0.025))</Function>
+        <Function Name="CaCh_PM_init">((z &lt; 0.025) * (z &gt;  - 0.025) * (y &gt; 0.0) * (x &lt; 0.025) * (x &gt;  - 0.025))</Function>
+        <Function Name="J_CaChannel">(4000000.0 * Ca_EC * exp( - (2000000.0 * (t - t0) * (t - t0))))</Function>
+        <CompartmentSubDomain Name="Terminal">
+          <BoundaryType Boundary="Xm" Type="Value" />
+          <BoundaryType Boundary="Xp" Type="Value" />
+          <BoundaryType Boundary="Ym" Type="Value" />
+          <BoundaryType Boundary="Yp" Type="Value" />
+          <BoundaryType Boundary="Zm" Type="Value" />
+          <BoundaryType Boundary="Zp" Type="Value" />
+          <PdeEquation Name="B" SolutionType="Unknown">
+            <Rate>0.0</Rate>
+            <Diffusion>B_Terminal_diffusionRate</Diffusion>
+            <Initial>B_Terminal_init</Initial>
+          </PdeEquation>
+          <PdeEquation Name="CaB" SolutionType="Unknown">
+            <Rate>0.0</Rate>
+            <Diffusion>CaB_Terminal_diffusionRate</Diffusion>
+            <Initial>CaB_Terminal_init</Initial>
+          </PdeEquation>
+          <PdeEquation Name="FI" SolutionType="Unknown">
+            <Rate>0.0</Rate>
+            <Diffusion>FI_Terminal_diffusionRate</Diffusion>
+            <Initial>FI_Terminal_init</Initial>
+          </PdeEquation>
+          <PdeEquation Name="Ca" SolutionType="Unknown">
+            <Rate>0.0</Rate>
+            <Diffusion>Ca_Terminal_diffusionRate</Diffusion>
+            <Initial>Ca_Terminal_init</Initial>
+          </PdeEquation>
+          <PdeEquation Name="CaFI" SolutionType="Unknown">
+            <Rate>0.0</Rate>
+            <Diffusion>CaFI_Terminal_diffusionRate</Diffusion>
+            <Initial>CaFI_Terminal_init</Initial>
+          </PdeEquation>
+        </CompartmentSubDomain>
+        <CompartmentSubDomain Name="EC">
+          <BoundaryType Boundary="Xm" Type="Value" />
+          <BoundaryType Boundary="Xp" Type="Value" />
+          <BoundaryType Boundary="Ym" Type="Value" />
+          <BoundaryType Boundary="Yp" Type="Value" />
+          <BoundaryType Boundary="Zm" Type="Value" />
+          <BoundaryType Boundary="Zp" Type="Value" />
+          <PdeEquation Name="B" SolutionType="Unknown">
+            <Rate>0.0</Rate>
+            <Diffusion>B_Terminal_diffusionRate</Diffusion>
+            <Initial>0.0</Initial>
+          </PdeEquation>
+          <PdeEquation Name="CaB" SolutionType="Unknown">
+            <Rate>0.0</Rate>
+            <Diffusion>CaB_Terminal_diffusionRate</Diffusion>
+            <Initial>0.0</Initial>
+          </PdeEquation>
+          <PdeEquation Name="FI" SolutionType="Unknown">
+            <Rate>0.0</Rate>
+            <Diffusion>FI_Terminal_diffusionRate</Diffusion>
+            <Initial>0.0</Initial>
+          </PdeEquation>
+          <PdeEquation Name="Ca" SolutionType="Unknown">
+            <Rate>0.0</Rate>
+            <Diffusion>Ca_Terminal_diffusionRate</Diffusion>
+            <Initial>0.0</Initial>
+          </PdeEquation>
+          <PdeEquation Name="CaFI" SolutionType="Unknown">
+            <Rate>0.0</Rate>
+            <Diffusion>CaFI_Terminal_diffusionRate</Diffusion>
+            <Initial>0.0</Initial>
+          </PdeEquation>
+        </CompartmentSubDomain>
+        <MembraneSubDomain Name="EC_Terminal_membrane" InsideCompartment="Terminal" OutsideCompartment="EC">
+          <BoundaryType Boundary="Xm" Type="Value" />
+          <BoundaryType Boundary="Xp" Type="Value" />
+          <BoundaryType Boundary="Ym" Type="Value" />
+          <BoundaryType Boundary="Yp" Type="Value" />
+          <BoundaryType Boundary="Zm" Type="Value" />
+          <BoundaryType Boundary="Zp" Type="Value" />
+          <JumpCondition Name="B">
+            <InFlux>0.0</InFlux>
+            <OutFlux>0.0</OutFlux>
+          </JumpCondition>
+          <JumpCondition Name="CaB">
+            <InFlux>0.0</InFlux>
+            <OutFlux>0.0</OutFlux>
+          </JumpCondition>
+          <JumpCondition Name="FI">
+            <InFlux>0.0</InFlux>
+            <OutFlux>0.0</OutFlux>
+          </JumpCondition>
+          <JumpCondition Name="Ca">
+            <InFlux>J_CaChannel</InFlux>
+            <OutFlux>0.0</OutFlux>
+          </JumpCondition>
+          <JumpCondition Name="CaFI">
+            <InFlux>0.0</InFlux>
+            <OutFlux>0.0</OutFlux>
+          </JumpCondition>
+        </MembraneSubDomain>
+        <Version Name="Terminal01_generated" KeyValue="20050992" BranchId="20037243" Archived="0" Date="17-Nov-2006 17:39:17" FromVersionable="false">
+          <Owner Name="drusakov" Identifier="19899569" />
+          <GroupAccess Type="1" />
+        </Version>
+      </MathDescription>
+      <Simulation Name="Simulation0">
+        <SolverTaskDescription TaskType="Unsteady" UseSymbolicJacobian="false" Solver="Finite Volume, Regular Grid">
+          <TimeBound StartTime="0.0" EndTime="0.005" />
+          <TimeStep DefaultTime="2.0E-4" MinTime="1.0E-8" MaxTime="1.0" />
+          <ErrorTolerance Absolut="1.0E-9" Relative="1.0E-9" />
+          <OutputOptions KeepEvery="2" KeepAtMost="1000" />
+          <NumberProcessors>1</NumberProcessors>
+        </SolverTaskDescription>
+        <MathOverrides />
+        <MeshSpecification>
+          <Size X="51" Y="51" Z="51" />
+        </MeshSpecification>
+        <Version Name="Simulation0" KeyValue="20051045" BranchId="20045875" Archived="0" Date="17-Nov-2006 17:39:17" FromVersionable="false">
+          <Owner Name="drusakov" Identifier="19899569" />
+          <GroupAccess Type="1" />
+        </Version>
+      </Simulation>
+      <SpatialObjects>
+        <SpatialObject Name="vobj_Terminal1" Type="Volume" subVolume="Terminal" regionId="1">
+          <QuantityCategoryList>
+            <QuantityCategory Name="VolumeCentroid" Enabled="false" />
+            <QuantityCategory Name="InteriorVelocity" Enabled="false" />
+            <QuantityCategory Name="VolumeRegionSize" Enabled="true" />
+          </QuantityCategoryList>
+        </SpatialObject>
+        <SpatialObject Name="vobj_EC0" Type="Volume" subVolume="EC" regionId="0">
+          <QuantityCategoryList>
+            <QuantityCategory Name="VolumeCentroid" Enabled="false" />
+            <QuantityCategory Name="InteriorVelocity" Enabled="false" />
+            <QuantityCategory Name="VolumeRegionSize" Enabled="true" />
+          </QuantityCategoryList>
+        </SpatialObject>
+        <SpatialObject Name="sobj_Terminal1_EC0" Type="Surface" subVolumeInside="Terminal" regionIdInside="1" subVolumeOutside="EC" regionIdOutside="0">
+          <QuantityCategoryList>
+            <QuantityCategory Name="SurfaceNormal" Enabled="false" />
+            <QuantityCategory Name="SurfaceVelocity" Enabled="false" />
+            <QuantityCategory Name="DistanceToSurface" Enabled="false" />
+            <QuantityCategory Name="DirectionToSurface" Enabled="false" />
+            <QuantityCategory Name="SurfaceSize" Enabled="true" />
+          </QuantityCategoryList>
+        </SpatialObject>
+      </SpatialObjects>
+      <Version Name="Terminal01" KeyValue="20051030" BranchId="20037246" Archived="0" Date="17-Nov-2006 17:39:17" FromVersionable="false">
+        <Owner Name="drusakov" Identifier="19899569" />
+        <GroupAccess Type="1" />
+      </Version>
+      <MicroscopeMeasurement Name="fluor">
+        <ConvolutionKernel Type="ProjectionZKernel" />
+      </MicroscopeMeasurement>
+    </SimulationSpec>
+    <Version Name="Terminal01" KeyValue="20051047" BranchId="20038895" Archived="0" Date="17-Nov-2006 17:39:17" FromVersionable="false">
+      <Owner Name="drusakov" Identifier="19899569" />
+      <GroupAccess Type="1" />
+    </Version>
+    <pathwayModel>
+      <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:bp="http://www.biopax.org/release/biopax-level3.owl#" version="3.0" />
+    </pathwayModel>
+    <relationshipModel>
+      <RMNS version="3.0" />
+    </relationshipModel>
+    <vcmetadata>
+      <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" />
+      <nonrdfAnnotationList />
+      <uriBindingList />
+    </vcmetadata>
+  </BioModel>
+</vcml>
+

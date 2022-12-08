@@ -1,0 +1,345 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--This biomodel was generated in VCML Version Alpha_Version_7.4.0_build_87-->
+<vcml xmlns="http://sourceforge.net/projects/vcell/vcml" Version="Alpha_Version_7.4.0_build_87">
+  <BioModel Name="BioModel 3">
+    <Model Name="model">
+      <Compound Name="s0" />
+      <Compound Name="s1" />
+      <Compound Name="s2" />
+      <Compound Name="s3" />
+      <Compound Name="s4" />
+      <Compound Name="s5" />
+      <Compound Name="s6" />
+      <Compound Name="s7" />
+      <Compound Name="s8" />
+      <Compound Name="s9" />
+      <Compound Name="s10" />
+      <Feature Name="Bacterial Cytosol" KeyValue="141545320" />
+      <LocalizedCompound Name="Metal_out" CompoundRef="s0" Structure="Bacterial Cytosol" OverrideName="true" KeyValue="141545322" />
+      <LocalizedCompound Name="Metal_in" CompoundRef="s1" Structure="Bacterial Cytosol" OverrideName="true" KeyValue="141545323" />
+      <LocalizedCompound Name="Ligand" CompoundRef="s2" Structure="Bacterial Cytosol" OverrideName="true" KeyValue="141545324" />
+      <LocalizedCompound Name="Metal_Ligand_Complex" CompoundRef="s3" Structure="Bacterial Cytosol" OverrideName="true" KeyValue="141545325" />
+      <LocalizedCompound Name="Apo_Regulator" CompoundRef="s4" Structure="Bacterial Cytosol" OverrideName="true" KeyValue="141545326" />
+      <LocalizedCompound Name="Transporter" CompoundRef="s5" Structure="Bacterial Cytosol" OverrideName="true" KeyValue="141545327" />
+      <LocalizedCompound Name="Degraded_Transporter" CompoundRef="s6" Structure="Bacterial Cytosol" OverrideName="true" KeyValue="141545328" />
+      <LocalizedCompound Name="Repressed_Promoter" CompoundRef="s7" Structure="Bacterial Cytosol" OverrideName="true" KeyValue="141545329" />
+      <LocalizedCompound Name="Promoter" CompoundRef="s8" Structure="Bacterial Cytosol" OverrideName="true" KeyValue="141545330" />
+      <LocalizedCompound Name="Transcription_Translation" CompoundRef="s9" Structure="Bacterial Cytosol" OverrideName="true" KeyValue="141545331" />
+      <LocalizedCompound Name="Metal_Regulator" CompoundRef="s10" Structure="Bacterial Cytosol" OverrideName="true" KeyValue="141545332" />
+      <SimpleReaction Structure="Bacterial Cytosol" Name="r2" Reversible="true" FluxOption="MolecularOnly" KeyValue="141545333">
+        <Reactant LocalizedCompoundRef="Metal_out" Stoichiometry="1" KeyValue="141545334" />
+        <Product LocalizedCompoundRef="Metal_in" Stoichiometry="1" KeyValue="141545335" />
+        <Modifier LocalizedCompoundRef="Transporter" />
+        <Kinetics KineticsType="GeneralLumpedKinetics">
+          <Parameter Name="LumpedJ" Role="lumped reaction rate" Unit="molecules.s-1">((Transporter * ((Kf * Metal_out) - (Kr * Metal_in))) / Bacterial_Cytosol)</Parameter>
+          <Parameter Name="Kr" Role="user defined" Unit="s-1">0.0</Parameter>
+          <Parameter Name="Kf" Role="user defined" Unit="s-1">100.0</Parameter>
+        </Kinetics>
+      </SimpleReaction>
+      <SimpleReaction Structure="Bacterial Cytosol" Name="r1" Reversible="true" FluxOption="MolecularOnly" KeyValue="141545337">
+        <Reactant LocalizedCompoundRef="Metal_in" Stoichiometry="1" KeyValue="141545338" />
+        <Reactant LocalizedCompoundRef="Ligand" Stoichiometry="1" KeyValue="141545339" />
+        <Product LocalizedCompoundRef="Metal_Ligand_Complex" Stoichiometry="1" KeyValue="141545340" />
+        <Kinetics KineticsType="MassAction">
+          <Parameter Name="J" Role="reaction rate" Unit="uM.s-1">(((Kf * Metal_in) * Ligand) - (Kr * Metal_Ligand_Complex))</Parameter>
+          <Parameter Name="Kf" Role="forward rate constant" Unit="s-1.uM-1">100.0</Parameter>
+          <Parameter Name="Kr" Role="reverse rate constant" Unit="s-1">10.0</Parameter>
+        </Kinetics>
+      </SimpleReaction>
+      <SimpleReaction Structure="Bacterial Cytosol" Name="r3" Reversible="true" FluxOption="MolecularOnly" KeyValue="141545341">
+        <Reactant LocalizedCompoundRef="Metal_Ligand_Complex" Stoichiometry="1" KeyValue="141545342" />
+        <Reactant LocalizedCompoundRef="Apo_Regulator" Stoichiometry="1" KeyValue="141545343" />
+        <Product LocalizedCompoundRef="Metal_Regulator" Stoichiometry="1" KeyValue="141545344" />
+        <Product LocalizedCompoundRef="Ligand" Stoichiometry="1" KeyValue="141545345" />
+        <Kinetics KineticsType="MassAction">
+          <Parameter Name="J" Role="reaction rate" Unit="uM.s-1">(((Kf * Metal_Ligand_Complex) * Apo_Regulator) - ((Kr * Metal_Regulator) * Ligand))</Parameter>
+          <Parameter Name="Kf" Role="forward rate constant" Unit="s-1.uM-1">100.0</Parameter>
+          <Parameter Name="Kr" Role="reverse rate constant" Unit="s-1.uM-1">0.0</Parameter>
+        </Kinetics>
+      </SimpleReaction>
+      <SimpleReaction Structure="Bacterial Cytosol" Name="r4" Reversible="true" FluxOption="MolecularOnly" KeyValue="141545346">
+        <Reactant LocalizedCompoundRef="Apo_Regulator" Stoichiometry="1" KeyValue="141545347" />
+        <Reactant LocalizedCompoundRef="Metal_in" Stoichiometry="1" KeyValue="141545348" />
+        <Product LocalizedCompoundRef="Metal_Regulator" Stoichiometry="1" KeyValue="141545349" />
+        <Kinetics KineticsType="MassAction">
+          <Parameter Name="J" Role="reaction rate" Unit="uM.s-1">(((Kf * Apo_Regulator) * Metal_in) - (Kr * Metal_Regulator))</Parameter>
+          <Parameter Name="Kf" Role="forward rate constant" Unit="s-1.uM-1">100.0</Parameter>
+          <Parameter Name="Kr" Role="reverse rate constant" Unit="s-1">0.0</Parameter>
+        </Kinetics>
+      </SimpleReaction>
+      <SimpleReaction Structure="Bacterial Cytosol" Name="r5" Reversible="true" FluxOption="MolecularOnly" KeyValue="141545350">
+        <Reactant LocalizedCompoundRef="Transporter" Stoichiometry="1" KeyValue="141545351" />
+        <Product LocalizedCompoundRef="Degraded_Transporter" Stoichiometry="1" KeyValue="141545352" />
+        <Modifier LocalizedCompoundRef="Repressed_Promoter" />
+        <Kinetics KineticsType="GeneralLumpedKinetics">
+          <Parameter Name="LumpedJ" Role="lumped reaction rate" Unit="molecules.s-1">((Repressed_Promoter * ((Kf * Transporter) - (Kr * Degraded_Transporter))) / Bacterial_Cytosol)</Parameter>
+          <Parameter Name="Kr" Role="user defined" Unit="s-1">0.0</Parameter>
+          <Parameter Name="Kf" Role="user defined" Unit="s-1">100000.0</Parameter>
+        </Kinetics>
+      </SimpleReaction>
+      <SimpleReaction Structure="Bacterial Cytosol" Name="r6" Reversible="true" FluxOption="MolecularOnly" KeyValue="141545354">
+        <Reactant LocalizedCompoundRef="Promoter" Stoichiometry="1" KeyValue="141545355" />
+        <Reactant LocalizedCompoundRef="Metal_Regulator" Stoichiometry="1" KeyValue="141545356" />
+        <Product LocalizedCompoundRef="Repressed_Promoter" Stoichiometry="1" KeyValue="141545357" />
+        <Kinetics KineticsType="MassAction">
+          <Parameter Name="J" Role="reaction rate" Unit="uM.s-1">(((Kf * Promoter) * Metal_Regulator) - (Kr * Repressed_Promoter))</Parameter>
+          <Parameter Name="Kf" Role="forward rate constant" Unit="s-1.uM-1">100.0</Parameter>
+          <Parameter Name="Kr" Role="reverse rate constant" Unit="s-1">0.0</Parameter>
+        </Kinetics>
+      </SimpleReaction>
+      <SimpleReaction Structure="Bacterial Cytosol" Name="r7" Reversible="true" FluxOption="MolecularOnly" KeyValue="141545358">
+        <Reactant LocalizedCompoundRef="Transcription_Translation" Stoichiometry="1" KeyValue="141545359" />
+        <Product LocalizedCompoundRef="Transporter" Stoichiometry="1" KeyValue="141545360" />
+        <Modifier LocalizedCompoundRef="Promoter" />
+        <Kinetics KineticsType="GeneralLumpedKinetics">
+          <Parameter Name="LumpedJ" Role="lumped reaction rate" Unit="molecules.s-1">((Promoter * ((Kf * Transcription_Translation) - (Kr * Transporter))) / Bacterial_Cytosol)</Parameter>
+          <Parameter Name="Kr" Role="user defined" Unit="s-1">0.0</Parameter>
+          <Parameter Name="Kf" Role="user defined" Unit="s-1">100000.0</Parameter>
+        </Kinetics>
+      </SimpleReaction>
+      <Diagram Name="c0" Structure="Bacterial Cytosol">
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="Transporter" LocationX="41" LocationY="100" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="full" SimpleReactionRef="r1" LocationX="288" LocationY="44" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="Metal_Ligand_Complex" LocationX="304" LocationY="84" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="full" SimpleReactionRef="r2" LocationX="102" LocationY="42" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="full" SimpleReactionRef="r3" LocationX="353" LocationY="143" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="Transcription_Translation" LocationX="64" LocationY="195" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="full" SimpleReactionRef="r5" LocationX="101" LocationY="120" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="Metal_out" LocationX="34" LocationY="34" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="Repressed_Promoter" LocationX="168" LocationY="150" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="Ligand" LocationX="425" LocationY="39" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="Apo_Regulator" LocationX="262" LocationY="122" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="full" SimpleReactionRef="r6" LocationX="195" LocationY="185" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="full" SimpleReactionRef="r7" LocationX="71" LocationY="155" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="Metal_Regulator" LocationX="276" LocationY="197" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="Degraded_Transporter" LocationX="141" LocationY="108" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="Promoter" LocationX="137" LocationY="210" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="full" SimpleReactionRef="r4" LocationX="240" LocationY="157" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="Metal_in" LocationX="154" LocationY="34" />
+      </Diagram>
+      <Version Name="model" KeyValue="141545307" BranchId="141430910" Archived="0" Date="02-Oct-2018 09:33:18" FromVersionable="false">
+        <Owner Name="xanxan" Identifier="141408272" />
+        <GroupAccess Type="1" />
+      </Version>
+      <ModelUnitSystem VolumeSubstanceUnit="uM.um3" MembraneSubstanceUnit="molecules" LumpedReactionSubstanceUnit="molecules" VolumeUnit="um3" AreaUnit="um2" LengthUnit="um" TimeUnit="s" />
+    </Model>
+    <SimulationSpec Name="Test" Stochastic="false" UseConcentration="true" RuleBased="false" MassConservationModelReduction="true" InsufficientIterations="false" InsufficientMaxMolecules="false">
+      <NetworkConstraints RbmMaxIteration="3" RbmMaxMoleculesPerSpecies="10" RbmSpeciesLimit="800" RbmReactionsLimit="2500" />
+      <Annotation />
+      <Geometry Name="non-spatial1027799529" Dimension="0">
+        <Extent X="10.0" Y="10.0" Z="10.0" />
+        <Origin X="0.0" Y="0.0" Z="0.0" />
+        <SubVolume Name="Compartment" Handle="0" Type="Compartmental" KeyValue="141430905" />
+        <Version Name="non-spatial1027799529" KeyValue="141430901" BranchId="141430902" Archived="0" Date="01-Oct-2018 13:34:10" FromVersionable="false">
+          <Owner Name="xanxan" Identifier="141408272" />
+          <GroupAccess Type="1" />
+        </Version>
+      </Geometry>
+      <GeometryContext>
+        <FeatureMapping Feature="Bacterial Cytosol" GeometryClass="Compartment" SubVolume="Compartment" Size="1.0">
+          <BoundariesTypes Xm="Flux" Xp="Flux" Ym="Flux" Yp="Flux" Zm="Flux" Zp="Flux" />
+        </FeatureMapping>
+      </GeometryContext>
+      <ReactionContext>
+        <LocalizedCompoundSpec LocalizedCompoundRef="Metal_out" ForceConstant="true" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>10.0</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="Metal_in" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>0.0</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="Ligand" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>0.5</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="Metal_Ligand_Complex" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>0.0</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="Apo_Regulator" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>0.15</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="Transporter" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>0.0</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="Degraded_Transporter" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>0.0</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="Repressed_Promoter" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>0.0</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="Promoter" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>0.00166</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="Transcription_Translation" ForceConstant="true" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>0.1</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="Metal_Regulator" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>0.0</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <ReactionSpec ReactionStepRef="r2" ReactionMapping="included" />
+        <ReactionSpec ReactionStepRef="r1" ReactionMapping="included" />
+        <ReactionSpec ReactionStepRef="r3" ReactionMapping="included" />
+        <ReactionSpec ReactionStepRef="r4" ReactionMapping="included" />
+        <ReactionSpec ReactionStepRef="r5" ReactionMapping="included" />
+        <ReactionSpec ReactionStepRef="r6" ReactionMapping="included" />
+        <ReactionSpec ReactionStepRef="r7" ReactionMapping="included" />
+      </ReactionContext>
+      <MathDescription Name="Test_generated">
+        <Constant Name="_F_">96480.0</Constant>
+        <Constant Name="_F_nmol_">9.648E-5</Constant>
+        <Constant Name="_K_GHK_">1.0E-9</Constant>
+        <Constant Name="_N_pmol_">6.02E11</Constant>
+        <Constant Name="_PI_">3.141592653589793</Constant>
+        <Constant Name="_R_">8314.0</Constant>
+        <Constant Name="_T_">300.0</Constant>
+        <Constant Name="Apo_Regulator_init_uM">0.15</Constant>
+        <Constant Name="Degraded_Transporter_init_uM">0.0</Constant>
+        <Constant Name="K_millivolts_per_volt">1000.0</Constant>
+        <Constant Name="Kf_r1">100.0</Constant>
+        <Constant Name="Kf_r2">100.0</Constant>
+        <Constant Name="Kf_r3">100.0</Constant>
+        <Constant Name="Kf_r4">100.0</Constant>
+        <Constant Name="Kf_r5">100000.0</Constant>
+        <Constant Name="Kf_r6">100.0</Constant>
+        <Constant Name="Kf_r7">100000.0</Constant>
+        <Constant Name="KMOLE">(1.0 / 602.0)</Constant>
+        <Constant Name="Kr_r1">10.0</Constant>
+        <Constant Name="Kr_r2">0.0</Constant>
+        <Constant Name="Kr_r3">0.0</Constant>
+        <Constant Name="Kr_r4">0.0</Constant>
+        <Constant Name="Kr_r5">0.0</Constant>
+        <Constant Name="Kr_r6">0.0</Constant>
+        <Constant Name="Kr_r7">0.0</Constant>
+        <Constant Name="Ligand_init_uM">0.5</Constant>
+        <Constant Name="Metal_in_init_uM">0.0</Constant>
+        <Constant Name="Metal_Ligand_Complex_init_uM">0.0</Constant>
+        <Constant Name="Metal_out_init_uM">10.0</Constant>
+        <Constant Name="Metal_Regulator_init_uM">0.0</Constant>
+        <Constant Name="Promoter_init_uM">0.00166</Constant>
+        <Constant Name="Repressed_Promoter_init_uM">0.0</Constant>
+        <Constant Name="Size_Bacterial_Cytosol">1.0</Constant>
+        <Constant Name="Transcription_Translation_init_uM">0.1</Constant>
+        <Constant Name="Transporter_init_uM">0.0</Constant>
+        <VolumeVariable Name="Degraded_Transporter" Domain="Compartment" />
+        <VolumeVariable Name="Metal_in" Domain="Compartment" />
+        <VolumeVariable Name="Metal_Ligand_Complex" Domain="Compartment" />
+        <VolumeVariable Name="Metal_Regulator" Domain="Compartment" />
+        <VolumeVariable Name="Promoter" Domain="Compartment" />
+        <VolumeVariable Name="Transporter" Domain="Compartment" />
+        <Function Name="Apo_Regulator" Domain="Compartment">((K_Apo_Regulator_total + (Size_Bacterial_Cytosol * Promoter) - (Size_Bacterial_Cytosol * Metal_Regulator)) / Size_Bacterial_Cytosol)</Function>
+        <Function Name="J_r1" Domain="Compartment">(((Kf_r1 * Metal_in) * Ligand) - (Kr_r1 * Metal_Ligand_Complex))</Function>
+        <Function Name="J_r3" Domain="Compartment">(((Kf_r3 * Metal_Ligand_Complex) * Apo_Regulator) - ((Kr_r3 * Metal_Regulator) * Ligand))</Function>
+        <Function Name="J_r4" Domain="Compartment">(((Kf_r4 * Apo_Regulator) * Metal_in) - (Kr_r4 * Metal_Regulator))</Function>
+        <Function Name="J_r6" Domain="Compartment">(((Kf_r6 * Promoter) * Metal_Regulator) - (Kr_r6 * Repressed_Promoter))</Function>
+        <Function Name="K_Apo_Regulator_total" Domain="Compartment">((Size_Bacterial_Cytosol * Apo_Regulator_init_uM) - (Size_Bacterial_Cytosol * Promoter_init_uM) + (Size_Bacterial_Cytosol * Metal_Regulator_init_uM))</Function>
+        <Function Name="K_Ligand_total" Domain="Compartment">((Size_Bacterial_Cytosol * Ligand_init_uM) + (Size_Bacterial_Cytosol * Metal_Ligand_Complex_init_uM))</Function>
+        <Function Name="K_Repressed_Promoter_total" Domain="Compartment">((Size_Bacterial_Cytosol * Repressed_Promoter_init_uM) + (Size_Bacterial_Cytosol * Promoter_init_uM))</Function>
+        <Function Name="Ligand" Domain="Compartment">((K_Ligand_total - (Size_Bacterial_Cytosol * Metal_Ligand_Complex)) / Size_Bacterial_Cytosol)</Function>
+        <Function Name="LumpedJ_r2" Domain="Compartment">((Transporter * ((Kf_r2 * Metal_out) - (Kr_r2 * Metal_in))) / Size_Bacterial_Cytosol)</Function>
+        <Function Name="LumpedJ_r5" Domain="Compartment">((Repressed_Promoter * ((Kf_r5 * Transporter) - (Kr_r5 * Degraded_Transporter))) / Size_Bacterial_Cytosol)</Function>
+        <Function Name="LumpedJ_r7" Domain="Compartment">((Promoter * ((Kf_r7 * Transcription_Translation) - (Kr_r7 * Transporter))) / Size_Bacterial_Cytosol)</Function>
+        <Function Name="Metal_out" Domain="Compartment">Metal_out_init_uM</Function>
+        <Function Name="Repressed_Promoter" Domain="Compartment">((K_Repressed_Promoter_total - (Size_Bacterial_Cytosol * Promoter)) / Size_Bacterial_Cytosol)</Function>
+        <Function Name="Transcription_Translation" Domain="Compartment">Transcription_Translation_init_uM</Function>
+        <Function Name="UnitFactor_uM_um3_molecules_neg_1">(1.0 / 602.0)</Function>
+        <CompartmentSubDomain Name="Compartment">
+          <BoundaryType Boundary="Xm" Type="Value" />
+          <BoundaryType Boundary="Xp" Type="Value" />
+          <BoundaryType Boundary="Ym" Type="Value" />
+          <BoundaryType Boundary="Yp" Type="Value" />
+          <BoundaryType Boundary="Zm" Type="Value" />
+          <BoundaryType Boundary="Zp" Type="Value" />
+          <OdeEquation Name="Metal_in" SolutionType="Unknown">
+            <Rate>((UnitFactor_uM_um3_molecules_neg_1 * LumpedJ_r2 / Size_Bacterial_Cytosol) - J_r1 - J_r4)</Rate>
+            <Initial>Metal_in_init_uM</Initial>
+          </OdeEquation>
+          <OdeEquation Name="Metal_Ligand_Complex" SolutionType="Unknown">
+            <Rate>(J_r1 - J_r3)</Rate>
+            <Initial>Metal_Ligand_Complex_init_uM</Initial>
+          </OdeEquation>
+          <OdeEquation Name="Transporter" SolutionType="Unknown">
+            <Rate>( - (UnitFactor_uM_um3_molecules_neg_1 * LumpedJ_r5 / Size_Bacterial_Cytosol) + (UnitFactor_uM_um3_molecules_neg_1 * LumpedJ_r7 / Size_Bacterial_Cytosol))</Rate>
+            <Initial>Transporter_init_uM</Initial>
+          </OdeEquation>
+          <OdeEquation Name="Degraded_Transporter" SolutionType="Unknown">
+            <Rate>(UnitFactor_uM_um3_molecules_neg_1 * LumpedJ_r5 / Size_Bacterial_Cytosol)</Rate>
+            <Initial>Degraded_Transporter_init_uM</Initial>
+          </OdeEquation>
+          <OdeEquation Name="Promoter" SolutionType="Unknown">
+            <Rate>- J_r6</Rate>
+            <Initial>Promoter_init_uM</Initial>
+          </OdeEquation>
+          <OdeEquation Name="Metal_Regulator" SolutionType="Unknown">
+            <Rate>(J_r3 + J_r4 - J_r6)</Rate>
+            <Initial>Metal_Regulator_init_uM</Initial>
+          </OdeEquation>
+        </CompartmentSubDomain>
+        <Version Name="Test_generated" KeyValue="141545305" BranchId="141430907" Archived="0" Date="02-Oct-2018 09:33:18" FromVersionable="false">
+          <Owner Name="xanxan" Identifier="141408272" />
+          <GroupAccess Type="1" />
+        </Version>
+      </MathDescription>
+      <Simulation Name="Mary Berry">
+        <SolverTaskDescription TaskType="Unsteady" UseSymbolicJacobian="false" Solver="Combined Stiff Solver (IDA/CVODE)">
+          <TimeBound StartTime="0.0" EndTime="30.0" />
+          <TimeStep DefaultTime="0.1" MinTime="1.0E-8" MaxTime="1.0" />
+          <ErrorTolerance Absolut="1.0E-9" Relative="1.0E-9" />
+          <OutputOptions KeepEvery="1" KeepAtMost="1000" />
+          <NumberProcessors>1</NumberProcessors>
+        </SolverTaskDescription>
+        <MathOverrides />
+        <Version Name="Mary Berry" KeyValue="141545407" BranchId="141460440" Archived="0" Date="02-Oct-2018 09:33:18" FromVersionable="false">
+          <Owner Name="xanxan" Identifier="141408272" />
+          <GroupAccess Type="1" />
+        </Version>
+      </Simulation>
+      <Simulation Name="Bound DNA">
+        <SolverTaskDescription TaskType="Unsteady" UseSymbolicJacobian="false" Solver="Combined Stiff Solver (IDA/CVODE)">
+          <TimeBound StartTime="0.0" EndTime="1.0" />
+          <TimeStep DefaultTime="0.1" MinTime="1.0E-8" MaxTime="1.0" />
+          <ErrorTolerance Absolut="1.0E-9" Relative="1.0E-9" />
+          <OutputOptions KeepEvery="1" KeepAtMost="1000" />
+          <NumberProcessors>1</NumberProcessors>
+        </SolverTaskDescription>
+        <MathOverrides />
+        <Version Name="Bound DNA" KeyValue="141892124" BranchId="141892125" Archived="0" Date="05-Oct-2018 10:42:02" FromVersionable="false">
+          <Owner Name="xanxan" Identifier="141408272" />
+          <GroupAccess Type="1" />
+          <ParentSimRef KeyValue="141550074" />
+        </Version>
+      </Simulation>
+      <Version Name="Test" KeyValue="141545365" BranchId="141430967" Archived="0" Date="02-Oct-2018 09:33:18" FromVersionable="false">
+        <Owner Name="xanxan" Identifier="141408272" />
+        <GroupAccess Type="1" />
+      </Version>
+      <MicroscopeMeasurement Name="fluor">
+        <ConvolutionKernel Type="ProjectionZKernel" />
+      </MicroscopeMeasurement>
+    </SimulationSpec>
+    <Version Name="BioModel 3" KeyValue="141892127" BranchId="141461570" Archived="0" Date="05-Oct-2018 10:42:02" FromVersionable="false">
+      <Owner Name="xanxan" Identifier="141408272" />
+      <GroupAccess Type="0" />
+    </Version>
+    <pathwayModel>
+      <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:bp="http://www.biopax.org/release/biopax-level3.owl#" version="3.0" />
+    </pathwayModel>
+    <relationshipModel>
+      <RMNS version="3.0" />
+    </relationshipModel>
+    <vcmetadata>
+      <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" />
+      <nonrdfAnnotationList />
+      <uriBindingList />
+    </vcmetadata>
+  </BioModel>
+</vcml>
+

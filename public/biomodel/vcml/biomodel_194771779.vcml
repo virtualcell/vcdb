@@ -1,0 +1,608 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--This biomodel was generated in VCML Version Alpha_Version_7.4.0_build_87-->
+<vcml xmlns="http://sourceforge.net/projects/vcell/vcml" Version="Alpha_Version_7.4.0_build_87">
+  <BioModel Name="Araujo2016_orig">
+    <Model Name="unnamed">
+      <ModelParameters>
+        <Parameter Name="Ks1" Role="user defined" Unit="tbd" SbmlName="Ks">0.1</Parameter>
+        <Parameter Name="Adeg1" Role="user defined" Unit="tbd" SbmlName="Adeg">0.001</Parameter>
+        <Parameter Name="Bdeg1" Role="user defined" Unit="tbd" SbmlName="Bdeg">0.02</Parameter>
+        <Parameter Name="Acdc1" Role="user defined" Unit="tbd" SbmlName="Acdc">0.5</Parameter>
+        <Parameter Name="Bcdc1" Role="user defined" Unit="tbd" SbmlName="Bcdc">1.5</Parameter>
+        <Parameter Name="EC50cdc1" Role="user defined" Unit="tbd" SbmlName="EC50cdc">30.0</Parameter>
+        <Parameter Name="n_cdc1" Role="user defined" Unit="tbd" SbmlName="n_cdc">10.0</Parameter>
+        <Parameter Name="Awee1" Role="user defined" Unit="tbd" SbmlName="Awee">0.5</Parameter>
+        <Parameter Name="Bwee1" Role="user defined" Unit="tbd" SbmlName="Bwee">1.0</Parameter>
+        <Parameter Name="EC50wee1" Role="user defined" Unit="tbd" SbmlName="EC50wee">30.0</Parameter>
+        <Parameter Name="n_wee1" Role="user defined" Unit="tbd" SbmlName="n_wee">10.0</Parameter>
+        <Parameter Name="EC50apc1" Role="user defined" Unit="tbd" SbmlName="EC50apc">0.5</Parameter>
+        <Parameter Name="n_apc1" Role="user defined" Unit="tbd" SbmlName="n_apc">10.0</Parameter>
+        <Parameter Name="AK1" Role="user defined" Unit="tbd" SbmlName="AK">0.0</Parameter>
+        <Parameter Name="BK1" Role="user defined" Unit="tbd" SbmlName="BK">0.25</Parameter>
+        <Parameter Name="EC50K1" Role="user defined" Unit="tbd" SbmlName="EC50K">0.18</Parameter>
+        <Parameter Name="n_K1" Role="user defined" Unit="tbd" SbmlName="n_K">5.0</Parameter>
+        <Parameter Name="AP1" Role="user defined" Unit="tbd" SbmlName="AP">0.025</Parameter>
+        <Parameter Name="BP1" Role="user defined" Unit="tbd" SbmlName="BP">0.5</Parameter>
+        <Parameter Name="EC50P1" Role="user defined" Unit="tbd" SbmlName="EC50P">0.18</Parameter>
+        <Parameter Name="n_P1" Role="user defined" Unit="tbd" SbmlName="n_P">5.0</Parameter>
+      </ModelParameters>
+      <Compound Name="Cdk1CycB">
+        <Annotation>Cdk1CycB</Annotation>
+      </Compound>
+      <Compound Name="APC">
+        <Annotation>APC</Annotation>
+      </Compound>
+      <Compound Name="CycB">
+        <Annotation>CycB</Annotation>
+      </Compound>
+      <Feature Name="Cell" KeyValue="194526834" />
+      <LocalizedCompound Name="Cdk1CycB1" SbmlName="Cdk1CycB" CompoundRef="Cdk1CycB" Structure="Cell" OverrideName="true" KeyValue="194526836" />
+      <LocalizedCompound Name="APC1" SbmlName="APC" CompoundRef="APC" Structure="Cell" OverrideName="true" KeyValue="194526837" />
+      <LocalizedCompound Name="CycB1" SbmlName="CycB" CompoundRef="CycB" Structure="Cell" OverrideName="true" KeyValue="194526838" />
+      <SimpleReaction Structure="Cell" Name="R4" Reversible="true" FluxOption="MolecularOnly" KeyValue="194526839" SbmlName="R1">
+        <Product LocalizedCompoundRef="Cdk1CycB1" Stoichiometry="1" KeyValue="194526840" />
+        <Modifier LocalizedCompoundRef="APC1" />
+        <Modifier LocalizedCompoundRef="CycB1" />
+        <Kinetics KineticsType="GeneralKinetics">
+          <Parameter Name="J" Role="reaction rate" Unit="nmol.ml-1.min-1">(Ks1 - (Adeg1 * Cdk1CycB1) - (Bdeg1 * pow(APC1,n_apc1) * Cdk1CycB1 / (pow(EC50apc1,n_apc1) + pow(APC1,n_apc1))) + ((Acdc1 + (Bcdc1 * pow(Cdk1CycB1,n_cdc1) / (pow(EC50cdc1,n_cdc1) + pow(Cdk1CycB1,n_cdc1)))) * (CycB1 - Cdk1CycB1)) - ((Awee1 + (Bwee1 * pow(EC50wee1,n_wee1) / (pow(EC50wee1,n_wee1) + pow(Cdk1CycB1,n_wee1)))) * Cdk1CycB1))</Parameter>
+        </Kinetics>
+      </SimpleReaction>
+      <SimpleReaction Structure="Cell" Name="R5" Reversible="true" FluxOption="MolecularOnly" KeyValue="194526843" SbmlName="R2">
+        <Product LocalizedCompoundRef="CycB1" Stoichiometry="1" KeyValue="194526844" />
+        <Modifier LocalizedCompoundRef="APC1" />
+        <Kinetics KineticsType="GeneralKinetics">
+          <Parameter Name="J" Role="reaction rate" Unit="nmol.ml-1.min-1">(Ks1 - (Adeg1 * CycB1) - (Bdeg1 * pow(APC1,n_apc1) * CycB1 / (pow(EC50apc1,n_apc1) + pow(APC1,n_apc1))))</Parameter>
+        </Kinetics>
+      </SimpleReaction>
+      <SimpleReaction Structure="Cell" Name="R6" Reversible="true" FluxOption="MolecularOnly" KeyValue="194526846" SbmlName="R3">
+        <Product LocalizedCompoundRef="APC1" Stoichiometry="1" KeyValue="194526847" />
+        <Modifier LocalizedCompoundRef="Cdk1CycB1" />
+        <Kinetics KineticsType="GeneralKinetics">
+          <Parameter Name="J" Role="reaction rate" Unit="nmol.ml-1.min-1">(((AK1 + (BK1 * pow((0.005 * Cdk1CycB1),n_K1) / (pow((0.005 * Cdk1CycB1),n_K1) + pow(EC50K1,n_K1)))) * (1.0 - APC1)) - ((AP1 + (BP1 * pow(EC50P1,n_P1) / (pow(APC1,n_P1) + pow(EC50P1,n_P1)))) * APC1))</Parameter>
+        </Kinetics>
+      </SimpleReaction>
+      <Diagram Name="Cell" Structure="Cell">
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="CycB1" LocationX="314" LocationY="138" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="full" SimpleReactionRef="R4" LocationX="249" LocationY="138" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="full" SimpleReactionRef="R6" LocationX="181" LocationY="82" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="APC1" LocationX="247" LocationY="80" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="Cdk1CycB1" LocationX="180" LocationY="136" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="full" SimpleReactionRef="R5" LocationX="316" LocationY="82" />
+      </Diagram>
+      <Version Name="unnamed" KeyValue="194526829" BranchId="194526539" Archived="0" Date="22-Nov-2020 14:59:20" FromVersionable="false">
+        <Owner Name="pariksheet" Identifier="188567844" />
+        <GroupAccess Type="1" />
+      </Version>
+      <ModelUnitSystem VolumeSubstanceUnit="nmol" MembraneSubstanceUnit="nmol" LumpedReactionSubstanceUnit="nmol" VolumeUnit="ml" AreaUnit="m2" LengthUnit="m" TimeUnit="min" />
+    </Model>
+    <SimulationSpec Name="Deterministic" Stochastic="false" UseConcentration="true" RuleBased="false" MassConservationModelReduction="false" InsufficientIterations="false" InsufficientMaxMolecules="false">
+      <NetworkConstraints RbmMaxIteration="3" RbmMaxMoleculesPerSpecies="10" RbmSpeciesLimit="800" RbmReactionsLimit="2500" />
+      <Annotation />
+      <Geometry Name="Compartmental" Dimension="0">
+        <Extent X="10.0" Y="10.0" Z="10.0" />
+        <Origin X="0.0" Y="0.0" Z="0.0" />
+        <SubVolume Name="Compartment" Handle="0" Type="Compartmental" KeyValue="194526534" />
+        <Version Name="Compartmental" KeyValue="194526530" BranchId="194526531" Archived="0" Date="22-Nov-2020 14:53:55" FromVersionable="false">
+          <Owner Name="pariksheet" Identifier="188567844" />
+          <GroupAccess Type="1" />
+        </Version>
+      </Geometry>
+      <GeometryContext>
+        <FeatureMapping Feature="Cell" GeometryClass="Compartment" SubVolume="Compartment" Size="1.0">
+          <BoundariesTypes Xm="Flux" Xp="Flux" Ym="Flux" Yp="Flux" Zm="Flux" Zp="Flux" />
+        </FeatureMapping>
+      </GeometryContext>
+      <ReactionContext>
+        <LocalizedCompoundSpec LocalizedCompoundRef="Cdk1CycB1" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>20.0</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="APC1" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>0.0</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="CycB1" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>59.9999999999999</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <ReactionSpec ReactionStepRef="R4" ReactionMapping="included" />
+        <ReactionSpec ReactionStepRef="R5" ReactionMapping="included" />
+        <ReactionSpec ReactionStepRef="R6" ReactionMapping="included" />
+      </ReactionContext>
+      <MathDescription Name="Deterministic_generated">
+        <Constant Name="_F_">96485.3321</Constant>
+        <Constant Name="_F_nmol_">9.64853321E-5</Constant>
+        <Constant Name="_K_GHK_">1.0E-9</Constant>
+        <Constant Name="_N_pmol_">6.02214179E11</Constant>
+        <Constant Name="_PI_">3.141592653589793</Constant>
+        <Constant Name="_R_">8314.46261815</Constant>
+        <Constant Name="_T_">300.0</Constant>
+        <Constant Name="Acdc1">0.5</Constant>
+        <Constant Name="Adeg1">0.001</Constant>
+        <Constant Name="AK1">0.0</Constant>
+        <Constant Name="AP1">0.025</Constant>
+        <Constant Name="APC1_init_nmol_ml_1">0.0</Constant>
+        <Constant Name="Awee1">0.5</Constant>
+        <Constant Name="Bcdc1">1.5</Constant>
+        <Constant Name="Bdeg1">0.02</Constant>
+        <Constant Name="BK1">0.25</Constant>
+        <Constant Name="BP1">0.5</Constant>
+        <Constant Name="Bwee1">1.0</Constant>
+        <Constant Name="Cdk1CycB1_init_nmol_ml_1">20.0</Constant>
+        <Constant Name="CycB1_init_nmol_ml_1">59.9999999999999</Constant>
+        <Constant Name="EC50apc1">0.5</Constant>
+        <Constant Name="EC50cdc1">30.0</Constant>
+        <Constant Name="EC50K1">0.18</Constant>
+        <Constant Name="EC50P1">0.18</Constant>
+        <Constant Name="EC50wee1">30.0</Constant>
+        <Constant Name="K_millivolts_per_volt">1000.0</Constant>
+        <Constant Name="KMOLE">0.001660538783162726</Constant>
+        <Constant Name="Ks1">0.1</Constant>
+        <Constant Name="n_apc1">10.0</Constant>
+        <Constant Name="n_cdc1">10.0</Constant>
+        <Constant Name="n_K1">5.0</Constant>
+        <Constant Name="n_P1">5.0</Constant>
+        <Constant Name="n_wee1">10.0</Constant>
+        <Constant Name="Size_Cell">1.0</Constant>
+        <VolumeVariable Name="APC1" Domain="Compartment" />
+        <VolumeVariable Name="Cdk1CycB1" Domain="Compartment" />
+        <VolumeVariable Name="CycB1" Domain="Compartment" />
+        <Function Name="J_R4" Domain="Compartment">(Ks1 - (Adeg1 * Cdk1CycB1) - (Bdeg1 * pow(APC1,n_apc1) * Cdk1CycB1 / (pow(EC50apc1,n_apc1) + pow(APC1,n_apc1))) + ((Acdc1 + (Bcdc1 * pow(Cdk1CycB1,n_cdc1) / (pow(EC50cdc1,n_cdc1) + pow(Cdk1CycB1,n_cdc1)))) * (CycB1 - Cdk1CycB1)) - ((Awee1 + (Bwee1 * pow(EC50wee1,n_wee1) / (pow(EC50wee1,n_wee1) + pow(Cdk1CycB1,n_wee1)))) * Cdk1CycB1))</Function>
+        <Function Name="J_R5" Domain="Compartment">(Ks1 - (Adeg1 * CycB1) - (Bdeg1 * pow(APC1,n_apc1) * CycB1 / (pow(EC50apc1,n_apc1) + pow(APC1,n_apc1))))</Function>
+        <Function Name="J_R6" Domain="Compartment">(((AK1 + (BK1 * pow((0.005 * Cdk1CycB1),n_K1) / (pow((0.005 * Cdk1CycB1),n_K1) + pow(EC50K1,n_K1)))) * (1.0 - APC1)) - ((AP1 + (BP1 * pow(EC50P1,n_P1) / (pow(APC1,n_P1) + pow(EC50P1,n_P1)))) * APC1))</Function>
+        <CompartmentSubDomain Name="Compartment">
+          <BoundaryType Boundary="Xm" Type="Value" />
+          <BoundaryType Boundary="Xp" Type="Value" />
+          <BoundaryType Boundary="Ym" Type="Value" />
+          <BoundaryType Boundary="Yp" Type="Value" />
+          <BoundaryType Boundary="Zm" Type="Value" />
+          <BoundaryType Boundary="Zp" Type="Value" />
+          <OdeEquation Name="Cdk1CycB1" SolutionType="Unknown">
+            <Rate>J_R4</Rate>
+            <Initial>Cdk1CycB1_init_nmol_ml_1</Initial>
+          </OdeEquation>
+          <OdeEquation Name="APC1" SolutionType="Unknown">
+            <Rate>J_R6</Rate>
+            <Initial>APC1_init_nmol_ml_1</Initial>
+          </OdeEquation>
+          <OdeEquation Name="CycB1" SolutionType="Unknown">
+            <Rate>J_R5</Rate>
+            <Initial>CycB1_init_nmol_ml_1</Initial>
+          </OdeEquation>
+        </CompartmentSubDomain>
+        <Version Name="Deterministic_generated" KeyValue="194526535" BranchId="194526536" Archived="0" Date="22-Nov-2020 14:53:55" FromVersionable="false">
+          <Owner Name="pariksheet" Identifier="188567844" />
+          <GroupAccess Type="1" />
+        </Version>
+      </MathDescription>
+      <Simulation Name="Simulation0">
+        <SolverTaskDescription TaskType="Unsteady" UseSymbolicJacobian="false" Solver="Combined Stiff Solver (IDA/CVODE)">
+          <TimeBound StartTime="0.0" EndTime="1.0" />
+          <TimeStep DefaultTime="0.1" MinTime="1.0E-8" MaxTime="1.0" />
+          <ErrorTolerance Absolut="1.0E-9" Relative="1.0E-9" />
+          <OutputOptions KeepEvery="1" KeepAtMost="1000" />
+          <NumberProcessors>1</NumberProcessors>
+        </SolverTaskDescription>
+        <MathOverrides />
+        <Version Name="Simulation0" KeyValue="194526571" BranchId="194526572" Archived="0" Date="22-Nov-2020 14:53:56" FromVersionable="false">
+          <Owner Name="pariksheet" Identifier="188567844" />
+          <GroupAccess Type="1" />
+        </Version>
+      </Simulation>
+      <Version Name="Deterministic" KeyValue="194526851" BranchId="194526562" Archived="0" Date="22-Nov-2020 14:59:20" FromVersionable="false">
+        <Owner Name="pariksheet" Identifier="188567844" />
+        <GroupAccess Type="1" />
+      </Version>
+      <MicroscopeMeasurement Name="fluor">
+        <ConvolutionKernel Type="ProjectionZKernel" />
+      </MicroscopeMeasurement>
+    </SimulationSpec>
+    <Version Name="Araujo2016_orig" KeyValue="194771779" BranchId="194771780" Archived="0" Date="25-Nov-2020 22:18:36" FromVersionable="false">
+      <Owner Name="pariksheet" Identifier="188567844" />
+      <GroupAccess Type="1" />
+    </Version>
+    <pathwayModel>
+      <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:bp="http://www.biopax.org/release/biopax-level3.owl#" version="3.0" />
+    </pathwayModel>
+    <relationshipModel>
+      <RMNS version="3.0" />
+    </relationshipModel>
+    <vcmetadata>
+      <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
+        <rdf:Description rdf:about="http://www.sbml.org/sbml/level2/version4/COPASI0">
+          <bqbiol:hasPart xmlns:bqbiol="http://biomodels.net/biology-qualifiers/">
+            <rdf:Bag rdf:nodeID="node0">
+              <rdf:_1>
+                <rdf:Description rdf:about="http://identifiers.org/pw/PW:0000092" />
+              </rdf:_1>
+            </rdf:Bag>
+          </bqbiol:hasPart>
+          <bqbiol:hasProperty xmlns:bqbiol="http://biomodels.net/biology-qualifiers/">
+            <rdf:Bag rdf:nodeID="node1">
+              <rdf:_1>
+                <rdf:Description rdf:about="http://identifiers.org/biomodels.teddy/TEDDY_0000035" />
+              </rdf:_1>
+            </rdf:Bag>
+          </bqbiol:hasProperty>
+          <bqbiol:hasTaxon xmlns:bqbiol="http://biomodels.net/biology-qualifiers/">
+            <rdf:Bag rdf:nodeID="node2">
+              <rdf:_1>
+                <rdf:Description rdf:about="http://identifiers.org/taxonomy/9606" />
+              </rdf:_1>
+            </rdf:Bag>
+          </bqbiol:hasTaxon>
+          <bqbiol:isDescribedBy xmlns:bqbiol="http://biomodels.net/biology-qualifiers/">
+            <rdf:Bag rdf:nodeID="node3">
+              <rdf:_1>
+                <rdf:Description rdf:about="http://identifiers.org/pubmed/27768873" />
+              </rdf:_1>
+            </rdf:Bag>
+          </bqbiol:isDescribedBy>
+          <bqmodel:hasProperty xmlns:bqmodel="http://biomodels.net/model-qualifiers/">
+            <rdf:Bag rdf:nodeID="node4">
+              <rdf:_1>
+                <rdf:Description rdf:about="http://identifiers.org/mamo/MAMO_0000046" />
+              </rdf:_1>
+            </rdf:Bag>
+          </bqmodel:hasProperty>
+          <bqmodel:is xmlns:bqmodel="http://biomodels.net/model-qualifiers/">
+            <rdf:Bag rdf:nodeID="node5">
+              <rdf:_1>
+                <rdf:Description rdf:about="http://identifiers.org/biomodels.db/MODEL1710040001" />
+              </rdf:_1>
+            </rdf:Bag>
+          </bqmodel:is>
+          <bqmodel:is xmlns:bqmodel="http://biomodels.net/model-qualifiers/">
+            <rdf:Bag rdf:nodeID="node6">
+              <rdf:_1>
+                <rdf:Description rdf:about="http://identifiers.org/biomodels.db/BIOMD0000000657" />
+              </rdf:_1>
+            </rdf:Bag>
+          </bqmodel:is>
+          <bqmodel:isDescribedBy xmlns:bqmodel="http://biomodels.net/model-qualifiers/">
+            <rdf:Bag rdf:nodeID="node7">
+              <rdf:_1>
+                <rdf:Description rdf:about="http://identifiers.org/pubmed/27768873" />
+              </rdf:_1>
+            </rdf:Bag>
+          </bqmodel:isDescribedBy>
+          <dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">
+            <rdf:Bag rdf:nodeID="node8">
+              <rdf:_1>
+                <rdf:Description rdf:nodeID="node16" />
+              </rdf:_1>
+              <rdf:_2>
+                <rdf:Description rdf:nodeID="node19" />
+              </rdf:_2>
+            </rdf:Bag>
+          </dc:creator>
+          <n0:created xmlns:n0="http://purl.org/dc/terms/">
+            <rdf:Description rdf:nodeID="node9">
+              <n0:W3CDTF rdf:datatype="http://www.w3.org/2001/XMLSchema#string">2017-07-19T14:13:53Z</n0:W3CDTF>
+            </rdf:Description>
+          </n0:created>
+          <n0:modified xmlns:n0="http://purl.org/dc/terms/">
+            <rdf:Description rdf:nodeID="node10">
+              <n0:W3CDTF rdf:datatype="http://www.w3.org/2001/XMLSchema#string">2017-10-04T14:41:20Z</n0:W3CDTF>
+            </rdf:Description>
+          </n0:modified>
+        </rdf:Description>
+        <rdf:Description rdf:about="http://www.sbml.org/sbml/level2/version4/COPASI2">
+          <bqbiol:hasPart xmlns:bqbiol="http://biomodels.net/biology-qualifiers/">
+            <rdf:Bag rdf:nodeID="node11">
+              <rdf:_1>
+                <rdf:Description rdf:about="http://identifiers.org/uniprot/P06493" />
+              </rdf:_1>
+            </rdf:Bag>
+          </bqbiol:hasPart>
+          <bqbiol:hasPart xmlns:bqbiol="http://biomodels.net/biology-qualifiers/">
+            <rdf:Bag rdf:nodeID="node12">
+              <rdf:_1>
+                <rdf:Description rdf:about="http://identifiers.org/uniprot/P14635" />
+              </rdf:_1>
+            </rdf:Bag>
+          </bqbiol:hasPart>
+          <bqbiol:isVersionOf xmlns:bqbiol="http://biomodels.net/biology-qualifiers/">
+            <rdf:Bag rdf:nodeID="node13">
+              <rdf:_1>
+                <rdf:Description rdf:about="http://identifiers.org/go/GO:0097125" />
+              </rdf:_1>
+            </rdf:Bag>
+          </bqbiol:isVersionOf>
+        </rdf:Description>
+        <rdf:Description rdf:about="http://www.sbml.org/sbml/level2/version4/COPASI3">
+          <bqbiol:isVersionOf xmlns:bqbiol="http://biomodels.net/biology-qualifiers/">
+            <rdf:Bag rdf:nodeID="node14">
+              <rdf:_1>
+                <rdf:Description rdf:about="http://identifiers.org/uniprot/P25054" />
+              </rdf:_1>
+            </rdf:Bag>
+          </bqbiol:isVersionOf>
+        </rdf:Description>
+        <rdf:Description rdf:about="http://www.sbml.org/sbml/level2/version4/COPASI4">
+          <bqbiol:isVersionOf xmlns:bqbiol="http://biomodels.net/biology-qualifiers/">
+            <rdf:Bag rdf:nodeID="node15">
+              <rdf:_1>
+                <rdf:Description rdf:about="http://identifiers.org/uniprot/P14635" />
+              </rdf:_1>
+            </rdf:Bag>
+          </bqbiol:isVersionOf>
+        </rdf:Description>
+        <rdf:Description rdf:nodeID="node16">
+          <vcard:EMAIL xmlns:vcard="http://www.w3.org/2001/vcard-rdf/3.0#" rdf:datatype="http://www.w3.org/2001/XMLSchema#string">sheriff@ebi.ac.uk</vcard:EMAIL>
+          <vcard:N xmlns:vcard="http://www.w3.org/2001/vcard-rdf/3.0#">
+            <rdf:Description rdf:nodeID="node17">
+              <vcard:Family rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Sheriff</vcard:Family>
+              <vcard:Given rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Rahuman</vcard:Given>
+            </rdf:Description>
+          </vcard:N>
+          <vcard:ORG xmlns:vcard="http://www.w3.org/2001/vcard-rdf/3.0#">
+            <rdf:Description rdf:nodeID="node18">
+              <vcard:Orgname rdf:datatype="http://www.w3.org/2001/XMLSchema#string">EMBL-EBI</vcard:Orgname>
+            </rdf:Description>
+          </vcard:ORG>
+        </rdf:Description>
+        <rdf:Description rdf:nodeID="node19">
+          <vcard:EMAIL xmlns:vcard="http://www.w3.org/2001/vcard-rdf/3.0#" rdf:datatype="http://www.w3.org/2001/XMLSchema#string">lendert.gelens@kuleuven.be</vcard:EMAIL>
+          <vcard:N xmlns:vcard="http://www.w3.org/2001/vcard-rdf/3.0#">
+            <rdf:Description rdf:nodeID="node20">
+              <vcard:Family rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Gelens</vcard:Family>
+              <vcard:Given rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Lendert</vcard:Given>
+            </rdf:Description>
+          </vcard:N>
+          <vcard:ORG xmlns:vcard="http://www.w3.org/2001/vcard-rdf/3.0#">
+            <rdf:Description rdf:nodeID="node21">
+              <vcard:Orgname rdf:datatype="http://www.w3.org/2001/XMLSchema#string">University of Leuven</vcard:Orgname>
+            </rdf:Description>
+          </vcard:ORG>
+        </rdf:Description>
+      </rdf:RDF>
+      <nonrdfAnnotationList>
+        <nonrdfAnnotation vcid="Species(CycB)">
+          <annotationList>
+            <annotation>
+              <COPASI xmlns="http://www.copasi.org/static/sbml">
+                <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:CopasiMT="http://www.copasi.org/RDF/MiriamTerms#" xmlns:dcterms="http://purl.org/dc/terms/">
+                  <rdf:Description rdf:about="#COPASI4">
+                    <dcterms:created>
+                      <rdf:Description>
+                        <dcterms:W3CDTF>2017-07-19T15:06:59Z</dcterms:W3CDTF>
+                      </rdf:Description>
+                    </dcterms:created>
+                    <CopasiMT:isVersionOf rdf:resource="urn:miriam:uniprot:P14635" />
+                  </rdf:Description>
+                </rdf:RDF>
+              </COPASI>
+            </annotation>
+          </annotationList>
+        </nonrdfAnnotation>
+        <nonrdfAnnotation vcid="Species(APC)">
+          <annotationList>
+            <annotation>
+              <COPASI xmlns="http://www.copasi.org/static/sbml">
+                <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:CopasiMT="http://www.copasi.org/RDF/MiriamTerms#" xmlns:dcterms="http://purl.org/dc/terms/">
+                  <rdf:Description rdf:about="#COPASI3">
+                    <dcterms:created>
+                      <rdf:Description>
+                        <dcterms:W3CDTF>2017-07-20T15:55:57Z</dcterms:W3CDTF>
+                      </rdf:Description>
+                    </dcterms:created>
+                    <CopasiMT:isVersionOf rdf:resource="urn:miriam:uniprot:P25054" />
+                  </rdf:Description>
+                </rdf:RDF>
+              </COPASI>
+            </annotation>
+          </annotationList>
+        </nonrdfAnnotation>
+        <nonrdfAnnotation vcid="Species(Cdk1CycB)">
+          <annotationList>
+            <annotation>
+              <COPASI xmlns="http://www.copasi.org/static/sbml">
+                <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:CopasiMT="http://www.copasi.org/RDF/MiriamTerms#" xmlns:dcterms="http://purl.org/dc/terms/">
+                  <rdf:Description rdf:about="#COPASI2">
+                    <dcterms:created>
+                      <rdf:Description>
+                        <dcterms:W3CDTF>2017-07-19T15:07:07Z</dcterms:W3CDTF>
+                      </rdf:Description>
+                    </dcterms:created>
+                    <CopasiMT:hasPart rdf:resource="urn:miriam:uniprot:P06493" />
+                    <CopasiMT:hasPart rdf:resource="urn:miriam:uniprot:P14635" />
+                    <CopasiMT:isVersionOf rdf:resource="urn:miriam:go:GO:0097125" />
+                  </rdf:Description>
+                </rdf:RDF>
+              </COPASI>
+            </annotation>
+          </annotationList>
+        </nonrdfAnnotation>
+        <nonrdfAnnotation vcid="ReactionStep(R6)">
+          <annotationList>
+            <annotation>
+              <COPASI xmlns="http://www.copasi.org/static/sbml">
+                <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:dcterms="http://purl.org/dc/terms/">
+                  <rdf:Description rdf:about="#COPASI28">
+                    <dcterms:created>
+                      <rdf:Description>
+                        <dcterms:W3CDTF>2017-07-20T15:40:15Z</dcterms:W3CDTF>
+                      </rdf:Description>
+                    </dcterms:created>
+                  </rdf:Description>
+                </rdf:RDF>
+              </COPASI>
+            </annotation>
+          </annotationList>
+        </nonrdfAnnotation>
+        <nonrdfAnnotation vcid="ReactionStep(R5)">
+          <annotationList>
+            <annotation>
+              <COPASI xmlns="http://www.copasi.org/static/sbml">
+                <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:dcterms="http://purl.org/dc/terms/">
+                  <rdf:Description rdf:about="#COPASI27">
+                    <dcterms:created>
+                      <rdf:Description>
+                        <dcterms:W3CDTF>2017-07-20T15:39:47Z</dcterms:W3CDTF>
+                      </rdf:Description>
+                    </dcterms:created>
+                  </rdf:Description>
+                </rdf:RDF>
+              </COPASI>
+            </annotation>
+          </annotationList>
+        </nonrdfAnnotation>
+        <nonrdfAnnotation vcid="BioModel(Araujo2016_orig)">
+          <freetext>&lt;html&gt;
+  &lt;head&gt;
+    
+  &lt;/head&gt;
+  &lt;body xmlns="http://www.w3.org/1999/xhtml"&gt;
+    &lt;div class="dc:title"&gt;
+      Araujo2016 - Positive feedback in Cdk1 signalling keeps mitotic duration 
+      short and constant
+    &lt;/div&gt;
+    &lt;div class="dc:bibliographicCitation"&gt;
+      &lt;p&gt;
+        This model is described in the article:
+      &lt;/p&gt;
+      &lt;div class="bibo:title"&gt;
+        &lt;a href="http://identifiers.org/pubmed/27768873" title="Access to this publication"&gt;Positive 
+        Feedback Keeps Duration of Mitosis Temporally Insulated from Upstream 
+        Cell-Cycle Events.&lt;/a&gt;
+      &lt;/div&gt;
+      &lt;div class="bibo:authorList"&gt;
+        Araujo AR, Gelens L, Sheriff RS, Santos SD.
+      &lt;/div&gt;
+      &lt;div class="bibo:Journal"&gt;
+        Mol. Cell 2016 Oct; 64(2): 362-375
+      &lt;/div&gt;
+      &lt;p&gt;
+        Abstract:
+      &lt;/p&gt;
+      &lt;div class="bibo:abstract"&gt;
+        &lt;p&gt;
+          Cell division is characterized by a sequence of events by which a 
+          cell gives rise to two daughter cells. Quantitative measurements of 
+          cell-cycle dynamics in single cells showed that despite variability 
+          in G1-, S-, and G2 phases, duration of mitosis is short and 
+          remarkably constant. Surprisingly, there is no correlation between 
+          cell-cycle length and mitotic duration, suggesting that mitosis is 
+          temporally insulated from variability in earlier cell-cycle phases. 
+          By combining live cell imaging and computational modeling, we showed 
+          that positive feedback is the molecular mechanism underlying the 
+          temporal insulation of mitosis. Perturbing positive feedback gave 
+          rise to a sluggish, variable entry and progression through mitosis 
+          and uncoupled duration of mitosis from variability in cell cycle 
+          length. We show that positive feedback is important to keep mitosis 
+          short, constant, and temporally insulated and anticipate it might be 
+          a commonly used regulatory strategy to create modularity in other 
+          biological systems.
+        &lt;/p&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+    &lt;div class="dc:publisher"&gt;
+      &lt;p&gt;
+        This model is hosted on &lt;a href="http://www.ebi.ac.uk/biomodels/"&gt;BioModels 
+        Database&lt;/a&gt; and identified by: &lt;a href="http://identifiers.org/biomodels.db/BIOMD0000000657"&gt;BIOMD0000000657&lt;/a&gt;.
+      &lt;/p&gt;
+      &lt;p&gt;
+        To cite BioModels Database, please use: &lt;a href="http://identifiers.org/pubmed/25414348" target="_blank"&gt;Chelliah 
+        V et al. BioModels: ten-year anniversary. Nucl. Acids Res. 2015, 
+        43(Database issue):D542-8&lt;/a&gt;.
+      &lt;/p&gt;
+    &lt;/div&gt;
+    &lt;div class="dc:license"&gt;
+      &lt;p&gt;
+        To the extent possible under law, all copyright and related or 
+        neighbouring rights to this encoded model have been dedicated to the 
+        public domain worldwide. Please refer to &lt;a href="http://creativecommons.org/publicdomain/zero/1.0/" title="Access to: CC0 1.0 Universal (CC0 1.0), Public Domain Dedication"&gt;CC0 
+        Public Domain Dedication&lt;/a&gt; for more information.
+      &lt;/p&gt;
+    &lt;/div&gt;
+  &lt;/body&gt;
+&lt;/html&gt;</freetext>
+          <annotationList>
+            <annotation>
+              <COPASI xmlns="http://www.copasi.org/static/sbml">
+                <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:CopasiMT="http://www.copasi.org/RDF/MiriamTerms#" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:vCard="http://www.w3.org/2001/vcard-rdf/3.0#">
+                  <rdf:Description rdf:about="#COPASI0">
+                    <dcterms:bibliographicCitation>
+                      <rdf:Description>
+                        <CopasiMT:isDescribedBy rdf:resource="urn:miriam:pubmed:27768873" />
+                      </rdf:Description>
+                    </dcterms:bibliographicCitation>
+                    <dcterms:created>
+                      <rdf:Description>
+                        <dcterms:W3CDTF>2017-07-19T14:13:53Z</dcterms:W3CDTF>
+                      </rdf:Description>
+                    </dcterms:created>
+                    <dcterms:creator>
+                      <rdf:Description>
+                        <vCard:EMAIL>sheriff@ebi.ac.uk</vCard:EMAIL>
+                        <vCard:N>
+                          <rdf:Description>
+                            <vCard:Family>Sheriff</vCard:Family>
+                            <vCard:Given>Rahuman</vCard:Given>
+                          </rdf:Description>
+                        </vCard:N>
+                        <vCard:ORG>
+                          <rdf:Description>
+                            <vCard:Orgname>EMBL-EBI</vCard:Orgname>
+                          </rdf:Description>
+                        </vCard:ORG>
+                      </rdf:Description>
+                    </dcterms:creator>
+                    <CopasiMT:hasPart rdf:resource="urn:miriam:biomodels.teddy:TEDDY_0000035" />
+                    <CopasiMT:hasPart rdf:resource="urn:miriam:pw:PW:0000092" />
+                  </rdf:Description>
+                </rdf:RDF>
+              </COPASI>
+            </annotation>
+          </annotationList>
+        </nonrdfAnnotation>
+        <nonrdfAnnotation vcid="ReactionStep(R4)">
+          <annotationList>
+            <annotation>
+              <COPASI xmlns="http://www.copasi.org/static/sbml">
+                <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:dcterms="http://purl.org/dc/terms/">
+                  <rdf:Description rdf:about="#COPASI26">
+                    <dcterms:created>
+                      <rdf:Description>
+                        <dcterms:W3CDTF>2017-07-20T15:39:33Z</dcterms:W3CDTF>
+                      </rdf:Description>
+                    </dcterms:created>
+                  </rdf:Description>
+                </rdf:RDF>
+              </COPASI>
+            </annotation>
+          </annotationList>
+        </nonrdfAnnotation>
+        <nonrdfAnnotation vcid="Structure(Cell)">
+          <annotationList>
+            <annotation>
+              <COPASI xmlns="http://www.copasi.org/static/sbml">
+                <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:dcterms="http://purl.org/dc/terms/">
+                  <rdf:Description rdf:about="#COPASI1">
+                    <dcterms:created>
+                      <rdf:Description>
+                        <dcterms:W3CDTF>2017-07-20T16:17:30Z</dcterms:W3CDTF>
+                      </rdf:Description>
+                    </dcterms:created>
+                  </rdf:Description>
+                </rdf:RDF>
+              </COPASI>
+            </annotation>
+          </annotationList>
+        </nonrdfAnnotation>
+      </nonrdfAnnotationList>
+      <uriBindingList>
+        <uriBinding uri="http://www.sbml.org/sbml/level2/version4/COPASI0" vcid="BioModel(Araujo2016_orig)" />
+        <uriBinding uri="http://www.sbml.org/sbml/level2/version4/COPASI1" vcid="Structure(Cell)" />
+        <uriBinding uri="http://www.sbml.org/sbml/level2/version4/COPASI28" vcid="ReactionStep(R6)" />
+        <uriBinding uri="http://www.sbml.org/sbml/level2/version4/COPASI26" vcid="ReactionStep(R4)" />
+        <uriBinding uri="http://www.sbml.org/sbml/level2/version4/COPASI3" vcid="Species(APC)" />
+        <uriBinding uri="http://www.sbml.org/sbml/level2/version4/COPASI2" vcid="Species(Cdk1CycB)" />
+        <uriBinding uri="http://www.sbml.org/sbml/level2/version4/COPASI27" vcid="ReactionStep(R5)" />
+        <uriBinding uri="http://www.sbml.org/sbml/level2/version4/COPASI4" vcid="Species(CycB)" />
+      </uriBindingList>
+    </vcmetadata>
+  </BioModel>
+</vcml>
+

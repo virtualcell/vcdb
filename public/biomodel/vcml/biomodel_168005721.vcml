@@ -1,0 +1,216 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--This biomodel was generated in VCML Version Alpha_Version_7.4.0_build_87-->
+<vcml xmlns="http://sourceforge.net/projects/vcell/vcml" Version="Alpha_Version_7.4.0_build_87">
+  <BioModel Name="TF1 model complex">
+    <Model Name="model">
+      <Compound Name="s0" />
+      <Compound Name="s1" />
+      <Compound Name="s2" />
+      <Feature Name="c0" KeyValue="168005423" />
+      <LocalizedCompound Name="TF1" CompoundRef="s0" Structure="c0" OverrideName="true" KeyValue="168005425" />
+      <LocalizedCompound Name="TF2" CompoundRef="s1" Structure="c0" OverrideName="true" KeyValue="168005426" />
+      <LocalizedCompound Name="Opt" CompoundRef="s2" Structure="c0" OverrideName="true" KeyValue="168005427" />
+      <SimpleReaction Structure="c0" Name="Rx synthesis" Reversible="true" FluxOption="MolecularOnly" KeyValue="168005428">
+        <Product LocalizedCompoundRef="TF2" Stoichiometry="1" KeyValue="168005429" />
+        <Kinetics KineticsType="GeneralKinetics">
+          <Parameter Name="J" Role="reaction rate" Unit="uM.s-1">Vr</Parameter>
+          <Parameter Name="Vr" Role="user defined" Unit="uM.s-1">1.0E-7</Parameter>
+        </Kinetics>
+      </SimpleReaction>
+      <SimpleReaction Structure="c0" Name="turnover" Reversible="true" FluxOption="MolecularOnly" KeyValue="168005430">
+        <Reactant LocalizedCompoundRef="TF2" Stoichiometry="1" KeyValue="168005431" />
+        <Kinetics KineticsType="GeneralKinetics">
+          <Parameter Name="J" Role="reaction rate" Unit="uM.s-1">(kt * R)</Parameter>
+          <Parameter Name="R" Role="user defined" Unit="tbd">1.0E-4</Parameter>
+          <Parameter Name="kt" Role="user defined" Unit="tbd">1.0E-4</Parameter>
+        </Kinetics>
+      </SimpleReaction>
+      <SimpleReaction Structure="c0" Name="binding" Reversible="true" FluxOption="MolecularOnly" KeyValue="168005432">
+        <Reactant LocalizedCompoundRef="TF1" Stoichiometry="1" KeyValue="168005433" />
+        <Reactant LocalizedCompoundRef="TF2" Stoichiometry="1" KeyValue="168005434" />
+        <Product LocalizedCompoundRef="Opt" Stoichiometry="1" KeyValue="168005435" />
+        <Kinetics KineticsType="GeneralKinetics">
+          <Parameter Name="J" Role="reaction rate" Unit="uM.s-1">((kon * Tf1 * TF2) - (koff * Opt))</Parameter>
+          <Parameter Name="koff" Role="user defined" Unit="s-1">0.001</Parameter>
+          <Parameter Name="kon" Role="user defined" Unit="tbd">1.0</Parameter>
+          <Parameter Name="Tf1" Role="user defined" Unit="tbd">0.0</Parameter>
+        </Kinetics>
+      </SimpleReaction>
+      <SimpleReaction Structure="c0" Name="endocytosis" Reversible="true" FluxOption="MolecularOnly" KeyValue="168005436">
+        <Reactant LocalizedCompoundRef="Opt" Stoichiometry="1" KeyValue="168005437" />
+        <Kinetics KineticsType="GeneralKinetics">
+          <Parameter Name="J" Role="reaction rate" Unit="uM.s-1">(ke * c)</Parameter>
+          <Parameter Name="c" Role="user defined" Unit="tbd">0.001</Parameter>
+          <Parameter Name="ke" Role="user defined" Unit="tbd">0.0</Parameter>
+        </Kinetics>
+      </SimpleReaction>
+      <Diagram Name="c0" Structure="c0">
+        <SimpleReactionShape NodeReferenceModeAttrTag="full" SimpleReactionRef="turnover" LocationX="131" LocationY="169" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="TF1" LocationX="54" LocationY="62" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="full" SimpleReactionRef="binding" LocationX="143" LocationY="74" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="TF2" LocationX="80" LocationY="158" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="full" SimpleReactionRef="Rx synthesis" LocationX="32" LocationY="164" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="Opt" LocationX="240" LocationY="91" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="full" SimpleReactionRef="endocytosis" LocationX="269" LocationY="134" />
+      </Diagram>
+      <Version Name="model" KeyValue="168005418" BranchId="167941384" Archived="0" Date="05-Oct-2019 16:58:42" FromVersionable="false">
+        <Owner Name="t_newman001" Identifier="167863377" />
+        <GroupAccess Type="1" />
+      </Version>
+      <ModelUnitSystem VolumeSubstanceUnit="uM.um3" MembraneSubstanceUnit="molecules" LumpedReactionSubstanceUnit="molecules" VolumeUnit="um3" AreaUnit="um2" LengthUnit="um" TimeUnit="s" />
+    </Model>
+    <SimulationSpec Name="Application1" Stochastic="false" UseConcentration="true" RuleBased="false" MassConservationModelReduction="true" InsufficientIterations="false" InsufficientMaxMolecules="false">
+      <NetworkConstraints RbmMaxIteration="3" RbmMaxMoleculesPerSpecies="10" RbmSpeciesLimit="800" RbmReactionsLimit="2500" />
+      <Annotation />
+      <Geometry Name="non-spatial" Dimension="0">
+        <Extent X="10.0" Y="10.0" Z="10.0" />
+        <Origin X="0.0" Y="0.0" Z="0.0" />
+        <SubVolume Name="Compartment" Handle="0" Type="Compartmental" KeyValue="168005414" />
+        <Version Name="non-spatial" KeyValue="168005410" BranchId="168005411" Archived="0" Date="05-Oct-2019 16:58:42" FromVersionable="false">
+          <Owner Name="t_newman001" Identifier="167863377" />
+          <GroupAccess Type="1" />
+        </Version>
+      </Geometry>
+      <GeometryContext>
+        <FeatureMapping Feature="c0" GeometryClass="Compartment" SubVolume="Compartment" Size="1000.0">
+          <BoundariesTypes Xm="Flux" Xp="Flux" Ym="Flux" Yp="Flux" Zm="Flux" Zp="Flux" />
+        </FeatureMapping>
+      </GeometryContext>
+      <ReactionContext>
+        <LocalizedCompoundSpec LocalizedCompoundRef="TF1" ForceConstant="true" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>0.03</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="TF2" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>0.001</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="Opt" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>0.0</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <ReactionSpec ReactionStepRef="Rx synthesis" ReactionMapping="included" />
+        <ReactionSpec ReactionStepRef="turnover" ReactionMapping="included" />
+        <ReactionSpec ReactionStepRef="binding" ReactionMapping="included" />
+        <ReactionSpec ReactionStepRef="endocytosis" ReactionMapping="included" />
+      </ReactionContext>
+      <MathDescription Name="Application1_generated">
+        <Constant Name="_F_">96480.0</Constant>
+        <Constant Name="_F_nmol_">9.648E-5</Constant>
+        <Constant Name="_K_GHK_">1.0E-9</Constant>
+        <Constant Name="_N_pmol_">6.02E11</Constant>
+        <Constant Name="_PI_">3.141592653589793</Constant>
+        <Constant Name="_R_">8314.0</Constant>
+        <Constant Name="_T_">300.0</Constant>
+        <Constant Name="c">0.001</Constant>
+        <Constant Name="K_millivolts_per_volt">1000.0</Constant>
+        <Constant Name="ke">0.0</Constant>
+        <Constant Name="KMOLE">(1.0 / 602.0)</Constant>
+        <Constant Name="koff">0.001</Constant>
+        <Constant Name="kon">1.0</Constant>
+        <Constant Name="kt">1.0E-4</Constant>
+        <Constant Name="Opt_init_uM">0.0</Constant>
+        <Constant Name="R">1.0E-4</Constant>
+        <Constant Name="Size_c0">1000.0</Constant>
+        <Constant Name="Tf1">0.0</Constant>
+        <Constant Name="TF1_init_uM">0.03</Constant>
+        <Constant Name="TF2_init_uM">0.001</Constant>
+        <Constant Name="Vr">1.0E-7</Constant>
+        <VolumeVariable Name="Opt" Domain="Compartment" />
+        <VolumeVariable Name="TF2" Domain="Compartment" />
+        <Function Name="J_binding" Domain="Compartment">((kon * Tf1 * TF2) - (koff * Opt))</Function>
+        <Function Name="J_endocytosis" Domain="Compartment">(ke * c)</Function>
+        <Function Name="J_Rx_synthesis" Domain="Compartment">Vr</Function>
+        <Function Name="J_turnover" Domain="Compartment">(kt * R)</Function>
+        <Function Name="TF1" Domain="Compartment">TF1_init_uM</Function>
+        <CompartmentSubDomain Name="Compartment">
+          <BoundaryType Boundary="Xm" Type="Value" />
+          <BoundaryType Boundary="Xp" Type="Value" />
+          <BoundaryType Boundary="Ym" Type="Value" />
+          <BoundaryType Boundary="Yp" Type="Value" />
+          <BoundaryType Boundary="Zm" Type="Value" />
+          <BoundaryType Boundary="Zp" Type="Value" />
+          <OdeEquation Name="TF2" SolutionType="Unknown">
+            <Rate>(J_Rx_synthesis - J_turnover - J_binding)</Rate>
+            <Initial>TF2_init_uM</Initial>
+          </OdeEquation>
+          <OdeEquation Name="Opt" SolutionType="Unknown">
+            <Rate>(J_binding - J_endocytosis)</Rate>
+            <Initial>Opt_init_uM</Initial>
+          </OdeEquation>
+        </CompartmentSubDomain>
+        <Version Name="Application1_generated" KeyValue="168005415" BranchId="168005416" Archived="0" Date="05-Oct-2019 16:58:42" FromVersionable="false">
+          <Owner Name="t_newman001" Identifier="167863377" />
+          <GroupAccess Type="1" />
+        </Version>
+      </MathDescription>
+      <Simulation Name="Simulation0">
+        <SolverTaskDescription TaskType="Unsteady" UseSymbolicJacobian="false" Solver="Combined Stiff Solver (IDA/CVODE)">
+          <TimeBound StartTime="0.0" EndTime="1.0" />
+          <TimeStep DefaultTime="0.1" MinTime="1.0E-8" MaxTime="1.0" />
+          <ErrorTolerance Absolut="1.0E-9" Relative="1.0E-9" />
+          <OutputOptions KeepEvery="1" KeepAtMost="1000" />
+          <NumberProcessors>1</NumberProcessors>
+        </SolverTaskDescription>
+        <MathOverrides />
+        <Version Name="Simulation0" KeyValue="168005450" BranchId="168005451" Archived="0" Date="05-Oct-2019 16:58:42" FromVersionable="false">
+          <Owner Name="t_newman001" Identifier="167863377" />
+          <GroupAccess Type="1" />
+        </Version>
+      </Simulation>
+      <Simulation Name="Simulation1">
+        <SolverTaskDescription TaskType="Unsteady" UseSymbolicJacobian="false" Solver="Combined Stiff Solver (IDA/CVODE)">
+          <TimeBound StartTime="0.0" EndTime="3600.0" />
+          <TimeStep DefaultTime="0.1" MinTime="1.0E-8" MaxTime="1.0" />
+          <ErrorTolerance Absolut="1.0E-9" Relative="1.0E-9" />
+          <OutputOptions KeepEvery="1" KeepAtMost="1000" />
+          <NumberProcessors>1</NumberProcessors>
+        </SolverTaskDescription>
+        <MathOverrides />
+        <Version Name="Simulation1" KeyValue="168005715" BranchId="168005716" Archived="0" Date="05-Oct-2019 17:08:46" FromVersionable="false">
+          <Owner Name="t_newman001" Identifier="167863377" />
+          <GroupAccess Type="1" />
+        </Version>
+      </Simulation>
+      <Simulation Name="Vary">
+        <SolverTaskDescription TaskType="Unsteady" UseSymbolicJacobian="false" Solver="Combined Stiff Solver (IDA/CVODE)">
+          <TimeBound StartTime="0.0" EndTime="3600.0" />
+          <TimeStep DefaultTime="0.1" MinTime="1.0E-8" MaxTime="1.0" />
+          <ErrorTolerance Absolut="1.0E-9" Relative="1.0E-9" />
+          <OutputOptions KeepEvery="1" KeepAtMost="1000" />
+          <NumberProcessors>1</NumberProcessors>
+        </SolverTaskDescription>
+        <MathOverrides>
+          <Constant Name="TF1_init_uM" ConstantArraySpec="1001">1.0E-4 to 0.1, log, 4 values</Constant>
+        </MathOverrides>
+        <Version Name="Vary" KeyValue="168005718" BranchId="168005719" Archived="0" Date="05-Oct-2019 17:08:46" FromVersionable="false">
+          <Owner Name="t_newman001" Identifier="167863377" />
+          <GroupAccess Type="1" />
+        </Version>
+      </Simulation>
+      <Version Name="Application1" KeyValue="168005439" BranchId="168005440" Archived="0" Date="05-Oct-2019 16:58:42" FromVersionable="false">
+        <Owner Name="t_newman001" Identifier="167863377" />
+        <GroupAccess Type="1" />
+      </Version>
+      <MicroscopeMeasurement Name="fluor">
+        <ConvolutionKernel Type="ProjectionZKernel" />
+      </MicroscopeMeasurement>
+    </SimulationSpec>
+    <Version Name="TF1 model complex" KeyValue="168005721" BranchId="167941406" Archived="0" Date="05-Oct-2019 17:08:47" FromVersionable="false">
+      <Owner Name="t_newman001" Identifier="167863377" />
+      <GroupAccess Type="1" />
+    </Version>
+    <pathwayModel>
+      <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:bp="http://www.biopax.org/release/biopax-level3.owl#" version="3.0" />
+    </pathwayModel>
+    <relationshipModel>
+      <RMNS version="3.0" />
+    </relationshipModel>
+    <vcmetadata>
+      <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" />
+      <nonrdfAnnotationList />
+      <uriBindingList />
+    </vcmetadata>
+  </BioModel>
+</vcml>
+

@@ -1,0 +1,1024 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--This biomodel was generated in VCML Version Alpha_Version_7.4.0_build_87-->
+<vcml xmlns="http://sourceforge.net/projects/vcell/vcml" Version="Alpha_Version_7.4.0_build_87">
+  <BioModel Name="aCalcium-ER_flux_Falkenburger_etal_2013">
+    <Annotation>cloned from 'aCalcium-ER_flux_Falkenburger_etal_2013' owned by user ModelBrick
+cloned from 'FalkenburgerDicksonHille2013' owned by user hillelab
+cloned from 'FDH2011' owned by user bfalken
+model published as Falkenburger, Jensen, Hille, Journal of General Physiology, Feb. 2010. 
+Application of Oxo-M is from t=100-130 s.
+Activation of VSP is from t =100-102 s.</Annotation>
+    <Model Name="unnamed">
+      <Annotation>cloned from 'unnamed' owned by user ModelBrick
+cloned from 'unnamed' owned by user hillelab
+cloned from 'unnamed' owned by user bfalken
+cloned from 'unnamed' owned by user hillelab
+cloned from 'unnamed' owned by user bfalken
+cloned from 'unnamed' owned by user hillelab
+cloned from 'unnamed' owned by user bfalken
+cloned from 'unnamed' owned by user hillelab</Annotation>
+      <ModelParameters>
+        <Parameter Name="KD_act_Ca_IP3R" Role="user defined" Unit="uM">0.2</Parameter>
+        <Parameter Name="KD_IP3_IP3R" Role="user defined" Unit="uM">0.1</Parameter>
+        <Parameter Name="IP3R" Role="user defined" Unit="1">pow((h * IP3_C * Ca_C / (IP3_C + KD_IP3_IP3R) / (Ca_C + KD_act_Ca_IP3R)),3.0)</Parameter>
+        <Parameter Name="h" Role="user defined" Unit="1">(noninactiveIP3R / (noninactiveIP3R + inactiveIP3R))</Parameter>
+      </ModelParameters>
+      <Compound Name="s0" />
+      <Compound Name="Ca" />
+      <Compound Name="h" />
+      <Compound Name="IP3" />
+      <Feature Name="Ca_store" KeyValue="211210460" />
+      <Feature Name="C" KeyValue="211210462" />
+      <Membrane InsideFeature="Ca_store" OutsideFeature="C" PositiveFeature="Ca_store" NegativeFeature="C" MembraneVoltage="Voltage_ERM" Name="ERM" KeyValue="211210464" />
+      <LocalizedCompound Name="inactiveIP3R" CompoundRef="s0" Structure="ERM" OverrideName="true" KeyValue="211210466">
+        <SpeciesPattern>
+          <MolecularTypePattern Index="1">
+            <MolecularType Name="IP3R" />
+            <ComponentPattern MolecularComponent="act" ComponentStatePattern="inact" BondType="-" />
+          </MolecularTypePattern>
+        </SpeciesPattern>
+      </LocalizedCompound>
+      <LocalizedCompound Name="Ca_C" CompoundRef="Ca" Structure="C" OverrideName="true" KeyValue="211210467">
+        <SpeciesPattern>
+          <MolecularTypePattern Index="1">
+            <MolecularType Name="Ca" />
+          </MolecularTypePattern>
+        </SpeciesPattern>
+      </LocalizedCompound>
+      <LocalizedCompound Name="noninactiveIP3R" CompoundRef="h" Structure="ERM" OverrideName="true" KeyValue="211210468">
+        <SpeciesPattern>
+          <MolecularTypePattern Index="1">
+            <MolecularType Name="IP3R" />
+            <ComponentPattern MolecularComponent="act" ComponentStatePattern="act" BondType="-" />
+          </MolecularTypePattern>
+        </SpeciesPattern>
+      </LocalizedCompound>
+      <LocalizedCompound Name="Ca_Ca_store" CompoundRef="Ca" Structure="Ca_store" OverrideName="true" KeyValue="211210469">
+        <SpeciesPattern>
+          <MolecularTypePattern Index="1">
+            <MolecularType Name="Ca" />
+          </MolecularTypePattern>
+        </SpeciesPattern>
+      </LocalizedCompound>
+      <LocalizedCompound Name="IP3_C" CompoundRef="IP3" Structure="C" OverrideName="true" KeyValue="211210470">
+        <SpeciesPattern>
+          <MolecularTypePattern Index="1">
+            <MolecularType Name="IP3" />
+          </MolecularTypePattern>
+        </SpeciesPattern>
+      </LocalizedCompound>
+      <SimpleReaction Structure="ERM" Name="h_reaction_IP3Rinactivation" Reversible="true" FluxOption="MolecularOnly" KeyValue="211210471">
+        <Reactant LocalizedCompoundRef="noninactiveIP3R" Stoichiometry="1" KeyValue="211210472" />
+        <Product LocalizedCompoundRef="inactiveIP3R" Stoichiometry="1" KeyValue="211210473" />
+        <Modifier LocalizedCompoundRef="Ca_C" />
+        <Kinetics KineticsType="GeneralKinetics">
+          <Parameter Name="J" Role="reaction rate" Unit="molecules.um-2.s-1">- ((KD_inh_Ca_IP3R - ((Ca_C + KD_inh_Ca_IP3R) * h)) * Kon_Ca_IP3R)</Parameter>
+          <Parameter Name="I" Role="inward current density" Unit="pA.um-2">0.0</Parameter>
+          <Parameter Name="netValence" Role="net charge valence" Unit="1">1.0</Parameter>
+          <Parameter Name="KD_inh_Ca_IP3R" Role="user defined" Unit="uM">0.2</Parameter>
+          <Parameter Name="Kon_Ca_IP3R" Role="user defined" Unit="molecules.um-2.uM-1.s-1">2.7</Parameter>
+        </Kinetics>
+      </SimpleReaction>
+      <FluxStep Name="ER_leak_flux" Structure="ERM" Reversible="true" FluxOption="MolecularOnly" KeyValue="211210475">
+        <Reactant LocalizedCompoundRef="Ca_C" Stoichiometry="1" KeyValue="211210476" />
+        <Product LocalizedCompoundRef="Ca_Ca_store" Stoichiometry="1" KeyValue="211210477" />
+        <Kinetics KineticsType="GeneralKinetics">
+          <Parameter Name="J" Role="reaction rate" Unit="uM.um.s-1">- (vL * (1.0 - (Ca_C / Ca_Ca_store)))</Parameter>
+          <Parameter Name="I" Role="inward current density" Unit="pA.um-2">0.0</Parameter>
+          <Parameter Name="netValence" Role="net charge valence" Unit="1">1.0</Parameter>
+          <Parameter Name="vL" Role="user defined" Unit="uM.um.s-1">0.0</Parameter>
+        </Kinetics>
+      </FluxStep>
+      <FluxStep Name="IP3R_flux" Structure="ERM" Reversible="true" FluxOption="MolecularOnly" KeyValue="211210478">
+        <Reactant LocalizedCompoundRef="Ca_C" Stoichiometry="1" KeyValue="211210479" />
+        <Product LocalizedCompoundRef="Ca_Ca_store" Stoichiometry="1" KeyValue="211210480" />
+        <Modifier LocalizedCompoundRef="IP3_C" />
+        <Kinetics KineticsType="GeneralKinetics">
+          <Parameter Name="J" Role="reaction rate" Unit="uM.um.s-1">- (Jmax2 * (1.0 - (Ca_C / Ca_Ca_store)) * pow((h * IP3_C * Ca_C / (IP3_C + KD_IP3_IP3R) / (Ca_C + KD_act_Ca_IP3R)),3.0))</Parameter>
+          <Parameter Name="I" Role="inward current density" Unit="pA.um-2">0.0</Parameter>
+          <Parameter Name="netValence" Role="net charge valence" Unit="1">1.0</Parameter>
+          <Parameter Name="Jmax2" Role="user defined" Unit="uM.um.s-1">200.0</Parameter>
+        </Kinetics>
+      </FluxStep>
+      <FluxStep Name="SERCA_flux" Structure="ERM" Reversible="true" FluxOption="MolecularOnly" KeyValue="211210482">
+        <Reactant LocalizedCompoundRef="Ca_C" Stoichiometry="1" KeyValue="211210483" />
+        <Product LocalizedCompoundRef="Ca_Ca_store" Stoichiometry="1" KeyValue="211210484" />
+        <Kinetics KineticsType="GeneralKinetics">
+          <Parameter Name="J" Role="reaction rate" Unit="uM.um.s-1">(vP * (Ca_C ^ 2.0) / ((kP ^ 2.0) + (Ca_C ^ 2.0)))</Parameter>
+          <Parameter Name="I" Role="inward current density" Unit="pA.um-2">0.0</Parameter>
+          <Parameter Name="netValence" Role="net charge valence" Unit="1">1.0</Parameter>
+          <Parameter Name="kP" Role="user defined" Unit="uM">1.3</Parameter>
+          <Parameter Name="vP" Role="user defined" Unit="uM.um.s-1">0.3</Parameter>
+        </Kinetics>
+      </FluxStep>
+      <RbmModelContainer>
+        <MolecularTypeList>
+          <MolecularType Name="IP3" AnchorAll="true" />
+          <MolecularType Name="Ca" AnchorAll="true" />
+          <MolecularType Name="IP3R" AnchorAll="false">
+            <Anchor Structure="ERM" />
+            <MolecularComponent Name="act" Index="1">
+              <AllowableState Name="inact" />
+              <AllowableState Name="act" />
+            </MolecularComponent>
+          </MolecularType>
+        </MolecularTypeList>
+        <RbmObservableList>
+          <Observable Name="O0_IP3_tot" ObservableType="Molecules" Sequence="Multimolecular" LengthEqual="2" LengthGreater="1" Structure="Ca_store">
+            <SpeciesPattern>
+              <MolecularTypePattern Index="1">
+                <MolecularType Name="IP3" />
+              </MolecularTypePattern>
+            </SpeciesPattern>
+          </Observable>
+          <Observable Name="O0_Ca_tot" ObservableType="Molecules" Sequence="Multimolecular" LengthEqual="2" LengthGreater="1" Structure="Ca_store">
+            <SpeciesPattern>
+              <MolecularTypePattern Index="1">
+                <MolecularType Name="Ca" />
+              </MolecularTypePattern>
+            </SpeciesPattern>
+          </Observable>
+          <Observable Name="O0_IP3R_tot" ObservableType="Molecules" Sequence="Multimolecular" LengthEqual="2" LengthGreater="1" Structure="Ca_store">
+            <SpeciesPattern>
+              <MolecularTypePattern Index="1">
+                <MolecularType Name="IP3R" />
+                <ComponentPattern MolecularComponent="act" Any="true" BondType="?" />
+              </MolecularTypePattern>
+            </SpeciesPattern>
+          </Observable>
+        </RbmObservableList>
+      </RbmModelContainer>
+      <Diagram Name="EC" Structure="C">
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="Ca_C" LocationX="112" LocationY="85" />
+        <FluxReactionShape NodeReferenceModeAttrTag="full" FluxReactionRef="SERCA_flux" LocationX="73" LocationY="34" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="full" SimpleReactionRef="h_reaction_IP3Rinactivation" LocationX="83" LocationY="175" />
+        <FluxReactionShape NodeReferenceModeAttrTag="full" FluxReactionRef="ER_leak_flux" LocationX="82" LocationY="79" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="noninactiveIP3R" LocationX="40" LocationY="222" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="Ca_Ca_store" LocationX="106" LocationY="85" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="inactiveIP3R" LocationX="128" LocationY="221" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="IP3_C" LocationX="141" LocationY="168" />
+        <FluxReactionShape NodeReferenceModeAttrTag="full" FluxReactionRef="IP3R_flux" LocationX="73" LocationY="119" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="molecule" SimpleReactionRef="h_reaction_IP3Rinactivation" LocationX="83" LocationY="175" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="IP3_C" LocationX="141" LocationY="168" />
+        <FluxReactionShape NodeReferenceModeAttrTag="molecule" FluxReactionRef="IP3R_flux" LocationX="73" LocationY="119" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="noninactiveIP3R" LocationX="40" LocationY="222" />
+        <FluxReactionShape NodeReferenceModeAttrTag="molecule" FluxReactionRef="ER_leak_flux" LocationX="82" LocationY="79" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="inactiveIP3R" LocationX="128" LocationY="221" />
+        <FluxReactionShape NodeReferenceModeAttrTag="molecule" FluxReactionRef="SERCA_flux" LocationX="73" LocationY="34" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="Ca_Ca_store" LocationX="106" LocationY="85" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="Ca_C" LocationX="112" LocationY="85" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="rule" SimpleReactionRef="h_reaction_IP3Rinactivation" LocationX="83" LocationY="175" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="IP3_C" LocationX="141" LocationY="168" />
+        <FluxReactionShape NodeReferenceModeAttrTag="rule" FluxReactionRef="IP3R_flux" LocationX="73" LocationY="119" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="noninactiveIP3R" LocationX="40" LocationY="222" />
+        <FluxReactionShape NodeReferenceModeAttrTag="rule" FluxReactionRef="ER_leak_flux" LocationX="82" LocationY="79" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="inactiveIP3R" LocationX="128" LocationY="221" />
+        <FluxReactionShape NodeReferenceModeAttrTag="rule" FluxReactionRef="SERCA_flux" LocationX="73" LocationY="34" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="Ca_Ca_store" LocationX="106" LocationY="85" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="Ca_C" LocationX="112" LocationY="85" />
+      </Diagram>
+      <Diagram Name="ERM" Structure="ERM">
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="Ca_C" LocationX="112" LocationY="85" />
+        <FluxReactionShape NodeReferenceModeAttrTag="full" FluxReactionRef="SERCA_flux" LocationX="73" LocationY="34" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="full" SimpleReactionRef="h_reaction_IP3Rinactivation" LocationX="83" LocationY="175" />
+        <FluxReactionShape NodeReferenceModeAttrTag="full" FluxReactionRef="ER_leak_flux" LocationX="82" LocationY="79" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="noninactiveIP3R" LocationX="40" LocationY="222" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="Ca_Ca_store" LocationX="106" LocationY="85" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="inactiveIP3R" LocationX="128" LocationY="221" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="IP3_C" LocationX="141" LocationY="168" />
+        <FluxReactionShape NodeReferenceModeAttrTag="full" FluxReactionRef="IP3R_flux" LocationX="73" LocationY="119" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="molecule" SimpleReactionRef="h_reaction_IP3Rinactivation" LocationX="83" LocationY="175" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="IP3_C" LocationX="141" LocationY="168" />
+        <FluxReactionShape NodeReferenceModeAttrTag="molecule" FluxReactionRef="IP3R_flux" LocationX="73" LocationY="119" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="noninactiveIP3R" LocationX="40" LocationY="222" />
+        <FluxReactionShape NodeReferenceModeAttrTag="molecule" FluxReactionRef="ER_leak_flux" LocationX="82" LocationY="79" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="inactiveIP3R" LocationX="128" LocationY="221" />
+        <FluxReactionShape NodeReferenceModeAttrTag="molecule" FluxReactionRef="SERCA_flux" LocationX="73" LocationY="34" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="Ca_Ca_store" LocationX="106" LocationY="85" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="Ca_C" LocationX="112" LocationY="85" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="rule" SimpleReactionRef="h_reaction_IP3Rinactivation" LocationX="83" LocationY="175" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="IP3_C" LocationX="141" LocationY="168" />
+        <FluxReactionShape NodeReferenceModeAttrTag="rule" FluxReactionRef="IP3R_flux" LocationX="73" LocationY="119" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="noninactiveIP3R" LocationX="40" LocationY="222" />
+        <FluxReactionShape NodeReferenceModeAttrTag="rule" FluxReactionRef="ER_leak_flux" LocationX="82" LocationY="79" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="inactiveIP3R" LocationX="128" LocationY="221" />
+        <FluxReactionShape NodeReferenceModeAttrTag="rule" FluxReactionRef="SERCA_flux" LocationX="73" LocationY="34" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="Ca_Ca_store" LocationX="106" LocationY="85" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="Ca_C" LocationX="112" LocationY="85" />
+      </Diagram>
+      <Diagram Name="Ca_store" Structure="Ca_store">
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="Ca_C" LocationX="112" LocationY="85" />
+        <FluxReactionShape NodeReferenceModeAttrTag="full" FluxReactionRef="SERCA_flux" LocationX="73" LocationY="34" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="full" SimpleReactionRef="h_reaction_IP3Rinactivation" LocationX="83" LocationY="175" />
+        <FluxReactionShape NodeReferenceModeAttrTag="full" FluxReactionRef="ER_leak_flux" LocationX="82" LocationY="79" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="noninactiveIP3R" LocationX="40" LocationY="222" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="Ca_Ca_store" LocationX="106" LocationY="85" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="inactiveIP3R" LocationX="128" LocationY="221" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="IP3_C" LocationX="141" LocationY="168" />
+        <FluxReactionShape NodeReferenceModeAttrTag="full" FluxReactionRef="IP3R_flux" LocationX="73" LocationY="119" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="molecule" SimpleReactionRef="h_reaction_IP3Rinactivation" LocationX="83" LocationY="175" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="IP3_C" LocationX="141" LocationY="168" />
+        <FluxReactionShape NodeReferenceModeAttrTag="molecule" FluxReactionRef="IP3R_flux" LocationX="73" LocationY="119" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="noninactiveIP3R" LocationX="40" LocationY="222" />
+        <FluxReactionShape NodeReferenceModeAttrTag="molecule" FluxReactionRef="ER_leak_flux" LocationX="82" LocationY="79" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="inactiveIP3R" LocationX="128" LocationY="221" />
+        <FluxReactionShape NodeReferenceModeAttrTag="molecule" FluxReactionRef="SERCA_flux" LocationX="73" LocationY="34" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="Ca_Ca_store" LocationX="106" LocationY="85" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="Ca_C" LocationX="112" LocationY="85" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="rule" SimpleReactionRef="h_reaction_IP3Rinactivation" LocationX="83" LocationY="175" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="IP3_C" LocationX="141" LocationY="168" />
+        <FluxReactionShape NodeReferenceModeAttrTag="rule" FluxReactionRef="IP3R_flux" LocationX="73" LocationY="119" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="noninactiveIP3R" LocationX="40" LocationY="222" />
+        <FluxReactionShape NodeReferenceModeAttrTag="rule" FluxReactionRef="ER_leak_flux" LocationX="82" LocationY="79" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="inactiveIP3R" LocationX="128" LocationY="221" />
+        <FluxReactionShape NodeReferenceModeAttrTag="rule" FluxReactionRef="SERCA_flux" LocationX="73" LocationY="34" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="Ca_Ca_store" LocationX="106" LocationY="85" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="Ca_C" LocationX="112" LocationY="85" />
+      </Diagram>
+      <Version Name="unnamed" KeyValue="211210453" BranchId="211210454" Archived="0" Date="15-Jul-2021 14:26:01" FromVersionable="false">
+        <Owner Name="Sanyu" Identifier="210592880" />
+        <GroupAccess Type="1" />
+        <Annotation>cloned from 'unnamed' owned by user ModelBrick
+cloned from 'unnamed' owned by user hillelab
+cloned from 'unnamed' owned by user bfalken
+cloned from 'unnamed' owned by user hillelab
+cloned from 'unnamed' owned by user bfalken
+cloned from 'unnamed' owned by user hillelab
+cloned from 'unnamed' owned by user bfalken
+cloned from 'unnamed' owned by user hillelab</Annotation>
+      </Version>
+      <ModelUnitSystem VolumeSubstanceUnit="uM.um3" MembraneSubstanceUnit="molecules" LumpedReactionSubstanceUnit="molecules" VolumeUnit="um3" AreaUnit="um2" LengthUnit="um" TimeUnit="s" />
+    </Model>
+    <SimulationSpec Name="Application0" Stochastic="false" UseConcentration="true" RuleBased="false" MassConservationModelReduction="false" InsufficientIterations="false" InsufficientMaxMolecules="false">
+      <NetworkConstraints RbmMaxIteration="3" RbmMaxMoleculesPerSpecies="10" RbmSpeciesLimit="800" RbmReactionsLimit="2500">
+        <MaxStoichiometry MolecularType="IP3" Integer="100" />
+        <MaxStoichiometry MolecularType="Ca" Integer="100" />
+        <MaxStoichiometry MolecularType="IP3R" Integer="100" />
+      </NetworkConstraints>
+      <Annotation />
+      <Geometry Name="non-spatial" Dimension="0">
+        <Extent X="10.0" Y="10.0" Z="10.0" />
+        <Origin X="0.0" Y="0.0" Z="0.0" />
+        <SubVolume Name="Compartment" Handle="0" Type="Compartmental" KeyValue="211211490" />
+        <Version Name="non-spatial" KeyValue="211211486" BranchId="211211487" Archived="0" Date="15-Jul-2021 15:09:13" FromVersionable="false">
+          <Owner Name="Sanyu" Identifier="210592880" />
+          <GroupAccess Type="1" />
+        </Version>
+      </Geometry>
+      <GeometryContext>
+        <FeatureMapping Feature="Ca_store" GeometryClass="Compartment" SubVolume="Compartment" Size="50000.0">
+          <BoundariesTypes Xm="Flux" Xp="Flux" Ym="Flux" Yp="Flux" Zm="Flux" Zp="Flux" />
+        </FeatureMapping>
+        <FeatureMapping Feature="C" GeometryClass="Compartment" SubVolume="Compartment" Size="50000.0">
+          <BoundariesTypes Xm="Flux" Xp="Flux" Ym="Flux" Yp="Flux" Zm="Flux" Zp="Flux" />
+        </FeatureMapping>
+        <MembraneMapping Membrane="ERM" Size="6563.0" CalculateVoltage="false" SpecificCapacitance="1.0" InitialVoltage="0.0" GeometryClass="Compartment">
+          <BoundariesTypes Xm="Flux" Xp="Flux" Ym="Flux" Yp="Flux" Zm="Flux" Zp="Flux" />
+        </MembraneMapping>
+      </GeometryContext>
+      <ReactionContext>
+        <LocalizedCompoundSpec LocalizedCompoundRef="Ca_Ca_store" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>0.0</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="Ca_C" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>0.0</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="IP3_C" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>0.0</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="inactiveIP3R" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>0.0</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="noninactiveIP3R" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>0.0</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <ReactionSpec ReactionStepRef="h_reaction_IP3Rinactivation" ReactionMapping="included" />
+        <ReactionSpec ReactionStepRef="ER_leak_flux" ReactionMapping="included" />
+        <ReactionSpec ReactionStepRef="IP3R_flux" ReactionMapping="included" />
+        <ReactionSpec ReactionStepRef="SERCA_flux" ReactionMapping="included" />
+      </ReactionContext>
+      <MathDescription Name="Application0_generated">
+        <Constant Name="_F_">96485.3321</Constant>
+        <Constant Name="_F_nmol_">9.64853321E-5</Constant>
+        <Constant Name="_K_GHK_">1.0E-9</Constant>
+        <Constant Name="_N_pmol_">6.02214179E11</Constant>
+        <Constant Name="_PI_">3.141592653589793</Constant>
+        <Constant Name="_R_">8314.46261815</Constant>
+        <Constant Name="_T_">300.0</Constant>
+        <Constant Name="Ca_C_init_uM">0.0</Constant>
+        <Constant Name="Ca_Ca_store_init_uM">0.0</Constant>
+        <Constant Name="inactiveIP3R_init_molecules_um_2">0.0</Constant>
+        <Constant Name="IP3_C_init_uM">0.0</Constant>
+        <Constant Name="Jmax2">200.0</Constant>
+        <Constant Name="K_millivolts_per_volt">1000.0</Constant>
+        <Constant Name="KD_act_Ca_IP3R">0.2</Constant>
+        <Constant Name="KD_inh_Ca_IP3R">0.2</Constant>
+        <Constant Name="KD_IP3_IP3R">0.1</Constant>
+        <Constant Name="KMOLE">0.001660538783162726</Constant>
+        <Constant Name="Kon_Ca_IP3R">2.7</Constant>
+        <Constant Name="kP">1.3</Constant>
+        <Constant Name="netValence_ER_leak_flux">1.0</Constant>
+        <Constant Name="netValence_h_reaction_IP3Rinactivation">1.0</Constant>
+        <Constant Name="netValence_IP3R_flux">1.0</Constant>
+        <Constant Name="netValence_SERCA_flux">1.0</Constant>
+        <Constant Name="noninactiveIP3R_init_molecules_um_2">0.0</Constant>
+        <Constant Name="Size_C">50000.0</Constant>
+        <Constant Name="Size_Ca_store">50000.0</Constant>
+        <Constant Name="Size_ERM">6563.0</Constant>
+        <Constant Name="vL">0.0</Constant>
+        <Constant Name="Voltage_ERM">0.0</Constant>
+        <Constant Name="vP">0.3</Constant>
+        <VolumeVariable Name="Ca_C" Domain="Compartment" />
+        <VolumeVariable Name="Ca_Ca_store" Domain="Compartment" />
+        <VolumeVariable Name="inactiveIP3R" Domain="Compartment" />
+        <VolumeVariable Name="IP3_C" Domain="Compartment" />
+        <VolumeVariable Name="noninactiveIP3R" Domain="Compartment" />
+        <Function Name="h">(noninactiveIP3R / (noninactiveIP3R + inactiveIP3R))</Function>
+        <Function Name="IP3R">pow((h * IP3_C * Ca_C / (IP3_C + KD_IP3_IP3R) / (Ca_C + KD_act_Ca_IP3R)),3.0)</Function>
+        <Function Name="J_ER_leak_flux" Domain="Compartment">- (vL * (1.0 - (Ca_C / Ca_Ca_store)))</Function>
+        <Function Name="J_h_reaction_IP3Rinactivation" Domain="Compartment">- ((KD_inh_Ca_IP3R - ((Ca_C + KD_inh_Ca_IP3R) * h)) * Kon_Ca_IP3R)</Function>
+        <Function Name="J_IP3R_flux" Domain="Compartment">- (Jmax2 * (1.0 - (Ca_C / Ca_Ca_store)) * pow((h * IP3_C * Ca_C / (IP3_C + KD_IP3_IP3R) / (Ca_C + KD_act_Ca_IP3R)),3.0))</Function>
+        <Function Name="J_SERCA_flux" Domain="Compartment">(vP * (Ca_C ^ 2.0) / ((kP ^ 2.0) + (Ca_C ^ 2.0)))</Function>
+        <Function Name="KFlux_ERM_C" Domain="Compartment">(Size_ERM / Size_C)</Function>
+        <Function Name="KFlux_ERM_Ca_store" Domain="Compartment">(Size_ERM / Size_Ca_store)</Function>
+        <CompartmentSubDomain Name="Compartment">
+          <BoundaryType Boundary="Xm" Type="Value" />
+          <BoundaryType Boundary="Xp" Type="Value" />
+          <BoundaryType Boundary="Ym" Type="Value" />
+          <BoundaryType Boundary="Yp" Type="Value" />
+          <BoundaryType Boundary="Zm" Type="Value" />
+          <BoundaryType Boundary="Zp" Type="Value" />
+          <OdeEquation Name="Ca_Ca_store" SolutionType="Unknown">
+            <Rate>((KFlux_ERM_Ca_store * J_ER_leak_flux) + (KFlux_ERM_Ca_store * J_IP3R_flux) + (KFlux_ERM_Ca_store * J_SERCA_flux))</Rate>
+            <Initial>Ca_Ca_store_init_uM</Initial>
+          </OdeEquation>
+          <OdeEquation Name="Ca_C" SolutionType="Unknown">
+            <Rate>( - (KFlux_ERM_C * J_ER_leak_flux) - (KFlux_ERM_C * J_IP3R_flux) - (KFlux_ERM_C * J_SERCA_flux))</Rate>
+            <Initial>Ca_C_init_uM</Initial>
+          </OdeEquation>
+          <OdeEquation Name="IP3_C" SolutionType="Unknown">
+            <Rate>0.0</Rate>
+            <Initial>IP3_C_init_uM</Initial>
+          </OdeEquation>
+          <OdeEquation Name="inactiveIP3R" SolutionType="Unknown">
+            <Rate>J_h_reaction_IP3Rinactivation</Rate>
+            <Initial>inactiveIP3R_init_molecules_um_2</Initial>
+          </OdeEquation>
+          <OdeEquation Name="noninactiveIP3R" SolutionType="Unknown">
+            <Rate>- J_h_reaction_IP3Rinactivation</Rate>
+            <Initial>noninactiveIP3R_init_molecules_um_2</Initial>
+          </OdeEquation>
+        </CompartmentSubDomain>
+        <Version Name="Application0_generated" KeyValue="211211491" BranchId="211211492" Archived="0" Date="15-Jul-2021 15:09:13" FromVersionable="false">
+          <Owner Name="Sanyu" Identifier="210592880" />
+          <GroupAccess Type="1" />
+        </Version>
+      </MathDescription>
+      <Simulation Name="Simulation0">
+        <SolverTaskDescription TaskType="Unsteady" UseSymbolicJacobian="false" Solver="Combined Stiff Solver (IDA/CVODE)">
+          <TimeBound StartTime="0.0" EndTime="1.0" />
+          <TimeStep DefaultTime="0.1" MinTime="1.0E-8" MaxTime="1.0" />
+          <ErrorTolerance Absolut="1.0E-9" Relative="1.0E-9" />
+          <OutputOptions KeepEvery="1" KeepAtMost="1000" />
+          <NumberProcessors>1</NumberProcessors>
+        </SolverTaskDescription>
+        <MathOverrides />
+        <Version Name="Simulation0" KeyValue="211211509" BranchId="211211510" Archived="0" Date="15-Jul-2021 15:09:13" FromVersionable="false">
+          <Owner Name="Sanyu" Identifier="210592880" />
+          <GroupAccess Type="1" />
+        </Version>
+      </Simulation>
+      <Version Name="Application0" KeyValue="211211948" BranchId="211211495" Archived="0" Date="15-Jul-2021 15:30:00" FromVersionable="false">
+        <Owner Name="Sanyu" Identifier="210592880" />
+        <GroupAccess Type="1" />
+      </Version>
+      <MicroscopeMeasurement Name="fluor">
+        <ConvolutionKernel Type="ProjectionZKernel" />
+      </MicroscopeMeasurement>
+    </SimulationSpec>
+    <Version Name="aCalcium-ER_flux_Falkenburger_etal_2013" KeyValue="211211962" BranchId="211210490" Archived="0" Date="15-Jul-2021 15:30:00" FromVersionable="false">
+      <Owner Name="Sanyu" Identifier="210592880" />
+      <GroupAccess Type="0" />
+      <Annotation>cloned from 'aCalcium-ER_flux_Falkenburger_etal_2013' owned by user ModelBrick
+cloned from 'FalkenburgerDicksonHille2013' owned by user hillelab
+cloned from 'FDH2011' owned by user bfalken
+model published as Falkenburger, Jensen, Hille, Journal of General Physiology, Feb. 2010. 
+Application of Oxo-M is from t=100-130 s.
+Activation of VSP is from t =100-102 s.</Annotation>
+    </Version>
+    <pathwayModel>
+      <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:bp="http://www.biopax.org/release/biopax-level3.owl#" version="3.0">
+        <DiagramObjectsID xmlns="">http://cbio.mskcc.org/cpath#CPATH-490996</DiagramObjectsID>
+        <DiagramObjectsID xmlns="">http://cbio.mskcc.org/cpath#CPATH-488377</DiagramObjectsID>
+        <DiagramObjectsID xmlns="">http://cbio.mskcc.org/cpath#CPATH-499299</DiagramObjectsID>
+        <DiagramObjectsID xmlns="">http://cbio.mskcc.org/cpath#CPATH-501655</DiagramObjectsID>
+        <DiagramObjectsID xmlns="">http://cbio.mskcc.org/cpath#CPATH-496414</DiagramObjectsID>
+        <DiagramObjectsID xmlns="">http://cbio.mskcc.org/cpath#CPATH-497546</DiagramObjectsID>
+        <bp:PhysicalEntity rdf:about="http://cbio.mskcc.org/cpath#CPATH-499299">
+          <bp:comment rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Converted from EntitySet in Reactome. Each synonym is a name of a PhysicalEntity, and each XREF points to one PhysicalEntity</bp:comment>
+          <bp:dataSource rdf:resource="http://cbio.mskcc.org/cpath#CPATH-LOCAL-7407714" />
+          <bp:name rdf:datatype="http://www.w3.org/2001/XMLSchema#string">IP3R subunits [platelet dense tubular network membrane]</bp:name>
+          <bp:name rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Inositol 1,4,5-trisphosphate receptor type 2 [platelet dense tubular network membrane]</bp:name>
+          <bp:name rdf:datatype="http://www.w3.org/2001/XMLSchema#string">IP3 receptor type 1 [platelet dense tubular network membrane]</bp:name>
+          <bp:name rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Inositol 1,4,5-trisphosphate receptor type 3 [platelet dense tubular network membrane]</bp:name>
+          <bp:xref rdf:resource="http://cbio.mskcc.org/cpath#CPATH-LOCAL-7407715" />
+          <bp:xref rdf:resource="http://cbio.mskcc.org/cpath#CPATH-LOCAL-7407716" />
+          <bp:xref rdf:resource="http://cbio.mskcc.org/cpath#CPATH-LOCAL-7407717" />
+          <bp:xref rdf:resource="http://cbio.mskcc.org/cpath#CPATH-LOCAL-7407718" />
+          <bp:xref rdf:resource="http://cbio.mskcc.org/cpath#CPATH-LOCAL-7407719" />
+          <bp:xref rdf:resource="http://cbio.mskcc.org/cpath#CPATH-LOCAL-7407720" />
+          <bp:xref rdf:resource="http://cbio.mskcc.org/cpath#CPATH-LOCAL-7456428" />
+        </bp:PhysicalEntity>
+        <bp:RelationshipXref rdf:about="http://cbio.mskcc.org/cpath#CPATH-LOCAL-7407720">
+          <bp:db rdf:datatype="http://www.w3.org/2001/XMLSchema#string">ENTREZ_GENE</bp:db>
+          <bp:id rdf:datatype="http://www.w3.org/2001/XMLSchema#string">3708</bp:id>
+        </bp:RelationshipXref>
+        <bp:SmallMolecule rdf:about="http://cbio.mskcc.org/cpath#CPATH-496414">
+          <bp:dataSource rdf:resource="http://cbio.mskcc.org/cpath#CPATH-LOCAL-7386437" />
+          <bp:name rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Calcium</bp:name>
+          <bp:name rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Calcium [ChEBI:29108]</bp:name>
+          <bp:name rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Ca2+</bp:name>
+          <bp:xref rdf:resource="http://cbio.mskcc.org/cpath#CPATH-LOCAL-7386438" />
+          <bp:xref rdf:resource="http://cbio.mskcc.org/cpath#CPATH-LOCAL-7454604" />
+        </bp:SmallMolecule>
+        <bp:Provenance rdf:about="http://cbio.mskcc.org/cpath#CPATH-LOCAL-7386437">
+          <bp:comment rdf:datatype="http://www.w3.org/2001/XMLSchema#string">http://www.reactome.org</bp:comment>
+          <bp:name rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Reactome</bp:name>
+        </bp:Provenance>
+        <bp:UnificationXref rdf:about="http://cbio.mskcc.org/cpath#CPATH-LOCAL-7456428">
+          <bp:db rdf:datatype="http://www.w3.org/2001/XMLSchema#string">CPATH</bp:db>
+          <bp:id rdf:datatype="http://www.w3.org/2001/XMLSchema#string">499299</bp:id>
+        </bp:UnificationXref>
+        <bp:Provenance rdf:about="http://cbio.mskcc.org/cpath#CPATH-LOCAL-7407714">
+          <bp:comment rdf:datatype="http://www.w3.org/2001/XMLSchema#string">http://www.reactome.org</bp:comment>
+          <bp:name rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Reactome</bp:name>
+        </bp:Provenance>
+        <bp:UnificationXref rdf:about="http://cbio.mskcc.org/cpath#CPATH-LOCAL-7386438">
+          <bp:db rdf:datatype="http://www.w3.org/2001/XMLSchema#string">ChEBI</bp:db>
+          <bp:id rdf:datatype="http://www.w3.org/2001/XMLSchema#string">29108</bp:id>
+        </bp:UnificationXref>
+        <bp:Complex rdf:about="http://cbio.mskcc.org/cpath#CPATH-497546">
+          <bp:dataSource rdf:resource="http://cbio.mskcc.org/cpath#CPATH-LOCAL-7402178" />
+          <bp:name rdf:datatype="http://www.w3.org/2001/XMLSchema#string">IP3 receptor bound to IP3 and Ca++</bp:name>
+          <bp:name rdf:datatype="http://www.w3.org/2001/XMLSchema#string">IP3 receptor bound to IP3 and Ca++ [platelet dense tubular network membrane]</bp:name>
+          <bp:xref rdf:resource="http://cbio.mskcc.org/cpath#CPATH-LOCAL-7402186" />
+          <bp:xref rdf:resource="http://cbio.mskcc.org/cpath#CPATH-LOCAL-7402187" />
+          <bp:xref rdf:resource="http://cbio.mskcc.org/cpath#CPATH-LOCAL-7455708" />
+          <bp:component rdf:resource="http://cbio.mskcc.org/cpath#CPATH-501655" />
+          <bp:component rdf:resource="http://cbio.mskcc.org/cpath#CPATH-497547" />
+          <bp:component rdf:resource="http://cbio.mskcc.org/cpath#CPATH-496414" />
+        </bp:Complex>
+        <bp:UnificationXref rdf:about="http://cbio.mskcc.org/cpath#CPATH-LOCAL-7402186">
+          <bp:comment rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Reactome stable identifier. Use this URL to connect to the web page of this instance in Reactome: http://www.reactome.org/cgi-bin/eventbrowser_st_id?ST_ID=REACT_4346.1</bp:comment>
+          <bp:db rdf:datatype="http://www.w3.org/2001/XMLSchema#string">REACTOME</bp:db>
+          <bp:id rdf:datatype="http://www.w3.org/2001/XMLSchema#string">REACT_4346</bp:id>
+          <bp:idVersion rdf:datatype="http://www.w3.org/2001/XMLSchema#string">1</bp:idVersion>
+        </bp:UnificationXref>
+        <bp:RelationshipXref rdf:about="http://cbio.mskcc.org/cpath#CPATH-LOCAL-7407716">
+          <bp:db rdf:datatype="http://www.w3.org/2001/XMLSchema#string">UNIPROT</bp:db>
+          <bp:id rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Q14643-1</bp:id>
+        </bp:RelationshipXref>
+        <bp:UnificationXref rdf:about="http://cbio.mskcc.org/cpath#CPATH-LOCAL-7454604">
+          <bp:db rdf:datatype="http://www.w3.org/2001/XMLSchema#string">CPATH</bp:db>
+          <bp:id rdf:datatype="http://www.w3.org/2001/XMLSchema#string">496414</bp:id>
+        </bp:UnificationXref>
+        <bp:BiochemicalReaction rdf:about="http://cbio.mskcc.org/cpath#CPATH-490996">
+          <bp:comment rdf:datatype="http://www.w3.org/2001/XMLSchema#string">The IP3 receptor (IP3R) is an intracellular calcium release channel that mobilizes Ca2+ from internal stores in the ER to the cytoplasm. Though its activity is stimulated by IP3, the principal activator of the IP3R is Ca2+. This process of calcium-induced calcium release is central to the mechanism of Ca2+ signalling. The effect of cytosolic Ca2+ on IP3R is complex: it can be both stimulatory and inhibitory and can the effect varies between IP3R isoforms. In general, the IP3Rs have a bell-shaped Ca2+ dependence when treated with low concentrations of IP3; low concentrations of Ca2+ (100�300 nM) are stimulatory but above 300 nM, Ca2+ becomes inhibitory and switches the channel off. The stimulatory effect of IP3 is to relieve Ca2+ inhibition of the channel, enabling Ca2+ activation sites to gate it. &lt;br&gt;Functionally the IP3 receptor is believed to be tetrameric, with results indicating that the tetramer is composed of 2 pairs of protein isoforms.</bp:comment>
+          <bp:comment rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Edited: Jupe, S, 2009-09-09</bp:comment>
+          <bp:dataSource rdf:resource="http://cbio.mskcc.org/cpath#CPATH-LOCAL-7338766" />
+          <bp:name rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Transport of Ca++ from platelet dense tubular system to cytoplasm</bp:name>
+          <bp:name rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Transport of Ca++ from platelet dense tubular system to cytoplasm</bp:name>
+          <bp:xref rdf:resource="http://cbio.mskcc.org/cpath#CPATH-LOCAL-7338770" />
+          <bp:xref rdf:resource="http://cbio.mskcc.org/cpath#CPATH-LOCAL-7338771" />
+          <bp:xref rdf:resource="http://cbio.mskcc.org/cpath#CPATH-LOCAL-7338772" />
+          <bp:xref rdf:resource="http://cbio.mskcc.org/cpath#CPATH-LOCAL-7338773" />
+          <bp:xref rdf:resource="http://cbio.mskcc.org/cpath#CPATH-LOCAL-7338774" />
+          <bp:xref rdf:resource="http://cbio.mskcc.org/cpath#CPATH-LOCAL-7450957" />
+          <bp:left rdf:resource="http://cbio.mskcc.org/cpath#CPATH-496414" />
+          <bp:right rdf:resource="http://cbio.mskcc.org/cpath#CPATH-496414" />
+          <bp:participantStoichiometry rdf:nodeID="VCELL_LOCAL_ID_235" />
+          <bp:participantStoichiometry rdf:nodeID="VCELL_LOCAL_ID_236" />
+        </bp:BiochemicalReaction>
+        <bp:PublicationXref rdf:about="http://cbio.mskcc.org/cpath#CPATH-LOCAL-7338770">
+          <bp:db rdf:datatype="http://www.w3.org/2001/XMLSchema#string">PUBMED</bp:db>
+          <bp:id rdf:datatype="http://www.w3.org/2001/XMLSchema#string">17429043</bp:id>
+          <bp:author rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Foskett, JK</bp:author>
+          <bp:author rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Cheung, KH</bp:author>
+          <bp:author rdf:datatype="http://www.w3.org/2001/XMLSchema#string">White, C</bp:author>
+          <bp:author rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Mak, DO</bp:author>
+          <bp:source rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Physiol Rev 87:593-658</bp:source>
+          <bp:year rdf:datatype="http://www.w3.org/2001/XMLSchema#int">2007</bp:year>
+          <bp:title rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Inositol trisphosphate receptor Ca2+ release channels</bp:title>
+        </bp:PublicationXref>
+        <bp:UnificationXref rdf:about="http://cbio.mskcc.org/cpath#CPATH-LOCAL-7338773">
+          <bp:comment rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Database identifier. Use this URL to connect to the web page of this instance in Reactome: http://www.reactome.org/cgi-bin/eventbrowser?DB=gk_current&amp;ID=139854</bp:comment>
+          <bp:db rdf:datatype="http://www.w3.org/2001/XMLSchema#string">REACTOME DATABASE ID</bp:db>
+          <bp:id rdf:datatype="http://www.w3.org/2001/XMLSchema#string">139854</bp:id>
+        </bp:UnificationXref>
+        <bp:UnificationXref rdf:about="http://cbio.mskcc.org/cpath#CPATH-LOCAL-7450957">
+          <bp:db rdf:datatype="http://www.w3.org/2001/XMLSchema#string">CPATH</bp:db>
+          <bp:id rdf:datatype="http://www.w3.org/2001/XMLSchema#string">490996</bp:id>
+        </bp:UnificationXref>
+        <bp:Provenance rdf:about="http://cbio.mskcc.org/cpath#CPATH-LOCAL-7338766">
+          <bp:comment rdf:datatype="http://www.w3.org/2001/XMLSchema#string">http://www.reactome.org</bp:comment>
+          <bp:name rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Reactome</bp:name>
+        </bp:Provenance>
+        <bp:PublicationXref rdf:about="http://cbio.mskcc.org/cpath#CPATH-LOCAL-7338774">
+          <bp:db rdf:datatype="http://www.w3.org/2001/XMLSchema#string">PUBMED</bp:db>
+          <bp:id rdf:datatype="http://www.w3.org/2001/XMLSchema#string">1693919</bp:id>
+          <bp:author rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Sage, SO</bp:author>
+          <bp:author rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Rink, TJ</bp:author>
+          <bp:author rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Mahaut-Smith, MP</bp:author>
+          <bp:source rdf:datatype="http://www.w3.org/2001/XMLSchema#string">J Biol Chem 265:10479-83</bp:source>
+          <bp:year rdf:datatype="http://www.w3.org/2001/XMLSchema#int">1990</bp:year>
+          <bp:title rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Receptor-activated single channels in intact human platelets</bp:title>
+        </bp:PublicationXref>
+        <bp:RelationshipXref rdf:about="http://cbio.mskcc.org/cpath#CPATH-LOCAL-7407715">
+          <bp:db rdf:datatype="http://www.w3.org/2001/XMLSchema#string">UNIPROT</bp:db>
+          <bp:id rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Q14571</bp:id>
+        </bp:RelationshipXref>
+        <bp:RelationshipXref rdf:about="http://cbio.mskcc.org/cpath#CPATH-LOCAL-7407719">
+          <bp:db rdf:datatype="http://www.w3.org/2001/XMLSchema#string">ENTREZ_GENE</bp:db>
+          <bp:id rdf:datatype="http://www.w3.org/2001/XMLSchema#string">3709</bp:id>
+        </bp:RelationshipXref>
+        <bp:UnificationXref rdf:about="http://cbio.mskcc.org/cpath#CPATH-LOCAL-7455708">
+          <bp:db rdf:datatype="http://www.w3.org/2001/XMLSchema#string">CPATH</bp:db>
+          <bp:id rdf:datatype="http://www.w3.org/2001/XMLSchema#string">497546</bp:id>
+        </bp:UnificationXref>
+        <bp:PhysicalEntity rdf:about="http://cbio.mskcc.org/cpath#CPATH-499299">
+          <bp:comment rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Converted from EntitySet in Reactome. Each synonym is a name of a PhysicalEntity, and each XREF points to one PhysicalEntity</bp:comment>
+          <bp:dataSource rdf:resource="http://cbio.mskcc.org/cpath#CPATH-LOCAL-7407714" />
+          <bp:name rdf:datatype="http://www.w3.org/2001/XMLSchema#string">IP3R subunits [platelet dense tubular network membrane]</bp:name>
+          <bp:name rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Inositol 1,4,5-trisphosphate receptor type 2 [platelet dense tubular network membrane]</bp:name>
+          <bp:name rdf:datatype="http://www.w3.org/2001/XMLSchema#string">IP3 receptor type 1 [platelet dense tubular network membrane]</bp:name>
+          <bp:name rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Inositol 1,4,5-trisphosphate receptor type 3 [platelet dense tubular network membrane]</bp:name>
+          <bp:xref rdf:resource="http://cbio.mskcc.org/cpath#CPATH-LOCAL-7407715" />
+          <bp:xref rdf:resource="http://cbio.mskcc.org/cpath#CPATH-LOCAL-7407716" />
+          <bp:xref rdf:resource="http://cbio.mskcc.org/cpath#CPATH-LOCAL-7407717" />
+          <bp:xref rdf:resource="http://cbio.mskcc.org/cpath#CPATH-LOCAL-7407718" />
+          <bp:xref rdf:resource="http://cbio.mskcc.org/cpath#CPATH-LOCAL-7407719" />
+          <bp:xref rdf:resource="http://cbio.mskcc.org/cpath#CPATH-LOCAL-7407720" />
+          <bp:xref rdf:resource="http://cbio.mskcc.org/cpath#CPATH-LOCAL-7456428" />
+        </bp:PhysicalEntity>
+        <bp:Catalysis rdf:about="http://cbio.mskcc.org/cpath#CPATH-488377">
+          <bp:dataSource rdf:resource="http://cbio.mskcc.org/cpath#CPATH-LOCAL-7307686" />
+          <bp:xref rdf:resource="http://cbio.mskcc.org/cpath#CPATH-LOCAL-7307687" />
+          <bp:xref rdf:resource="http://cbio.mskcc.org/cpath#CPATH-LOCAL-7307688" />
+          <bp:xref rdf:resource="http://cbio.mskcc.org/cpath#CPATH-LOCAL-7448338" />
+          <bp:controller rdf:resource="http://cbio.mskcc.org/cpath#CPATH-497546" />
+          <bp:controlType rdf:datatype="http://www.w3.org/2001/XMLSchema#string">ACTIVATION</bp:controlType>
+          <bp:controlled rdf:resource="http://cbio.mskcc.org/cpath#CPATH-490996" />
+          <bp:catalysisDirection rdf:datatype="http://www.w3.org/2001/XMLSchema#string">PHYSIOL_LEFT_TO_RIGHT</bp:catalysisDirection>
+        </bp:Catalysis>
+        <bp:UnificationXref rdf:about="http://cbio.mskcc.org/cpath#CPATH-LOCAL-7307687">
+          <bp:comment rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Database identifier. Use this URL to connect to the web page of this instance in Reactome: http://www.reactome.org/cgi-bin/eventbrowser?DB=gk_current&amp;ID=139847</bp:comment>
+          <bp:db rdf:datatype="http://www.w3.org/2001/XMLSchema#string">REACTOME DATABASE ID</bp:db>
+          <bp:id rdf:datatype="http://www.w3.org/2001/XMLSchema#string">139847</bp:id>
+        </bp:UnificationXref>
+        <bp:RelationshipXref rdf:about="http://cbio.mskcc.org/cpath#CPATH-LOCAL-7407717">
+          <bp:db rdf:datatype="http://www.w3.org/2001/XMLSchema#string">UNIPROT</bp:db>
+          <bp:id rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Q14573</bp:id>
+        </bp:RelationshipXref>
+        <bp:UnificationXref rdf:about="http://cbio.mskcc.org/cpath#CPATH-LOCAL-7338771">
+          <bp:comment rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Reactome stable identifier. Use this URL to connect to the web page of this instance in Reactome: http://www.reactome.org/cgi-bin/eventbrowser_st_id?ST_ID=REACT_945.4</bp:comment>
+          <bp:db rdf:datatype="http://www.w3.org/2001/XMLSchema#string">REACTOME</bp:db>
+          <bp:id rdf:datatype="http://www.w3.org/2001/XMLSchema#string">REACT_945</bp:id>
+          <bp:idVersion rdf:datatype="http://www.w3.org/2001/XMLSchema#string">4</bp:idVersion>
+        </bp:UnificationXref>
+        <bp:UnificationXref rdf:about="http://cbio.mskcc.org/cpath#CPATH-LOCAL-7402187">
+          <bp:comment rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Database identifier. Use this URL to connect to the web page of this instance in Reactome: http://www.reactome.org/cgi-bin/eventbrowser?DB=gk_current&amp;ID=139839</bp:comment>
+          <bp:db rdf:datatype="http://www.w3.org/2001/XMLSchema#string">REACTOME DATABASE ID</bp:db>
+          <bp:id rdf:datatype="http://www.w3.org/2001/XMLSchema#string">139839</bp:id>
+        </bp:UnificationXref>
+        <bp:RelationshipXref rdf:about="http://cbio.mskcc.org/cpath#CPATH-LOCAL-7307688">
+          <bp:db rdf:datatype="http://www.w3.org/2001/XMLSchema#string">GENE_ONTOLOGY</bp:db>
+          <bp:id rdf:datatype="http://www.w3.org/2001/XMLSchema#string">0005262</bp:id>
+          <bp:relationshipType rdf:nodeID="node-4471097763996566974_1468610366766" />
+        </bp:RelationshipXref>
+        <bp:RelationshipTypeVocabulary rdf:nodeID="node-4471097763996566974_1468610366766">
+          <bp:term rdf:datatype="http://www.w3.org/2001/XMLSchema#string">GO molecular function</bp:term>
+        </bp:RelationshipTypeVocabulary>
+        <bp:SmallMolecule rdf:about="http://cbio.mskcc.org/cpath#CPATH-496414">
+          <bp:dataSource rdf:resource="http://cbio.mskcc.org/cpath#CPATH-LOCAL-7386437" />
+          <bp:name rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Calcium</bp:name>
+          <bp:name rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Calcium [ChEBI:29108]</bp:name>
+          <bp:name rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Ca2+</bp:name>
+          <bp:xref rdf:resource="http://cbio.mskcc.org/cpath#CPATH-LOCAL-7386438" />
+          <bp:xref rdf:resource="http://cbio.mskcc.org/cpath#CPATH-LOCAL-7454604" />
+        </bp:SmallMolecule>
+        <bp:PublicationXref rdf:about="http://cbio.mskcc.org/cpath#CPATH-LOCAL-7338772">
+          <bp:db rdf:datatype="http://www.w3.org/2001/XMLSchema#string">PUBMED</bp:db>
+          <bp:id rdf:datatype="http://www.w3.org/2001/XMLSchema#string">11413485</bp:id>
+          <bp:author rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Berridge, MJ</bp:author>
+          <bp:author rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Lipp, P</bp:author>
+          <bp:author rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Bootman, MD</bp:author>
+          <bp:source rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Nat Rev Mol Cell Biol 1:11-21</bp:source>
+          <bp:year rdf:datatype="http://www.w3.org/2001/XMLSchema#int">2000</bp:year>
+          <bp:title rdf:datatype="http://www.w3.org/2001/XMLSchema#string">The versatility and universality of calcium signalling</bp:title>
+        </bp:PublicationXref>
+        <bp:Stoichiometry rdf:nodeID="VCELL_LOCAL_ID_235">
+          <bp:physicalEntity rdf:resource="http://cbio.mskcc.org/cpath#CPATH-496414" />
+          <bp:stoichiometricCoefficient rdf:datatype="http://www.w3.org/2001/XMLSchema#double">1.0</bp:stoichiometricCoefficient>
+        </bp:Stoichiometry>
+        <bp:Stoichiometry rdf:nodeID="VCELL_LOCAL_ID_236">
+          <bp:physicalEntity rdf:resource="http://cbio.mskcc.org/cpath#CPATH-496414" />
+          <bp:stoichiometricCoefficient rdf:datatype="http://www.w3.org/2001/XMLSchema#double">1.0</bp:stoichiometricCoefficient>
+        </bp:Stoichiometry>
+        <bp:RelationshipXref rdf:about="http://cbio.mskcc.org/cpath#CPATH-LOCAL-7407718">
+          <bp:db rdf:datatype="http://www.w3.org/2001/XMLSchema#string">ENTREZ_GENE</bp:db>
+          <bp:id rdf:datatype="http://www.w3.org/2001/XMLSchema#string">3710</bp:id>
+        </bp:RelationshipXref>
+        <bp:SmallMolecule rdf:about="http://cbio.mskcc.org/cpath#CPATH-501655">
+          <bp:dataSource rdf:resource="http://cbio.mskcc.org/cpath#CPATH-LOCAL-7424674" />
+          <bp:name rdf:datatype="http://www.w3.org/2001/XMLSchema#string">IP3</bp:name>
+          <bp:name rdf:datatype="http://www.w3.org/2001/XMLSchema#string">IP3 [ChEBI:16595]</bp:name>
+          <bp:name rdf:datatype="http://www.w3.org/2001/XMLSchema#string">D-myo-Inositol 1,4,5-trisphosphate</bp:name>
+          <bp:name rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Inositol 1,4,5-trisphosphate</bp:name>
+          <bp:name rdf:datatype="http://www.w3.org/2001/XMLSchema#string">1D-myo-Inositol 1,4,5-trisphosphate</bp:name>
+          <bp:xref rdf:resource="http://cbio.mskcc.org/cpath#CPATH-LOCAL-7424675" />
+          <bp:xref rdf:resource="http://cbio.mskcc.org/cpath#CPATH-LOCAL-7457970" />
+        </bp:SmallMolecule>
+        <bp:UnificationXref rdf:about="http://cbio.mskcc.org/cpath#CPATH-LOCAL-7457970">
+          <bp:db rdf:datatype="http://www.w3.org/2001/XMLSchema#string">CPATH</bp:db>
+          <bp:id rdf:datatype="http://www.w3.org/2001/XMLSchema#string">501655</bp:id>
+        </bp:UnificationXref>
+        <bp:Provenance rdf:about="http://cbio.mskcc.org/cpath#CPATH-LOCAL-7424674">
+          <bp:comment rdf:datatype="http://www.w3.org/2001/XMLSchema#string">http://www.reactome.org</bp:comment>
+          <bp:name rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Reactome</bp:name>
+        </bp:Provenance>
+        <bp:UnificationXref rdf:about="http://cbio.mskcc.org/cpath#CPATH-LOCAL-7424675">
+          <bp:db rdf:datatype="http://www.w3.org/2001/XMLSchema#string">ChEBI</bp:db>
+          <bp:id rdf:datatype="http://www.w3.org/2001/XMLSchema#string">16595</bp:id>
+        </bp:UnificationXref>
+        <bp:Provenance rdf:about="http://cbio.mskcc.org/cpath#CPATH-LOCAL-7402178">
+          <bp:comment rdf:datatype="http://www.w3.org/2001/XMLSchema#string">http://www.reactome.org</bp:comment>
+          <bp:name rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Reactome</bp:name>
+        </bp:Provenance>
+        <bp:Provenance rdf:about="http://cbio.mskcc.org/cpath#CPATH-LOCAL-7307686">
+          <bp:comment rdf:datatype="http://www.w3.org/2001/XMLSchema#string">http://www.reactome.org</bp:comment>
+          <bp:name rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Reactome</bp:name>
+        </bp:Provenance>
+        <bp:UnificationXref rdf:about="http://cbio.mskcc.org/cpath#CPATH-LOCAL-7448338">
+          <bp:db rdf:datatype="http://www.w3.org/2001/XMLSchema#string">CPATH</bp:db>
+          <bp:id rdf:datatype="http://www.w3.org/2001/XMLSchema#string">488377</bp:id>
+        </bp:UnificationXref>
+        <bp:Complex rdf:about="http://cbio.mskcc.org/cpath#CPATH-497547">
+          <bp:dataSource rdf:resource="http://cbio.mskcc.org/cpath#CPATH-LOCAL-7402188" />
+          <bp:name rdf:datatype="http://www.w3.org/2001/XMLSchema#string">IP3 receptor</bp:name>
+          <bp:name rdf:datatype="http://www.w3.org/2001/XMLSchema#string">IP3 receptor [platelet dense tubular network membrane]</bp:name>
+          <bp:xref rdf:resource="http://cbio.mskcc.org/cpath#CPATH-LOCAL-7402194" />
+          <bp:xref rdf:resource="http://cbio.mskcc.org/cpath#CPATH-LOCAL-7402195" />
+          <bp:xref rdf:resource="http://cbio.mskcc.org/cpath#CPATH-LOCAL-7455709" />
+          <bp:component rdf:resource="http://cbio.mskcc.org/cpath#CPATH-499299" />
+        </bp:Complex>
+        <bp:UnificationXref rdf:about="http://cbio.mskcc.org/cpath#CPATH-LOCAL-7402194">
+          <bp:comment rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Database identifier. Use this URL to connect to the web page of this instance in Reactome: http://www.reactome.org/cgi-bin/eventbrowser?DB=gk_current&amp;ID=418292</bp:comment>
+          <bp:db rdf:datatype="http://www.w3.org/2001/XMLSchema#string">REACTOME DATABASE ID</bp:db>
+          <bp:id rdf:datatype="http://www.w3.org/2001/XMLSchema#string">418292</bp:id>
+        </bp:UnificationXref>
+        <bp:UnificationXref rdf:about="http://cbio.mskcc.org/cpath#CPATH-LOCAL-7402195">
+          <bp:comment rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Reactome stable identifier. Use this URL to connect to the web page of this instance in Reactome: http://www.reactome.org/cgi-bin/eventbrowser_st_id?ST_ID=REACT_18961.1</bp:comment>
+          <bp:db rdf:datatype="http://www.w3.org/2001/XMLSchema#string">REACTOME</bp:db>
+          <bp:id rdf:datatype="http://www.w3.org/2001/XMLSchema#string">REACT_18961</bp:id>
+          <bp:idVersion rdf:datatype="http://www.w3.org/2001/XMLSchema#string">1</bp:idVersion>
+        </bp:UnificationXref>
+        <bp:Provenance rdf:about="http://cbio.mskcc.org/cpath#CPATH-LOCAL-7402188">
+          <bp:comment rdf:datatype="http://www.w3.org/2001/XMLSchema#string">http://www.reactome.org</bp:comment>
+          <bp:name rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Reactome</bp:name>
+        </bp:Provenance>
+        <bp:UnificationXref rdf:about="http://cbio.mskcc.org/cpath#CPATH-LOCAL-7455709">
+          <bp:db rdf:datatype="http://www.w3.org/2001/XMLSchema#string">CPATH</bp:db>
+          <bp:id rdf:datatype="http://www.w3.org/2001/XMLSchema#string">497547</bp:id>
+        </bp:UnificationXref>
+      </rdf:RDF>
+    </pathwayModel>
+    <relationshipModel>
+      <RMNS version="3.0">
+        <RelationshipObject bioPaxObjectID="BioPaxObject(http://cbio.mskcc.org/cpath#CPATH-501655)" bioModelObjectID="SpeciesContext(IP3_C)" />
+        <RelationshipObject bioPaxObjectID="BioPaxObject(http://cbio.mskcc.org/cpath#CPATH-499299)" bioModelObjectID="SpeciesContext(inactiveIP3R)" />
+        <RelationshipObject bioPaxObjectID="BioPaxObject(http://cbio.mskcc.org/cpath#CPATH-499299)" bioModelObjectID="SpeciesContext(noninactiveIP3R)" />
+        <RelationshipObject bioPaxObjectID="BioPaxObject(http://cbio.mskcc.org/cpath#CPATH-496414)" bioModelObjectID="SpeciesContext(Ca_Ca_store)" />
+        <RelationshipObject bioPaxObjectID="BioPaxObject(http://cbio.mskcc.org/cpath#CPATH-490996)" bioModelObjectID="ReactionStep(IP3R_flux)" />
+        <RelationshipObject bioPaxObjectID="BioPaxObject(http://cbio.mskcc.org/cpath#CPATH-497546)" bioModelObjectID="SpeciesContext(noninactiveIP3R)" />
+        <RelationshipObject bioPaxObjectID="BioPaxObject(http://cbio.mskcc.org/cpath#CPATH-496414)" bioModelObjectID="SpeciesContext(Ca_C)" />
+      </RMNS>
+    </relationshipModel>
+    <vcmetadata>
+      <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
+        <rdf:Description rdf:about="http://sourceforge.net/projects/vcell/vcml/cbit.vcell.biomodel.BioModel/876975424">
+          <bqbiol:isDescribedBy xmlns:bqbiol="http://biomodels.net/biology-qualifiers/">
+            <rdf:Bag rdf:nodeID="node0">
+              <rdf:_1>
+                <rdf:Description rdf:about="urn:miriam:pubmed:23630338" />
+              </rdf:_1>
+            </rdf:Bag>
+          </bqbiol:isDescribedBy>
+          <bqbiol:isPropertyOf xmlns:bqbiol="http://biomodels.net/biology-qualifiers/">
+            <rdf:Bag rdf:nodeID="node1">
+              <rdf:_1>
+                <rdf:Description rdf:about="urn:miriam:pubmed:23630338" />
+              </rdf:_1>
+            </rdf:Bag>
+          </bqbiol:isPropertyOf>
+          <bqmodel:isDescribedBy xmlns:bqmodel="http://biomodels.net/model-qualifiers/">
+            <rdf:Bag rdf:nodeID="node2">
+              <rdf:_1>
+                <rdf:Description rdf:about="urn:miriam:pubmed:23630338" />
+              </rdf:_1>
+            </rdf:Bag>
+          </bqmodel:isDescribedBy>
+        </rdf:Description>
+        <rdf:Description rdf:about="http://sourceforge.net/projects/vcell/vcml/cbit.vcell.model.Feature/metaid_1181890139">
+          <bqmodel:isDescribedBy xmlns:bqmodel="http://biomodels.net/model-qualifiers/">
+            <rdf:Bag rdf:nodeID="node3">
+              <rdf:_1>
+                <rdf:Description rdf:about="urn:miriam:pubmed:22332061" />
+              </rdf:_1>
+            </rdf:Bag>
+          </bqmodel:isDescribedBy>
+        </rdf:Description>
+        <rdf:Description rdf:about="http://sourceforge.net/projects/vcell/vcml/cbit.vcell.model.Feature/metaid_1457168921">
+          <bqmodel:isDescribedBy xmlns:bqmodel="http://biomodels.net/model-qualifiers/">
+            <rdf:Bag rdf:nodeID="node4">
+              <rdf:_1>
+                <rdf:Description rdf:about="urn:miriam:pubmed:27161222" />
+              </rdf:_1>
+            </rdf:Bag>
+          </bqmodel:isDescribedBy>
+        </rdf:Description>
+        <rdf:Description rdf:about="http://sourceforge.net/projects/vcell/vcml/cbit.vcell.model.FluxReaction/metaid_1523831935">
+          <bqmodel:isDescribedBy xmlns:bqmodel="http://biomodels.net/model-qualifiers/">
+            <rdf:Bag rdf:nodeID="node5">
+              <rdf:_1>
+                <rdf:Description rdf:about="urn:miriam:pubmed:28725634" />
+              </rdf:_1>
+            </rdf:Bag>
+          </bqmodel:isDescribedBy>
+        </rdf:Description>
+        <rdf:Description rdf:about="http://sourceforge.net/projects/vcell/vcml/cbit.vcell.model.FluxReaction/metaid_866194159">
+          <bqmodel:isDescribedBy xmlns:bqmodel="http://biomodels.net/model-qualifiers/">
+            <rdf:Bag rdf:nodeID="node6">
+              <rdf:_1>
+                <rdf:Description rdf:about="urn:miriam:pubmed:23229128" />
+              </rdf:_1>
+            </rdf:Bag>
+          </bqmodel:isDescribedBy>
+        </rdf:Description>
+        <rdf:Description rdf:about="http://sourceforge.net/projects/vcell/vcml/cbit.vcell.model.Membrane/metaid_646975576">
+          <bqmodel:isDescribedBy xmlns:bqmodel="http://biomodels.net/model-qualifiers/">
+            <rdf:Bag rdf:nodeID="node7">
+              <rdf:_1>
+                <rdf:Description rdf:about="urn:miriam:pubmed:28951399" />
+              </rdf:_1>
+            </rdf:Bag>
+          </bqmodel:isDescribedBy>
+        </rdf:Description>
+        <rdf:Description rdf:about="http://sourceforge.net/projects/vcell/vcml/cbit.vcell.model.Species/metaid_121881540">
+          <bqbiol:isDescribedBy xmlns:bqbiol="http://biomodels.net/biology-qualifiers/">
+            <rdf:Bag rdf:nodeID="node8">
+              <rdf:_1>
+                <rdf:Description rdf:about="urn:miriam:doi:10.1016%2FS1063" />
+              </rdf:_1>
+            </rdf:Bag>
+          </bqbiol:isDescribedBy>
+        </rdf:Description>
+        <rdf:Description rdf:about="http://sourceforge.net/projects/vcell/vcml/cbit.vcell.model.Species/metaid_2030461697">
+          <bqbiol:isDescribedBy xmlns:bqbiol="http://biomodels.net/biology-qualifiers/">
+            <rdf:Bag rdf:nodeID="node9">
+              <rdf:_1>
+                <rdf:Description rdf:about="urn:miriam:doi:10.1016%2FS1063" />
+              </rdf:_1>
+            </rdf:Bag>
+          </bqbiol:isDescribedBy>
+        </rdf:Description>
+        <rdf:Description rdf:about="http://sourceforge.net/projects/vcell/vcml/cbit.vcell.model.Species/metaid_429298632">
+          <bqbiol:isDescribedBy xmlns:bqbiol="http://biomodels.net/biology-qualifiers/">
+            <rdf:Bag rdf:nodeID="node10">
+              <rdf:_1>
+                <rdf:Description rdf:about="urn:miriam:doi:10.1113%2FJP271139" />
+              </rdf:_1>
+            </rdf:Bag>
+          </bqbiol:isDescribedBy>
+          <bqbiol:isDescribedBy xmlns:bqbiol="http://biomodels.net/biology-qualifiers/">
+            <rdf:Bag rdf:nodeID="node11">
+              <rdf:_1>
+                <rdf:Description rdf:about="urn:miriam:pubmed:25497594" />
+              </rdf:_1>
+            </rdf:Bag>
+          </bqbiol:isDescribedBy>
+        </rdf:Description>
+        <rdf:Description rdf:about="http://sourceforge.net/projects/vcell/vcml/cbit.vcell.model.Species/metaid_496124089">
+          <bqbiol:isDescribedBy xmlns:bqbiol="http://biomodels.net/biology-qualifiers/">
+            <rdf:Bag rdf:nodeID="node12">
+              <rdf:_1>
+                <rdf:Description rdf:about="urn:miriam:doi:10.1016%2FS0960" />
+              </rdf:_1>
+            </rdf:Bag>
+          </bqbiol:isDescribedBy>
+          <bqbiol:isDescribedBy xmlns:bqbiol="http://biomodels.net/biology-qualifiers/">
+            <rdf:Bag rdf:nodeID="node13">
+              <rdf:_1>
+                <rdf:Description rdf:about="urn:miriam:pubmed:31570335" />
+              </rdf:_1>
+            </rdf:Bag>
+          </bqbiol:isDescribedBy>
+        </rdf:Description>
+        <rdf:Description rdf:about="http://sourceforge.net/projects/vcell/vcml/org.vcell.model.rbm.MolecularType/metaid_1052325069">
+          <bqmodel:isDescribedBy xmlns:bqmodel="http://biomodels.net/model-qualifiers/">
+            <rdf:Bag rdf:nodeID="node14">
+              <rdf:_1>
+                <rdf:Description rdf:about="urn:miriam:pubmed:25497594" />
+              </rdf:_1>
+            </rdf:Bag>
+          </bqmodel:isDescribedBy>
+        </rdf:Description>
+      </rdf:RDF>
+      <nonrdfAnnotationList>
+        <nonrdfAnnotation vcid="Species(s0)">
+          <freetext>&lt;html&gt;
+  &lt;head&gt;
+    
+  &lt;/head&gt;
+  &lt;body&gt;
+    &lt;span align="left" style="letter-spacing: normal; text-indent: 0px; text-transform: none; white-space: pre-wrap; word-spacing: 0px; background-color: rgb(255, 255, 255); display: inline !important; float: none"&gt;&lt;font color="rgb(0, 0, 0)" face="Arial" size="13px"&gt;The 
+    activity of the inositol 1,4,5-trisphosphate (IP3) receptor (IP3R) Ca2+ 
+    release channel is intricately regulated by a multitude of ligands. The 
+    most important ligands regulating IP3R channel activity are IP3 and Ca2+, 
+    its physiological permeant ion. &lt;/font&gt;&lt;/span&gt;
+  &lt;/body&gt;
+&lt;/html&gt;</freetext>
+        </nonrdfAnnotation>
+        <nonrdfAnnotation vcid="Structure(Ca_store)">
+          <freetext>&lt;html&gt;
+  &lt;head&gt;
+    
+  &lt;/head&gt;
+  &lt;body&gt;
+    &lt;h1 class="heading-title" align="start" style="margin-top: 0px; margin-right: 0px; margin-bottom: 0; margin-left: 0px; clear: both; line-height: 1.4; letter-spacing: normal; text-indent: 0px; text-transform: none; white-space: normal; word-spacing: 0px; background-color: rgb(255, 255, 255)"&gt;
+      Historical Overview of Store-Operated Ca(2+) Entry
+    &lt;/h1&gt;
+  &lt;/body&gt;
+&lt;/html&gt;</freetext>
+        </nonrdfAnnotation>
+        <nonrdfAnnotation vcid="Species(Ca)">
+          <freetext>&lt;html&gt;
+  &lt;head&gt;
+    
+  &lt;/head&gt;
+  &lt;body&gt;
+    &lt;span align="start" style="letter-spacing: normal; text-indent: 0px; text-transform: none; white-space: normal; word-spacing: 0px; background-color: rgb(255, 255, 255); display: inline !important; float: none"&gt;&lt;font color="rgb(33, 33, 33)" face="BlinkMacSystemFont, -apple-system, Segoe UI, Roboto, Oxygen, Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif" size="16px"&gt;Store-operated 
+    calcium (Ca&lt;/font&gt;&lt;/span&gt;&lt;font size="12px" color="rgb(33, 33, 33)" face="BlinkMacSystemFont, -apple-system, Segoe UI, Roboto, Oxygen, Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif"&gt;&lt;sup align="start" style="line-height: 0; letter-spacing: normal; text-indent: 0px; text-transform: none; white-space: normal; word-spacing: 0px; background-color: rgb(255, 255, 255)"&gt;2+&lt;/sup&gt;&lt;/font&gt;&lt;span align="start" style="letter-spacing: normal; text-indent: 0px; text-transform: none; white-space: normal; word-spacing: 0px; background-color: rgb(255, 255, 255); display: inline !important; float: none"&gt;&lt;font color="rgb(33, 33, 33)" face="BlinkMacSystemFont, -apple-system, Segoe UI, Roboto, Oxygen, Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif" size="16px"&gt;) 
+    entry (SOCE) occurs through a widely distributed family of ion channels 
+    activated by the loss of Ca&lt;/font&gt;&lt;/span&gt;&lt;font size="12px" color="rgb(33, 33, 33)" face="BlinkMacSystemFont, -apple-system, Segoe UI, Roboto, Oxygen, Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif"&gt;&lt;sup align="start" style="line-height: 0; letter-spacing: normal; text-indent: 0px; text-transform: none; white-space: normal; word-spacing: 0px; background-color: rgb(255, 255, 255)"&gt;2+&lt;/sup&gt;&lt;/font&gt;&lt;span&gt;&lt;font color="rgb(33, 33, 33)" face="BlinkMacSystemFont, -apple-system, Segoe UI, Roboto, Oxygen, Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif" size="16px"&gt;&amp;#160;&lt;/font&gt;&lt;/span&gt;&lt;font color="rgb(33, 33, 33)" face="BlinkMacSystemFont, -apple-system, Segoe UI, Roboto, Oxygen, Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif" size="16px"&gt;&lt;span align="start" style="letter-spacing: normal; text-indent: 0px; text-transform: none; white-space: normal; word-spacing: 0px; background-color: rgb(255, 255, 255); display: inline !important; float: none"&gt;from 
+    the endoplasmic reticulum (ER).&lt;/span&gt;&lt;/font&gt;
+  &lt;/body&gt;
+&lt;/html&gt;</freetext>
+        </nonrdfAnnotation>
+        <nonrdfAnnotation vcid="ReactionStep(h_reaction_IP3Rinactivation)">
+          <freetext>&lt;html&gt;
+  &lt;head&gt;
+    
+  &lt;/head&gt;
+  &lt;body&gt;
+    &lt;h1 class="content-title" align="left" style="margin-top: 0; margin-right: 0px; margin-bottom: 0; margin-left: 0px; line-height: 1.35em; letter-spacing: normal; text-indent: 0px; text-transform: none; white-space: normal; word-spacing: 0px; background-color: rgb(255, 255, 255)"&gt;
+      Requirements for calcium oscillations driven by the IP3 receptor.
+    &lt;/h1&gt;
+  &lt;/body&gt;
+&lt;/html&gt;</freetext>
+        </nonrdfAnnotation>
+        <nonrdfAnnotation vcid="MolecularType(Ca)">
+          <freetext>&lt;html&gt;
+  &lt;head&gt;
+
+  &lt;/head&gt;
+  &lt;body&gt;
+    &lt;h1 class="heading-title" align="start" style="margin-top: 0px; margin-right: 0px; margin-bottom: 0; margin-left: 0px; clear: both; line-height: 1.4; letter-spacing: normal; text-indent: 0px; text-transform: none; white-space: normal; word-spacing: 0px; background-color: rgb(255, 255, 255)"&gt;
+      Calcium
+    &lt;/h1&gt;
+  &lt;/body&gt;
+&lt;/html&gt;</freetext>
+        </nonrdfAnnotation>
+        <nonrdfAnnotation vcid="ReactionStep(SERCA_flux)">
+          <freetext>&lt;html&gt;
+  &lt;head&gt;
+    
+  &lt;/head&gt;
+  &lt;body&gt;
+    &lt;h1 class="heading-title" align="start" style="margin-top: 0px; margin-right: 0px; margin-bottom: 0; margin-left: 0px; clear: both; line-height: 1.4; letter-spacing: normal; text-indent: 0px; text-transform: none; white-space: normal; word-spacing: 0px; background-color: rgb(255, 255, 255)"&gt;
+      Calcium flux balance in the heart
+    &lt;/h1&gt;
+  &lt;/body&gt;
+&lt;/html&gt;</freetext>
+        </nonrdfAnnotation>
+        <nonrdfAnnotation vcid="Structure(ERM)">
+          <freetext>&lt;html&gt;
+  &lt;head&gt;
+    
+  &lt;/head&gt;
+  &lt;body&gt;
+    &lt;h1 class="heading-title" align="start" style="margin-top: 0px; margin-right: 0px; margin-bottom: 0; margin-left: 0px; clear: both; line-height: 1.4; letter-spacing: normal; text-indent: 0px; text-transform: none; white-space: normal; word-spacing: 0px; background-color: rgb(255, 255, 255)"&gt;
+      Prevalence and risk factors of epiretinal membranes: a systematic review 
+      and meta-analysis of population-based studies
+    &lt;/h1&gt;
+  &lt;/body&gt;
+&lt;/html&gt;</freetext>
+        </nonrdfAnnotation>
+        <nonrdfAnnotation vcid="Species(h)">
+          <freetext>&lt;html&gt;
+  &lt;head&gt;
+    
+  &lt;/head&gt;
+  &lt;body&gt;
+    &lt;span align="left" style="letter-spacing: normal; text-indent: 0px; text-transform: none; white-space: pre-wrap; word-spacing: 0px; background-color: rgb(255, 255, 255); display: inline !important; float: none"&gt;&lt;font color="rgb(0, 0, 0)" face="Arial" size="13px"&gt;The 
+    activity of the inositol 1,4,5-trisphosphate (IP3) receptor (IP3R) Ca2+ 
+    release channel is intricately regulated by a multitude of ligands. The 
+    most important ligands regulating IP3R channel activity are IP3 and Ca2+, 
+    its physiological permeant ion.&lt;/font&gt;&lt;/span&gt;
+  &lt;/body&gt;
+&lt;/html&gt;</freetext>
+        </nonrdfAnnotation>
+        <nonrdfAnnotation vcid="ReactionStep(ER_leak_flux)">
+          <freetext>currently turned off by vL =0, should be 0.12396</freetext>
+        </nonrdfAnnotation>
+        <nonrdfAnnotation vcid="ReactionStep(IP3R_flux)">
+          <freetext>&lt;html&gt;
+  &lt;head&gt;
+    
+  &lt;/head&gt;
+  &lt;body&gt;
+    &lt;h1 class="heading-title" align="start" style="margin-top: 0px; margin-right: 0px; margin-bottom: 0; margin-left: 0px; clear: both; line-height: 1.4; letter-spacing: normal; text-indent: 0px; text-transform: none; white-space: normal; word-spacing: 0px; background-color: rgb(255, 255, 255)"&gt;
+      IP&lt;span&gt;&amp;#160;&lt;/span&gt;&lt;font size="19.5px"&gt;&lt;sub style="line-height: 0"&gt;3&lt;/sub&gt;&lt;/font&gt;&lt;span&gt;&amp;#160;&lt;/span&gt;Receptor-Mediated 
+      Calcium Signaling and Its Role in Autophagy in Cancer
+    &lt;/h1&gt;
+  &lt;/body&gt;
+&lt;/html&gt;</freetext>
+        </nonrdfAnnotation>
+        <nonrdfAnnotation vcid="Species(IP3)">
+          <freetext>&lt;html&gt;
+  &lt;head&gt;
+    
+  &lt;/head&gt;
+  &lt;body&gt;
+    &lt;span align="left" style="letter-spacing: normal; text-indent: 0px; text-transform: none; white-space: pre-wrap; word-spacing: 0px; background-color: rgb(255, 255, 255); display: inline !important; float: none"&gt;&lt;font color="rgb(0, 0, 0)" face="Arial" size="13px"&gt;Inositol 
+    1,4,5&amp;#8208;trisphosphate receptors (IP3Rs) are expressed in most animal cells, 
+    where they mediate the release of Ca2+ from intracellular stores. The 
+    complex spatial and temporal organization of the ensuing intracellular 
+    Ca2+ signals allows selective regulation of diverse physiological 
+    responses&amp;quot; (); Inositol 1,4,5-trisphosphate (IP3) also releases Ca2+, 
+    which is required to activate Ca2+ entry. &lt;/font&gt;&lt;/span&gt;
+  &lt;/body&gt;
+&lt;/html&gt;</freetext>
+        </nonrdfAnnotation>
+        <nonrdfAnnotation vcid="Structure(C)">
+          <freetext>&lt;html&gt;
+  &lt;head&gt;
+    
+  &lt;/head&gt;
+  &lt;body&gt;
+    &lt;h1 class="heading-title" align="start" style="margin-top: 0px; margin-right: 0px; margin-bottom: 0; margin-left: 0px; clear: both; line-height: 1.4; letter-spacing: normal; text-indent: 0px; text-transform: none; white-space: normal; word-spacing: 0px; background-color: rgb(255, 255, 255)"&gt;
+      Calcium
+    &lt;/h1&gt;
+  &lt;/body&gt;
+&lt;/html&gt;</freetext>
+        </nonrdfAnnotation>
+        <nonrdfAnnotation vcid="MolecularType(IP3)">
+          <freetext>&lt;html&gt;
+  &lt;head&gt;
+    
+  &lt;/head&gt;
+  &lt;body&gt;
+    &lt;h1 class="heading-title" align="start" style="margin-top: 0px; margin-right: 0px; margin-bottom: 0; margin-left: 0px; clear: both; line-height: 1.4; letter-spacing: normal; text-indent: 0px; text-transform: none; white-space: normal; word-spacing: 0px; background-color: rgb(255, 255, 255)"&gt;
+      Role of IP3 receptor signaling in cell functions and diseases
+    &lt;/h1&gt;
+  &lt;/body&gt;
+&lt;/html&gt;</freetext>
+        </nonrdfAnnotation>
+        <nonrdfAnnotation vcid="BioModel(aCalcium-ER_flux_Falkenburger_etal_2013)">
+          <freetext>cloned from 'FDH2011' owned by user bfalken
+model published as Falkenburger, Jensen, Hille, Journal of General Physiology, Feb. 2010. 
+Application of Oxo-M is from t=100-130 s.
+Activation of VSP is from t =100-102 s.</freetext>
+        </nonrdfAnnotation>
+      </nonrdfAnnotationList>
+      <uriBindingList>
+        <uriBinding uri="http://sourceforge.net/projects/vcell/vcml/cbit.vcell.model.Species/metaid_121881540" vcid="Species(s0)" />
+        <uriBinding uri="http://sourceforge.net/projects/vcell/vcml/cbit.vcell.model.FluxReaction/metaid_1523831935" vcid="ReactionStep(IP3R_flux)" />
+        <uriBinding uri="http://sourceforge.net/projects/vcell/vcml/cbit.vcell.model.Species/metaid_496124089" vcid="Species(Ca)" />
+        <uriBinding uri="http://sourceforge.net/projects/vcell/vcml/cbit.vcell.model.Species/metaid_429298632" vcid="Species(IP3)" />
+        <uriBinding uri="http://sourceforge.net/projects/vcell/vcml/cbit.vcell.model.Feature/metaid_1181890139" vcid="Structure(C)" />
+        <uriBinding uri="http://sourceforge.net/projects/vcell/vcml/cbit.vcell.biomodel.BioModel/876975424" vcid="BioModel(aCalcium-ER_flux_Falkenburger_etal_2013)" />
+        <uriBinding uri="http://sourceforge.net/projects/vcell/vcml/cbit.vcell.model.Feature/metaid_1457168921" vcid="Structure(Ca_store)" />
+        <uriBinding uri="http://sourceforge.net/projects/vcell/vcml/cbit.vcell.model.Species/metaid_2030461697" vcid="Species(h)" />
+        <uriBinding uri="http://sourceforge.net/projects/vcell/vcml/org.vcell.model.rbm.MolecularType/metaid_1052325069" vcid="MolecularType(IP3)" />
+        <uriBinding uri="http://sourceforge.net/projects/vcell/vcml/cbit.vcell.model.Membrane/metaid_646975576" vcid="Structure(ERM)" />
+        <uriBinding uri="http://sourceforge.net/projects/vcell/vcml/cbit.vcell.model.FluxReaction/metaid_866194159" vcid="ReactionStep(SERCA_flux)" />
+      </uriBindingList>
+    </vcmetadata>
+  </BioModel>
+</vcml>
+

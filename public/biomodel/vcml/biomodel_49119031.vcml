@@ -1,0 +1,443 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--This biomodel was generated in VCML Version Alpha_Version_7.4.0_build_87-->
+<vcml xmlns="http://sourceforge.net/projects/vcell/vcml" Version="Alpha_Version_7.4.0_build_87">
+  <BioModel Name="Homework 6 (Better)">
+    <Model Name="unnamed">
+      <Compound Name="EGF" />
+      <Compound Name="EGF_Receptor" />
+      <Compound Name="Receptor_Complex" />
+      <Compound Name="Internal_complex" />
+      <Compound Name="Internal_Receptor" />
+      <Compound Name="Degredation_Products" />
+      <Compound Name="New_receptors" />
+      <Feature Name="Extracellular Medium" KeyValue="49089716" />
+      <Feature Name="Inracellular Space" KeyValue="49089719" />
+      <Membrane InsideFeature="Inracellular Space" OutsideFeature="Extracellular Medium" PositiveFeature="Inracellular Space" NegativeFeature="Extracellular Medium" MembraneVoltage="Voltage_Plasma_Membrane" Name="Plasma Membrane" KeyValue="49089718" />
+      <LocalizedCompound Name="EGF_Extracellular_Medium" CompoundRef="EGF" Structure="Extracellular Medium" OverrideName="true" KeyValue="49089722" />
+      <LocalizedCompound Name="EGF_Receptor_Plasma_Membrane" CompoundRef="EGF_Receptor" Structure="Plasma Membrane" OverrideName="true" KeyValue="49089723" />
+      <LocalizedCompound Name="Receptor_Complex_Plasma_Membrane" CompoundRef="Receptor_Complex" Structure="Plasma Membrane" OverrideName="true" KeyValue="49089724" />
+      <LocalizedCompound Name="Internal_complex_Inracellular_Space" CompoundRef="Internal_complex" Structure="Inracellular Space" OverrideName="true" KeyValue="49089725" />
+      <LocalizedCompound Name="Internal_Receptor_Inracellular_Space" CompoundRef="Internal_Receptor" Structure="Inracellular Space" OverrideName="true" KeyValue="49089726" />
+      <LocalizedCompound Name="Degredation_Products_Inracellular_Space" CompoundRef="Degredation_Products" Structure="Inracellular Space" OverrideName="true" KeyValue="49089727" />
+      <LocalizedCompound Name="New_receptors_Inracellular_Space" CompoundRef="New_receptors" Structure="Inracellular Space" OverrideName="true" KeyValue="49089728" />
+      <SimpleReaction Structure="Plasma Membrane" Name="EGF+Receptor-&gt;Complex" Reversible="true" FluxOption="MolecularOnly" KeyValue="49089729">
+        <Reactant LocalizedCompoundRef="EGF_Extracellular_Medium" Stoichiometry="1" KeyValue="49089730" />
+        <Reactant LocalizedCompoundRef="EGF_Receptor_Plasma_Membrane" Stoichiometry="1" KeyValue="49089731" />
+        <Product LocalizedCompoundRef="Receptor_Complex_Plasma_Membrane" Stoichiometry="1" KeyValue="49089732" />
+        <Kinetics KineticsType="MassAction">
+          <Parameter Name="J" Role="reaction rate" Unit="molecules.um-2.s-1">(((Kf * EGF_Extracellular_Medium) * EGF_Receptor_Plasma_Membrane) - (Kr * Receptor_Complex_Plasma_Membrane))</Parameter>
+          <Parameter Name="I" Role="inward current density" Unit="pA.um-2">0.0</Parameter>
+          <Parameter Name="netValence" Role="net charge valence" Unit="1">0.0</Parameter>
+          <Parameter Name="Kf" Role="forward rate constant" Unit="s-1.uM-1">1.0</Parameter>
+          <Parameter Name="Kr" Role="reverse rate constant" Unit="s-1">0.01</Parameter>
+        </Kinetics>
+      </SimpleReaction>
+      <SimpleReaction Structure="Plasma Membrane" Name="Complex_Internalization" Reversible="true" FluxOption="MolecularOnly" KeyValue="49089733">
+        <Reactant LocalizedCompoundRef="Receptor_Complex_Plasma_Membrane" Stoichiometry="1" KeyValue="49089734" />
+        <Product LocalizedCompoundRef="Internal_complex_Inracellular_Space" Stoichiometry="1" KeyValue="49089735" />
+        <Kinetics KineticsType="GeneralLumpedKinetics">
+          <Parameter Name="LumpedI" Role="lumped current" Unit="pA">0.0</Parameter>
+          <Parameter Name="LumpedJ" Role="lumped reaction rate" Unit="molecules.s-1">(314.0 * ((Kf * Receptor_Complex_Plasma_Membrane) - (Kr * Internal_complex_Inracellular_Space)))</Parameter>
+          <Parameter Name="netValence" Role="net charge valence" Unit="1">0.0</Parameter>
+          <Parameter Name="Kr" Role="user defined" Unit="molecules.um-2.uM-1.s-1">0.0</Parameter>
+          <Parameter Name="Kf" Role="user defined" Unit="s-1">0.005</Parameter>
+        </Kinetics>
+      </SimpleReaction>
+      <SimpleReaction Structure="Plasma Membrane" Name="Receptor Internalization" Reversible="true" FluxOption="MolecularOnly" KeyValue="49089736">
+        <Reactant LocalizedCompoundRef="EGF_Receptor_Plasma_Membrane" Stoichiometry="1" KeyValue="49089737" />
+        <Product LocalizedCompoundRef="Internal_Receptor_Inracellular_Space" Stoichiometry="1" KeyValue="49089738" />
+        <Kinetics KineticsType="GeneralLumpedKinetics">
+          <Parameter Name="LumpedI" Role="lumped current" Unit="pA">0.0</Parameter>
+          <Parameter Name="LumpedJ" Role="lumped reaction rate" Unit="molecules.s-1">(314.0 * ((Kf * EGF_Receptor_Plasma_Membrane) - (Kr * Internal_Receptor_Inracellular_Space)))</Parameter>
+          <Parameter Name="netValence" Role="net charge valence" Unit="1">0.0</Parameter>
+          <Parameter Name="Kr" Role="user defined" Unit="molecules.um-2.uM-1.s-1">0.0</Parameter>
+          <Parameter Name="Kf" Role="user defined" Unit="s-1">5.0E-4</Parameter>
+        </Kinetics>
+      </SimpleReaction>
+      <SimpleReaction Structure="Plasma Membrane" Name="Complex Degredation" Reversible="true" FluxOption="MolecularOnly" KeyValue="49089739">
+        <Reactant LocalizedCompoundRef="Internal_complex_Inracellular_Space" Stoichiometry="1" KeyValue="49089740" />
+        <Product LocalizedCompoundRef="Degredation_Products_Inracellular_Space" Stoichiometry="1" KeyValue="49089741" />
+        <Kinetics KineticsType="GeneralLumpedKinetics">
+          <Parameter Name="LumpedI" Role="lumped current" Unit="pA">0.0</Parameter>
+          <Parameter Name="LumpedJ" Role="lumped reaction rate" Unit="molecules.s-1">(314.0 * ((Kf * Internal_complex_Inracellular_Space) - (Kr * Degredation_Products_Inracellular_Space)))</Parameter>
+          <Parameter Name="netValence" Role="net charge valence" Unit="1">0.0</Parameter>
+          <Parameter Name="Kr" Role="user defined" Unit="molecules.um-2.uM-1.s-1">0.0</Parameter>
+          <Parameter Name="Kf" Role="user defined" Unit="s-1">5.0E-5</Parameter>
+        </Kinetics>
+      </SimpleReaction>
+      <SimpleReaction Structure="Plasma Membrane" Name="New_Receptor_Gen" Reversible="true" FluxOption="MolecularOnly" KeyValue="49089742">
+        <Reactant LocalizedCompoundRef="New_receptors_Inracellular_Space" Stoichiometry="1" KeyValue="49089743" />
+        <Product LocalizedCompoundRef="EGF_Receptor_Plasma_Membrane" Stoichiometry="1" KeyValue="49089744" />
+        <Kinetics KineticsType="GeneralLumpedKinetics">
+          <Parameter Name="LumpedI" Role="lumped current" Unit="pA">0.0</Parameter>
+          <Parameter Name="LumpedJ" Role="lumped reaction rate" Unit="molecules.s-1">2.0</Parameter>
+          <Parameter Name="netValence" Role="net charge valence" Unit="1">0.0</Parameter>
+        </Kinetics>
+      </SimpleReaction>
+      <Diagram Name="Unnamed compartment" Structure="Extracellular Medium" />
+      <Diagram Name="Plasma Membrane" Structure="Plasma Membrane">
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="EGF_Receptor_Plasma_Membrane" LocationX="13" LocationY="401" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="Receptor_Complex_Plasma_Membrane" LocationX="125" LocationY="77" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="Internal_complex_Inracellular_Space" LocationX="61" LocationY="86" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="Internal_Receptor_Inracellular_Space" LocationX="96" LocationY="442" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="Degredation_Products_Inracellular_Space" LocationX="51" LocationY="226" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="New_receptors_Inracellular_Space" LocationX="53" LocationY="536" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="EGF_Extracellular_Medium" LocationX="37" LocationY="68" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="full" SimpleReactionRef="EGF+Receptor-&gt;Complex" LocationX="68" LocationY="150" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="full" SimpleReactionRef="Complex_Internalization" LocationX="337" LocationY="90" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="full" SimpleReactionRef="Receptor Internalization" LocationX="303" LocationY="396" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="full" SimpleReactionRef="Complex Degredation" LocationX="425" LocationY="225" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="full" SimpleReactionRef="New_Receptor_Gen" LocationX="87" LocationY="487" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="full" SimpleReactionRef="reaction0" LocationX="208" LocationY="235" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="full" SimpleReactionRef="reaction1" LocationX="207" LocationY="235" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="EGF_Receptor_Plasma_Membrane" LocationX="13" LocationY="401" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="Receptor_Complex_Plasma_Membrane" LocationX="125" LocationY="77" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="Internal_complex_Inracellular_Space" LocationX="61" LocationY="86" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="Internal_Receptor_Inracellular_Space" LocationX="96" LocationY="442" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="Degredation_Products_Inracellular_Space" LocationX="51" LocationY="226" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="New_receptors_Inracellular_Space" LocationX="53" LocationY="536" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="EGF_Extracellular_Medium" LocationX="37" LocationY="68" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="molecule" SimpleReactionRef="EGF+Receptor-&gt;Complex" LocationX="68" LocationY="150" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="molecule" SimpleReactionRef="Complex_Internalization" LocationX="337" LocationY="90" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="molecule" SimpleReactionRef="Receptor Internalization" LocationX="303" LocationY="396" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="molecule" SimpleReactionRef="Complex Degredation" LocationX="425" LocationY="225" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="molecule" SimpleReactionRef="New_Receptor_Gen" LocationX="87" LocationY="487" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="molecule" SimpleReactionRef="reaction0" LocationX="208" LocationY="235" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="molecule" SimpleReactionRef="reaction1" LocationX="207" LocationY="235" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="EGF_Receptor_Plasma_Membrane" LocationX="13" LocationY="401" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="Receptor_Complex_Plasma_Membrane" LocationX="125" LocationY="77" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="Internal_complex_Inracellular_Space" LocationX="61" LocationY="86" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="Internal_Receptor_Inracellular_Space" LocationX="96" LocationY="442" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="Degredation_Products_Inracellular_Space" LocationX="51" LocationY="226" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="New_receptors_Inracellular_Space" LocationX="53" LocationY="536" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="EGF_Extracellular_Medium" LocationX="37" LocationY="68" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="rule" SimpleReactionRef="EGF+Receptor-&gt;Complex" LocationX="68" LocationY="150" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="rule" SimpleReactionRef="Complex_Internalization" LocationX="337" LocationY="90" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="rule" SimpleReactionRef="Receptor Internalization" LocationX="303" LocationY="396" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="rule" SimpleReactionRef="Complex Degredation" LocationX="425" LocationY="225" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="rule" SimpleReactionRef="New_Receptor_Gen" LocationX="87" LocationY="487" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="rule" SimpleReactionRef="reaction0" LocationX="208" LocationY="235" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="rule" SimpleReactionRef="reaction1" LocationX="207" LocationY="235" />
+      </Diagram>
+      <Diagram Name="Membrane" Structure="Inracellular Space" />
+      <Version Name="unnamed" KeyValue="49089707" BranchId="49082340" Archived="0" Date="24-Sep-2010 17:11:59" FromVersionable="false">
+        <Owner Name="pkeegan" Identifier="48864879" />
+        <GroupAccess Type="1" />
+      </Version>
+      <ModelUnitSystem VolumeSubstanceUnit="uM.um3" MembraneSubstanceUnit="molecules" LumpedReactionSubstanceUnit="molecules" VolumeUnit="um3" AreaUnit="um2" LengthUnit="um" TimeUnit="s" />
+    </Model>
+    <SimulationSpec Name="Test1" Stochastic="false" UseConcentration="true" RuleBased="false" MassConservationModelReduction="true" InsufficientIterations="false" InsufficientMaxMolecules="false">
+      <NetworkConstraints RbmMaxIteration="1" RbmMaxMoleculesPerSpecies="10" RbmSpeciesLimit="800" RbmReactionsLimit="2500" />
+      <Annotation />
+      <Geometry Name="non-spatial645359204" Dimension="0">
+        <Extent X="10.0" Y="10.0" Z="10.0" />
+        <Origin X="0.0" Y="0.0" Z="0.0" />
+        <SubVolume Name="Compartment" Handle="0" Type="Compartmental" KeyValue="49082335" />
+        <Version Name="non-spatial645359204" KeyValue="49082331" BranchId="49082332" Archived="0" Date="24-Sep-2010 11:43:43" FromVersionable="false">
+          <Owner Name="pkeegan" Identifier="48864879" />
+          <GroupAccess Type="1" />
+        </Version>
+      </Geometry>
+      <GeometryContext>
+        <FeatureMapping Feature="Extracellular Medium" GeometryClass="Compartment" SubVolume="Compartment" Size="1000000.0">
+          <BoundariesTypes Xm="Flux" Xp="Flux" Ym="Flux" Yp="Flux" Zm="Flux" Zp="Flux" />
+        </FeatureMapping>
+        <FeatureMapping Feature="Inracellular Space" GeometryClass="Compartment" SubVolume="Compartment" Size="1570.0">
+          <BoundariesTypes Xm="Flux" Xp="Flux" Ym="Flux" Yp="Flux" Zm="Flux" Zp="Flux" />
+        </FeatureMapping>
+        <MembraneMapping Membrane="Plasma Membrane" SurfaceToVolumeRatio="0.2" VolumeFraction="0.0015675389638267919" Size="314.0" CalculateVoltage="false" SpecificCapacitance="1.0" InitialVoltage="0.0" GeometryClass="Compartment">
+          <BoundariesTypes Xm="Flux" Xp="Flux" Ym="Flux" Yp="Flux" Zm="Flux" Zp="Flux" />
+        </MembraneMapping>
+      </GeometryContext>
+      <ReactionContext>
+        <LocalizedCompoundSpec LocalizedCompoundRef="EGF_Extracellular_Medium" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>5.0E-4</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="Internal_complex_Inracellular_Space" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>0.0</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="Internal_Receptor_Inracellular_Space" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>0.0</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="Degredation_Products_Inracellular_Space" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>0.0</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="New_receptors_Inracellular_Space" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>0.0</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="EGF_Receptor_Plasma_Membrane" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>10.0</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="Receptor_Complex_Plasma_Membrane" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>0.0</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <ReactionSpec ReactionStepRef="EGF+Receptor-&gt;Complex" ReactionMapping="included" />
+        <ReactionSpec ReactionStepRef="Complex_Internalization" ReactionMapping="included" />
+        <ReactionSpec ReactionStepRef="Receptor Internalization" ReactionMapping="included" />
+        <ReactionSpec ReactionStepRef="Complex Degredation" ReactionMapping="included" />
+        <ReactionSpec ReactionStepRef="New_Receptor_Gen" ReactionMapping="included" />
+      </ReactionContext>
+      <MathDescription Name="Test1_generated">
+        <Constant Name="_F_">96480.0</Constant>
+        <Constant Name="_F_nmol_">9.648E-5</Constant>
+        <Constant Name="_K_GHK_">1.0E-9</Constant>
+        <Constant Name="_N_pmol_">6.02E11</Constant>
+        <Constant Name="_R_">8314.0</Constant>
+        <Constant Name="_T_">300.0</Constant>
+        <Constant Name="Degredation_Products_Inracellular_Space_init">0.0</Constant>
+        <Constant Name="EGF_Extracellular_Medium_init">5.0E-4</Constant>
+        <Constant Name="EGF_Receptor_Plasma_Membrane_init">10.0</Constant>
+        <Constant Name="Internal_complex_Inracellular_Space_init">0.0</Constant>
+        <Constant Name="Internal_Receptor_Inracellular_Space_init">0.0</Constant>
+        <Constant Name="K_millivolts_per_volt">1000.0</Constant>
+        <Constant Name="Kf_Complex_Degredation">5.0E-5</Constant>
+        <Constant Name="Kf_Complex_Internalization">0.005</Constant>
+        <Constant Name="Kf_EGF_Receptor__Complex">1.0</Constant>
+        <Constant Name="Kf_Receptor_Internalization">5.0E-4</Constant>
+        <Constant Name="KMOLE">0.0016611295681063123</Constant>
+        <Constant Name="Kr_Complex_Degredation">0.0</Constant>
+        <Constant Name="Kr_Complex_Internalization">0.0</Constant>
+        <Constant Name="Kr_EGF_Receptor__Complex">0.01</Constant>
+        <Constant Name="Kr_Receptor_Internalization">0.0</Constant>
+        <Constant Name="LumpedJ_New_Receptor_Gen">2.0</Constant>
+        <Constant Name="New_receptors_Inracellular_Space_init">0.0</Constant>
+        <Constant Name="Receptor_Complex_Plasma_Membrane_init">0.0</Constant>
+        <Constant Name="Size_Extracellular_Medium">1000000.0</Constant>
+        <Constant Name="Size_Inracellular_Space">1570.0</Constant>
+        <Constant Name="Size_Plasma_Membrane">314.0</Constant>
+        <Constant Name="SurfToVol_Plasma_Membrane">0.2</Constant>
+        <Constant Name="VolFract_Inracellular_Space">0.0015675389638267919</Constant>
+        <Constant Name="Voltage_Plasma_Membrane">0.0</Constant>
+        <VolumeVariable Name="Degredation_Products_Inracellular_Space" />
+        <VolumeVariable Name="EGF_Receptor_Plasma_Membrane" />
+        <VolumeVariable Name="Internal_Receptor_Inracellular_Space" />
+        <VolumeVariable Name="New_receptors_Inracellular_Space" />
+        <VolumeVariable Name="Receptor_Complex_Plasma_Membrane" />
+        <Function Name="EGF_Extracellular_Medium">(((EGF_Receptor_Plasma_Membrane * SurfToVol_Plasma_Membrane * VolFract_Inracellular_Space * KMOLE) + (VolFract_Inracellular_Space * New_receptors_Inracellular_Space) + K_EGF_Extracellular_Medium_total + (VolFract_Inracellular_Space * Internal_Receptor_Inracellular_Space)) / (1.0 - VolFract_Inracellular_Space))</Function>
+        <Function Name="Internal_complex_Inracellular_Space">(( - (Receptor_Complex_Plasma_Membrane * SurfToVol_Plasma_Membrane * VolFract_Inracellular_Space * KMOLE) - (EGF_Receptor_Plasma_Membrane * SurfToVol_Plasma_Membrane * VolFract_Inracellular_Space * KMOLE) - (VolFract_Inracellular_Space * New_receptors_Inracellular_Space) - (VolFract_Inracellular_Space * Degredation_Products_Inracellular_Space) + K_Internal_complex_Inracellular_Space_total - (VolFract_Inracellular_Space * Internal_Receptor_Inracellular_Space)) / VolFract_Inracellular_Space)</Function>
+        <Function Name="J_EGF_Receptor__Complex">((EGF_Receptor_Plasma_Membrane * Kf_EGF_Receptor__Complex * EGF_Extracellular_Medium) - (Kr_EGF_Receptor__Complex * Receptor_Complex_Plasma_Membrane))</Function>
+        <Function Name="K_EGF_Extracellular_Medium_total">( - (EGF_Receptor_Plasma_Membrane_init * SurfToVol_Plasma_Membrane * VolFract_Inracellular_Space * KMOLE) - (VolFract_Inracellular_Space * New_receptors_Inracellular_Space_init) + ((1.0 - VolFract_Inracellular_Space) * EGF_Extracellular_Medium_init) - (VolFract_Inracellular_Space * Internal_Receptor_Inracellular_Space_init))</Function>
+        <Function Name="K_Internal_complex_Inracellular_Space_total">((Receptor_Complex_Plasma_Membrane_init * SurfToVol_Plasma_Membrane * VolFract_Inracellular_Space * KMOLE) + (EGF_Receptor_Plasma_Membrane_init * SurfToVol_Plasma_Membrane * VolFract_Inracellular_Space * KMOLE) + (VolFract_Inracellular_Space * New_receptors_Inracellular_Space_init) + (VolFract_Inracellular_Space * Degredation_Products_Inracellular_Space_init) + (VolFract_Inracellular_Space * Internal_complex_Inracellular_Space_init) + (VolFract_Inracellular_Space * Internal_Receptor_Inracellular_Space_init))</Function>
+        <Function Name="KFlux_Plasma_Membrane_mapping_Extracellular_Medium">(SurfToVol_Plasma_Membrane * VolFract_Inracellular_Space / (1.0 - VolFract_Inracellular_Space))</Function>
+        <Function Name="KFlux_Plasma_Membrane_mapping_Inracellular_Space">SurfToVol_Plasma_Membrane</Function>
+        <Function Name="LumpedJ_Complex_Degredation">(314.0 * ((Kf_Complex_Degredation * Internal_complex_Inracellular_Space) - (Kr_Complex_Degredation * Degredation_Products_Inracellular_Space)))</Function>
+        <Function Name="LumpedJ_Complex_Internalization">(314.0 * ((Kf_Complex_Internalization * Receptor_Complex_Plasma_Membrane) - (Kr_Complex_Internalization * Internal_complex_Inracellular_Space)))</Function>
+        <Function Name="LumpedJ_Receptor_Internalization">(314.0 * ((Kf_Receptor_Internalization * EGF_Receptor_Plasma_Membrane) - (Kr_Receptor_Internalization * Internal_Receptor_Inracellular_Space)))</Function>
+        <CompartmentSubDomain Name="Compartment">
+          <BoundaryType Boundary="Xm" Type="Value" />
+          <BoundaryType Boundary="Xp" Type="Value" />
+          <BoundaryType Boundary="Ym" Type="Value" />
+          <BoundaryType Boundary="Yp" Type="Value" />
+          <BoundaryType Boundary="Zm" Type="Value" />
+          <BoundaryType Boundary="Zp" Type="Value" />
+          <OdeEquation Name="Internal_Receptor_Inracellular_Space" SolutionType="Unknown">
+            <Rate>(KFlux_Plasma_Membrane_mapping_Inracellular_Space * KMOLE * LumpedJ_Receptor_Internalization / Size_Plasma_Membrane)</Rate>
+            <Initial>Internal_Receptor_Inracellular_Space_init</Initial>
+          </OdeEquation>
+          <OdeEquation Name="Degredation_Products_Inracellular_Space" SolutionType="Unknown">
+            <Rate>(KFlux_Plasma_Membrane_mapping_Inracellular_Space * KMOLE * LumpedJ_Complex_Degredation / Size_Plasma_Membrane)</Rate>
+            <Initial>Degredation_Products_Inracellular_Space_init</Initial>
+          </OdeEquation>
+          <OdeEquation Name="New_receptors_Inracellular_Space" SolutionType="Unknown">
+            <Rate>- (KFlux_Plasma_Membrane_mapping_Inracellular_Space * KMOLE * LumpedJ_New_Receptor_Gen / Size_Plasma_Membrane)</Rate>
+            <Initial>New_receptors_Inracellular_Space_init</Initial>
+          </OdeEquation>
+          <OdeEquation Name="EGF_Receptor_Plasma_Membrane" SolutionType="Unknown">
+            <Rate>((LumpedJ_New_Receptor_Gen / Size_Plasma_Membrane) - J_EGF_Receptor__Complex - (LumpedJ_Receptor_Internalization / Size_Plasma_Membrane))</Rate>
+            <Initial>EGF_Receptor_Plasma_Membrane_init</Initial>
+          </OdeEquation>
+          <OdeEquation Name="Receptor_Complex_Plasma_Membrane" SolutionType="Unknown">
+            <Rate>(J_EGF_Receptor__Complex - (LumpedJ_Complex_Internalization / Size_Plasma_Membrane))</Rate>
+            <Initial>Receptor_Complex_Plasma_Membrane_init</Initial>
+          </OdeEquation>
+        </CompartmentSubDomain>
+        <Version Name="Test1_generated" KeyValue="49085856" BranchId="49082337" Archived="0" Date="24-Sep-2010 16:18:55" FromVersionable="false">
+          <Owner Name="pkeegan" Identifier="48864879" />
+          <GroupAccess Type="1" />
+        </Version>
+      </MathDescription>
+      <Simulation Name="Simulation0">
+        <SolverTaskDescription TaskType="Unsteady" UseSymbolicJacobian="false" Solver="Runge-Kutta-Fehlberg (Fifth Order, Variable Time Step)">
+          <TimeBound StartTime="0.0" EndTime="3600.0" />
+          <TimeStep DefaultTime="0.1" MinTime="1.0E-8" MaxTime="1.0" />
+          <ErrorTolerance Absolut="1.0E-9" Relative="1.0E-9" />
+          <OutputOptions KeepEvery="1" KeepAtMost="1000" />
+          <NumberProcessors>1</NumberProcessors>
+        </SolverTaskDescription>
+        <MathOverrides />
+        <Version Name="Simulation0" KeyValue="49090129" BranchId="49082618" Archived="0" Date="24-Sep-2010 17:39:30" FromVersionable="false">
+          <Owner Name="pkeegan" Identifier="48864879" />
+          <GroupAccess Type="1" />
+        </Version>
+      </Simulation>
+      <Simulation Name="Method 1 Data">
+        <SolverTaskDescription TaskType="Unsteady" UseSymbolicJacobian="false" Solver="Runge-Kutta-Fehlberg (Fifth Order, Variable Time Step)">
+          <TimeBound StartTime="0.0" EndTime="900.0" />
+          <TimeStep DefaultTime="0.1" MinTime="1.0E-8" MaxTime="1.0" />
+          <ErrorTolerance Absolut="1.0E-9" Relative="1.0E-9" />
+          <OutputOptions KeepEvery="1" KeepAtMost="1000" />
+          <Constant Name="Kf_Complex_Internalization">0.005</Constant>
+          <NumberProcessors>1</NumberProcessors>
+        </SolverTaskDescription>
+        <MathOverrides>
+          <Constant Name="Kf_Complex_Degredation">-2.81361E-32</Constant>
+          <Constant Name="Kr_EGF_Receptor__Complex">1.29502</Constant>
+          <Constant Name="Kf_Complex_Internalization">1.89539</Constant>
+          <Constant Name="Kf_EGF_Receptor__Complex">847.447</Constant>
+          <Constant Name="LumpedJ_New_Receptor_Gen">1025.43</Constant>
+          <Constant Name="Kr_Complex_Internalization">35.1394</Constant>
+          <Constant Name="Kr_Complex_Degredation">9.86076E-32</Constant>
+          <Constant Name="Kr_Receptor_Internalization">0.370574</Constant>
+          <Constant Name="Kf_Receptor_Internalization">0.0460557</Constant>
+        </MathOverrides>
+        <Version Name="Method 1 Data" KeyValue="49119029" BranchId="49094620" Archived="0" Date="27-Sep-2010 13:20:11" FromVersionable="false">
+          <Owner Name="pkeegan" Identifier="48864879" />
+          <GroupAccess Type="1" />
+        </Version>
+      </Simulation>
+      <Simulation Name="Method 2 Data">
+        <SolverTaskDescription TaskType="Unsteady" UseSymbolicJacobian="false" Solver="Runge-Kutta-Fehlberg (Fifth Order, Variable Time Step)">
+          <TimeBound StartTime="0.0" EndTime="3600.0" />
+          <TimeStep DefaultTime="0.1" MinTime="1.0E-8" MaxTime="1.0" />
+          <ErrorTolerance Absolut="1.0E-9" Relative="1.0E-9" />
+          <OutputOptions KeepEvery="1" KeepAtMost="1000" />
+          <Constant Name="Kf_Complex_Internalization">0.005</Constant>
+          <NumberProcessors>1</NumberProcessors>
+        </SolverTaskDescription>
+        <MathOverrides>
+          <Constant Name="Kf_Complex_Degredation">2.25211E-5</Constant>
+          <Constant Name="Kr_EGF_Receptor__Complex">0.0267007</Constant>
+          <Constant Name="Kf_Complex_Internalization">0.0393267</Constant>
+          <Constant Name="Kf_EGF_Receptor__Complex">18.6885</Constant>
+          <Constant Name="LumpedJ_New_Receptor_Gen">20.1881</Constant>
+          <Constant Name="Kr_Complex_Internalization">7.45758</Constant>
+          <Constant Name="Kr_Complex_Degredation">0.2987</Constant>
+          <Constant Name="Kr_Receptor_Internalization">0.716191</Constant>
+          <Constant Name="Kf_Receptor_Internalization">0.00768325</Constant>
+        </MathOverrides>
+        <Version Name="Method 2 Data" KeyValue="49118747" BranchId="49094660" Archived="0" Date="27-Sep-2010 13:06:10" FromVersionable="false">
+          <Owner Name="pkeegan" Identifier="48864879" />
+          <GroupAccess Type="1" />
+        </Version>
+      </Simulation>
+      <Simulation Name="Simulation1">
+        <SolverTaskDescription TaskType="Unsteady" UseSymbolicJacobian="false" Solver="Combined Stiff Solver (IDA/CVODE)">
+          <TimeBound StartTime="0.0" EndTime="1.0" />
+          <TimeStep DefaultTime="0.1" MinTime="1.0E-8" MaxTime="1.0" />
+          <ErrorTolerance Absolut="1.0E-9" Relative="1.0E-9" />
+          <OutputOptions KeepEvery="1" KeepAtMost="1000" />
+          <NumberProcessors>1</NumberProcessors>
+        </SolverTaskDescription>
+        <MathOverrides>
+          <Constant Name="Kf_Complex_Degredation">-2.81361E-32</Constant>
+          <Constant Name="Kr_EGF_Receptor__Complex">1.29502</Constant>
+          <Constant Name="Kf_Complex_Internalization">1.89539</Constant>
+          <Constant Name="Kf_EGF_Receptor__Complex">847.447</Constant>
+          <Constant Name="LumpedJ_New_Receptor_Gen">1025.43</Constant>
+          <Constant Name="Kr_Complex_Internalization">35.1394</Constant>
+          <Constant Name="Kr_Complex_Degredation">9.86076E-32</Constant>
+          <Constant Name="Kr_Receptor_Internalization">0.370574</Constant>
+          <Constant Name="Kf_Receptor_Internalization">0.0460557</Constant>
+        </MathOverrides>
+        <Version Name="Simulation1" KeyValue="49094743" BranchId="49094744" Archived="0" Date="26-Sep-2010 11:46:43" FromVersionable="false">
+          <Owner Name="pkeegan" Identifier="48864879" />
+          <GroupAccess Type="1" />
+        </Version>
+      </Simulation>
+      <AnalysisTaskList>
+        <ParameterEstimationTask Name="task1">
+          <parameterMappingSpecList>
+            <parameterMappingSpec parameterReferenceAttribute="unnamed.EGF_Receptor__Complex.netValence" lowLimit="0.0" highLimit="0.0" currentValue="0.0" selected="false" />
+            <parameterMappingSpec parameterReferenceAttribute="unnamed.EGF_Receptor__Complex.Kf" lowLimit="0.0" highLimit="10.0" currentValue="1.0" selected="false" />
+            <parameterMappingSpec parameterReferenceAttribute="unnamed.EGF_Receptor__Complex.Kr" lowLimit="0.0" highLimit="0.1" currentValue="0.01" selected="false" />
+            <parameterMappingSpec parameterReferenceAttribute="unnamed.Complex_Internalization.netValence" lowLimit="0.0" highLimit="0.0" currentValue="0.0" selected="false" />
+            <parameterMappingSpec parameterReferenceAttribute="unnamed.Complex_Internalization.Kr" lowLimit="0.0" highLimit="0.0" currentValue="0.0" selected="false" />
+            <parameterMappingSpec parameterReferenceAttribute="unnamed.Complex_Internalization.Kf" lowLimit="5.0E-4" highLimit="0.05" currentValue="0.005" selected="false" />
+            <parameterMappingSpec parameterReferenceAttribute="unnamed.Receptor_Internalization.netValence" lowLimit="0.0" highLimit="0.0" currentValue="0.0" selected="false" />
+            <parameterMappingSpec parameterReferenceAttribute="unnamed.Receptor_Internalization.Kr" lowLimit="0.0" highLimit="0.0" currentValue="0.0" selected="false" />
+            <parameterMappingSpec parameterReferenceAttribute="unnamed.Receptor_Internalization.Kf" lowLimit="5.0E-5" highLimit="0.005" currentValue="5.0E-4" selected="false" />
+            <parameterMappingSpec parameterReferenceAttribute="unnamed.Complex_Degredation.netValence" lowLimit="0.0" highLimit="0.0" currentValue="0.0" selected="false" />
+            <parameterMappingSpec parameterReferenceAttribute="unnamed.Complex_Degredation.Kr" lowLimit="0.0" highLimit="0.0" currentValue="0.0" selected="false" />
+            <parameterMappingSpec parameterReferenceAttribute="unnamed.Complex_Degredation.Kf" lowLimit="5.0E-6" highLimit="5.0E-4" currentValue="5.0E-5" selected="false" />
+            <parameterMappingSpec parameterReferenceAttribute="unnamed.New_Receptor_Gen.LumpedJ" lowLimit="0.2" highLimit="20.0" currentValue="2.0" selected="false" />
+            <parameterMappingSpec parameterReferenceAttribute="unnamed.New_Receptor_Gen.netValence" lowLimit="0.0" highLimit="0.0" currentValue="0.0" selected="false" />
+            <parameterMappingSpec parameterReferenceAttribute="Test1.EGF_Extracellular_Medium_scs.initConc" lowLimit="0.0" highLimit="0.005" currentValue="5.0E-4" selected="false" />
+            <parameterMappingSpec parameterReferenceAttribute="Test1.Internal_complex_Inracellular_Space_scs.initConc" lowLimit="0.0" highLimit="0.0" currentValue="0.0" selected="false" />
+            <parameterMappingSpec parameterReferenceAttribute="Test1.Internal_Receptor_Inracellular_Space_scs.initConc" lowLimit="0.0" highLimit="0.0" currentValue="0.0" selected="false" />
+            <parameterMappingSpec parameterReferenceAttribute="Test1.Degredation_Products_Inracellular_Space_scs.initConc" lowLimit="0.0" highLimit="0.0" currentValue="0.0" selected="false" />
+            <parameterMappingSpec parameterReferenceAttribute="Test1.New_receptors_Inracellular_Space_scs.initConc" lowLimit="0.0" highLimit="0.0" currentValue="0.0" selected="false" />
+            <parameterMappingSpec parameterReferenceAttribute="Test1.EGF_Receptor_Plasma_Membrane_scs.initConc" lowLimit="0.0" highLimit="100.0" currentValue="10.0" selected="false" />
+            <parameterMappingSpec parameterReferenceAttribute="Test1.Receptor_Complex_Plasma_Membrane_scs.initConc" lowLimit="0.0" highLimit="0.0" currentValue="0.0" selected="false" />
+            <parameterMappingSpec parameterReferenceAttribute="Test1.Extracellular_Medium_mapping.Size" lowLimit="0.0" highLimit="1.0E7" currentValue="1000000.0" selected="false" />
+            <parameterMappingSpec parameterReferenceAttribute="Test1.Inracellular_Space_mapping.Size" lowLimit="0.0" highLimit="15700.0" currentValue="1570.0" selected="false" />
+            <parameterMappingSpec parameterReferenceAttribute="Test1.Plasma_Membrane_mapping.Voltage_Plasma_Membrane_init" lowLimit="-120.0" highLimit="60.0" currentValue="0.0" selected="false" />
+            <parameterMappingSpec parameterReferenceAttribute="Test1.Plasma_Membrane_mapping.SurfToVolRatio" lowLimit="0.001" highLimit="10000.0" currentValue="0.2" selected="false" />
+            <parameterMappingSpec parameterReferenceAttribute="Test1.Plasma_Membrane_mapping.VolFraction" lowLimit="1.567538963826792E-4" highLimit="0.01567538963826792" currentValue="0.0015675389638267919" selected="false" />
+            <parameterMappingSpec parameterReferenceAttribute="Test1.Plasma_Membrane_mapping.Size" lowLimit="0.0" highLimit="3140.0" currentValue="314.0" selected="false" />
+          </parameterMappingSpecList>
+          <referenceData numRows="7" numColumns="4">
+            <dataColumnList>
+              <dataColumn Name="t" weight="1.0" />
+              <dataColumn Name="C" weight="1.0" />
+              <dataColumn Name="Ci" weight="1.0" />
+              <dataColumn Name="L" weight="1.0" />
+            </dataColumnList>
+            <dataRowList>
+              <dataRow>0.0 29.61783 0.0 0.0</dataRow>
+              <dataRow>60.0 18.36306 0.00177 3.09E-6</dataRow>
+              <dataRow>120.0 17.47452 0.00216 2.78E-6</dataRow>
+              <dataRow>240.0 3.850318 0.00511 4.63E-6</dataRow>
+              <dataRow>360.0 5.184713 0.00472 4.94E-6</dataRow>
+              <dataRow>600.0 14.80892 0.00492 5.87E-6</dataRow>
+              <dataRow>900.0 2.073248 0.00462 5.71E-6</dataRow>
+            </dataRowList>
+          </referenceData>
+          <referenceDataMappingSpecList>
+            <referenceDataMappingSpec referenceDataColumnName="t" referenceDataModelSymbol="t" />
+            <referenceDataMappingSpec referenceDataColumnName="C" referenceDataModelSymbol="EGF_Receptor_Plasma_Membrane" />
+            <referenceDataMappingSpec referenceDataColumnName="Ci" referenceDataModelSymbol="Internal_complex_Inracellular_Space" />
+            <referenceDataMappingSpec referenceDataColumnName="L" referenceDataModelSymbol="EGF_Extracellular_Medium" />
+          </referenceDataMappingSpecList>
+          <optimizationSolverSpec optimizationSolverType="Evolutionary Programming" NumOfRuns="1">
+            <ListOfParameters>
+              <Parameter Name="Number of Generations" Value="200.0" />
+              <Parameter Name="Population Size" Value="20.0" />
+              <Parameter Name="Random Number Generator" Value="1.0" />
+              <Parameter Name="Seed" Value="0.0" />
+            </ListOfParameters>
+          </optimizationSolverSpec>
+        </ParameterEstimationTask>
+      </AnalysisTaskList>
+      <Version Name="Test1" KeyValue="49094723" BranchId="49082382" Archived="0" Date="26-Sep-2010 11:46:43" FromVersionable="false">
+        <Owner Name="pkeegan" Identifier="48864879" />
+        <GroupAccess Type="1" />
+      </Version>
+      <MicroscopeMeasurement Name="fluor">
+        <ConvolutionKernel Type="ProjectionZKernel" />
+      </MicroscopeMeasurement>
+    </SimulationSpec>
+    <Version Name="Homework 6 (Better)" KeyValue="49119031" BranchId="49090184" Archived="0" Date="27-Sep-2010 13:20:11" FromVersionable="false">
+      <Owner Name="pkeegan" Identifier="48864879" />
+      <GroupAccess Type="0" />
+    </Version>
+    <pathwayModel>
+      <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:bp="http://www.biopax.org/release/biopax-level3.owl#" version="3.0" />
+    </pathwayModel>
+    <relationshipModel>
+      <RMNS version="3.0" />
+    </relationshipModel>
+    <vcmetadata>
+      <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" />
+      <nonrdfAnnotationList />
+      <uriBindingList />
+    </vcmetadata>
+  </BioModel>
+</vcml>
+

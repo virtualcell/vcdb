@@ -1,0 +1,339 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--This biomodel was generated in VCML Version Alpha_Version_7.4.0_build_87-->
+<vcml xmlns="http://sourceforge.net/projects/vcell/vcml" Version="Alpha_Version_7.4.0_build_87">
+  <BioModel Name="PI3 Kinase Signaling  - Haugh et al">
+    <Annotation>Physiology for a series of Models from Jason Haugh's lab. Applications are not yet available.
+Park et al. (2003).  Kinetic analysis of platelet-derived growth factor receptor/phosphoinositide 3-kinase/Akt signaling in fibroblasts.  J. Biol. Chem., 278: 37064-37072.
+
+Haugh and Schneider (2004).  Spatial analysis of 3' phosphoinositide signaling in living fibroblasts: I. Uniform stimulation model and bounds on dimensionless groups.  Biophys. J., 86: 589-598.
+
+Schneider and Haugh (2004).  Spatial analysis of 3' phosphoinositide signaling in living fibroblasts: II. Parameter estimates for individual cells from experiments.  Biophys. J., 86: 599-608.</Annotation>
+    <Model Name="unnamed">
+      <Annotation>cloned from 'unnamed' owned by user jmhaugh</Annotation>
+      <Compound Name="C1" />
+      <Compound Name="C2" />
+      <Compound Name="R" />
+      <Compound Name="PI3K" />
+      <Compound Name="GFP_AktPH" />
+      <Compound Name="C2_PI3K" />
+      <Compound Name="C2_PI3K2" />
+      <Compound Name="PIP3" />
+      <Compound Name="PIP3_AktPH" />
+      <Compound Name="enzyme_factor" />
+      <Compound Name="PDGF_BB" />
+      <Compound Name="R_initial" />
+      <Feature Name="cytosol" KeyValue="13736436" />
+      <Feature Name="nucleus" KeyValue="13736439" />
+      <Feature Name="extracellular" KeyValue="13736434" />
+      <Membrane InsideFeature="cytosol" OutsideFeature="extracellular" PositiveFeature="cytosol" NegativeFeature="extracellular" MembraneVoltage="Voltage_pm" Name="plasma_membrane" KeyValue="13736435" />
+      <Membrane InsideFeature="nucleus" OutsideFeature="cytosol" PositiveFeature="nucleus" NegativeFeature="cytosol" MembraneVoltage="Voltage_nm" Name="nuclear_membrane" KeyValue="13736438" />
+      <LocalizedCompound Name="C1_plasma_membrane" CompoundRef="C1" Structure="plasma_membrane" OverrideName="true" KeyValue="13736444" />
+      <LocalizedCompound Name="C2_plasma_membrane" CompoundRef="C2" Structure="plasma_membrane" OverrideName="true" KeyValue="13736445" />
+      <LocalizedCompound Name="R_plasma_membrane" CompoundRef="R" Structure="plasma_membrane" OverrideName="true" KeyValue="13736446" />
+      <LocalizedCompound Name="PI3K_cytosol" CompoundRef="PI3K" Structure="cytosol" OverrideName="true" KeyValue="13736447" />
+      <LocalizedCompound Name="GFP_AktPH_cytosol" CompoundRef="GFP_AktPH" Structure="cytosol" OverrideName="true" KeyValue="13736448" />
+      <LocalizedCompound Name="C2_PI3K_plasma_membrane" CompoundRef="C2_PI3K" Structure="plasma_membrane" OverrideName="true" KeyValue="13736449" />
+      <LocalizedCompound Name="C2_PI3K2_plasma_membrane" CompoundRef="C2_PI3K2" Structure="plasma_membrane" OverrideName="true" KeyValue="13736450" />
+      <LocalizedCompound Name="PIP3_plasma_membrane" CompoundRef="PIP3" Structure="plasma_membrane" OverrideName="true" KeyValue="13736451" />
+      <LocalizedCompound Name="PIP3_AktPH_plasma_membrane" CompoundRef="PIP3_AktPH" Structure="plasma_membrane" OverrideName="true" KeyValue="13736452" />
+      <LocalizedCompound Name="GFP_AktPH_nucleus" CompoundRef="GFP_AktPH" Structure="nucleus" OverrideName="true" KeyValue="13736453" />
+      <LocalizedCompound Name="enzyme_factor_plasma_membrane" CompoundRef="enzyme_factor" Structure="plasma_membrane" OverrideName="true" KeyValue="13736454" />
+      <LocalizedCompound Name="PDGF_BB_extracellular" CompoundRef="PDGF_BB" Structure="extracellular" OverrideName="true" KeyValue="13736455" />
+      <LocalizedCompound Name="R_initial_plasma_membrane" CompoundRef="R_initial" Structure="plasma_membrane" OverrideName="true" KeyValue="13736456" />
+      <SimpleReaction Structure="plasma_membrane" Name="pi3k binding2" Reversible="true" FluxOption="MolecularOnly" KeyValue="13736457">
+        <Reactant LocalizedCompoundRef="PI3K_cytosol" Stoichiometry="1" KeyValue="13736458" />
+        <Reactant LocalizedCompoundRef="C2_PI3K_plasma_membrane" Stoichiometry="1" KeyValue="13736459" />
+        <Product LocalizedCompoundRef="C2_PI3K2_plasma_membrane" Stoichiometry="1" KeyValue="13736460" />
+        <Kinetics KineticsType="GeneralKinetics">
+          <Parameter Name="J" Role="reaction rate" Unit="molecules.um-2.s-1">((Kon * C2_PI3K_plasma_membrane * PI3K_cytosol) - (2.0 * Koff * C2_PI3K2_plasma_membrane))</Parameter>
+          <Parameter Name="I" Role="inward current density" Unit="pA.um-2">0.0</Parameter>
+          <Parameter Name="netValence" Role="net charge valence" Unit="1">0.0</Parameter>
+          <Parameter Name="Koff" Role="user defined" Unit="s-1">0.01</Parameter>
+          <Parameter Name="Kon" Role="user defined" Unit="uM-1.s-1">10.0</Parameter>
+        </Kinetics>
+      </SimpleReaction>
+      <SimpleReaction Structure="plasma_membrane" Name="C2 internalization" Reversible="true" FluxOption="MolecularOnly" KeyValue="13736461">
+        <Reactant LocalizedCompoundRef="C2_plasma_membrane" Stoichiometry="1" KeyValue="13736462" />
+        <Kinetics KineticsType="GeneralKinetics">
+          <Parameter Name="J" Role="reaction rate" Unit="molecules.um-2.s-1">(Ke * C2_plasma_membrane)</Parameter>
+          <Parameter Name="I" Role="inward current density" Unit="pA.um-2">0.0</Parameter>
+          <Parameter Name="netValence" Role="net charge valence" Unit="1">0.0</Parameter>
+          <Parameter Name="Ke" Role="user defined" Unit="s-1">0.00333</Parameter>
+        </Kinetics>
+      </SimpleReaction>
+      <SimpleReaction Structure="plasma_membrane" Name="PDGF binding" Reversible="true" FluxOption="MolecularOnly" KeyValue="13736463">
+        <Reactant LocalizedCompoundRef="PDGF_BB_extracellular" Stoichiometry="1" KeyValue="13736464" />
+        <Reactant LocalizedCompoundRef="R_plasma_membrane" Stoichiometry="1" KeyValue="13736465" />
+        <Product LocalizedCompoundRef="C1_plasma_membrane" Stoichiometry="1" KeyValue="13736466" />
+        <Kinetics KineticsType="MassAction">
+          <Parameter Name="J" Role="reaction rate" Unit="molecules.um-2.s-1">(((Kf * PDGF_BB_extracellular) * R_plasma_membrane) - (Kr * C1_plasma_membrane))</Parameter>
+          <Parameter Name="I" Role="inward current density" Unit="pA.um-2">0.0</Parameter>
+          <Parameter Name="netValence" Role="net charge valence" Unit="1">0.0</Parameter>
+          <Parameter Name="Kf" Role="forward rate constant" Unit="s-1.uM-1">(666.6666666666666 * Kr)</Parameter>
+          <Parameter Name="Kr" Role="reverse rate constant" Unit="s-1">0.1</Parameter>
+        </Kinetics>
+      </SimpleReaction>
+      <SimpleReaction Structure="plasma_membrane" Name="receptor dimerization" Reversible="true" FluxOption="MolecularOnly" KeyValue="13736467">
+        <Reactant LocalizedCompoundRef="C1_plasma_membrane" Stoichiometry="2" KeyValue="13736468" />
+        <Product LocalizedCompoundRef="C2_plasma_membrane" Stoichiometry="1" KeyValue="13736469" />
+        <Kinetics KineticsType="GeneralKinetics">
+          <Parameter Name="J" Role="reaction rate" Unit="molecules.um-2.s-1">(Kx * (C1_plasma_membrane ^ 2.0))</Parameter>
+          <Parameter Name="I" Role="inward current density" Unit="pA.um-2">0.0</Parameter>
+          <Parameter Name="netValence" Role="net charge valence" Unit="1">0.0</Parameter>
+          <Parameter Name="Kx" Role="user defined" Unit="um2.molecules-1.s-1">5.0E-5</Parameter>
+        </Kinetics>
+      </SimpleReaction>
+      <SimpleReaction Structure="plasma_membrane" Name="C2pi3k internalization" Reversible="true" FluxOption="MolecularOnly" KeyValue="13736470">
+        <Reactant LocalizedCompoundRef="C2_PI3K_plasma_membrane" Stoichiometry="1" KeyValue="13736471" />
+        <Product LocalizedCompoundRef="PI3K_cytosol" Stoichiometry="1" KeyValue="13736472" />
+        <Kinetics KineticsType="GeneralKinetics">
+          <Parameter Name="J" Role="reaction rate" Unit="molecules.um-2.s-1">(Ke * C2_PI3K_plasma_membrane)</Parameter>
+          <Parameter Name="I" Role="inward current density" Unit="pA.um-2">0.0</Parameter>
+          <Parameter Name="netValence" Role="net charge valence" Unit="1">0.0</Parameter>
+          <Parameter Name="Ke" Role="user defined" Unit="s-1">0.00333</Parameter>
+        </Kinetics>
+      </SimpleReaction>
+      <SimpleReaction Structure="plasma_membrane" Name="C2pi3k2 internalization" Reversible="true" FluxOption="MolecularOnly" KeyValue="13736473">
+        <Reactant LocalizedCompoundRef="C2_PI3K2_plasma_membrane" Stoichiometry="1" KeyValue="13736474" />
+        <Product LocalizedCompoundRef="PI3K_cytosol" Stoichiometry="2" KeyValue="13736475" />
+        <Kinetics KineticsType="GeneralKinetics">
+          <Parameter Name="J" Role="reaction rate" Unit="molecules.um-2.s-1">(Ke * C2_PI3K2_plasma_membrane)</Parameter>
+          <Parameter Name="I" Role="inward current density" Unit="pA.um-2">0.0</Parameter>
+          <Parameter Name="netValence" Role="net charge valence" Unit="1">0.0</Parameter>
+          <Parameter Name="Ke" Role="user defined" Unit="s-1">0.00333</Parameter>
+        </Kinetics>
+      </SimpleReaction>
+      <SimpleReaction Structure="plasma_membrane" Name="PIP3 production" Reversible="true" FluxOption="MolecularOnly" KeyValue="13736476">
+        <Product LocalizedCompoundRef="PIP3_plasma_membrane" Stoichiometry="1" KeyValue="13736477" />
+        <Modifier LocalizedCompoundRef="C2_PI3K_plasma_membrane" />
+        <Modifier LocalizedCompoundRef="C2_PI3K2_plasma_membrane" />
+        <Modifier LocalizedCompoundRef="enzyme_factor_plasma_membrane" />
+        <Kinetics KineticsType="GeneralKinetics">
+          <Parameter Name="J" Role="reaction rate" Unit="molecules.um-2.s-1">(Vpi3k * (C2_PI3K_plasma_membrane + (2.0 * C2_PI3K2_plasma_membrane)) * enzyme_factor_plasma_membrane / enzyme_total)</Parameter>
+          <Parameter Name="I" Role="inward current density" Unit="pA.um-2">0.0</Parameter>
+          <Parameter Name="netValence" Role="net charge valence" Unit="1">0.0</Parameter>
+          <Parameter Name="Vpi3k" Role="user defined" Unit="s-1">30.0</Parameter>
+          <Parameter Name="enzyme_total" Role="user defined" Unit="molecules.um-2">1.0</Parameter>
+        </Kinetics>
+      </SimpleReaction>
+      <SimpleReaction Structure="plasma_membrane" Name="GFP_AktPH binding" Reversible="true" FluxOption="MolecularOnly" KeyValue="13736481">
+        <Reactant LocalizedCompoundRef="PIP3_plasma_membrane" Stoichiometry="1" KeyValue="13736482" />
+        <Reactant LocalizedCompoundRef="GFP_AktPH_cytosol" Stoichiometry="1" KeyValue="13736483" />
+        <Product LocalizedCompoundRef="PIP3_AktPH_plasma_membrane" Stoichiometry="1" KeyValue="13736484" />
+        <Kinetics KineticsType="MassAction">
+          <Parameter Name="J" Role="reaction rate" Unit="molecules.um-2.s-1">(((Kf * PIP3_plasma_membrane) * GFP_AktPH_cytosol) - (Kr * PIP3_AktPH_plasma_membrane))</Parameter>
+          <Parameter Name="I" Role="inward current density" Unit="pA.um-2">0.0</Parameter>
+          <Parameter Name="netValence" Role="net charge valence" Unit="1">0.0</Parameter>
+          <Parameter Name="Kf" Role="forward rate constant" Unit="s-1.uM-1">1.0</Parameter>
+          <Parameter Name="Kr" Role="reverse rate constant" Unit="s-1">1.0</Parameter>
+        </Kinetics>
+      </SimpleReaction>
+      <SimpleReaction Structure="plasma_membrane" Name="PIP3 degradation" Reversible="true" FluxOption="MolecularOnly" KeyValue="13736485">
+        <Reactant LocalizedCompoundRef="PIP3_plasma_membrane" Stoichiometry="1" KeyValue="13736486" />
+        <Kinetics KineticsType="GeneralKinetics">
+          <Parameter Name="J" Role="reaction rate" Unit="molecules.um-2.s-1">(K3pi * PIP3_plasma_membrane)</Parameter>
+          <Parameter Name="I" Role="inward current density" Unit="pA.um-2">0.0</Parameter>
+          <Parameter Name="netValence" Role="net charge valence" Unit="1">0.0</Parameter>
+          <Parameter Name="K3pi" Role="user defined" Unit="s-1">0.0167</Parameter>
+        </Kinetics>
+      </SimpleReaction>
+      <SimpleReaction Structure="plasma_membrane" Name="dimer uncoupling" Reversible="true" FluxOption="MolecularOnly" KeyValue="13736487">
+        <Reactant LocalizedCompoundRef="C2_plasma_membrane" Stoichiometry="1" KeyValue="13736488" />
+        <Product LocalizedCompoundRef="R_plasma_membrane" Stoichiometry="1" KeyValue="13736489" />
+        <Product LocalizedCompoundRef="C1_plasma_membrane" Stoichiometry="1" KeyValue="13736490" />
+        <Kinetics KineticsType="GeneralKinetics">
+          <Parameter Name="J" Role="reaction rate" Unit="molecules.um-2.s-1">(Kminusx * C2_plasma_membrane)</Parameter>
+          <Parameter Name="I" Role="inward current density" Unit="pA.um-2">0.0</Parameter>
+          <Parameter Name="netValence" Role="net charge valence" Unit="1">0.0</Parameter>
+          <Parameter Name="Kminusx" Role="user defined" Unit="s-1">0.00117</Parameter>
+        </Kinetics>
+      </SimpleReaction>
+      <SimpleReaction Structure="plasma_membrane" Name="receptor synthesis" Reversible="true" FluxOption="MolecularOnly" KeyValue="13736491">
+        <Product LocalizedCompoundRef="R_plasma_membrane" Stoichiometry="1" KeyValue="13736492" />
+        <Modifier LocalizedCompoundRef="R_initial_plasma_membrane" />
+        <Kinetics KineticsType="GeneralKinetics">
+          <Parameter Name="J" Role="reaction rate" Unit="molecules.um-2.s-1">(3.3E-4 * R_initial_plasma_membrane)</Parameter>
+          <Parameter Name="I" Role="inward current density" Unit="pA.um-2">0.0</Parameter>
+          <Parameter Name="netValence" Role="net charge valence" Unit="1">0.0</Parameter>
+        </Kinetics>
+      </SimpleReaction>
+      <SimpleReaction Structure="plasma_membrane" Name="receptor turnover" Reversible="true" FluxOption="MolecularOnly" KeyValue="13736494">
+        <Reactant LocalizedCompoundRef="R_plasma_membrane" Stoichiometry="1" KeyValue="13736495" />
+        <Kinetics KineticsType="GeneralKinetics">
+          <Parameter Name="J" Role="reaction rate" Unit="molecules.um-2.s-1">(Kt * R_plasma_membrane)</Parameter>
+          <Parameter Name="I" Role="inward current density" Unit="pA.um-2">0.0</Parameter>
+          <Parameter Name="netValence" Role="net charge valence" Unit="1">0.0</Parameter>
+          <Parameter Name="Kt" Role="user defined" Unit="s-1">3.3E-4</Parameter>
+        </Kinetics>
+      </SimpleReaction>
+      <SimpleReaction Structure="plasma_membrane" Name="C1 turnover" Reversible="true" FluxOption="MolecularOnly" KeyValue="13736496">
+        <Reactant LocalizedCompoundRef="C1_plasma_membrane" Stoichiometry="1" KeyValue="13736497" />
+        <Kinetics KineticsType="GeneralKinetics">
+          <Parameter Name="J" Role="reaction rate" Unit="molecules.um-2.s-1">(Kt * C1_plasma_membrane)</Parameter>
+          <Parameter Name="I" Role="inward current density" Unit="pA.um-2">0.0</Parameter>
+          <Parameter Name="netValence" Role="net charge valence" Unit="1">0.0</Parameter>
+          <Parameter Name="Kt" Role="user defined" Unit="s-1">3.3E-4</Parameter>
+        </Kinetics>
+      </SimpleReaction>
+      <SimpleReaction Structure="plasma_membrane" Name="pi3k binding" Reversible="true" FluxOption="MolecularOnly" KeyValue="13736498">
+        <Reactant LocalizedCompoundRef="C2_plasma_membrane" Stoichiometry="1" KeyValue="13736499" />
+        <Reactant LocalizedCompoundRef="PI3K_cytosol" Stoichiometry="1" KeyValue="13736500" />
+        <Product LocalizedCompoundRef="C2_PI3K_plasma_membrane" Stoichiometry="1" KeyValue="13736501" />
+        <Kinetics KineticsType="GeneralKinetics">
+          <Parameter Name="J" Role="reaction rate" Unit="molecules.um-2.s-1">((2.0 * Kon * C2_plasma_membrane * PI3K_cytosol) - (Koff * C2_PI3K_plasma_membrane))</Parameter>
+          <Parameter Name="I" Role="inward current density" Unit="pA.um-2">0.0</Parameter>
+          <Parameter Name="netValence" Role="net charge valence" Unit="1">0.0</Parameter>
+          <Parameter Name="Koff" Role="user defined" Unit="s-1">0.01</Parameter>
+          <Parameter Name="Kon" Role="user defined" Unit="uM-1.s-1">10.0</Parameter>
+        </Kinetics>
+      </SimpleReaction>
+      <FluxStep Name="nuclear flux" Structure="nuclear_membrane" Reversible="true" FluxOption="MolecularOnly" KeyValue="13736502">
+        <Reactant LocalizedCompoundRef="GFP_AktPH_cytosol" Stoichiometry="1" />
+        <Product LocalizedCompoundRef="GFP_AktPH_nucleus" Stoichiometry="1" />
+        <Kinetics KineticsType="GeneralKinetics">
+          <Parameter Name="J" Role="reaction rate" Unit="uM.um.s-1">(Kc * (GFP_AktPH_cytosol - GFP_AktPH_nucleus))</Parameter>
+          <Parameter Name="I" Role="inward current density" Unit="pA.um-2">0.0</Parameter>
+          <Parameter Name="netValence" Role="net charge valence" Unit="1">0.0</Parameter>
+          <Parameter Name="Kc" Role="user defined" Unit="um.s-1">0.1</Parameter>
+        </Kinetics>
+      </FluxStep>
+      <Diagram Name="Unnamed compartment" Structure="extracellular" />
+      <Diagram Name="cm" Structure="plasma_membrane">
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="C1_plasma_membrane" LocationX="277" LocationY="217" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="C2_plasma_membrane" LocationX="354" LocationY="310" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="R_plasma_membrane" LocationX="161" LocationY="317" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="C2_PI3K_plasma_membrane" LocationX="356" LocationY="372" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="C2_PI3K2_plasma_membrane" LocationX="354" LocationY="453" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="PIP3_plasma_membrane" LocationX="472" LocationY="582" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="PIP3_AktPH_plasma_membrane" LocationX="471" LocationY="667" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="enzyme_factor_plasma_membrane" LocationX="192" LocationY="555" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="PI3K_cytosol" LocationX="47" LocationY="404" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="GFP_AktPH_cytosol" LocationX="37" LocationY="593" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="PDGF_BB_extracellular" LocationX="207" LocationY="227" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="full" SimpleReactionRef="pi3k binding" LocationX="469" LocationY="334" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="full" SimpleReactionRef="pi3k binding2" LocationX="469" LocationY="432" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="full" SimpleReactionRef="C2 internalization" LocationX="469" LocationY="273" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="full" SimpleReactionRef="PDGF binding" LocationX="157" LocationY="212" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="full" SimpleReactionRef="receptor dimerization" LocationX="348" LocationY="220" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="full" SimpleReactionRef="C2pi3k internalization" LocationX="471" LocationY="375" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="full" SimpleReactionRef="C2pi3k2 internalization" LocationX="469" LocationY="497" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="full" SimpleReactionRef="PIP3 production" LocationX="253" LocationY="518" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="full" SimpleReactionRef="GFP_AktPH binding" LocationX="550" LocationY="624" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="full" SimpleReactionRef="PIP3 degradation" LocationX="549" LocationY="523" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="full" SimpleReactionRef="dimer uncoupling" LocationX="258" LocationY="317" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="full" SimpleReactionRef="receptor synthesis" LocationX="124" LocationY="396" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="full" SimpleReactionRef="receptor turnover" LocationX="203" LocationY="398" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="full" SimpleReactionRef="C1 turnover" LocationX="301" LocationY="145" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="full" SimpleReactionRef="reaction1" LocationX="395" LocationY="354" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="R_initial_plasma_membrane" LocationX="93" LocationY="466" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="C1_plasma_membrane" LocationX="277" LocationY="217" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="C2_plasma_membrane" LocationX="354" LocationY="310" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="R_plasma_membrane" LocationX="161" LocationY="317" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="C2_PI3K_plasma_membrane" LocationX="356" LocationY="372" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="C2_PI3K2_plasma_membrane" LocationX="354" LocationY="453" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="PIP3_plasma_membrane" LocationX="472" LocationY="582" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="PIP3_AktPH_plasma_membrane" LocationX="471" LocationY="667" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="enzyme_factor_plasma_membrane" LocationX="192" LocationY="555" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="PI3K_cytosol" LocationX="47" LocationY="404" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="GFP_AktPH_cytosol" LocationX="37" LocationY="593" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="PDGF_BB_extracellular" LocationX="207" LocationY="227" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="molecule" SimpleReactionRef="pi3k binding" LocationX="469" LocationY="334" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="molecule" SimpleReactionRef="pi3k binding2" LocationX="469" LocationY="432" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="molecule" SimpleReactionRef="C2 internalization" LocationX="469" LocationY="273" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="molecule" SimpleReactionRef="PDGF binding" LocationX="157" LocationY="212" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="molecule" SimpleReactionRef="receptor dimerization" LocationX="348" LocationY="220" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="molecule" SimpleReactionRef="C2pi3k internalization" LocationX="471" LocationY="375" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="molecule" SimpleReactionRef="C2pi3k2 internalization" LocationX="469" LocationY="497" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="molecule" SimpleReactionRef="PIP3 production" LocationX="253" LocationY="518" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="molecule" SimpleReactionRef="GFP_AktPH binding" LocationX="550" LocationY="624" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="molecule" SimpleReactionRef="PIP3 degradation" LocationX="549" LocationY="523" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="molecule" SimpleReactionRef="dimer uncoupling" LocationX="258" LocationY="317" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="molecule" SimpleReactionRef="receptor synthesis" LocationX="124" LocationY="396" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="molecule" SimpleReactionRef="receptor turnover" LocationX="203" LocationY="398" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="molecule" SimpleReactionRef="C1 turnover" LocationX="301" LocationY="145" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="molecule" SimpleReactionRef="reaction1" LocationX="395" LocationY="354" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="R_initial_plasma_membrane" LocationX="93" LocationY="466" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="C1_plasma_membrane" LocationX="277" LocationY="217" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="C2_plasma_membrane" LocationX="354" LocationY="310" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="R_plasma_membrane" LocationX="161" LocationY="317" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="C2_PI3K_plasma_membrane" LocationX="356" LocationY="372" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="C2_PI3K2_plasma_membrane" LocationX="354" LocationY="453" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="PIP3_plasma_membrane" LocationX="472" LocationY="582" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="PIP3_AktPH_plasma_membrane" LocationX="471" LocationY="667" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="enzyme_factor_plasma_membrane" LocationX="192" LocationY="555" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="PI3K_cytosol" LocationX="47" LocationY="404" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="GFP_AktPH_cytosol" LocationX="37" LocationY="593" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="PDGF_BB_extracellular" LocationX="207" LocationY="227" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="rule" SimpleReactionRef="pi3k binding" LocationX="469" LocationY="334" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="rule" SimpleReactionRef="pi3k binding2" LocationX="469" LocationY="432" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="rule" SimpleReactionRef="C2 internalization" LocationX="469" LocationY="273" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="rule" SimpleReactionRef="PDGF binding" LocationX="157" LocationY="212" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="rule" SimpleReactionRef="receptor dimerization" LocationX="348" LocationY="220" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="rule" SimpleReactionRef="C2pi3k internalization" LocationX="471" LocationY="375" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="rule" SimpleReactionRef="C2pi3k2 internalization" LocationX="469" LocationY="497" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="rule" SimpleReactionRef="PIP3 production" LocationX="253" LocationY="518" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="rule" SimpleReactionRef="GFP_AktPH binding" LocationX="550" LocationY="624" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="rule" SimpleReactionRef="PIP3 degradation" LocationX="549" LocationY="523" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="rule" SimpleReactionRef="dimer uncoupling" LocationX="258" LocationY="317" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="rule" SimpleReactionRef="receptor synthesis" LocationX="124" LocationY="396" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="rule" SimpleReactionRef="receptor turnover" LocationX="203" LocationY="398" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="rule" SimpleReactionRef="C1 turnover" LocationX="301" LocationY="145" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="rule" SimpleReactionRef="reaction1" LocationX="395" LocationY="354" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="R_initial_plasma_membrane" LocationX="93" LocationY="466" />
+      </Diagram>
+      <Diagram Name="cytosol" Structure="cytosol" />
+      <Diagram Name="nm" Structure="nuclear_membrane">
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="GFP_AktPH_nucleus" LocationX="54" LocationY="133" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="PI3K_cytosol" LocationX="33" LocationY="45" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="GFP_AktPH_cytosol" LocationX="49" LocationY="135" />
+        <FluxReactionShape NodeReferenceModeAttrTag="full" FluxReactionRef="nuclear flux" LocationX="115" LocationY="130" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="GFP_AktPH_nucleus" LocationX="54" LocationY="133" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="PI3K_cytosol" LocationX="33" LocationY="45" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="GFP_AktPH_cytosol" LocationX="49" LocationY="135" />
+        <FluxReactionShape NodeReferenceModeAttrTag="molecule" FluxReactionRef="nuclear flux" LocationX="115" LocationY="130" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="GFP_AktPH_nucleus" LocationX="54" LocationY="133" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="PI3K_cytosol" LocationX="33" LocationY="45" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="GFP_AktPH_cytosol" LocationX="49" LocationY="135" />
+        <FluxReactionShape NodeReferenceModeAttrTag="rule" FluxReactionRef="nuclear flux" LocationX="115" LocationY="130" />
+      </Diagram>
+      <Diagram Name="nucleus" Structure="nucleus" />
+      <Version Name="unnamed" KeyValue="13736419" BranchId="13736420" Archived="0" Date="21-Jul-2005 08:16:18" FromVersionable="false">
+        <Owner Name="CMC" Identifier="2794180" />
+        <GroupAccess Type="1" />
+        <Annotation>cloned from 'unnamed' owned by user jmhaugh</Annotation>
+      </Version>
+      <ModelUnitSystem VolumeSubstanceUnit="uM.um3" MembraneSubstanceUnit="molecules" LumpedReactionSubstanceUnit="molecules" VolumeUnit="um3" AreaUnit="um2" LengthUnit="um" TimeUnit="s" />
+    </Model>
+    <Version Name="PI3 Kinase Signaling  - Haugh et al" KeyValue="13736736" BranchId="13736511" Archived="0" Date="21-Jul-2005 09:23:36" FromVersionable="false">
+      <Owner Name="CMC" Identifier="2794180" />
+      <GroupAccess Type="0" />
+      <Annotation>Physiology for a series of Models from Jason Haugh's lab. Applications are not yet available.
+Park et al. (2003).  Kinetic analysis of platelet-derived growth factor receptor/phosphoinositide 3-kinase/Akt signaling in fibroblasts.  J. Biol. Chem., 278: 37064-37072.
+
+Haugh and Schneider (2004).  Spatial analysis of 3' phosphoinositide signaling in living fibroblasts: I. Uniform stimulation model and bounds on dimensionless groups.  Biophys. J., 86: 589-598.
+
+Schneider and Haugh (2004).  Spatial analysis of 3' phosphoinositide signaling in living fibroblasts: II. Parameter estimates for individual cells from experiments.  Biophys. J., 86: 599-608.</Annotation>
+    </Version>
+    <pathwayModel>
+      <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:bp="http://www.biopax.org/release/biopax-level3.owl#" version="3.0" />
+    </pathwayModel>
+    <relationshipModel>
+      <RMNS version="3.0" />
+    </relationshipModel>
+    <vcmetadata>
+      <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" />
+      <nonrdfAnnotationList>
+        <nonrdfAnnotation vcid="BioModel(PI3 Kinase Signaling  - Haugh et al)">
+          <freetext>Physiology for a series of Models from Jason Haugh's lab. Applications are not yet available.
+Park et al. (2003).  Kinetic analysis of platelet-derived growth factor receptor/phosphoinositide 3-kinase/Akt signaling in fibroblasts.  J. Biol. Chem., 278: 37064-37072.
+
+Haugh and Schneider (2004).  Spatial analysis of 3' phosphoinositide signaling in living fibroblasts: I. Uniform stimulation model and bounds on dimensionless groups.  Biophys. J., 86: 589-598.
+
+Schneider and Haugh (2004).  Spatial analysis of 3' phosphoinositide signaling in living fibroblasts: II. Parameter estimates for individual cells from experiments.  Biophys. J., 86: 599-608.</freetext>
+        </nonrdfAnnotation>
+      </nonrdfAnnotationList>
+      <uriBindingList />
+    </vcmetadata>
+  </BioModel>
+</vcml>
+

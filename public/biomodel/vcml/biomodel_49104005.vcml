@@ -1,0 +1,477 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--This biomodel was generated in VCML Version Alpha_Version_7.4.0_build_87-->
+<vcml xmlns="http://sourceforge.net/projects/vcell/vcml" Version="Alpha_Version_7.4.0_build_87">
+  <BioModel Name="HW6-ChristaCaesar-NEW">
+    <Model Name="unnamed">
+      <Compound Name="Ligand" />
+      <Compound Name="ReceptorsFree" />
+      <Compound Name="ComplexA" />
+      <Compound Name="InternalReceptor" />
+      <Compound Name="InternalComplex" />
+      <Compound Name="DegradedComplex" />
+      <Feature Name="ECM" KeyValue="49102454" />
+      <Feature Name="Cell" KeyValue="49102457" />
+      <Membrane InsideFeature="Cell" OutsideFeature="ECM" PositiveFeature="Cell" NegativeFeature="ECM" MembraneVoltage="Voltage_Plasma_membrane" Name="Plasma membrane" KeyValue="49102456" />
+      <LocalizedCompound Name="Ligand_ECM" CompoundRef="Ligand" Structure="ECM" OverrideName="true" KeyValue="49102460" />
+      <LocalizedCompound Name="ReceptorsFree_Plasma_membrane" CompoundRef="ReceptorsFree" Structure="Plasma membrane" OverrideName="true" KeyValue="49102461" />
+      <LocalizedCompound Name="ComplexA_Plasma_membrane" CompoundRef="ComplexA" Structure="Plasma membrane" OverrideName="true" KeyValue="49102462" />
+      <LocalizedCompound Name="InternalReceptor_Cell" CompoundRef="InternalReceptor" Structure="Cell" OverrideName="true" KeyValue="49102463" />
+      <LocalizedCompound Name="InternalComplex_Cell" CompoundRef="InternalComplex" Structure="Cell" OverrideName="true" KeyValue="49102464" />
+      <LocalizedCompound Name="DegradedComplex_Cell" CompoundRef="DegradedComplex" Structure="Cell" OverrideName="true" KeyValue="49102465" />
+      <SimpleReaction Structure="Cell" Name="Degradation" Reversible="true" FluxOption="MolecularOnly" KeyValue="49102478">
+        <Reactant LocalizedCompoundRef="InternalComplex_Cell" Stoichiometry="1" KeyValue="49102479" />
+        <Product LocalizedCompoundRef="DegradedComplex_Cell" Stoichiometry="1" KeyValue="49102480" />
+        <Kinetics KineticsType="MassAction">
+          <Parameter Name="J" Role="reaction rate" Unit="uM.s-1">((Kdeg * InternalComplex_Cell) - (Kr * DegradedComplex_Cell))</Parameter>
+          <Parameter Name="Kdeg" Role="forward rate constant" Unit="s-1">5.0E-5</Parameter>
+          <Parameter Name="Kr" Role="reverse rate constant" Unit="s-1">0.0</Parameter>
+        </Kinetics>
+      </SimpleReaction>
+      <SimpleReaction Structure="Plasma membrane" Name="LigandBinding" Reversible="true" FluxOption="MolecularOnly" KeyValue="49102466">
+        <Reactant LocalizedCompoundRef="Ligand_ECM" Stoichiometry="1" KeyValue="49102467" />
+        <Reactant LocalizedCompoundRef="ReceptorsFree_Plasma_membrane" Stoichiometry="1" KeyValue="49102468" />
+        <Product LocalizedCompoundRef="ComplexA_Plasma_membrane" Stoichiometry="1" KeyValue="49102469" />
+        <Kinetics KineticsType="MassAction">
+          <Parameter Name="J" Role="reaction rate" Unit="molecules.um-2.s-1">(((Kf * Ligand_ECM) * ReceptorsFree_Plasma_membrane) - (Kr * ComplexA_Plasma_membrane))</Parameter>
+          <Parameter Name="I" Role="inward current density" Unit="pA.um-2">0.0</Parameter>
+          <Parameter Name="netValence" Role="net charge valence" Unit="1">0.0</Parameter>
+          <Parameter Name="Kf" Role="forward rate constant" Unit="s-1.uM-1">1.0</Parameter>
+          <Parameter Name="Kr" Role="reverse rate constant" Unit="s-1">0.01</Parameter>
+        </Kinetics>
+      </SimpleReaction>
+      <SimpleReaction Structure="Plasma membrane" Name="SynthesisFreeReceptor" Reversible="true" FluxOption="MolecularOnly" KeyValue="49102470">
+        <Product LocalizedCompoundRef="ReceptorsFree_Plasma_membrane" Stoichiometry="1" KeyValue="49102471" />
+        <Kinetics KineticsType="GeneralLumpedKinetics">
+          <Parameter Name="LumpedI" Role="lumped current" Unit="pA">0.0</Parameter>
+          <Parameter Name="Vs" Role="lumped reaction rate" Unit="molecules.s-1">2.0</Parameter>
+          <Parameter Name="netValence" Role="net charge valence" Unit="1">0.0</Parameter>
+        </Kinetics>
+      </SimpleReaction>
+      <SimpleReaction Structure="Plasma membrane" Name="ComplexInternalization" Reversible="true" FluxOption="MolecularOnly" KeyValue="49102472">
+        <Reactant LocalizedCompoundRef="ComplexA_Plasma_membrane" Stoichiometry="1" KeyValue="49102473" />
+        <Product LocalizedCompoundRef="InternalComplex_Cell" Stoichiometry="1" KeyValue="49102474" />
+        <Kinetics KineticsType="MassAction">
+          <Parameter Name="J" Role="reaction rate" Unit="molecules.um-2.s-1">((Kec * ComplexA_Plasma_membrane) - (Kr * InternalComplex_Cell))</Parameter>
+          <Parameter Name="I" Role="inward current density" Unit="pA.um-2">0.0</Parameter>
+          <Parameter Name="netValence" Role="net charge valence" Unit="1">0.0</Parameter>
+          <Parameter Name="Kec" Role="forward rate constant" Unit="s-1">0.005</Parameter>
+          <Parameter Name="Kr" Role="reverse rate constant" Unit="molecules.um-2.s-1.uM-1">0.0</Parameter>
+        </Kinetics>
+      </SimpleReaction>
+      <SimpleReaction Structure="Plasma membrane" Name="ReceptorInternalization" Reversible="true" FluxOption="MolecularOnly" KeyValue="49102475">
+        <Reactant LocalizedCompoundRef="ReceptorsFree_Plasma_membrane" Stoichiometry="1" KeyValue="49102476" />
+        <Product LocalizedCompoundRef="InternalReceptor_Cell" Stoichiometry="1" KeyValue="49102477" />
+        <Kinetics KineticsType="MassAction">
+          <Parameter Name="J" Role="reaction rate" Unit="molecules.um-2.s-1">((Ker * ReceptorsFree_Plasma_membrane) - (Kr * InternalReceptor_Cell))</Parameter>
+          <Parameter Name="I" Role="inward current density" Unit="pA.um-2">0.0</Parameter>
+          <Parameter Name="netValence" Role="net charge valence" Unit="1">0.0</Parameter>
+          <Parameter Name="Ker" Role="forward rate constant" Unit="s-1">5.0E-4</Parameter>
+          <Parameter Name="Kr" Role="reverse rate constant" Unit="molecules.um-2.s-1.uM-1">0.0</Parameter>
+        </Kinetics>
+      </SimpleReaction>
+      <Diagram Name="Unnamed compartment" Structure="ECM" />
+      <Diagram Name="Plasma membrane" Structure="Plasma membrane">
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="ReceptorsFree_Plasma_membrane" LocationX="38" LocationY="271" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="ComplexA_Plasma_membrane" LocationX="260" LocationY="131" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="Ligand_ECM" LocationX="12" LocationY="89" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="full" SimpleReactionRef="LigandBinding" LocationX="53" LocationY="117" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="InternalReceptor_Cell" LocationX="19" LocationY="303" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="InternalComplex_Cell" LocationX="25" LocationY="129" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="DegradedComplex_Cell" LocationX="25" LocationY="219" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="full" SimpleReactionRef="SynthesisFreeReceptor" LocationX="21" LocationY="377" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="full" SimpleReactionRef="ComplexInternalization" LocationX="406" LocationY="141" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="full" SimpleReactionRef="ReceptorInternalization" LocationX="339" LocationY="287" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="ReceptorsFree_Plasma_membrane" LocationX="38" LocationY="271" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="ComplexA_Plasma_membrane" LocationX="260" LocationY="131" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="Ligand_ECM" LocationX="12" LocationY="89" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="molecule" SimpleReactionRef="LigandBinding" LocationX="53" LocationY="117" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="InternalReceptor_Cell" LocationX="19" LocationY="303" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="InternalComplex_Cell" LocationX="25" LocationY="129" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="DegradedComplex_Cell" LocationX="25" LocationY="219" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="molecule" SimpleReactionRef="SynthesisFreeReceptor" LocationX="21" LocationY="377" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="molecule" SimpleReactionRef="ComplexInternalization" LocationX="406" LocationY="141" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="molecule" SimpleReactionRef="ReceptorInternalization" LocationX="339" LocationY="287" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="ReceptorsFree_Plasma_membrane" LocationX="38" LocationY="271" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="ComplexA_Plasma_membrane" LocationX="260" LocationY="131" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="Ligand_ECM" LocationX="12" LocationY="89" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="rule" SimpleReactionRef="LigandBinding" LocationX="53" LocationY="117" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="InternalReceptor_Cell" LocationX="19" LocationY="303" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="InternalComplex_Cell" LocationX="25" LocationY="129" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="DegradedComplex_Cell" LocationX="25" LocationY="219" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="rule" SimpleReactionRef="SynthesisFreeReceptor" LocationX="21" LocationY="377" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="rule" SimpleReactionRef="ComplexInternalization" LocationX="406" LocationY="141" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="rule" SimpleReactionRef="ReceptorInternalization" LocationX="339" LocationY="287" />
+      </Diagram>
+      <Diagram Name="Cell Membrane" Structure="Cell">
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="InternalReceptor_Cell" LocationX="71" LocationY="178" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="InternalComplex_Cell" LocationX="58" LocationY="34" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="DegradedComplex_Cell" LocationX="299" LocationY="37" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="full" SimpleReactionRef="Degradation" LocationX="176" LocationY="80" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="InternalReceptor_Cell" LocationX="71" LocationY="178" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="InternalComplex_Cell" LocationX="58" LocationY="34" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="DegradedComplex_Cell" LocationX="299" LocationY="37" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="molecule" SimpleReactionRef="Degradation" LocationX="176" LocationY="80" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="InternalReceptor_Cell" LocationX="71" LocationY="178" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="InternalComplex_Cell" LocationX="58" LocationY="34" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="DegradedComplex_Cell" LocationX="299" LocationY="37" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="rule" SimpleReactionRef="Degradation" LocationX="176" LocationY="80" />
+      </Diagram>
+      <Version Name="unnamed" KeyValue="49102446" BranchId="49093821" Archived="0" Date="26-Sep-2010 15:19:50" FromVersionable="false">
+        <Owner Name="ccaesar3" Identifier="48881051" />
+        <GroupAccess Type="1" />
+      </Version>
+      <ModelUnitSystem VolumeSubstanceUnit="uM.um3" MembraneSubstanceUnit="molecules" LumpedReactionSubstanceUnit="molecules" VolumeUnit="um3" AreaUnit="um2" LengthUnit="um" TimeUnit="s" />
+    </Model>
+    <SimulationSpec Name="Equations" Stochastic="false" UseConcentration="true" RuleBased="false" MassConservationModelReduction="true" InsufficientIterations="false" InsufficientMaxMolecules="false">
+      <NetworkConstraints RbmMaxIteration="1" RbmMaxMoleculesPerSpecies="10" RbmSpeciesLimit="800" RbmReactionsLimit="2500" />
+      <Annotation />
+      <Geometry Name="non-spatial2121444840" Dimension="0">
+        <Extent X="10.0" Y="10.0" Z="10.0" />
+        <Origin X="0.0" Y="0.0" Z="0.0" />
+        <SubVolume Name="Compartment" Handle="0" Type="Compartmental" KeyValue="49101451" />
+        <Version Name="non-spatial2121444840" KeyValue="49101447" BranchId="49101448" Archived="0" Date="26-Sep-2010 14:35:43" FromVersionable="false">
+          <Owner Name="ccaesar3" Identifier="48881051" />
+          <GroupAccess Type="1" />
+        </Version>
+      </Geometry>
+      <GeometryContext>
+        <FeatureMapping Feature="ECM" GeometryClass="Compartment" SubVolume="Compartment" Size="1000000.0">
+          <BoundariesTypes Xm="Flux" Xp="Flux" Ym="Flux" Yp="Flux" Zm="Flux" Zp="Flux" />
+        </FeatureMapping>
+        <FeatureMapping Feature="Cell" GeometryClass="Compartment" SubVolume="Compartment" Size="1570.0">
+          <BoundariesTypes Xm="Flux" Xp="Flux" Ym="Flux" Yp="Flux" Zm="Flux" Zp="Flux" />
+        </FeatureMapping>
+        <MembraneMapping Membrane="Plasma membrane" SurfaceToVolumeRatio="0.2" VolumeFraction="0.0015675389638267919" Size="314.0" CalculateVoltage="false" SpecificCapacitance="1.0" InitialVoltage="0.0" GeometryClass="Compartment">
+          <BoundariesTypes Xm="Flux" Xp="Flux" Ym="Flux" Yp="Flux" Zm="Flux" Zp="Flux" />
+        </MembraneMapping>
+      </GeometryContext>
+      <ReactionContext>
+        <LocalizedCompoundSpec LocalizedCompoundRef="Ligand_ECM" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>3.7E-4</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="InternalReceptor_Cell" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>0.0</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="InternalComplex_Cell" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>0.0</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="DegradedComplex_Cell" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>0.0</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="ReceptorsFree_Plasma_membrane" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>10.0</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="ComplexA_Plasma_membrane" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>0.0</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <ReactionSpec ReactionStepRef="Degradation" ReactionMapping="included" />
+        <ReactionSpec ReactionStepRef="LigandBinding" ReactionMapping="included" />
+        <ReactionSpec ReactionStepRef="SynthesisFreeReceptor" ReactionMapping="included" />
+        <ReactionSpec ReactionStepRef="ComplexInternalization" ReactionMapping="included" />
+        <ReactionSpec ReactionStepRef="ReceptorInternalization" ReactionMapping="included" />
+      </ReactionContext>
+      <MathDescription Name="Equations_generated">
+        <Constant Name="_F_">96480.0</Constant>
+        <Constant Name="_F_nmol_">9.648E-5</Constant>
+        <Constant Name="_K_GHK_">1.0E-9</Constant>
+        <Constant Name="_N_pmol_">6.02E11</Constant>
+        <Constant Name="_R_">8314.0</Constant>
+        <Constant Name="_T_">300.0</Constant>
+        <Constant Name="ComplexA_Plasma_membrane_init">0.0</Constant>
+        <Constant Name="DegradedComplex_Cell_init">0.0</Constant>
+        <Constant Name="InternalComplex_Cell_init">0.0</Constant>
+        <Constant Name="InternalReceptor_Cell_init">0.0</Constant>
+        <Constant Name="K_millivolts_per_volt">1000.0</Constant>
+        <Constant Name="Kdeg">5.0E-5</Constant>
+        <Constant Name="Kec">0.005</Constant>
+        <Constant Name="Ker">5.0E-4</Constant>
+        <Constant Name="Kf">1.0</Constant>
+        <Constant Name="KMOLE">0.0016611295681063123</Constant>
+        <Constant Name="Kr_ComplexInternalization">0.0</Constant>
+        <Constant Name="Kr_Degradation">0.0</Constant>
+        <Constant Name="Kr_LigandBinding">0.01</Constant>
+        <Constant Name="Kr_ReceptorInternalization">0.0</Constant>
+        <Constant Name="Ligand_ECM_init">3.7E-4</Constant>
+        <Constant Name="ReceptorsFree_Plasma_membrane_init">10.0</Constant>
+        <Constant Name="Size_Cell">1570.0</Constant>
+        <Constant Name="Size_ECM">1000000.0</Constant>
+        <Constant Name="Size_Plasma_membrane">314.0</Constant>
+        <Constant Name="SurfToVol_Plasma_membrane">0.2</Constant>
+        <Constant Name="VolFract_Cell">0.0015675389638267919</Constant>
+        <Constant Name="Voltage_Plasma_membrane">0.0</Constant>
+        <Constant Name="Vs">2.0</Constant>
+        <VolumeVariable Name="ComplexA_Plasma_membrane" />
+        <VolumeVariable Name="DegradedComplex_Cell" />
+        <VolumeVariable Name="InternalComplex_Cell" />
+        <VolumeVariable Name="InternalReceptor_Cell" />
+        <VolumeVariable Name="ReceptorsFree_Plasma_membrane" />
+        <Function Name="J_ComplexInternalization">((Kec * ComplexA_Plasma_membrane) - (Kr_ComplexInternalization * InternalComplex_Cell))</Function>
+        <Function Name="J_Degradation">((Kdeg * InternalComplex_Cell) - (Kr_Degradation * DegradedComplex_Cell))</Function>
+        <Function Name="J_LigandBinding">((ReceptorsFree_Plasma_membrane * Kf * Ligand_ECM) - (Kr_LigandBinding * ComplexA_Plasma_membrane))</Function>
+        <Function Name="J_ReceptorInternalization">((Ker * ReceptorsFree_Plasma_membrane) - (Kr_ReceptorInternalization * InternalReceptor_Cell))</Function>
+        <Function Name="K_Ligand_ECM_total">((ComplexA_Plasma_membrane_init * SurfToVol_Plasma_membrane * VolFract_Cell * KMOLE) + (VolFract_Cell * DegradedComplex_Cell_init) + ((1.0 - VolFract_Cell) * Ligand_ECM_init) + (VolFract_Cell * InternalComplex_Cell_init))</Function>
+        <Function Name="KFlux_Plasma_membrane_mapping_Cell">SurfToVol_Plasma_membrane</Function>
+        <Function Name="KFlux_Plasma_membrane_mapping_ECM">(SurfToVol_Plasma_membrane * VolFract_Cell / (1.0 - VolFract_Cell))</Function>
+        <Function Name="Ligand_ECM">(( - (ComplexA_Plasma_membrane * SurfToVol_Plasma_membrane * VolFract_Cell * KMOLE) - (VolFract_Cell * DegradedComplex_Cell) + K_Ligand_ECM_total - (VolFract_Cell * InternalComplex_Cell)) / (1.0 - VolFract_Cell))</Function>
+        <CompartmentSubDomain Name="Compartment">
+          <BoundaryType Boundary="Xm" Type="Value" />
+          <BoundaryType Boundary="Xp" Type="Value" />
+          <BoundaryType Boundary="Ym" Type="Value" />
+          <BoundaryType Boundary="Yp" Type="Value" />
+          <BoundaryType Boundary="Zm" Type="Value" />
+          <BoundaryType Boundary="Zp" Type="Value" />
+          <OdeEquation Name="InternalReceptor_Cell" SolutionType="Unknown">
+            <Rate>(KFlux_Plasma_membrane_mapping_Cell * KMOLE * J_ReceptorInternalization)</Rate>
+            <Initial>InternalReceptor_Cell_init</Initial>
+          </OdeEquation>
+          <OdeEquation Name="InternalComplex_Cell" SolutionType="Unknown">
+            <Rate>( - J_Degradation + (KFlux_Plasma_membrane_mapping_Cell * KMOLE * J_ComplexInternalization))</Rate>
+            <Initial>InternalComplex_Cell_init</Initial>
+          </OdeEquation>
+          <OdeEquation Name="DegradedComplex_Cell" SolutionType="Unknown">
+            <Rate>J_Degradation</Rate>
+            <Initial>DegradedComplex_Cell_init</Initial>
+          </OdeEquation>
+          <OdeEquation Name="ReceptorsFree_Plasma_membrane" SolutionType="Unknown">
+            <Rate>( - J_ReceptorInternalization - J_LigandBinding + (Vs / Size_Plasma_membrane))</Rate>
+            <Initial>ReceptorsFree_Plasma_membrane_init</Initial>
+          </OdeEquation>
+          <OdeEquation Name="ComplexA_Plasma_membrane" SolutionType="Unknown">
+            <Rate>(J_LigandBinding - J_ComplexInternalization)</Rate>
+            <Initial>ComplexA_Plasma_membrane_init</Initial>
+          </OdeEquation>
+        </CompartmentSubDomain>
+        <Version Name="Equations_generated" KeyValue="49103723" BranchId="49101453" Archived="0" Date="26-Sep-2010 17:33:07" FromVersionable="false">
+          <Owner Name="ccaesar3" Identifier="48881051" />
+          <GroupAccess Type="1" />
+        </Version>
+      </MathDescription>
+      <Simulation Name="Simulation0">
+        <SolverTaskDescription TaskType="Unsteady" UseSymbolicJacobian="false" Solver="Runge-Kutta-Fehlberg (Fifth Order, Variable Time Step)">
+          <TimeBound StartTime="0.0" EndTime="3600.0" />
+          <TimeStep DefaultTime="0.0" MinTime="0.0" MaxTime="1.0" />
+          <ErrorTolerance Absolut="1.0E-9" Relative="1.0E-9" />
+          <OutputOptions KeepEvery="1" KeepAtMost="1000" />
+          <NumberProcessors>1</NumberProcessors>
+        </SolverTaskDescription>
+        <MathOverrides />
+        <Version Name="Simulation0" KeyValue="49103743" BranchId="49101511" Archived="0" Date="26-Sep-2010 17:33:08" FromVersionable="false">
+          <Owner Name="ccaesar3" Identifier="48881051" />
+          <GroupAccess Type="1" />
+        </Version>
+      </Simulation>
+      <Simulation Name="Simulation1">
+        <SolverTaskDescription TaskType="Unsteady" UseSymbolicJacobian="false" Solver="Runge-Kutta-Fehlberg (Fifth Order, Variable Time Step)">
+          <TimeBound StartTime="0.0" EndTime="3600.0" />
+          <TimeStep DefaultTime="0.1" MinTime="1.0E-8" MaxTime="1.0" />
+          <ErrorTolerance Absolut="1.0E-9" Relative="1.0E-9" />
+          <OutputOptions KeepEvery="1" KeepAtMost="1000" />
+          <NumberProcessors>1</NumberProcessors>
+        </SolverTaskDescription>
+        <MathOverrides />
+        <Version Name="Simulation1" KeyValue="49103745" BranchId="49103746" Archived="0" Date="26-Sep-2010 17:33:08" FromVersionable="false">
+          <Owner Name="ccaesar3" Identifier="48881051" />
+          <GroupAccess Type="1" />
+        </Version>
+      </Simulation>
+      <Simulation Name="Sensitivity Analysis - Method 1">
+        <SolverTaskDescription TaskType="Unsteady" UseSymbolicJacobian="false" Solver="Runge-Kutta-Fehlberg (Fifth Order, Variable Time Step)">
+          <TimeBound StartTime="0.0" EndTime="3600.0" />
+          <TimeStep DefaultTime="0.1" MinTime="1.0E-8" MaxTime="1.0" />
+          <ErrorTolerance Absolut="1.0E-9" Relative="1.0E-9" />
+          <OutputOptions KeepEvery="1" KeepAtMost="1000" />
+          <Constant Name="Kec">0.005</Constant>
+          <NumberProcessors>1</NumberProcessors>
+        </SolverTaskDescription>
+        <MathOverrides>
+          <Constant Name="Kec">0.0034691</Constant>
+          <Constant Name="Kdeg">1.287E-4</Constant>
+          <Constant Name="Kr_LigandBinding">0.00234082</Constant>
+          <Constant Name="Vs">6.85871</Constant>
+          <Constant Name="Kf">3.38448</Constant>
+          <Constant Name="Ligand_ECM_init">0.0</Constant>
+          <Constant Name="ComplexA_Plasma_membrane_init">29.61783</Constant>
+          <Constant Name="Ker">3.9854E-4</Constant>
+        </MathOverrides>
+        <Version Name="Sensitivity Analysis - Method 1" KeyValue="49104002" BranchId="49104003" Archived="0" Date="26-Sep-2010 17:59:25" FromVersionable="false">
+          <Owner Name="ccaesar3" Identifier="48881051" />
+          <GroupAccess Type="1" />
+        </Version>
+      </Simulation>
+      <Simulation Name="Sensitivity Analysis - Method 2">
+        <SolverTaskDescription TaskType="Unsteady" UseSymbolicJacobian="false" Solver="Runge-Kutta-Fehlberg (Fifth Order, Variable Time Step)">
+          <TimeBound StartTime="0.0" EndTime="3600.0" />
+          <TimeStep DefaultTime="0.1" MinTime="1.0E-8" MaxTime="1.0" />
+          <ErrorTolerance Absolut="1.0E-9" Relative="1.0E-9" />
+          <OutputOptions KeepEvery="1" KeepAtMost="1000" />
+          <Constant Name="Kec">0.005</Constant>
+          <NumberProcessors>1</NumberProcessors>
+        </SolverTaskDescription>
+        <MathOverrides>
+          <Constant Name="Kec">0.003846</Constant>
+          <Constant Name="Kdeg">5.8958E-4</Constant>
+          <Constant Name="Vs">14.7793</Constant>
+          <Constant Name="Kr_LigandBinding">0.0021</Constant>
+          <Constant Name="Kf">25.6596</Constant>
+          <Constant Name="Ker">0.002171</Constant>
+        </MathOverrides>
+        <Version Name="Sensitivity Analysis - Method 2" KeyValue="49103989" BranchId="49103809" Archived="0" Date="26-Sep-2010 17:55:24" FromVersionable="false">
+          <Owner Name="ccaesar3" Identifier="48881051" />
+          <GroupAccess Type="1" />
+        </Version>
+      </Simulation>
+      <AnalysisTaskList>
+        <ParameterEstimationTask Name="Question 4">
+          <parameterMappingSpecList>
+            <parameterMappingSpec parameterReferenceAttribute="unnamed.Degradation.Kdeg" lowLimit="0.0" highLimit="5.0E-4" currentValue="5.0E-5" selected="false" />
+            <parameterMappingSpec parameterReferenceAttribute="unnamed.Degradation.Kr" lowLimit="0.0" highLimit="0.0" currentValue="0.0" selected="false" />
+            <parameterMappingSpec parameterReferenceAttribute="unnamed.LigandBinding.netValence" lowLimit="0.0" highLimit="0.0" currentValue="0.0" selected="false" />
+            <parameterMappingSpec parameterReferenceAttribute="unnamed.LigandBinding.Kf" lowLimit="0.0" highLimit="10.0" currentValue="1.0" selected="false" />
+            <parameterMappingSpec parameterReferenceAttribute="unnamed.LigandBinding.Kr" lowLimit="0.0" highLimit="0.1" currentValue="0.01" selected="false" />
+            <parameterMappingSpec parameterReferenceAttribute="unnamed.SynthesisFreeReceptor.Vs" lowLimit="0.2" highLimit="20.0" currentValue="2.0" selected="false" />
+            <parameterMappingSpec parameterReferenceAttribute="unnamed.SynthesisFreeReceptor.netValence" lowLimit="0.0" highLimit="0.0" currentValue="0.0" selected="false" />
+            <parameterMappingSpec parameterReferenceAttribute="unnamed.ComplexInternalization.netValence" lowLimit="0.0" highLimit="0.0" currentValue="0.0" selected="false" />
+            <parameterMappingSpec parameterReferenceAttribute="unnamed.ComplexInternalization.Kec" lowLimit="0.0" highLimit="0.05" currentValue="0.005" selected="false" />
+            <parameterMappingSpec parameterReferenceAttribute="unnamed.ComplexInternalization.Kr" lowLimit="0.0" highLimit="0.0" currentValue="0.0" selected="false" />
+            <parameterMappingSpec parameterReferenceAttribute="unnamed.ReceptorInternalization.netValence" lowLimit="0.0" highLimit="0.0" currentValue="0.0" selected="false" />
+            <parameterMappingSpec parameterReferenceAttribute="unnamed.ReceptorInternalization.Ker" lowLimit="0.0" highLimit="0.005" currentValue="5.0E-4" selected="false" />
+            <parameterMappingSpec parameterReferenceAttribute="unnamed.ReceptorInternalization.Kr" lowLimit="0.0" highLimit="0.0" currentValue="0.0" selected="false" />
+            <parameterMappingSpec parameterReferenceAttribute="Equations.Ligand_ECM_scs.initConc" lowLimit="0.0" highLimit="0.0037" currentValue="3.7E-4" selected="false" />
+            <parameterMappingSpec parameterReferenceAttribute="Equations.InternalReceptor_Cell_scs.initConc" lowLimit="0.0" highLimit="0.0" currentValue="0.0" selected="false" />
+            <parameterMappingSpec parameterReferenceAttribute="Equations.InternalComplex_Cell_scs.initConc" lowLimit="0.0" highLimit="0.0" currentValue="0.0" selected="false" />
+            <parameterMappingSpec parameterReferenceAttribute="Equations.DegradedComplex_Cell_scs.initConc" lowLimit="0.0" highLimit="0.0" currentValue="0.0" selected="false" />
+            <parameterMappingSpec parameterReferenceAttribute="Equations.ReceptorsFree_Plasma_membrane_scs.initConc" lowLimit="0.0" highLimit="100.0" currentValue="10.0" selected="false" />
+            <parameterMappingSpec parameterReferenceAttribute="Equations.ComplexA_Plasma_membrane_scs.initConc" lowLimit="0.0" highLimit="0.0" currentValue="0.0" selected="false" />
+            <parameterMappingSpec parameterReferenceAttribute="Equations.ECM_mapping.Size" lowLimit="0.0" highLimit="1.0E7" currentValue="1000000.0" selected="false" />
+            <parameterMappingSpec parameterReferenceAttribute="Equations.Cell_mapping.Size" lowLimit="0.0" highLimit="15700.0" currentValue="1570.0" selected="false" />
+            <parameterMappingSpec parameterReferenceAttribute="Equations.Plasma_membrane_mapping.Voltage_Plasma_membrane_init" lowLimit="-120.0" highLimit="60.0" currentValue="0.0" selected="false" />
+            <parameterMappingSpec parameterReferenceAttribute="Equations.Plasma_membrane_mapping.SurfToVolRatio" lowLimit="0.001" highLimit="10000.0" currentValue="0.2" selected="false" />
+            <parameterMappingSpec parameterReferenceAttribute="Equations.Plasma_membrane_mapping.VolFraction" lowLimit="1.567538963826792E-4" highLimit="0.01567538963826792" currentValue="0.0015675389638267919" selected="false" />
+            <parameterMappingSpec parameterReferenceAttribute="Equations.Plasma_membrane_mapping.Size" lowLimit="0.0" highLimit="3140.0" currentValue="314.0" selected="false" />
+          </parameterMappingSpecList>
+          <referenceData numRows="7" numColumns="4">
+            <dataColumnList>
+              <dataColumn Name="t" weight="1.0" />
+              <dataColumn Name="C" weight="1.0" />
+              <dataColumn Name="Ci" weight="1.0" />
+              <dataColumn Name="L" weight="1.0" />
+            </dataColumnList>
+            <dataRowList>
+              <dataRow>0.0 29.61783 0.0 0.0</dataRow>
+              <dataRow>60.0 18.36306 0.00177 3.09E-6</dataRow>
+              <dataRow>120.0 17.47452 0.00216 2.78E-6</dataRow>
+              <dataRow>240.0 3.8503 0.00511 4.63E-6</dataRow>
+              <dataRow>360.0 5.184713 0.00472 4.94E-6</dataRow>
+              <dataRow>600.0 1.480892 0.00492 5.87E-6</dataRow>
+              <dataRow>900.0 2.073248 0.00462 5.71E-6</dataRow>
+            </dataRowList>
+          </referenceData>
+          <referenceDataMappingSpecList>
+            <referenceDataMappingSpec referenceDataColumnName="t" referenceDataModelSymbol="t" />
+            <referenceDataMappingSpec referenceDataColumnName="C" referenceDataModelSymbol="ComplexA_Plasma_membrane" />
+            <referenceDataMappingSpec referenceDataColumnName="Ci" referenceDataModelSymbol="InternalComplex_Cell" />
+            <referenceDataMappingSpec referenceDataColumnName="L" referenceDataModelSymbol="Ligand_ECM" />
+          </referenceDataMappingSpecList>
+          <optimizationSolverSpec optimizationSolverType="Evolutionary Programming" NumOfRuns="1">
+            <ListOfParameters>
+              <Parameter Name="Number of Generations" Value="200.0" />
+              <Parameter Name="Population Size" Value="20.0" />
+              <Parameter Name="Random Number Generator" Value="1.0" />
+              <Parameter Name="Seed" Value="0.0" />
+            </ListOfParameters>
+          </optimizationSolverSpec>
+        </ParameterEstimationTask>
+        <ParameterEstimationTask Name="Question 5">
+          <parameterMappingSpecList>
+            <parameterMappingSpec parameterReferenceAttribute="unnamed.Degradation.Kdeg" lowLimit="0.0" highLimit="5.0E-4" currentValue="5.0E-5" selected="false" />
+            <parameterMappingSpec parameterReferenceAttribute="unnamed.Degradation.Kr" lowLimit="0.0" highLimit="0.0" currentValue="0.0" selected="false" />
+            <parameterMappingSpec parameterReferenceAttribute="unnamed.LigandBinding.netValence" lowLimit="0.0" highLimit="0.0" currentValue="0.0" selected="false" />
+            <parameterMappingSpec parameterReferenceAttribute="unnamed.LigandBinding.Kf" lowLimit="0.0" highLimit="10.0" currentValue="1.0" selected="false" />
+            <parameterMappingSpec parameterReferenceAttribute="unnamed.LigandBinding.Kr" lowLimit="0.0" highLimit="0.1" currentValue="0.01" selected="false" />
+            <parameterMappingSpec parameterReferenceAttribute="unnamed.SynthesisFreeReceptor.Vs" lowLimit="0.2" highLimit="20.0" currentValue="2.0" selected="false" />
+            <parameterMappingSpec parameterReferenceAttribute="unnamed.SynthesisFreeReceptor.netValence" lowLimit="0.0" highLimit="0.0" currentValue="0.0" selected="false" />
+            <parameterMappingSpec parameterReferenceAttribute="unnamed.ComplexInternalization.netValence" lowLimit="0.0" highLimit="0.0" currentValue="0.0" selected="false" />
+            <parameterMappingSpec parameterReferenceAttribute="unnamed.ComplexInternalization.Kec" lowLimit="0.0" highLimit="0.05" currentValue="0.005" selected="false" />
+            <parameterMappingSpec parameterReferenceAttribute="unnamed.ComplexInternalization.Kr" lowLimit="0.0" highLimit="0.0" currentValue="0.0" selected="false" />
+            <parameterMappingSpec parameterReferenceAttribute="unnamed.ReceptorInternalization.netValence" lowLimit="0.0" highLimit="0.0" currentValue="0.0" selected="false" />
+            <parameterMappingSpec parameterReferenceAttribute="unnamed.ReceptorInternalization.Ker" lowLimit="0.0" highLimit="0.005" currentValue="5.0E-4" selected="false" />
+            <parameterMappingSpec parameterReferenceAttribute="unnamed.ReceptorInternalization.Kr" lowLimit="0.0" highLimit="0.0" currentValue="0.0" selected="false" />
+            <parameterMappingSpec parameterReferenceAttribute="Equations.Ligand_ECM_scs.initConc" lowLimit="0.0" highLimit="0.0037" currentValue="3.7E-4" selected="false" />
+            <parameterMappingSpec parameterReferenceAttribute="Equations.InternalReceptor_Cell_scs.initConc" lowLimit="0.0" highLimit="0.0" currentValue="0.0" selected="false" />
+            <parameterMappingSpec parameterReferenceAttribute="Equations.InternalComplex_Cell_scs.initConc" lowLimit="0.0" highLimit="0.0" currentValue="0.0" selected="false" />
+            <parameterMappingSpec parameterReferenceAttribute="Equations.DegradedComplex_Cell_scs.initConc" lowLimit="0.0" highLimit="0.0" currentValue="0.0" selected="false" />
+            <parameterMappingSpec parameterReferenceAttribute="Equations.ReceptorsFree_Plasma_membrane_scs.initConc" lowLimit="0.0" highLimit="100.0" currentValue="10.0" selected="false" />
+            <parameterMappingSpec parameterReferenceAttribute="Equations.ComplexA_Plasma_membrane_scs.initConc" lowLimit="0.0" highLimit="0.0" currentValue="0.0" selected="false" />
+            <parameterMappingSpec parameterReferenceAttribute="Equations.ECM_mapping.Size" lowLimit="0.0" highLimit="1.0E7" currentValue="1000000.0" selected="false" />
+            <parameterMappingSpec parameterReferenceAttribute="Equations.Cell_mapping.Size" lowLimit="0.0" highLimit="15700.0" currentValue="1570.0" selected="false" />
+            <parameterMappingSpec parameterReferenceAttribute="Equations.Plasma_membrane_mapping.Voltage_Plasma_membrane_init" lowLimit="-120.0" highLimit="60.0" currentValue="0.0" selected="false" />
+            <parameterMappingSpec parameterReferenceAttribute="Equations.Plasma_membrane_mapping.SurfToVolRatio" lowLimit="0.001" highLimit="10000.0" currentValue="0.2" selected="false" />
+            <parameterMappingSpec parameterReferenceAttribute="Equations.Plasma_membrane_mapping.VolFraction" lowLimit="1.567538963826792E-4" highLimit="0.01567538963826792" currentValue="0.0015675389638267919" selected="false" />
+            <parameterMappingSpec parameterReferenceAttribute="Equations.Plasma_membrane_mapping.Size" lowLimit="0.0" highLimit="3140.0" currentValue="314.0" selected="false" />
+          </parameterMappingSpecList>
+          <referenceData numRows="8" numColumns="4">
+            <dataColumnList>
+              <dataColumn Name="t" weight="1.0" />
+              <dataColumn Name="C" weight="1.0" />
+              <dataColumn Name="Ci" weight="1.0" />
+              <dataColumn Name="L" weight="1.0" />
+            </dataColumnList>
+            <dataRowList>
+              <dataRow>0.0 0.0 0.0 3.7E-4</dataRow>
+              <dataRow>60.0 6.387449 5.05E-4 3.67E-4</dataRow>
+              <dataRow>240.0 3.548583 0.00202 3.65E-4</dataRow>
+              <dataRow>420.0 7.097166 0.00353 3.61E-4</dataRow>
+              <dataRow>900.0 8.8871457 0.00896 3.52E-4</dataRow>
+              <dataRow>1800.0 6.387449 0.0113 3.49E-4</dataRow>
+              <dataRow>2700.0 6.742307 0.0165 3.39E-4</dataRow>
+              <dataRow>3600.0 15.61376 0.0153 3.37E-4</dataRow>
+            </dataRowList>
+          </referenceData>
+          <referenceDataMappingSpecList>
+            <referenceDataMappingSpec referenceDataColumnName="t" referenceDataModelSymbol="t" />
+            <referenceDataMappingSpec referenceDataColumnName="C" referenceDataModelSymbol="ComplexA_Plasma_membrane" />
+            <referenceDataMappingSpec referenceDataColumnName="Ci" referenceDataModelSymbol="InternalComplex_Cell" />
+            <referenceDataMappingSpec referenceDataColumnName="L" referenceDataModelSymbol="Ligand_ECM" />
+          </referenceDataMappingSpecList>
+          <optimizationSolverSpec optimizationSolverType="Evolutionary Programming" NumOfRuns="1">
+            <ListOfParameters>
+              <Parameter Name="Number of Generations" Value="200.0" />
+              <Parameter Name="Population Size" Value="20.0" />
+              <Parameter Name="Random Number Generator" Value="1.0" />
+              <Parameter Name="Seed" Value="0.0" />
+            </ListOfParameters>
+          </optimizationSolverSpec>
+        </ParameterEstimationTask>
+      </AnalysisTaskList>
+      <Version Name="Equations" KeyValue="49103725" BranchId="49101494" Archived="0" Date="26-Sep-2010 17:33:07" FromVersionable="false">
+        <Owner Name="ccaesar3" Identifier="48881051" />
+        <GroupAccess Type="1" />
+      </Version>
+      <MicroscopeMeasurement Name="fluor">
+        <ConvolutionKernel Type="ProjectionZKernel" />
+      </MicroscopeMeasurement>
+    </SimulationSpec>
+    <Version Name="HW6-ChristaCaesar-NEW" KeyValue="49104005" BranchId="49101695" Archived="0" Date="26-Sep-2010 17:59:25" FromVersionable="false">
+      <Owner Name="ccaesar3" Identifier="48881051" />
+      <GroupAccess Type="1" />
+    </Version>
+    <pathwayModel>
+      <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:bp="http://www.biopax.org/release/biopax-level3.owl#" version="3.0" />
+    </pathwayModel>
+    <relationshipModel>
+      <RMNS version="3.0" />
+    </relationshipModel>
+    <vcmetadata>
+      <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" />
+      <nonrdfAnnotationList />
+      <uriBindingList />
+    </vcmetadata>
+  </BioModel>
+</vcml>
+

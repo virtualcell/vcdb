@@ -1,0 +1,413 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--This biomodel was generated in VCML Version Alpha_Version_7.4.0_build_87-->
+<vcml xmlns="http://sourceforge.net/projects/vcell/vcml" Version="Alpha_Version_7.4.0_build_87">
+  <BioModel Name="Rinzel_Lee_1986">
+    <Model Name="model">
+      <ModelParameters>
+        <Parameter Name="f" Role="user defined" Unit="1">0.0058</Parameter>
+        <Parameter Name="V" Role="user defined" Unit="mV">pm.Voltage_pm</Parameter>
+        <Parameter Name="VK" Role="user defined" Unit="mV">-75.0</Parameter>
+        <Parameter Name="g_bar_KCa" Role="user defined" Unit="nS">0.0475</Parameter>
+        <Parameter Name="VL" Role="user defined" Unit="mV">-40.0</Parameter>
+        <Parameter Name="g_bar_L" Role="user defined" Unit="nS">0.0316</Parameter>
+        <Parameter Name="Kd" Role="user defined" Unit="uM">1.0</Parameter>
+        <Parameter Name="vm" Role="user defined" Unit="mV">(V + 50.0)</Parameter>
+        <Parameter Name="alpham" Role="user defined" Unit="1">(0.1 * (25.0 - vm) / (exp(((25.0 - vm) / 10.0)) - 1.0))</Parameter>
+        <Parameter Name="g_bar_Ca" Role="user defined" Unit="nS">8.14</Parameter>
+        <Parameter Name="VCa" Role="user defined" Unit="mV">100.0</Parameter>
+        <Parameter Name="vh" Role="user defined" Unit="mV">(V + 50.0)</Parameter>
+        <Parameter Name="alphah" Role="user defined" Unit="1">(0.07 * exp(( - vh / 20.0)))</Parameter>
+        <Parameter Name="betah" Role="user defined" Unit="1">(1.0 / (exp(((30.0 - vh) / 10.0)) + 1.0))</Parameter>
+        <Parameter Name="betam" Role="user defined" Unit="1">(4.0 * exp(( - vm / 18.0)))</Parameter>
+        <Parameter Name="hinfty" Role="user defined" Unit="1">(alphah / (alphah + betah))</Parameter>
+        <Parameter Name="minfty" Role="user defined" Unit="1">(alpham / (alpham + betam))</Parameter>
+        <Parameter Name="g_bar_K" Role="user defined" Unit="nS">7.68</Parameter>
+        <Parameter Name="vn" Role="user defined" Unit="mV">(V + 30.0)</Parameter>
+        <Parameter Name="betan" Role="user defined" Unit="1">(0.125 * exp(( - vn / 80.0)))</Parameter>
+        <Parameter Name="alphan" Role="user defined" Unit="1">(0.01 * (10.0 - vn) / (exp(((10.0 - vn) / 10.0)) - 1.0))</Parameter>
+        <Parameter Name="ninfty" Role="user defined" Unit="1">(alphan / (alphan + betan))</Parameter>
+        <Parameter Name="taun" Role="user defined" Unit="1">(1.0 / (alphan + betan))</Parameter>
+        <Parameter Name="lambda" Role="user defined" Unit="tbd">0.3</Parameter>
+      </ModelParameters>
+      <Compound Name="s2" />
+      <Compound Name="s3" />
+      <Compound Name="s0" />
+      <Compound Name="s1" />
+      <Compound Name="s4" />
+      <Compound Name="s5" />
+      <Compound Name="s6" />
+      <Compound Name="s7" />
+      <Feature Name="extr" KeyValue="123940913" />
+      <Feature Name="cyto" KeyValue="123940915" />
+      <Membrane PositiveFeature="cyto" NegativeFeature="extr" MembraneVoltage="Voltage_pm" Name="pm" KeyValue="123940917" />
+      <LocalizedCompound Name="Ca_extr" CompoundRef="s2" Structure="extr" OverrideName="true" KeyValue="123940919" />
+      <LocalizedCompound Name="Ca_cyto_free" CompoundRef="s3" Structure="cyto" OverrideName="true" KeyValue="123940920" />
+      <LocalizedCompound Name="I_ext" CompoundRef="s0" Structure="extr" OverrideName="true" KeyValue="123940921" />
+      <LocalizedCompound Name="I_cyt" CompoundRef="s1" Structure="cyto" OverrideName="true" KeyValue="123940922" />
+      <LocalizedCompound Name="K_extr" CompoundRef="s4" Structure="extr" OverrideName="true" KeyValue="123940923" />
+      <LocalizedCompound Name="K_cyt" CompoundRef="s5" Structure="cyto" OverrideName="true" KeyValue="123940924" />
+      <LocalizedCompound Name="n" CompoundRef="s6" Structure="pm" OverrideName="true" KeyValue="123940925" />
+      <LocalizedCompound Name="Ca_cyto_bound" CompoundRef="s7" Structure="cyto" OverrideName="true" KeyValue="123940926" />
+      <SimpleReaction Structure="cyto" Name="Calcium_Sequest" Reversible="false" FluxOption="MolecularOnly" KeyValue="123940927">
+        <Reactant LocalizedCompoundRef="Ca_cyto_free" Stoichiometry="1" KeyValue="123940928" />
+        <Kinetics KineticsType="GeneralKinetics">
+          <Parameter Name="J" Role="reaction rate" Unit="uM.s-1">(kCa * Ca_cyto_free * f)</Parameter>
+          <Parameter Name="kCa" Role="user defined" Unit="s-1">20.0</Parameter>
+        </Kinetics>
+      </SimpleReaction>
+      <SimpleReaction Structure="pm" Name="potassium voltage gate" Reversible="true" FluxOption="MolecularOnly" KeyValue="123940929">
+        <Product LocalizedCompoundRef="n" Stoichiometry="1" KeyValue="123940930" />
+        <Kinetics KineticsType="GeneralKinetics">
+          <Parameter Name="J" Role="reaction rate" Unit="molecules.um-2.s-1">(((ninfty - n) / taun) * 1000.0 * lambda)</Parameter>
+          <Parameter Name="I" Role="inward current density" Unit="pA.um-2">0.0</Parameter>
+          <Parameter Name="netValence" Role="net charge valence" Unit="1">1.0</Parameter>
+        </Kinetics>
+      </SimpleReaction>
+      <FluxStep Name="calcium_voltage" Structure="pm" Reversible="true" FluxOption="MolecularAndElectrical" KeyValue="123940931">
+        <Reactant LocalizedCompoundRef="Ca_extr" Stoichiometry="1" KeyValue="123940932" />
+        <Product LocalizedCompoundRef="Ca_cyto_free" Stoichiometry="1" KeyValue="123940933" />
+        <Kinetics KineticsType="GeneralCurrentLumpedKinetics">
+          <Parameter Name="LumpedI" Role="lumped current" Unit="pA">((g_bar_Ca * (minfty ^ 3.0) * hinfty) * (VCa - V) * f)</Parameter>
+          <Parameter Name="LumpedJ" Role="lumped reaction rate" Unit="molecules.s-1">((LumpedI / (carrierValence * _F_)) * unitFactor)</Parameter>
+          <Parameter Name="carrierValence" Role="flux carrier valence" Unit="1">1.0</Parameter>
+          <Parameter Name="unitFactor" Role="electrical unit factor" Unit="molecules.C.s-1.pA-1.mol-1">(6.02214179E11 / 1.0)</Parameter>
+        </Kinetics>
+      </FluxStep>
+      <FluxStep Name="leak" Structure="pm" Reversible="true" FluxOption="ElectricalOnly" KeyValue="123940934">
+        <Reactant LocalizedCompoundRef="I_ext" Stoichiometry="1" KeyValue="123940935" />
+        <Product LocalizedCompoundRef="I_cyt" Stoichiometry="1" KeyValue="123940936" />
+        <Kinetics KineticsType="GeneralCurrentLumpedKinetics">
+          <Parameter Name="LumpedI" Role="lumped current" Unit="pA">(g_bar_L * (VL - V))</Parameter>
+          <Parameter Name="LumpedJ" Role="lumped reaction rate" Unit="molecules.s-1">0.0</Parameter>
+          <Parameter Name="carrierValence" Role="flux carrier valence" Unit="1">1.0</Parameter>
+        </Kinetics>
+      </FluxStep>
+      <FluxStep Name="KCa" Structure="pm" Reversible="true" FluxOption="ElectricalOnly" KeyValue="123940937">
+        <Reactant LocalizedCompoundRef="K_cyt" Stoichiometry="1" KeyValue="123940938" />
+        <Product LocalizedCompoundRef="K_extr" Stoichiometry="1" KeyValue="123940939" />
+        <Modifier LocalizedCompoundRef="Ca_cyto_free" />
+        <Kinetics KineticsType="GeneralCurrentLumpedKinetics">
+          <Parameter Name="LumpedI" Role="lumped current" Unit="pA">(g_bar_KCa * Ca_cyto_free / (Ca_cyto_free + Kd) * (VK - V))</Parameter>
+          <Parameter Name="LumpedJ" Role="lumped reaction rate" Unit="molecules.s-1">0.0</Parameter>
+          <Parameter Name="carrierValence" Role="flux carrier valence" Unit="1">1.0</Parameter>
+        </Kinetics>
+      </FluxStep>
+      <FluxStep Name="Kv" Structure="pm" Reversible="true" FluxOption="ElectricalOnly" KeyValue="123940941">
+        <Reactant LocalizedCompoundRef="K_cyt" Stoichiometry="1" KeyValue="123940942" />
+        <Product LocalizedCompoundRef="K_extr" Stoichiometry="1" KeyValue="123940943" />
+        <Modifier LocalizedCompoundRef="n" />
+        <Kinetics KineticsType="GeneralCurrentLumpedKinetics">
+          <Parameter Name="LumpedI" Role="lumped current" Unit="pA">(g_bar_K * (n ^ 4.0) * (VK - V))</Parameter>
+          <Parameter Name="LumpedJ" Role="lumped reaction rate" Unit="molecules.s-1">0.0</Parameter>
+          <Parameter Name="carrierValence" Role="flux carrier valence" Unit="1">1.0</Parameter>
+        </Kinetics>
+      </FluxStep>
+      <FluxStep Name="calcium_bound" Structure="pm" Reversible="true" FluxOption="ElectricalOnly" KeyValue="123940945">
+        <Reactant LocalizedCompoundRef="Ca_extr" Stoichiometry="1" KeyValue="123940946" />
+        <Product LocalizedCompoundRef="Ca_cyto_bound" Stoichiometry="1" KeyValue="123940947" />
+        <Kinetics KineticsType="GeneralCurrentLumpedKinetics">
+          <Parameter Name="LumpedI" Role="lumped current" Unit="pA">((g_bar_Ca * (minfty ^ 3.0) * hinfty * (VCa - V)) * (1.0 - f))</Parameter>
+          <Parameter Name="LumpedJ" Role="lumped reaction rate" Unit="molecules.s-1">0.0</Parameter>
+          <Parameter Name="carrierValence" Role="flux carrier valence" Unit="1">1.0</Parameter>
+        </Kinetics>
+      </FluxStep>
+      <Diagram Name="c1" Structure="extr">
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="K_extr" LocationX="106" LocationY="157" />
+        <FluxReactionShape NodeReferenceModeAttrTag="full" FluxReactionRef="KCa" LocationX="43" LocationY="127" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="full" SimpleReactionRef="Calcium_Sequest" LocationX="100" LocationY="74" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="Ca_cyto_bound" LocationX="40" LocationY="45" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="I_cyt" LocationX="23" LocationY="259" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="n" LocationX="159" LocationY="220" />
+        <FluxReactionShape NodeReferenceModeAttrTag="full" FluxReactionRef="calcium_voltage" LocationX="46" LocationY="78" />
+        <FluxReactionShape NodeReferenceModeAttrTag="full" FluxReactionRef="leak" LocationX="25" LocationY="254" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="Ca_extr" LocationX="106" LocationY="64" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="I_ext" LocationX="137" LocationY="250" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="full" SimpleReactionRef="potassium voltage gate" LocationX="27" LocationY="213" />
+        <FluxReactionShape NodeReferenceModeAttrTag="full" FluxReactionRef="calcium_bound" LocationX="46" LocationY="38" />
+        <FluxReactionShape NodeReferenceModeAttrTag="full" FluxReactionRef="Kv" LocationX="65" LocationY="176" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="K_cyt" LocationX="54" LocationY="168" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="Ca_cyto_free" LocationX="36" LocationY="111" />
+      </Diagram>
+      <Diagram Name="m0" Structure="pm">
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="K_extr" LocationX="106" LocationY="157" />
+        <FluxReactionShape NodeReferenceModeAttrTag="full" FluxReactionRef="KCa" LocationX="43" LocationY="127" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="full" SimpleReactionRef="Calcium_Sequest" LocationX="100" LocationY="74" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="Ca_cyto_bound" LocationX="40" LocationY="45" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="I_cyt" LocationX="23" LocationY="259" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="n" LocationX="159" LocationY="220" />
+        <FluxReactionShape NodeReferenceModeAttrTag="full" FluxReactionRef="calcium_voltage" LocationX="46" LocationY="78" />
+        <FluxReactionShape NodeReferenceModeAttrTag="full" FluxReactionRef="leak" LocationX="25" LocationY="254" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="Ca_extr" LocationX="106" LocationY="64" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="I_ext" LocationX="137" LocationY="250" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="full" SimpleReactionRef="potassium voltage gate" LocationX="27" LocationY="213" />
+        <FluxReactionShape NodeReferenceModeAttrTag="full" FluxReactionRef="calcium_bound" LocationX="46" LocationY="38" />
+        <FluxReactionShape NodeReferenceModeAttrTag="full" FluxReactionRef="Kv" LocationX="65" LocationY="176" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="K_cyt" LocationX="54" LocationY="168" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="Ca_cyto_free" LocationX="36" LocationY="111" />
+      </Diagram>
+      <Diagram Name="c0" Structure="cyto">
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="K_extr" LocationX="106" LocationY="157" />
+        <FluxReactionShape NodeReferenceModeAttrTag="full" FluxReactionRef="KCa" LocationX="43" LocationY="127" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="full" SimpleReactionRef="Calcium_Sequest" LocationX="100" LocationY="74" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="Ca_cyto_bound" LocationX="40" LocationY="45" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="I_cyt" LocationX="23" LocationY="259" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="n" LocationX="159" LocationY="220" />
+        <FluxReactionShape NodeReferenceModeAttrTag="full" FluxReactionRef="calcium_voltage" LocationX="46" LocationY="78" />
+        <FluxReactionShape NodeReferenceModeAttrTag="full" FluxReactionRef="leak" LocationX="25" LocationY="254" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="Ca_extr" LocationX="106" LocationY="64" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="I_ext" LocationX="137" LocationY="250" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="full" SimpleReactionRef="potassium voltage gate" LocationX="27" LocationY="213" />
+        <FluxReactionShape NodeReferenceModeAttrTag="full" FluxReactionRef="calcium_bound" LocationX="46" LocationY="38" />
+        <FluxReactionShape NodeReferenceModeAttrTag="full" FluxReactionRef="Kv" LocationX="65" LocationY="176" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="K_cyt" LocationX="54" LocationY="168" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="Ca_cyto_free" LocationX="36" LocationY="111" />
+      </Diagram>
+      <Version Name="model" KeyValue="123940903" BranchId="116207149" Archived="0" Date="17-Jan-2018 16:16:44" FromVersionable="false">
+        <Owner Name="farochechouart" Identifier="106105292" />
+        <GroupAccess Type="1" />
+      </Version>
+      <ModelUnitSystem VolumeSubstanceUnit="uM.um3" MembraneSubstanceUnit="molecules" LumpedReactionSubstanceUnit="molecules" VolumeUnit="um3" AreaUnit="um2" LengthUnit="um" TimeUnit="s" />
+    </Model>
+    <SimulationSpec Name="test1" Stochastic="false" UseConcentration="true" RuleBased="false" MassConservationModelReduction="true" InsufficientIterations="false" InsufficientMaxMolecules="false">
+      <NetworkConstraints RbmMaxIteration="3" RbmMaxMoleculesPerSpecies="10" RbmSpeciesLimit="800" RbmReactionsLimit="2500" />
+      <Annotation />
+      <Geometry Name="non-spatial1451101864" Dimension="0">
+        <Extent X="10.0" Y="10.0" Z="10.0" />
+        <Origin X="0.0" Y="0.0" Z="0.0" />
+        <SubVolume Name="Compartment" Handle="0" Type="Compartmental" KeyValue="116207144" />
+        <Version Name="non-spatial1451101864" KeyValue="116207140" BranchId="116207141" Archived="0" Date="11-Aug-2017 15:52:28" FromVersionable="false">
+          <Owner Name="farochechouart" Identifier="106105292" />
+          <GroupAccess Type="1" />
+        </Version>
+      </Geometry>
+      <GeometryContext>
+        <FeatureMapping Feature="extr" GeometryClass="Compartment" SubVolume="Compartment" Size="904.32">
+          <BoundariesTypes Xm="Flux" Xp="Flux" Ym="Flux" Yp="Flux" Zm="Flux" Zp="Flux" />
+        </FeatureMapping>
+        <FeatureMapping Feature="cyto" GeometryClass="Compartment" SubVolume="Compartment" Size="904.32">
+          <BoundariesTypes Xm="Flux" Xp="Flux" Ym="Flux" Yp="Flux" Zm="Flux" Zp="Flux" />
+        </FeatureMapping>
+        <MembraneMapping Membrane="pm" Size="452.16" CalculateVoltage="true" SpecificCapacitance="0.01" InitialVoltage="-50.0" GeometryClass="Compartment">
+          <BoundariesTypes Xm="Flux" Xp="Flux" Ym="Flux" Yp="Flux" Zm="Flux" Zp="Flux" />
+        </MembraneMapping>
+      </GeometryContext>
+      <ReactionContext>
+        <LocalizedCompoundSpec LocalizedCompoundRef="Ca_extr" ForceConstant="true" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>1000.0</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="I_ext" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>0.1</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="K_extr" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>4000.0</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="Ca_cyto_free" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>(0.8 * f)</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="I_cyt" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>0.1</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="K_cyt" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>150000.0</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="Ca_cyto_bound" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>(0.8 * (1.0 - f))</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="n" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>0.13</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <ReactionSpec ReactionStepRef="Calcium_Sequest" ReactionMapping="included" />
+        <ReactionSpec ReactionStepRef="potassium voltage gate" ReactionMapping="included" />
+        <ReactionSpec ReactionStepRef="calcium_voltage" ReactionMapping="included" />
+        <ReactionSpec ReactionStepRef="leak" ReactionMapping="included" />
+        <ReactionSpec ReactionStepRef="KCa" ReactionMapping="included" />
+        <ReactionSpec ReactionStepRef="Kv" ReactionMapping="included" />
+        <ReactionSpec ReactionStepRef="calcium_bound" ReactionMapping="included" />
+      </ReactionContext>
+      <MathDescription Name="test1_generated">
+        <Constant Name="_F_">96480.0</Constant>
+        <Constant Name="_F_nmol_">9.648E-5</Constant>
+        <Constant Name="_K_GHK_">1.0E-9</Constant>
+        <Constant Name="_N_pmol_">6.02E11</Constant>
+        <Constant Name="_PI_">3.141592653589793</Constant>
+        <Constant Name="_R_">8314.0</Constant>
+        <Constant Name="_T_">300.0</Constant>
+        <Constant Name="C_pm">0.01</Constant>
+        <Constant Name="Ca_extr_init_uM">1000.0</Constant>
+        <Constant Name="carrierValence_calcium_bound">1.0</Constant>
+        <Constant Name="carrierValence_calcium_voltage">1.0</Constant>
+        <Constant Name="carrierValence_KCa">1.0</Constant>
+        <Constant Name="carrierValence_Kv">1.0</Constant>
+        <Constant Name="carrierValence_leak">1.0</Constant>
+        <Constant Name="f">0.0058</Constant>
+        <Constant Name="g_bar_Ca">8.14</Constant>
+        <Constant Name="g_bar_K">7.68</Constant>
+        <Constant Name="g_bar_KCa">0.0475</Constant>
+        <Constant Name="g_bar_L">0.0316</Constant>
+        <Constant Name="I_cyt_init_uM">0.1</Constant>
+        <Constant Name="I_ext_init_uM">0.1</Constant>
+        <Constant Name="I_pm">0.0</Constant>
+        <Constant Name="K_cyt_init_uM">150000.0</Constant>
+        <Constant Name="K_extr_init_uM">4000.0</Constant>
+        <Constant Name="K_millivolts_per_volt">1000.0</Constant>
+        <Constant Name="kCa">20.0</Constant>
+        <Constant Name="Kd">1.0</Constant>
+        <Constant Name="KMOLE">(1.0 / 602.0)</Constant>
+        <Constant Name="lambda">0.3</Constant>
+        <Constant Name="LumpedJ_calcium_bound">0.0</Constant>
+        <Constant Name="LumpedJ_KCa">0.0</Constant>
+        <Constant Name="LumpedJ_Kv">0.0</Constant>
+        <Constant Name="LumpedJ_leak">0.0</Constant>
+        <Constant Name="n_init_molecules_um_2">0.13</Constant>
+        <Constant Name="netValence">1.0</Constant>
+        <Constant Name="Size_cyto">904.32</Constant>
+        <Constant Name="Size_extr">904.32</Constant>
+        <Constant Name="Size_pm">452.16</Constant>
+        <Constant Name="VCa">100.0</Constant>
+        <Constant Name="VK">-75.0</Constant>
+        <Constant Name="VL">-40.0</Constant>
+        <Constant Name="Voltage_pm_init">-50.0</Constant>
+        <VolumeVariable Name="Ca_cyto_bound" Domain="Compartment" />
+        <VolumeVariable Name="Ca_cyto_free" Domain="Compartment" />
+        <VolumeVariable Name="I_cyt" Domain="Compartment" />
+        <VolumeVariable Name="K_cyt" Domain="Compartment" />
+        <VolumeVariable Name="n" Domain="Compartment" />
+        <VolumeVariable Name="Voltage_pm" Domain="Compartment" />
+        <Function Name="alphah">(0.07 * exp(( - vh / 20.0)))</Function>
+        <Function Name="alpham">(0.1 * (25.0 - vm) / (exp(((25.0 - vm) / 10.0)) - 1.0))</Function>
+        <Function Name="alphan">(0.01 * (10.0 - vn) / (exp(((10.0 - vn) / 10.0)) - 1.0))</Function>
+        <Function Name="betah">(1.0 / (exp(((30.0 - vh) / 10.0)) + 1.0))</Function>
+        <Function Name="betam">(4.0 * exp(( - vm / 18.0)))</Function>
+        <Function Name="betan">(0.125 * exp(( - vn / 80.0)))</Function>
+        <Function Name="Ca_cyto_bound_init_uM" Domain="Compartment">(0.8 * (1.0 - f))</Function>
+        <Function Name="Ca_cyto_free_init_uM" Domain="Compartment">(0.8 * f)</Function>
+        <Function Name="Ca_extr" Domain="Compartment">Ca_extr_init_uM</Function>
+        <Function Name="device_pm.Capacitance" Domain="Compartment">(C_pm * Size_pm)</Function>
+        <Function Name="F_pm" Domain="Compartment">( - LumpedI_calcium_voltage - LumpedI_leak - LumpedI_KCa - LumpedI_Kv - LumpedI_calcium_bound)</Function>
+        <Function Name="hinfty">(alphah / (alphah + betah))</Function>
+        <Function Name="I_ext" Domain="Compartment">((K_I_ext_total - (Size_cyto * I_cyt)) / Size_extr)</Function>
+        <Function Name="J_Calcium_Sequest" Domain="Compartment">(kCa * Ca_cyto_free * f)</Function>
+        <Function Name="J_potassium_voltage_gate" Domain="Compartment">(((ninfty - n) / taun) * 1000.0 * lambda)</Function>
+        <Function Name="K_extr" Domain="Compartment">((K_K_extr_total - (Size_cyto * K_cyt)) / Size_extr)</Function>
+        <Function Name="K_I_ext_total" Domain="Compartment">((Size_extr * I_ext_init_uM) + (Size_cyto * I_cyt_init_uM))</Function>
+        <Function Name="K_K_extr_total" Domain="Compartment">((Size_extr * K_extr_init_uM) + (Size_cyto * K_cyt_init_uM))</Function>
+        <Function Name="KFlux_pm_cyto" Domain="Compartment">(Size_pm / Size_cyto)</Function>
+        <Function Name="KFlux_pm_extr" Domain="Compartment">(Size_pm / Size_extr)</Function>
+        <Function Name="LumpedI_calcium_bound" Domain="Compartment">((g_bar_Ca * (minfty ^ 3.0) * hinfty * (VCa - V)) * (1.0 - f))</Function>
+        <Function Name="LumpedI_calcium_voltage" Domain="Compartment">((g_bar_Ca * (minfty ^ 3.0) * hinfty) * (VCa - V) * f)</Function>
+        <Function Name="LumpedI_KCa" Domain="Compartment">(g_bar_KCa * Ca_cyto_free / (Ca_cyto_free + Kd) * (VK - V))</Function>
+        <Function Name="LumpedI_Kv" Domain="Compartment">(g_bar_K * (n ^ 4.0) * (VK - V))</Function>
+        <Function Name="LumpedI_leak" Domain="Compartment">(g_bar_L * (VL - V))</Function>
+        <Function Name="LumpedJ_calcium_voltage" Domain="Compartment">((LumpedI_calcium_voltage / (carrierValence_calcium_voltage * _F_)) * unitFactor)</Function>
+        <Function Name="minfty">(alpham / (alpham + betam))</Function>
+        <Function Name="ninfty">(alphan / (alphan + betan))</Function>
+        <Function Name="taun">(1.0 / (alphan + betan))</Function>
+        <Function Name="unitFactor" Domain="Compartment">(6.02E11 / 1.0)</Function>
+        <Function Name="UnitFactor_mV_pF_s_neg_1_pA_neg_1">(1000.0 / 1.0)</Function>
+        <Function Name="UnitFactor_uM_um3_molecules_neg_1">(1.0 / 602.0)</Function>
+        <Function Name="V">Voltage_pm</Function>
+        <Function Name="vh">(V + 50.0)</Function>
+        <Function Name="vm">(V + 50.0)</Function>
+        <Function Name="vn">(V + 30.0)</Function>
+        <CompartmentSubDomain Name="Compartment">
+          <BoundaryType Boundary="Xm" Type="Value" />
+          <BoundaryType Boundary="Xp" Type="Value" />
+          <BoundaryType Boundary="Ym" Type="Value" />
+          <BoundaryType Boundary="Yp" Type="Value" />
+          <BoundaryType Boundary="Zm" Type="Value" />
+          <BoundaryType Boundary="Zp" Type="Value" />
+          <OdeEquation Name="Ca_cyto_free" SolutionType="Unknown">
+            <Rate>( - J_Calcium_Sequest + (UnitFactor_uM_um3_molecules_neg_1 * KFlux_pm_cyto * LumpedJ_calcium_voltage / Size_pm))</Rate>
+            <Initial>Ca_cyto_free_init_uM</Initial>
+          </OdeEquation>
+          <OdeEquation Name="I_cyt" SolutionType="Unknown">
+            <Rate>(UnitFactor_uM_um3_molecules_neg_1 * KFlux_pm_cyto * LumpedJ_leak / Size_pm)</Rate>
+            <Initial>I_cyt_init_uM</Initial>
+          </OdeEquation>
+          <OdeEquation Name="K_cyt" SolutionType="Unknown">
+            <Rate>( - (UnitFactor_uM_um3_molecules_neg_1 * KFlux_pm_cyto * LumpedJ_KCa / Size_pm) - (UnitFactor_uM_um3_molecules_neg_1 * KFlux_pm_cyto * LumpedJ_Kv / Size_pm))</Rate>
+            <Initial>K_cyt_init_uM</Initial>
+          </OdeEquation>
+          <OdeEquation Name="Ca_cyto_bound" SolutionType="Unknown">
+            <Rate>(UnitFactor_uM_um3_molecules_neg_1 * KFlux_pm_cyto * LumpedJ_calcium_bound / Size_pm)</Rate>
+            <Initial>Ca_cyto_bound_init_uM</Initial>
+          </OdeEquation>
+          <OdeEquation Name="n" SolutionType="Unknown">
+            <Rate>J_potassium_voltage_gate</Rate>
+            <Initial>n_init_molecules_um_2</Initial>
+          </OdeEquation>
+          <OdeEquation Name="Voltage_pm" SolutionType="Unknown">
+            <Rate>((UnitFactor_mV_pF_s_neg_1_pA_neg_1 / device_pm.Capacitance) * (I_pm - ( - LumpedI_calcium_voltage - LumpedI_leak - LumpedI_KCa - LumpedI_Kv - LumpedI_calcium_bound)))</Rate>
+            <Initial>Voltage_pm_init</Initial>
+          </OdeEquation>
+        </CompartmentSubDomain>
+        <Version Name="test1_generated" KeyValue="116311528" BranchId="116207146" Archived="0" Date="14-Aug-2017 13:29:45" FromVersionable="false">
+          <Owner Name="farochechouart" Identifier="106105292" />
+          <GroupAccess Type="1" />
+        </Version>
+      </MathDescription>
+      <Simulation Name="Simulation0">
+        <SolverTaskDescription TaskType="Unsteady" UseSymbolicJacobian="false" Solver="CVODE (Variable Order, Variable Time Step)">
+          <TimeBound StartTime="0.0" EndTime="100.0" />
+          <TimeStep DefaultTime="0.1" MinTime="1.0E-8" MaxTime="1.0" />
+          <ErrorTolerance Absolut="1.0E-9" Relative="1.0E-9" />
+          <OutputOptions KeepEvery="1" KeepAtMost="100000" />
+          <NumberProcessors>1</NumberProcessors>
+        </SolverTaskDescription>
+        <MathOverrides />
+        <Version Name="Simulation0" KeyValue="116311599" BranchId="116209467" Archived="0" Date="14-Aug-2017 13:29:47" FromVersionable="false">
+          <Owner Name="farochechouart" Identifier="106105292" />
+          <GroupAccess Type="1" />
+        </Version>
+      </Simulation>
+      <Simulation Name="init">
+        <SolverTaskDescription TaskType="Unsteady" UseSymbolicJacobian="false" Solver="CVODE (Variable Order, Variable Time Step)">
+          <TimeBound StartTime="0.0" EndTime="100.0" />
+          <TimeStep DefaultTime="0.1" MinTime="1.0E-8" MaxTime="1.0" />
+          <ErrorTolerance Absolut="1.0E-9" Relative="1.0E-9" />
+          <OutputOptions KeepEvery="1" KeepAtMost="100000" />
+          <NumberProcessors>1</NumberProcessors>
+        </SolverTaskDescription>
+        <MathOverrides>
+          <Constant Name="Voltage_pm_init">-70.0</Constant>
+          <Constant Name="n_init_molecules_um_2">1.0</Constant>
+        </MathOverrides>
+        <Version Name="init" KeyValue="123946755" BranchId="123940973" Archived="0" Date="17-Jan-2018 19:19:58" FromVersionable="false">
+          <Owner Name="farochechouart" Identifier="106105292" />
+          <GroupAccess Type="1" />
+        </Version>
+      </Simulation>
+      <Version Name="test1" KeyValue="123940952" BranchId="116207193" Archived="0" Date="17-Jan-2018 16:16:45" FromVersionable="false">
+        <Owner Name="farochechouart" Identifier="106105292" />
+        <GroupAccess Type="1" />
+      </Version>
+      <MicroscopeMeasurement Name="fluor">
+        <ConvolutionKernel Type="ProjectionZKernel" />
+      </MicroscopeMeasurement>
+    </SimulationSpec>
+    <Version Name="Rinzel_Lee_1986" KeyValue="123946757" BranchId="116311602" Archived="0" Date="17-Jan-2018 19:19:58" FromVersionable="false">
+      <Owner Name="farochechouart" Identifier="106105292" />
+      <GroupAccess Type="1" />
+    </Version>
+    <pathwayModel>
+      <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:bp="http://www.biopax.org/release/biopax-level3.owl#" version="3.0" />
+    </pathwayModel>
+    <relationshipModel>
+      <RMNS version="3.0" />
+    </relationshipModel>
+    <vcmetadata>
+      <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" />
+      <nonrdfAnnotationList />
+      <uriBindingList />
+    </vcmetadata>
+  </BioModel>
+</vcml>
+

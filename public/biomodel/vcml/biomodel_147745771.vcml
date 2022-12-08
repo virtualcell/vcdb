@@ -1,0 +1,205 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--This biomodel was generated in VCML Version Alpha_Version_7.4.0_build_87-->
+<vcml xmlns="http://sourceforge.net/projects/vcell/vcml" Version="Alpha_Version_7.4.0_build_87">
+  <BioModel Name="Noble">
+    <Model Name="model">
+      <ModelParameters>
+        <Parameter Name="aw" Role="user defined" Unit="s-1">0.0</Parameter>
+      </ModelParameters>
+      <Compound Name="s0" />
+      <Compound Name="s1" />
+      <Compound Name="s2" />
+      <Compound Name="s3" />
+      <Compound Name="s4" />
+      <Compound Name="s5" />
+      <Compound Name="s6" />
+      <Compound Name="s7" />
+      <Compound Name="s8" />
+      <Compound Name="s9" />
+      <Feature Name="in" KeyValue="147745703" />
+      <Feature Name="out" KeyValue="147745705" />
+      <Membrane PositiveFeature="in" NegativeFeature="out" MembraneVoltage="Voltage_m0" Name="m0" KeyValue="147745707" />
+      <LocalizedCompound Name="K_out" CompoundRef="s0" Structure="out" OverrideName="true" KeyValue="147745709" />
+      <LocalizedCompound Name="K_in" CompoundRef="s1" Structure="in" OverrideName="true" KeyValue="147745710" />
+      <LocalizedCompound Name="Na_out" CompoundRef="s2" Structure="out" OverrideName="true" KeyValue="147745711" />
+      <LocalizedCompound Name="Na_in" CompoundRef="s3" Structure="in" OverrideName="true" KeyValue="147745712" />
+      <LocalizedCompound Name="kc" CompoundRef="s4" Structure="m0" OverrideName="true" KeyValue="147745713" />
+      <LocalizedCompound Name="k" CompoundRef="s5" Structure="m0" OverrideName="true" KeyValue="147745714" />
+      <LocalizedCompound Name="nac" CompoundRef="s6" Structure="m0" OverrideName="true" KeyValue="147745715" />
+      <LocalizedCompound Name="na" CompoundRef="s7" Structure="m0" OverrideName="true" KeyValue="147745716" />
+      <LocalizedCompound Name="h" CompoundRef="s8" Structure="m0" OverrideName="true" KeyValue="147745717" />
+      <LocalizedCompound Name="hc" CompoundRef="s9" Structure="m0" OverrideName="true" KeyValue="147745718" />
+      <SimpleReaction Structure="m0" Name="r0" Reversible="false" FluxOption="MolecularAndElectrical" KeyValue="147745719">
+        <Reactant LocalizedCompoundRef="Na_out" Stoichiometry="1" KeyValue="147745720" />
+        <Product LocalizedCompoundRef="Na_in" Stoichiometry="1" KeyValue="147745721" />
+        <Modifier LocalizedCompoundRef="na" />
+        <Modifier LocalizedCompoundRef="h" />
+        <Kinetics KineticsType="GeneralKinetics">
+          <Parameter Name="J" Role="reaction rate" Unit="molecules.um-2.s-1">- (gn * (Voltage_m0 - Vna))</Parameter>
+          <Parameter Name="I" Role="inward current density" Unit="pA.um-2">((netValence * _F_ * J) * unitFactor)</Parameter>
+          <Parameter Name="netValence" Role="net charge valence" Unit="1">1.0</Parameter>
+          <Parameter Name="unitFactor" Role="electrical unit factor" Unit="pA.s.mol.molecules-1.C-1">(1.0 / 6.02214179E11)</Parameter>
+          <Parameter Name="gn" Role="user defined" Unit="molecules.um-2.s-1.mV-1">(((400.0 * (na ^ 3.0)) * h) + 0.14)</Parameter>
+          <Parameter Name="Vna" Role="user defined" Unit="mV">40.0</Parameter>
+        </Kinetics>
+      </SimpleReaction>
+      <SimpleReaction Structure="m0" Name="r1" Reversible="false" FluxOption="MolecularAndElectrical" KeyValue="147745722">
+        <Reactant LocalizedCompoundRef="K_out" Stoichiometry="1" KeyValue="147745723" />
+        <Product LocalizedCompoundRef="K_in" Stoichiometry="1" KeyValue="147745724" />
+        <Modifier LocalizedCompoundRef="k" />
+        <Kinetics KineticsType="GeneralKinetics">
+          <Parameter Name="J" Role="reaction rate" Unit="molecules.um-2.s-1">( - gk * (Voltage_m0 - Vk))</Parameter>
+          <Parameter Name="I" Role="inward current density" Unit="pA.um-2">((netValence * _F_ * J) * unitFactor)</Parameter>
+          <Parameter Name="netValence" Role="net charge valence" Unit="1">1.0</Parameter>
+          <Parameter Name="unitFactor" Role="electrical unit factor" Unit="pA.s.mol.molecules-1.C-1">(1.0 / 6.02214179E11)</Parameter>
+          <Parameter Name="gk" Role="user defined" Unit="molecules.um-2.s-1.mV-1">(g1 + g2)</Parameter>
+          <Parameter Name="Vk" Role="user defined" Unit="mV">-100.0</Parameter>
+          <Parameter Name="g1" Role="user defined" Unit="molecules.um-2.s-1.mV-1">((1.2 * exp(( - (Voltage_m0 + 90.0) / 50.0))) + (0.015 * exp(((Voltage_m0 + 90.0) / 50.0))))</Parameter>
+          <Parameter Name="g2" Role="user defined" Unit="molecules.um-2.s-1.mV-1">(1.2 * (k ^ 4.0))</Parameter>
+        </Kinetics>
+      </SimpleReaction>
+      <SimpleReaction Structure="m0" Name="r2" Reversible="true" FluxOption="MolecularOnly" KeyValue="147745725">
+        <Reactant LocalizedCompoundRef="kc" Stoichiometry="1" KeyValue="147745726" />
+        <Product LocalizedCompoundRef="k" Stoichiometry="1" KeyValue="147745727" />
+        <Kinetics KineticsType="MassAction">
+          <Parameter Name="J" Role="reaction rate" Unit="molecules.um-2.s-1">((Kf * kc) - (Kr * k))</Parameter>
+          <Parameter Name="I" Role="inward current density" Unit="pA.um-2">0.0</Parameter>
+          <Parameter Name="netValence" Role="net charge valence" Unit="1">1.0</Parameter>
+          <Parameter Name="Kf" Role="forward rate constant" Unit="s-1">(((C1 * exp(((Voltage_m0 - V0) / C2))) + (C3 * (Voltage_m0 - V0))) / (1.0 + (C4 * exp(((Voltage_m0 - V0) / C5)))))</Parameter>
+          <Parameter Name="Kr" Role="reverse rate constant" Unit="s-1">(((Cb1 * exp(((Voltage_m0 - Vb0) / Cb2))) + (Cb3 * (Voltage_m0 - Vb0))) / (1.0 + (Cb4 * exp(((Voltage_m0 - Vb0) / Cb5)))))</Parameter>
+          <Parameter Name="C3" Role="user defined" Unit="tbd">1.0E-4</Parameter>
+          <Parameter Name="C4" Role="user defined" Unit="tbd">-1.0</Parameter>
+          <Parameter Name="C5" Role="user defined" Unit="mV">-10.0</Parameter>
+          <Parameter Name="V0" Role="user defined" Unit="mV">-50.0</Parameter>
+          <Parameter Name="C1" Role="user defined" Unit="tbd">0.0</Parameter>
+          <Parameter Name="C2" Role="user defined" Unit="mV">1.0</Parameter>
+          <Parameter Name="Cb2" Role="user defined" Unit="mV">-80.0</Parameter>
+          <Parameter Name="Cb1" Role="user defined" Unit="tbd">0.002</Parameter>
+          <Parameter Name="Cb4" Role="user defined" Unit="tbd">0.0</Parameter>
+          <Parameter Name="Vb0" Role="user defined" Unit="mV">-90.0</Parameter>
+          <Parameter Name="Cb3" Role="user defined" Unit="tbd">0.0</Parameter>
+          <Parameter Name="Cb5" Role="user defined" Unit="mV">1.0</Parameter>
+        </Kinetics>
+      </SimpleReaction>
+      <SimpleReaction Structure="m0" Name="r3" Reversible="true" FluxOption="MolecularOnly" KeyValue="147745728">
+        <Reactant LocalizedCompoundRef="nac" Stoichiometry="1" KeyValue="147745729" />
+        <Product LocalizedCompoundRef="na" Stoichiometry="1" KeyValue="147745730" />
+        <Kinetics KineticsType="MassAction">
+          <Parameter Name="J" Role="reaction rate" Unit="molecules.um-2.s-1">((Kf * nac) - (Kr * na))</Parameter>
+          <Parameter Name="I" Role="inward current density" Unit="pA.um-2">0.0</Parameter>
+          <Parameter Name="netValence" Role="net charge valence" Unit="1">1.0</Parameter>
+          <Parameter Name="Kf" Role="forward rate constant" Unit="s-1">aw</Parameter>
+          <Parameter Name="Kr" Role="reverse rate constant" Unit="s-1">(((Cb1 * exp(((Voltage_m0 - Vb0) / Cb2))) + (Cb3 * (Voltage_m0 - Vb0))) / (1.0 + (Cb4 * exp(((Voltage_m0 - Vb0) / Cb5)))))</Parameter>
+          <Parameter Name="aw" Role="user defined" Unit="s-1">(((C1 * exp(((Voltage_m0 - V0) / C2))) + (C3 * (Voltage_m0 - V0))) / (1.0 + (C4 * exp(((Voltage_m0 - V0) / C5)))))</Parameter>
+          <Parameter Name="C2" Role="user defined" Unit="mV">1.0</Parameter>
+          <Parameter Name="C1" Role="user defined" Unit="s-1">0.0</Parameter>
+          <Parameter Name="C5" Role="user defined" Unit="mV">-15.0</Parameter>
+          <Parameter Name="C4" Role="user defined" Unit="1">-1.0</Parameter>
+          <Parameter Name="C3" Role="user defined" Unit="s-1.mV-1">0.1</Parameter>
+          <Parameter Name="V0" Role="user defined" Unit="mV">-48.0</Parameter>
+          <Parameter Name="Cb2" Role="user defined" Unit="mV">1.0</Parameter>
+          <Parameter Name="Cb1" Role="user defined" Unit="tbd">0.0</Parameter>
+          <Parameter Name="Cb4" Role="user defined" Unit="tbd">-1.0</Parameter>
+          <Parameter Name="Vb0" Role="user defined" Unit="mV">-8.0</Parameter>
+          <Parameter Name="Cb3" Role="user defined" Unit="tbd">-0.12</Parameter>
+          <Parameter Name="Cb5" Role="user defined" Unit="mV">5.0</Parameter>
+        </Kinetics>
+      </SimpleReaction>
+      <SimpleReaction Structure="m0" Name="r4" Reversible="true" FluxOption="MolecularOnly" KeyValue="147745731">
+        <Reactant LocalizedCompoundRef="hc" Stoichiometry="1" KeyValue="147745732" />
+        <Product LocalizedCompoundRef="h" Stoichiometry="1" KeyValue="147745733" />
+        <Kinetics KineticsType="MassAction">
+          <Parameter Name="J" Role="reaction rate" Unit="molecules.um-2.s-1">((Kf * hc) - (Kr * h))</Parameter>
+          <Parameter Name="I" Role="inward current density" Unit="pA.um-2">0.0</Parameter>
+          <Parameter Name="netValence" Role="net charge valence" Unit="1">1.0</Parameter>
+          <Parameter Name="Kf" Role="forward rate constant" Unit="s-1">(((C1 * exp(((Voltage_m0 - V0) / C2))) + (C3 * (Voltage_m0 - V0))) / (1.0 + (C4 * exp(((Voltage_m0 - V0) / C5)))))</Parameter>
+          <Parameter Name="Kr" Role="reverse rate constant" Unit="s-1">(((Cb1 * exp(((Voltage_m0 - Vb0) / Cb2))) + (Cb3 * (Voltage_m0 - Vb0))) / (1.0 + (Cb4 * exp(((Voltage_m0 - Vb0) / Cb5)))))</Parameter>
+          <Parameter Name="C3" Role="user defined" Unit="tbd">0.0</Parameter>
+          <Parameter Name="C4" Role="user defined" Unit="tbd">0.0</Parameter>
+          <Parameter Name="C5" Role="user defined" Unit="mV">1.0</Parameter>
+          <Parameter Name="V0" Role="user defined" Unit="mV">-90.0</Parameter>
+          <Parameter Name="C1" Role="user defined" Unit="tbd">0.17</Parameter>
+          <Parameter Name="C2" Role="user defined" Unit="mV">-20.0</Parameter>
+          <Parameter Name="Cb2" Role="user defined" Unit="mV">1.0</Parameter>
+          <Parameter Name="Cb1" Role="user defined" Unit="tbd">0.0</Parameter>
+          <Parameter Name="Cb4" Role="user defined" Unit="tbd">1.0</Parameter>
+          <Parameter Name="Vb0" Role="user defined" Unit="mV">-42.0</Parameter>
+          <Parameter Name="Cb3" Role="user defined" Unit="tbd">0.0</Parameter>
+          <Parameter Name="Cb5" Role="user defined" Unit="mV">-10.0</Parameter>
+        </Kinetics>
+      </SimpleReaction>
+      <Diagram Name="c1" Structure="out">
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="na" LocationX="68" LocationY="224" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="full" SimpleReactionRef="r3" LocationX="43" LocationY="246" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="hc" LocationX="55" LocationY="88" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="Na_out" LocationX="152" LocationY="177" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="K_in" LocationX="26" LocationY="111" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="k" LocationX="62" LocationY="28" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="kc" LocationX="26" LocationY="54" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="full" SimpleReactionRef="r2" LocationX="45" LocationY="59" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="K_out" LocationX="152" LocationY="97" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="full" SimpleReactionRef="r4" LocationX="51" LocationY="92" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="Na_in" LocationX="68" LocationY="198" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="full" SimpleReactionRef="r1" LocationX="59" LocationY="133" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="h" LocationX="32" LocationY="82" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="full" SimpleReactionRef="r0" LocationX="67" LocationY="180" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="nac" LocationX="20" LocationY="232" />
+      </Diagram>
+      <Diagram Name="m0" Structure="m0">
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="na" LocationX="68" LocationY="224" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="full" SimpleReactionRef="r3" LocationX="43" LocationY="246" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="hc" LocationX="55" LocationY="88" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="Na_out" LocationX="152" LocationY="177" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="K_in" LocationX="26" LocationY="111" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="k" LocationX="62" LocationY="28" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="kc" LocationX="26" LocationY="54" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="full" SimpleReactionRef="r2" LocationX="45" LocationY="59" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="K_out" LocationX="152" LocationY="97" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="full" SimpleReactionRef="r4" LocationX="51" LocationY="92" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="Na_in" LocationX="68" LocationY="198" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="full" SimpleReactionRef="r1" LocationX="59" LocationY="133" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="h" LocationX="32" LocationY="82" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="full" SimpleReactionRef="r0" LocationX="67" LocationY="180" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="nac" LocationX="20" LocationY="232" />
+      </Diagram>
+      <Diagram Name="c0" Structure="in">
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="na" LocationX="68" LocationY="224" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="full" SimpleReactionRef="r3" LocationX="43" LocationY="246" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="hc" LocationX="55" LocationY="88" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="Na_out" LocationX="152" LocationY="177" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="K_in" LocationX="26" LocationY="111" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="k" LocationX="62" LocationY="28" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="kc" LocationX="26" LocationY="54" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="full" SimpleReactionRef="r2" LocationX="45" LocationY="59" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="K_out" LocationX="152" LocationY="97" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="full" SimpleReactionRef="r4" LocationX="51" LocationY="92" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="Na_in" LocationX="68" LocationY="198" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="full" SimpleReactionRef="r1" LocationX="59" LocationY="133" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="h" LocationX="32" LocationY="82" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="full" SimpleReactionRef="r0" LocationX="67" LocationY="180" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="nac" LocationX="20" LocationY="232" />
+      </Diagram>
+      <Version Name="model" KeyValue="147745691" BranchId="146795578" Archived="0" Date="04-Jan-2019 10:16:43" FromVersionable="false">
+        <Owner Name="Anna_Boldova" Identifier="145462753" />
+        <GroupAccess Type="1" />
+      </Version>
+      <ModelUnitSystem VolumeSubstanceUnit="uM.um3" MembraneSubstanceUnit="molecules" LumpedReactionSubstanceUnit="molecules" VolumeUnit="um3" AreaUnit="um2" LengthUnit="um" TimeUnit="s" />
+    </Model>
+    <Version Name="Noble" KeyValue="147745771" BranchId="146795694" Archived="0" Date="04-Jan-2019 10:19:13" FromVersionable="false">
+      <Owner Name="Anna_Boldova" Identifier="145462753" />
+      <GroupAccess Type="0" />
+    </Version>
+    <pathwayModel>
+      <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:bp="http://www.biopax.org/release/biopax-level3.owl#" version="3.0" />
+    </pathwayModel>
+    <relationshipModel>
+      <RMNS version="3.0" />
+    </relationshipModel>
+    <vcmetadata>
+      <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" />
+      <nonrdfAnnotationList />
+      <uriBindingList />
+    </vcmetadata>
+  </BioModel>
+</vcml>
+

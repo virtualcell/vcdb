@@ -1,0 +1,357 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--This biomodel was generated in VCML Version Alpha_Version_7.4.0_build_87-->
+<vcml xmlns="http://sourceforge.net/projects/vcell/vcml" Version="Alpha_Version_7.4.0_build_87">
+  <BioModel Name="ChannelSimple">
+    <Annotation>cloned from 'ChannelSimple' owned by user Vinitarii</Annotation>
+    <Model Name="model">
+      <Annotation>cloned from 'model' owned by user Vinitarii</Annotation>
+      <ModelParameters>
+        <Parameter Name="D" Role="user defined" Unit="tbd">1000.0</Parameter>
+        <Parameter Name="L" Role="user defined" Unit="tbd">0.0</Parameter>
+        <Parameter Name="g" Role="user defined" Unit="molecules.um-2.s-1.mV-1">1.0</Parameter>
+      </ModelParameters>
+      <Compound Name="s0" />
+      <Compound Name="s1" />
+      <Compound Name="s2" />
+      <Compound Name="s3" />
+      <Compound Name="s4" />
+      <Compound Name="s5" />
+      <Compound Name="s6" />
+      <Compound Name="s7" />
+      <Feature Name="Cellular" KeyValue="196214959" />
+      <Feature Name="Extracellular" KeyValue="196214961" />
+      <Membrane PositiveFeature="Extracellular" NegativeFeature="Cellular" MembraneVoltage="Voltage_m0" Name="m0" KeyValue="196214963" />
+      <LocalizedCompound Name="Na" CompoundRef="s0" Structure="Extracellular" OverrideName="true" KeyValue="196214965" />
+      <LocalizedCompound Name="Na_c" CompoundRef="s1" Structure="Cellular" OverrideName="true" KeyValue="196214966" />
+      <LocalizedCompound Name="O" CompoundRef="s2" Structure="m0" OverrideName="true" KeyValue="196214967" />
+      <LocalizedCompound Name="C" CompoundRef="s3" Structure="m0" OverrideName="true" KeyValue="196214968" />
+      <LocalizedCompound Name="K" CompoundRef="s4" Structure="Extracellular" OverrideName="true" KeyValue="196214969" />
+      <LocalizedCompound Name="K_c" CompoundRef="s5" Structure="Cellular" OverrideName="true" KeyValue="196214970" />
+      <LocalizedCompound Name="Cl" CompoundRef="s6" Structure="Extracellular" OverrideName="true" KeyValue="196214971" />
+      <LocalizedCompound Name="Cl_c" CompoundRef="s7" Structure="Cellular" OverrideName="true" KeyValue="196214972" />
+      <SimpleReaction Structure="m0" Name="r0" Reversible="true" FluxOption="MolecularAndElectrical" KeyValue="196214973">
+        <Reactant LocalizedCompoundRef="Na" Stoichiometry="1" KeyValue="196214974" />
+        <Product LocalizedCompoundRef="Na_c" Stoichiometry="1" KeyValue="196214975" />
+        <Modifier LocalizedCompoundRef="O" />
+        <Kinetics KineticsType="GeneralKinetics">
+          <Parameter Name="J" Role="reaction rate" Unit="molecules.um-2.s-1">( - g1 * (Voltage_m0 - V1))</Parameter>
+          <Parameter Name="I" Role="inward current density" Unit="pA.um-2">((netValence * _F_ * J) * unitFactor)</Parameter>
+          <Parameter Name="netValence" Role="net charge valence" Unit="1">1.0</Parameter>
+          <Parameter Name="unitFactor" Role="electrical unit factor" Unit="pA.s.mol.molecules-1.C-1">(1.0 / 6.02214179E11)</Parameter>
+          <Parameter Name="g1" Role="user defined" Unit="molecules.um-2.s-1.mV-1">(O * g0 * m0)</Parameter>
+          <Parameter Name="V1" Role="user defined" Unit="mV">((_R_ * _T_ / _F_) * log((Na / Na_c)))</Parameter>
+          <Parameter Name="g0" Role="user defined" Unit="s-1.mV-1.um-2">0.0</Parameter>
+        </Kinetics>
+      </SimpleReaction>
+      <SimpleReaction Structure="m0" Name="r1" Reversible="true" FluxOption="MolecularOnly" KeyValue="196214977">
+        <Reactant LocalizedCompoundRef="C" Stoichiometry="1" KeyValue="196214978" />
+        <Product LocalizedCompoundRef="O" Stoichiometry="1" KeyValue="196214979" />
+        <Kinetics KineticsType="MassAction">
+          <Parameter Name="J" Role="reaction rate" Unit="molecules.um-2.s-1">((Kf * C) - (Kr * O))</Parameter>
+          <Parameter Name="I" Role="inward current density" Unit="pA.um-2">0.0</Parameter>
+          <Parameter Name="netValence" Role="net charge valence" Unit="1">1.0</Parameter>
+          <Parameter Name="Kf" Role="forward rate constant" Unit="s-1">(k1 * exp(( - a * Voltage_m0)))</Parameter>
+          <Parameter Name="Kr" Role="reverse rate constant" Unit="s-1">(k2 * exp(( - b * Voltage_m0)))</Parameter>
+          <Parameter Name="a" Role="user defined" Unit="mV-1">2.0</Parameter>
+          <Parameter Name="k1" Role="user defined" Unit="s-1">2.7</Parameter>
+          <Parameter Name="b" Role="user defined" Unit="mV-1">1.0</Parameter>
+          <Parameter Name="k2" Role="user defined" Unit="s-1">1.0</Parameter>
+        </Kinetics>
+      </SimpleReaction>
+      <SimpleReaction Structure="m0" Name="r2" Reversible="true" FluxOption="MolecularAndElectrical" KeyValue="196214980">
+        <Reactant LocalizedCompoundRef="K" Stoichiometry="1" KeyValue="196214981" />
+        <Product LocalizedCompoundRef="K_c" Stoichiometry="1" KeyValue="196214982" />
+        <Kinetics KineticsType="GeneralKinetics">
+          <Parameter Name="J" Role="reaction rate" Unit="molecules.um-2.s-1">( - g2 * (Voltage_m0 - V2))</Parameter>
+          <Parameter Name="I" Role="inward current density" Unit="pA.um-2">((netValence * _F_ * J) * unitFactor)</Parameter>
+          <Parameter Name="netValence" Role="net charge valence" Unit="1">1.0</Parameter>
+          <Parameter Name="unitFactor" Role="electrical unit factor" Unit="pA.s.mol.molecules-1.C-1">(1.0 / 6.02214179E11)</Parameter>
+          <Parameter Name="g2" Role="user defined" Unit="molecules.um-2.s-1.mV-1">0.001</Parameter>
+          <Parameter Name="V2" Role="user defined" Unit="mV">((_R_ * _T_ / _F_) * log((K / K_c)))</Parameter>
+        </Kinetics>
+      </SimpleReaction>
+      <SimpleReaction Structure="m0" Name="r3" Reversible="true" FluxOption="MolecularAndElectrical" KeyValue="196214983">
+        <Reactant LocalizedCompoundRef="Cl" Stoichiometry="1" KeyValue="196214984" />
+        <Product LocalizedCompoundRef="Cl_c" Stoichiometry="1" KeyValue="196214985" />
+        <Kinetics KineticsType="GeneralKinetics">
+          <Parameter Name="J" Role="reaction rate" Unit="molecules.um-2.s-1">( - g3 * (Voltage_m0 - V3))</Parameter>
+          <Parameter Name="I" Role="inward current density" Unit="pA.um-2">((netValence * _F_ * J) * unitFactor)</Parameter>
+          <Parameter Name="netValence" Role="net charge valence" Unit="1">1.0</Parameter>
+          <Parameter Name="unitFactor" Role="electrical unit factor" Unit="pA.s.mol.molecules-1.C-1">(1.0 / 6.02214179E11)</Parameter>
+          <Parameter Name="g3" Role="user defined" Unit="molecules.um-2.s-1.mV-1">2.5E-4</Parameter>
+          <Parameter Name="V3" Role="user defined" Unit="mV">((_R_ * _T_ / _F_) * log((Cl / Cl_c)))</Parameter>
+        </Kinetics>
+      </SimpleReaction>
+      <Diagram Name="c0" Structure="Extracellular">
+        <SimpleReactionShape NodeReferenceModeAttrTag="full" SimpleReactionRef="r3" LocationX="56" LocationY="200" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="K_c" LocationX="90" LocationY="98" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="full" SimpleReactionRef="r2" LocationX="57" LocationY="107" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="Na" LocationX="80" LocationY="141" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="C" LocationX="15" LocationY="67" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="Cl_c" LocationX="94" LocationY="202" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="Na_c" LocationX="92" LocationY="154" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="full" SimpleReactionRef="r0" LocationX="54" LocationY="154" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="full" SimpleReactionRef="r1" LocationX="55" LocationY="45" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="Cl" LocationX="76" LocationY="198" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="O" LocationX="88" LocationY="65" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="K" LocationX="80" LocationY="84" />
+      </Diagram>
+      <Diagram Name="m0" Structure="m0">
+        <SimpleReactionShape NodeReferenceModeAttrTag="full" SimpleReactionRef="r3" LocationX="56" LocationY="200" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="K_c" LocationX="90" LocationY="98" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="full" SimpleReactionRef="r2" LocationX="57" LocationY="107" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="Na" LocationX="80" LocationY="141" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="C" LocationX="15" LocationY="67" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="Cl_c" LocationX="94" LocationY="202" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="Na_c" LocationX="92" LocationY="154" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="full" SimpleReactionRef="r0" LocationX="54" LocationY="154" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="full" SimpleReactionRef="r1" LocationX="55" LocationY="45" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="Cl" LocationX="76" LocationY="198" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="O" LocationX="88" LocationY="65" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="K" LocationX="80" LocationY="84" />
+      </Diagram>
+      <Diagram Name="c1" Structure="Cellular">
+        <SimpleReactionShape NodeReferenceModeAttrTag="full" SimpleReactionRef="r3" LocationX="56" LocationY="200" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="K_c" LocationX="90" LocationY="98" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="full" SimpleReactionRef="r2" LocationX="57" LocationY="107" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="Na" LocationX="80" LocationY="141" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="C" LocationX="15" LocationY="67" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="Cl_c" LocationX="94" LocationY="202" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="Na_c" LocationX="92" LocationY="154" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="full" SimpleReactionRef="r0" LocationX="54" LocationY="154" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="full" SimpleReactionRef="r1" LocationX="55" LocationY="45" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="Cl" LocationX="76" LocationY="198" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="O" LocationX="88" LocationY="65" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="K" LocationX="80" LocationY="84" />
+      </Diagram>
+      <Version Name="model" KeyValue="196214949" BranchId="195226711" Archived="0" Date="16-Dec-2020 06:34:04" FromVersionable="false">
+        <Owner Name="madoway" Identifier="195225751" />
+        <GroupAccess Type="1" />
+        <Annotation>cloned from 'model' owned by user Vinitarii</Annotation>
+      </Version>
+      <ModelUnitSystem VolumeSubstanceUnit="uM.um3" MembraneSubstanceUnit="molecules" LumpedReactionSubstanceUnit="molecules" VolumeUnit="um3" AreaUnit="um2" LengthUnit="um" TimeUnit="s" />
+    </Model>
+    <SimulationSpec Name="Application0" Stochastic="false" UseConcentration="true" RuleBased="false" MassConservationModelReduction="false" InsufficientIterations="false" InsufficientMaxMolecules="false">
+      <NetworkConstraints RbmMaxIteration="3" RbmMaxMoleculesPerSpecies="10" RbmSpeciesLimit="800" RbmReactionsLimit="2500" />
+      <Annotation />
+      <Geometry Name="non-spatial53519938" Dimension="0">
+        <Extent X="10.0" Y="10.0" Z="10.0" />
+        <Origin X="0.0" Y="0.0" Z="0.0" />
+        <SubVolume Name="Compartment" Handle="0" Type="Compartmental" KeyValue="196143792" />
+        <Version Name="non-spatial53519938" KeyValue="196143788" BranchId="196143789" Archived="0" Date="15-Dec-2020 10:07:44" FromVersionable="false">
+          <Owner Name="madoway" Identifier="195225751" />
+          <GroupAccess Type="1" />
+        </Version>
+      </Geometry>
+      <GeometryContext>
+        <FeatureMapping Feature="Cellular" GeometryClass="Compartment" SubVolume="Compartment" Size="50000.0">
+          <BoundariesTypes Xm="Flux" Xp="Flux" Ym="Flux" Yp="Flux" Zm="Flux" Zp="Flux" />
+        </FeatureMapping>
+        <FeatureMapping Feature="Extracellular" GeometryClass="Compartment" SubVolume="Compartment" Size="50000.0">
+          <BoundariesTypes Xm="Flux" Xp="Flux" Ym="Flux" Yp="Flux" Zm="Flux" Zp="Flux" />
+        </FeatureMapping>
+        <MembraneMapping Membrane="m0" Size="6563.0" CalculateVoltage="true" SpecificCapacitance="1.0" InitialVoltage="0.0" GeometryClass="Compartment">
+          <BoundariesTypes Xm="Flux" Xp="Flux" Ym="Flux" Yp="Flux" Zm="Flux" Zp="Flux" />
+        </MembraneMapping>
+      </GeometryContext>
+      <ReactionContext>
+        <LocalizedCompoundSpec LocalizedCompoundRef="Na_c" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>18000.0</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="K_c" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>135000.0</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="Cl_c" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>7000.0</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="Na" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>145000.0</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="K" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>3000.0</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="Cl" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>120000.0</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="O" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>0.0</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="C" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>100.0</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <ReactionSpec ReactionStepRef="r0" ReactionMapping="included" />
+        <ReactionSpec ReactionStepRef="r1" ReactionMapping="included" />
+        <ReactionSpec ReactionStepRef="r2" ReactionMapping="included" />
+        <ReactionSpec ReactionStepRef="r3" ReactionMapping="included" />
+      </ReactionContext>
+      <MathDescription Name="Application0_generated">
+        <Constant Name="_F_">96485.3321</Constant>
+        <Constant Name="_F_nmol_">9.64853321E-5</Constant>
+        <Constant Name="_K_GHK_">1.0E-9</Constant>
+        <Constant Name="_N_pmol_">6.02214179E11</Constant>
+        <Constant Name="_PI_">3.141592653589793</Constant>
+        <Constant Name="_R_">8314.46261815</Constant>
+        <Constant Name="_T_">300.0</Constant>
+        <Constant Name="a">2.0</Constant>
+        <Constant Name="b">1.0</Constant>
+        <Constant Name="C_init_molecules_um_2">100.0</Constant>
+        <Constant Name="C_m0">1.0</Constant>
+        <Constant Name="Cl_c_init_uM">7000.0</Constant>
+        <Constant Name="Cl_init_uM">120000.0</Constant>
+        <Constant Name="D">1000.0</Constant>
+        <Constant Name="g">1.0</Constant>
+        <Constant Name="g0">0.0</Constant>
+        <Constant Name="g2">0.001</Constant>
+        <Constant Name="g3">2.5E-4</Constant>
+        <Constant Name="I_m0">0.0</Constant>
+        <Constant Name="k1">2.7</Constant>
+        <Constant Name="k2">1.0</Constant>
+        <Constant Name="K_c_init_uM">135000.0</Constant>
+        <Constant Name="K_init_uM">3000.0</Constant>
+        <Constant Name="K_millivolts_per_volt">1000.0</Constant>
+        <Constant Name="KMOLE">0.001660538783162726</Constant>
+        <Constant Name="L">0.0</Constant>
+        <Constant Name="Na_c_init_uM">18000.0</Constant>
+        <Constant Name="Na_init_uM">145000.0</Constant>
+        <Constant Name="netValence_r0">1.0</Constant>
+        <Constant Name="netValence_r1">1.0</Constant>
+        <Constant Name="netValence_r2">1.0</Constant>
+        <Constant Name="netValence_r3">1.0</Constant>
+        <Constant Name="O_init_molecules_um_2">0.0</Constant>
+        <Constant Name="Size_Cellular">50000.0</Constant>
+        <Constant Name="Size_Extracellular">50000.0</Constant>
+        <Constant Name="Size_m0">6563.0</Constant>
+        <Constant Name="Voltage_m0_init">0.0</Constant>
+        <VolumeVariable Name="C" Domain="Compartment" />
+        <VolumeVariable Name="Cl" Domain="Compartment" />
+        <VolumeVariable Name="Cl_c" Domain="Compartment" />
+        <VolumeVariable Name="K" Domain="Compartment" />
+        <VolumeVariable Name="K_c" Domain="Compartment" />
+        <VolumeVariable Name="Na" Domain="Compartment" />
+        <VolumeVariable Name="Na_c" Domain="Compartment" />
+        <VolumeVariable Name="O" Domain="Compartment" />
+        <VolumeVariable Name="Voltage_m0" Domain="Compartment" />
+        <Function Name="device_m0.Capacitance" Domain="Compartment">(C_m0 * Size_m0)</Function>
+        <Function Name="F_m0" Domain="Compartment">( - (I_r0 * Size_m0) - (I_r2 * Size_m0) - (I_r3 * Size_m0))</Function>
+        <Function Name="g1" Domain="Compartment">(O * g0 * Size_m0)</Function>
+        <Function Name="I_r0" Domain="Compartment">((netValence_r0 * _F_ * J_r0) * unitFactor_r0)</Function>
+        <Function Name="I_r2" Domain="Compartment">((netValence_r2 * _F_ * J_r2) * unitFactor_r2)</Function>
+        <Function Name="I_r3" Domain="Compartment">((netValence_r3 * _F_ * J_r3) * unitFactor_r3)</Function>
+        <Function Name="J_r0" Domain="Compartment">( - g1 * (Voltage_m0 - V1))</Function>
+        <Function Name="J_r1" Domain="Compartment">((Kf * C) - (Kr * O))</Function>
+        <Function Name="J_r2" Domain="Compartment">( - g2 * (Voltage_m0 - V2))</Function>
+        <Function Name="J_r3" Domain="Compartment">( - g3 * (Voltage_m0 - V3))</Function>
+        <Function Name="Kf" Domain="Compartment">(k1 * exp(( - a * Voltage_m0)))</Function>
+        <Function Name="KFlux_m0_Cellular" Domain="Compartment">(Size_m0 / Size_Cellular)</Function>
+        <Function Name="KFlux_m0_Extracellular" Domain="Compartment">(Size_m0 / Size_Extracellular)</Function>
+        <Function Name="Kr" Domain="Compartment">(k2 * exp(( - b * Voltage_m0)))</Function>
+        <Function Name="UnitFactor_mV_pF_s_neg_1_pA_neg_1">(1000.0 / 1.0)</Function>
+        <Function Name="unitFactor_r0" Domain="Compartment">(1.0 / 6.02214179E11)</Function>
+        <Function Name="unitFactor_r2" Domain="Compartment">(1.0 / 6.02214179E11)</Function>
+        <Function Name="unitFactor_r3" Domain="Compartment">(1.0 / 6.02214179E11)</Function>
+        <Function Name="UnitFactor_uM_um3_molecules_neg_1">(1000000.0 / 6.02214179E8)</Function>
+        <Function Name="V1" Domain="Compartment">((_R_ * _T_ / _F_) * log((Na / Na_c)))</Function>
+        <Function Name="V2" Domain="Compartment">((_R_ * _T_ / _F_) * log((K / K_c)))</Function>
+        <Function Name="V3" Domain="Compartment">((_R_ * _T_ / _F_) * log((Cl / Cl_c)))</Function>
+        <CompartmentSubDomain Name="Compartment">
+          <BoundaryType Boundary="Xm" Type="Value" />
+          <BoundaryType Boundary="Xp" Type="Value" />
+          <BoundaryType Boundary="Ym" Type="Value" />
+          <BoundaryType Boundary="Yp" Type="Value" />
+          <BoundaryType Boundary="Zm" Type="Value" />
+          <BoundaryType Boundary="Zp" Type="Value" />
+          <OdeEquation Name="Na_c" SolutionType="Unknown">
+            <Rate>(UnitFactor_uM_um3_molecules_neg_1 * KFlux_m0_Cellular * J_r0)</Rate>
+            <Initial>Na_c_init_uM</Initial>
+          </OdeEquation>
+          <OdeEquation Name="K_c" SolutionType="Unknown">
+            <Rate>(UnitFactor_uM_um3_molecules_neg_1 * KFlux_m0_Cellular * J_r2)</Rate>
+            <Initial>K_c_init_uM</Initial>
+          </OdeEquation>
+          <OdeEquation Name="Cl_c" SolutionType="Unknown">
+            <Rate>(UnitFactor_uM_um3_molecules_neg_1 * KFlux_m0_Cellular * J_r3)</Rate>
+            <Initial>Cl_c_init_uM</Initial>
+          </OdeEquation>
+          <OdeEquation Name="Na" SolutionType="Unknown">
+            <Rate>- (UnitFactor_uM_um3_molecules_neg_1 * KFlux_m0_Extracellular * J_r0)</Rate>
+            <Initial>Na_init_uM</Initial>
+          </OdeEquation>
+          <OdeEquation Name="K" SolutionType="Unknown">
+            <Rate>- (UnitFactor_uM_um3_molecules_neg_1 * KFlux_m0_Extracellular * J_r2)</Rate>
+            <Initial>K_init_uM</Initial>
+          </OdeEquation>
+          <OdeEquation Name="Cl" SolutionType="Unknown">
+            <Rate>- (UnitFactor_uM_um3_molecules_neg_1 * KFlux_m0_Extracellular * J_r3)</Rate>
+            <Initial>Cl_init_uM</Initial>
+          </OdeEquation>
+          <OdeEquation Name="O" SolutionType="Unknown">
+            <Rate>J_r1</Rate>
+            <Initial>O_init_molecules_um_2</Initial>
+          </OdeEquation>
+          <OdeEquation Name="C" SolutionType="Unknown">
+            <Rate>- J_r1</Rate>
+            <Initial>C_init_molecules_um_2</Initial>
+          </OdeEquation>
+          <OdeEquation Name="Voltage_m0" SolutionType="Unknown">
+            <Rate>((UnitFactor_mV_pF_s_neg_1_pA_neg_1 / device_m0.Capacitance) * (I_m0 - ( - (I_r0 * Size_m0) - (I_r2 * Size_m0) - (I_r3 * Size_m0))))</Rate>
+            <Initial>Voltage_m0_init</Initial>
+          </OdeEquation>
+        </CompartmentSubDomain>
+        <Version Name="Application0_generated" KeyValue="196216370" BranchId="196143794" Archived="0" Date="16-Dec-2020 06:52:52" FromVersionable="false">
+          <Owner Name="madoway" Identifier="195225751" />
+          <GroupAccess Type="1" />
+        </Version>
+      </MathDescription>
+      <Simulation Name="Simulation0">
+        <SolverTaskDescription TaskType="Unsteady" UseSymbolicJacobian="false" Solver="Runge-Kutta (Second Order, Fixed Time Step)">
+          <TimeBound StartTime="0.0" EndTime="5.0" />
+          <TimeStep DefaultTime="0.01" MinTime="1.0E-8" MaxTime="1.0" />
+          <ErrorTolerance Absolut="1.0E-9" Relative="1.0E-9" />
+          <OutputOptions KeepEvery="1" KeepAtMost="1000" />
+          <NumberProcessors>1</NumberProcessors>
+        </SolverTaskDescription>
+        <MathOverrides>
+          <Constant Name="b">2.0</Constant>
+          <Constant Name="a">1.0</Constant>
+          <Constant Name="g0">1.0</Constant>
+        </MathOverrides>
+        <Version Name="Simulation0" KeyValue="196216389" BranchId="196144107" Archived="0" Date="16-Dec-2020 06:52:52" FromVersionable="false">
+          <Owner Name="madoway" Identifier="195225751" />
+          <GroupAccess Type="1" />
+        </Version>
+      </Simulation>
+      <Version Name="Application0" KeyValue="196216372" BranchId="196143797" Archived="0" Date="16-Dec-2020 06:52:52" FromVersionable="false">
+        <Owner Name="madoway" Identifier="195225751" />
+        <GroupAccess Type="1" />
+      </Version>
+      <MicroscopeMeasurement Name="fluor">
+        <ConvolutionKernel Type="ProjectionZKernel" />
+      </MicroscopeMeasurement>
+    </SimulationSpec>
+    <Version Name="ChannelSimple" KeyValue="196216391" BranchId="195226743" Archived="0" Date="16-Dec-2020 06:52:52" FromVersionable="false">
+      <Owner Name="madoway" Identifier="195225751" />
+      <GroupAccess Type="0" />
+      <Annotation>cloned from 'ChannelSimple' owned by user Vinitarii</Annotation>
+    </Version>
+    <pathwayModel>
+      <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:bp="http://www.biopax.org/release/biopax-level3.owl#" version="3.0" />
+    </pathwayModel>
+    <relationshipModel>
+      <RMNS version="3.0" />
+    </relationshipModel>
+    <vcmetadata>
+      <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" />
+      <nonrdfAnnotationList />
+      <uriBindingList />
+    </vcmetadata>
+  </BioModel>
+</vcml>
+

@@ -1,0 +1,247 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--This biomodel was generated in VCML Version Alpha_Version_7.4.0_build_87-->
+<vcml xmlns="http://sourceforge.net/projects/vcell/vcml" Version="Alpha_Version_7.4.0_build_87">
+  <BioModel Name="Channel_M_L_Ch">
+    <Model Name="model">
+      <ModelParameters>
+        <Parameter Name="V" Role="user defined" Unit="mV">1.0</Parameter>
+        <Parameter Name="S00" Role="user defined" Unit="mV">(1.0 / (beta - alpha))</Parameter>
+        <Parameter Name="beta" Role="user defined" Unit="mV-1">2.0</Parameter>
+        <Parameter Name="alpha" Role="user defined" Unit="mV-1">1.0</Parameter>
+        <Parameter Name="k01" Role="user defined" Unit="s-1">2.0</Parameter>
+        <Parameter Name="k02" Role="user defined" Unit="s-1">3.0</Parameter>
+        <Parameter Name="a" Role="user defined" Unit="s-1">(k01 * exp(( - alpha * Voltage_m0)))</Parameter>
+        <Parameter Name="b" Role="user defined" Unit="s-1">(k02 * exp(( - beta * Voltage_m0)))</Parameter>
+      </ModelParameters>
+      <Compound Name="s0" />
+      <Compound Name="s1" />
+      <Compound Name="s2" />
+      <Compound Name="s3" />
+      <Feature Name="c1" KeyValue="146526818" />
+      <Feature Name="c0" KeyValue="146526820" />
+      <Membrane PositiveFeature="c1" NegativeFeature="c0" MembraneVoltage="Voltage_m0" Name="m0" KeyValue="146526822" />
+      <LocalizedCompound Name="s0_r" CompoundRef="s0" Structure="c0" OverrideName="true" KeyValue="146526824" />
+      <LocalizedCompound Name="s0_l" CompoundRef="s1" Structure="c1" OverrideName="true" KeyValue="146526825" />
+      <LocalizedCompound Name="C" CompoundRef="s2" Structure="m0" OverrideName="true" KeyValue="146526826" />
+      <LocalizedCompound Name="O" CompoundRef="s3" Structure="m0" OverrideName="true" KeyValue="146526827" />
+      <SimpleReaction Structure="m0" Name="r0" Reversible="true" FluxOption="MolecularAndElectrical" KeyValue="146526828">
+        <Reactant LocalizedCompoundRef="s0_l" Stoichiometry="1" KeyValue="146526829" />
+        <Product LocalizedCompoundRef="s0_r" Stoichiometry="1" KeyValue="146526830" />
+        <Kinetics KineticsType="GeneralKinetics">
+          <Parameter Name="J" Role="reaction rate" Unit="molecules.um-2.s-1">( - g * (Voltage_m0 - V1))</Parameter>
+          <Parameter Name="I" Role="inward current density" Unit="pA.um-2">((netValence * _F_ * J) * unitFactor)</Parameter>
+          <Parameter Name="netValence" Role="net charge valence" Unit="1">1.0</Parameter>
+          <Parameter Name="unitFactor" Role="electrical unit factor" Unit="pA.s.mol.molecules-1.C-1">(1.0 / 6.02214179E11)</Parameter>
+          <Parameter Name="g" Role="user defined" Unit="molecules.um-2.s-1.mV-1">(0.1 * (a / (a + b)))</Parameter>
+          <Parameter Name="V1" Role="user defined" Unit="mV">(S00 * log((k02 / k01)))</Parameter>
+        </Kinetics>
+      </SimpleReaction>
+      <SimpleReaction Structure="m0" Name="r1" Reversible="true" FluxOption="MolecularAndElectrical" KeyValue="146526831">
+        <Reactant LocalizedCompoundRef="O" Stoichiometry="1" KeyValue="146526832" />
+        <Product LocalizedCompoundRef="C" Stoichiometry="1" KeyValue="146526833" />
+        <Kinetics KineticsType="MassAction">
+          <Parameter Name="J" Role="reaction rate" Unit="molecules.um-2.s-1">((Kf * O) - (Kr * C))</Parameter>
+          <Parameter Name="I" Role="inward current density" Unit="pA.um-2">((netValence * _F_ * J) * unitFactor)</Parameter>
+          <Parameter Name="netValence" Role="net charge valence" Unit="1">1.0</Parameter>
+          <Parameter Name="Kf" Role="forward rate constant" Unit="s-1">a</Parameter>
+          <Parameter Name="Kr" Role="reverse rate constant" Unit="s-1">b</Parameter>
+          <Parameter Name="unitFactor" Role="electrical unit factor" Unit="pA.s.mol.molecules-1.C-1">(1.0 / 6.02214179E11)</Parameter>
+        </Kinetics>
+      </SimpleReaction>
+      <Diagram Name="c1" Structure="c1">
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="s0_r" LocationX="118" LocationY="70" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="full" SimpleReactionRef="r1" LocationX="28" LocationY="131" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="O" LocationX="25" LocationY="39" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="full" SimpleReactionRef="r0" LocationX="51" LocationY="105" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="s0_l" LocationX="78" LocationY="135" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="C" LocationX="28" LocationY="174" />
+      </Diagram>
+      <Diagram Name="m0" Structure="m0">
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="s0_r" LocationX="118" LocationY="70" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="full" SimpleReactionRef="r1" LocationX="28" LocationY="131" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="O" LocationX="25" LocationY="39" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="full" SimpleReactionRef="r0" LocationX="51" LocationY="105" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="s0_l" LocationX="78" LocationY="135" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="C" LocationX="28" LocationY="174" />
+      </Diagram>
+      <Diagram Name="c0" Structure="c0">
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="s0_r" LocationX="118" LocationY="70" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="full" SimpleReactionRef="r1" LocationX="28" LocationY="131" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="O" LocationX="25" LocationY="39" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="full" SimpleReactionRef="r0" LocationX="51" LocationY="105" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="s0_l" LocationX="78" LocationY="135" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="C" LocationX="28" LocationY="174" />
+      </Diagram>
+      <Version Name="model" KeyValue="146526812" BranchId="146000266" Archived="0" Date="17-Dec-2018 08:49:54" FromVersionable="false">
+        <Owner Name="garzdak" Identifier="144869675" />
+        <GroupAccess Type="1" />
+      </Version>
+      <ModelUnitSystem VolumeSubstanceUnit="uM.um3" MembraneSubstanceUnit="molecules" LumpedReactionSubstanceUnit="molecules" VolumeUnit="um3" AreaUnit="um2" LengthUnit="um" TimeUnit="s" />
+    </Model>
+    <SimulationSpec Name="Application0" Stochastic="false" UseConcentration="true" RuleBased="false" MassConservationModelReduction="true" InsufficientIterations="false" InsufficientMaxMolecules="false">
+      <NetworkConstraints RbmMaxIteration="3" RbmMaxMoleculesPerSpecies="10" RbmSpeciesLimit="800" RbmReactionsLimit="2500" />
+      <Annotation />
+      <Geometry Name="non-spatial1362128941" Dimension="0">
+        <Extent X="10.0" Y="10.0" Z="10.0" />
+        <Origin X="0.0" Y="0.0" Z="0.0" />
+        <SubVolume Name="Compartment" Handle="0" Type="Compartmental" KeyValue="146000261" />
+        <Version Name="non-spatial1362128941" KeyValue="146000257" BranchId="146000258" Archived="0" Date="10-Dec-2018 08:57:10" FromVersionable="false">
+          <Owner Name="garzdak" Identifier="144869675" />
+          <GroupAccess Type="1" />
+        </Version>
+      </Geometry>
+      <GeometryContext>
+        <FeatureMapping Feature="c1" GeometryClass="Compartment" SubVolume="Compartment" Size="50000.0">
+          <BoundariesTypes Xm="Flux" Xp="Flux" Ym="Flux" Yp="Flux" Zm="Flux" Zp="Flux" />
+        </FeatureMapping>
+        <FeatureMapping Feature="c0" GeometryClass="Compartment" SubVolume="Compartment" Size="50000.0">
+          <BoundariesTypes Xm="Flux" Xp="Flux" Ym="Flux" Yp="Flux" Zm="Flux" Zp="Flux" />
+        </FeatureMapping>
+        <MembraneMapping Membrane="m0" Size="6563.0" CalculateVoltage="true" SpecificCapacitance="1.0" InitialVoltage="0.0" GeometryClass="Compartment">
+          <BoundariesTypes Xm="Flux" Xp="Flux" Ym="Flux" Yp="Flux" Zm="Flux" Zp="Flux" />
+        </MembraneMapping>
+      </GeometryContext>
+      <ReactionContext>
+        <LocalizedCompoundSpec LocalizedCompoundRef="s0_l" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>0.0</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="s0_r" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>0.0</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="C" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>0.0</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="O" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>0.0</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <ReactionSpec ReactionStepRef="r0" ReactionMapping="included" />
+        <ReactionSpec ReactionStepRef="r1" ReactionMapping="included" />
+      </ReactionContext>
+      <MathDescription Name="Application0_generated">
+        <Constant Name="_F_">96480.0</Constant>
+        <Constant Name="_F_nmol_">9.648E-5</Constant>
+        <Constant Name="_K_GHK_">1.0E-9</Constant>
+        <Constant Name="_N_pmol_">6.02E11</Constant>
+        <Constant Name="_PI_">3.141592653589793</Constant>
+        <Constant Name="_R_">8314.0</Constant>
+        <Constant Name="_T_">300.0</Constant>
+        <Constant Name="alpha">1.0</Constant>
+        <Constant Name="beta">2.0</Constant>
+        <Constant Name="C_init_molecules_um_2">0.0</Constant>
+        <Constant Name="C_m0">1.0</Constant>
+        <Constant Name="I_m0">0.0</Constant>
+        <Constant Name="k01">2.0</Constant>
+        <Constant Name="k02">3.0</Constant>
+        <Constant Name="K_millivolts_per_volt">1000.0</Constant>
+        <Constant Name="KMOLE">(1.0 / 602.0)</Constant>
+        <Constant Name="netValence_r0">1.0</Constant>
+        <Constant Name="netValence_r1">1.0</Constant>
+        <Constant Name="O_init_molecules_um_2">0.0</Constant>
+        <Constant Name="s0_l_init_uM">0.0</Constant>
+        <Constant Name="s0_r_init_uM">0.0</Constant>
+        <Constant Name="Size_c0">50000.0</Constant>
+        <Constant Name="Size_c1">50000.0</Constant>
+        <Constant Name="Size_m0">6563.0</Constant>
+        <Constant Name="V">1.0</Constant>
+        <Constant Name="Voltage_m0_init">0.0</Constant>
+        <VolumeVariable Name="O" Domain="Compartment" />
+        <VolumeVariable Name="s0_r" Domain="Compartment" />
+        <VolumeVariable Name="Voltage_m0" Domain="Compartment" />
+        <Function Name="a">(k01 * exp(( - alpha * Voltage_m0)))</Function>
+        <Function Name="b">(k02 * exp(( - beta * Voltage_m0)))</Function>
+        <Function Name="C" Domain="Compartment">((K_C_total - (Size_m0 * UnitFactor_uM_um3_molecules_neg_1 * O)) / (Size_m0 * UnitFactor_uM_um3_molecules_neg_1))</Function>
+        <Function Name="device_m0.Capacitance" Domain="Compartment">(C_m0 * Size_m0)</Function>
+        <Function Name="F_m0" Domain="Compartment">( - (I_r0 * Size_m0) - (I_r1 * Size_m0))</Function>
+        <Function Name="g" Domain="Compartment">(0.1 * (a / (a + b)))</Function>
+        <Function Name="I_r0" Domain="Compartment">((netValence_r0 * _F_ * J_r0) * unitFactor_r0)</Function>
+        <Function Name="I_r1" Domain="Compartment">((netValence_r1 * _F_ * J_r1) * unitFactor_r1)</Function>
+        <Function Name="J_r0" Domain="Compartment">( - g * (Voltage_m0 - V1))</Function>
+        <Function Name="J_r1" Domain="Compartment">((Kf * O) - (Kr * C))</Function>
+        <Function Name="K_C_total" Domain="Compartment">((Size_m0 * UnitFactor_uM_um3_molecules_neg_1 * C_init_molecules_um_2) + (Size_m0 * UnitFactor_uM_um3_molecules_neg_1 * O_init_molecules_um_2))</Function>
+        <Function Name="K_s0_l_total" Domain="Compartment">((Size_c1 * s0_l_init_uM) + (Size_c0 * s0_r_init_uM))</Function>
+        <Function Name="Kf" Domain="Compartment">a</Function>
+        <Function Name="KFlux_m0_c0" Domain="Compartment">(Size_m0 / Size_c0)</Function>
+        <Function Name="KFlux_m0_c1" Domain="Compartment">(Size_m0 / Size_c1)</Function>
+        <Function Name="Kr" Domain="Compartment">b</Function>
+        <Function Name="S00">(1.0 / (beta - alpha))</Function>
+        <Function Name="s0_l" Domain="Compartment">((K_s0_l_total - (Size_c0 * s0_r)) / Size_c1)</Function>
+        <Function Name="UnitFactor_mV_pF_s_neg_1_pA_neg_1">(1000.0 / 1.0)</Function>
+        <Function Name="unitFactor_r0" Domain="Compartment">(1.0 / 6.01999999398E11)</Function>
+        <Function Name="unitFactor_r1" Domain="Compartment">(1.0 / 6.01999999398E11)</Function>
+        <Function Name="UnitFactor_uM_um3_molecules_neg_1">(1.0 / 602.0)</Function>
+        <Function Name="V1" Domain="Compartment">(S00 * log((k02 / k01)))</Function>
+        <CompartmentSubDomain Name="Compartment">
+          <BoundaryType Boundary="Xm" Type="Value" />
+          <BoundaryType Boundary="Xp" Type="Value" />
+          <BoundaryType Boundary="Ym" Type="Value" />
+          <BoundaryType Boundary="Yp" Type="Value" />
+          <BoundaryType Boundary="Zm" Type="Value" />
+          <BoundaryType Boundary="Zp" Type="Value" />
+          <OdeEquation Name="s0_r" SolutionType="Unknown">
+            <Rate>(UnitFactor_uM_um3_molecules_neg_1 * KFlux_m0_c0 * J_r0)</Rate>
+            <Initial>s0_r_init_uM</Initial>
+          </OdeEquation>
+          <OdeEquation Name="O" SolutionType="Unknown">
+            <Rate>- J_r1</Rate>
+            <Initial>O_init_molecules_um_2</Initial>
+          </OdeEquation>
+          <OdeEquation Name="Voltage_m0" SolutionType="Unknown">
+            <Rate>((UnitFactor_mV_pF_s_neg_1_pA_neg_1 / device_m0.Capacitance) * (I_m0 - ( - (I_r0 * Size_m0) - (I_r1 * Size_m0))))</Rate>
+            <Initial>Voltage_m0_init</Initial>
+          </OdeEquation>
+        </CompartmentSubDomain>
+        <Version Name="Application0_generated" KeyValue="146526810" BranchId="146000263" Archived="0" Date="17-Dec-2018 08:49:54" FromVersionable="false">
+          <Owner Name="garzdak" Identifier="144869675" />
+          <GroupAccess Type="1" />
+        </Version>
+      </MathDescription>
+      <Simulation Name="Simulation0">
+        <SolverTaskDescription TaskType="Unsteady" UseSymbolicJacobian="false" Solver="Combined Stiff Solver (IDA/CVODE)">
+          <TimeBound StartTime="0.0" EndTime="30000.0" />
+          <TimeStep DefaultTime="0.1" MinTime="1.0E-8" MaxTime="1.0" />
+          <ErrorTolerance Absolut="1.0E-9" Relative="1.0E-9" />
+          <OutputOptions OutputTimeStep="10.0" />
+          <NumberProcessors>1</NumberProcessors>
+        </SolverTaskDescription>
+        <MathOverrides>
+          <Constant Name="s0_l_init_uM">0.001</Constant>
+          <Constant Name="g" ConstantArraySpec="1001">0.001 to 1.0, log, 4 values</Constant>
+          <Constant Name="O_init_molecules_um_2">2.0</Constant>
+          <Constant Name="C_init_molecules_um_2">1.0</Constant>
+          <Constant Name="s0_r_init_uM">0.005</Constant>
+        </MathOverrides>
+        <Version Name="Simulation0" KeyValue="146526895" BranchId="146000295" Archived="0" Date="17-Dec-2018 08:54:43" FromVersionable="false">
+          <Owner Name="garzdak" Identifier="144869675" />
+          <GroupAccess Type="1" />
+        </Version>
+      </Simulation>
+      <Version Name="Application0" KeyValue="146526838" BranchId="146000286" Archived="0" Date="17-Dec-2018 08:49:54" FromVersionable="false">
+        <Owner Name="garzdak" Identifier="144869675" />
+        <GroupAccess Type="1" />
+      </Version>
+      <MicroscopeMeasurement Name="fluor">
+        <ConvolutionKernel Type="ProjectionZKernel" />
+      </MicroscopeMeasurement>
+    </SimulationSpec>
+    <Version Name="Channel_M_L_Ch" KeyValue="146526897" BranchId="146001860" Archived="0" Date="17-Dec-2018 08:54:43" FromVersionable="false">
+      <Owner Name="garzdak" Identifier="144869675" />
+      <GroupAccess Type="0" />
+    </Version>
+    <pathwayModel>
+      <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:bp="http://www.biopax.org/release/biopax-level3.owl#" version="3.0" />
+    </pathwayModel>
+    <relationshipModel>
+      <RMNS version="3.0" />
+    </relationshipModel>
+    <vcmetadata>
+      <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" />
+      <nonrdfAnnotationList />
+      <uriBindingList />
+    </vcmetadata>
+  </BioModel>
+</vcml>
+

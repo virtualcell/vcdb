@@ -1,0 +1,1059 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--This biomodel was generated in VCML Version Alpha_Version_7.4.0_build_87-->
+<vcml xmlns="http://sourceforge.net/projects/vcell/vcml" Version="Alpha_Version_7.4.0_build_87">
+  <BioModel Name="STATmoduleVariants">
+    <Annotation>ps translocates just like s. Thus there is competition between s &amp; ps. I call this 'competitive model' in the study. The signaling properties of this are compared to the 'dimeric model' &amp; the 'monomeric model'.</Annotation>
+    <Model Name="unnamed">
+      <Compound Name="PstatDimer">
+        <Annotation>tyrPstat3 dimer</Annotation>
+      </Compound>
+      <Compound Name="statKinase">
+        <Annotation>stat kinase</Annotation>
+      </Compound>
+      <Compound Name="Pstat">
+        <Annotation>tyrosine phosphorylated stat3</Annotation>
+      </Compound>
+      <Compound Name="stat">
+        <Annotation>stat3</Annotation>
+      </Compound>
+      <Compound Name="statPhosphatase">
+        <Annotation>stat3 phosphatase</Annotation>
+      </Compound>
+      <Feature Name="extraCellular" KeyValue="10627904" />
+      <Feature Name="sol" KeyValue="10627907" />
+      <Feature Name="nucleus" KeyValue="10627910" />
+      <Membrane InsideFeature="sol" OutsideFeature="extraCellular" PositiveFeature="sol" NegativeFeature="extraCellular" MembraneVoltage="Voltage_pm" Name="pm" KeyValue="10627906" />
+      <Membrane InsideFeature="nucleus" OutsideFeature="sol" PositiveFeature="nucleus" NegativeFeature="sol" MembraneVoltage="Voltage_nm" Name="nm" KeyValue="10627909" />
+      <LocalizedCompound Name="PstatDimer_sol" CompoundRef="PstatDimer" Structure="sol" OverrideName="true" KeyValue="10627914" />
+      <LocalizedCompound Name="statKinase_sol" CompoundRef="statKinase" Structure="sol" OverrideName="true" KeyValue="10627915" />
+      <LocalizedCompound Name="Pstat_nucleus" CompoundRef="Pstat" Structure="nucleus" OverrideName="true" KeyValue="10627916" />
+      <LocalizedCompound Name="stat_sol" CompoundRef="stat" Structure="sol" OverrideName="true" KeyValue="10627917" />
+      <LocalizedCompound Name="Pstat_sol" CompoundRef="Pstat" Structure="sol" OverrideName="true" KeyValue="10627918" />
+      <LocalizedCompound Name="stat_nucleus" CompoundRef="stat" Structure="nucleus" OverrideName="true" KeyValue="10627919" />
+      <LocalizedCompound Name="PstatDimer_nucleus" CompoundRef="PstatDimer" Structure="nucleus" OverrideName="true" KeyValue="10627920" />
+      <LocalizedCompound Name="statPhosphatase_nucleus" CompoundRef="statPhosphatase" Structure="nucleus" OverrideName="true" KeyValue="10627921" />
+      <SimpleReaction Structure="sol" Name="PstatDimerisationSol" Reversible="true" FluxOption="MolecularOnly" KeyValue="10627922">
+        <Reactant LocalizedCompoundRef="Pstat_sol" Stoichiometry="2" KeyValue="10627923" />
+        <Product LocalizedCompoundRef="PstatDimer_sol" Stoichiometry="1" KeyValue="10627924" />
+        <Kinetics KineticsType="MassAction">
+          <Parameter Name="J" Role="reaction rate" Unit="uM.s-1">((Kf_PstatDimerisation * pow(Pstat_sol,2.0)) - (Kr_PstatDimerisation * PstatDimer_sol))</Parameter>
+          <Parameter Name="Kf_PstatDimerisation" Role="forward rate constant" Unit="s-1.uM-1">0.6</Parameter>
+          <Parameter Name="Kr_PstatDimerisation" Role="reverse rate constant" Unit="s-1">0.03</Parameter>
+        </Kinetics>
+      </SimpleReaction>
+      <SimpleReaction Structure="nucleus" Name="statDephosphorylation" Reversible="true" FluxOption="MolecularOnly" KeyValue="10627925">
+        <Reactant LocalizedCompoundRef="Pstat_nucleus" Stoichiometry="1" KeyValue="10627926" />
+        <Product LocalizedCompoundRef="stat_nucleus" Stoichiometry="1" KeyValue="10627927" />
+        <Modifier LocalizedCompoundRef="statPhosphatase_nucleus" />
+        <Kinetics KineticsType="GeneralKinetics">
+          <Parameter Name="J" Role="reaction rate" Unit="uM.s-1">(Kcat_dephos * statPhosphatase_nucleus * Pstat_nucleus / (Km_dephos + Pstat_nucleus))</Parameter>
+          <Parameter Name="Kcat_dephos" Role="user defined" Unit="s-1">1.0</Parameter>
+          <Parameter Name="Km_dephos" Role="user defined" Unit="uM">2.0</Parameter>
+        </Kinetics>
+      </SimpleReaction>
+      <SimpleReaction Structure="sol" Name="statPhosphorylation" Reversible="true" FluxOption="MolecularOnly" KeyValue="10627929">
+        <Reactant LocalizedCompoundRef="stat_sol" Stoichiometry="1" KeyValue="10627930" />
+        <Product LocalizedCompoundRef="Pstat_sol" Stoichiometry="1" KeyValue="10627931" />
+        <Modifier LocalizedCompoundRef="statKinase_sol" />
+        <Kinetics KineticsType="GeneralKinetics">
+          <Parameter Name="J" Role="reaction rate" Unit="uM.s-1">(Kcat_phos * statKinase_sol * stat_sol / (Km_phos + stat_sol))</Parameter>
+          <Parameter Name="Km_phos" Role="user defined" Unit="uM">4.0</Parameter>
+          <Parameter Name="Kcat_phos" Role="user defined" Unit="s-1">1.0</Parameter>
+        </Kinetics>
+      </SimpleReaction>
+      <SimpleReaction Structure="nucleus" Name="PstatDimerisationNuc" Reversible="true" FluxOption="MolecularOnly" KeyValue="10627933">
+        <Reactant LocalizedCompoundRef="Pstat_nucleus" Stoichiometry="2" KeyValue="10627934" />
+        <Product LocalizedCompoundRef="PstatDimer_nucleus" Stoichiometry="1" KeyValue="10627935" />
+        <Kinetics KineticsType="MassAction">
+          <Parameter Name="J" Role="reaction rate" Unit="uM.s-1">((Kf_PstatDimerisation * pow(Pstat_nucleus,2.0)) - (Kr_PstatDimerisation * PstatDimer_nucleus))</Parameter>
+          <Parameter Name="Kf_PstatDimerisation" Role="forward rate constant" Unit="s-1.uM-1">0.6</Parameter>
+          <Parameter Name="Kr_PstatDimerisation" Role="reverse rate constant" Unit="s-1">0.03</Parameter>
+        </Kinetics>
+      </SimpleReaction>
+      <FluxStep Name="stat_export" Structure="nm" Reversible="true" FluxOption="MolecularOnly" KeyValue="10627936">
+        <Reactant LocalizedCompoundRef="stat_sol" Stoichiometry="1" />
+        <Product LocalizedCompoundRef="stat_nucleus" Stoichiometry="1" />
+        <Modifier LocalizedCompoundRef="Pstat_nucleus" />
+        <Kinetics KineticsType="GeneralKinetics">
+          <Parameter Name="J_stat_export" Role="reaction rate" Unit="uM.um.s-1">(stat_expMax * stat_nucleus / (Ks_exp + stat_nucleus + Pstat_nucleus))</Parameter>
+          <Parameter Name="I" Role="inward current density" Unit="pA.um-2">0.0</Parameter>
+          <Parameter Name="netValence" Role="net charge valence" Unit="1">0.0</Parameter>
+          <Parameter Name="stat_expMax" Role="user defined" Unit="uM.um.s-1">-0.06</Parameter>
+          <Parameter Name="Ks_exp" Role="user defined" Unit="uM">0.6</Parameter>
+        </Kinetics>
+      </FluxStep>
+      <FluxStep Name="Pstat_export" Structure="nm" Reversible="true" FluxOption="MolecularOnly" KeyValue="10627940">
+        <Reactant LocalizedCompoundRef="Pstat_sol" Stoichiometry="1" />
+        <Product LocalizedCompoundRef="Pstat_nucleus" Stoichiometry="1" />
+        <Modifier LocalizedCompoundRef="stat_nucleus" />
+        <Kinetics KineticsType="GeneralKinetics">
+          <Parameter Name="J_Pstat_export" Role="reaction rate" Unit="uM.um.s-1">(Pstat_expMax * Pstat_nucleus / (Kps_exp + Pstat_nucleus + stat_nucleus))</Parameter>
+          <Parameter Name="I" Role="inward current density" Unit="pA.um-2">0.0</Parameter>
+          <Parameter Name="netValence" Role="net charge valence" Unit="1">1.0</Parameter>
+          <Parameter Name="Pstat_expMax" Role="user defined" Unit="uM.um.s-1">-0.06</Parameter>
+          <Parameter Name="Kps_exp" Role="user defined" Unit="uM">0.6</Parameter>
+        </Kinetics>
+      </FluxStep>
+      <FluxStep Name="stat_import" Structure="nm" Reversible="true" FluxOption="MolecularOnly" KeyValue="10627944">
+        <Reactant LocalizedCompoundRef="stat_sol" Stoichiometry="1" />
+        <Product LocalizedCompoundRef="stat_nucleus" Stoichiometry="1" />
+        <Modifier LocalizedCompoundRef="Pstat_sol" />
+        <Kinetics KineticsType="GeneralKinetics">
+          <Parameter Name="J_stat_import" Role="reaction rate" Unit="uM.um.s-1">(stat_impMax * stat_sol / (Ks_imp + stat_sol + Pstat_sol))</Parameter>
+          <Parameter Name="I" Role="inward current density" Unit="pA.um-2">0.0</Parameter>
+          <Parameter Name="netValence" Role="net charge valence" Unit="1">0.0</Parameter>
+          <Parameter Name="stat_impMax" Role="user defined" Unit="uM.um.s-1">0.003</Parameter>
+          <Parameter Name="Ks_imp" Role="user defined" Unit="uM">3.0</Parameter>
+        </Kinetics>
+      </FluxStep>
+      <FluxStep Name="PstatDimer_ import" Structure="nm" Reversible="true" FluxOption="MolecularOnly" KeyValue="10627948">
+        <Reactant LocalizedCompoundRef="PstatDimer_sol" Stoichiometry="1" />
+        <Product LocalizedCompoundRef="PstatDimer_nucleus" Stoichiometry="1" />
+        <Kinetics KineticsType="GeneralKinetics">
+          <Parameter Name="J_PstatDimer_import" Role="reaction rate" Unit="uM.um.s-1">(PstatDimer_impMax * PstatDimer_sol / (Kpsd_imp + PstatDimer_sol))</Parameter>
+          <Parameter Name="I" Role="inward current density" Unit="pA.um-2">0.0</Parameter>
+          <Parameter Name="netValence" Role="net charge valence" Unit="1">1.0</Parameter>
+          <Parameter Name="Kpsd_imp" Role="user defined" Unit="uM">0.3</Parameter>
+          <Parameter Name="PstatDimer_impMax" Role="user defined" Unit="uM.um.s-1">0.045</Parameter>
+        </Kinetics>
+      </FluxStep>
+      <FluxStep Name="Pstat_import" Structure="nm" Reversible="true" FluxOption="MolecularOnly" KeyValue="10627951">
+        <Reactant LocalizedCompoundRef="Pstat_sol" Stoichiometry="1" />
+        <Product LocalizedCompoundRef="Pstat_nucleus" Stoichiometry="1" />
+        <Modifier LocalizedCompoundRef="stat_sol" />
+        <Kinetics KineticsType="GeneralKinetics">
+          <Parameter Name="J_Pstat_import" Role="reaction rate" Unit="uM.um.s-1">(Pstat_impMax * Pstat_sol / (Kps_imp + Pstat_sol + stat_sol))</Parameter>
+          <Parameter Name="I" Role="inward current density" Unit="pA.um-2">0.0</Parameter>
+          <Parameter Name="netValence" Role="net charge valence" Unit="1">1.0</Parameter>
+          <Parameter Name="Kps_imp" Role="user defined" Unit="uM">3.0</Parameter>
+          <Parameter Name="Pstat_impMax" Role="user defined" Unit="uM.um.s-1">0.006</Parameter>
+        </Kinetics>
+      </FluxStep>
+      <Diagram Name="Feature0" Structure="nucleus">
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="Pstat_nucleus" LocationX="244" LocationY="251" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="stat_nucleus" LocationX="241" LocationY="142" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="PstatDimer_nucleus" LocationX="61" LocationY="250" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="statPhosphatase_nucleus" LocationX="417" LocationY="198" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="full" SimpleReactionRef="statDephosphorylation" LocationX="246" LocationY="197" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="full" SimpleReactionRef="PstatDimerisationNuc" LocationX="143" LocationY="300" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="Pstat_nucleus" LocationX="244" LocationY="251" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="stat_nucleus" LocationX="241" LocationY="142" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="PstatDimer_nucleus" LocationX="61" LocationY="250" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="statPhosphatase_nucleus" LocationX="417" LocationY="198" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="molecule" SimpleReactionRef="statDephosphorylation" LocationX="246" LocationY="197" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="molecule" SimpleReactionRef="PstatDimerisationNuc" LocationX="143" LocationY="300" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="Pstat_nucleus" LocationX="244" LocationY="251" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="stat_nucleus" LocationX="241" LocationY="142" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="PstatDimer_nucleus" LocationX="61" LocationY="250" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="statPhosphatase_nucleus" LocationX="417" LocationY="198" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="rule" SimpleReactionRef="statDephosphorylation" LocationX="246" LocationY="197" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="rule" SimpleReactionRef="PstatDimerisationNuc" LocationX="143" LocationY="300" />
+      </Diagram>
+      <Diagram Name="Membrane0" Structure="pm">
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="shp2_sol" LocationX="44" LocationY="130" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="Pstat_sol" LocationX="31" LocationY="171" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="stat_sol" LocationX="35" LocationY="362" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="ptp1b_sol" LocationX="63" LocationY="287" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="shp2P_sol" LocationX="36" LocationY="32" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="PstatDimer_sol" LocationX="16" LocationY="263" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="shp2_sol" LocationX="44" LocationY="130" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="Pstat_sol" LocationX="31" LocationY="171" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="stat_sol" LocationX="35" LocationY="362" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="ptp1b_sol" LocationX="63" LocationY="287" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="shp2P_sol" LocationX="36" LocationY="32" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="PstatDimer_sol" LocationX="16" LocationY="263" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="shp2_sol" LocationX="44" LocationY="130" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="Pstat_sol" LocationX="31" LocationY="171" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="stat_sol" LocationX="35" LocationY="362" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="ptp1b_sol" LocationX="63" LocationY="287" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="shp2P_sol" LocationX="36" LocationY="32" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="PstatDimer_sol" LocationX="16" LocationY="263" />
+      </Diagram>
+      <Diagram Name="Feature0" Structure="sol">
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="PstatDimer_sol" LocationX="305" LocationY="235" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="statKinase_sol" LocationX="295" LocationY="151" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="stat_sol" LocationX="196" LocationY="80" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="Pstat_sol" LocationX="198" LocationY="239" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="full" SimpleReactionRef="PstatDimerisationSol" LocationX="245" LocationY="361" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="full" SimpleReactionRef="statPhosphorylation" LocationX="197" LocationY="151" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="PstatDimer_sol" LocationX="305" LocationY="235" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="statKinase_sol" LocationX="295" LocationY="151" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="stat_sol" LocationX="196" LocationY="80" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="Pstat_sol" LocationX="198" LocationY="239" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="molecule" SimpleReactionRef="PstatDimerisationSol" LocationX="245" LocationY="361" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="molecule" SimpleReactionRef="statPhosphorylation" LocationX="197" LocationY="151" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="PstatDimer_sol" LocationX="305" LocationY="235" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="statKinase_sol" LocationX="295" LocationY="151" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="stat_sol" LocationX="196" LocationY="80" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="Pstat_sol" LocationX="198" LocationY="239" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="rule" SimpleReactionRef="PstatDimerisationSol" LocationX="245" LocationY="361" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="rule" SimpleReactionRef="statPhosphorylation" LocationX="197" LocationY="151" />
+      </Diagram>
+      <Diagram Name="unnamed" Structure="extraCellular" />
+      <Diagram Name="Membrane0" Structure="nm">
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="Pstat_nucleus" LocationX="51" LocationY="177" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="stat_nucleus" LocationX="53" LocationY="271" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="PstatDimer_nucleus" LocationX="49" LocationY="101" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="statPhosphatase_nucleus" LocationX="41" LocationY="377" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="PstatDimer_sol" LocationX="27" LocationY="97" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="statKinase_sol" LocationX="49" LocationY="42" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="stat_sol" LocationX="24" LocationY="264" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="Pstat_sol" LocationX="18" LocationY="171" />
+        <FluxReactionShape NodeReferenceModeAttrTag="full" FluxReactionRef="stat_export" LocationX="105" LocationY="310" />
+        <FluxReactionShape NodeReferenceModeAttrTag="full" FluxReactionRef="Pstat_export" LocationX="105" LocationY="158" />
+        <FluxReactionShape NodeReferenceModeAttrTag="full" FluxReactionRef="stat_import" LocationX="108" LocationY="262" />
+        <FluxReactionShape NodeReferenceModeAttrTag="full" FluxReactionRef="PstatDimer_ import" LocationX="122" LocationY="66" />
+        <FluxReactionShape NodeReferenceModeAttrTag="full" FluxReactionRef="Pstat_import" LocationX="102" LocationY="202" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="Pstat_nucleus" LocationX="51" LocationY="177" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="stat_nucleus" LocationX="53" LocationY="271" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="PstatDimer_nucleus" LocationX="49" LocationY="101" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="statPhosphatase_nucleus" LocationX="41" LocationY="377" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="PstatDimer_sol" LocationX="27" LocationY="97" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="statKinase_sol" LocationX="49" LocationY="42" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="stat_sol" LocationX="24" LocationY="264" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="Pstat_sol" LocationX="18" LocationY="171" />
+        <FluxReactionShape NodeReferenceModeAttrTag="molecule" FluxReactionRef="stat_export" LocationX="105" LocationY="310" />
+        <FluxReactionShape NodeReferenceModeAttrTag="molecule" FluxReactionRef="Pstat_export" LocationX="105" LocationY="158" />
+        <FluxReactionShape NodeReferenceModeAttrTag="molecule" FluxReactionRef="stat_import" LocationX="108" LocationY="262" />
+        <FluxReactionShape NodeReferenceModeAttrTag="molecule" FluxReactionRef="PstatDimer_ import" LocationX="122" LocationY="66" />
+        <FluxReactionShape NodeReferenceModeAttrTag="molecule" FluxReactionRef="Pstat_import" LocationX="102" LocationY="202" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="Pstat_nucleus" LocationX="51" LocationY="177" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="stat_nucleus" LocationX="53" LocationY="271" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="PstatDimer_nucleus" LocationX="49" LocationY="101" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="statPhosphatase_nucleus" LocationX="41" LocationY="377" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="PstatDimer_sol" LocationX="27" LocationY="97" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="statKinase_sol" LocationX="49" LocationY="42" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="stat_sol" LocationX="24" LocationY="264" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="Pstat_sol" LocationX="18" LocationY="171" />
+        <FluxReactionShape NodeReferenceModeAttrTag="rule" FluxReactionRef="stat_export" LocationX="105" LocationY="310" />
+        <FluxReactionShape NodeReferenceModeAttrTag="rule" FluxReactionRef="Pstat_export" LocationX="105" LocationY="158" />
+        <FluxReactionShape NodeReferenceModeAttrTag="rule" FluxReactionRef="stat_import" LocationX="108" LocationY="262" />
+        <FluxReactionShape NodeReferenceModeAttrTag="rule" FluxReactionRef="PstatDimer_ import" LocationX="122" LocationY="66" />
+        <FluxReactionShape NodeReferenceModeAttrTag="rule" FluxReactionRef="Pstat_import" LocationX="102" LocationY="202" />
+      </Diagram>
+      <Version Name="unnamed" KeyValue="10627898" BranchId="4375184" Archived="0" Date="01-Dec-2004 17:52:26" FromVersionable="false">
+        <Owner Name="mayya" Identifier="4322010" />
+        <GroupAccess Type="1" />
+      </Version>
+      <ModelUnitSystem VolumeSubstanceUnit="uM.um3" MembraneSubstanceUnit="molecules" LumpedReactionSubstanceUnit="molecules" VolumeUnit="um3" AreaUnit="um2" LengthUnit="um" TimeUnit="s" />
+    </Model>
+    <SimulationSpec Name="phosphataseSensitivitySupFig3" Stochastic="false" UseConcentration="true" RuleBased="false" MassConservationModelReduction="true" InsufficientIterations="false" InsufficientMaxMolecules="false">
+      <NetworkConstraints RbmMaxIteration="1" RbmMaxMoleculesPerSpecies="10" RbmSpeciesLimit="800" RbmReactionsLimit="2500" />
+      <Annotation>To check the output at different levels of nuclear statPhosphatase.</Annotation>
+      <Geometry Name="checkFit" Dimension="0">
+        <Extent X="10.0" Y="10.0" Z="10.0" />
+        <Origin X="0.0" Y="0.0" Z="0.0" />
+        <SubVolume Name="Compartment" Handle="0" Type="Compartmental" KeyValue="4375236" />
+        <Version Name="checkFit" KeyValue="4375233" BranchId="4375234" Archived="0" Date="20-Feb-2003 13:19:11" FromVersionable="false">
+          <Owner Name="mayya" Identifier="4322010" />
+          <GroupAccess Type="1" />
+        </Version>
+      </Geometry>
+      <GeometryContext>
+        <FeatureMapping Feature="extraCellular" GeometryClass="Compartment" SubVolume="Compartment">
+          <BoundariesTypes Xm="Value" Xp="Value" Ym="Value" Yp="Value" Zm="Value" Zp="Value" />
+        </FeatureMapping>
+        <FeatureMapping Feature="sol" GeometryClass="Compartment" SubVolume="Compartment">
+          <BoundariesTypes Xm="Value" Xp="Value" Ym="Value" Yp="Value" Zm="Value" Zp="Value" />
+        </FeatureMapping>
+        <FeatureMapping Feature="nucleus" GeometryClass="Compartment" SubVolume="Compartment">
+          <BoundariesTypes Xm="Value" Xp="Value" Ym="Value" Yp="Value" Zm="Value" Zp="Value" />
+        </FeatureMapping>
+        <MembraneMapping Membrane="pm" SurfaceToVolumeRatio="0.4" VolumeFraction="0.999" CalculateVoltage="false" SpecificCapacitance="0.01" InitialVoltage="0.0" GeometryClass="Compartment">
+          <BoundariesTypes Xm="Value" Xp="Value" Ym="Value" Yp="Value" Zm="Value" Zp="Value" />
+        </MembraneMapping>
+        <MembraneMapping Membrane="nm" SurfaceToVolumeRatio="1.0" VolumeFraction="0.064" CalculateVoltage="false" SpecificCapacitance="0.01" InitialVoltage="0.0" GeometryClass="Compartment">
+          <BoundariesTypes Xm="Value" Xp="Value" Ym="Value" Yp="Value" Zm="Value" Zp="Value" />
+        </MembraneMapping>
+      </GeometryContext>
+      <ReactionContext>
+        <LocalizedCompoundSpec LocalizedCompoundRef="PstatDimer_sol" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>0.0</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="statKinase_sol" ForceConstant="true" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>(0.005 * sin((7.865E-4 * ( - 500.0 + t))) * ((t &gt; 500.0) &amp;&amp; (t &lt; 4494.39625)))</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="stat_sol" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>1.0</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="Pstat_sol" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>0.0</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="Pstat_nucleus" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>0.0</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="stat_nucleus" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>0.0</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="PstatDimer_nucleus" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>0.0</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="statPhosphatase_nucleus" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>0.05</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <ReactionSpec ReactionStepRef="PstatDimerisationSol" ReactionMapping="included" />
+        <ReactionSpec ReactionStepRef="statDephosphorylation" ReactionMapping="included" />
+        <ReactionSpec ReactionStepRef="statPhosphorylation" ReactionMapping="included" />
+        <ReactionSpec ReactionStepRef="PstatDimerisationNuc" ReactionMapping="included" />
+        <ReactionSpec ReactionStepRef="stat_export" ReactionMapping="included" />
+        <ReactionSpec ReactionStepRef="Pstat_export" ReactionMapping="included" />
+        <ReactionSpec ReactionStepRef="stat_import" ReactionMapping="included" />
+        <ReactionSpec ReactionStepRef="PstatDimer_ import" ReactionMapping="included" />
+        <ReactionSpec ReactionStepRef="Pstat_import" ReactionMapping="included" />
+      </ReactionContext>
+      <MathDescription Name="dimerRtd">
+        <Constant Name="_F_">96480.0</Constant>
+        <Constant Name="_F_nmol_">9.648E-5</Constant>
+        <Constant Name="_K_GHK_">1.0E-9</Constant>
+        <Constant Name="_N_pmol_">6.02E11</Constant>
+        <Constant Name="_R_">8314.0</Constant>
+        <Constant Name="_T_">300.0</Constant>
+        <Constant Name="K_millivolts_per_volt">1000.0</Constant>
+        <Constant Name="Kcat_dephos">1.0</Constant>
+        <Constant Name="Kcat_phos">1.0</Constant>
+        <Constant Name="Kf_PstatDimerisation_PstatDimerisationNuc">0.6</Constant>
+        <Constant Name="Kf_PstatDimerisation_PstatDimerisationSol">0.6</Constant>
+        <Constant Name="Km_dephos">2.0</Constant>
+        <Constant Name="Km_phos">4.0</Constant>
+        <Constant Name="KMOLE">0.0016611295681063123</Constant>
+        <Constant Name="Kps_exp">0.6</Constant>
+        <Constant Name="Kps_imp">3.0</Constant>
+        <Constant Name="Kpsd_imp">0.3</Constant>
+        <Constant Name="Kr_PstatDimerisation_PstatDimerisationNuc">0.03</Constant>
+        <Constant Name="Kr_PstatDimerisation_PstatDimerisationSol">0.03</Constant>
+        <Constant Name="Ks_exp">0.6</Constant>
+        <Constant Name="Ks_imp">3.0</Constant>
+        <Constant Name="Pstat_expMax">-0.06</Constant>
+        <Constant Name="Pstat_impMax">0.006</Constant>
+        <Constant Name="Pstat_nucleus_init">0.0</Constant>
+        <Constant Name="Pstat_sol_init">0.0</Constant>
+        <Constant Name="PstatDimer_impMax">0.045</Constant>
+        <Constant Name="PstatDimer_nucleus_init">0.0</Constant>
+        <Constant Name="PstatDimer_sol_init">0.0</Constant>
+        <Constant Name="stat_expMax">-0.06</Constant>
+        <Constant Name="stat_impMax">0.003</Constant>
+        <Constant Name="stat_nucleus_init">0.0</Constant>
+        <Constant Name="stat_sol_init">1.0</Constant>
+        <Constant Name="statPhosphatase_nucleus_init">0.05</Constant>
+        <Constant Name="SurfToVol_nm">1.0</Constant>
+        <Constant Name="SurfToVol_pm">0.4</Constant>
+        <Constant Name="VolFract_nucleus">0.064</Constant>
+        <Constant Name="VolFract_sol">0.999</Constant>
+        <VolumeVariable Name="Pstat_nucleus" />
+        <VolumeVariable Name="Pstat_sol" />
+        <VolumeVariable Name="PstatDimer_nucleus" />
+        <VolumeVariable Name="stat_nucleus" />
+        <VolumeVariable Name="stat_sol" />
+        <Function Name="J_Pstat_export">(Pstat_expMax * Pstat_nucleus / (Kps_exp + Pstat_nucleus + stat_nucleus))</Function>
+        <Function Name="J_Pstat_import">(Pstat_impMax * Pstat_sol / (Kps_imp + Pstat_sol + stat_sol))</Function>
+        <Function Name="J_PstatDimer_import">(PstatDimer_impMax * PstatDimer_sol / (Kpsd_imp + PstatDimer_sol))</Function>
+        <Function Name="J_PstatDimerisationNuc">((Kf_PstatDimerisation_PstatDimerisationNuc * pow(Pstat_nucleus,2.0)) - (Kr_PstatDimerisation_PstatDimerisationNuc * PstatDimer_nucleus))</Function>
+        <Function Name="J_PstatDimerisationSol">((Kf_PstatDimerisation_PstatDimerisationSol * pow(Pstat_sol,2.0)) - (Kr_PstatDimerisation_PstatDimerisationSol * PstatDimer_sol))</Function>
+        <Function Name="J_stat_export">(stat_expMax * stat_nucleus / (Ks_exp + stat_nucleus + Pstat_nucleus))</Function>
+        <Function Name="J_stat_import">(stat_impMax * stat_sol / (Ks_imp + stat_sol + Pstat_sol))</Function>
+        <Function Name="J_statDephosphorylation">(Kcat_dephos * statPhosphatase_nucleus * Pstat_nucleus / (Km_dephos + Pstat_nucleus))</Function>
+        <Function Name="J_statPhosphorylation">(Kcat_phos * statKinase_sol * stat_sol / (Km_phos + stat_sol))</Function>
+        <Function Name="K_PstatDimer_sol_total">((PstatDimer_nucleus_init * VolFract_nucleus * VolFract_sol) + (0.5 * stat_nucleus_init * VolFract_nucleus * VolFract_sol) + (0.5 * Pstat_nucleus_init * VolFract_nucleus * VolFract_sol) + (0.5 * Pstat_sol_init * (1.0 - VolFract_nucleus) * VolFract_sol) + (PstatDimer_sol_init * (1.0 - VolFract_nucleus) * VolFract_sol) + (0.5 * stat_sol_init * (1.0 - VolFract_nucleus) * VolFract_sol))</Function>
+        <Function Name="K_statPhosphatase_nucleus_total">(statPhosphatase_nucleus_init * VolFract_nucleus * VolFract_sol)</Function>
+        <Function Name="KFlux_nm_nucleus">SurfToVol_nm</Function>
+        <Function Name="KFlux_nm_sol">(SurfToVol_nm * VolFract_nucleus / (1.0 - VolFract_nucleus))</Function>
+        <Function Name="KFlux_pm_extraCellular">(SurfToVol_pm * VolFract_sol / (1.0 - VolFract_sol))</Function>
+        <Function Name="KFlux_pm_sol">(SurfToVol_pm / (1.0 - VolFract_nucleus))</Function>
+        <Function Name="PstatDimer_sol">(( - (PstatDimer_nucleus * VolFract_nucleus * VolFract_sol) - (0.5 * stat_nucleus * VolFract_nucleus * VolFract_sol) - (0.5 * Pstat_nucleus * VolFract_nucleus * VolFract_sol) - (0.5 * Pstat_sol * (1.0 - VolFract_nucleus) * VolFract_sol) + K_PstatDimer_sol_total - (0.5 * stat_sol * (1.0 - VolFract_nucleus) * VolFract_sol)) / ((1.0 - VolFract_nucleus) * VolFract_sol))</Function>
+        <Function Name="statKinase_sol">(0.005 * sin((7.865E-4 * ( - 500.0 + t))) * ((t &gt; 500.0) &amp;&amp; (t &lt; 4494.39625)))</Function>
+        <Function Name="statKinase_sol_init">(0.005 * sin((7.865E-4 * ( - 500.0 + t))) * ((t &gt; 500.0) &amp;&amp; (t &lt; 4494.39625)))</Function>
+        <Function Name="statPhosphatase_nucleus">(K_statPhosphatase_nucleus_total / (VolFract_nucleus * VolFract_sol))</Function>
+        <Function Name="Voltage_Membrane0">0.0</Function>
+        <CompartmentSubDomain Name="Compartment">
+          <BoundaryType Boundary="Xm" Type="Value" />
+          <BoundaryType Boundary="Xp" Type="Value" />
+          <BoundaryType Boundary="Ym" Type="Value" />
+          <BoundaryType Boundary="Yp" Type="Value" />
+          <BoundaryType Boundary="Zm" Type="Value" />
+          <BoundaryType Boundary="Zp" Type="Value" />
+          <OdeEquation Name="stat_sol" SolutionType="Unknown">
+            <Rate>( - (KFlux_nm_sol * J_stat_import) - J_statPhosphorylation - (KFlux_nm_sol * J_stat_export))</Rate>
+            <Initial>stat_sol_init</Initial>
+          </OdeEquation>
+          <OdeEquation Name="Pstat_sol" SolutionType="Unknown">
+            <Rate>( - (KFlux_nm_sol * J_Pstat_import) - (KFlux_nm_sol * J_Pstat_export) - (2.0 * J_PstatDimerisationSol) + J_statPhosphorylation)</Rate>
+            <Initial>Pstat_sol_init</Initial>
+          </OdeEquation>
+          <OdeEquation Name="Pstat_nucleus" SolutionType="Unknown">
+            <Rate>((KFlux_nm_nucleus * J_Pstat_import) + (KFlux_nm_nucleus * J_Pstat_export) - J_statDephosphorylation - (2.0 * J_PstatDimerisationNuc))</Rate>
+            <Initial>Pstat_nucleus_init</Initial>
+          </OdeEquation>
+          <OdeEquation Name="stat_nucleus" SolutionType="Unknown">
+            <Rate>((KFlux_nm_nucleus * J_stat_import) + J_statDephosphorylation + (KFlux_nm_nucleus * J_stat_export))</Rate>
+            <Initial>stat_nucleus_init</Initial>
+          </OdeEquation>
+          <OdeEquation Name="PstatDimer_nucleus" SolutionType="Unknown">
+            <Rate>(J_PstatDimerisationNuc + (KFlux_nm_nucleus * J_PstatDimer_import))</Rate>
+            <Initial>PstatDimer_nucleus_init</Initial>
+          </OdeEquation>
+        </CompartmentSubDomain>
+        <Version Name="dimerRtd" KeyValue="10633750" BranchId="5055085" Archived="0" Date="02-Dec-2004 01:09:10" FromVersionable="false">
+          <Owner Name="mayya" Identifier="4322010" />
+          <GroupAccess Type="1" />
+        </Version>
+      </MathDescription>
+      <Simulation Name="Simulation2">
+        <Annotation>this is for nuclear StatPhosphatase at a conc of 0.05 units wrt Sc.</Annotation>
+        <SolverTaskDescription TaskType="Unsteady" UseSymbolicJacobian="false" Solver="Runge-Kutta-Fehlberg (Fifth Order, Variable Time Step)">
+          <TimeBound StartTime="0.0" EndTime="10000.0" />
+          <TimeStep DefaultTime="0.1" MinTime="1.0E-8" MaxTime="1.0" />
+          <ErrorTolerance Absolut="1.0E-9" Relative="1.0E-9" />
+          <OutputOptions KeepEvery="10" KeepAtMost="1000" />
+          <NumberProcessors>1</NumberProcessors>
+        </SolverTaskDescription>
+        <MathOverrides />
+        <Version Name="Simulation2" KeyValue="10633881" BranchId="10633882" Archived="0" Date="02-Dec-2004 01:12:09" FromVersionable="false">
+          <Owner Name="mayya" Identifier="4322010" />
+          <GroupAccess Type="1" />
+          <Annotation>this is for nuclear StatPhosphatase at a conc of 0.05 units wrt Sc.</Annotation>
+        </Version>
+      </Simulation>
+      <Version Name="phosphataseSensitivitySupFig3" KeyValue="10633846" BranchId="10633209" Archived="0" Date="02-Dec-2004 01:11:30" FromVersionable="false">
+        <Owner Name="mayya" Identifier="4322010" />
+        <GroupAccess Type="1" />
+        <Annotation>To check the output at different levels of nuclear statPhosphatase.</Annotation>
+      </Version>
+      <MicroscopeMeasurement Name="fluor">
+        <ConvolutionKernel Type="ProjectionZKernel" />
+      </MicroscopeMeasurement>
+    </SimulationSpec>
+    <SimulationSpec Name="steadyState" Stochastic="false" UseConcentration="true" RuleBased="false" MassConservationModelReduction="true" InsufficientIterations="false" InsufficientMaxMolecules="false">
+      <NetworkConstraints RbmMaxIteration="1" RbmMaxMoleculesPerSpecies="10" RbmSpeciesLimit="800" RbmReactionsLimit="2500" />
+      <Annotation>is to calculate steady state values &amp; basal activity values  for other simulation conditions.</Annotation>
+      <Geometry Name="checkFit" Dimension="0">
+        <Extent X="10.0" Y="10.0" Z="10.0" />
+        <Origin X="0.0" Y="0.0" Z="0.0" />
+        <SubVolume Name="Compartment" Handle="0" Type="Compartmental" KeyValue="4375236" />
+        <Version Name="checkFit" KeyValue="4375233" BranchId="4375234" Archived="0" Date="20-Feb-2003 13:19:11" FromVersionable="false">
+          <Owner Name="mayya" Identifier="4322010" />
+          <GroupAccess Type="1" />
+        </Version>
+      </Geometry>
+      <GeometryContext>
+        <FeatureMapping Feature="extraCellular" GeometryClass="Compartment" SubVolume="Compartment">
+          <BoundariesTypes Xm="Value" Xp="Value" Ym="Value" Yp="Value" Zm="Value" Zp="Value" />
+        </FeatureMapping>
+        <FeatureMapping Feature="sol" GeometryClass="Compartment" SubVolume="Compartment">
+          <BoundariesTypes Xm="Value" Xp="Value" Ym="Value" Yp="Value" Zm="Value" Zp="Value" />
+        </FeatureMapping>
+        <FeatureMapping Feature="nucleus" GeometryClass="Compartment" SubVolume="Compartment">
+          <BoundariesTypes Xm="Value" Xp="Value" Ym="Value" Yp="Value" Zm="Value" Zp="Value" />
+        </FeatureMapping>
+        <MembraneMapping Membrane="pm" SurfaceToVolumeRatio="0.4" VolumeFraction="0.999" CalculateVoltage="false" SpecificCapacitance="0.01" InitialVoltage="0.0" GeometryClass="Compartment">
+          <BoundariesTypes Xm="Value" Xp="Value" Ym="Value" Yp="Value" Zm="Value" Zp="Value" />
+        </MembraneMapping>
+        <MembraneMapping Membrane="nm" SurfaceToVolumeRatio="1.0" VolumeFraction="0.064" CalculateVoltage="false" SpecificCapacitance="0.01" InitialVoltage="0.0" GeometryClass="Compartment">
+          <BoundariesTypes Xm="Value" Xp="Value" Ym="Value" Yp="Value" Zm="Value" Zp="Value" />
+        </MembraneMapping>
+      </GeometryContext>
+      <ReactionContext>
+        <LocalizedCompoundSpec LocalizedCompoundRef="PstatDimer_sol" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>0.0</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="statKinase_sol" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>0.005</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="stat_sol" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>1.0</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="Pstat_sol" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>0.0</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="Pstat_nucleus" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>0.0</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="stat_nucleus" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>0.0</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="PstatDimer_nucleus" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>0.0</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="statPhosphatase_nucleus" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>0.05</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <ReactionSpec ReactionStepRef="PstatDimerisationSol" ReactionMapping="included" />
+        <ReactionSpec ReactionStepRef="statDephosphorylation" ReactionMapping="included" />
+        <ReactionSpec ReactionStepRef="statPhosphorylation" ReactionMapping="included" />
+        <ReactionSpec ReactionStepRef="PstatDimerisationNuc" ReactionMapping="included" />
+        <ReactionSpec ReactionStepRef="stat_export" ReactionMapping="included" />
+        <ReactionSpec ReactionStepRef="Pstat_export" ReactionMapping="included" />
+        <ReactionSpec ReactionStepRef="stat_import" ReactionMapping="included" />
+        <ReactionSpec ReactionStepRef="PstatDimer_ import" ReactionMapping="included" />
+        <ReactionSpec ReactionStepRef="Pstat_import" ReactionMapping="included" />
+      </ReactionContext>
+      <MathDescription Name="steadyStateCalc">
+        <Constant Name="_F_">96480.0</Constant>
+        <Constant Name="_F_nmol_">9.648E-5</Constant>
+        <Constant Name="_K_GHK_">1.0E-9</Constant>
+        <Constant Name="_N_pmol_">6.02E11</Constant>
+        <Constant Name="_R_">8314.0</Constant>
+        <Constant Name="_T_">300.0</Constant>
+        <Constant Name="K_millivolts_per_volt">1000.0</Constant>
+        <Constant Name="Kcat_dephos">1.0</Constant>
+        <Constant Name="Kcat_phos">1.0</Constant>
+        <Constant Name="Kf_PstatDimerisation_PstatDimerisationNuc">0.6</Constant>
+        <Constant Name="Kf_PstatDimerisation_PstatDimerisationSol">0.6</Constant>
+        <Constant Name="Km_dephos">2.0</Constant>
+        <Constant Name="Km_phos">4.0</Constant>
+        <Constant Name="KMOLE">0.0016611295681063123</Constant>
+        <Constant Name="Kps_exp">0.6</Constant>
+        <Constant Name="Kps_imp">3.0</Constant>
+        <Constant Name="Kpsd_imp">0.3</Constant>
+        <Constant Name="Kr_PstatDimerisation_PstatDimerisationNuc">0.03</Constant>
+        <Constant Name="Kr_PstatDimerisation_PstatDimerisationSol">0.03</Constant>
+        <Constant Name="Ks_exp">0.6</Constant>
+        <Constant Name="Ks_imp">3.0</Constant>
+        <Constant Name="Pstat_expMax">-0.06</Constant>
+        <Constant Name="Pstat_impMax">0.006</Constant>
+        <Constant Name="Pstat_nucleus_init">0.0</Constant>
+        <Constant Name="Pstat_sol_init">0.0</Constant>
+        <Constant Name="PstatDimer_impMax">0.045</Constant>
+        <Constant Name="PstatDimer_nucleus_init">0.0</Constant>
+        <Constant Name="PstatDimer_sol_init">0.0</Constant>
+        <Constant Name="stat_expMax">-0.06</Constant>
+        <Constant Name="stat_impMax">0.003</Constant>
+        <Constant Name="stat_nucleus_init">0.0</Constant>
+        <Constant Name="stat_sol_init">1.0</Constant>
+        <Constant Name="statKinase_sol_init">0.005</Constant>
+        <Constant Name="statPhosphatase_nucleus_init">0.05</Constant>
+        <Constant Name="SurfToVol_nm">1.0</Constant>
+        <Constant Name="SurfToVol_pm">0.4</Constant>
+        <Constant Name="VolFract_nucleus">0.064</Constant>
+        <Constant Name="VolFract_sol">0.999</Constant>
+        <VolumeVariable Name="Pstat_nucleus" />
+        <VolumeVariable Name="Pstat_sol" />
+        <VolumeVariable Name="PstatDimer_nucleus" />
+        <VolumeVariable Name="stat_nucleus" />
+        <VolumeVariable Name="stat_sol" />
+        <Function Name="J_Pstat_export">(Pstat_expMax * Pstat_nucleus / (Kps_exp + Pstat_nucleus + stat_nucleus))</Function>
+        <Function Name="J_Pstat_import">(Pstat_impMax * Pstat_sol / (Kps_imp + Pstat_sol + stat_sol))</Function>
+        <Function Name="J_PstatDimer_import">(PstatDimer_impMax * PstatDimer_sol / (Kpsd_imp + PstatDimer_sol))</Function>
+        <Function Name="J_PstatDimerisationNuc">((Kf_PstatDimerisation_PstatDimerisationNuc * pow(Pstat_nucleus,2.0)) - (Kr_PstatDimerisation_PstatDimerisationNuc * PstatDimer_nucleus))</Function>
+        <Function Name="J_PstatDimerisationSol">((Kf_PstatDimerisation_PstatDimerisationSol * pow(Pstat_sol,2.0)) - (Kr_PstatDimerisation_PstatDimerisationSol * PstatDimer_sol))</Function>
+        <Function Name="J_stat_export">(stat_expMax * stat_nucleus / (Ks_exp + stat_nucleus + Pstat_nucleus))</Function>
+        <Function Name="J_stat_import">(stat_impMax * stat_sol / (Ks_imp + stat_sol + Pstat_sol))</Function>
+        <Function Name="J_statDephosphorylation">(Kcat_dephos * statPhosphatase_nucleus * Pstat_nucleus / (Km_dephos + Pstat_nucleus))</Function>
+        <Function Name="J_statPhosphorylation">(Kcat_phos * statKinase_sol * stat_sol / (Km_phos + stat_sol))</Function>
+        <Function Name="K_PstatDimer_sol_total">((PstatDimer_nucleus_init * VolFract_nucleus * VolFract_sol) + (0.5 * stat_nucleus_init * VolFract_nucleus * VolFract_sol) + (0.5 * Pstat_nucleus_init * VolFract_nucleus * VolFract_sol) + (0.5 * Pstat_sol_init * (1.0 - VolFract_nucleus) * VolFract_sol) + (PstatDimer_sol_init * (1.0 - VolFract_nucleus) * VolFract_sol) + (0.5 * stat_sol_init * (1.0 - VolFract_nucleus) * VolFract_sol))</Function>
+        <Function Name="K_statKinase_sol_total">(statKinase_sol_init * (1.0 - VolFract_nucleus) * VolFract_sol)</Function>
+        <Function Name="K_statPhosphatase_nucleus_total">(statPhosphatase_nucleus_init * VolFract_nucleus * VolFract_sol)</Function>
+        <Function Name="KFlux_nm_nucleus">SurfToVol_nm</Function>
+        <Function Name="KFlux_nm_sol">(SurfToVol_nm * VolFract_nucleus / (1.0 - VolFract_nucleus))</Function>
+        <Function Name="KFlux_pm_extraCellular">(SurfToVol_pm * VolFract_sol / (1.0 - VolFract_sol))</Function>
+        <Function Name="KFlux_pm_sol">(SurfToVol_pm / (1.0 - VolFract_nucleus))</Function>
+        <Function Name="PstatDimer_sol">(( - (PstatDimer_nucleus * VolFract_nucleus * VolFract_sol) - (0.5 * stat_nucleus * VolFract_nucleus * VolFract_sol) - (0.5 * Pstat_nucleus * VolFract_nucleus * VolFract_sol) - (0.5 * Pstat_sol * (1.0 - VolFract_nucleus) * VolFract_sol) + K_PstatDimer_sol_total - (0.5 * stat_sol * (1.0 - VolFract_nucleus) * VolFract_sol)) / ((1.0 - VolFract_nucleus) * VolFract_sol))</Function>
+        <Function Name="statKinase_sol">(K_statKinase_sol_total / ((1.0 - VolFract_nucleus) * VolFract_sol))</Function>
+        <Function Name="statPhosphatase_nucleus">(K_statPhosphatase_nucleus_total / (VolFract_nucleus * VolFract_sol))</Function>
+        <Function Name="Voltage_Membrane0">0.0</Function>
+        <CompartmentSubDomain Name="Compartment">
+          <BoundaryType Boundary="Xm" Type="Value" />
+          <BoundaryType Boundary="Xp" Type="Value" />
+          <BoundaryType Boundary="Ym" Type="Value" />
+          <BoundaryType Boundary="Yp" Type="Value" />
+          <BoundaryType Boundary="Zm" Type="Value" />
+          <BoundaryType Boundary="Zp" Type="Value" />
+          <OdeEquation Name="stat_sol" SolutionType="Unknown">
+            <Rate>( - (KFlux_nm_sol * J_stat_import) - J_statPhosphorylation - (KFlux_nm_sol * J_stat_export))</Rate>
+            <Initial>stat_sol_init</Initial>
+          </OdeEquation>
+          <OdeEquation Name="Pstat_sol" SolutionType="Unknown">
+            <Rate>( - (KFlux_nm_sol * J_Pstat_import) - (KFlux_nm_sol * J_Pstat_export) - (2.0 * J_PstatDimerisationSol) + J_statPhosphorylation)</Rate>
+            <Initial>Pstat_sol_init</Initial>
+          </OdeEquation>
+          <OdeEquation Name="Pstat_nucleus" SolutionType="Unknown">
+            <Rate>((KFlux_nm_nucleus * J_Pstat_import) + (KFlux_nm_nucleus * J_Pstat_export) - J_statDephosphorylation - (2.0 * J_PstatDimerisationNuc))</Rate>
+            <Initial>Pstat_nucleus_init</Initial>
+          </OdeEquation>
+          <OdeEquation Name="stat_nucleus" SolutionType="Unknown">
+            <Rate>((KFlux_nm_nucleus * J_stat_import) + J_statDephosphorylation + (KFlux_nm_nucleus * J_stat_export))</Rate>
+            <Initial>stat_nucleus_init</Initial>
+          </OdeEquation>
+          <OdeEquation Name="PstatDimer_nucleus" SolutionType="Unknown">
+            <Rate>(J_PstatDimerisationNuc + (KFlux_nm_nucleus * J_PstatDimer_import))</Rate>
+            <Initial>PstatDimer_nucleus_init</Initial>
+          </OdeEquation>
+        </CompartmentSubDomain>
+        <Version Name="steadyStateCalc" KeyValue="10623358" BranchId="4762559" Archived="0" Date="01-Dec-2004 17:33:31" FromVersionable="false">
+          <Owner Name="mayya" Identifier="4322010" />
+          <GroupAccess Type="1" />
+        </Version>
+      </MathDescription>
+      <Simulation Name="Simulation 9">
+        <Annotation>this application is to get steady state values at different StatKinase levels-
+- or at different parameter values.</Annotation>
+        <SolverTaskDescription TaskType="Unsteady" UseSymbolicJacobian="false" Solver="Runge-Kutta-Fehlberg (Fifth Order, Variable Time Step)">
+          <TimeBound StartTime="0.0" EndTime="7000.0" />
+          <TimeStep DefaultTime="2.0" MinTime="1.0E-8" MaxTime="1.0" />
+          <ErrorTolerance Absolut="1.0E-9" Relative="1.0E-9" />
+          <OutputOptions KeepEvery="5" KeepAtMost="1000" />
+          <NumberProcessors>1</NumberProcessors>
+        </SolverTaskDescription>
+        <MathOverrides>
+          <Constant Name="statKinase_sol_init">0.2</Constant>
+        </MathOverrides>
+        <Version Name="Simulation 9" KeyValue="10631408" BranchId="4762598" Archived="0" Date="01-Dec-2004 19:53:17" FromVersionable="false">
+          <Owner Name="mayya" Identifier="4322010" />
+          <GroupAccess Type="1" />
+          <Annotation>this application is to get steady state values at different StatKinase levels-
+- or at different parameter values.</Annotation>
+        </Version>
+      </Simulation>
+      <Version Name="steadyState" KeyValue="10633171" BranchId="10633172" Archived="0" Date="02-Dec-2004 00:07:27" FromVersionable="false">
+        <Owner Name="mayya" Identifier="4322010" />
+        <GroupAccess Type="1" />
+        <Annotation>is to calculate steady state values &amp; basal activity values  for other simulation conditions.</Annotation>
+      </Version>
+      <MicroscopeMeasurement Name="fluor">
+        <ConvolutionKernel Type="ProjectionZKernel" />
+      </MicroscopeMeasurement>
+    </SimulationSpec>
+    <SimulationSpec Name="sensitivityAnalysesSupFig2b" Stochastic="false" UseConcentration="true" RuleBased="false" MassConservationModelReduction="true" InsufficientIterations="false" InsufficientMaxMolecules="false">
+      <NetworkConstraints RbmMaxIteration="1" RbmMaxMoleculesPerSpecies="10" RbmSpeciesLimit="800" RbmReactionsLimit="2500" />
+      <Annotation>For sensitivity Analyses. The parameter values are changed &amp; the output is compared with respect to the output (nominal value) from the reference set of parameter values.</Annotation>
+      <Geometry Name="checkFit" Dimension="0">
+        <Extent X="10.0" Y="10.0" Z="10.0" />
+        <Origin X="0.0" Y="0.0" Z="0.0" />
+        <SubVolume Name="Compartment" Handle="0" Type="Compartmental" KeyValue="4375236" />
+        <Version Name="checkFit" KeyValue="4375233" BranchId="4375234" Archived="0" Date="20-Feb-2003 13:19:11" FromVersionable="false">
+          <Owner Name="mayya" Identifier="4322010" />
+          <GroupAccess Type="1" />
+        </Version>
+      </Geometry>
+      <GeometryContext>
+        <FeatureMapping Feature="extraCellular" GeometryClass="Compartment" SubVolume="Compartment">
+          <BoundariesTypes Xm="Value" Xp="Value" Ym="Value" Yp="Value" Zm="Value" Zp="Value" />
+        </FeatureMapping>
+        <FeatureMapping Feature="sol" GeometryClass="Compartment" SubVolume="Compartment">
+          <BoundariesTypes Xm="Value" Xp="Value" Ym="Value" Yp="Value" Zm="Value" Zp="Value" />
+        </FeatureMapping>
+        <FeatureMapping Feature="nucleus" GeometryClass="Compartment" SubVolume="Compartment">
+          <BoundariesTypes Xm="Value" Xp="Value" Ym="Value" Yp="Value" Zm="Value" Zp="Value" />
+        </FeatureMapping>
+        <MembraneMapping Membrane="pm" SurfaceToVolumeRatio="0.4" VolumeFraction="0.999" CalculateVoltage="false" SpecificCapacitance="0.01" InitialVoltage="0.0" GeometryClass="Compartment">
+          <BoundariesTypes Xm="Value" Xp="Value" Ym="Value" Yp="Value" Zm="Value" Zp="Value" />
+        </MembraneMapping>
+        <MembraneMapping Membrane="nm" SurfaceToVolumeRatio="1.0" VolumeFraction="0.064" CalculateVoltage="false" SpecificCapacitance="0.01" InitialVoltage="0.0" GeometryClass="Compartment">
+          <BoundariesTypes Xm="Value" Xp="Value" Ym="Value" Yp="Value" Zm="Value" Zp="Value" />
+        </MembraneMapping>
+      </GeometryContext>
+      <ReactionContext>
+        <LocalizedCompoundSpec LocalizedCompoundRef="PstatDimer_sol" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>0.0</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="statKinase_sol" ForceConstant="true" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>(0.005 * sin((2.0E-4 * ( - 500.0 + t))) * ((t &gt; 500.0) &amp;&amp; (t &lt; 16230.0)))</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="stat_sol" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>1.0</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="Pstat_sol" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>0.0</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="Pstat_nucleus" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>0.0</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="stat_nucleus" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>0.0</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="PstatDimer_nucleus" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>0.0</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="statPhosphatase_nucleus" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>0.05</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <ReactionSpec ReactionStepRef="PstatDimerisationSol" ReactionMapping="included" />
+        <ReactionSpec ReactionStepRef="statDephosphorylation" ReactionMapping="included" />
+        <ReactionSpec ReactionStepRef="statPhosphorylation" ReactionMapping="included" />
+        <ReactionSpec ReactionStepRef="PstatDimerisationNuc" ReactionMapping="included" />
+        <ReactionSpec ReactionStepRef="stat_export" ReactionMapping="included" />
+        <ReactionSpec ReactionStepRef="Pstat_export" ReactionMapping="included" />
+        <ReactionSpec ReactionStepRef="stat_import" ReactionMapping="included" />
+        <ReactionSpec ReactionStepRef="PstatDimer_ import" ReactionMapping="included" />
+        <ReactionSpec ReactionStepRef="Pstat_import" ReactionMapping="included" />
+      </ReactionContext>
+      <MathDescription Name="sensitivityAnalysesSupFig2b_generated">
+        <Constant Name="_F_">96480.0</Constant>
+        <Constant Name="_F_nmol_">9.648E-5</Constant>
+        <Constant Name="_K_GHK_">1.0E-9</Constant>
+        <Constant Name="_N_pmol_">6.02E11</Constant>
+        <Constant Name="_R_">8314.0</Constant>
+        <Constant Name="_T_">300.0</Constant>
+        <Constant Name="K_millivolts_per_volt">1000.0</Constant>
+        <Constant Name="Kcat_dephos">1.0</Constant>
+        <Constant Name="Kcat_phos">1.0</Constant>
+        <Constant Name="Kf_PstatDimerisation_PstatDimerisationNuc">0.6</Constant>
+        <Constant Name="Kf_PstatDimerisation_PstatDimerisationSol">0.6</Constant>
+        <Constant Name="Km_dephos">2.0</Constant>
+        <Constant Name="Km_phos">4.0</Constant>
+        <Constant Name="KMOLE">0.0016611295681063123</Constant>
+        <Constant Name="Kps_exp">0.6</Constant>
+        <Constant Name="Kps_imp">3.0</Constant>
+        <Constant Name="Kpsd_imp">0.3</Constant>
+        <Constant Name="Kr_PstatDimerisation_PstatDimerisationNuc">0.03</Constant>
+        <Constant Name="Kr_PstatDimerisation_PstatDimerisationSol">0.03</Constant>
+        <Constant Name="Ks_exp">0.6</Constant>
+        <Constant Name="Ks_imp">3.0</Constant>
+        <Constant Name="Pstat_expMax">-0.06</Constant>
+        <Constant Name="Pstat_impMax">0.006</Constant>
+        <Constant Name="Pstat_nucleus_init">0.0</Constant>
+        <Constant Name="Pstat_sol_init">0.0</Constant>
+        <Constant Name="PstatDimer_impMax">0.045</Constant>
+        <Constant Name="PstatDimer_nucleus_init">0.0</Constant>
+        <Constant Name="PstatDimer_sol_init">0.0</Constant>
+        <Constant Name="stat_expMax">-0.06</Constant>
+        <Constant Name="stat_impMax">0.003</Constant>
+        <Constant Name="stat_nucleus_init">0.0</Constant>
+        <Constant Name="stat_sol_init">1.0</Constant>
+        <Constant Name="statPhosphatase_nucleus_init">0.05</Constant>
+        <Constant Name="SurfToVol_nm">1.0</Constant>
+        <Constant Name="SurfToVol_pm">0.4</Constant>
+        <Constant Name="VolFract_nucleus">0.064</Constant>
+        <Constant Name="VolFract_sol">0.999</Constant>
+        <VolumeVariable Name="Pstat_nucleus" />
+        <VolumeVariable Name="Pstat_sol" />
+        <VolumeVariable Name="PstatDimer_nucleus" />
+        <VolumeVariable Name="stat_nucleus" />
+        <VolumeVariable Name="stat_sol" />
+        <Function Name="J_Pstat_export">(Pstat_expMax * Pstat_nucleus / (Kps_exp + Pstat_nucleus + stat_nucleus))</Function>
+        <Function Name="J_Pstat_import">(Pstat_impMax * Pstat_sol / (Kps_imp + Pstat_sol + stat_sol))</Function>
+        <Function Name="J_PstatDimer_import">(PstatDimer_impMax * PstatDimer_sol / (Kpsd_imp + PstatDimer_sol))</Function>
+        <Function Name="J_PstatDimerisationNuc">((Kf_PstatDimerisation_PstatDimerisationNuc * pow(Pstat_nucleus,2.0)) - (Kr_PstatDimerisation_PstatDimerisationNuc * PstatDimer_nucleus))</Function>
+        <Function Name="J_PstatDimerisationSol">((Kf_PstatDimerisation_PstatDimerisationSol * pow(Pstat_sol,2.0)) - (Kr_PstatDimerisation_PstatDimerisationSol * PstatDimer_sol))</Function>
+        <Function Name="J_stat_export">(stat_expMax * stat_nucleus / (Ks_exp + stat_nucleus + Pstat_nucleus))</Function>
+        <Function Name="J_stat_import">(stat_impMax * stat_sol / (Ks_imp + stat_sol + Pstat_sol))</Function>
+        <Function Name="J_statDephosphorylation">(Kcat_dephos * statPhosphatase_nucleus * Pstat_nucleus / (Km_dephos + Pstat_nucleus))</Function>
+        <Function Name="J_statPhosphorylation">(Kcat_phos * statKinase_sol * stat_sol / (Km_phos + stat_sol))</Function>
+        <Function Name="K_PstatDimer_sol_total">((PstatDimer_nucleus_init * VolFract_nucleus * VolFract_sol) + (0.5 * stat_nucleus_init * VolFract_nucleus * VolFract_sol) + (0.5 * Pstat_nucleus_init * VolFract_nucleus * VolFract_sol) + (0.5 * Pstat_sol_init * (1.0 - VolFract_nucleus) * VolFract_sol) + (PstatDimer_sol_init * (1.0 - VolFract_nucleus) * VolFract_sol) + (0.5 * stat_sol_init * (1.0 - VolFract_nucleus) * VolFract_sol))</Function>
+        <Function Name="K_statPhosphatase_nucleus_total">(statPhosphatase_nucleus_init * VolFract_nucleus * VolFract_sol)</Function>
+        <Function Name="KFlux_nm_nucleus">SurfToVol_nm</Function>
+        <Function Name="KFlux_nm_sol">(SurfToVol_nm * VolFract_nucleus / (1.0 - VolFract_nucleus))</Function>
+        <Function Name="KFlux_pm_extraCellular">(SurfToVol_pm * VolFract_sol / (1.0 - VolFract_sol))</Function>
+        <Function Name="KFlux_pm_sol">(SurfToVol_pm / (1.0 - VolFract_nucleus))</Function>
+        <Function Name="PstatDimer_sol">(( - (PstatDimer_nucleus * VolFract_nucleus * VolFract_sol) - (0.5 * stat_nucleus * VolFract_nucleus * VolFract_sol) - (0.5 * Pstat_nucleus * VolFract_nucleus * VolFract_sol) - (0.5 * Pstat_sol * (1.0 - VolFract_nucleus) * VolFract_sol) + K_PstatDimer_sol_total - (0.5 * stat_sol * (1.0 - VolFract_nucleus) * VolFract_sol)) / ((1.0 - VolFract_nucleus) * VolFract_sol))</Function>
+        <Function Name="statKinase_sol">(0.005 * sin((2.0E-4 * ( - 500.0 + t))) * ((t &gt; 500.0) &amp;&amp; (t &lt; 16230.0)))</Function>
+        <Function Name="statKinase_sol_init">(0.005 * sin((2.0E-4 * ( - 500.0 + t))) * ((t &gt; 500.0) &amp;&amp; (t &lt; 16230.0)))</Function>
+        <Function Name="statPhosphatase_nucleus">(K_statPhosphatase_nucleus_total / (VolFract_nucleus * VolFract_sol))</Function>
+        <Function Name="Voltage_Membrane0">0.0</Function>
+        <CompartmentSubDomain Name="Compartment">
+          <BoundaryType Boundary="Xm" Type="Value" />
+          <BoundaryType Boundary="Xp" Type="Value" />
+          <BoundaryType Boundary="Ym" Type="Value" />
+          <BoundaryType Boundary="Yp" Type="Value" />
+          <BoundaryType Boundary="Zm" Type="Value" />
+          <BoundaryType Boundary="Zp" Type="Value" />
+          <OdeEquation Name="stat_sol" SolutionType="Unknown">
+            <Rate>( - (KFlux_nm_sol * J_stat_import) - J_statPhosphorylation - (KFlux_nm_sol * J_stat_export))</Rate>
+            <Initial>stat_sol_init</Initial>
+          </OdeEquation>
+          <OdeEquation Name="Pstat_sol" SolutionType="Unknown">
+            <Rate>( - (KFlux_nm_sol * J_Pstat_import) - (KFlux_nm_sol * J_Pstat_export) - (2.0 * J_PstatDimerisationSol) + J_statPhosphorylation)</Rate>
+            <Initial>Pstat_sol_init</Initial>
+          </OdeEquation>
+          <OdeEquation Name="Pstat_nucleus" SolutionType="Unknown">
+            <Rate>((KFlux_nm_nucleus * J_Pstat_import) + (KFlux_nm_nucleus * J_Pstat_export) - J_statDephosphorylation - (2.0 * J_PstatDimerisationNuc))</Rate>
+            <Initial>Pstat_nucleus_init</Initial>
+          </OdeEquation>
+          <OdeEquation Name="stat_nucleus" SolutionType="Unknown">
+            <Rate>((KFlux_nm_nucleus * J_stat_import) + J_statDephosphorylation + (KFlux_nm_nucleus * J_stat_export))</Rate>
+            <Initial>stat_nucleus_init</Initial>
+          </OdeEquation>
+          <OdeEquation Name="PstatDimer_nucleus" SolutionType="Unknown">
+            <Rate>(J_PstatDimerisationNuc + (KFlux_nm_nucleus * J_PstatDimer_import))</Rate>
+            <Initial>PstatDimer_nucleus_init</Initial>
+          </OdeEquation>
+        </CompartmentSubDomain>
+        <Version Name="sensitivityAnalysesSupFig2b_generated" KeyValue="10633204" BranchId="10633205" Archived="0" Date="02-Dec-2004 00:13:37" FromVersionable="false">
+          <Owner Name="mayya" Identifier="4322010" />
+          <GroupAccess Type="1" />
+        </Version>
+      </MathDescription>
+      <Simulation Name="Simulation4">
+        <Annotation>This is the reference set of parameters. And hence gives the nominal value. 
+The parameter values can readily be changed using the 'edit' option</Annotation>
+        <SolverTaskDescription TaskType="Unsteady" UseSymbolicJacobian="false" Solver="Runge-Kutta-Fehlberg (Fifth Order, Variable Time Step)">
+          <TimeBound StartTime="0.0" EndTime="25000.0" />
+          <TimeStep DefaultTime="0.1" MinTime="1.0E-8" MaxTime="1.0" />
+          <ErrorTolerance Absolut="1.0E-9" Relative="1.0E-9" />
+          <OutputOptions KeepEvery="25" KeepAtMost="1000" />
+          <NumberProcessors>1</NumberProcessors>
+        </SolverTaskDescription>
+        <MathOverrides />
+        <Version Name="Simulation4" KeyValue="10633610" BranchId="10633582" Archived="0" Date="02-Dec-2004 00:25:31" FromVersionable="false">
+          <Owner Name="mayya" Identifier="4322010" />
+          <GroupAccess Type="1" />
+          <Annotation>This is the reference set of parameters. And hence gives the nominal value. 
+The parameter values can readily be changed using the 'edit' option</Annotation>
+        </Version>
+      </Simulation>
+      <Version Name="sensitivityAnalysesSupFig2b" KeyValue="10633535" BranchId="10633233" Archived="0" Date="02-Dec-2004 00:24:36" FromVersionable="false">
+        <Owner Name="mayya" Identifier="4322010" />
+        <GroupAccess Type="1" />
+        <Annotation>For sensitivity Analyses. The parameter values are changed &amp; the output is compared with respect to the output (nominal value) from the reference set of parameter values.</Annotation>
+      </Version>
+      <MicroscopeMeasurement Name="fluor">
+        <ConvolutionKernel Type="ProjectionZKernel" />
+      </MicroscopeMeasurement>
+    </SimulationSpec>
+    <SimulationSpec Name="I/OcontourPlotSupFig1b" Stochastic="false" UseConcentration="true" RuleBased="false" MassConservationModelReduction="true" InsufficientIterations="false" InsufficientMaxMolecules="false">
+      <NetworkConstraints RbmMaxIteration="1" RbmMaxMoleculesPerSpecies="10" RbmSpeciesLimit="800" RbmReactionsLimit="2500" />
+      <Annotation>To generate the input-output relationship map. Output for input signals of different amplitude and generation are plotted.</Annotation>
+      <Geometry Name="checkFit" Dimension="0">
+        <Extent X="10.0" Y="10.0" Z="10.0" />
+        <Origin X="0.0" Y="0.0" Z="0.0" />
+        <SubVolume Name="Compartment" Handle="0" Type="Compartmental" KeyValue="4375236" />
+        <Version Name="checkFit" KeyValue="4375233" BranchId="4375234" Archived="0" Date="20-Feb-2003 13:19:11" FromVersionable="false">
+          <Owner Name="mayya" Identifier="4322010" />
+          <GroupAccess Type="1" />
+        </Version>
+      </Geometry>
+      <GeometryContext>
+        <FeatureMapping Feature="extraCellular" GeometryClass="Compartment" SubVolume="Compartment">
+          <BoundariesTypes Xm="Value" Xp="Value" Ym="Value" Yp="Value" Zm="Value" Zp="Value" />
+        </FeatureMapping>
+        <FeatureMapping Feature="sol" GeometryClass="Compartment" SubVolume="Compartment">
+          <BoundariesTypes Xm="Value" Xp="Value" Ym="Value" Yp="Value" Zm="Value" Zp="Value" />
+        </FeatureMapping>
+        <FeatureMapping Feature="nucleus" GeometryClass="Compartment" SubVolume="Compartment">
+          <BoundariesTypes Xm="Value" Xp="Value" Ym="Value" Yp="Value" Zm="Value" Zp="Value" />
+        </FeatureMapping>
+        <MembraneMapping Membrane="pm" SurfaceToVolumeRatio="0.4" VolumeFraction="0.999" CalculateVoltage="false" SpecificCapacitance="0.01" InitialVoltage="0.0" GeometryClass="Compartment">
+          <BoundariesTypes Xm="Value" Xp="Value" Ym="Value" Yp="Value" Zm="Value" Zp="Value" />
+        </MembraneMapping>
+        <MembraneMapping Membrane="nm" SurfaceToVolumeRatio="1.0" VolumeFraction="0.064" CalculateVoltage="false" SpecificCapacitance="0.01" InitialVoltage="0.0" GeometryClass="Compartment">
+          <BoundariesTypes Xm="Value" Xp="Value" Ym="Value" Yp="Value" Zm="Value" Zp="Value" />
+        </MembraneMapping>
+      </GeometryContext>
+      <ReactionContext>
+        <LocalizedCompoundSpec LocalizedCompoundRef="PstatDimer_sol" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>0.0</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="statKinase_sol" ForceConstant="true" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>(0.05 * sin((0.002 * ( - 500.0 + t))) * ((t &gt; 500.0) &amp;&amp; (t &lt; 2073.0)))</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="stat_sol" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>1.0</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="Pstat_sol" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>0.0</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="Pstat_nucleus" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>0.0</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="stat_nucleus" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>0.0</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="PstatDimer_nucleus" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>0.0</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="statPhosphatase_nucleus" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>0.05</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <ReactionSpec ReactionStepRef="PstatDimerisationSol" ReactionMapping="included" />
+        <ReactionSpec ReactionStepRef="statDephosphorylation" ReactionMapping="included" />
+        <ReactionSpec ReactionStepRef="statPhosphorylation" ReactionMapping="included" />
+        <ReactionSpec ReactionStepRef="PstatDimerisationNuc" ReactionMapping="included" />
+        <ReactionSpec ReactionStepRef="stat_export" ReactionMapping="included" />
+        <ReactionSpec ReactionStepRef="Pstat_export" ReactionMapping="included" />
+        <ReactionSpec ReactionStepRef="stat_import" ReactionMapping="included" />
+        <ReactionSpec ReactionStepRef="PstatDimer_ import" ReactionMapping="included" />
+        <ReactionSpec ReactionStepRef="Pstat_import" ReactionMapping="included" />
+      </ReactionContext>
+      <MathDescription Name="I/OcontourPlotSupFig1b_generated">
+        <Constant Name="_F_">96480.0</Constant>
+        <Constant Name="_F_nmol_">9.648E-5</Constant>
+        <Constant Name="_K_GHK_">1.0E-9</Constant>
+        <Constant Name="_N_pmol_">6.02E11</Constant>
+        <Constant Name="_R_">8314.0</Constant>
+        <Constant Name="_T_">300.0</Constant>
+        <Constant Name="K_millivolts_per_volt">1000.0</Constant>
+        <Constant Name="Kcat_dephos">1.0</Constant>
+        <Constant Name="Kcat_phos">1.0</Constant>
+        <Constant Name="Kf_PstatDimerisation_PstatDimerisationNuc">0.6</Constant>
+        <Constant Name="Kf_PstatDimerisation_PstatDimerisationSol">0.6</Constant>
+        <Constant Name="Km_dephos">2.0</Constant>
+        <Constant Name="Km_phos">4.0</Constant>
+        <Constant Name="KMOLE">0.0016611295681063123</Constant>
+        <Constant Name="Kps_exp">0.6</Constant>
+        <Constant Name="Kps_imp">3.0</Constant>
+        <Constant Name="Kpsd_imp">0.3</Constant>
+        <Constant Name="Kr_PstatDimerisation_PstatDimerisationNuc">0.03</Constant>
+        <Constant Name="Kr_PstatDimerisation_PstatDimerisationSol">0.03</Constant>
+        <Constant Name="Ks_exp">0.6</Constant>
+        <Constant Name="Ks_imp">3.0</Constant>
+        <Constant Name="Pstat_expMax">-0.06</Constant>
+        <Constant Name="Pstat_impMax">0.006</Constant>
+        <Constant Name="Pstat_nucleus_init">0.0</Constant>
+        <Constant Name="Pstat_sol_init">0.0</Constant>
+        <Constant Name="PstatDimer_impMax">0.045</Constant>
+        <Constant Name="PstatDimer_nucleus_init">0.0</Constant>
+        <Constant Name="PstatDimer_sol_init">0.0</Constant>
+        <Constant Name="stat_expMax">-0.06</Constant>
+        <Constant Name="stat_impMax">0.003</Constant>
+        <Constant Name="stat_nucleus_init">0.0</Constant>
+        <Constant Name="stat_sol_init">1.0</Constant>
+        <Constant Name="statPhosphatase_nucleus_init">0.05</Constant>
+        <Constant Name="SurfToVol_nm">1.0</Constant>
+        <Constant Name="SurfToVol_pm">0.4</Constant>
+        <Constant Name="VolFract_nucleus">0.064</Constant>
+        <Constant Name="VolFract_sol">0.999</Constant>
+        <VolumeVariable Name="Pstat_nucleus" />
+        <VolumeVariable Name="Pstat_sol" />
+        <VolumeVariable Name="PstatDimer_nucleus" />
+        <VolumeVariable Name="stat_nucleus" />
+        <VolumeVariable Name="stat_sol" />
+        <Function Name="J_Pstat_export">(Pstat_expMax * Pstat_nucleus / (Kps_exp + Pstat_nucleus + stat_nucleus))</Function>
+        <Function Name="J_Pstat_import">(Pstat_impMax * Pstat_sol / (Kps_imp + Pstat_sol + stat_sol))</Function>
+        <Function Name="J_PstatDimer_import">(PstatDimer_impMax * PstatDimer_sol / (Kpsd_imp + PstatDimer_sol))</Function>
+        <Function Name="J_PstatDimerisationNuc">((Kf_PstatDimerisation_PstatDimerisationNuc * pow(Pstat_nucleus,2.0)) - (Kr_PstatDimerisation_PstatDimerisationNuc * PstatDimer_nucleus))</Function>
+        <Function Name="J_PstatDimerisationSol">((Kf_PstatDimerisation_PstatDimerisationSol * pow(Pstat_sol,2.0)) - (Kr_PstatDimerisation_PstatDimerisationSol * PstatDimer_sol))</Function>
+        <Function Name="J_stat_export">(stat_expMax * stat_nucleus / (Ks_exp + stat_nucleus + Pstat_nucleus))</Function>
+        <Function Name="J_stat_import">(stat_impMax * stat_sol / (Ks_imp + stat_sol + Pstat_sol))</Function>
+        <Function Name="J_statDephosphorylation">(Kcat_dephos * statPhosphatase_nucleus * Pstat_nucleus / (Km_dephos + Pstat_nucleus))</Function>
+        <Function Name="J_statPhosphorylation">(Kcat_phos * statKinase_sol * stat_sol / (Km_phos + stat_sol))</Function>
+        <Function Name="K_PstatDimer_sol_total">((PstatDimer_nucleus_init * VolFract_nucleus * VolFract_sol) + (0.5 * stat_nucleus_init * VolFract_nucleus * VolFract_sol) + (0.5 * Pstat_nucleus_init * VolFract_nucleus * VolFract_sol) + (0.5 * Pstat_sol_init * (1.0 - VolFract_nucleus) * VolFract_sol) + (PstatDimer_sol_init * (1.0 - VolFract_nucleus) * VolFract_sol) + (0.5 * stat_sol_init * (1.0 - VolFract_nucleus) * VolFract_sol))</Function>
+        <Function Name="K_statPhosphatase_nucleus_total">(statPhosphatase_nucleus_init * VolFract_nucleus * VolFract_sol)</Function>
+        <Function Name="KFlux_nm_nucleus">SurfToVol_nm</Function>
+        <Function Name="KFlux_nm_sol">(SurfToVol_nm * VolFract_nucleus / (1.0 - VolFract_nucleus))</Function>
+        <Function Name="KFlux_pm_extraCellular">(SurfToVol_pm * VolFract_sol / (1.0 - VolFract_sol))</Function>
+        <Function Name="KFlux_pm_sol">(SurfToVol_pm / (1.0 - VolFract_nucleus))</Function>
+        <Function Name="PstatDimer_sol">(( - (PstatDimer_nucleus * VolFract_nucleus * VolFract_sol) - (0.5 * stat_nucleus * VolFract_nucleus * VolFract_sol) - (0.5 * Pstat_nucleus * VolFract_nucleus * VolFract_sol) - (0.5 * Pstat_sol * (1.0 - VolFract_nucleus) * VolFract_sol) + K_PstatDimer_sol_total - (0.5 * stat_sol * (1.0 - VolFract_nucleus) * VolFract_sol)) / ((1.0 - VolFract_nucleus) * VolFract_sol))</Function>
+        <Function Name="statKinase_sol">(0.05 * sin((0.002 * ( - 500.0 + t))) * ((t &gt; 500.0) &amp;&amp; (t &lt; 2073.0)))</Function>
+        <Function Name="statKinase_sol_init">(0.05 * sin((0.002 * ( - 500.0 + t))) * ((t &gt; 500.0) &amp;&amp; (t &lt; 2073.0)))</Function>
+        <Function Name="statPhosphatase_nucleus">(K_statPhosphatase_nucleus_total / (VolFract_nucleus * VolFract_sol))</Function>
+        <Function Name="Voltage_Membrane0">0.0</Function>
+        <CompartmentSubDomain Name="Compartment">
+          <BoundaryType Boundary="Xm" Type="Value" />
+          <BoundaryType Boundary="Xp" Type="Value" />
+          <BoundaryType Boundary="Ym" Type="Value" />
+          <BoundaryType Boundary="Yp" Type="Value" />
+          <BoundaryType Boundary="Zm" Type="Value" />
+          <BoundaryType Boundary="Zp" Type="Value" />
+          <OdeEquation Name="stat_sol" SolutionType="Unknown">
+            <Rate>( - (KFlux_nm_sol * J_stat_import) - J_statPhosphorylation - (KFlux_nm_sol * J_stat_export))</Rate>
+            <Initial>stat_sol_init</Initial>
+          </OdeEquation>
+          <OdeEquation Name="Pstat_sol" SolutionType="Unknown">
+            <Rate>( - (KFlux_nm_sol * J_Pstat_import) - (KFlux_nm_sol * J_Pstat_export) - (2.0 * J_PstatDimerisationSol) + J_statPhosphorylation)</Rate>
+            <Initial>Pstat_sol_init</Initial>
+          </OdeEquation>
+          <OdeEquation Name="Pstat_nucleus" SolutionType="Unknown">
+            <Rate>((KFlux_nm_nucleus * J_Pstat_import) + (KFlux_nm_nucleus * J_Pstat_export) - J_statDephosphorylation - (2.0 * J_PstatDimerisationNuc))</Rate>
+            <Initial>Pstat_nucleus_init</Initial>
+          </OdeEquation>
+          <OdeEquation Name="stat_nucleus" SolutionType="Unknown">
+            <Rate>((KFlux_nm_nucleus * J_stat_import) + J_statDephosphorylation + (KFlux_nm_nucleus * J_stat_export))</Rate>
+            <Initial>stat_nucleus_init</Initial>
+          </OdeEquation>
+          <OdeEquation Name="PstatDimer_nucleus" SolutionType="Unknown">
+            <Rate>(J_PstatDimerisationNuc + (KFlux_nm_nucleus * J_PstatDimer_import))</Rate>
+            <Initial>PstatDimer_nucleus_init</Initial>
+          </OdeEquation>
+        </CompartmentSubDomain>
+        <Version Name="I/OcontourPlotSupFig1b_generated" KeyValue="10633206" BranchId="10633207" Archived="0" Date="02-Dec-2004 00:13:37" FromVersionable="false">
+          <Owner Name="mayya" Identifier="4322010" />
+          <GroupAccess Type="1" />
+        </Version>
+      </MathDescription>
+      <Simulation Name="Simulation5">
+        <Annotation>This input corresponds to region 3 (upper quadrant, right side) in the contour plot.
+The actual data was generated from batch simulations in MATLAB.</Annotation>
+        <SolverTaskDescription TaskType="Unsteady" UseSymbolicJacobian="false" Solver="Runge-Kutta-Fehlberg (Fifth Order, Variable Time Step)">
+          <TimeBound StartTime="0.0" EndTime="10000.0" />
+          <TimeStep DefaultTime="0.1" MinTime="1.0E-8" MaxTime="1.0" />
+          <ErrorTolerance Absolut="1.0E-9" Relative="1.0E-9" />
+          <OutputOptions KeepEvery="10" KeepAtMost="1000" />
+          <NumberProcessors>1</NumberProcessors>
+        </SolverTaskDescription>
+        <MathOverrides />
+        <Version Name="Simulation5" KeyValue="10633583" BranchId="10633584" Archived="0" Date="02-Dec-2004 00:24:36" FromVersionable="false">
+          <Owner Name="mayya" Identifier="4322010" />
+          <GroupAccess Type="1" />
+          <Annotation>This input corresponds to region 3 (upper quadrant, right side) in the contour plot.
+The actual data was generated from batch simulations in MATLAB.</Annotation>
+          <ParentSimRef KeyValue="10633293" />
+        </Version>
+      </Simulation>
+      <Version Name="I/OcontourPlotSupFig1b" KeyValue="10633558" BranchId="10633257" Archived="0" Date="02-Dec-2004 00:24:36" FromVersionable="false">
+        <Owner Name="mayya" Identifier="4322010" />
+        <GroupAccess Type="1" />
+        <Annotation>To generate the input-output relationship map. Output for input signals of different amplitude and generation are plotted.</Annotation>
+      </Version>
+      <MicroscopeMeasurement Name="fluor">
+        <ConvolutionKernel Type="ProjectionZKernel" />
+      </MicroscopeMeasurement>
+    </SimulationSpec>
+    <Version Name="STATmoduleVariants" KeyValue="10766867" BranchId="10765878" Archived="0" Date="03-Dec-2004 19:00:39" FromVersionable="false">
+      <Owner Name="mayya" Identifier="4322010" />
+      <GroupAccess Type="0" />
+      <Annotation>ps translocates just like s. Thus there is competition between s &amp; ps. I call this 'competitive model' in the study. The signaling properties of this are compared to the 'dimeric model' &amp; the 'monomeric model'.</Annotation>
+    </Version>
+    <pathwayModel>
+      <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:bp="http://www.biopax.org/release/biopax-level3.owl#" version="3.0" />
+    </pathwayModel>
+    <relationshipModel>
+      <RMNS version="3.0" />
+    </relationshipModel>
+    <vcmetadata>
+      <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" />
+      <nonrdfAnnotationList>
+        <nonrdfAnnotation vcid="BioModel(STATmoduleVariants)">
+          <freetext>ps translocates just like s. Thus there is competition between s &amp; ps. I call this 'competitive model' in the study. The signaling properties of this are compared to the 'dimeric model' &amp; the 'monomeric model'.</freetext>
+        </nonrdfAnnotation>
+        <nonrdfAnnotation vcid="Species(statPhosphatase)">
+          <freetext>stat3 phosphatase</freetext>
+        </nonrdfAnnotation>
+        <nonrdfAnnotation vcid="Species(Pstat)">
+          <freetext>tyrosine phosphorylated stat3</freetext>
+        </nonrdfAnnotation>
+        <nonrdfAnnotation vcid="Species(stat)">
+          <freetext>stat3</freetext>
+        </nonrdfAnnotation>
+        <nonrdfAnnotation vcid="Species(statKinase)">
+          <freetext>stat kinase</freetext>
+        </nonrdfAnnotation>
+        <nonrdfAnnotation vcid="Species(PstatDimer)">
+          <freetext>tyrPstat3 dimer</freetext>
+        </nonrdfAnnotation>
+      </nonrdfAnnotationList>
+      <uriBindingList />
+    </vcmetadata>
+  </BioModel>
+</vcml>
+

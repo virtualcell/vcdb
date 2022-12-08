@@ -1,0 +1,495 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--This biomodel was generated in VCML Version Alpha_Version_7.4.0_build_87-->
+<vcml xmlns="http://sourceforge.net/projects/vcell/vcml" Version="Alpha_Version_7.4.0_build_87">
+  <BioModel Name="DLS-Model of Kidney cell-2-polarized AQPs">
+    <Model Name="unnamed">
+      <Compound Name="K" />
+      <Compound Name="Kchannel" />
+      <Compound Name="H2O" />
+      <Compound Name="AQP4" />
+      <Feature Name="Cell" KeyValue="32436646" />
+      <Feature Name="ECS" KeyValue="32436644" />
+      <Membrane InsideFeature="Cell" OutsideFeature="ECS" PositiveFeature="Cell" NegativeFeature="ECS" MembraneVoltage="Voltage_Cellmembrane" Name="Cellmembrane" KeyValue="32436645" />
+      <LocalizedCompound Name="K_ECS" CompoundRef="K" Structure="ECS" OverrideName="true" KeyValue="32436650" />
+      <LocalizedCompound Name="K_Cell" CompoundRef="K" Structure="Cell" OverrideName="true" KeyValue="32436651" />
+      <LocalizedCompound Name="Kchannel_Cellmembrane" CompoundRef="Kchannel" Structure="Cellmembrane" OverrideName="true" KeyValue="32436652" />
+      <LocalizedCompound Name="H2O_Cell" CompoundRef="H2O" Structure="Cell" OverrideName="true" KeyValue="32436653" />
+      <LocalizedCompound Name="H2O_ECS" CompoundRef="H2O" Structure="ECS" OverrideName="true" KeyValue="32436654" />
+      <LocalizedCompound Name="AQP4_Cellmembrane" CompoundRef="AQP4" Structure="Cellmembrane" OverrideName="true" KeyValue="32436655" />
+      <SimpleReaction Structure="ECS" Name="Del_voltage_AQP4+" Reversible="true" FluxOption="MolecularOnly" KeyValue="32436656">
+        <Modifier LocalizedCompoundRef="K_ECS" />
+        <Modifier LocalizedCompoundRef="H2O_ECS" />
+        <Kinetics KineticsType="GeneralKinetics">
+          <Parameter Name="J" Role="reaction rate" Unit="uM.s-1">(Vm - Vm_initial)</Parameter>
+          <Parameter Name="Vm" Role="user defined" Unit="uM.s-1">(25.6 * log((Keffective_ECS / K_intracellular)))</Parameter>
+          <Parameter Name="Vm_initial" Role="user defined" Unit="uM.s-1">-92.867844</Parameter>
+          <Parameter Name="Keffective_ECS" Role="user defined" Unit="tbd">(K_ECS * H2O_initial / H2O_ECS)</Parameter>
+          <Parameter Name="K_intracellular" Role="user defined" Unit="tbd">150000.0</Parameter>
+          <Parameter Name="H2O_initial" Role="user defined" Unit="tbd">150000.0</Parameter>
+        </Kinetics>
+      </SimpleReaction>
+      <SimpleReaction Structure="ECS" Name="Del_voltage_withoutAQP4" Reversible="true" FluxOption="MolecularOnly" KeyValue="32436659">
+        <Modifier LocalizedCompoundRef="K_ECS" />
+        <Kinetics KineticsType="GeneralKinetics">
+          <Parameter Name="J" Role="reaction rate" Unit="uM.s-1">(Vm - Vm_initial)</Parameter>
+          <Parameter Name="Vm" Role="user defined" Unit="uM.s-1">(25.6 * log((K_ECS / K_intracellular)))</Parameter>
+          <Parameter Name="Vm_initial" Role="user defined" Unit="uM.s-1">-92.867844</Parameter>
+          <Parameter Name="K_intracellular" Role="user defined" Unit="uM">150000.0</Parameter>
+        </Kinetics>
+      </SimpleReaction>
+      <FluxStep Name="K_Flux" Structure="Cellmembrane" Reversible="true" FluxOption="MolecularAndElectrical" KeyValue="32436662">
+        <Reactant LocalizedCompoundRef="K_ECS" Stoichiometry="1" />
+        <Product LocalizedCompoundRef="K_Cell" Stoichiometry="1" />
+        <Modifier LocalizedCompoundRef="Kchannel_Cellmembrane" />
+        <Kinetics KineticsType="GeneralCurrentKinetics">
+          <Parameter Name="I" Role="inward current density" Unit="pA.um-2">- (C * delVk * Gk * Kchannel_Cellmembrane)</Parameter>
+          <Parameter Name="J" Role="reaction rate" Unit="uM.um.s-1">((I / (carrierValence * _F_)) * unitFactor)</Parameter>
+          <Parameter Name="carrierValence" Role="flux carrier valence" Unit="1">1.0</Parameter>
+          <Parameter Name="unitFactor" Role="electrical unit factor" Unit="uM.um3.C.s-1.pA-1.mol-1">(1.0E9 / 1.0)</Parameter>
+          <Parameter Name="delVk" Role="user defined" Unit="mV">(Voltage_Cellmembrane - Vk)</Parameter>
+          <Parameter Name="C" Role="user defined" Unit="1000000 item-1">1.0</Parameter>
+          <Parameter Name="Gk" Role="user defined" Unit="1.0E-14 S">22.0</Parameter>
+          <Parameter Name="Vk" Role="user defined" Unit="mV">(25.6 * log((K_ECS / K_Cell)))</Parameter>
+        </Kinetics>
+      </FluxStep>
+      <FluxStep Name="water_Flux" Structure="Cellmembrane" Reversible="true" FluxOption="MolecularOnly" KeyValue="32436666">
+        <Reactant LocalizedCompoundRef="H2O_ECS" Stoichiometry="1" />
+        <Product LocalizedCompoundRef="H2O_Cell" Stoichiometry="1" />
+        <Modifier LocalizedCompoundRef="AQP4_Cellmembrane" />
+        <Modifier LocalizedCompoundRef="K_ECS" />
+        <Modifier LocalizedCompoundRef="K_Cell" />
+        <Kinetics KineticsType="GeneralKinetics">
+          <Parameter Name="J" Role="reaction rate" Unit="uM.um.s-1">(c * Pf * AQP4_Cellmembrane * (delK_ECS - delK_Cell - (Beta * delH2O_ECS)))</Parameter>
+          <Parameter Name="I" Role="inward current density" Unit="pA.um-2">0.0</Parameter>
+          <Parameter Name="netValence" Role="net charge valence" Unit="1">1.0</Parameter>
+          <Parameter Name="c" Role="user defined" Unit="1">1.0</Parameter>
+          <Parameter Name="delK_ECS" Role="user defined" Unit="uM">(K_ECSinitial - K_ECS)</Parameter>
+          <Parameter Name="Pf" Role="user defined" Unit="1.0E-18 m3.s-1">0.007</Parameter>
+          <Parameter Name="delH2O_ECS" Role="user defined" Unit="uM">(H2O_ECSinitial - H2O_ECS)</Parameter>
+          <Parameter Name="delK_Cell" Role="user defined" Unit="uM">(K_Cellinitial - K_Cell)</Parameter>
+          <Parameter Name="Beta" Role="user defined" Unit="1">0.02</Parameter>
+          <Parameter Name="K_ECSinitial" Role="user defined" Unit="uM">4000.0</Parameter>
+          <Parameter Name="H2O_ECSinitial" Role="user defined" Unit="uM">150000.0</Parameter>
+          <Parameter Name="K_Cellinitial" Role="user defined" Unit="uM">150000.0</Parameter>
+        </Kinetics>
+      </FluxStep>
+      <Diagram Name="Unnamed compartment" Structure="ECS">
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="K_ECS" LocationX="423" LocationY="123" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="H2O_ECS" LocationX="64" LocationY="126" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="full" SimpleReactionRef="Del_voltage_AQP4+" LocationX="240" LocationY="100" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="full" SimpleReactionRef="Del_voltage_withoutAQP4" LocationX="240" LocationY="197" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="K_ECS" LocationX="423" LocationY="123" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="H2O_ECS" LocationX="64" LocationY="126" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="molecule" SimpleReactionRef="Del_voltage_AQP4+" LocationX="240" LocationY="100" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="molecule" SimpleReactionRef="Del_voltage_withoutAQP4" LocationX="240" LocationY="197" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="K_ECS" LocationX="423" LocationY="123" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="H2O_ECS" LocationX="64" LocationY="126" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="rule" SimpleReactionRef="Del_voltage_AQP4+" LocationX="240" LocationY="100" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="rule" SimpleReactionRef="Del_voltage_withoutAQP4" LocationX="240" LocationY="197" />
+      </Diagram>
+      <Diagram Name="Cellmembrane1" Structure="Cellmembrane">
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="Kchannel_Cellmembrane" LocationX="177" LocationY="296" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="AQP4_Cellmembrane" LocationX="179" LocationY="58" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="K_Cell" LocationX="23" LocationY="222" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="H2O_Cell" LocationX="15" LocationY="106" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="K_ECS" LocationX="14" LocationY="219" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="H2O_ECS" LocationX="14" LocationY="106" />
+        <FluxReactionShape NodeReferenceModeAttrTag="full" FluxReactionRef="K_Flux" LocationX="157" LocationY="219" />
+        <FluxReactionShape NodeReferenceModeAttrTag="full" FluxReactionRef="water_Flux" LocationX="158" LocationY="144" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="Kchannel_Cellmembrane" LocationX="177" LocationY="296" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="AQP4_Cellmembrane" LocationX="179" LocationY="58" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="K_Cell" LocationX="23" LocationY="222" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="H2O_Cell" LocationX="15" LocationY="106" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="K_ECS" LocationX="14" LocationY="219" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="H2O_ECS" LocationX="14" LocationY="106" />
+        <FluxReactionShape NodeReferenceModeAttrTag="molecule" FluxReactionRef="K_Flux" LocationX="157" LocationY="219" />
+        <FluxReactionShape NodeReferenceModeAttrTag="molecule" FluxReactionRef="water_Flux" LocationX="158" LocationY="144" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="Kchannel_Cellmembrane" LocationX="177" LocationY="296" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="AQP4_Cellmembrane" LocationX="179" LocationY="58" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="K_Cell" LocationX="23" LocationY="222" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="H2O_Cell" LocationX="15" LocationY="106" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="K_ECS" LocationX="14" LocationY="219" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="H2O_ECS" LocationX="14" LocationY="106" />
+        <FluxReactionShape NodeReferenceModeAttrTag="rule" FluxReactionRef="K_Flux" LocationX="157" LocationY="219" />
+        <FluxReactionShape NodeReferenceModeAttrTag="rule" FluxReactionRef="water_Flux" LocationX="158" LocationY="144" />
+      </Diagram>
+      <Diagram Name="Cell1" Structure="Cell">
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="K_Cell" LocationX="110" LocationY="130" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="H2O_Cell" LocationX="373" LocationY="130" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="K_Cell" LocationX="110" LocationY="130" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="H2O_Cell" LocationX="373" LocationY="130" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="K_Cell" LocationX="110" LocationY="130" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="H2O_Cell" LocationX="373" LocationY="130" />
+      </Diagram>
+      <Version Name="unnamed" KeyValue="32436638" BranchId="21097005" Archived="0" Date="18-Mar-2009 05:58:15" FromVersionable="false">
+        <Owner Name="padideh" Identifier="17368603" />
+        <GroupAccess Type="1" />
+      </Version>
+      <ModelUnitSystem VolumeSubstanceUnit="uM.um3" MembraneSubstanceUnit="molecules" LumpedReactionSubstanceUnit="molecules" VolumeUnit="um3" AreaUnit="um2" LengthUnit="um" TimeUnit="s" />
+    </Model>
+    <SimulationSpec Name="Geometrical Model" Stochastic="false" UseConcentration="true" RuleBased="false" MassConservationModelReduction="true" InsufficientIterations="false" InsufficientMaxMolecules="false" CharacteristicSize="0.0038314176245210726">
+      <NetworkConstraints RbmMaxIteration="1" RbmMaxMoleculesPerSpecies="10" RbmSpeciesLimit="800" RbmReactionsLimit="2500" />
+      <Annotation />
+      <Geometry Name="KidneyCell_nGeometry17" Dimension="2">
+        <Extent X="3.0" Y="10.0" Z="0.01" />
+        <Origin X="0.0" Y="0.0" Z="0.0" />
+        <Image Name="KidneCell_nGeometry17">
+          <Annotation>NoName</Annotation>
+          <ImageData X="353" Y="431" Z="1" CompressedSize="1645">789CEDDDDB721B37104551E9FF7F3A954A7C89C30BD0E88301C9B59E3DE89E4D6A22CA15EBEB0B00000000000000000000000000000000000000000000000000000000000000000000000000000000DECF37490287091C267098C0610287091C267098C0610287091C267098C0610287091C267098C0610287091C267098C0610287091C267098C0610287091C267098C0610287091C267098C0610287091C267098C0610287091C267098C0610287091C267098C0610287091C267098C0610287091C267098C0610287091C267098C0610287091C267098C0610287091C267098C0610287091C7678E0D7FF27D0CFBE8137F847E6CFDE5FE0AC77F83D0947AF2F7098C0610287099CF516BF0CE8E4F5050E1338EB3D7E5FD8C1EB0B1C267098C0596FF23B1BCF5D5FE03081C3040E8B04FE9AD43171FD8C8C44E0D9BE0DC305FED4C089BE95C0ABE3050E27FEA8C0B5BE6F19B8EDFEEE9EBAABB0C01F1938D357E09F327DCB815796383C70E858810F0BBCB0C74705BEA2F06705BEA0F091811BDE38CF8F16381278FBF76A9F1778646C63E1B3035F35B7B1F0F0653BEFF8A2BEFF99DDD578F49AADF77C65E0EEC48357AC3E89E67C5EE0B5AF926927079E5D4AE0FBE35B0A0FFDF9CD7D0F0F3CB7D66CE0DACA932E0EDC5AD83BF8D1020D85A7037FC033F8BBF3312CF0E315B604DEDDF784FF3F6E67E0ED7D4F08FCB8F0D43973A3EA1B8FDBFA623EDD221FF8131FC1DF5B03EF2E7C46E04785A74E991D55DD77DC197D3706BEE811B161D2D01E7B0397B79D704AE0FB85A7CE989B535E76C23181EF169E3A62724C79D9711F177873E19D5F2CCF5CF00E16B8FFC7951F1CF866E1C903A68714579D58E99CBE370B4F5E3F3DA3B8E9C44A2705BE5178F2F2E919B53D67561238EAF3022F0D98F771811727CCDAF585324CE0B0FFDF7FF683C6A6C0D11953F281B77E9F76DC1B78B1B0C003DE29F09E5771D28DB7F0F07E020F78A3C09B9E439376070EDEBCC0E1BB1758E0C90D6B8153B7BFE3352CB81D786CCBA3026FF92229B81FF8F99E020F8807DE55F815033F5B55E0A79EE47DB270357024C04B07BEB3B3C04F091C361EF8D7E25FBF5D5D9B11BF95C88092C9C07FAC2FF053A5C03F6FE0A44744FE15AC28F6FD71078377B22370FC052C29F7FDF1341EFE9945BA70FE152C58C83B17F8DEE5C15B693EBF6657E07CDF377C031F14F8EE765713386BADEFEA33B831C1A18117FBAE7E1721F0485F811FE8E85B0F9CBE93CEF38B3AFA0AFCC07ADD6F8F88473AFA9E1178D7CF9B2775F43DE31171E85B7839EE3F871487C56FA57540DB5693794F0EBC3C61F990A5B0BF0E290E5BD9FCF9E927041EEF2B70DF52D39B9E1138F210DE15F8D929C5690B9B0F9DDF1478E19496BE024FAD54D8F28C0F1AC1C0F5635AFA0E074EFFAD672E70F99C96BEC7040E9CFFF281D385BB0EECDB281AF8F5DEC2EBC75C1D38FE18EE39AF75A560E078E1EEE3050E9FDF70C8FB076E79FB75EFB43370F8AF359AE2742F25F01FE7752FB533F0C18577046EFCA87C77D6C2F623133A0EEBDE696FE0C6C627067E5278E0F28E492B37F06C42C36181AD5E33F0ED210D27B5EFF4BA81FB3E30BF53E095ED07C6AC9FD3BE92C0AD81576E7D66F8831732FA145E3FA77FA7E1A3A7866F297C62E085B7B0C0C5A52281B77C2321B0C0B9C03B0A0B9CEDDBF6596E4FE0812B7B06F525EE0F9C594AE01D8147AE6C19D4D7B73F706829813BF77AF3C0A5B3DF2E70F2A7EE2BE7C4968A047EA1BFD6107866C2C239B9A52281F31F35BA0E17786E40F99CE452EF1478FA7881270754CF892ED5FE5159E0EB02D7361F1F503D27BA5420705B80F4F9024F9E5FFD86FDE2A5FA02A79FC19343DE307053E1C7814787346F55DFA73370FA5E26A66C5FEAEEA8858F4857051E19734DE05B03CF0BDCF216BE32F07F47AEFC182514B8A3F0B5817F1FBBF493C0AB028FFCB75BE095BB993961D34AF7D66C0DBCEB21FC6C4EFB4EB5BE81C0677C1FD1BE52B16F22F011DF0A776F54ED1B09BCE72B72EADAFC3A8FF66C0FBCE54B72EADAF836F5656B23576FA83BF0E242B5AA6BE30347B60DE8DEA792747D7AC7995FFF3EA26EFDE1EAF98DB738B6C888D4DC81ABBFEF042E9FDD788BE3375A0FB136B67EFFF59D3B6FB2256E71F6CCD93FDEA7E31B94776EBDCBE17B2C2EBB69F88F157EDBA4B8F4F405DB6EF1FABE15F33B1D16F8C1468DB3574C2F75D56D3C687872DF3FB68B5CD0E371C373FBBE0EFDD2E44D93374E600000000000000000000000000000000000000000000080BFFD0546591747</ImageData>
+          <PixelClass Name="PixelClass1" ImagePixelValue="0" KeyValue="24478878" />
+          <PixelClass Name="PixelClass2" ImagePixelValue="1" KeyValue="24478879" />
+          <Version Name="KidneCell_nGeometry17" KeyValue="24478872" BranchId="24478873" Archived="0" Date="16-Nov-2007 04:21:19" FromVersionable="false">
+            <Owner Name="padideh" Identifier="17368603" />
+            <GroupAccess Type="1" />
+            <Annotation>NoName</Annotation>
+          </Version>
+        </Image>
+        <SubVolume Name="PixelClass1" Handle="0" Type="Image" ImagePixelValue="0" KeyValue="24478883" />
+        <SubVolume Name="PixelClass2" Handle="1" Type="Image" ImagePixelValue="1" KeyValue="24478884" />
+        <SurfaceClass Name="PixelClass1_PixelClass2_membrane" SubVolume1Ref="PixelClass1" SubVolume2Ref="PixelClass2" />
+        <SurfaceDescription NumSamplesX="353" NumSamplesY="431" NumSamplesZ="1" CutoffFrequency="0.3">
+          <VolumeRegion Name="PixelClass10" RegionID="0" SubVolume="PixelClass1" Size="15.832650634249472" Unit="um2" />
+          <VolumeRegion Name="PixelClass21" RegionID="1" SubVolume="PixelClass2" Size="14.167349365750528" Unit="um2" />
+          <MembraneRegion Name="membrane_PixelClass10_PixelClass21" VolumeRegion1="PixelClass21" VolumeRegion2="PixelClass10" Size="41.42201640241619" Unit="um" />
+        </SurfaceDescription>
+        <Version Name="KidneyCell_nGeometry17" KeyValue="24478880" BranchId="24478881" Archived="0" Date="16-Nov-2007 04:21:35" FromVersionable="false">
+          <Owner Name="padideh" Identifier="17368603" />
+          <GroupAccess Type="1" />
+        </Version>
+      </Geometry>
+      <GeometryContext>
+        <FeatureMapping Feature="Cell" GeometryClass="PixelClass2" SubVolume="PixelClass2">
+          <BoundariesTypes Xm="Flux" Xp="Flux" Ym="Flux" Yp="Flux" Zm="Flux" Zp="Flux" />
+        </FeatureMapping>
+        <FeatureMapping Feature="ECS" GeometryClass="PixelClass1" SubVolume="PixelClass1">
+          <BoundariesTypes Xm="Flux" Xp="Flux" Ym="Flux" Yp="Value" Zm="Flux" Zp="Flux" />
+        </FeatureMapping>
+        <MembraneMapping Membrane="Cellmembrane" SurfaceToVolumeRatio="1.0" VolumeFraction="0.2" CalculateVoltage="true" SpecificCapacitance="0.1" InitialVoltage="-92.867844" GeometryClass="PixelClass1_PixelClass2_membrane">
+          <BoundariesTypes Xm="Flux" Xp="Flux" Ym="Flux" Yp="Flux" Zm="Flux" Zp="Flux" />
+        </MembraneMapping>
+      </GeometryContext>
+      <ReactionContext>
+        <LocalizedCompoundSpec LocalizedCompoundRef="K_Cell" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>150000.0</InitialConcentration>
+          <Diffusion>100.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="H2O_Cell" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>1600000.0</InitialConcentration>
+          <Diffusion>10.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="K_ECS" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>(4000.0 + (2000.0 * (y &gt; 9.0)))</InitialConcentration>
+          <Diffusion>100.0</Diffusion>
+          <Boundaries Ym="0.0" Yp="6000.0" />
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="H2O_ECS" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>150000.0</InitialConcentration>
+          <Diffusion>10.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="Kchannel_Cellmembrane" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>(5.0 * (x &lt; 2.95) * (x &gt; 0.1))</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="AQP4_Cellmembrane" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>((1400.0 * (x &lt; 0.77) * (y &lt; 8.35) * (x &gt; 0.38) * (y &gt; 7.65)) + (140.0 * (x &lt; 0.67) * (y &lt; 7.65) * (x &gt; 0.21) * (y &gt; 4.0)) + (1400.0 * (x &lt; 1.58) * (y &lt; 8.35) * (x &gt; 1.07) * (y &gt; 7.65)) + (140.0 * (x &lt; 1.58) * (y &lt; 7.65) * (x &gt; 1.07) * (y &gt; 4.0)) + (1400.0 * (x &lt; 2.02) * (y &lt; 8.35) * (x &gt; 1.68) * (y &gt; 7.65)) + (140.0 * (x &lt; 1.97) * (y &lt; 7.65) * (x &gt; 1.68) * (y &gt; 4.0)) + (1400.0 * (x &lt; 2.94) * (y &lt; 8.35) * (x &gt; 2.35) * (y &gt; 7.65)) + (140.0 * (x &lt; 2.97) * (y &lt; 7.65) * (x &gt; 1.97) * (y &gt; 4.0)))</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <ReactionSpec ReactionStepRef="Del_voltage_AQP4+" ReactionMapping="included" />
+        <ReactionSpec ReactionStepRef="Del_voltage_withoutAQP4" ReactionMapping="included" />
+        <ReactionSpec ReactionStepRef="K_Flux" ReactionMapping="included" />
+        <ReactionSpec ReactionStepRef="water_Flux" ReactionMapping="included" />
+      </ReactionContext>
+      <MathDescription Name="DS and AQP4_generated">
+        <Constant Name="_F_">96480.0</Constant>
+        <Constant Name="_F_nmol_">9.648E-5</Constant>
+        <Constant Name="_K_GHK_">1.0E-9</Constant>
+        <Constant Name="_N_pmol_">6.02E11</Constant>
+        <Constant Name="_R_">8314.0</Constant>
+        <Constant Name="_T_">300.0</Constant>
+        <Constant Name="Beta">0.02</Constant>
+        <Constant Name="C">1.0</Constant>
+        <Constant Name="c">1.0</Constant>
+        <Constant Name="C_Cellmembrane">0.1</Constant>
+        <Constant Name="Gk">22.0</Constant>
+        <Constant Name="H2O_Cell_diffusionRate">10.0</Constant>
+        <Constant Name="H2O_Cell_init">1600000.0</Constant>
+        <Constant Name="H2O_ECS_diffusionRate">10.0</Constant>
+        <Constant Name="H2O_ECS_init">150000.0</Constant>
+        <Constant Name="H2O_ECSinitial">150000.0</Constant>
+        <Constant Name="H2O_initial">150000.0</Constant>
+        <Constant Name="I_Cellmembrane">0.0</Constant>
+        <Constant Name="K_Cell_diffusionRate">100.0</Constant>
+        <Constant Name="K_Cell_init">150000.0</Constant>
+        <Constant Name="K_Cellinitial">150000.0</Constant>
+        <Constant Name="K_ECS_diffusionRate">100.0</Constant>
+        <Constant Name="K_ECSinitial">4000.0</Constant>
+        <Constant Name="K_intracellular_Del_voltage_AQP4_">150000.0</Constant>
+        <Constant Name="K_intracellular_Del_voltage_withoutAQP4">150000.0</Constant>
+        <Constant Name="K_millivolts_per_volt">1000.0</Constant>
+        <Constant Name="KMOLE">0.0016611295681063123</Constant>
+        <Constant Name="Pf">0.007</Constant>
+        <Constant Name="Vm_initial_Del_voltage_AQP4_">-92.867844</Constant>
+        <Constant Name="Vm_initial_Del_voltage_withoutAQP4">-92.867844</Constant>
+        <Constant Name="Voltage_Cellmembrane_init">-92.867844</Constant>
+        <VolumeVariable Name="H2O" />
+        <VolumeVariable Name="K" />
+        <MembraneRegionVariable Name="Voltage_Cellmembrane" />
+        <Function Name="AQP4_Cellmembrane">K_AQP4_Cellmembrane_total</Function>
+        <Function Name="AQP4_Cellmembrane_init">((1400.0 * (x &lt; 0.77) * (y &lt; 8.35) * (x &gt; 0.38) * (y &gt; 7.65)) + (140.0 * (x &lt; 0.67) * (y &lt; 7.65) * (x &gt; 0.21) * (y &gt; 4.0)) + (1400.0 * (x &lt; 1.58) * (y &lt; 8.35) * (x &gt; 1.07) * (y &gt; 7.65)) + (140.0 * (x &lt; 1.58) * (y &lt; 7.65) * (x &gt; 1.07) * (y &gt; 4.0)) + (1400.0 * (x &lt; 2.02) * (y &lt; 8.35) * (x &gt; 1.68) * (y &gt; 7.65)) + (140.0 * (x &lt; 1.97) * (y &lt; 7.65) * (x &gt; 1.68) * (y &gt; 4.0)) + (1400.0 * (x &lt; 2.94) * (y &lt; 8.35) * (x &gt; 2.35) * (y &gt; 7.65)) + (140.0 * (x &lt; 2.97) * (y &lt; 7.65) * (x &gt; 1.97) * (y &gt; 4.0)))</Function>
+        <Function Name="delH2O_ECS">(H2O_ECSinitial - H2O_OUTSIDE)</Function>
+        <Function Name="delK_Cell">(K_Cellinitial - K_INSIDE)</Function>
+        <Function Name="delK_ECS">(K_ECSinitial - K_OUTSIDE)</Function>
+        <Function Name="delVk">(Voltage_Cellmembrane - Vk)</Function>
+        <Function Name="F_Cellmembrane">- I_K_Flux</Function>
+        <Function Name="I_K_Flux">- (C * delVk * Gk * Kchannel_Cellmembrane)</Function>
+        <Function Name="J_Del_voltage_AQP4_">(Vm_Del_voltage_AQP4_ - Vm_initial_Del_voltage_AQP4_)</Function>
+        <Function Name="J_Del_voltage_withoutAQP4">(Vm_Del_voltage_withoutAQP4 - Vm_initial_Del_voltage_withoutAQP4)</Function>
+        <Function Name="J_K_Flux">(I_K_Flux / _F_nmol_)</Function>
+        <Function Name="J_water_Flux">(c * Pf * AQP4_Cellmembrane * (delK_ECS - delK_Cell - (Beta * delH2O_ECS)))</Function>
+        <Function Name="K_AQP4_Cellmembrane_total">AQP4_Cellmembrane_init</Function>
+        <Function Name="K_ECS_init">(4000.0 + (2000.0 * (y &gt; 9.0)))</Function>
+        <Function Name="K_Kchannel_Cellmembrane_total">Kchannel_Cellmembrane_init</Function>
+        <Function Name="Kchannel_Cellmembrane">K_Kchannel_Cellmembrane_total</Function>
+        <Function Name="Kchannel_Cellmembrane_init">(5.0 * (x &lt; 2.95) * (x &gt; 0.1))</Function>
+        <Function Name="Keffective_ECS">(K * H2O_initial / H2O)</Function>
+        <Function Name="Vk">(25.6 * log((K_OUTSIDE / K_INSIDE)))</Function>
+        <Function Name="Vm_Del_voltage_AQP4_">(25.6 * log((Keffective_ECS / K_intracellular_Del_voltage_AQP4_)))</Function>
+        <Function Name="Vm_Del_voltage_withoutAQP4">(25.6 * log((K / K_intracellular_Del_voltage_withoutAQP4)))</Function>
+        <CompartmentSubDomain Name="PixelClass1">
+          <BoundaryType Boundary="Xm" Type="Flux" />
+          <BoundaryType Boundary="Xp" Type="Flux" />
+          <BoundaryType Boundary="Ym" Type="Flux" />
+          <BoundaryType Boundary="Yp" Type="Value" />
+          <BoundaryType Boundary="Zm" Type="Value" />
+          <BoundaryType Boundary="Zp" Type="Value" />
+          <PdeEquation Name="K" SolutionType="Unknown">
+            <Boundaries Ym="0.0" Yp="6000.0" />
+            <Rate>0.0</Rate>
+            <Diffusion>K_ECS_diffusionRate</Diffusion>
+            <Initial>K_ECS_init</Initial>
+          </PdeEquation>
+          <PdeEquation Name="H2O" SolutionType="Unknown">
+            <Rate>0.0</Rate>
+            <Diffusion>H2O_ECS_diffusionRate</Diffusion>
+            <Initial>H2O_ECS_init</Initial>
+          </PdeEquation>
+        </CompartmentSubDomain>
+        <CompartmentSubDomain Name="PixelClass2">
+          <BoundaryType Boundary="Xm" Type="Flux" />
+          <BoundaryType Boundary="Xp" Type="Flux" />
+          <BoundaryType Boundary="Ym" Type="Flux" />
+          <BoundaryType Boundary="Yp" Type="Flux" />
+          <BoundaryType Boundary="Zm" Type="Value" />
+          <BoundaryType Boundary="Zp" Type="Value" />
+          <PdeEquation Name="K" SolutionType="Unknown">
+            <Rate>0.0</Rate>
+            <Diffusion>K_Cell_diffusionRate</Diffusion>
+            <Initial>K_Cell_init</Initial>
+          </PdeEquation>
+          <PdeEquation Name="H2O" SolutionType="Unknown">
+            <Rate>0.0</Rate>
+            <Diffusion>H2O_Cell_diffusionRate</Diffusion>
+            <Initial>H2O_Cell_init</Initial>
+          </PdeEquation>
+        </CompartmentSubDomain>
+        <MembraneSubDomain Name="PixelClass1_PixelClass2_membrane" InsideCompartment="PixelClass2" OutsideCompartment="PixelClass1">
+          <BoundaryType Boundary="Xm" Type="Value" />
+          <BoundaryType Boundary="Xp" Type="Value" />
+          <BoundaryType Boundary="Ym" Type="Value" />
+          <BoundaryType Boundary="Yp" Type="Value" />
+          <BoundaryType Boundary="Zm" Type="Value" />
+          <BoundaryType Boundary="Zp" Type="Value" />
+          <MembraneRegionEquation Name="Voltage_Cellmembrane">
+            <UniformRate>0.0</UniformRate>
+            <MembraneRate>(1000.0 * (I_Cellmembrane + I_K_Flux) / C_Cellmembrane)</MembraneRate>
+            <Initial>-92.867844</Initial>
+            <SolutionType Type="unknown" />
+          </MembraneRegionEquation>
+          <JumpCondition Name="K">
+            <InFlux>J_K_Flux</InFlux>
+            <OutFlux>- J_K_Flux</OutFlux>
+          </JumpCondition>
+          <JumpCondition Name="H2O">
+            <InFlux>J_water_Flux</InFlux>
+            <OutFlux>- J_water_Flux</OutFlux>
+          </JumpCondition>
+        </MembraneSubDomain>
+        <Version Name="DS and AQP4_generated" KeyValue="32436845" BranchId="21097002" Archived="0" Date="18-Mar-2009 06:03:21" FromVersionable="false">
+          <Owner Name="padideh" Identifier="17368603" />
+          <GroupAccess Type="1" />
+        </Version>
+      </MathDescription>
+      <Simulation Name="No water permeability">
+        <SolverTaskDescription TaskType="Unsteady" UseSymbolicJacobian="false" Solver="Finite Volume, Regular Grid">
+          <TimeBound StartTime="0.0" EndTime="1.0" />
+          <TimeStep DefaultTime="1.0E-6" MinTime="1.0E-8" MaxTime="1.0" />
+          <ErrorTolerance Absolut="1.0E-9" Relative="1.0E-9" />
+          <OutputOptions KeepEvery="1000" KeepAtMost="1000" />
+          <NumberProcessors>1</NumberProcessors>
+        </SolverTaskDescription>
+        <MathOverrides>
+          <Constant Name="Pf">0.0</Constant>
+        </MathOverrides>
+        <MeshSpecification>
+          <Size X="90" Y="180" Z="1" />
+        </MeshSpecification>
+        <Version Name="No water permeability" KeyValue="32436862" BranchId="32436863" Archived="0" Date="18-Mar-2009 06:03:21" FromVersionable="false">
+          <Owner Name="padideh" Identifier="17368603" />
+          <GroupAccess Type="1" />
+        </Version>
+      </Simulation>
+      <Simulation Name="No water permeability, longer time">
+        <SolverTaskDescription TaskType="Unsteady" UseSymbolicJacobian="false" Solver="Finite Volume, Regular Grid">
+          <TimeBound StartTime="0.0" EndTime="10.0" />
+          <TimeStep DefaultTime="1.0E-6" MinTime="1.0E-8" MaxTime="1.0" />
+          <ErrorTolerance Absolut="1.0E-9" Relative="1.0E-9" />
+          <OutputOptions KeepEvery="10000" KeepAtMost="1000" />
+          <NumberProcessors>1</NumberProcessors>
+        </SolverTaskDescription>
+        <MathOverrides>
+          <Constant Name="Pf">0.0</Constant>
+        </MathOverrides>
+        <MeshSpecification>
+          <Size X="90" Y="180" Z="1" />
+        </MeshSpecification>
+        <Version Name="No water permeability, longer time" KeyValue="32436886" BranchId="32436887" Archived="0" Date="18-Mar-2009 06:03:24" FromVersionable="false">
+          <Owner Name="padideh" Identifier="17368603" />
+          <GroupAccess Type="1" />
+        </Version>
+      </Simulation>
+      <Simulation Name="water permeability:x  (with AQPs)">
+        <SolverTaskDescription TaskType="Unsteady" UseSymbolicJacobian="false" Solver="Finite Volume, Regular Grid">
+          <TimeBound StartTime="0.0" EndTime="1.0" />
+          <TimeStep DefaultTime="1.0E-6" MinTime="1.0E-8" MaxTime="1.0" />
+          <ErrorTolerance Absolut="1.0E-9" Relative="1.0E-9" />
+          <OutputOptions KeepEvery="1000" KeepAtMost="1000" />
+          <NumberProcessors>1</NumberProcessors>
+        </SolverTaskDescription>
+        <MathOverrides />
+        <MeshSpecification>
+          <Size X="90" Y="180" Z="1" />
+        </MeshSpecification>
+        <Version Name="water permeability:x  (with AQPs)" KeyValue="32436900" BranchId="32436901" Archived="0" Date="18-Mar-2009 06:03:28" FromVersionable="false">
+          <Owner Name="padideh" Identifier="17368603" />
+          <GroupAccess Type="1" />
+        </Version>
+      </Simulation>
+      <Simulation Name="water permeability:x  (with AQPs), longer time">
+        <SolverTaskDescription TaskType="Unsteady" UseSymbolicJacobian="false" Solver="Finite Volume, Regular Grid">
+          <TimeBound StartTime="0.0" EndTime="10.0" />
+          <TimeStep DefaultTime="1.0E-6" MinTime="1.0E-8" MaxTime="1.0" />
+          <ErrorTolerance Absolut="1.0E-9" Relative="1.0E-9" />
+          <OutputOptions KeepEvery="10000" KeepAtMost="1000" />
+          <NumberProcessors>1</NumberProcessors>
+        </SolverTaskDescription>
+        <MathOverrides />
+        <MeshSpecification>
+          <Size X="90" Y="180" Z="1" />
+        </MeshSpecification>
+        <Version Name="water permeability:x  (with AQPs), longer time" KeyValue="32436915" BranchId="32436916" Archived="0" Date="18-Mar-2009 06:03:31" FromVersionable="false">
+          <Owner Name="padideh" Identifier="17368603" />
+          <GroupAccess Type="1" />
+        </Version>
+      </Simulation>
+      <Simulation Name="water permeability: 7x">
+        <SolverTaskDescription TaskType="Unsteady" UseSymbolicJacobian="false" Solver="Finite Volume, Regular Grid">
+          <TimeBound StartTime="0.0" EndTime="1.0" />
+          <TimeStep DefaultTime="1.0E-6" MinTime="1.0E-8" MaxTime="1.0" />
+          <ErrorTolerance Absolut="1.0E-9" Relative="1.0E-9" />
+          <OutputOptions KeepEvery="1000" KeepAtMost="1000" />
+          <NumberProcessors>1</NumberProcessors>
+        </SolverTaskDescription>
+        <MathOverrides>
+          <Constant Name="Pf">0.049</Constant>
+        </MathOverrides>
+        <MeshSpecification>
+          <Size X="90" Y="180" Z="1" />
+        </MeshSpecification>
+        <Version Name="water permeability: 7x" KeyValue="32436929" BranchId="32436930" Archived="0" Date="18-Mar-2009 06:03:33" FromVersionable="false">
+          <Owner Name="padideh" Identifier="17368603" />
+          <GroupAccess Type="1" />
+        </Version>
+      </Simulation>
+      <Simulation Name="water permeability: 7x, longer time">
+        <Annotation>For all the simulations: The model describe a bigger portion of the kidney pronciple cell including both its basolateral and apical membranes. 
+The K+ transport from the basal extracellular space to the apical extracellular space is simulated.
+In addition, the model explains how the mechanism of K+ recirculation takes place in DLS (through Kir7.1 located in DLS) 
+in order to maintain the cell membrane potential.  . 
+The result of the function of AQP4 is reflected in the term Keffective_ECS.
+This model represents the case where K+ level is increased in the blood up to 6 mM.</Annotation>
+        <SolverTaskDescription TaskType="Unsteady" UseSymbolicJacobian="false" Solver="Finite Volume, Regular Grid">
+          <TimeBound StartTime="0.0" EndTime="10.0" />
+          <TimeStep DefaultTime="1.0E-6" MinTime="1.0E-8" MaxTime="1.0" />
+          <ErrorTolerance Absolut="1.0E-9" Relative="1.0E-9" />
+          <OutputOptions KeepEvery="10000" KeepAtMost="1000" />
+          <NumberProcessors>1</NumberProcessors>
+        </SolverTaskDescription>
+        <MathOverrides>
+          <Constant Name="Pf">0.049</Constant>
+        </MathOverrides>
+        <MeshSpecification>
+          <Size X="90" Y="180" Z="1" />
+        </MeshSpecification>
+        <Version Name="water permeability: 7x, longer time" KeyValue="32436962" BranchId="32436948" Archived="0" Date="18-Mar-2009 06:04:42" FromVersionable="false">
+          <Owner Name="padideh" Identifier="17368603" />
+          <GroupAccess Type="1" />
+          <Annotation>For all the simulations: The model describe a bigger portion of the kidney pronciple cell including both its basolateral and apical membranes. 
+The K+ transport from the basal extracellular space to the apical extracellular space is simulated.
+In addition, the model explains how the mechanism of K+ recirculation takes place in DLS (through Kir7.1 located in DLS) 
+in order to maintain the cell membrane potential.  . 
+The result of the function of AQP4 is reflected in the term Keffective_ECS.
+This model represents the case where K+ level is increased in the blood up to 6 mM.</Annotation>
+          <ParentSimRef KeyValue="32436947" />
+        </Version>
+      </Simulation>
+      <SpatialObjects>
+        <SpatialObject Name="vobj_PixelClass10" Type="Volume" subVolume="PixelClass1" regionId="0">
+          <QuantityCategoryList>
+            <QuantityCategory Name="VolumeCentroid" Enabled="false" />
+            <QuantityCategory Name="InteriorVelocity" Enabled="false" />
+            <QuantityCategory Name="VolumeRegionSize" Enabled="true" />
+          </QuantityCategoryList>
+        </SpatialObject>
+        <SpatialObject Name="vobj_PixelClass21" Type="Volume" subVolume="PixelClass2" regionId="1">
+          <QuantityCategoryList>
+            <QuantityCategory Name="VolumeCentroid" Enabled="false" />
+            <QuantityCategory Name="InteriorVelocity" Enabled="false" />
+            <QuantityCategory Name="VolumeRegionSize" Enabled="true" />
+          </QuantityCategoryList>
+        </SpatialObject>
+        <SpatialObject Name="sobj_PixelClass21_PixelClass10" Type="Surface" subVolumeInside="PixelClass2" regionIdInside="1" subVolumeOutside="PixelClass1" regionIdOutside="0">
+          <QuantityCategoryList>
+            <QuantityCategory Name="SurfaceNormal" Enabled="false" />
+            <QuantityCategory Name="SurfaceVelocity" Enabled="false" />
+            <QuantityCategory Name="DistanceToSurface" Enabled="false" />
+            <QuantityCategory Name="DirectionToSurface" Enabled="false" />
+            <QuantityCategory Name="SurfaceSize" Enabled="true" />
+          </QuantityCategoryList>
+        </SpatialObject>
+      </SpatialObjects>
+      <Version Name="Geometrical Model" KeyValue="32436847" BranchId="24698138" Archived="0" Date="18-Mar-2009 06:03:21" FromVersionable="false">
+        <Owner Name="padideh" Identifier="17368603" />
+        <GroupAccess Type="1" />
+      </Version>
+      <MicroscopeMeasurement Name="fluor">
+        <ConvolutionKernel Type="ProjectionZKernel" />
+      </MicroscopeMeasurement>
+    </SimulationSpec>
+    <Version Name="DLS-Model of Kidney cell-2-polarized AQPs" KeyValue="32436964" BranchId="32436835" Archived="0" Date="18-Mar-2009 06:04:42" FromVersionable="false">
+      <Owner Name="padideh" Identifier="17368603" />
+      <GroupAccess Type="1" />
+    </Version>
+    <pathwayModel>
+      <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:bp="http://www.biopax.org/release/biopax-level3.owl#" version="3.0" />
+    </pathwayModel>
+    <relationshipModel>
+      <RMNS version="3.0" />
+    </relationshipModel>
+    <vcmetadata>
+      <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" />
+      <nonrdfAnnotationList />
+      <uriBindingList />
+    </vcmetadata>
+  </BioModel>
+</vcml>
+

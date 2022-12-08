@@ -1,0 +1,1114 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--This biomodel was generated in VCML Version Alpha_Version_7.4.0_build_87-->
+<vcml xmlns="http://sourceforge.net/projects/vcell/vcml" Version="Alpha_Version_7.4.0_build_87">
+  <BioModel Name="be276 final">
+    <Annotation>cloned from 'TA-test model2' owned by user bboras
+cloned from 'AKARmyocyte' owned by user jsaucer
+Saucerman et. al, Systems Analysis of PKA mediated phosphorylation gradients, submitted 2006
+
+This model contains simulations for single-compartment simulations (all except those in Figure 3, which is available as AKARmyocyte_bidomain).</Annotation>
+    <Model Name="unnamed">
+      <Annotation>cloned from 'unnamed' owned by user bboras
+cloned from 'unnamed' owned by user jsaucer</Annotation>
+      <Compound Name="cAMP" />
+      <Compound Name="DMNB_cAMP" />
+      <Compound Name="light_spot" />
+      <Compound Name="s2" />
+      <Compound Name="s3" />
+      <Compound Name="s4" />
+      <Compound Name="s5" />
+      <Compound Name="s6" />
+      <Compound Name="s7" />
+      <Compound Name="s8" />
+      <Compound Name="s11" />
+      <Compound Name="s14" />
+      <Compound Name="s0" />
+      <Compound Name="s1" />
+      <Compound Name="s9" />
+      <Compound Name="s10" />
+      <Compound Name="s13" />
+      <Compound Name="s15" />
+      <Feature Name="ec" KeyValue="110196983" />
+      <Feature Name="cell" KeyValue="110196985" />
+      <Membrane InsideFeature="cell" OutsideFeature="ec" PositiveFeature="cell" NegativeFeature="ec" MembraneVoltage="Voltage_membrane" Name="membrane" KeyValue="110196987" />
+      <LocalizedCompound Name="cAMP_cell" CompoundRef="cAMP" Structure="cell" OverrideName="true" KeyValue="110196989" />
+      <LocalizedCompound Name="DMNB_cAMP_cell" CompoundRef="DMNB_cAMP" Structure="cell" OverrideName="true" KeyValue="110196990" />
+      <LocalizedCompound Name="light_spot_cell" CompoundRef="light_spot" Structure="cell" OverrideName="true" KeyValue="110196991" />
+      <LocalizedCompound Name="PKA" CompoundRef="s2" Structure="cell" OverrideName="true" KeyValue="110196992" />
+      <LocalizedCompound Name="PKA_cAMP1" CompoundRef="s3" Structure="cell" OverrideName="true" KeyValue="110196993" />
+      <LocalizedCompound Name="PKA_cAMP2" CompoundRef="s4" Structure="cell" OverrideName="true" KeyValue="110196994" />
+      <LocalizedCompound Name="PKA_R_cAMP2" CompoundRef="s5" Structure="cell" OverrideName="true" KeyValue="110196995" />
+      <LocalizedCompound Name="PKA_C" CompoundRef="s6" Structure="cell" OverrideName="true" KeyValue="110196996" />
+      <LocalizedCompound Name="PKI" CompoundRef="s7" Structure="cell" OverrideName="true" KeyValue="110196997" />
+      <LocalizedCompound Name="PKA_C_PKI" CompoundRef="s8" Structure="cell" OverrideName="true" KeyValue="110196998" />
+      <LocalizedCompound Name="PP" CompoundRef="s11" Structure="cell" OverrideName="true" KeyValue="110196999" />
+      <LocalizedCompound Name="cAMP_ec" CompoundRef="s14" Structure="ec" OverrideName="true" KeyValue="110197000" />
+      <LocalizedCompound Name="PDE5" CompoundRef="s0" Structure="cell" OverrideName="true" KeyValue="110197001" />
+      <LocalizedCompound Name="PKA_C_PDE5" CompoundRef="s1" Structure="cell" OverrideName="true" KeyValue="110197002" />
+      <LocalizedCompound Name="PDE5_p" CompoundRef="s9" Structure="cell" OverrideName="true" KeyValue="110197003" />
+      <LocalizedCompound Name="cGMP" CompoundRef="s10" Structure="cell" OverrideName="true" KeyValue="110197004" />
+      <LocalizedCompound Name="GMP" CompoundRef="s13" Structure="cell" OverrideName="true" KeyValue="110197005" />
+      <LocalizedCompound Name="PP_PDE5_p" CompoundRef="s15" Structure="cell" OverrideName="true" KeyValue="110197006" />
+      <SimpleReaction Structure="cell" Name="cAMP_photolysis" Reversible="true" FluxOption="MolecularOnly" KeyValue="110197007">
+        <Reactant LocalizedCompoundRef="DMNB_cAMP_cell" Stoichiometry="1" KeyValue="110197008" />
+        <Product LocalizedCompoundRef="cAMP_cell" Stoichiometry="1" KeyValue="110197009" />
+        <Modifier LocalizedCompoundRef="light_spot_cell" />
+        <Kinetics KineticsType="GeneralKinetics">
+          <Parameter Name="J" Role="reaction rate" Unit="uM.s-1">(kphot * light * DMNB_cAMP_cell)</Parameter>
+          <Parameter Name="kphot" Role="user defined" Unit="s-1">0.1</Parameter>
+          <Parameter Name="light" Role="user defined" Unit="1">(((t &gt; ton_global_light) * (t &lt; toff_global_light)) + ((t &gt; ton_local_light) * (t &lt; toff_local_light) * light_spot_cell))</Parameter>
+          <Parameter Name="toff_local_light" Role="user defined" Unit="s">0.0</Parameter>
+          <Parameter Name="ton_local_light" Role="user defined" Unit="s">0.0</Parameter>
+          <Parameter Name="toff_global_light" Role="user defined" Unit="s">0.0</Parameter>
+          <Parameter Name="ton_global_light" Role="user defined" Unit="s">0.0</Parameter>
+        </Kinetics>
+      </SimpleReaction>
+      <SimpleReaction Structure="cell" Name="r2" Reversible="true" FluxOption="MolecularOnly" KeyValue="110197011">
+        <Reactant LocalizedCompoundRef="PKA" Stoichiometry="1" KeyValue="110197012" />
+        <Reactant LocalizedCompoundRef="cAMP_cell" Stoichiometry="1" KeyValue="110197013" />
+        <Product LocalizedCompoundRef="PKA_cAMP1" Stoichiometry="1" KeyValue="110197014" />
+        <Kinetics KineticsType="MassAction">
+          <Parameter Name="J" Role="reaction rate" Unit="uM.s-1">(((Kf * PKA) * cAMP_cell) - (Kr * PKA_cAMP1))</Parameter>
+          <Parameter Name="Kf" Role="forward rate constant" Unit="s-1.uM-1">1.0</Parameter>
+          <Parameter Name="Kr" Role="reverse rate constant" Unit="s-1">9.14</Parameter>
+        </Kinetics>
+      </SimpleReaction>
+      <SimpleReaction Structure="cell" Name="r3" Reversible="true" FluxOption="MolecularOnly" KeyValue="110197015">
+        <Reactant LocalizedCompoundRef="PKA_cAMP1" Stoichiometry="1" KeyValue="110197016" />
+        <Reactant LocalizedCompoundRef="cAMP_cell" Stoichiometry="1" KeyValue="110197017" />
+        <Product LocalizedCompoundRef="PKA_cAMP2" Stoichiometry="1" KeyValue="110197018" />
+        <Kinetics KineticsType="MassAction">
+          <Parameter Name="J" Role="reaction rate" Unit="uM.s-1">(((Kf * PKA_cAMP1) * cAMP_cell) - (Kr * PKA_cAMP2))</Parameter>
+          <Parameter Name="Kf" Role="forward rate constant" Unit="s-1.uM-1">1.0</Parameter>
+          <Parameter Name="Kr" Role="reverse rate constant" Unit="s-1">1.64</Parameter>
+        </Kinetics>
+      </SimpleReaction>
+      <SimpleReaction Structure="cell" Name="r4" Reversible="true" FluxOption="MolecularOnly" KeyValue="110197019">
+        <Reactant LocalizedCompoundRef="PKA_cAMP2" Stoichiometry="1" KeyValue="110197020" />
+        <Product LocalizedCompoundRef="PKA_R_cAMP2" Stoichiometry="1" KeyValue="110197021" />
+        <Product LocalizedCompoundRef="PKA_C" Stoichiometry="1" KeyValue="110197022" />
+        <Kinetics KineticsType="MassAction">
+          <Parameter Name="J" Role="reaction rate" Unit="uM.s-1">((Kf * PKA_cAMP2) - ((Kr * PKA_R_cAMP2) * PKA_C))</Parameter>
+          <Parameter Name="Kf" Role="forward rate constant" Unit="s-1">1.0</Parameter>
+          <Parameter Name="Kr" Role="reverse rate constant" Unit="s-1.uM-1">0.23</Parameter>
+        </Kinetics>
+      </SimpleReaction>
+      <SimpleReaction Structure="cell" Name="r5" Reversible="true" FluxOption="MolecularOnly" KeyValue="110197023">
+        <Reactant LocalizedCompoundRef="PKA_C" Stoichiometry="1" KeyValue="110197024" />
+        <Reactant LocalizedCompoundRef="PKI" Stoichiometry="1" KeyValue="110197025" />
+        <Product LocalizedCompoundRef="PKA_C_PKI" Stoichiometry="1" KeyValue="110197026" />
+        <Kinetics KineticsType="MassAction">
+          <Parameter Name="J" Role="reaction rate" Unit="uM.s-1">(((Kf * PKA_C) * PKI) - (Kr * PKA_C_PKI))</Parameter>
+          <Parameter Name="Kf" Role="forward rate constant" Unit="s-1.uM-1">1.0</Parameter>
+          <Parameter Name="Kr" Role="reverse rate constant" Unit="s-1">2.0E-4</Parameter>
+        </Kinetics>
+      </SimpleReaction>
+      <SimpleReaction Structure="cell" Name="r0" Reversible="true" FluxOption="MolecularOnly" KeyValue="110197027">
+        <Reactant LocalizedCompoundRef="PKA_C" Stoichiometry="1" KeyValue="110197028" />
+        <Reactant LocalizedCompoundRef="PDE5" Stoichiometry="1" KeyValue="110197029" />
+        <Product LocalizedCompoundRef="PKA_C_PDE5" Stoichiometry="1" KeyValue="110197030" />
+        <Kinetics KineticsType="MassAction">
+          <Parameter Name="J" Role="reaction rate" Unit="uM.s-1">(((Kf * PKA_C) * PDE5) - (Kr * PKA_C_PDE5))</Parameter>
+          <Parameter Name="Kf" Role="forward rate constant" Unit="s-1.uM-1">0.0</Parameter>
+          <Parameter Name="Kr" Role="reverse rate constant" Unit="s-1">0.0</Parameter>
+        </Kinetics>
+      </SimpleReaction>
+      <SimpleReaction Structure="cell" Name="r1" Reversible="true" FluxOption="MolecularOnly" KeyValue="110197031">
+        <Reactant LocalizedCompoundRef="cGMP" Stoichiometry="1" KeyValue="110197032" />
+        <Reactant LocalizedCompoundRef="PDE5" Stoichiometry="1" KeyValue="110197033" />
+        <Product LocalizedCompoundRef="GMP" Stoichiometry="1" KeyValue="110197034" />
+        <Kinetics KineticsType="MassAction">
+          <Parameter Name="J" Role="reaction rate" Unit="uM.s-1">(((Kf * cGMP) * PDE5) - (Kr * GMP))</Parameter>
+          <Parameter Name="Kf" Role="forward rate constant" Unit="s-1.uM-1">0.0</Parameter>
+          <Parameter Name="Kr" Role="reverse rate constant" Unit="s-1">0.0</Parameter>
+        </Kinetics>
+      </SimpleReaction>
+      <SimpleReaction Structure="cell" Name="r6" Reversible="true" FluxOption="MolecularOnly" KeyValue="110197035">
+        <Reactant LocalizedCompoundRef="cGMP" Stoichiometry="1" KeyValue="110197036" />
+        <Reactant LocalizedCompoundRef="PDE5_p" Stoichiometry="1" KeyValue="110197037" />
+        <Product LocalizedCompoundRef="GMP" Stoichiometry="1" KeyValue="110197038" />
+        <Kinetics KineticsType="MassAction">
+          <Parameter Name="J" Role="reaction rate" Unit="uM.s-1">(((Kf * cGMP) * PDE5_p) - (Kr * GMP))</Parameter>
+          <Parameter Name="Kf" Role="forward rate constant" Unit="s-1.uM-1">0.0</Parameter>
+          <Parameter Name="Kr" Role="reverse rate constant" Unit="s-1">0.0</Parameter>
+        </Kinetics>
+      </SimpleReaction>
+      <SimpleReaction Structure="cell" Name="r7" Reversible="true" FluxOption="MolecularOnly" KeyValue="110197039">
+        <Reactant LocalizedCompoundRef="PDE5_p" Stoichiometry="1" KeyValue="110197040" />
+        <Reactant LocalizedCompoundRef="PP" Stoichiometry="1" KeyValue="110197041" />
+        <Product LocalizedCompoundRef="PP_PDE5_p" Stoichiometry="1" KeyValue="110197042" />
+        <Kinetics KineticsType="MassAction">
+          <Parameter Name="J" Role="reaction rate" Unit="uM.s-1">(((Kf * PDE5_p) * PP) - (Kr * PP_PDE5_p))</Parameter>
+          <Parameter Name="Kf" Role="forward rate constant" Unit="s-1.uM-1">0.0</Parameter>
+          <Parameter Name="Kr" Role="reverse rate constant" Unit="s-1">0.0</Parameter>
+        </Kinetics>
+      </SimpleReaction>
+      <SimpleReaction Structure="cell" Name="r8" Reversible="true" FluxOption="MolecularOnly" KeyValue="110197043">
+        <Reactant LocalizedCompoundRef="PP_PDE5_p" Stoichiometry="1" KeyValue="110197044" />
+        <Product LocalizedCompoundRef="PP" Stoichiometry="1" KeyValue="110197045" />
+        <Product LocalizedCompoundRef="PDE5" Stoichiometry="1" KeyValue="110197046" />
+        <Kinetics KineticsType="MassAction">
+          <Parameter Name="J" Role="reaction rate" Unit="uM.s-1">((Kf * PP_PDE5_p) - ((Kr * PP) * PDE5))</Parameter>
+          <Parameter Name="Kf" Role="forward rate constant" Unit="s-1">0.0</Parameter>
+          <Parameter Name="Kr" Role="reverse rate constant" Unit="s-1.uM-1">0.0</Parameter>
+        </Kinetics>
+      </SimpleReaction>
+      <FluxStep Name="flux0" Structure="membrane" Reversible="true" FluxOption="MolecularOnly" KeyValue="110197047">
+        <Reactant LocalizedCompoundRef="cAMP_ec" Stoichiometry="1" KeyValue="110197048" />
+        <Product LocalizedCompoundRef="cAMP_cell" Stoichiometry="1" KeyValue="110197049" />
+        <Kinetics KineticsType="GeneralKinetics">
+          <Parameter Name="J" Role="reaction rate" Unit="uM.um.s-1">((cAMP_ec * 5.0) - (cAMP_cell * 5.0))</Parameter>
+          <Parameter Name="I" Role="inward current density" Unit="pA.um-2">0.0</Parameter>
+          <Parameter Name="netValence" Role="net charge valence" Unit="1">1.0</Parameter>
+        </Kinetics>
+      </FluxStep>
+      <Diagram Name="ec" Structure="ec">
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="PKA_cAMP1" LocationX="31" LocationY="128" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="full" SimpleReactionRef="r7" LocationX="177" LocationY="260" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="PKA_cAMP2" LocationX="40" LocationY="185" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="PKA_C_PKI" LocationX="109" LocationY="283" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="PDE5_p" LocationX="231" LocationY="255" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="PKA_C_PDE5" LocationX="236" LocationY="146" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="cGMP" LocationX="297" LocationY="212" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="full" SimpleReactionRef="r1" LocationX="205" LocationY="212" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="PP" LocationX="324" LocationY="288" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="full" SimpleReactionRef="r8" LocationX="280" LocationY="298" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="GMP" LocationX="148" LocationY="231" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="cAMP_ec" LocationX="89" LocationY="114" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="full" SimpleReactionRef="r4" LocationX="67" LocationY="192" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="full" SimpleReactionRef="r5" LocationX="91" LocationY="248" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="full" SimpleReactionRef="cAMP_photolysis" LocationX="264" LocationY="76" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="PKA_R_cAMP2" LocationX="37" LocationY="224" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="full" SimpleReactionRef="r0" LocationX="179" LocationY="160" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="PKA_C" LocationX="115" LocationY="202" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="PKA" LocationX="76" LocationY="86" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="full" SimpleReactionRef="r3" LocationX="27" LocationY="160" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="light_spot_cell" LocationX="278" LocationY="28" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="PKI" LocationX="38" LocationY="254" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="DMNB_cAMP_cell" LocationX="336" LocationY="146" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="PP_PDE5_p" LocationX="170" LocationY="299" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="cAMP_cell" LocationX="175" LocationY="76" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="full" SimpleReactionRef="r6" LocationX="238" LocationY="228" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="full" SimpleReactionRef="r2" LocationX="50" LocationY="108" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="PDE5" LocationX="220" LocationY="181" />
+        <FluxReactionShape NodeReferenceModeAttrTag="full" FluxReactionRef="flux0" LocationX="48" LocationY="172" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="PKA_cAMP1" LocationX="31" LocationY="128" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="molecule" SimpleReactionRef="r7" LocationX="177" LocationY="260" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="PKA_cAMP2" LocationX="40" LocationY="185" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="PKA_C_PKI" LocationX="109" LocationY="283" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="PDE5_p" LocationX="231" LocationY="255" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="PKA_C_PDE5" LocationX="236" LocationY="146" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="cGMP" LocationX="297" LocationY="212" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="molecule" SimpleReactionRef="r1" LocationX="205" LocationY="212" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="PP" LocationX="324" LocationY="288" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="molecule" SimpleReactionRef="r8" LocationX="280" LocationY="298" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="GMP" LocationX="148" LocationY="231" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="cAMP_ec" LocationX="89" LocationY="114" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="molecule" SimpleReactionRef="r4" LocationX="67" LocationY="192" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="molecule" SimpleReactionRef="r5" LocationX="91" LocationY="248" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="molecule" SimpleReactionRef="cAMP_photolysis" LocationX="264" LocationY="76" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="PKA_R_cAMP2" LocationX="37" LocationY="224" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="molecule" SimpleReactionRef="r0" LocationX="179" LocationY="160" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="PKA_C" LocationX="115" LocationY="202" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="PKA" LocationX="76" LocationY="86" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="molecule" SimpleReactionRef="r3" LocationX="27" LocationY="160" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="light_spot_cell" LocationX="278" LocationY="28" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="PKI" LocationX="38" LocationY="254" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="DMNB_cAMP_cell" LocationX="336" LocationY="146" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="PP_PDE5_p" LocationX="170" LocationY="299" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="cAMP_cell" LocationX="175" LocationY="76" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="molecule" SimpleReactionRef="r6" LocationX="238" LocationY="228" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="molecule" SimpleReactionRef="r2" LocationX="50" LocationY="108" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="PDE5" LocationX="220" LocationY="181" />
+        <FluxReactionShape NodeReferenceModeAttrTag="molecule" FluxReactionRef="flux0" LocationX="48" LocationY="172" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="PKA_cAMP1" LocationX="31" LocationY="128" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="rule" SimpleReactionRef="r7" LocationX="177" LocationY="260" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="PKA_cAMP2" LocationX="40" LocationY="185" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="PKA_C_PKI" LocationX="109" LocationY="283" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="PDE5_p" LocationX="231" LocationY="255" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="PKA_C_PDE5" LocationX="236" LocationY="146" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="cGMP" LocationX="297" LocationY="212" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="rule" SimpleReactionRef="r1" LocationX="205" LocationY="212" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="PP" LocationX="324" LocationY="288" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="rule" SimpleReactionRef="r8" LocationX="280" LocationY="298" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="GMP" LocationX="148" LocationY="231" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="cAMP_ec" LocationX="89" LocationY="114" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="rule" SimpleReactionRef="r4" LocationX="67" LocationY="192" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="rule" SimpleReactionRef="r5" LocationX="91" LocationY="248" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="rule" SimpleReactionRef="cAMP_photolysis" LocationX="264" LocationY="76" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="PKA_R_cAMP2" LocationX="37" LocationY="224" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="rule" SimpleReactionRef="r0" LocationX="179" LocationY="160" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="PKA_C" LocationX="115" LocationY="202" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="PKA" LocationX="76" LocationY="86" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="rule" SimpleReactionRef="r3" LocationX="27" LocationY="160" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="light_spot_cell" LocationX="278" LocationY="28" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="PKI" LocationX="38" LocationY="254" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="DMNB_cAMP_cell" LocationX="336" LocationY="146" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="PP_PDE5_p" LocationX="170" LocationY="299" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="cAMP_cell" LocationX="175" LocationY="76" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="rule" SimpleReactionRef="r6" LocationX="238" LocationY="228" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="rule" SimpleReactionRef="r2" LocationX="50" LocationY="108" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="PDE5" LocationX="220" LocationY="181" />
+        <FluxReactionShape NodeReferenceModeAttrTag="rule" FluxReactionRef="flux0" LocationX="48" LocationY="172" />
+      </Diagram>
+      <Diagram Name="membrane" Structure="membrane">
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="PKA_cAMP1" LocationX="31" LocationY="128" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="full" SimpleReactionRef="r7" LocationX="177" LocationY="260" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="PKA_cAMP2" LocationX="40" LocationY="185" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="PKA_C_PKI" LocationX="109" LocationY="283" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="PDE5_p" LocationX="231" LocationY="255" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="PKA_C_PDE5" LocationX="236" LocationY="146" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="cGMP" LocationX="297" LocationY="212" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="full" SimpleReactionRef="r1" LocationX="205" LocationY="212" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="PP" LocationX="324" LocationY="288" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="full" SimpleReactionRef="r8" LocationX="280" LocationY="298" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="GMP" LocationX="148" LocationY="231" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="cAMP_ec" LocationX="89" LocationY="114" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="full" SimpleReactionRef="r4" LocationX="67" LocationY="192" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="full" SimpleReactionRef="r5" LocationX="91" LocationY="248" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="full" SimpleReactionRef="cAMP_photolysis" LocationX="264" LocationY="76" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="PKA_R_cAMP2" LocationX="37" LocationY="224" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="full" SimpleReactionRef="r0" LocationX="179" LocationY="160" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="PKA_C" LocationX="115" LocationY="202" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="PKA" LocationX="76" LocationY="86" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="full" SimpleReactionRef="r3" LocationX="27" LocationY="160" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="light_spot_cell" LocationX="278" LocationY="28" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="PKI" LocationX="38" LocationY="254" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="DMNB_cAMP_cell" LocationX="336" LocationY="146" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="PP_PDE5_p" LocationX="170" LocationY="299" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="cAMP_cell" LocationX="175" LocationY="76" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="full" SimpleReactionRef="r6" LocationX="238" LocationY="228" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="full" SimpleReactionRef="r2" LocationX="50" LocationY="108" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="PDE5" LocationX="220" LocationY="181" />
+        <FluxReactionShape NodeReferenceModeAttrTag="full" FluxReactionRef="flux0" LocationX="48" LocationY="172" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="PKA_cAMP1" LocationX="31" LocationY="128" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="molecule" SimpleReactionRef="r7" LocationX="177" LocationY="260" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="PKA_cAMP2" LocationX="40" LocationY="185" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="PKA_C_PKI" LocationX="109" LocationY="283" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="PDE5_p" LocationX="231" LocationY="255" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="PKA_C_PDE5" LocationX="236" LocationY="146" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="cGMP" LocationX="297" LocationY="212" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="molecule" SimpleReactionRef="r1" LocationX="205" LocationY="212" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="PP" LocationX="324" LocationY="288" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="molecule" SimpleReactionRef="r8" LocationX="280" LocationY="298" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="GMP" LocationX="148" LocationY="231" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="cAMP_ec" LocationX="89" LocationY="114" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="molecule" SimpleReactionRef="r4" LocationX="67" LocationY="192" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="molecule" SimpleReactionRef="r5" LocationX="91" LocationY="248" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="molecule" SimpleReactionRef="cAMP_photolysis" LocationX="264" LocationY="76" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="PKA_R_cAMP2" LocationX="37" LocationY="224" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="molecule" SimpleReactionRef="r0" LocationX="179" LocationY="160" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="PKA_C" LocationX="115" LocationY="202" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="PKA" LocationX="76" LocationY="86" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="molecule" SimpleReactionRef="r3" LocationX="27" LocationY="160" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="light_spot_cell" LocationX="278" LocationY="28" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="PKI" LocationX="38" LocationY="254" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="DMNB_cAMP_cell" LocationX="336" LocationY="146" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="PP_PDE5_p" LocationX="170" LocationY="299" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="cAMP_cell" LocationX="175" LocationY="76" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="molecule" SimpleReactionRef="r6" LocationX="238" LocationY="228" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="molecule" SimpleReactionRef="r2" LocationX="50" LocationY="108" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="PDE5" LocationX="220" LocationY="181" />
+        <FluxReactionShape NodeReferenceModeAttrTag="molecule" FluxReactionRef="flux0" LocationX="48" LocationY="172" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="PKA_cAMP1" LocationX="31" LocationY="128" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="rule" SimpleReactionRef="r7" LocationX="177" LocationY="260" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="PKA_cAMP2" LocationX="40" LocationY="185" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="PKA_C_PKI" LocationX="109" LocationY="283" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="PDE5_p" LocationX="231" LocationY="255" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="PKA_C_PDE5" LocationX="236" LocationY="146" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="cGMP" LocationX="297" LocationY="212" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="rule" SimpleReactionRef="r1" LocationX="205" LocationY="212" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="PP" LocationX="324" LocationY="288" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="rule" SimpleReactionRef="r8" LocationX="280" LocationY="298" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="GMP" LocationX="148" LocationY="231" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="cAMP_ec" LocationX="89" LocationY="114" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="rule" SimpleReactionRef="r4" LocationX="67" LocationY="192" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="rule" SimpleReactionRef="r5" LocationX="91" LocationY="248" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="rule" SimpleReactionRef="cAMP_photolysis" LocationX="264" LocationY="76" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="PKA_R_cAMP2" LocationX="37" LocationY="224" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="rule" SimpleReactionRef="r0" LocationX="179" LocationY="160" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="PKA_C" LocationX="115" LocationY="202" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="PKA" LocationX="76" LocationY="86" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="rule" SimpleReactionRef="r3" LocationX="27" LocationY="160" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="light_spot_cell" LocationX="278" LocationY="28" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="PKI" LocationX="38" LocationY="254" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="DMNB_cAMP_cell" LocationX="336" LocationY="146" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="PP_PDE5_p" LocationX="170" LocationY="299" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="cAMP_cell" LocationX="175" LocationY="76" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="rule" SimpleReactionRef="r6" LocationX="238" LocationY="228" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="rule" SimpleReactionRef="r2" LocationX="50" LocationY="108" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="PDE5" LocationX="220" LocationY="181" />
+        <FluxReactionShape NodeReferenceModeAttrTag="rule" FluxReactionRef="flux0" LocationX="48" LocationY="172" />
+      </Diagram>
+      <Diagram Name="Unnamed compartment" Structure="cell">
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="PKA_cAMP1" LocationX="31" LocationY="128" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="full" SimpleReactionRef="r7" LocationX="177" LocationY="260" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="PKA_cAMP2" LocationX="40" LocationY="185" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="PKA_C_PKI" LocationX="109" LocationY="283" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="PDE5_p" LocationX="231" LocationY="255" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="PKA_C_PDE5" LocationX="236" LocationY="146" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="cGMP" LocationX="297" LocationY="212" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="full" SimpleReactionRef="r1" LocationX="205" LocationY="212" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="PP" LocationX="324" LocationY="288" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="full" SimpleReactionRef="r8" LocationX="280" LocationY="298" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="GMP" LocationX="148" LocationY="231" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="cAMP_ec" LocationX="89" LocationY="114" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="full" SimpleReactionRef="r4" LocationX="67" LocationY="192" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="full" SimpleReactionRef="r5" LocationX="91" LocationY="248" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="full" SimpleReactionRef="cAMP_photolysis" LocationX="264" LocationY="76" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="PKA_R_cAMP2" LocationX="37" LocationY="224" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="full" SimpleReactionRef="r0" LocationX="179" LocationY="160" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="PKA_C" LocationX="115" LocationY="202" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="PKA" LocationX="76" LocationY="86" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="full" SimpleReactionRef="r3" LocationX="27" LocationY="160" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="light_spot_cell" LocationX="278" LocationY="28" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="PKI" LocationX="38" LocationY="254" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="DMNB_cAMP_cell" LocationX="336" LocationY="146" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="PP_PDE5_p" LocationX="170" LocationY="299" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="cAMP_cell" LocationX="175" LocationY="76" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="full" SimpleReactionRef="r6" LocationX="238" LocationY="228" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="full" SimpleReactionRef="r2" LocationX="50" LocationY="108" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="PDE5" LocationX="220" LocationY="181" />
+        <FluxReactionShape NodeReferenceModeAttrTag="full" FluxReactionRef="flux0" LocationX="48" LocationY="172" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="PKA_cAMP1" LocationX="31" LocationY="128" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="molecule" SimpleReactionRef="r7" LocationX="177" LocationY="260" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="PKA_cAMP2" LocationX="40" LocationY="185" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="PKA_C_PKI" LocationX="109" LocationY="283" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="PDE5_p" LocationX="231" LocationY="255" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="PKA_C_PDE5" LocationX="236" LocationY="146" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="cGMP" LocationX="297" LocationY="212" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="molecule" SimpleReactionRef="r1" LocationX="205" LocationY="212" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="PP" LocationX="324" LocationY="288" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="molecule" SimpleReactionRef="r8" LocationX="280" LocationY="298" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="GMP" LocationX="148" LocationY="231" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="cAMP_ec" LocationX="89" LocationY="114" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="molecule" SimpleReactionRef="r4" LocationX="67" LocationY="192" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="molecule" SimpleReactionRef="r5" LocationX="91" LocationY="248" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="molecule" SimpleReactionRef="cAMP_photolysis" LocationX="264" LocationY="76" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="PKA_R_cAMP2" LocationX="37" LocationY="224" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="molecule" SimpleReactionRef="r0" LocationX="179" LocationY="160" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="PKA_C" LocationX="115" LocationY="202" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="PKA" LocationX="76" LocationY="86" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="molecule" SimpleReactionRef="r3" LocationX="27" LocationY="160" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="light_spot_cell" LocationX="278" LocationY="28" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="PKI" LocationX="38" LocationY="254" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="DMNB_cAMP_cell" LocationX="336" LocationY="146" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="PP_PDE5_p" LocationX="170" LocationY="299" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="cAMP_cell" LocationX="175" LocationY="76" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="molecule" SimpleReactionRef="r6" LocationX="238" LocationY="228" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="molecule" SimpleReactionRef="r2" LocationX="50" LocationY="108" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="PDE5" LocationX="220" LocationY="181" />
+        <FluxReactionShape NodeReferenceModeAttrTag="molecule" FluxReactionRef="flux0" LocationX="48" LocationY="172" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="PKA_cAMP1" LocationX="31" LocationY="128" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="rule" SimpleReactionRef="r7" LocationX="177" LocationY="260" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="PKA_cAMP2" LocationX="40" LocationY="185" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="PKA_C_PKI" LocationX="109" LocationY="283" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="PDE5_p" LocationX="231" LocationY="255" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="PKA_C_PDE5" LocationX="236" LocationY="146" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="cGMP" LocationX="297" LocationY="212" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="rule" SimpleReactionRef="r1" LocationX="205" LocationY="212" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="PP" LocationX="324" LocationY="288" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="rule" SimpleReactionRef="r8" LocationX="280" LocationY="298" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="GMP" LocationX="148" LocationY="231" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="cAMP_ec" LocationX="89" LocationY="114" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="rule" SimpleReactionRef="r4" LocationX="67" LocationY="192" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="rule" SimpleReactionRef="r5" LocationX="91" LocationY="248" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="rule" SimpleReactionRef="cAMP_photolysis" LocationX="264" LocationY="76" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="PKA_R_cAMP2" LocationX="37" LocationY="224" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="rule" SimpleReactionRef="r0" LocationX="179" LocationY="160" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="PKA_C" LocationX="115" LocationY="202" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="PKA" LocationX="76" LocationY="86" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="rule" SimpleReactionRef="r3" LocationX="27" LocationY="160" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="light_spot_cell" LocationX="278" LocationY="28" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="PKI" LocationX="38" LocationY="254" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="DMNB_cAMP_cell" LocationX="336" LocationY="146" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="PP_PDE5_p" LocationX="170" LocationY="299" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="cAMP_cell" LocationX="175" LocationY="76" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="rule" SimpleReactionRef="r6" LocationX="238" LocationY="228" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="rule" SimpleReactionRef="r2" LocationX="50" LocationY="108" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="PDE5" LocationX="220" LocationY="181" />
+        <FluxReactionShape NodeReferenceModeAttrTag="rule" FluxReactionRef="flux0" LocationX="48" LocationY="172" />
+      </Diagram>
+      <Version Name="unnamed" KeyValue="110196963" BranchId="109430252" Archived="0" Date="20-Mar-2017 00:53:33" FromVersionable="false">
+        <Owner Name="yaz147" Identifier="109205579" />
+        <GroupAccess Type="1" />
+        <Annotation>cloned from 'unnamed' owned by user bboras
+cloned from 'unnamed' owned by user jsaucer</Annotation>
+      </Version>
+      <ModelUnitSystem VolumeSubstanceUnit="uM.um3" MembraneSubstanceUnit="molecules" LumpedReactionSubstanceUnit="molecules" VolumeUnit="um3" AreaUnit="um2" LengthUnit="um" TimeUnit="s" />
+    </Model>
+    <SimulationSpec Name="spatial" Stochastic="false" UseConcentration="true" RuleBased="false" MassConservationModelReduction="true" InsufficientIterations="false" InsufficientMaxMolecules="false" CharacteristicSize="0.2723404255319149">
+      <NetworkConstraints RbmMaxIteration="1" RbmMaxMoleculesPerSpecies="10" RbmSpeciesLimit="800" RbmReactionsLimit="2500" />
+      <Annotation>cloned from 'spatial' owned by user bboras
+cloned from 'spatial' owned by user jsaucer
+spatial simulations for Fig 5</Annotation>
+      <Geometry Name="myocyte225num3" Dimension="2">
+        <Annotation>cloned from 'myocyte225num3' owned by user bboras
+cloned from 'myocyte225num3' owned by user jsaucer</Annotation>
+        <Extent X="92.3" Y="60.6" Z="1.0" />
+        <Origin X="0.0" Y="0.0" Z="0.0" />
+        <Image Name="myocyte20060225num3">
+          <Annotation>cloned from 'myocyte20060225num3' owned by user bboras
+cloned from 'myocyte20060225num3' owned by user jsaucer
+neonatal cardiac myocyte 2/25 exp #3</Annotation>
+          <ImageData X="338" Y="222" Z="1" CompressedSize="1034">789CEDD90B5263210044D164FF9B9EF133A3C6F703BA69E0DDBB00684E69998A8F47DF9ECF67E71BD7EEF9517AC6323D5F4B0F9ABC5F9E98B6B5098A69757B9E98D675E4F91D15DF6B9D7AF2235B562128A6A7958B627A580D28A247558942BA5F1D28A2BB558222BA5BAD28A43B558342BA5D0328A49B212AAE0914D2DF358222FA5A2B28A42FB58342FA338528A4DF928022FA950614D1FF894011FD970A14D1CF64A0887EA61385F43D2128A26F294111157B220AA83C3128A2806A537BDE5E540F7A6F5183E7BD493DA037163581DE56D4E5795F5244C519416F6AEA15BD21A9191451485BB383220A695B1D406F46DA45F44EA47D401145B4BA4EA088425A5B37D0BB88F603BD0B29A2E27A82DE42B42B28A29096D7191451444BEB0DBABC6877D0D54903A06B8B2640D72645545C067461D110E8BAA229504411BD5A4C74595244D5E54457250D8AAE691A055D92145175888A0B83228AE869888A4B83228AE85969D0E544D39E88227A56DAF3B91A695AF3ADB481B6B4E67B69046569CB8FD20ACAD2969FA51984A5293F4B33E84A4BFE2BEDA02B2DF9BF3484AC34E45769095169C6EFA52D24A5117F94C6909446FC595A43509AF0A53487A034E16B698FE6D280BF4B8B3496E6DB284DD2589A6FABB4495369BCCDD2282DA5EDB64BABB494B6DB2EADD2509A6EAFB44B7569B8DDD230D5A5E10E4AD3D495563B2BED535C1AECBCB4506969AF2BA58D8A4A635D2CCD74BDB4D4E5D250974B431594A6BA565AA9A834D695D24685A5B92E94262A2DED755A1AA8A234D971699DAAD26887A571EA4AAB1D94A6A92DEDB65B1AA6BEB4DC4E6996A6D2785B091E60D26A58944C34DD68D6B4AB7FE2D956BBC66D9DD26F36FBB5CE73671AEC366C5FE8CAB7D6AEA81829CF3BD5CE28DA29CC3DD4CEA81A2AAAC74C3BA46E6A87B776BA469464ADF7A11DAF52A49A6B7BA4FE36B3AD7070F51323FB56141D63DE2AA2438DBB8FE86073C6261D6ED9F4A403EE9A9C74C45573938EB8C9F3896A94EDBD7614CE9A57B4D78CD25D03938EB1A2629986D4F0C2513DCFA669501D8F1C17F4649C02D5F2CC813DDF73927A5E3A38E87B2652D35327007D4B8F6A7BEC1CA0EEEFFDED4B9517C89A595479BEB04948E7017D384D9D238567CB9B525478B4A1194867F27C4CF18FD3A93C1F3E52CB42DDA1CE86279DCCF3612355EF939DE76F74D1BF0B8567756A70D12983541FA2F2103504A92144E521AA0F517990EA43D411A2A6203584A83E480D21EA085243901A82541FA28620D507A921486D41AA0F517D909A82D410A4FA30D507A93E4C0D61AA0F537DFCF2EBE30FBFBE2D53509BDA2445B5A93D535CAB3B22C5B4AA435250ABC254DE0929A6C59D89625ADC3929A6855D2005B5AC4BA4989604A93C48E541AA0F537D881A82D410A486203584A821442D016A08509AB13F430D5094</ImageData>
+          <PixelClass Name="ec" ImagePixelValue="0" KeyValue="109430234" />
+          <PixelClass Name="cell" ImagePixelValue="1" KeyValue="109430235" />
+          <Version Name="myocyte20060225num3" KeyValue="109430228" BranchId="109430229" Archived="0" Date="28-Feb-2017 18:54:13" FromVersionable="false">
+            <Owner Name="yaz147" Identifier="109205579" />
+            <GroupAccess Type="1" />
+            <Annotation>cloned from 'myocyte20060225num3' owned by user bboras
+cloned from 'myocyte20060225num3' owned by user jsaucer
+neonatal cardiac myocyte 2/25 exp #3</Annotation>
+          </Version>
+        </Image>
+        <SubVolume Name="ec" Handle="0" Type="Image" ImagePixelValue="0" KeyValue="109430239" />
+        <SubVolume Name="cell" Handle="1" Type="Image" ImagePixelValue="1" KeyValue="109430240" />
+        <SurfaceClass Name="cell_ec_membrane" SubVolume1Ref="cell" SubVolume2Ref="ec" KeyValue="109430241" />
+        <SurfaceDescription NumSamplesX="338" NumSamplesY="222" NumSamplesZ="1" CutoffFrequency="0.3">
+          <VolumeRegion Name="ec0" RegionID="0" SubVolume="ec" Size="571.6960525397102" Unit="um2" />
+          <VolumeRegion Name="cell1" RegionID="1" SubVolume="cell" Size="1548.0798359224996" Unit="um2" />
+          <VolumeRegion Name="ec2" RegionID="2" SubVolume="ec" Size="3473.60411153779" Unit="um2" />
+          <MembraneRegion Name="membrane_ec0_cell1" VolumeRegion1="cell1" VolumeRegion2="ec0" Size="50.31327197798185" Unit="um" />
+          <MembraneRegion Name="membrane_cell1_ec2" VolumeRegion1="ec2" VolumeRegion2="cell1" Size="197.2780923357235" Unit="um" />
+        </SurfaceDescription>
+        <Version Name="myocyte225num3" KeyValue="109430236" BranchId="109430237" Archived="0" Date="28-Feb-2017 18:54:13" FromVersionable="false">
+          <Owner Name="yaz147" Identifier="109205579" />
+          <GroupAccess Type="1" />
+          <Annotation>cloned from 'myocyte225num3' owned by user bboras
+cloned from 'myocyte225num3' owned by user jsaucer</Annotation>
+        </Version>
+      </Geometry>
+      <GeometryContext>
+        <FeatureMapping Feature="ec" GeometryClass="ec" SubVolume="ec" Size="50000.0" VolumePerUnitVolume="1.0">
+          <BoundariesTypes Xm="Flux" Xp="Flux" Ym="Flux" Yp="Flux" Zm="Flux" Zp="Flux" />
+        </FeatureMapping>
+        <FeatureMapping Feature="cell" GeometryClass="cell" SubVolume="cell" Size="50000.0" VolumePerUnitVolume="1.0">
+          <BoundariesTypes Xm="Flux" Xp="Flux" Ym="Flux" Yp="Flux" Zm="Flux" Zp="Flux" />
+        </FeatureMapping>
+        <MembraneMapping Membrane="membrane" Size="6563.0" AreaPerUnitArea="1.0" CalculateVoltage="false" SpecificCapacitance="1.0" InitialVoltage="0.0" GeometryClass="cell_ec_membrane">
+          <BoundariesTypes Xm="Flux" Xp="Flux" Ym="Flux" Yp="Flux" Zm="Flux" Zp="Flux" />
+        </MembraneMapping>
+      </GeometryContext>
+      <ReactionContext>
+        <LocalizedCompoundSpec LocalizedCompoundRef="cAMP_ec" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>0.0</InitialConcentration>
+          <Diffusion>10.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="cAMP_cell" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>0.15</InitialConcentration>
+          <Diffusion>200.0</Diffusion>
+          <Boundaries Xm="0.0" Xp="0.0" Ym="0.0" Yp="0.0" />
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="DMNB_cAMP_cell" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>30.0</InitialConcentration>
+          <Diffusion>200.0</Diffusion>
+          <Boundaries Xm="0.0" Xp="0.0" Ym="0.0" Yp="0.0" />
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="light_spot_cell" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>((pow(( - 75.0 + x),2.0) + pow(( - 55.0 + y),2.0)) &lt; 400.0)</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="PKA" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>0.94</InitialConcentration>
+          <Diffusion>30.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="PKA_cAMP1" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>0.015</InitialConcentration>
+          <Diffusion>30.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="PKA_cAMP2" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>0.0014</InitialConcentration>
+          <Diffusion>30.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="PKA_R_cAMP2" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>0.22</InitialConcentration>
+          <Diffusion>30.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="PKA_C" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>0.028</InitialConcentration>
+          <Diffusion>30.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="PKI" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>0.0013</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="PKA_C_PKI" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>0.18</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="PP" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>0.59</InitialConcentration>
+          <Diffusion>30.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="PDE5" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>0.0</InitialConcentration>
+          <Diffusion>30.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="PKA_C_PDE5" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>0.0</InitialConcentration>
+          <Diffusion>30.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="PDE5_p" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>0.0</InitialConcentration>
+          <Diffusion>30.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="cGMP" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>0.0</InitialConcentration>
+          <Diffusion>30.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="GMP" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>0.0</InitialConcentration>
+          <Diffusion>30.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="PP_PDE5_p" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>0.0</InitialConcentration>
+          <Diffusion>30.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <ReactionSpec ReactionStepRef="cAMP_photolysis" ReactionMapping="included" />
+        <ReactionSpec ReactionStepRef="r2" ReactionMapping="included" />
+        <ReactionSpec ReactionStepRef="r3" ReactionMapping="included" />
+        <ReactionSpec ReactionStepRef="r4" ReactionMapping="included" />
+        <ReactionSpec ReactionStepRef="r5" ReactionMapping="included" />
+        <ReactionSpec ReactionStepRef="r0" ReactionMapping="included" />
+        <ReactionSpec ReactionStepRef="r1" ReactionMapping="included" />
+        <ReactionSpec ReactionStepRef="r6" ReactionMapping="included" />
+        <ReactionSpec ReactionStepRef="r7" ReactionMapping="included" />
+        <ReactionSpec ReactionStepRef="r8" ReactionMapping="included" />
+        <ReactionSpec ReactionStepRef="flux0" ReactionMapping="included" />
+      </ReactionContext>
+      <MathDescription Name="spatial2_generated">
+        <Annotation>cloned from 'spatial2_generated' owned by user bboras
+cloned from 'spatial2_generated' owned by user jsaucer</Annotation>
+        <Constant Name="_F_">96480.0</Constant>
+        <Constant Name="_F_nmol_">9.648E-5</Constant>
+        <Constant Name="_K_GHK_">1.0E-9</Constant>
+        <Constant Name="_N_pmol_">6.02E11</Constant>
+        <Constant Name="_PI_">3.141592653589793</Constant>
+        <Constant Name="_R_">8314.0</Constant>
+        <Constant Name="_T_">300.0</Constant>
+        <Constant Name="AreaPerUnitArea_membrane">1.0</Constant>
+        <Constant Name="cAMP_cell_boundaryXm">0.0</Constant>
+        <Constant Name="cAMP_cell_boundaryXp">0.0</Constant>
+        <Constant Name="cAMP_cell_boundaryYm">0.0</Constant>
+        <Constant Name="cAMP_cell_boundaryYp">0.0</Constant>
+        <Constant Name="cAMP_cell_diffusionRate">200.0</Constant>
+        <Constant Name="cAMP_cell_init_uM">0.15</Constant>
+        <Constant Name="cAMP_ec_diffusionRate">10.0</Constant>
+        <Constant Name="cAMP_ec_init_uM">0.0</Constant>
+        <Constant Name="cGMP_diffusionRate">30.0</Constant>
+        <Constant Name="cGMP_init_uM">0.0</Constant>
+        <Constant Name="DMNB_cAMP_cell_boundaryXm">0.0</Constant>
+        <Constant Name="DMNB_cAMP_cell_boundaryXp">0.0</Constant>
+        <Constant Name="DMNB_cAMP_cell_boundaryYm">0.0</Constant>
+        <Constant Name="DMNB_cAMP_cell_boundaryYp">0.0</Constant>
+        <Constant Name="DMNB_cAMP_cell_diffusionRate">200.0</Constant>
+        <Constant Name="DMNB_cAMP_cell_init_uM">30.0</Constant>
+        <Constant Name="GMP_diffusionRate">30.0</Constant>
+        <Constant Name="GMP_init_uM">0.0</Constant>
+        <Constant Name="K_millivolts_per_volt">1000.0</Constant>
+        <Constant Name="Kf_r0">0.0</Constant>
+        <Constant Name="Kf_r1">0.0</Constant>
+        <Constant Name="Kf_r2">1.0</Constant>
+        <Constant Name="Kf_r3">1.0</Constant>
+        <Constant Name="Kf_r4">1.0</Constant>
+        <Constant Name="Kf_r5">1.0</Constant>
+        <Constant Name="Kf_r6">0.0</Constant>
+        <Constant Name="Kf_r7">0.0</Constant>
+        <Constant Name="Kf_r8">0.0</Constant>
+        <Constant Name="KMOLE">(1.0 / 602.0)</Constant>
+        <Constant Name="kphot">0.1</Constant>
+        <Constant Name="Kr_r0">0.0</Constant>
+        <Constant Name="Kr_r1">0.0</Constant>
+        <Constant Name="Kr_r2">9.14</Constant>
+        <Constant Name="Kr_r3">1.64</Constant>
+        <Constant Name="Kr_r4">0.23</Constant>
+        <Constant Name="Kr_r5">2.0E-4</Constant>
+        <Constant Name="Kr_r6">0.0</Constant>
+        <Constant Name="Kr_r7">0.0</Constant>
+        <Constant Name="Kr_r8">0.0</Constant>
+        <Constant Name="netValence">1.0</Constant>
+        <Constant Name="PDE5_diffusionRate">30.0</Constant>
+        <Constant Name="PDE5_init_uM">0.0</Constant>
+        <Constant Name="PDE5_p_diffusionRate">30.0</Constant>
+        <Constant Name="PDE5_p_init_uM">0.0</Constant>
+        <Constant Name="PKA_C_diffusionRate">30.0</Constant>
+        <Constant Name="PKA_C_init_uM">0.028</Constant>
+        <Constant Name="PKA_C_PDE5_diffusionRate">30.0</Constant>
+        <Constant Name="PKA_C_PDE5_init_uM">0.0</Constant>
+        <Constant Name="PKA_C_PKI_init_uM">0.18</Constant>
+        <Constant Name="PKA_cAMP1_diffusionRate">30.0</Constant>
+        <Constant Name="PKA_cAMP1_init_uM">0.015</Constant>
+        <Constant Name="PKA_cAMP2_diffusionRate">30.0</Constant>
+        <Constant Name="PKA_cAMP2_init_uM">0.0014</Constant>
+        <Constant Name="PKA_diffusionRate">30.0</Constant>
+        <Constant Name="PKA_init_uM">0.94</Constant>
+        <Constant Name="PKA_R_cAMP2_diffusionRate">30.0</Constant>
+        <Constant Name="PKA_R_cAMP2_init_uM">0.22</Constant>
+        <Constant Name="PKI_init_uM">0.0013</Constant>
+        <Constant Name="PP_diffusionRate">30.0</Constant>
+        <Constant Name="PP_init_uM">0.59</Constant>
+        <Constant Name="PP_PDE5_p_diffusionRate">30.0</Constant>
+        <Constant Name="PP_PDE5_p_init_uM">0.0</Constant>
+        <Constant Name="toff_global_light">0.0</Constant>
+        <Constant Name="toff_local_light">0.0</Constant>
+        <Constant Name="ton_global_light">0.0</Constant>
+        <Constant Name="ton_local_light">0.0</Constant>
+        <Constant Name="Voltage_membrane">0.0</Constant>
+        <Constant Name="VolumePerUnitVolume_cell">1.0</Constant>
+        <Constant Name="VolumePerUnitVolume_ec">1.0</Constant>
+        <VolumeVariable Name="cAMP_cell" Domain="cell" />
+        <VolumeVariable Name="cAMP_ec" Domain="ec" />
+        <VolumeVariable Name="cGMP" Domain="cell" />
+        <VolumeVariable Name="DMNB_cAMP_cell" Domain="cell" />
+        <VolumeVariable Name="GMP" Domain="cell" />
+        <VolumeVariable Name="PDE5" Domain="cell" />
+        <VolumeVariable Name="PDE5_p" Domain="cell" />
+        <VolumeVariable Name="PKA" Domain="cell" />
+        <VolumeVariable Name="PKA_C" Domain="cell" />
+        <VolumeVariable Name="PKA_C_PDE5" Domain="cell" />
+        <VolumeVariable Name="PKA_C_PKI" Domain="cell" />
+        <VolumeVariable Name="PKA_cAMP1" Domain="cell" />
+        <VolumeVariable Name="PKA_cAMP2" Domain="cell" />
+        <VolumeVariable Name="PKA_R_cAMP2" Domain="cell" />
+        <VolumeVariable Name="PP" Domain="cell" />
+        <VolumeVariable Name="PP_PDE5_p" Domain="cell" />
+        <Function Name="J_cAMP_photolysis" Domain="cell">(kphot * light * DMNB_cAMP_cell)</Function>
+        <Function Name="J_flux0" Domain="cell_ec_membrane">((cAMP_ec * 5.0) - (cAMP_cell * 5.0))</Function>
+        <Function Name="J_r0" Domain="cell">(((Kf_r0 * PKA_C) * PDE5) - (Kr_r0 * PKA_C_PDE5))</Function>
+        <Function Name="J_r1" Domain="cell">(((Kf_r1 * cGMP) * PDE5) - (Kr_r1 * GMP))</Function>
+        <Function Name="J_r2" Domain="cell">(((Kf_r2 * PKA) * cAMP_cell) - (Kr_r2 * PKA_cAMP1))</Function>
+        <Function Name="J_r3" Domain="cell">(((Kf_r3 * PKA_cAMP1) * cAMP_cell) - (Kr_r3 * PKA_cAMP2))</Function>
+        <Function Name="J_r4" Domain="cell">((Kf_r4 * PKA_cAMP2) - ((Kr_r4 * PKA_R_cAMP2) * PKA_C))</Function>
+        <Function Name="J_r5" Domain="cell">(((Kf_r5 * PKA_C) * PKI) - (Kr_r5 * PKA_C_PKI))</Function>
+        <Function Name="J_r6" Domain="cell">(((Kf_r6 * cGMP) * PDE5_p) - (Kr_r6 * GMP))</Function>
+        <Function Name="J_r7" Domain="cell">(((Kf_r7 * PDE5_p) * PP) - (Kr_r7 * PP_PDE5_p))</Function>
+        <Function Name="J_r8" Domain="cell">((Kf_r8 * PP_PDE5_p) - ((Kr_r8 * PP) * PDE5))</Function>
+        <Function Name="K_light_spot_cell_total" Domain="cell">(VolumePerUnitVolume_cell * light_spot_cell_init_uM)</Function>
+        <Function Name="K_PKI_total" Domain="cell">((VolumePerUnitVolume_cell * PKI_init_uM) + (VolumePerUnitVolume_cell * PKA_C_PKI_init_uM))</Function>
+        <Function Name="light" Domain="cell">(((t &gt; ton_global_light) * (t &lt; toff_global_light)) + ((t &gt; ton_local_light) * (t &lt; toff_local_light) * light_spot_cell))</Function>
+        <Function Name="light_spot_cell" Domain="cell">(K_light_spot_cell_total / VolumePerUnitVolume_cell)</Function>
+        <Function Name="light_spot_cell_init_uM" Domain="cell">((pow(( - 75.0 + x),2.0) + pow(( - 55.0 + y),2.0)) &lt; 400.0)</Function>
+        <Function Name="PKI" Domain="cell">((K_PKI_total - (VolumePerUnitVolume_cell * PKA_C_PKI)) / VolumePerUnitVolume_cell)</Function>
+        <Function Name="Size_cell" Domain="cell">(VolumePerUnitVolume_cell * vcRegionVolume('cell'))</Function>
+        <Function Name="Size_ec" Domain="ec">(VolumePerUnitVolume_ec * vcRegionVolume('ec'))</Function>
+        <Function Name="Size_membrane" Domain="cell_ec_membrane">(AreaPerUnitArea_membrane * vcRegionArea('cell_ec_membrane'))</Function>
+        <CompartmentSubDomain Name="ec">
+          <BoundaryType Boundary="Xm" Type="Flux" />
+          <BoundaryType Boundary="Xp" Type="Flux" />
+          <BoundaryType Boundary="Ym" Type="Flux" />
+          <BoundaryType Boundary="Yp" Type="Flux" />
+          <BoundaryType Boundary="Zm" Type="Value" />
+          <BoundaryType Boundary="Zp" Type="Value" />
+          <PdeEquation Name="cAMP_ec" SolutionType="Unknown">
+            <Rate>0.0</Rate>
+            <Diffusion>cAMP_ec_diffusionRate</Diffusion>
+            <Initial>cAMP_ec_init_uM</Initial>
+          </PdeEquation>
+        </CompartmentSubDomain>
+        <CompartmentSubDomain Name="cell">
+          <BoundaryType Boundary="Xm" Type="Flux" />
+          <BoundaryType Boundary="Xp" Type="Flux" />
+          <BoundaryType Boundary="Ym" Type="Flux" />
+          <BoundaryType Boundary="Yp" Type="Flux" />
+          <BoundaryType Boundary="Zm" Type="Value" />
+          <BoundaryType Boundary="Zp" Type="Value" />
+          <OdeEquation Name="PKA_C_PKI" SolutionType="Unknown">
+            <Rate>J_r5</Rate>
+            <Initial>PKA_C_PKI_init_uM</Initial>
+          </OdeEquation>
+          <PdeEquation Name="cAMP_cell" SolutionType="Unknown">
+            <Boundaries Xm="cAMP_cell_boundaryXm" Xp="cAMP_cell_boundaryXp" Ym="cAMP_cell_boundaryYm" Yp="cAMP_cell_boundaryYp" />
+            <Rate>( - J_r3 + J_cAMP_photolysis - J_r2)</Rate>
+            <Diffusion>cAMP_cell_diffusionRate</Diffusion>
+            <Initial>cAMP_cell_init_uM</Initial>
+          </PdeEquation>
+          <PdeEquation Name="DMNB_cAMP_cell" SolutionType="Unknown">
+            <Boundaries Xm="DMNB_cAMP_cell_boundaryXm" Xp="DMNB_cAMP_cell_boundaryXp" Ym="DMNB_cAMP_cell_boundaryYm" Yp="DMNB_cAMP_cell_boundaryYp" />
+            <Rate>- J_cAMP_photolysis</Rate>
+            <Diffusion>DMNB_cAMP_cell_diffusionRate</Diffusion>
+            <Initial>DMNB_cAMP_cell_init_uM</Initial>
+          </PdeEquation>
+          <PdeEquation Name="PKA" SolutionType="Unknown">
+            <Rate>- J_r2</Rate>
+            <Diffusion>PKA_diffusionRate</Diffusion>
+            <Initial>PKA_init_uM</Initial>
+          </PdeEquation>
+          <PdeEquation Name="PKA_cAMP1" SolutionType="Unknown">
+            <Rate>(J_r2 - J_r3)</Rate>
+            <Diffusion>PKA_cAMP1_diffusionRate</Diffusion>
+            <Initial>PKA_cAMP1_init_uM</Initial>
+          </PdeEquation>
+          <PdeEquation Name="PKA_cAMP2" SolutionType="Unknown">
+            <Rate>(J_r3 - J_r4)</Rate>
+            <Diffusion>PKA_cAMP2_diffusionRate</Diffusion>
+            <Initial>PKA_cAMP2_init_uM</Initial>
+          </PdeEquation>
+          <PdeEquation Name="PKA_R_cAMP2" SolutionType="Unknown">
+            <Rate>J_r4</Rate>
+            <Diffusion>PKA_R_cAMP2_diffusionRate</Diffusion>
+            <Initial>PKA_R_cAMP2_init_uM</Initial>
+          </PdeEquation>
+          <PdeEquation Name="PKA_C" SolutionType="Unknown">
+            <Rate>( - J_r0 + J_r4 - J_r5)</Rate>
+            <Diffusion>PKA_C_diffusionRate</Diffusion>
+            <Initial>PKA_C_init_uM</Initial>
+          </PdeEquation>
+          <PdeEquation Name="PP" SolutionType="Unknown">
+            <Rate>( - J_r7 + J_r8)</Rate>
+            <Diffusion>PP_diffusionRate</Diffusion>
+            <Initial>PP_init_uM</Initial>
+          </PdeEquation>
+          <PdeEquation Name="PDE5" SolutionType="Unknown">
+            <Rate>(J_r8 - J_r0 - J_r1)</Rate>
+            <Diffusion>PDE5_diffusionRate</Diffusion>
+            <Initial>PDE5_init_uM</Initial>
+          </PdeEquation>
+          <PdeEquation Name="PKA_C_PDE5" SolutionType="Unknown">
+            <Rate>J_r0</Rate>
+            <Diffusion>PKA_C_PDE5_diffusionRate</Diffusion>
+            <Initial>PKA_C_PDE5_init_uM</Initial>
+          </PdeEquation>
+          <PdeEquation Name="PDE5_p" SolutionType="Unknown">
+            <Rate>( - J_r6 - J_r7)</Rate>
+            <Diffusion>PDE5_p_diffusionRate</Diffusion>
+            <Initial>PDE5_p_init_uM</Initial>
+          </PdeEquation>
+          <PdeEquation Name="cGMP" SolutionType="Unknown">
+            <Rate>( - J_r1 - J_r6)</Rate>
+            <Diffusion>cGMP_diffusionRate</Diffusion>
+            <Initial>cGMP_init_uM</Initial>
+          </PdeEquation>
+          <PdeEquation Name="GMP" SolutionType="Unknown">
+            <Rate>(J_r1 + J_r6)</Rate>
+            <Diffusion>GMP_diffusionRate</Diffusion>
+            <Initial>GMP_init_uM</Initial>
+          </PdeEquation>
+          <PdeEquation Name="PP_PDE5_p" SolutionType="Unknown">
+            <Rate>(J_r7 - J_r8)</Rate>
+            <Diffusion>PP_PDE5_p_diffusionRate</Diffusion>
+            <Initial>PP_PDE5_p_init_uM</Initial>
+          </PdeEquation>
+        </CompartmentSubDomain>
+        <MembraneSubDomain Name="cell_ec_membrane" InsideCompartment="cell" OutsideCompartment="ec">
+          <BoundaryType Boundary="Xm" Type="Value" />
+          <BoundaryType Boundary="Xp" Type="Value" />
+          <BoundaryType Boundary="Ym" Type="Value" />
+          <BoundaryType Boundary="Yp" Type="Value" />
+          <BoundaryType Boundary="Zm" Type="Value" />
+          <BoundaryType Boundary="Zp" Type="Value" />
+          <JumpCondition Name="cAMP_ec">
+            <InFlux>0.0</InFlux>
+            <OutFlux>- (J_flux0 / VolumePerUnitVolume_ec)</OutFlux>
+          </JumpCondition>
+          <JumpCondition Name="cAMP_cell">
+            <InFlux>(J_flux0 / VolumePerUnitVolume_cell)</InFlux>
+            <OutFlux>0.0</OutFlux>
+          </JumpCondition>
+          <JumpCondition Name="DMNB_cAMP_cell">
+            <InFlux>0.0</InFlux>
+            <OutFlux>0.0</OutFlux>
+          </JumpCondition>
+          <JumpCondition Name="PKA">
+            <InFlux>0.0</InFlux>
+            <OutFlux>0.0</OutFlux>
+          </JumpCondition>
+          <JumpCondition Name="PKA_cAMP1">
+            <InFlux>0.0</InFlux>
+            <OutFlux>0.0</OutFlux>
+          </JumpCondition>
+          <JumpCondition Name="PKA_cAMP2">
+            <InFlux>0.0</InFlux>
+            <OutFlux>0.0</OutFlux>
+          </JumpCondition>
+          <JumpCondition Name="PKA_R_cAMP2">
+            <InFlux>0.0</InFlux>
+            <OutFlux>0.0</OutFlux>
+          </JumpCondition>
+          <JumpCondition Name="PKA_C">
+            <InFlux>0.0</InFlux>
+            <OutFlux>0.0</OutFlux>
+          </JumpCondition>
+          <JumpCondition Name="PP">
+            <InFlux>0.0</InFlux>
+            <OutFlux>0.0</OutFlux>
+          </JumpCondition>
+          <JumpCondition Name="PDE5">
+            <InFlux>0.0</InFlux>
+            <OutFlux>0.0</OutFlux>
+          </JumpCondition>
+          <JumpCondition Name="PKA_C_PDE5">
+            <InFlux>0.0</InFlux>
+            <OutFlux>0.0</OutFlux>
+          </JumpCondition>
+          <JumpCondition Name="PDE5_p">
+            <InFlux>0.0</InFlux>
+            <OutFlux>0.0</OutFlux>
+          </JumpCondition>
+          <JumpCondition Name="cGMP">
+            <InFlux>0.0</InFlux>
+            <OutFlux>0.0</OutFlux>
+          </JumpCondition>
+          <JumpCondition Name="GMP">
+            <InFlux>0.0</InFlux>
+            <OutFlux>0.0</OutFlux>
+          </JumpCondition>
+          <JumpCondition Name="PP_PDE5_p">
+            <InFlux>0.0</InFlux>
+            <OutFlux>0.0</OutFlux>
+          </JumpCondition>
+        </MembraneSubDomain>
+        <Version Name="spatial2_generated" KeyValue="110196961" BranchId="109430249" Archived="0" Date="20-Mar-2017 00:53:33" FromVersionable="false">
+          <Owner Name="yaz147" Identifier="109205579" />
+          <GroupAccess Type="1" />
+          <Annotation>cloned from 'spatial2_generated' owned by user bboras
+cloned from 'spatial2_generated' owned by user jsaucer</Annotation>
+        </Version>
+      </MathDescription>
+      <Simulation Name="Sim 1">
+        <Annotation>cloned from 'Sim 1' owned by user bboras
+cloned from 'global uncaging' owned by user jsaucer</Annotation>
+        <SolverTaskDescription TaskType="Unsteady" UseSymbolicJacobian="false" Solver="Sundials Stiff PDE Solver (Variable Time Step)">
+          <TimeBound StartTime="0.0" EndTime="100.0" />
+          <TimeStep DefaultTime="0.1" MinTime="0.0" MaxTime="0.1" />
+          <ErrorTolerance Absolut="1.0E-9" Relative="1.0E-7" />
+          <OutputOptions KeepEvery="10" KeepAtMost="1000" />
+          <SundialsSolverOptions>
+            <maxOrderAdvection>2</maxOrderAdvection>
+          </SundialsSolverOptions>
+          <NumberProcessors>1</NumberProcessors>
+        </SolverTaskDescription>
+        <MathOverrides>
+          <Constant Name="ton_global_light">20.0</Constant>
+          <Constant Name="toff_global_light">25.0</Constant>
+        </MathOverrides>
+        <MeshSpecification>
+          <Size X="120" Y="79" Z="1" />
+        </MeshSpecification>
+        <Version Name="Sim 1" KeyValue="110197087" BranchId="109430284" Archived="0" Date="20-Mar-2017 00:53:34" FromVersionable="false">
+          <Owner Name="yaz147" Identifier="109205579" />
+          <GroupAccess Type="1" />
+          <Annotation>cloned from 'Sim 1' owned by user bboras
+cloned from 'global uncaging' owned by user jsaucer</Annotation>
+        </Version>
+      </Simulation>
+      <Simulation Name="Sim 2">
+        <Annotation>cloned from 'Sim 2' owned by user bboras
+cloned from 'local uncaging' owned by user jsaucer</Annotation>
+        <SolverTaskDescription TaskType="Unsteady" UseSymbolicJacobian="false" Solver="Sundials Stiff PDE Solver (Variable Time Step)">
+          <TimeBound StartTime="0.0" EndTime="100.0" />
+          <TimeStep DefaultTime="0.1" MinTime="0.0" MaxTime="0.1" />
+          <ErrorTolerance Absolut="1.0E-9" Relative="1.0E-7" />
+          <OutputOptions KeepEvery="10" KeepAtMost="1000" />
+          <SundialsSolverOptions>
+            <maxOrderAdvection>2</maxOrderAdvection>
+          </SundialsSolverOptions>
+          <NumberProcessors>1</NumberProcessors>
+        </SolverTaskDescription>
+        <MathOverrides>
+          <Constant Name="toff_local_light">25.0</Constant>
+          <Constant Name="ton_local_light">20.0</Constant>
+        </MathOverrides>
+        <MeshSpecification>
+          <Size X="120" Y="79" Z="1" />
+        </MeshSpecification>
+        <Version Name="Sim 2" KeyValue="110197089" BranchId="109430287" Archived="0" Date="20-Mar-2017 00:53:34" FromVersionable="false">
+          <Owner Name="yaz147" Identifier="109205579" />
+          <GroupAccess Type="1" />
+          <Annotation>cloned from 'Sim 2' owned by user bboras
+cloned from 'local uncaging' owned by user jsaucer</Annotation>
+        </Version>
+      </Simulation>
+      <Simulation Name="Sim 3">
+        <Annotation>cloned from 'Sim 3' owned by user bboras
+cloned from 'Fig 5: global, local' owned by user jsaucer</Annotation>
+        <SolverTaskDescription TaskType="Unsteady" UseSymbolicJacobian="false" Solver="Sundials Stiff PDE Solver (Variable Time Step)">
+          <TimeBound StartTime="0.0" EndTime="450.0" />
+          <TimeStep DefaultTime="0.1" MinTime="0.0" MaxTime="0.1" />
+          <ErrorTolerance Absolut="1.0E-9" Relative="1.0E-7" />
+          <OutputOptions KeepEvery="10" KeepAtMost="1000" />
+          <SundialsSolverOptions>
+            <maxOrderAdvection>2</maxOrderAdvection>
+          </SundialsSolverOptions>
+          <NumberProcessors>1</NumberProcessors>
+        </SolverTaskDescription>
+        <MathOverrides>
+          <Constant Name="ton_global_light">50.0</Constant>
+          <Constant Name="toff_local_light">305.0</Constant>
+          <Constant Name="toff_global_light">55.0</Constant>
+          <Constant Name="ton_local_light">300.0</Constant>
+        </MathOverrides>
+        <MeshSpecification>
+          <Size X="120" Y="79" Z="1" />
+        </MeshSpecification>
+        <Version Name="Sim 3" KeyValue="110197091" BranchId="109430290" Archived="0" Date="20-Mar-2017 00:53:34" FromVersionable="false">
+          <Owner Name="yaz147" Identifier="109205579" />
+          <GroupAccess Type="1" />
+          <Annotation>cloned from 'Sim 3' owned by user bboras
+cloned from 'Fig 5: global, local' owned by user jsaucer</Annotation>
+        </Version>
+      </Simulation>
+      <Simulation Name="Sim 4">
+        <Annotation>cloned from 'Sim 4' owned by user bboras
+cloned from 'Fig 6A: D_cAMP scan' owned by user jsaucer</Annotation>
+        <SolverTaskDescription TaskType="Unsteady" UseSymbolicJacobian="false" Solver="Sundials Stiff PDE Solver (Variable Time Step)">
+          <TimeBound StartTime="0.0" EndTime="100.0" />
+          <TimeStep DefaultTime="0.1" MinTime="0.0" MaxTime="0.1" />
+          <ErrorTolerance Absolut="1.0E-9" Relative="1.0E-7" />
+          <OutputOptions KeepEvery="10" KeepAtMost="1000" />
+          <SundialsSolverOptions>
+            <maxOrderAdvection>2</maxOrderAdvection>
+          </SundialsSolverOptions>
+          <NumberProcessors>1</NumberProcessors>
+        </SolverTaskDescription>
+        <MathOverrides>
+          <Constant Name="toff_local_light">15.0</Constant>
+          <Constant Name="cAMP_cell_diffusionRate" ConstantArraySpec="1001">10.0 to 1000.0, log, 10 values</Constant>
+          <Constant Name="ton_local_light">10.0</Constant>
+        </MathOverrides>
+        <MeshSpecification>
+          <Size X="120" Y="79" Z="1" />
+        </MeshSpecification>
+        <Version Name="Sim 4" KeyValue="110197093" BranchId="109430293" Archived="0" Date="20-Mar-2017 00:53:34" FromVersionable="false">
+          <Owner Name="yaz147" Identifier="109205579" />
+          <GroupAccess Type="1" />
+          <Annotation>cloned from 'Sim 4' owned by user bboras
+cloned from 'Fig 6A: D_cAMP scan' owned by user jsaucer</Annotation>
+        </Version>
+      </Simulation>
+      <Simulation Name="Copy of Sim 2">
+        <Annotation>cloned from 'Sim 2' owned by user bboras
+cloned from 'local uncaging' owned by user jsaucer</Annotation>
+        <SolverTaskDescription TaskType="Unsteady" UseSymbolicJacobian="false" Solver="Sundials Stiff PDE Solver (Variable Time Step)">
+          <TimeBound StartTime="0.0" EndTime="100.0" />
+          <TimeStep DefaultTime="0.1" MinTime="0.0" MaxTime="0.1" />
+          <ErrorTolerance Absolut="1.0E-9" Relative="1.0E-7" />
+          <OutputOptions KeepEvery="10" KeepAtMost="1000" />
+          <SundialsSolverOptions>
+            <maxOrderAdvection>2</maxOrderAdvection>
+          </SundialsSolverOptions>
+          <NumberProcessors>1</NumberProcessors>
+        </SolverTaskDescription>
+        <MathOverrides>
+          <Constant Name="toff_local_light">25.0</Constant>
+          <Constant Name="ton_local_light">20.0</Constant>
+        </MathOverrides>
+        <MeshSpecification>
+          <Size X="120" Y="79" Z="1" />
+        </MeshSpecification>
+        <Version Name="Copy of Sim 2" KeyValue="110197095" BranchId="109671134" Archived="0" Date="20-Mar-2017 00:53:34" FromVersionable="false">
+          <Owner Name="yaz147" Identifier="109205579" />
+          <GroupAccess Type="1" />
+          <Annotation>cloned from 'Sim 2' owned by user bboras
+cloned from 'local uncaging' owned by user jsaucer</Annotation>
+        </Version>
+      </Simulation>
+      <Simulation Name="Copy of Sim 2 1">
+        <Annotation>cloned from 'Sim 2' owned by user bboras
+cloned from 'local uncaging' owned by user jsaucer</Annotation>
+        <SolverTaskDescription TaskType="Unsteady" UseSymbolicJacobian="false" Solver="Sundials Stiff PDE Solver (Variable Time Step)">
+          <TimeBound StartTime="0.0" EndTime="100.0" />
+          <TimeStep DefaultTime="0.1" MinTime="0.0" MaxTime="0.1" />
+          <ErrorTolerance Absolut="1.0E-9" Relative="1.0E-7" />
+          <OutputOptions KeepEvery="10" KeepAtMost="1000" />
+          <SundialsSolverOptions>
+            <maxOrderAdvection>2</maxOrderAdvection>
+          </SundialsSolverOptions>
+          <NumberProcessors>1</NumberProcessors>
+        </SolverTaskDescription>
+        <MathOverrides>
+          <Constant Name="toff_local_light">25.0</Constant>
+          <Constant Name="ton_local_light">20.0</Constant>
+        </MathOverrides>
+        <MeshSpecification>
+          <Size X="120" Y="79" Z="1" />
+        </MeshSpecification>
+        <Version Name="Copy of Sim 2 1" KeyValue="110197097" BranchId="109671166" Archived="0" Date="20-Mar-2017 00:53:34" FromVersionable="false">
+          <Owner Name="yaz147" Identifier="109205579" />
+          <GroupAccess Type="1" />
+          <Annotation>cloned from 'Sim 2' owned by user bboras
+cloned from 'local uncaging' owned by user jsaucer</Annotation>
+        </Version>
+      </Simulation>
+      <SpatialObjects>
+        <SpatialObject Name="vobj_ec0" Type="Volume" subVolume="ec" regionId="0">
+          <QuantityCategoryList>
+            <QuantityCategory Name="VolumeCentroid" Enabled="false" />
+            <QuantityCategory Name="InteriorVelocity" Enabled="false" />
+            <QuantityCategory Name="VolumeRegionSize" Enabled="true" />
+          </QuantityCategoryList>
+        </SpatialObject>
+        <SpatialObject Name="vobj_cell1" Type="Volume" subVolume="cell" regionId="1">
+          <QuantityCategoryList>
+            <QuantityCategory Name="VolumeCentroid" Enabled="false" />
+            <QuantityCategory Name="InteriorVelocity" Enabled="false" />
+            <QuantityCategory Name="VolumeRegionSize" Enabled="true" />
+          </QuantityCategoryList>
+        </SpatialObject>
+        <SpatialObject Name="vobj_ec2" Type="Volume" subVolume="ec" regionId="2">
+          <QuantityCategoryList>
+            <QuantityCategory Name="VolumeCentroid" Enabled="false" />
+            <QuantityCategory Name="InteriorVelocity" Enabled="false" />
+            <QuantityCategory Name="VolumeRegionSize" Enabled="true" />
+          </QuantityCategoryList>
+        </SpatialObject>
+        <SpatialObject Name="sobj_cell1_ec0" Type="Surface" subVolumeInside="cell" regionIdInside="1" subVolumeOutside="ec" regionIdOutside="0">
+          <QuantityCategoryList>
+            <QuantityCategory Name="SurfaceNormal" Enabled="false" />
+            <QuantityCategory Name="SurfaceVelocity" Enabled="false" />
+            <QuantityCategory Name="DistanceToSurface" Enabled="false" />
+            <QuantityCategory Name="DirectionToSurface" Enabled="false" />
+            <QuantityCategory Name="SurfaceSize" Enabled="true" />
+          </QuantityCategoryList>
+        </SpatialObject>
+        <SpatialObject Name="sobj_ec2_cell1" Type="Surface" subVolumeInside="ec" regionIdInside="2" subVolumeOutside="cell" regionIdOutside="1">
+          <QuantityCategoryList>
+            <QuantityCategory Name="SurfaceNormal" Enabled="false" />
+            <QuantityCategory Name="SurfaceVelocity" Enabled="false" />
+            <QuantityCategory Name="DistanceToSurface" Enabled="false" />
+            <QuantityCategory Name="DirectionToSurface" Enabled="false" />
+            <QuantityCategory Name="SurfaceSize" Enabled="true" />
+          </QuantityCategoryList>
+        </SpatialObject>
+      </SpatialObjects>
+      <Version Name="spatial" KeyValue="110197053" BranchId="109430274" Archived="0" Date="20-Mar-2017 00:53:33" FromVersionable="false">
+        <Owner Name="yaz147" Identifier="109205579" />
+        <GroupAccess Type="1" />
+        <Annotation>cloned from 'spatial' owned by user bboras
+cloned from 'spatial' owned by user jsaucer
+spatial simulations for Fig 5</Annotation>
+      </Version>
+      <MicroscopeMeasurement Name="fluor">
+        <ConvolutionKernel Type="ProjectionZKernel" />
+      </MicroscopeMeasurement>
+    </SimulationSpec>
+    <Version Name="be276 final" KeyValue="110197099" BranchId="110187590" Archived="0" Date="20-Mar-2017 00:53:34" FromVersionable="false">
+      <Owner Name="yaz147" Identifier="109205579" />
+      <GroupAccess Type="0" />
+      <Annotation>cloned from 'TA-test model2' owned by user bboras
+cloned from 'AKARmyocyte' owned by user jsaucer
+Saucerman et. al, Systems Analysis of PKA mediated phosphorylation gradients, submitted 2006
+
+This model contains simulations for single-compartment simulations (all except those in Figure 3, which is available as AKARmyocyte_bidomain).</Annotation>
+    </Version>
+    <pathwayModel>
+      <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:bp="http://www.biopax.org/release/biopax-level3.owl#" version="3.0" />
+    </pathwayModel>
+    <relationshipModel>
+      <RMNS version="3.0" />
+    </relationshipModel>
+    <vcmetadata>
+      <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" />
+      <nonrdfAnnotationList>
+        <nonrdfAnnotation vcid="BioModel(be276 final)">
+          <freetext>cloned from 'AKARmyocyte' owned by user jsaucer
+Saucerman et. al, Systems Analysis of PKA mediated phosphorylation gradients, submitted 2006
+
+This model contains simulations for single-compartment simulations (all except those in Figure 3, which is available as AKARmyocyte_bidomain).</freetext>
+        </nonrdfAnnotation>
+      </nonrdfAnnotationList>
+      <uriBindingList />
+    </vcmetadata>
+  </BioModel>
+</vcml>
+

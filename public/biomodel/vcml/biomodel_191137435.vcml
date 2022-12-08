@@ -1,0 +1,476 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--This biomodel was generated in VCML Version Alpha_Version_7.4.0_build_87-->
+<vcml xmlns="http://sourceforge.net/projects/vcell/vcml" Version="Alpha_Version_7.4.0_build_87">
+  <BioModel Name="SpermCalcium_catsper">
+    <Model Name="model">
+      <ModelParameters>
+        <Parameter Name="kcatABHD" Role="user defined" Unit="tbd">10.0</Parameter>
+        <Parameter Name="Vabhd" Role="user defined" Unit="tbd">0.0</Parameter>
+        <Parameter Name="KmABHD" Role="user defined" Unit="tbd">16.0</Parameter>
+        <Parameter Name="CatSper_0" Role="user defined" Unit="tbd">0.0</Parameter>
+        <Parameter Name="CatSper0" Role="user defined" Unit="tbd">0.0</Parameter>
+        <Parameter Name="IC50AG" Role="user defined" Unit="tbd">(0.67 / 0.16)</Parameter>
+        <Parameter Name="K_abhdProgf" Role="user defined" Unit="tbd">0.0</Parameter>
+        <Parameter Name="K_abhdProgb" Role="user defined" Unit="tbd">0.0</Parameter>
+        <Parameter Name="K_CatSperf" Role="user defined" Unit="tbd">0.0</Parameter>
+        <Parameter Name="Popen" Role="user defined" Unit="tbd">0.0</Parameter>
+        <Parameter Name="K2" Role="user defined" Unit="tbd">30.0</Parameter>
+        <Parameter Name="K3" Role="user defined" Unit="tbd">0.005</Parameter>
+        <Parameter Name="K5" Role="user defined" Unit="tbd">0.25</Parameter>
+        <Parameter Name="K1" Role="user defined" Unit="tbd">0.02</Parameter>
+        <Parameter Name="KCspAG" Role="user defined" Unit="tbd">1.0</Parameter>
+        <Parameter Name="Kserca" Role="user defined" Unit="tbd">0.27</Parameter>
+        <Parameter Name="Vserca" Role="user defined" Unit="tbd">0.7</Parameter>
+        <Parameter Name="kleakrne" Role="user defined" Unit="tbd">0.5</Parameter>
+        <Parameter Name="NABHD" Role="user defined" Unit="tbd">100.0</Parameter>
+        <Parameter Name="leakparam" Role="user defined" Unit="tbd">0.012</Parameter>
+        <Parameter Name="P4c" Role="user defined" Unit="tbd">1.0</Parameter>
+      </ModelParameters>
+      <Compound Name="s0" />
+      <Compound Name="s1" />
+      <Compound Name="s2" />
+      <Compound Name="s3" />
+      <Compound Name="s4" />
+      <Compound Name="s5" />
+      <Compound Name="s6" />
+      <Feature Name="Cytosole" KeyValue="191137384" />
+      <Feature Name="outside" KeyValue="191137386" />
+      <Membrane PositiveFeature="Cytosole" NegativeFeature="outside" MembraneVoltage="Voltage_m0" Name="m0" KeyValue="191137388" />
+      <LocalizedCompound Name="progesterone" CompoundRef="s0" Structure="outside" OverrideName="true" KeyValue="191137390" />
+      <LocalizedCompound Name="CatSper" CompoundRef="s1" Structure="m0" OverrideName="true" KeyValue="191137391" />
+      <LocalizedCompound Name="ABHD" CompoundRef="s2" Structure="m0" OverrideName="true" KeyValue="191137392" />
+      <LocalizedCompound Name="ABHDact" CompoundRef="s3" Structure="m0" OverrideName="true" KeyValue="191137393" />
+      <LocalizedCompound Name="AG" CompoundRef="s4" Structure="m0" OverrideName="true" KeyValue="191137394" />
+      <LocalizedCompound Name="AA" CompoundRef="s5" Structure="m0" OverrideName="true" KeyValue="191137395" />
+      <LocalizedCompound Name="CatSperAG" CompoundRef="s6" Structure="m0" OverrideName="true" KeyValue="191137396" />
+      <SimpleReaction Structure="m0" Name="ActABHD" Reversible="true" FluxOption="MolecularOnly" KeyValue="191137397">
+        <Reactant LocalizedCompoundRef="progesterone" Stoichiometry="1" KeyValue="191137398" />
+        <Reactant LocalizedCompoundRef="ABHD" Stoichiometry="1" KeyValue="191137399" />
+        <Product LocalizedCompoundRef="ABHDact" Stoichiometry="1" KeyValue="191137400" />
+        <Kinetics KineticsType="MassAction">
+          <Parameter Name="J" Role="reaction rate" Unit="molecules.um-2.s-1">(((Kf * progesterone) * ABHD) - (Kr * ABHDact))</Parameter>
+          <Parameter Name="I" Role="inward current density" Unit="pA.um-2">0.0</Parameter>
+          <Parameter Name="netValence" Role="net charge valence" Unit="1">1.0</Parameter>
+          <Parameter Name="Kf" Role="forward rate constant" Unit="s-1.uM-1">3.0</Parameter>
+          <Parameter Name="Kr" Role="reverse rate constant" Unit="s-1">(Kf / KmABHD)</Parameter>
+        </Kinetics>
+      </SimpleReaction>
+      <SimpleReaction Structure="m0" Name="CleaveAA" Reversible="true" FluxOption="MolecularOnly" KeyValue="191137401">
+        <Reactant LocalizedCompoundRef="AG" Stoichiometry="1" KeyValue="191137402" />
+        <Product LocalizedCompoundRef="AA" Stoichiometry="1" KeyValue="191137403" />
+        <Modifier LocalizedCompoundRef="ABHDact" />
+        <Kinetics KineticsType="HMMIrreversible">
+          <Parameter Name="J" Role="reaction rate" Unit="molecules.um-2.s-1">((Vmax * AG) / (Km + AG))</Parameter>
+          <Parameter Name="I" Role="inward current density" Unit="pA.um-2">0.0</Parameter>
+          <Parameter Name="netValence" Role="net charge valence" Unit="1">1.0</Parameter>
+          <Parameter Name="Km" Role="Km (1/2 max)" Unit="molecules.um-2">ABHDAGKm</Parameter>
+          <Parameter Name="Vmax" Role="max reaction rate" Unit="molecules.um-2.s-1">(ABHDact * kcatABHD)</Parameter>
+          <Parameter Name="ABHDAGKm" Role="user defined" Unit="molecules.um-2">(16.0 / 0.16)</Parameter>
+        </Kinetics>
+      </SimpleReaction>
+      <SimpleReaction Structure="m0" Name="Inhib" Reversible="true" FluxOption="MolecularOnly" KeyValue="191137404">
+        <Reactant LocalizedCompoundRef="AG" Stoichiometry="1" KeyValue="191137405" />
+        <Reactant LocalizedCompoundRef="CatSper" Stoichiometry="1" KeyValue="191137406" />
+        <Product LocalizedCompoundRef="CatSperAG" Stoichiometry="1" KeyValue="191137407" />
+        <Kinetics KineticsType="GeneralKinetics">
+          <Parameter Name="J" Role="reaction rate" Unit="molecules.um-2.s-1">((KCspAG * CatSper * AG) - (IC50AG * KCspAG * CatSperAG))</Parameter>
+          <Parameter Name="I" Role="inward current density" Unit="pA.um-2">0.0</Parameter>
+          <Parameter Name="netValence" Role="net charge valence" Unit="1">1.0</Parameter>
+        </Kinetics>
+      </SimpleReaction>
+      <SimpleReaction Structure="m0" Name="AGrevert" Reversible="true" FluxOption="MolecularOnly" KeyValue="191137408">
+        <Reactant LocalizedCompoundRef="AA" Stoichiometry="1" KeyValue="191137409" />
+        <Product LocalizedCompoundRef="AG" Stoichiometry="1" KeyValue="191137410" />
+        <Kinetics KineticsType="MassAction">
+          <Parameter Name="J" Role="reaction rate" Unit="molecules.um-2.s-1">((Kf * AA) - (Kr * AG))</Parameter>
+          <Parameter Name="I" Role="inward current density" Unit="pA.um-2">0.0</Parameter>
+          <Parameter Name="netValence" Role="net charge valence" Unit="1">1.0</Parameter>
+          <Parameter Name="Kf" Role="forward rate constant" Unit="s-1">0.01</Parameter>
+          <Parameter Name="Kr" Role="reverse rate constant" Unit="s-1">0.0</Parameter>
+        </Kinetics>
+      </SimpleReaction>
+      <Diagram Name="c1" Structure="outside">
+        <SimpleReactionShape NodeReferenceModeAttrTag="full" SimpleReactionRef="ActABHD" LocationX="49" LocationY="207" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="full" SimpleReactionRef="Inhib" LocationX="136" LocationY="43" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="full" SimpleReactionRef="CleaveAA" LocationX="159" LocationY="171" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="AG" LocationX="92" LocationY="118" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="CatSperAG" LocationX="211" LocationY="11" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="full" SimpleReactionRef="AGrevert" LocationX="171" LocationY="140" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="AA" LocationX="258" LocationY="233" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="CatSper" LocationX="20" LocationY="24" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="ABHD" LocationX="58" LocationY="151" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="ABHDact" LocationX="4" LocationY="117" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="progesterone" LocationX="80" LocationY="192" />
+      </Diagram>
+      <Diagram Name="m0" Structure="m0">
+        <SimpleReactionShape NodeReferenceModeAttrTag="full" SimpleReactionRef="ActABHD" LocationX="49" LocationY="207" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="full" SimpleReactionRef="Inhib" LocationX="136" LocationY="43" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="full" SimpleReactionRef="CleaveAA" LocationX="159" LocationY="171" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="AG" LocationX="92" LocationY="118" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="CatSperAG" LocationX="211" LocationY="11" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="full" SimpleReactionRef="AGrevert" LocationX="171" LocationY="140" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="AA" LocationX="258" LocationY="233" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="CatSper" LocationX="20" LocationY="24" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="ABHD" LocationX="58" LocationY="151" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="ABHDact" LocationX="4" LocationY="117" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="progesterone" LocationX="80" LocationY="192" />
+      </Diagram>
+      <Diagram Name="c0" Structure="Cytosole">
+        <SimpleReactionShape NodeReferenceModeAttrTag="full" SimpleReactionRef="ActABHD" LocationX="49" LocationY="207" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="full" SimpleReactionRef="Inhib" LocationX="136" LocationY="43" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="full" SimpleReactionRef="CleaveAA" LocationX="159" LocationY="171" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="AG" LocationX="92" LocationY="118" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="CatSperAG" LocationX="211" LocationY="11" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="full" SimpleReactionRef="AGrevert" LocationX="171" LocationY="140" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="AA" LocationX="258" LocationY="233" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="CatSper" LocationX="20" LocationY="24" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="ABHD" LocationX="58" LocationY="151" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="ABHDact" LocationX="4" LocationY="117" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="progesterone" LocationX="80" LocationY="192" />
+      </Diagram>
+      <Version Name="model" KeyValue="191137375" BranchId="130485145" Archived="0" Date="08-Oct-2020 18:38:57" FromVersionable="false">
+        <Owner Name="Juliajessica" Identifier="121396185" />
+        <GroupAccess Type="1" />
+      </Version>
+      <ModelUnitSystem VolumeSubstanceUnit="uM.um3" MembraneSubstanceUnit="molecules" LumpedReactionSubstanceUnit="molecules" VolumeUnit="um3" AreaUnit="um2" LengthUnit="um" TimeUnit="s" />
+    </Model>
+    <SimulationSpec Name="Application0" Stochastic="false" UseConcentration="true" RuleBased="false" MassConservationModelReduction="true" InsufficientIterations="false" InsufficientMaxMolecules="false" CharacteristicSize="0.10545093842449195">
+      <NetworkConstraints RbmMaxIteration="3" RbmMaxMoleculesPerSpecies="10" RbmSpeciesLimit="800" RbmReactionsLimit="2500" />
+      <Annotation />
+      <Geometry Name="Geometry1120118915" Dimension="3">
+        <Extent X="40.0" Y="5.0" Z="5.0" />
+        <Origin X="0.0" Y="2.0" Z="2.0" />
+        <SubVolume Name="subdomain2" Handle="2" Type="Analytical" KeyValue="173392767">
+          <AnalyticExpression>(((((x - 33.7) ^ 2.0) + ((y - 5.0) ^ 2.0) + ((z - 5.0) ^ 2.0)) &lt; (0.5 ^ 2.0)) * (x &gt; 33.7))</AnalyticExpression>
+        </SubVolume>
+        <SubVolume Name="subdomain1" Handle="1" Type="Analytical" KeyValue="173392768">
+          <AnalyticExpression>((((x &gt;= 2.0) &amp;&amp; (x &lt;= 28.0) &amp;&amp; ((((y - 5.0) ^ 2.0) + ((z - 5.0) ^ 2.0)) &lt; (0.3 ^ 2.0))) + ((((x - 35.0) ^ 2.0) + (((1.3 * y) - (1.3 * 5.0)) ^ 2.0) + (((2.0 * z) - 10.0) ^ 2.0)) &lt; 3.0)) + ((x &gt;= 28.0) &amp;&amp; (x &lt;= 34.0) &amp;&amp; ((((y - 5.0) ^ 2.0) + ((z - 5.0) ^ 2.0)) &lt; (0.4 ^ 2.0))))</AnalyticExpression>
+        </SubVolume>
+        <SubVolume Name="subdomain0" Handle="0" Type="Analytical" KeyValue="173392769">
+          <AnalyticExpression>100.0</AnalyticExpression>
+        </SubVolume>
+        <SurfaceClass Name="subdomain0_subdomain1_membrane" SubVolume1Ref="subdomain0" SubVolume2Ref="subdomain1" KeyValue="173392770" />
+        <SurfaceClass Name="subdomain1_subdomain2_membrane" SubVolume1Ref="subdomain1" SubVolume2Ref="subdomain2" KeyValue="173392771" />
+        <SurfaceDescription NumSamplesX="101" NumSamplesY="101" NumSamplesZ="101" CutoffFrequency="0.3">
+          <VolumeRegion Name="subdomain00" RegionID="0" SubVolume="subdomain0" Size="981.7429999999999" Unit="um3" />
+          <VolumeRegion Name="subdomain11" RegionID="1" SubVolume="subdomain1" Size="18.06" Unit="um3" />
+          <VolumeRegion Name="subdomain22" RegionID="2" SubVolume="subdomain2" Size="0.197" Unit="um3" />
+          <MembraneRegion Name="membrane_subdomain00_subdomain11" VolumeRegion1="subdomain11" VolumeRegion2="subdomain00" Size="82.33520874988687" Unit="um2" />
+          <MembraneRegion Name="membrane_subdomain11_subdomain22" VolumeRegion1="subdomain22" VolumeRegion2="subdomain11" Size="1.3641404183584045" Unit="um2" />
+        </SurfaceDescription>
+        <Version Name="Geometry1120118915" KeyValue="173392764" BranchId="130485127" Archived="0" Date="20-Feb-2020 12:05:41" FromVersionable="false">
+          <Owner Name="Juliajessica" Identifier="121396185" />
+          <GroupAccess Type="1" />
+        </Version>
+      </Geometry>
+      <GeometryContext>
+        <FeatureMapping Feature="Cytosole" GeometryClass="subdomain1" SubVolume="subdomain1" Size="50000.0" VolumePerUnitVolume="1.0">
+          <BoundariesTypes Xm="Flux" Xp="Flux" Ym="Flux" Yp="Flux" Zm="Flux" Zp="Flux" />
+        </FeatureMapping>
+        <FeatureMapping Feature="outside" GeometryClass="subdomain0" SubVolume="subdomain0" Size="50000.0" VolumePerUnitVolume="1.0">
+          <BoundariesTypes Xm="Flux" Xp="Flux" Ym="Flux" Yp="Flux" Zm="Flux" Zp="Flux" />
+        </FeatureMapping>
+        <MembraneMapping Membrane="m0" Size="6563.0" AreaPerUnitArea="1.0" CalculateVoltage="false" SpecificCapacitance="1.0" InitialVoltage="0.0" GeometryClass="subdomain0_subdomain1_membrane">
+          <BoundariesTypes Xm="Flux" Xp="Flux" Ym="Flux" Yp="Flux" Zm="Flux" Zp="Flux" />
+        </MembraneMapping>
+      </GeometryContext>
+      <ReactionContext>
+        <LocalizedCompoundSpec LocalizedCompoundRef="progesterone" ForceConstant="true" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>(P4c * (t &gt; 15.0) * (t &lt; 250.0))</InitialConcentration>
+          <Diffusion>10.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="CatSper" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>((100.0 * 3.0 / m0) * (x &lt; 25.0))</InitialConcentration>
+          <Diffusion>(2.0 * (x &lt; 25.0))</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="ABHD" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>(NABHD * 3.0 * (x &lt; 25.0) / m0)</InitialConcentration>
+          <Diffusion>(2.0 * (x &lt; 25.0))</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="ABHDact" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>0.0</InitialConcentration>
+          <Diffusion>(2.0 * (x &lt; 25.0))</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="AG" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>(3300.0 / m0)</InitialConcentration>
+          <Diffusion>1.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="AA" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>0.0</InitialConcentration>
+          <Diffusion>1.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="CatSperAG" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>0.0</InitialConcentration>
+          <Diffusion>(2.0 * (x &lt; 25.0))</Diffusion>
+        </LocalizedCompoundSpec>
+        <ReactionSpec ReactionStepRef="ActABHD" ReactionMapping="included" />
+        <ReactionSpec ReactionStepRef="CleaveAA" ReactionMapping="included" />
+        <ReactionSpec ReactionStepRef="Inhib" ReactionMapping="included" />
+        <ReactionSpec ReactionStepRef="AGrevert" ReactionMapping="included" />
+      </ReactionContext>
+      <MathDescription Name="Application0_generated">
+        <Constant Name="_F_">96485.3321</Constant>
+        <Constant Name="_F_nmol_">9.64853321E-5</Constant>
+        <Constant Name="_K_GHK_">1.0E-9</Constant>
+        <Constant Name="_N_pmol_">6.02214179E11</Constant>
+        <Constant Name="_PI_">3.141592653589793</Constant>
+        <Constant Name="_R_">8314.46261815</Constant>
+        <Constant Name="_T_">300.0</Constant>
+        <Constant Name="AA_diffusionRate">1.0</Constant>
+        <Constant Name="AA_init_molecules_um_2">0.0</Constant>
+        <Constant Name="ABHDact_init_molecules_um_2">0.0</Constant>
+        <Constant Name="AG_diffusionRate">1.0</Constant>
+        <Constant Name="AreaPerUnitArea_m0">1.0</Constant>
+        <Constant Name="CatSper0">0.0</Constant>
+        <Constant Name="CatSper_0">0.0</Constant>
+        <Constant Name="CatSperAG_init_molecules_um_2">0.0</Constant>
+        <Constant Name="K1">0.02</Constant>
+        <Constant Name="K2">30.0</Constant>
+        <Constant Name="K3">0.005</Constant>
+        <Constant Name="K5">0.25</Constant>
+        <Constant Name="K_abhdProgb">0.0</Constant>
+        <Constant Name="K_abhdProgf">0.0</Constant>
+        <Constant Name="K_CatSperf">0.0</Constant>
+        <Constant Name="K_millivolts_per_volt">1000.0</Constant>
+        <Constant Name="kcatABHD">10.0</Constant>
+        <Constant Name="KCspAG">1.0</Constant>
+        <Constant Name="Kf_ActABHD">3.0</Constant>
+        <Constant Name="Kf_AGrevert">0.01</Constant>
+        <Constant Name="kleakrne">0.5</Constant>
+        <Constant Name="KmABHD">16.0</Constant>
+        <Constant Name="KMOLE">0.001660538783162726</Constant>
+        <Constant Name="Kr_AGrevert">0.0</Constant>
+        <Constant Name="Kserca">0.27</Constant>
+        <Constant Name="leakparam">0.012</Constant>
+        <Constant Name="NABHD">100.0</Constant>
+        <Constant Name="netValence_ActABHD">1.0</Constant>
+        <Constant Name="netValence_AGrevert">1.0</Constant>
+        <Constant Name="netValence_CleaveAA">1.0</Constant>
+        <Constant Name="netValence_Inhib">1.0</Constant>
+        <Constant Name="P4c">1.0</Constant>
+        <Constant Name="Popen">0.0</Constant>
+        <Constant Name="Vabhd">0.0</Constant>
+        <Constant Name="Voltage_m0">0.0</Constant>
+        <Constant Name="VolumePerUnitVolume_Cytosole">1.0</Constant>
+        <Constant Name="VolumePerUnitVolume_outside">1.0</Constant>
+        <Constant Name="Vserca">0.7</Constant>
+        <MembraneVariable Name="AA" Domain="subdomain0_subdomain1_membrane" />
+        <MembraneVariable Name="ABHD" Domain="subdomain0_subdomain1_membrane" />
+        <MembraneVariable Name="ABHDact" Domain="subdomain0_subdomain1_membrane" />
+        <MembraneVariable Name="AG" Domain="subdomain0_subdomain1_membrane" />
+        <MembraneVariable Name="CatSper" Domain="subdomain0_subdomain1_membrane" />
+        <MembraneVariable Name="CatSperAG" Domain="subdomain0_subdomain1_membrane" />
+        <Function Name="ABHD_diffusionRate" Domain="subdomain0_subdomain1_membrane">(2.0 * (x &lt; 25.0))</Function>
+        <Function Name="ABHD_init_molecules_um_2" Domain="subdomain0_subdomain1_membrane">(NABHD * 3.0 * (x &lt; 25.0) / Size_m0)</Function>
+        <Function Name="ABHDact_diffusionRate" Domain="subdomain0_subdomain1_membrane">(2.0 * (x &lt; 25.0))</Function>
+        <Function Name="ABHDAGKm" Domain="subdomain0_subdomain1_membrane">(16.0 / 0.16)</Function>
+        <Function Name="AG_init_molecules_um_2" Domain="subdomain0_subdomain1_membrane">(3300.0 / Size_m0)</Function>
+        <Function Name="CatSper_diffusionRate" Domain="subdomain0_subdomain1_membrane">(2.0 * (x &lt; 25.0))</Function>
+        <Function Name="CatSper_init_molecules_um_2" Domain="subdomain0_subdomain1_membrane">((100.0 * 3.0 / Size_m0) * (x &lt; 25.0))</Function>
+        <Function Name="CatSperAG_diffusionRate" Domain="subdomain0_subdomain1_membrane">(2.0 * (x &lt; 25.0))</Function>
+        <Function Name="IC50AG">(0.67 / 0.16)</Function>
+        <Function Name="J_ActABHD" Domain="subdomain0_subdomain1_membrane">(((Kf_ActABHD * progesterone) * ABHD) - (Kr_ActABHD * ABHDact))</Function>
+        <Function Name="J_AGrevert" Domain="subdomain0_subdomain1_membrane">((Kf_AGrevert * AA) - (Kr_AGrevert * AG))</Function>
+        <Function Name="J_CleaveAA" Domain="subdomain0_subdomain1_membrane">((Vmax * AG) / (Km + AG))</Function>
+        <Function Name="J_Inhib" Domain="subdomain0_subdomain1_membrane">((KCspAG * CatSper * AG) - (IC50AG * KCspAG * CatSperAG))</Function>
+        <Function Name="Km" Domain="subdomain0_subdomain1_membrane">ABHDAGKm</Function>
+        <Function Name="Kr_ActABHD" Domain="subdomain0_subdomain1_membrane">(Kf_ActABHD / KmABHD)</Function>
+        <Function Name="progesterone" Domain="subdomain0">progesterone_init_uM</Function>
+        <Function Name="progesterone_init_uM" Domain="subdomain0">(P4c * (t &gt; 15.0) * (t &lt; 250.0))</Function>
+        <Function Name="Size_Cytosole" Domain="subdomain1">(VolumePerUnitVolume_Cytosole * vcRegionVolume('subdomain1'))</Function>
+        <Function Name="Size_m0" Domain="subdomain0_subdomain1_membrane">(AreaPerUnitArea_m0 * vcRegionArea('subdomain0_subdomain1_membrane'))</Function>
+        <Function Name="Size_outside" Domain="subdomain0">(VolumePerUnitVolume_outside * vcRegionVolume('subdomain0'))</Function>
+        <Function Name="sobj_subdomain11_subdomain00_size" Domain="subdomain0_subdomain1_membrane">vcRegionArea('subdomain0_subdomain1_membrane')</Function>
+        <Function Name="sobj_subdomain22_subdomain11_size" Domain="subdomain1_subdomain2_membrane">vcRegionArea('subdomain1_subdomain2_membrane')</Function>
+        <Function Name="Vmax" Domain="subdomain0_subdomain1_membrane">(ABHDact * kcatABHD)</Function>
+        <Function Name="vobj_subdomain00_size" Domain="subdomain0">vcRegionVolume('subdomain0')</Function>
+        <Function Name="vobj_subdomain11_size" Domain="subdomain1">vcRegionVolume('subdomain1')</Function>
+        <Function Name="vobj_subdomain22_size" Domain="subdomain2">vcRegionVolume('subdomain2')</Function>
+        <CompartmentSubDomain Name="subdomain2">
+          <BoundaryType Boundary="Xm" Type="Value" />
+          <BoundaryType Boundary="Xp" Type="Value" />
+          <BoundaryType Boundary="Ym" Type="Value" />
+          <BoundaryType Boundary="Yp" Type="Value" />
+          <BoundaryType Boundary="Zm" Type="Value" />
+          <BoundaryType Boundary="Zp" Type="Value" />
+        </CompartmentSubDomain>
+        <CompartmentSubDomain Name="subdomain1">
+          <BoundaryType Boundary="Xm" Type="Flux" />
+          <BoundaryType Boundary="Xp" Type="Flux" />
+          <BoundaryType Boundary="Ym" Type="Flux" />
+          <BoundaryType Boundary="Yp" Type="Flux" />
+          <BoundaryType Boundary="Zm" Type="Flux" />
+          <BoundaryType Boundary="Zp" Type="Flux" />
+        </CompartmentSubDomain>
+        <CompartmentSubDomain Name="subdomain0">
+          <BoundaryType Boundary="Xm" Type="Flux" />
+          <BoundaryType Boundary="Xp" Type="Flux" />
+          <BoundaryType Boundary="Ym" Type="Flux" />
+          <BoundaryType Boundary="Yp" Type="Flux" />
+          <BoundaryType Boundary="Zm" Type="Flux" />
+          <BoundaryType Boundary="Zp" Type="Flux" />
+        </CompartmentSubDomain>
+        <MembraneSubDomain Name="subdomain0_subdomain1_membrane" InsideCompartment="subdomain0" OutsideCompartment="subdomain1">
+          <BoundaryType Boundary="Xm" Type="Value" />
+          <BoundaryType Boundary="Xp" Type="Value" />
+          <BoundaryType Boundary="Ym" Type="Value" />
+          <BoundaryType Boundary="Yp" Type="Value" />
+          <BoundaryType Boundary="Zm" Type="Value" />
+          <BoundaryType Boundary="Zp" Type="Value" />
+          <PdeEquation Name="CatSper" SolutionType="Unknown">
+            <Rate>- J_Inhib</Rate>
+            <Diffusion>CatSper_diffusionRate</Diffusion>
+            <Initial>CatSper_init_molecules_um_2</Initial>
+          </PdeEquation>
+          <PdeEquation Name="ABHD" SolutionType="Unknown">
+            <Rate>- J_ActABHD</Rate>
+            <Diffusion>ABHD_diffusionRate</Diffusion>
+            <Initial>ABHD_init_molecules_um_2</Initial>
+          </PdeEquation>
+          <PdeEquation Name="ABHDact" SolutionType="Unknown">
+            <Rate>J_ActABHD</Rate>
+            <Diffusion>ABHDact_diffusionRate</Diffusion>
+            <Initial>ABHDact_init_molecules_um_2</Initial>
+          </PdeEquation>
+          <PdeEquation Name="AG" SolutionType="Unknown">
+            <Rate>( - J_CleaveAA - J_Inhib + J_AGrevert)</Rate>
+            <Diffusion>AG_diffusionRate</Diffusion>
+            <Initial>AG_init_molecules_um_2</Initial>
+          </PdeEquation>
+          <PdeEquation Name="AA" SolutionType="Unknown">
+            <Rate>(J_CleaveAA - J_AGrevert)</Rate>
+            <Diffusion>AA_diffusionRate</Diffusion>
+            <Initial>AA_init_molecules_um_2</Initial>
+          </PdeEquation>
+          <PdeEquation Name="CatSperAG" SolutionType="Unknown">
+            <Rate>J_Inhib</Rate>
+            <Diffusion>CatSperAG_diffusionRate</Diffusion>
+            <Initial>CatSperAG_init_molecules_um_2</Initial>
+          </PdeEquation>
+        </MembraneSubDomain>
+        <MembraneSubDomain Name="subdomain1_subdomain2_membrane" InsideCompartment="subdomain1" OutsideCompartment="subdomain2">
+          <BoundaryType Boundary="Xm" Type="Value" />
+          <BoundaryType Boundary="Xp" Type="Value" />
+          <BoundaryType Boundary="Ym" Type="Value" />
+          <BoundaryType Boundary="Yp" Type="Value" />
+          <BoundaryType Boundary="Zm" Type="Value" />
+          <BoundaryType Boundary="Zp" Type="Value" />
+        </MembraneSubDomain>
+        <Version Name="Application0_generated" KeyValue="191137373" BranchId="130485142" Archived="0" Date="08-Oct-2020 18:38:57" FromVersionable="false">
+          <Owner Name="Juliajessica" Identifier="121396185" />
+          <GroupAccess Type="1" />
+        </Version>
+      </MathDescription>
+      <Simulation Name="Simulation0">
+        <SolverTaskDescription TaskType="Unsteady" UseSymbolicJacobian="false" Solver="Sundials Stiff PDE Solver (Variable Time Step)">
+          <TimeBound StartTime="0.0" EndTime="250.0" />
+          <TimeStep DefaultTime="0.05" MinTime="0.0" MaxTime="0.1" />
+          <ErrorTolerance Absolut="1.0E-9" Relative="1.0E-7" />
+          <OutputOptions OutputTimeStep="0.1" />
+          <SundialsSolverOptions>
+            <maxOrderAdvection>2</maxOrderAdvection>
+          </SundialsSolverOptions>
+          <NumberProcessors>1</NumberProcessors>
+        </SolverTaskDescription>
+        <MathOverrides>
+          <Constant Name="P4c" ConstantArraySpec="1001">1.0E-4 to 10.0, log, 25 values</Constant>
+        </MathOverrides>
+        <MeshSpecification>
+          <Size X="200" Y="25" Z="25" />
+        </MeshSpecification>
+        <Version Name="Simulation0" KeyValue="191137431" BranchId="145254775" Archived="0" Date="08-Oct-2020 18:38:57" FromVersionable="false">
+          <Owner Name="Juliajessica" Identifier="121396185" />
+          <GroupAccess Type="1" />
+        </Version>
+      </Simulation>
+      <Simulation Name="Copy of Simulation0">
+        <SolverTaskDescription TaskType="Unsteady" UseSymbolicJacobian="false" Solver="Sundials Stiff PDE Solver (Variable Time Step)">
+          <TimeBound StartTime="0.0" EndTime="250.0" />
+          <TimeStep DefaultTime="0.05" MinTime="0.0" MaxTime="0.1" />
+          <ErrorTolerance Absolut="1.0E-9" Relative="1.0E-7" />
+          <OutputOptions OutputTimeStep="0.1" />
+          <SundialsSolverOptions>
+            <maxOrderAdvection>2</maxOrderAdvection>
+          </SundialsSolverOptions>
+          <NumberProcessors>1</NumberProcessors>
+        </SolverTaskDescription>
+        <MathOverrides>
+          <Constant Name="P4c" ConstantArraySpec="1000">"0.006", "5.0"</Constant>
+          <Constant Name="AG_diffusionRate" ConstantArraySpec="1000">"1.0", "10.0", "100.0"</Constant>
+          <Constant Name="AA_diffusionRate" ConstantArraySpec="1000">"1.0", "10.0", "100.0"</Constant>
+        </MathOverrides>
+        <MeshSpecification>
+          <Size X="200" Y="25" Z="25" />
+        </MeshSpecification>
+        <Version Name="Copy of Simulation0" KeyValue="191137433" BranchId="191113565" Archived="0" Date="08-Oct-2020 18:38:57" FromVersionable="false">
+          <Owner Name="Juliajessica" Identifier="121396185" />
+          <GroupAccess Type="1" />
+        </Version>
+      </Simulation>
+      <SpatialObjects>
+        <SpatialObject Name="vobj_subdomain00" Type="Volume" subVolume="subdomain0" regionId="0">
+          <QuantityCategoryList>
+            <QuantityCategory Name="VolumeCentroid" Enabled="false" />
+            <QuantityCategory Name="InteriorVelocity" Enabled="false" />
+            <QuantityCategory Name="VolumeRegionSize" Enabled="true" />
+          </QuantityCategoryList>
+        </SpatialObject>
+        <SpatialObject Name="vobj_subdomain11" Type="Volume" subVolume="subdomain1" regionId="1">
+          <QuantityCategoryList>
+            <QuantityCategory Name="VolumeCentroid" Enabled="false" />
+            <QuantityCategory Name="InteriorVelocity" Enabled="false" />
+            <QuantityCategory Name="VolumeRegionSize" Enabled="true" />
+          </QuantityCategoryList>
+        </SpatialObject>
+        <SpatialObject Name="sobj_subdomain11_subdomain00" Type="Surface" subVolumeInside="subdomain1" regionIdInside="1" subVolumeOutside="subdomain0" regionIdOutside="0">
+          <QuantityCategoryList>
+            <QuantityCategory Name="SurfaceNormal" Enabled="false" />
+            <QuantityCategory Name="SurfaceVelocity" Enabled="false" />
+            <QuantityCategory Name="DistanceToSurface" Enabled="false" />
+            <QuantityCategory Name="DirectionToSurface" Enabled="false" />
+            <QuantityCategory Name="SurfaceSize" Enabled="true" />
+          </QuantityCategoryList>
+        </SpatialObject>
+        <SpatialObject Name="vobj_subdomain22" Type="Volume" subVolume="subdomain2" regionId="2">
+          <QuantityCategoryList>
+            <QuantityCategory Name="VolumeCentroid" Enabled="false" />
+            <QuantityCategory Name="InteriorVelocity" Enabled="false" />
+            <QuantityCategory Name="VolumeRegionSize" Enabled="true" />
+          </QuantityCategoryList>
+        </SpatialObject>
+        <SpatialObject Name="sobj_subdomain22_subdomain11" Type="Surface" subVolumeInside="subdomain2" regionIdInside="2" subVolumeOutside="subdomain1" regionIdOutside="1">
+          <QuantityCategoryList>
+            <QuantityCategory Name="SurfaceNormal" Enabled="false" />
+            <QuantityCategory Name="SurfaceVelocity" Enabled="false" />
+            <QuantityCategory Name="DistanceToSurface" Enabled="false" />
+            <QuantityCategory Name="DirectionToSurface" Enabled="false" />
+            <QuantityCategory Name="SurfaceSize" Enabled="true" />
+          </QuantityCategoryList>
+        </SpatialObject>
+      </SpatialObjects>
+      <Version Name="Application0" KeyValue="191137415" BranchId="130485223" Archived="0" Date="08-Oct-2020 18:38:57" FromVersionable="false">
+        <Owner Name="Juliajessica" Identifier="121396185" />
+        <GroupAccess Type="1" />
+      </Version>
+      <MicroscopeMeasurement Name="fluor">
+        <ConvolutionKernel Type="ProjectionZKernel" />
+      </MicroscopeMeasurement>
+    </SimulationSpec>
+    <Version Name="SpermCalcium_catsper" KeyValue="191137435" BranchId="187049735" Archived="0" Date="08-Oct-2020 18:38:57" FromVersionable="false">
+      <Owner Name="Juliajessica" Identifier="121396185" />
+      <GroupAccess Type="0" />
+    </Version>
+    <pathwayModel>
+      <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:bp="http://www.biopax.org/release/biopax-level3.owl#" version="3.0" />
+    </pathwayModel>
+    <relationshipModel>
+      <RMNS version="3.0" />
+    </relationshipModel>
+    <vcmetadata>
+      <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" />
+      <nonrdfAnnotationList />
+      <uriBindingList />
+    </vcmetadata>
+  </BioModel>
+</vcml>
+

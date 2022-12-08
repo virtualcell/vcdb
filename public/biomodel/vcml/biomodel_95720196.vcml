@@ -1,0 +1,437 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--This biomodel was generated in VCML Version Alpha_Version_7.4.0_build_87-->
+<vcml xmlns="http://sourceforge.net/projects/vcell/vcml" Version="Alpha_Version_7.4.0_build_87">
+  <BioModel Name="Enzymatic Activation - Simple">
+    <Model Name="unnamed">
+      <ModelParameters>
+        <Parameter Name="kL_activation" Role="user defined" Unit="s-1">1000.0</Parameter>
+        <Parameter Name="kL_deactivation" Role="user defined" Unit="s-1">500.0</Parameter>
+        <Parameter Name="kE_activation" Role="user defined" Unit="s-1">1000.0</Parameter>
+        <Parameter Name="kE_deactivation" Role="user defined" Unit="s-1">500.0</Parameter>
+        <Parameter Name="kon" Role="user defined" Unit="uM-1.s-1">30.0</Parameter>
+        <Parameter Name="koff" Role="user defined" Unit="s-1">100.0</Parameter>
+      </ModelParameters>
+      <Compound Name="s0" />
+      <Compound Name="s1" />
+      <Compound Name="s2" />
+      <Compound Name="s3" />
+      <Compound Name="s4" />
+      <Feature Name="c0" KeyValue="95715577" />
+      <LocalizedCompound Name="Linactive" CompoundRef="s0" Structure="c0" OverrideName="true" KeyValue="95715579" />
+      <LocalizedCompound Name="Lactive" CompoundRef="s1" Structure="c0" OverrideName="true" KeyValue="95715580" />
+      <LocalizedCompound Name="Eoff" CompoundRef="s2" Structure="c0" OverrideName="true" KeyValue="95715581" />
+      <LocalizedCompound Name="L_Eoff" CompoundRef="s3" Structure="c0" OverrideName="true" KeyValue="95715582" />
+      <LocalizedCompound Name="L_Eon" CompoundRef="s4" Structure="c0" OverrideName="true" KeyValue="95715583" />
+      <SimpleReaction Structure="c0" Name="Ligand Activation" Reversible="true" FluxOption="MolecularOnly" KeyValue="95715584">
+        <Reactant LocalizedCompoundRef="Linactive" Stoichiometry="1" KeyValue="95715585" />
+        <Product LocalizedCompoundRef="Lactive" Stoichiometry="1" KeyValue="95715586" />
+        <Kinetics KineticsType="MassAction">
+          <Parameter Name="J" Role="reaction rate" Unit="uM.s-1">((Kf * Linactive) - (Kr * Lactive))</Parameter>
+          <Parameter Name="Kf" Role="forward rate constant" Unit="s-1">kL_activation</Parameter>
+          <Parameter Name="Kr" Role="reverse rate constant" Unit="s-1">kL_deactivation</Parameter>
+        </Kinetics>
+      </SimpleReaction>
+      <SimpleReaction Structure="c0" Name="Ligand Binding" Reversible="true" FluxOption="MolecularOnly" KeyValue="95715587">
+        <Reactant LocalizedCompoundRef="Lactive" Stoichiometry="1" KeyValue="95715588" />
+        <Reactant LocalizedCompoundRef="Eoff" Stoichiometry="1" KeyValue="95715589" />
+        <Product LocalizedCompoundRef="L_Eoff" Stoichiometry="1" KeyValue="95715590" />
+        <Kinetics KineticsType="MassAction">
+          <Parameter Name="J" Role="reaction rate" Unit="uM.s-1">(((Kf * Lactive) * Eoff) - (Kr * L_Eoff))</Parameter>
+          <Parameter Name="Kf" Role="forward rate constant" Unit="s-1.uM-1">kon</Parameter>
+          <Parameter Name="Kr" Role="reverse rate constant" Unit="s-1">koff</Parameter>
+        </Kinetics>
+      </SimpleReaction>
+      <SimpleReaction Structure="c0" Name="Enzyme Activation" Reversible="true" FluxOption="MolecularOnly" KeyValue="95715591">
+        <Reactant LocalizedCompoundRef="L_Eoff" Stoichiometry="1" KeyValue="95715592" />
+        <Product LocalizedCompoundRef="L_Eon" Stoichiometry="1" KeyValue="95715593" />
+        <Kinetics KineticsType="MassAction">
+          <Parameter Name="J" Role="reaction rate" Unit="uM.s-1">((Kf * L_Eoff) - (Kr * L_Eon))</Parameter>
+          <Parameter Name="Kf" Role="forward rate constant" Unit="s-1">kE_activation</Parameter>
+          <Parameter Name="Kr" Role="reverse rate constant" Unit="s-1">kE_deactivation</Parameter>
+        </Kinetics>
+      </SimpleReaction>
+      <Diagram Name="c0" Structure="c0">
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="Lactive" LocationX="178" LocationY="113" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="L_Eoff" LocationX="257" LocationY="177" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="full" SimpleReactionRef="Enzyme Activation" LocationX="317" LocationY="182" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="L_Eon" LocationX="362" LocationY="171" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="Linactive" LocationX="83" LocationY="118" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="Eoff" LocationX="254" LocationY="49" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="full" SimpleReactionRef="Ligand Activation" LocationX="138" LocationY="123" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="full" SimpleReactionRef="Ligand Binding" LocationX="255" LocationY="120" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="Lactive" LocationX="178" LocationY="113" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="L_Eoff" LocationX="257" LocationY="177" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="molecule" SimpleReactionRef="Enzyme Activation" LocationX="317" LocationY="182" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="L_Eon" LocationX="362" LocationY="171" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="Linactive" LocationX="83" LocationY="118" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="Eoff" LocationX="254" LocationY="49" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="molecule" SimpleReactionRef="Ligand Activation" LocationX="138" LocationY="123" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="molecule" SimpleReactionRef="Ligand Binding" LocationX="255" LocationY="120" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="Lactive" LocationX="178" LocationY="113" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="L_Eoff" LocationX="257" LocationY="177" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="rule" SimpleReactionRef="Enzyme Activation" LocationX="317" LocationY="182" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="L_Eon" LocationX="362" LocationY="171" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="Linactive" LocationX="83" LocationY="118" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="Eoff" LocationX="254" LocationY="49" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="rule" SimpleReactionRef="Ligand Activation" LocationX="138" LocationY="123" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="rule" SimpleReactionRef="Ligand Binding" LocationX="255" LocationY="120" />
+      </Diagram>
+      <Version Name="unnamed" KeyValue="95715570" BranchId="95715560" Archived="0" Date="09-Aug-2015 14:03:13" FromVersionable="false">
+        <Owner Name="pjmichal" Identifier="45073070" />
+        <GroupAccess Type="1" />
+      </Version>
+      <ModelUnitSystem VolumeSubstanceUnit="uM.um3" MembraneSubstanceUnit="molecules" LumpedReactionSubstanceUnit="molecules" VolumeUnit="um3" AreaUnit="um2" LengthUnit="um" TimeUnit="s" />
+    </Model>
+    <SimulationSpec Name="Deterministic" Stochastic="false" UseConcentration="true" RuleBased="false" MassConservationModelReduction="true" InsufficientIterations="false" InsufficientMaxMolecules="false">
+      <NetworkConstraints RbmMaxIteration="1" RbmMaxMoleculesPerSpecies="10" RbmSpeciesLimit="800" RbmReactionsLimit="2500" />
+      <Annotation />
+      <Geometry Name="non-spatial518524480" Dimension="0">
+        <Extent X="10.0" Y="10.0" Z="10.0" />
+        <Origin X="0.0" Y="0.0" Z="0.0" />
+        <SubVolume Name="Compartment" Handle="0" Type="Compartmental" KeyValue="95715604" />
+        <Version Name="non-spatial518524480" KeyValue="95715600" BranchId="95715601" Archived="0" Date="09-Aug-2015 14:04:06" FromVersionable="false">
+          <Owner Name="pjmichal" Identifier="45073070" />
+          <GroupAccess Type="1" />
+        </Version>
+      </Geometry>
+      <GeometryContext>
+        <FeatureMapping Feature="c0" GeometryClass="Compartment" SubVolume="Compartment" Size="50000.0">
+          <BoundariesTypes Xm="Flux" Xp="Flux" Ym="Flux" Yp="Flux" Zm="Flux" Zp="Flux" />
+        </FeatureMapping>
+      </GeometryContext>
+      <ReactionContext>
+        <LocalizedCompoundSpec LocalizedCompoundRef="Linactive" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>20.0</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="Lactive" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>0.0</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="Eoff" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>20.0</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="L_Eoff" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>0.0</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="L_Eon" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>0.0</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <ReactionSpec ReactionStepRef="Ligand Activation" ReactionMapping="included" />
+        <ReactionSpec ReactionStepRef="Ligand Binding" ReactionMapping="included" />
+        <ReactionSpec ReactionStepRef="Enzyme Activation" ReactionMapping="included" />
+      </ReactionContext>
+      <MathDescription Name="Application0_generated">
+        <Constant Name="_F_">96480.0</Constant>
+        <Constant Name="_F_nmol_">9.648E-5</Constant>
+        <Constant Name="_K_GHK_">1.0E-9</Constant>
+        <Constant Name="_N_pmol_">6.02E11</Constant>
+        <Constant Name="_PI_">3.141592653589793</Constant>
+        <Constant Name="_R_">8314.0</Constant>
+        <Constant Name="_T_">300.0</Constant>
+        <Constant Name="Eoff_init_uM">20.0</Constant>
+        <Constant Name="K_millivolts_per_volt">1000.0</Constant>
+        <Constant Name="kE_activation">1000.0</Constant>
+        <Constant Name="kE_deactivation">500.0</Constant>
+        <Constant Name="kL_activation">1000.0</Constant>
+        <Constant Name="kL_deactivation">500.0</Constant>
+        <Constant Name="KMOLE">(1.0 / 602.0)</Constant>
+        <Constant Name="koff">100.0</Constant>
+        <Constant Name="kon">30.0</Constant>
+        <Constant Name="L_Eoff_init_uM">0.0</Constant>
+        <Constant Name="L_Eon_init_uM">0.0</Constant>
+        <Constant Name="Lactive_init_uM">0.0</Constant>
+        <Constant Name="Linactive_init_uM">20.0</Constant>
+        <Constant Name="Size_c0">50000.0</Constant>
+        <VolumeVariable Name="L_Eoff" Domain="Compartment" />
+        <VolumeVariable Name="L_Eon" Domain="Compartment" />
+        <VolumeVariable Name="Lactive" Domain="Compartment" />
+        <Function Name="Eoff" Domain="Compartment">(( - (Size_c0 * L_Eon) + K_Eoff_total - (Size_c0 * L_Eoff)) / Size_c0)</Function>
+        <Function Name="J_Enzyme_Activation" Domain="Compartment">((Kf_Enzyme_Activation * L_Eoff) - (Kr_Enzyme_Activation * L_Eon))</Function>
+        <Function Name="J_Ligand_Activation" Domain="Compartment">((Kf_Ligand_Activation * Linactive) - (Kr_Ligand_Activation * Lactive))</Function>
+        <Function Name="J_Ligand_Binding" Domain="Compartment">(((Kf_Ligand_Binding * Lactive) * Eoff) - (Kr_Ligand_Binding * L_Eoff))</Function>
+        <Function Name="K_Eoff_total" Domain="Compartment">((Size_c0 * L_Eon_init_uM) + (Size_c0 * Eoff_init_uM) + (Size_c0 * L_Eoff_init_uM))</Function>
+        <Function Name="K_Linactive_total" Domain="Compartment">((Size_c0 * L_Eon_init_uM) + (Size_c0 * L_Eoff_init_uM) + (Size_c0 * Linactive_init_uM) + (Size_c0 * Lactive_init_uM))</Function>
+        <Function Name="Kf_Enzyme_Activation" Domain="Compartment">kE_activation</Function>
+        <Function Name="Kf_Ligand_Activation" Domain="Compartment">kL_activation</Function>
+        <Function Name="Kf_Ligand_Binding" Domain="Compartment">kon</Function>
+        <Function Name="Kr_Enzyme_Activation" Domain="Compartment">kE_deactivation</Function>
+        <Function Name="Kr_Ligand_Activation" Domain="Compartment">kL_deactivation</Function>
+        <Function Name="Kr_Ligand_Binding" Domain="Compartment">koff</Function>
+        <Function Name="Linactive" Domain="Compartment">(( - (Size_c0 * L_Eon) - (Size_c0 * L_Eoff) + K_Linactive_total - (Size_c0 * Lactive)) / Size_c0)</Function>
+        <CompartmentSubDomain Name="Compartment">
+          <BoundaryType Boundary="Xm" Type="Value" />
+          <BoundaryType Boundary="Xp" Type="Value" />
+          <BoundaryType Boundary="Ym" Type="Value" />
+          <BoundaryType Boundary="Yp" Type="Value" />
+          <BoundaryType Boundary="Zm" Type="Value" />
+          <BoundaryType Boundary="Zp" Type="Value" />
+          <OdeEquation Name="Lactive" SolutionType="Unknown">
+            <Rate>(J_Ligand_Activation - J_Ligand_Binding)</Rate>
+            <Initial>Lactive_init_uM</Initial>
+          </OdeEquation>
+          <OdeEquation Name="L_Eoff" SolutionType="Unknown">
+            <Rate>(J_Ligand_Binding - J_Enzyme_Activation)</Rate>
+            <Initial>L_Eoff_init_uM</Initial>
+          </OdeEquation>
+          <OdeEquation Name="L_Eon" SolutionType="Unknown">
+            <Rate>J_Enzyme_Activation</Rate>
+            <Initial>L_Eon_init_uM</Initial>
+          </OdeEquation>
+        </CompartmentSubDomain>
+        <Version Name="Application0_generated" KeyValue="95715605" BranchId="95715606" Archived="0" Date="09-Aug-2015 14:04:06" FromVersionable="false">
+          <Owner Name="pjmichal" Identifier="45073070" />
+          <GroupAccess Type="1" />
+        </Version>
+      </MathDescription>
+      <Simulation Name="Simulation0">
+        <SolverTaskDescription TaskType="Unsteady" UseSymbolicJacobian="false" Solver="Combined Stiff Solver (IDA/CVODE)">
+          <TimeBound StartTime="0.0" EndTime="1.0" />
+          <TimeStep DefaultTime="0.1" MinTime="1.0E-8" MaxTime="1.0" />
+          <ErrorTolerance Absolut="1.0E-9" Relative="1.0E-9" />
+          <OutputOptions KeepEvery="1" KeepAtMost="1000" />
+          <NumberProcessors>1</NumberProcessors>
+        </SolverTaskDescription>
+        <MathOverrides />
+        <Version Name="Simulation0" KeyValue="95715620" BranchId="95715621" Archived="0" Date="09-Aug-2015 14:04:06" FromVersionable="false">
+          <Owner Name="pjmichal" Identifier="45073070" />
+          <GroupAccess Type="1" />
+        </Version>
+      </Simulation>
+      <Simulation Name="Shorter time">
+        <SolverTaskDescription TaskType="Unsteady" UseSymbolicJacobian="false" Solver="Combined Stiff Solver (IDA/CVODE)">
+          <TimeBound StartTime="0.0" EndTime="0.1" />
+          <TimeStep DefaultTime="0.1" MinTime="1.0E-8" MaxTime="1.0" />
+          <ErrorTolerance Absolut="1.0E-9" Relative="1.0E-9" />
+          <OutputOptions OutputTimeStep="2.0E-4" />
+          <NumberProcessors>1</NumberProcessors>
+        </SolverTaskDescription>
+        <MathOverrides>
+          <Constant Name="Linactive_init_uM">12.458</Constant>
+          <Constant Name="Eoff_init_uM">8.306</Constant>
+        </MathOverrides>
+        <Version Name="Shorter time" KeyValue="95715753" BranchId="95715663" Archived="0" Date="09-Aug-2015 14:28:10" FromVersionable="false">
+          <Owner Name="pjmichal" Identifier="45073070" />
+          <GroupAccess Type="1" />
+        </Version>
+      </Simulation>
+      <Simulation Name="Copy of Shorter time">
+        <SolverTaskDescription TaskType="Unsteady" UseSymbolicJacobian="false" Solver="Combined Stiff Solver (IDA/CVODE)">
+          <TimeBound StartTime="0.0" EndTime="0.2" />
+          <TimeStep DefaultTime="0.1" MinTime="1.0E-8" MaxTime="1.0" />
+          <ErrorTolerance Absolut="1.0E-9" Relative="1.0E-9" />
+          <OutputOptions OutputTimeStep="2.0E-4" />
+          <NumberProcessors>1</NumberProcessors>
+        </SolverTaskDescription>
+        <MathOverrides>
+          <Constant Name="Linactive_init_uM">12.458</Constant>
+          <Constant Name="Eoff_init_uM">8.306</Constant>
+        </MathOverrides>
+        <Version Name="Copy of Shorter time" KeyValue="95720193" BranchId="95720194" Archived="0" Date="10-Aug-2015 15:52:11" FromVersionable="false">
+          <Owner Name="pjmichal" Identifier="45073070" />
+          <GroupAccess Type="1" />
+        </Version>
+      </Simulation>
+      <Version Name="Deterministic" KeyValue="95715638" BranchId="95715639" Archived="0" Date="09-Aug-2015 14:13:29" FromVersionable="false">
+        <Owner Name="pjmichal" Identifier="45073070" />
+        <GroupAccess Type="1" />
+      </Version>
+      <MicroscopeMeasurement Name="fluor">
+        <ConvolutionKernel Type="ProjectionZKernel" />
+      </MicroscopeMeasurement>
+    </SimulationSpec>
+    <SimulationSpec Name="Stochastic" Stochastic="true" UseConcentration="false" RandomizeInitCondition="false" RuleBased="false" MassConservationModelReduction="true" InsufficientIterations="false" InsufficientMaxMolecules="false">
+      <NetworkConstraints RbmMaxIteration="1" RbmMaxMoleculesPerSpecies="10" RbmSpeciesLimit="800" RbmReactionsLimit="2500" />
+      <Annotation />
+      <Geometry Name="non-spatial634941945" Dimension="0">
+        <Extent X="10.0" Y="10.0" Z="10.0" />
+        <Origin X="0.0" Y="0.0" Z="0.0" />
+        <SubVolume Name="Compartment" Handle="0" Type="Compartmental" KeyValue="95715634" />
+        <Version Name="non-spatial634941945" KeyValue="95715630" BranchId="95715631" Archived="0" Date="09-Aug-2015 14:13:29" FromVersionable="false">
+          <Owner Name="pjmichal" Identifier="45073070" />
+          <GroupAccess Type="1" />
+        </Version>
+      </Geometry>
+      <GeometryContext>
+        <FeatureMapping Feature="c0" GeometryClass="Compartment" SubVolume="Compartment" Size="0.008">
+          <BoundariesTypes Xm="Flux" Xp="Flux" Ym="Flux" Yp="Flux" Zm="Flux" Zp="Flux" />
+        </FeatureMapping>
+      </GeometryContext>
+      <ReactionContext>
+        <LocalizedCompoundSpec LocalizedCompoundRef="Linactive" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialCount>60.0</InitialCount>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="Lactive" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialCount>0.0</InitialCount>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="Eoff" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialCount>40.0</InitialCount>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="L_Eoff" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialCount>0.0</InitialCount>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="L_Eon" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialCount>0.0</InitialCount>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <ReactionSpec ReactionStepRef="Ligand Activation" ReactionMapping="included" />
+        <ReactionSpec ReactionStepRef="Ligand Binding" ReactionMapping="included" />
+        <ReactionSpec ReactionStepRef="Enzyme Activation" ReactionMapping="included" />
+      </ReactionContext>
+      <MathDescription Name="Stochastic_generated">
+        <Constant Name="_F_">96480.0</Constant>
+        <Constant Name="_F_nmol_">9.648E-5</Constant>
+        <Constant Name="_N_pmol_">6.02E11</Constant>
+        <Constant Name="_PI_">3.141592653589793</Constant>
+        <Constant Name="_R_">8314.0</Constant>
+        <Constant Name="_T_">300.0</Constant>
+        <Constant Name="Eoff_initCount">40.0</Constant>
+        <Constant Name="kE_activation">1000.0</Constant>
+        <Constant Name="kE_deactivation">500.0</Constant>
+        <Constant Name="kL_activation">1000.0</Constant>
+        <Constant Name="kL_deactivation">500.0</Constant>
+        <Constant Name="KMOLE">(1.0 / 602.0)</Constant>
+        <Constant Name="koff">100.0</Constant>
+        <Constant Name="kon">30.0</Constant>
+        <Constant Name="L_Eoff_initCount">0.0</Constant>
+        <Constant Name="L_Eon_initCount">0.0</Constant>
+        <Constant Name="Lactive_initCount">0.0</Constant>
+        <Constant Name="Linactive_initCount">60.0</Constant>
+        <Constant Name="Size_c0">0.008</Constant>
+        <StochasticVolumeVariable Name="Eoff" />
+        <StochasticVolumeVariable Name="L_Eoff" />
+        <StochasticVolumeVariable Name="L_Eon" />
+        <StochasticVolumeVariable Name="Lactive" />
+        <StochasticVolumeVariable Name="Linactive" />
+        <Function Name="Eoff_Conc" Domain="Compartment">(Eoff * (UnitFactor_uM_um3_molecules_neg_1 / Size_c0))</Function>
+        <Function Name="Kf_Enzyme_Activation" Domain="Compartment">kE_activation</Function>
+        <Function Name="Kf_Ligand_Activation" Domain="Compartment">kL_activation</Function>
+        <Function Name="Kf_Ligand_Binding" Domain="Compartment">kon</Function>
+        <Function Name="Kr_Enzyme_Activation" Domain="Compartment">kE_deactivation</Function>
+        <Function Name="Kr_Ligand_Activation" Domain="Compartment">kL_deactivation</Function>
+        <Function Name="Kr_Ligand_Binding" Domain="Compartment">koff</Function>
+        <Function Name="L_Eoff_Conc" Domain="Compartment">(L_Eoff * (UnitFactor_uM_um3_molecules_neg_1 / Size_c0))</Function>
+        <Function Name="L_Eon_Conc" Domain="Compartment">(L_Eon * (UnitFactor_uM_um3_molecules_neg_1 / Size_c0))</Function>
+        <Function Name="Lactive_Conc" Domain="Compartment">(Lactive * (UnitFactor_uM_um3_molecules_neg_1 / Size_c0))</Function>
+        <Function Name="Linactive_Conc" Domain="Compartment">(Linactive * (UnitFactor_uM_um3_molecules_neg_1 / Size_c0))</Function>
+        <Function Name="P_Enzyme_Activation" Domain="Compartment">(kE_activation * L_Eoff * UnitFactor_molecules_uM_neg_1_um_neg_3 * UnitFactor_uM_um3_molecules_neg_1)</Function>
+        <Function Name="P_Enzyme_Activation_reverse" Domain="Compartment">(kE_deactivation * L_Eon * UnitFactor_molecules_uM_neg_1_um_neg_3 * UnitFactor_uM_um3_molecules_neg_1)</Function>
+        <Function Name="P_Ligand_Activation" Domain="Compartment">(kL_activation * Linactive * UnitFactor_molecules_uM_neg_1_um_neg_3 * UnitFactor_uM_um3_molecules_neg_1)</Function>
+        <Function Name="P_Ligand_Activation_reverse" Domain="Compartment">(kL_deactivation * Lactive * UnitFactor_molecules_uM_neg_1_um_neg_3 * UnitFactor_uM_um3_molecules_neg_1)</Function>
+        <Function Name="P_Ligand_Binding" Domain="Compartment">(kon * Lactive * Eoff * UnitFactor_molecules_uM_neg_1_um_neg_3 * UnitFactor_uM_um3_molecules_neg_1 * UnitFactor_uM_um3_molecules_neg_1 / Size_c0)</Function>
+        <Function Name="P_Ligand_Binding_reverse" Domain="Compartment">(koff * L_Eoff * UnitFactor_molecules_uM_neg_1_um_neg_3 * UnitFactor_uM_um3_molecules_neg_1)</Function>
+        <Function Name="UnitFactor_molecules_uM_neg_1_um_neg_3">(602.0 / 1.0)</Function>
+        <Function Name="UnitFactor_uM_um3_molecules_neg_1">(1.0 / 602.0)</Function>
+        <CompartmentSubDomain Name="Compartment">
+          <BoundaryType Boundary="Xm" Type="Value" />
+          <BoundaryType Boundary="Xp" Type="Value" />
+          <BoundaryType Boundary="Ym" Type="Value" />
+          <BoundaryType Boundary="Yp" Type="Value" />
+          <BoundaryType Boundary="Zm" Type="Value" />
+          <BoundaryType Boundary="Zp" Type="Value" />
+          <VariableInitialCount Name="Linactive">Linactive_initCount</VariableInitialCount>
+          <VariableInitialCount Name="Lactive">Lactive_initCount</VariableInitialCount>
+          <VariableInitialCount Name="Eoff">Eoff_initCount</VariableInitialCount>
+          <VariableInitialCount Name="L_Eoff">L_Eoff_initCount</VariableInitialCount>
+          <VariableInitialCount Name="L_Eon">L_Eon_initCount</VariableInitialCount>
+          <JumpProcess Name="Ligand_Activation">
+            <ProbabilityRate>P_Ligand_Activation</ProbabilityRate>
+            <Effect VarName="Linactive" Operation="inc">-1.0</Effect>
+            <Effect VarName="Lactive" Operation="inc">1.0</Effect>
+          </JumpProcess>
+          <JumpProcess Name="Ligand_Activation_reverse">
+            <ProbabilityRate>P_Ligand_Activation_reverse</ProbabilityRate>
+            <Effect VarName="Linactive" Operation="inc">1.0</Effect>
+            <Effect VarName="Lactive" Operation="inc">-1.0</Effect>
+          </JumpProcess>
+          <JumpProcess Name="Ligand_Binding">
+            <ProbabilityRate>P_Ligand_Binding</ProbabilityRate>
+            <Effect VarName="Lactive" Operation="inc">-1.0</Effect>
+            <Effect VarName="Eoff" Operation="inc">-1.0</Effect>
+            <Effect VarName="L_Eoff" Operation="inc">1.0</Effect>
+          </JumpProcess>
+          <JumpProcess Name="Ligand_Binding_reverse">
+            <ProbabilityRate>P_Ligand_Binding_reverse</ProbabilityRate>
+            <Effect VarName="Lactive" Operation="inc">1.0</Effect>
+            <Effect VarName="Eoff" Operation="inc">1.0</Effect>
+            <Effect VarName="L_Eoff" Operation="inc">-1.0</Effect>
+          </JumpProcess>
+          <JumpProcess Name="Enzyme_Activation">
+            <ProbabilityRate>P_Enzyme_Activation</ProbabilityRate>
+            <Effect VarName="L_Eoff" Operation="inc">-1.0</Effect>
+            <Effect VarName="L_Eon" Operation="inc">1.0</Effect>
+          </JumpProcess>
+          <JumpProcess Name="Enzyme_Activation_reverse">
+            <ProbabilityRate>P_Enzyme_Activation_reverse</ProbabilityRate>
+            <Effect VarName="L_Eoff" Operation="inc">1.0</Effect>
+            <Effect VarName="L_Eon" Operation="inc">-1.0</Effect>
+          </JumpProcess>
+        </CompartmentSubDomain>
+        <Version Name="Stochastic_generated" KeyValue="95715674" BranchId="95715636" Archived="0" Date="09-Aug-2015 14:18:38" FromVersionable="false">
+          <Owner Name="pjmichal" Identifier="45073070" />
+          <GroupAccess Type="1" />
+        </Version>
+      </MathDescription>
+      <Simulation Name="Simulation1">
+        <SolverTaskDescription TaskType="Unsteady" UseSymbolicJacobian="false" Solver="Gibson (Next Reaction Stochastic Method)">
+          <TimeBound StartTime="0.0" EndTime="0.1" />
+          <TimeStep DefaultTime="0.1" MinTime="1.0E-8" MaxTime="1.0" />
+          <ErrorTolerance Absolut="1.0E-9" Relative="1.0E-8" />
+          <StochSimOptions UseCustomSeed="false" NumberOfTrial="10000" Histogram="true" />
+          <OutputOptions OutputTimeStep="0.01" />
+          <NumberProcessors>1</NumberProcessors>
+        </SolverTaskDescription>
+        <MathOverrides />
+        <Version Name="Simulation1" KeyValue="95715740" BranchId="95715688" Archived="0" Date="09-Aug-2015 14:20:45" FromVersionable="false">
+          <Owner Name="pjmichal" Identifier="45073070" />
+          <GroupAccess Type="1" />
+        </Version>
+      </Simulation>
+      <Simulation Name="Copy of Simulation1">
+        <SolverTaskDescription TaskType="Unsteady" UseSymbolicJacobian="false" Solver="Gibson (Next Reaction Stochastic Method)">
+          <TimeBound StartTime="0.0" EndTime="0.05" />
+          <TimeStep DefaultTime="0.1" MinTime="1.0E-8" MaxTime="1.0" />
+          <ErrorTolerance Absolut="1.0E-9" Relative="1.0E-8" />
+          <StochSimOptions UseCustomSeed="false" NumberOfTrial="10000" Histogram="true" />
+          <OutputOptions OutputTimeStep="5.0E-4" />
+          <NumberProcessors>1</NumberProcessors>
+        </SolverTaskDescription>
+        <MathOverrides />
+        <Version Name="Copy of Simulation1" KeyValue="95715727" BranchId="95715701" Archived="0" Date="09-Aug-2015 14:19:51" FromVersionable="false">
+          <Owner Name="pjmichal" Identifier="45073070" />
+          <GroupAccess Type="1" />
+        </Version>
+      </Simulation>
+      <Version Name="Stochastic" KeyValue="95715676" BranchId="95715651" Archived="0" Date="09-Aug-2015 14:18:38" FromVersionable="false">
+        <Owner Name="pjmichal" Identifier="45073070" />
+        <GroupAccess Type="1" />
+      </Version>
+      <MicroscopeMeasurement Name="fluor">
+        <ConvolutionKernel Type="ProjectionZKernel" />
+      </MicroscopeMeasurement>
+    </SimulationSpec>
+    <Version Name="Enzymatic Activation - Simple" KeyValue="95720196" BranchId="95715566" Archived="0" Date="10-Aug-2015 15:52:11" FromVersionable="false">
+      <Owner Name="pjmichal" Identifier="45073070" />
+      <GroupAccess Type="0" />
+    </Version>
+    <pathwayModel>
+      <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:bp="http://www.biopax.org/release/biopax-level3.owl#" version="3.0" />
+    </pathwayModel>
+    <relationshipModel>
+      <RMNS version="3.0" />
+    </relationshipModel>
+    <vcmetadata>
+      <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" />
+      <nonrdfAnnotationList />
+      <uriBindingList />
+    </vcmetadata>
+  </BioModel>
+</vcml>
+

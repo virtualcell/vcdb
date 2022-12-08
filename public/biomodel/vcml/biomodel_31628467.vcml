@@ -1,0 +1,279 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--This biomodel was generated in VCML Version Alpha_Version_7.4.0_build_87-->
+<vcml xmlns="http://sourceforge.net/projects/vcell/vcml" Version="Alpha_Version_7.4.0_build_87">
+  <BioModel Name="Biophysics2">
+    <Annotation>cloned from 'Biophysics homework2' owned by user boris</Annotation>
+    <Model Name="unnamed">
+      <Annotation>cloned from 'unnamed' owned by user boris</Annotation>
+      <Compound Name="Laser" />
+      <Compound Name="occTJF" />
+      <Feature Name="TJ" KeyValue="31627532" />
+      <LocalizedCompound Name="Laser_TJ" CompoundRef="Laser" Structure="TJ" OverrideName="true" KeyValue="31627534" />
+      <LocalizedCompound Name="occTJF_TJ" CompoundRef="occTJF" Structure="TJ" OverrideName="true" KeyValue="31627535" />
+      <SimpleReaction Structure="TJ" Name="reaction0" Reversible="true" FluxOption="MolecularOnly" KeyValue="31627536">
+        <Reactant LocalizedCompoundRef="occTJF_TJ" Stoichiometry="1" KeyValue="31627537" />
+        <Modifier LocalizedCompoundRef="Laser_TJ" />
+        <Kinetics KineticsType="GeneralKinetics">
+          <Parameter Name="J" Role="reaction rate" Unit="uM.s-1">(k * occTJF_TJ * Laser_TJ)</Parameter>
+          <Parameter Name="k" Role="user defined" Unit="uM-1.s-1">4.0</Parameter>
+        </Kinetics>
+      </SimpleReaction>
+      <Diagram Name="Unnamed compartment" Structure="TJ">
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="Laser_TJ" LocationX="99" LocationY="41" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="occTJF_TJ" LocationX="33" LocationY="101" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="full" SimpleReactionRef="reaction0" LocationX="97" LocationY="99" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="Laser_TJ" LocationX="99" LocationY="41" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="occTJF_TJ" LocationX="33" LocationY="101" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="molecule" SimpleReactionRef="reaction0" LocationX="97" LocationY="99" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="Laser_TJ" LocationX="99" LocationY="41" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="occTJF_TJ" LocationX="33" LocationY="101" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="rule" SimpleReactionRef="reaction0" LocationX="97" LocationY="99" />
+      </Diagram>
+      <Version Name="unnamed" KeyValue="31627527" BranchId="31627528" Archived="0" Date="03-Feb-2009 00:33:11" FromVersionable="false">
+        <Owner Name="zqiu" Identifier="31502111" />
+        <GroupAccess Type="1" />
+        <Annotation>cloned from 'unnamed' owned by user boris</Annotation>
+      </Version>
+      <ModelUnitSystem VolumeSubstanceUnit="uM.um3" MembraneSubstanceUnit="molecules" LumpedReactionSubstanceUnit="molecules" VolumeUnit="um3" AreaUnit="um2" LengthUnit="um" TimeUnit="s" />
+    </Model>
+    <SimulationSpec Name="FRAP" Stochastic="false" UseConcentration="true" RuleBased="false" MassConservationModelReduction="true" InsufficientIterations="false" InsufficientMaxMolecules="false" CharacteristicSize="0.2109018768489839">
+      <NetworkConstraints RbmMaxIteration="1" RbmMaxMoleculesPerSpecies="10" RbmSpeciesLimit="800" RbmReactionsLimit="2500" />
+      <Annotation>cloned from 'FRAP' owned by user boris</Annotation>
+      <Geometry Name="Lec1" Dimension="1">
+        <Annotation>cloned from 'Lec1' owned by user boris</Annotation>
+        <Extent X="94.0" Y="10.0" Z="10.0" />
+        <Origin X="0.0" Y="0.0" Z="0.0" />
+        <SubVolume Name="subVolume1" Handle="0" Type="Analytical" KeyValue="31627511">
+          <AnalyticExpression>1.0</AnalyticExpression>
+        </SubVolume>
+        <SurfaceDescription NumSamplesX="50" NumSamplesY="1" NumSamplesZ="1" CutoffFrequency="0.3">
+          <VolumeRegion Name="subVolume10" RegionID="0" SubVolume="subVolume1" Size="93.99999999999999" Unit="um" />
+        </SurfaceDescription>
+        <Version Name="Lec1" KeyValue="31627507" BranchId="31627508" Archived="0" Date="03-Feb-2009 00:33:10" FromVersionable="false">
+          <Owner Name="zqiu" Identifier="31502111" />
+          <GroupAccess Type="1" />
+          <Annotation>cloned from 'Lec1' owned by user boris</Annotation>
+        </Version>
+      </Geometry>
+      <GeometryContext>
+        <FeatureMapping Feature="TJ" GeometryClass="subVolume1" SubVolume="subVolume1">
+          <BoundariesTypes Xm="Flux" Xp="Flux" Ym="Flux" Yp="Flux" Zm="Flux" Zp="Flux" />
+        </FeatureMapping>
+      </GeometryContext>
+      <ReactionContext>
+        <LocalizedCompoundSpec LocalizedCompoundRef="Laser_TJ" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>((t &gt; 1.0) * (t &lt; 2.0) * (x &gt; 43.0) * (x &lt; 46.0))</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="occTJF_TJ" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>100.0</InitialConcentration>
+          <Diffusion>0.1</Diffusion>
+        </LocalizedCompoundSpec>
+        <ReactionSpec ReactionStepRef="reaction0" ReactionMapping="included" />
+      </ReactionContext>
+      <MathDescription Name="bleach_generated">
+        <Annotation>cloned from 'bleach_generated' owned by user boris</Annotation>
+        <Constant Name="_F_">96480.0</Constant>
+        <Constant Name="_F_nmol_">9.648E-5</Constant>
+        <Constant Name="_K_GHK_">1.0E-9</Constant>
+        <Constant Name="_N_pmol_">6.02E11</Constant>
+        <Constant Name="_R_">8314.0</Constant>
+        <Constant Name="_T_">300.0</Constant>
+        <Constant Name="k">4.0</Constant>
+        <Constant Name="K_millivolts_per_volt">1000.0</Constant>
+        <Constant Name="KMOLE">0.0016611295681063123</Constant>
+        <Constant Name="occTJF_TJ_diffusionRate">0.1</Constant>
+        <Constant Name="occTJF_TJ_init">100.0</Constant>
+        <VolumeVariable Name="occTJF" />
+        <Function Name="J_reaction0">(k * occTJF * Laser_TJ)</Function>
+        <Function Name="K_Laser_TJ_total">Laser_TJ_init</Function>
+        <Function Name="Laser_TJ">K_Laser_TJ_total</Function>
+        <Function Name="Laser_TJ_init">((t &gt; 1.0) * (t &lt; 2.0) * (x &gt; 43.0) * (x &lt; 46.0))</Function>
+        <CompartmentSubDomain Name="subVolume1">
+          <BoundaryType Boundary="Xm" Type="Flux" />
+          <BoundaryType Boundary="Xp" Type="Flux" />
+          <BoundaryType Boundary="Ym" Type="Value" />
+          <BoundaryType Boundary="Yp" Type="Value" />
+          <BoundaryType Boundary="Zm" Type="Value" />
+          <BoundaryType Boundary="Zp" Type="Value" />
+          <PdeEquation Name="occTJF" SolutionType="Unknown">
+            <Rate>- J_reaction0</Rate>
+            <Diffusion>occTJF_TJ_diffusionRate</Diffusion>
+            <Initial>occTJF_TJ_init</Initial>
+          </PdeEquation>
+        </CompartmentSubDomain>
+        <Version Name="bleach_generated" KeyValue="31628324" BranchId="31627522" Archived="0" Date="03-Feb-2009 01:49:40" FromVersionable="false">
+          <Owner Name="zqiu" Identifier="31502111" />
+          <GroupAccess Type="1" />
+          <Annotation>cloned from 'bleach_generated' owned by user boris</Annotation>
+        </Version>
+      </MathDescription>
+      <Simulation Name="Simulation0">
+        <SolverTaskDescription TaskType="Unsteady" UseSymbolicJacobian="false" Solver="Finite Volume, Regular Grid">
+          <TimeBound StartTime="0.0" EndTime="600.0" />
+          <TimeStep DefaultTime="0.1" MinTime="1.0E-8" MaxTime="1.0" />
+          <ErrorTolerance Absolut="1.0E-9" Relative="1.0E-9" />
+          <OutputOptions KeepEvery="1" KeepAtMost="1000" />
+          <NumberProcessors>1</NumberProcessors>
+        </SolverTaskDescription>
+        <MathOverrides />
+        <MeshSpecification>
+          <Size X="200" Y="1" Z="1" />
+        </MeshSpecification>
+        <Version Name="Simulation0" KeyValue="31628332" BranchId="31628333" Archived="0" Date="03-Feb-2009 01:49:40" FromVersionable="false">
+          <Owner Name="zqiu" Identifier="31502111" />
+          <GroupAccess Type="1" />
+        </Version>
+      </Simulation>
+      <SpatialObjects>
+        <SpatialObject Name="vobj_subVolume10" Type="Volume" subVolume="subVolume1" regionId="0">
+          <QuantityCategoryList>
+            <QuantityCategory Name="VolumeCentroid" Enabled="false" />
+            <QuantityCategory Name="InteriorVelocity" Enabled="false" />
+            <QuantityCategory Name="VolumeRegionSize" Enabled="true" />
+          </QuantityCategoryList>
+        </SpatialObject>
+      </SpatialObjects>
+      <Version Name="FRAP" KeyValue="31628326" BranchId="31627541" Archived="0" Date="03-Feb-2009 01:49:40" FromVersionable="false">
+        <Owner Name="zqiu" Identifier="31502111" />
+        <GroupAccess Type="1" />
+        <Annotation>cloned from 'FRAP' owned by user boris</Annotation>
+      </Version>
+      <MicroscopeMeasurement Name="fluor">
+        <ConvolutionKernel Type="ProjectionZKernel" />
+      </MicroscopeMeasurement>
+    </SimulationSpec>
+    <SimulationSpec Name="FLIP" Stochastic="false" UseConcentration="true" RuleBased="false" MassConservationModelReduction="true" InsufficientIterations="false" InsufficientMaxMolecules="false" CharacteristicSize="0.2109018768489839">
+      <NetworkConstraints RbmMaxIteration="1" RbmMaxMoleculesPerSpecies="10" RbmSpeciesLimit="800" RbmReactionsLimit="2500" />
+      <Annotation>cloned from 'FLIP' owned by user boris
+(copied from FRAP)</Annotation>
+      <Geometry Name="Lec1650998582" Dimension="1">
+        <Annotation>cloned from 'Lec1' owned by user boris</Annotation>
+        <Extent X="94.0" Y="10.0" Z="10.0" />
+        <Origin X="0.0" Y="0.0" Z="0.0" />
+        <SubVolume Name="subVolume1" Handle="0" Type="Analytical" KeyValue="31627518">
+          <AnalyticExpression>1.0</AnalyticExpression>
+        </SubVolume>
+        <SurfaceDescription NumSamplesX="50" NumSamplesY="1" NumSamplesZ="1" CutoffFrequency="0.3">
+          <VolumeRegion Name="subVolume10" RegionID="0" SubVolume="subVolume1" Size="93.99999999999999" Unit="um" />
+        </SurfaceDescription>
+        <Version Name="Lec1650998582" KeyValue="31627514" BranchId="31627515" Archived="0" Date="03-Feb-2009 00:33:11" FromVersionable="false">
+          <Owner Name="zqiu" Identifier="31502111" />
+          <GroupAccess Type="1" />
+          <Annotation>cloned from 'Lec1' owned by user boris</Annotation>
+        </Version>
+      </Geometry>
+      <GeometryContext>
+        <FeatureMapping Feature="TJ" GeometryClass="subVolume1" SubVolume="subVolume1">
+          <BoundariesTypes Xm="Flux" Xp="Flux" Ym="Flux" Yp="Flux" Zm="Flux" Zp="Flux" />
+        </FeatureMapping>
+      </GeometryContext>
+      <ReactionContext>
+        <LocalizedCompoundSpec LocalizedCompoundRef="Laser_TJ" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>((x &gt; 42.0) * (x &lt; 47.0))</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="occTJF_TJ" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>100.0</InitialConcentration>
+          <Diffusion>0.011</Diffusion>
+        </LocalizedCompoundSpec>
+        <ReactionSpec ReactionStepRef="reaction0" ReactionMapping="included" />
+      </ReactionContext>
+      <MathDescription Name="FLIP_generated">
+        <Annotation>cloned from 'FLIP_generated' owned by user boris</Annotation>
+        <Constant Name="_F_">96480.0</Constant>
+        <Constant Name="_F_nmol_">9.648E-5</Constant>
+        <Constant Name="_K_GHK_">1.0E-9</Constant>
+        <Constant Name="_N_pmol_">6.02E11</Constant>
+        <Constant Name="_R_">8314.0</Constant>
+        <Constant Name="_T_">300.0</Constant>
+        <Constant Name="k">4.0</Constant>
+        <Constant Name="K_millivolts_per_volt">1000.0</Constant>
+        <Constant Name="KMOLE">0.0016611295681063123</Constant>
+        <Constant Name="occTJF_TJ_diffusionRate">0.011</Constant>
+        <Constant Name="occTJF_TJ_init">100.0</Constant>
+        <VolumeVariable Name="occTJF" />
+        <Function Name="J_reaction0">(k * occTJF * Laser_TJ)</Function>
+        <Function Name="K_Laser_TJ_total">Laser_TJ_init</Function>
+        <Function Name="Laser_TJ">K_Laser_TJ_total</Function>
+        <Function Name="Laser_TJ_init">((x &gt; 42.0) * (x &lt; 47.0))</Function>
+        <CompartmentSubDomain Name="subVolume1">
+          <BoundaryType Boundary="Xm" Type="Flux" />
+          <BoundaryType Boundary="Xp" Type="Flux" />
+          <BoundaryType Boundary="Ym" Type="Value" />
+          <BoundaryType Boundary="Yp" Type="Value" />
+          <BoundaryType Boundary="Zm" Type="Value" />
+          <BoundaryType Boundary="Zp" Type="Value" />
+          <PdeEquation Name="occTJF" SolutionType="Unknown">
+            <Rate>- J_reaction0</Rate>
+            <Diffusion>occTJF_TJ_diffusionRate</Diffusion>
+            <Initial>occTJF_TJ_init</Initial>
+          </PdeEquation>
+        </CompartmentSubDomain>
+        <Version Name="FLIP_generated" KeyValue="31627524" BranchId="31627525" Archived="0" Date="03-Feb-2009 00:33:11" FromVersionable="false">
+          <Owner Name="zqiu" Identifier="31502111" />
+          <GroupAccess Type="1" />
+          <Annotation>cloned from 'FLIP_generated' owned by user boris</Annotation>
+        </Version>
+      </MathDescription>
+      <Simulation Name="Simulation1">
+        <Annotation>cloned from 'Simulation1' owned by user boris</Annotation>
+        <SolverTaskDescription TaskType="Unsteady" UseSymbolicJacobian="false" Solver="Finite Volume, Regular Grid">
+          <TimeBound StartTime="0.0" EndTime="600.0" />
+          <TimeStep DefaultTime="0.1" MinTime="1.0E-8" MaxTime="1.0" />
+          <ErrorTolerance Absolut="1.0E-9" Relative="1.0E-9" />
+          <OutputOptions KeepEvery="50" KeepAtMost="1000" />
+          <NumberProcessors>1</NumberProcessors>
+        </SolverTaskDescription>
+        <MathOverrides />
+        <MeshSpecification>
+          <Size X="200" Y="1" Z="1" />
+        </MeshSpecification>
+        <Version Name="Simulation1" KeyValue="31627557" BranchId="31627558" Archived="0" Date="03-Feb-2009 00:33:11" FromVersionable="false">
+          <Owner Name="zqiu" Identifier="31502111" />
+          <GroupAccess Type="1" />
+          <Annotation>cloned from 'Simulation1' owned by user boris</Annotation>
+        </Version>
+      </Simulation>
+      <SpatialObjects>
+        <SpatialObject Name="vobj_subVolume10" Type="Volume" subVolume="subVolume1" regionId="0">
+          <QuantityCategoryList>
+            <QuantityCategory Name="VolumeCentroid" Enabled="false" />
+            <QuantityCategory Name="InteriorVelocity" Enabled="false" />
+            <QuantityCategory Name="VolumeRegionSize" Enabled="true" />
+          </QuantityCategoryList>
+        </SpatialObject>
+      </SpatialObjects>
+      <Version Name="FLIP" KeyValue="31627547" BranchId="31627548" Archived="0" Date="03-Feb-2009 00:33:11" FromVersionable="false">
+        <Owner Name="zqiu" Identifier="31502111" />
+        <GroupAccess Type="1" />
+        <Annotation>cloned from 'FLIP' owned by user boris
+(copied from FRAP)</Annotation>
+      </Version>
+      <MicroscopeMeasurement Name="fluor">
+        <ConvolutionKernel Type="ProjectionZKernel" />
+      </MicroscopeMeasurement>
+    </SimulationSpec>
+    <Version Name="Biophysics2" KeyValue="31628467" BranchId="31628419" Archived="0" Date="03-Feb-2009 02:16:49" FromVersionable="false">
+      <Owner Name="zqiu" Identifier="31502111" />
+      <GroupAccess Type="0" />
+      <Annotation>cloned from 'Biophysics homework2' owned by user boris</Annotation>
+    </Version>
+    <pathwayModel>
+      <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:bp="http://www.biopax.org/release/biopax-level3.owl#" version="3.0" />
+    </pathwayModel>
+    <relationshipModel>
+      <RMNS version="3.0" />
+    </relationshipModel>
+    <vcmetadata>
+      <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" />
+      <nonrdfAnnotationList>
+        <nonrdfAnnotation vcid="BioModel(Biophysics2)">
+          <freetext>cloned from 'Biophysics homework2' owned by user boris</freetext>
+        </nonrdfAnnotation>
+      </nonrdfAnnotationList>
+      <uriBindingList />
+    </vcmetadata>
+  </BioModel>
+</vcml>
+

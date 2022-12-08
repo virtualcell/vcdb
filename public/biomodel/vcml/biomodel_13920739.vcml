@@ -1,0 +1,980 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--This biomodel was generated in VCML Version Alpha_Version_7.4.0_build_87-->
+<vcml xmlns="http://sourceforge.net/projects/vcell/vcml" Version="Alpha_Version_7.4.0_build_87">
+  <BioModel Name="Ca Dynamics in Spine Public">
+    <Model Name="unnamed">
+      <Compound Name="Ca" />
+      <Compound Name="B" />
+      <Compound Name="CaB" />
+      <Feature Name="Synapse" KeyValue="11884916" />
+      <Feature Name="ER" KeyValue="11884919" />
+      <Feature Name="Extracellular" KeyValue="11884914" />
+      <Membrane InsideFeature="Synapse" OutsideFeature="Extracellular" PositiveFeature="Synapse" NegativeFeature="Extracellular" MembraneVoltage="Voltage_Membrane" Name="Membrane" KeyValue="11884915" />
+      <Membrane InsideFeature="ER" OutsideFeature="Synapse" PositiveFeature="ER" NegativeFeature="Synapse" MembraneVoltage="Voltage_ER_Memb" Name="ER_Memb" KeyValue="11884918" />
+      <LocalizedCompound Name="Ca_Synapse" CompoundRef="Ca" Structure="Synapse" OverrideName="true" KeyValue="11884924" />
+      <LocalizedCompound Name="B_Synapse" CompoundRef="B" Structure="Synapse" OverrideName="true" KeyValue="11884925" />
+      <LocalizedCompound Name="CaB_Synapse" CompoundRef="CaB" Structure="Synapse" OverrideName="true" KeyValue="11884926" />
+      <LocalizedCompound Name="Ca_Extracellular" CompoundRef="Ca" Structure="Extracellular" OverrideName="true" KeyValue="11884927" />
+      <SimpleReaction Structure="Synapse" Name="Buffering" Reversible="true" FluxOption="MolecularOnly" KeyValue="11884928">
+        <Reactant LocalizedCompoundRef="Ca_Synapse" Stoichiometry="1" KeyValue="11884929" />
+        <Reactant LocalizedCompoundRef="B_Synapse" Stoichiometry="1" KeyValue="11884930" />
+        <Product LocalizedCompoundRef="CaB_Synapse" Stoichiometry="1" KeyValue="11884931" />
+        <Kinetics KineticsType="MassAction">
+          <Parameter Name="J" Role="reaction rate" Unit="uM.s-1">(((Kf_Buffering * Ca_Synapse) * B_Synapse) - (Kr_Buffering * CaB_Synapse))</Parameter>
+          <Parameter Name="Kf_Buffering" Role="forward rate constant" Unit="s-1.uM-1">1000.0</Parameter>
+          <Parameter Name="Kr_Buffering" Role="reverse rate constant" Unit="s-1">500.0</Parameter>
+        </Kinetics>
+      </SimpleReaction>
+      <FluxStep Name="CaPump" Structure="Membrane" Reversible="true" FluxOption="MolecularAndElectrical" KeyValue="11884932">
+        <Reactant LocalizedCompoundRef="Ca_Extracellular" Stoichiometry="1" />
+        <Product LocalizedCompoundRef="Ca_Synapse" Stoichiometry="1" />
+        <Kinetics KineticsType="GeneralKinetics">
+          <Parameter Name="J_CaPump" Role="reaction rate" Unit="uM.um.s-1">- ((Ca_Synapse - Ca_basal) / tauCa / Cont2Areal_factor)</Parameter>
+          <Parameter Name="I" Role="inward current density" Unit="pA.um-2">((netValence * _F_ * J_CaPump) * unitFactor)</Parameter>
+          <Parameter Name="netValence" Role="net charge valence" Unit="1">2.0</Parameter>
+          <Parameter Name="unitFactor" Role="electrical unit factor" Unit="pA.s.mol.um-3.uM-1.C-1">(1.0 / 1.0E9)</Parameter>
+          <Parameter Name="Cont2Areal_factor" Role="user defined" Unit="um-1">11.07</Parameter>
+          <Parameter Name="Ca_basal" Role="user defined" Unit="uM">0.06</Parameter>
+          <Parameter Name="tauCa" Role="user defined" Unit="s">0.00135</Parameter>
+        </Kinetics>
+      </FluxStep>
+      <FluxStep Name="VSCC" Structure="Membrane" Reversible="true" FluxOption="MolecularAndElectrical" KeyValue="11884935">
+        <Reactant LocalizedCompoundRef="Ca_Extracellular" Stoichiometry="1" />
+        <Product LocalizedCompoundRef="Ca_Synapse" Stoichiometry="1" />
+        <Kinetics KineticsType="GeneralCurrentKinetics">
+          <Parameter Name="I_VSCC" Role="inward current density" Unit="pA.um-2">((Voltage_Membrane &gt; CaActivation) * iVSCC * Nch * Po * (Voltage_Membrane - En))</Parameter>
+          <Parameter Name="J" Role="reaction rate" Unit="uM.um.s-1">((I_VSCC / (carrierValence * _F_)) * unitFactor)</Parameter>
+          <Parameter Name="carrierValence" Role="flux carrier valence" Unit="1">2.0</Parameter>
+          <Parameter Name="unitFactor" Role="electrical unit factor" Unit="uM.um3.C.s-1.pA-1.mol-1">(1.0E9 / 1.0)</Parameter>
+          <Parameter Name="Nch" Role="user defined" Unit="1">(12.94 / Cont2Area)</Parameter>
+          <Parameter Name="CaActivation" Role="user defined" Unit="mV">-20.0</Parameter>
+          <Parameter Name="iVSCC" Role="user defined" Unit="nS.um-2">-0.017</Parameter>
+          <Parameter Name="En" Role="user defined" Unit="mV">(12.66 * log((Ca_Extracellular / Ca_Synapse)))</Parameter>
+          <Parameter Name="Po" Role="user defined" Unit="1">0.37</Parameter>
+          <Parameter Name="Cont2Area" Role="user defined" Unit="1">11.07</Parameter>
+        </Kinetics>
+      </FluxStep>
+      <Diagram Name="Unnamed compartment" Structure="Extracellular" />
+      <Diagram Name="Membrane" Structure="Membrane">
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="Ca_Synapse" LocationX="34" LocationY="209" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="B_Synapse" LocationX="32" LocationY="114" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="CaB_Synapse" LocationX="35" LocationY="55" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="Ca_Extracellular" LocationX="48" LocationY="213" />
+        <FluxReactionShape NodeReferenceModeAttrTag="full" FluxReactionRef="VSCC" LocationX="138" LocationY="85" />
+        <FluxReactionShape NodeReferenceModeAttrTag="full" FluxReactionRef="CaPump" LocationX="136" LocationY="289" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="Ca_Synapse" LocationX="34" LocationY="209" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="B_Synapse" LocationX="32" LocationY="114" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="CaB_Synapse" LocationX="35" LocationY="55" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="Ca_Extracellular" LocationX="48" LocationY="213" />
+        <FluxReactionShape NodeReferenceModeAttrTag="molecule" FluxReactionRef="VSCC" LocationX="138" LocationY="85" />
+        <FluxReactionShape NodeReferenceModeAttrTag="molecule" FluxReactionRef="CaPump" LocationX="136" LocationY="289" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="Ca_Synapse" LocationX="34" LocationY="209" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="B_Synapse" LocationX="32" LocationY="114" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="CaB_Synapse" LocationX="35" LocationY="55" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="Ca_Extracellular" LocationX="48" LocationY="213" />
+        <FluxReactionShape NodeReferenceModeAttrTag="rule" FluxReactionRef="VSCC" LocationX="138" LocationY="85" />
+        <FluxReactionShape NodeReferenceModeAttrTag="rule" FluxReactionRef="CaPump" LocationX="136" LocationY="289" />
+      </Diagram>
+      <Diagram Name="Synapse" Structure="Synapse">
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="Ca_Synapse" LocationX="107" LocationY="105" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="B_Synapse" LocationX="107" LocationY="213" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="CaB_Synapse" LocationX="298" LocationY="156" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="full" SimpleReactionRef="Buffering" LocationX="196" LocationY="156" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="Ca_Synapse" LocationX="107" LocationY="105" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="B_Synapse" LocationX="107" LocationY="213" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="CaB_Synapse" LocationX="298" LocationY="156" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="molecule" SimpleReactionRef="Buffering" LocationX="196" LocationY="156" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="Ca_Synapse" LocationX="107" LocationY="105" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="B_Synapse" LocationX="107" LocationY="213" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="CaB_Synapse" LocationX="298" LocationY="156" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="rule" SimpleReactionRef="Buffering" LocationX="196" LocationY="156" />
+      </Diagram>
+      <Diagram Name="ER_Memb" Structure="ER_Memb">
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="Ca_Synapse" LocationX="49" LocationY="28" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="B_Synapse" LocationX="49" LocationY="137" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="CaB_Synapse" LocationX="49" LocationY="259" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="Ca_Synapse" LocationX="49" LocationY="28" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="B_Synapse" LocationX="49" LocationY="137" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="CaB_Synapse" LocationX="49" LocationY="259" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="Ca_Synapse" LocationX="49" LocationY="28" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="B_Synapse" LocationX="49" LocationY="137" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="CaB_Synapse" LocationX="49" LocationY="259" />
+      </Diagram>
+      <Diagram Name="ER" Structure="ER" />
+      <Version Name="unnamed" KeyValue="11884910" BranchId="11874626" Archived="0" Date="20-Mar-2005 04:30:39" FromVersionable="false">
+        <Owner Name="pablo" Identifier="4509932" />
+        <GroupAccess Type="1" />
+      </Version>
+      <ModelUnitSystem VolumeSubstanceUnit="uM.um3" MembraneSubstanceUnit="molecules" LumpedReactionSubstanceUnit="molecules" VolumeUnit="um3" AreaUnit="um2" LengthUnit="um" TimeUnit="s" />
+    </Model>
+    <SimulationSpec Name="BAP in Compartemental Model" Stochastic="false" UseConcentration="true" RuleBased="false" MassConservationModelReduction="true" InsufficientIterations="false" InsufficientMaxMolecules="false">
+      <NetworkConstraints RbmMaxIteration="1" RbmMaxMoleculesPerSpecies="10" RbmSpeciesLimit="800" RbmReactionsLimit="2500" />
+      <Annotation>_</Annotation>
+      <Geometry Name="non-spatial1984646570" Dimension="0">
+        <Extent X="10.0" Y="10.0" Z="10.0" />
+        <Origin X="0.0" Y="0.0" Z="0.0" />
+        <SubVolume Name="Compartment" Handle="0" Type="Compartmental" KeyValue="11874783" />
+        <Version Name="non-spatial1984646570" KeyValue="11874780" BranchId="11874781" Archived="0" Date="17-Mar-2005 09:31:43" FromVersionable="false">
+          <Owner Name="pablo" Identifier="4509932" />
+          <GroupAccess Type="1" />
+        </Version>
+      </Geometry>
+      <GeometryContext>
+        <FeatureMapping Feature="Synapse" GeometryClass="Compartment" SubVolume="Compartment">
+          <BoundariesTypes Xm="Flux" Xp="Flux" Ym="Flux" Yp="Flux" Zm="Flux" Zp="Flux" />
+        </FeatureMapping>
+        <FeatureMapping Feature="ER" GeometryClass="Compartment" SubVolume="Compartment">
+          <BoundariesTypes Xm="Flux" Xp="Flux" Ym="Flux" Yp="Flux" Zm="Flux" Zp="Flux" />
+        </FeatureMapping>
+        <FeatureMapping Feature="Extracellular" GeometryClass="Compartment" SubVolume="Compartment">
+          <BoundariesTypes Xm="Flux" Xp="Flux" Ym="Flux" Yp="Flux" Zm="Flux" Zp="Flux" />
+        </FeatureMapping>
+        <MembraneMapping Membrane="Membrane" SurfaceToVolumeRatio="11.07" VolumeFraction="0.8598" CalculateVoltage="true" SpecificCapacitance="1.0" InitialVoltage="-65.0" GeometryClass="Compartment">
+          <BoundariesTypes Xm="Flux" Xp="Flux" Ym="Flux" Yp="Flux" Zm="Flux" Zp="Flux" />
+        </MembraneMapping>
+        <MembraneMapping Membrane="ER_Memb" SurfaceToVolumeRatio="1.0" VolumeFraction="0.1402" CalculateVoltage="false" SpecificCapacitance="1.0" InitialVoltage="0.0" GeometryClass="Compartment">
+          <BoundariesTypes Xm="Flux" Xp="Flux" Ym="Flux" Yp="Flux" Zm="Flux" Zp="Flux" />
+        </MembraneMapping>
+      </GeometryContext>
+      <ReactionContext>
+        <LocalizedCompoundSpec LocalizedCompoundRef="Ca_Synapse" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>0.06</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="B_Synapse" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>52.3</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="CaB_Synapse" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>6.276</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="Ca_Extracellular" ForceConstant="true" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>2000.0</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <ReactionSpec ReactionStepRef="Buffering" ReactionMapping="fast" />
+        <ReactionSpec ReactionStepRef="CaPump" ReactionMapping="included" />
+        <ReactionSpec ReactionStepRef="VSCC" ReactionMapping="included" />
+      </ReactionContext>
+      <ElectricalContext>
+        <Clamp Type="Voltage">
+          <Electrode Feature="Synapse">
+            <Coordinate X="0.0" Y="0.0" Z="0.0" />
+          </Electrode>
+          <Parameter Name="V" Role="potential difference" Unit="mV">( - 65.0 + (75.0 * (t &gt; 0.01) * exp( - (1000.0 * ( - 0.01 + t)))) + (25.0 * (t &gt; 0.01) * exp( - (3000.0 * ( - 0.01 + t)))) + (100.0 * (t &lt;= 0.01) * exp((5000.0 * ( - 0.01 + t)))))</Parameter>
+        </Clamp>
+        <Electrode Feature="Extracellular">
+          <Coordinate X="0.0" Y="0.0" Z="0.0" />
+        </Electrode>
+      </ElectricalContext>
+      <MathDescription Name="BAP1-2 in Comp Model_generated">
+        <Constant Name="_F_">96480.0</Constant>
+        <Constant Name="_F_nmol_">9.648E-5</Constant>
+        <Constant Name="_K_GHK_">1.0E-9</Constant>
+        <Constant Name="_N_pmol_">6.02E11</Constant>
+        <Constant Name="_R_">8314.0</Constant>
+        <Constant Name="_T_">300.0</Constant>
+        <Constant Name="B_Synapse_init">52.3</Constant>
+        <Constant Name="C_ER_Memb">1.0</Constant>
+        <Constant Name="C_Membrane">1.0</Constant>
+        <Constant Name="Ca_basal">0.06</Constant>
+        <Constant Name="Ca_Extracellular">2000.0</Constant>
+        <Constant Name="Ca_Extracellular_init">2000.0</Constant>
+        <Constant Name="Ca_Synapse_init">0.06</Constant>
+        <Constant Name="CaActivation">-20.0</Constant>
+        <Constant Name="CaB_Synapse_init">6.276</Constant>
+        <Constant Name="Cont2Area">11.07</Constant>
+        <Constant Name="Cont2Areal_factor">11.07</Constant>
+        <Constant Name="iVSCC">-0.017</Constant>
+        <Constant Name="K_millivolts_per_volt">1000.0</Constant>
+        <Constant Name="Kf_Buffering">1000.0</Constant>
+        <Constant Name="KMOLE">0.0016611295681063123</Constant>
+        <Constant Name="Kr_Buffering">500.0</Constant>
+        <Constant Name="Po">0.37</Constant>
+        <Constant Name="SurfToVol_ER_Memb">1.0</Constant>
+        <Constant Name="SurfToVol_Membrane">11.07</Constant>
+        <Constant Name="tauCa">0.00135</Constant>
+        <Constant Name="VolFract_ER">0.1402</Constant>
+        <Constant Name="VolFract_Synapse">0.8598</Constant>
+        <VolumeVariable Name="Ca_Synapse" />
+        <VolumeVariable Name="CaB_Synapse" />
+        <Function Name="B_Synapse">((K_B_Synapse_total - (CaB_Synapse * (1.0 - VolFract_ER) * VolFract_Synapse)) / ((1.0 - VolFract_ER) * VolFract_Synapse))</Function>
+        <Function Name="device_voltClampElectrode.I">( - F_Membrane - (0.001 * C_Membrane * ( - (75000.0 * (t &gt; 0.01) * exp( - (1000.0 * ( - 0.01 + t)))) - (75000.0 * (t &gt; 0.01) * exp( - (3000.0 * ( - 0.01 + t)))) + (500000.0 * (t &lt;= 0.01) * exp((5000.0 * ( - 0.01 + t)))))))</Function>
+        <Function Name="device_voltClampElectrode.V">( - 65.0 + (75.0 * (t &gt; 0.01) * exp( - (1000.0 * ( - 0.01 + t)))) + (25.0 * (t &gt; 0.01) * exp( - (3000.0 * ( - 0.01 + t)))) + (100.0 * (t &lt;= 0.01) * exp((5000.0 * ( - 0.01 + t)))))</Function>
+        <Function Name="En">(12.66 * log((Ca_Extracellular / Ca_Synapse)))</Function>
+        <Function Name="F_Membrane">( - I - I_VSCC)</Function>
+        <Function Name="I">(2.0 * J_CaPump * _F_nmol_)</Function>
+        <Function Name="I_Membrane">(F_Membrane + (0.001 * C_Membrane * ( - (75000.0 * (t &gt; 0.01) * exp( - (1000.0 * ( - 0.01 + t)))) - (75000.0 * (t &gt; 0.01) * exp( - (3000.0 * ( - 0.01 + t)))) + (500000.0 * (t &lt;= 0.01) * exp((5000.0 * ( - 0.01 + t)))))))</Function>
+        <Function Name="I_VSCC">((Voltage_Membrane &gt; CaActivation) * iVSCC * Nch * Po * (Voltage_Membrane - En))</Function>
+        <Function Name="J_Buffering">((B_Synapse * Kf_Buffering * Ca_Synapse) - (Kr_Buffering * CaB_Synapse))</Function>
+        <Function Name="J_CaPump">- ((Ca_Synapse - Ca_basal) / tauCa / Cont2Areal_factor)</Function>
+        <Function Name="J_VSCC">(I_VSCC / (2.0 * _F_nmol_))</Function>
+        <Function Name="K_B_Synapse_total">((B_Synapse_init * (1.0 - VolFract_ER) * VolFract_Synapse) + (CaB_Synapse_init * (1.0 - VolFract_ER) * VolFract_Synapse))</Function>
+        <Function Name="KFlux_ER_Memb_ER">SurfToVol_ER_Memb</Function>
+        <Function Name="KFlux_ER_Memb_Synapse">(SurfToVol_ER_Memb * VolFract_ER / (1.0 - VolFract_ER))</Function>
+        <Function Name="KFlux_Membrane_Extracellular">(SurfToVol_Membrane * VolFract_Synapse / (1.0 - VolFract_Synapse))</Function>
+        <Function Name="KFlux_Membrane_Synapse">(SurfToVol_Membrane / (1.0 - VolFract_ER))</Function>
+        <Function Name="Nch">(12.94 / Cont2Area)</Function>
+        <Function Name="Voltage_ER_Memb">0.0</Function>
+        <Function Name="Voltage_ER_Memb_init">0.0</Function>
+        <Function Name="Voltage_Membrane">device_voltClampElectrode.V</Function>
+        <CompartmentSubDomain Name="Compartment">
+          <BoundaryType Boundary="Xm" Type="Value" />
+          <BoundaryType Boundary="Xp" Type="Value" />
+          <BoundaryType Boundary="Ym" Type="Value" />
+          <BoundaryType Boundary="Yp" Type="Value" />
+          <BoundaryType Boundary="Zm" Type="Value" />
+          <BoundaryType Boundary="Zp" Type="Value" />
+          <OdeEquation Name="Ca_Synapse" SolutionType="Unknown">
+            <Rate>((KFlux_Membrane_Synapse * J_CaPump) + (KFlux_Membrane_Synapse * J_VSCC))</Rate>
+            <Initial>Ca_Synapse_init</Initial>
+          </OdeEquation>
+          <OdeEquation Name="CaB_Synapse" SolutionType="Unknown">
+            <Rate>0.0</Rate>
+            <Initial>CaB_Synapse_init</Initial>
+          </OdeEquation>
+          <FastSystem>
+            <FastInvariant>(Ca_Synapse + CaB_Synapse)</FastInvariant>
+            <FastRate>J_Buffering</FastRate>
+          </FastSystem>
+        </CompartmentSubDomain>
+        <Version Name="BAP1-2 in Comp Model_generated" KeyValue="11902168" BranchId="11877552" Archived="0" Date="22-Mar-2005 09:13:25" FromVersionable="false">
+          <Owner Name="pablo" Identifier="4509932" />
+          <GroupAccess Type="1" />
+        </Version>
+      </MathDescription>
+      <Simulation Name="BAP at 10 ms, KappaB=28.5">
+        <SolverTaskDescription TaskType="Unsteady" UseSymbolicJacobian="false" Solver="Runge-Kutta (Fourth Order, Fixed Time Step)">
+          <TimeBound StartTime="0.0" EndTime="0.1" />
+          <TimeStep DefaultTime="1.0E-5" MinTime="1.0E-8" MaxTime="1.0" />
+          <ErrorTolerance Absolut="1.0E-9" Relative="1.0E-9" />
+          <OutputOptions KeepEvery="1" KeepAtMost="1000" />
+          <NumberProcessors>1</NumberProcessors>
+        </SolverTaskDescription>
+        <MathOverrides />
+        <Version Name="BAP at 10 ms, KappaB=28.5" KeyValue="11902204" BranchId="11878049" Archived="0" Date="22-Mar-2005 09:14:31" FromVersionable="false">
+          <Owner Name="pablo" Identifier="4509932" />
+          <GroupAccess Type="1" />
+        </Version>
+      </Simulation>
+      <Version Name="BAP in Compartemental Model" KeyValue="13920707" BranchId="11878013" Archived="0" Date="25-Aug-2005 07:29:10" FromVersionable="false">
+        <Owner Name="pablo" Identifier="4509932" />
+        <GroupAccess Type="1" />
+        <Annotation>_</Annotation>
+      </Version>
+      <MicroscopeMeasurement Name="fluor">
+        <ConvolutionKernel Type="ProjectionZKernel" />
+      </MicroscopeMeasurement>
+    </SimulationSpec>
+    <SimulationSpec Name="BAP in 2D Spine" Stochastic="false" UseConcentration="true" RuleBased="false" MassConservationModelReduction="true" InsufficientIterations="false" InsufficientMaxMolecules="false" CharacteristicSize="0.0016926952141057936">
+      <NetworkConstraints RbmMaxIteration="1" RbmMaxMoleculesPerSpecies="10" RbmSpeciesLimit="800" RbmReactionsLimit="2500" />
+      <Annotation>_</Annotation>
+      <Geometry Name="2D Spacek Spine 2" Dimension="2">
+        <Extent X="1.086" Y="0.672" Z="1.0" />
+        <Origin X="0.0" Y="0.0" Z="0.0" />
+        <Image Name="2D Spacek Spine">
+          <Annotation>Spacek</Annotation>
+          <ImageData X="612" Y="397" Z="1" CompressedSize="4125">789CED9D0B96E3A812447BA9B5FF4D78A6DB556509322113120250DCF3DE9C6E5B4228E21676C99FFEF38710420821841042082184104208218410420821841042082184104208218410420821841042082184104208218410420821841042082184104208218410420821841042C879BCFEE7CFF7FF5FE8C990D378C9A0A7454E4111EC775923A49D825DF99246DD8807875CE983274D23555AFDBAAF69E8B320ABD2EFD74D3542524215A3662421DC2F5A46EE0C522CD38CE23D958186FD48F57D7943D08E9CCF68C164E7C84300E845C99E054C314AF604807A51B26780368C8E1D0F5AB0171D3B1DB45F6FD0299081A0E5FA019D0319065AAD5FD0419051A0CDFA804E828C026DD6077412640C68AFEEA0D320D144DAF1F515320C3A12124B8814DF7C7DE81A079D090925C8AE375F37FEDDD236103A1512C938C5BA1634742C2490C186B54A868E85C4315E313AF670860BD6E8183A1712C60CC57E2573D886CE85C431C3B096850D9D0B090362181D7B1020C3E8D87380297671ECEBDF0874EC50708A7DA452D7357438248210C51A1DCB76A6632712A358CD31792B71673A7614DF5F413D54B1C2B6CADE74EC2082D44A2D79D52FB2262E95B44487447AE857ECF5E34479E19277D40C4B8640A7445A09F04BB4C3EAD8CBEC1825DB94818AF95FF8A66327325231B764D511D069113F3186D57F9734496791141D18F112A598E3B2AB73003AB63B618E75BE93C7E1243A32E204E758A38C746C37E214133E433946313AB617818A492F6553313258B1FC8E7EC3E8D8660C51AC7C45AC53302AB619818A39BED1C2EA17153B018862C21ED625EC2FE8CC888F18BD5263FCFB656314764067467C341BA5B8D2E0583E4EE52B7DD099111F5D36A46E044956039D19F11158BDF1D9543FE8CC888FC0EACDCFD9D5DDAD9BA243232E9C225424B15876BBCFF1DBE415746AC441945FB22FF9F57ED3A5314A7614831DAB6FD128193A3762679E6356BF8C0B193DDB8548C5CA927914B33EF747A7472CC43A968BD4A618BF53F12442C4023A46C9D62742B19B138A2CE90D74EC310429963BA149966FD0E918255B9D2EBB2EB228376752751D84EF25DB92D6CE0DF5A7B7B738963EB24ADBA02324159C9D4B1A68F567373728667A10456748CA384B2F58A0DC77FB7BE3D015C9D01992323EA34A1E28F7DEFEEAD4898E1D4198629A63B72764E218FDAF00A0432445A20C333C0E8A1BB9F4A2635B12A698CDB1E6F761D0B17D8932CCECD897745B9761B46C6DE2149BE3983A383A48A212A758D531693B7980CF0DAE83A0B32432718A753B663852E508E8308988D92ABDF8B18E79408749445AAA140DB37F878A3A54CB5C6EA0C324222D55DEAC0874AC5F35749A44A2A5C9BB0D463764879425B1D535749A44A2A1C84402F73A66FEA4927F6AE8348984B344C900AB12923C45C7DC92A1C32422CE164B9ED8F7354BE6B30C9D259171955879E26EDE595A05032C436749641C15EA3A597590DD09930C9D2591B13778F341BCD5BCB73A429F68E82C898C55AEC405CBAD85DDA58DFB25436749448C6AE51E88B73BF657B6A663E761A94EAD3FBFEFFD17F318D603191DA3644B62154CA9DEE58E3488B29167C89B64146D3D3A1D4B3F615B35C2B7447DEE6F7A11131D2EF9D36FD84711AB3785210680CE97389FF05F6CA83BA66943C71E467B799921666DA63A46C9D074745777CCF34B63C7446AA0337E3A5DE5A58A78CCA1634FA1B3BD0EC792CD3B2752069DF2A3E96EAFF66069DD9B8E9D4AA1FA4C02D983B085AC5D200BE8A09F4AADF897E917C5E4AEC685AC431F13E8AC1F4AB57789D2E6F2CEE5EE2729F6FA396370E60FA356BBD7316DFF72F73397B1CF9FC8146AAD7B255347A80B30DEB1EB2963637F12C5C65B245387508F73DDDE658C9FDB3963837F0E7A1D35C5DC8EE957FADB7C69E27ECEE8F41F815E862255DDB1C2C73FB403B5C8D24872D2E8FC9F805E86A647B864FA0A3782FCA4D1151C8F5E862A47DD18FD69BF7659CDEEC800D01D1C4E2179DD8C9E854CD807EE18251B492978DD8B3EC7D29DD415712EE82A8EA5147AC58AC2039FCB3155D6D9A0BB389552E68587B7FA3AA67D406961C768D9184A8917562BC7422638263DB96BD5221A742107528ADBB0581596B87CCB2D1CA364E194D22E2866902CDF700FC7285934A5B0C73926BCDAD428C408D09D9C46296BA363E54B11A262C225DA562146802EE52C8A51AB2B5572B7F0D0276CA449563E0806742D47514CBAE2982C597283E658FE50DAE34438E85E4EA218B4DDB16C5992B6A910604620E8620EA298F34CC702B48805DDCC391463AE2AA0DC7F8262742C8C62CC160BEC4BDD5E8A51B2308A299B3C286FB0AF62742C8872CA36178A776FEC18258BA11CB25186D2DD36C7E64A663E1EBA9D33A8B761D1C12E9932E65CC9EC4743D77304F53A7A25CB779D2B583EBEEF80E886F6C7D290CBB2F208F2988EC6DDC807F78D812E696F7C2515BD3049260FE96BDC8775FA65D03DED4C474BDA3BFC0BFBAB233A1BF7D0AED87D237453FBD2D393F251257DEFE288B699B8B1FD7CE8BB7EFE8AAE6A5BFA9A4ACAAA49561BD1381917ED8E65DBA2BBDA94CEA692B6D4064BCD6224F3EDF87D0BBAAD3DE92FEBD657CD31ED85F591EFB6AEFF685876FCB9115DD886B8DBAA7C58522BB05EED30C79A1732797B7463FBE16D4BE92C2BA65058A951DF748CC88ED58FA56E8F2E6D33C25A4BEE2CEC531AB36D3AB5D9DE0EDFBC9051B246D4545DE94748662DBE95864F0FA827896E6D2FF454BDF1A76F7CD5F7290D59ED3D80E685ECB20BBAB79D2866EACB3F5928F45D4A23D67B8FA1D7314A66A71468B585EC97CCEB406A679DBD07613C949A07BAB88D50E3B43896ED77BD45DBBA3C90E98811D80FA5C4816E6E1FC42C7D8EE5257876BE0FE4DF6706CAC9A0BBDB857B924D8A698E2D2A4C20E8F236E11A995BAE6CC7FB0D213DAECC3B3E7485CB73CBACD98BA72E646FD01D2E4F4CCCC912F82CC7DEA08B5C98A08445C982C6DE047493EB121470FA5C8E8E911FC212961C7B9664E82A97252E622E64FEE89FF1CF4D0746FC78C95A531FD7EE1A04462C5DC0081C7E071A231FDC319AD88CF32BB1B1E3AF4F63E2E38B06121CB17025B67D982D0D6D8C7B4EDB10A213962EF7378F729E641DBBEE4B78C2C2058CE6573F37954C71A57DCFCD098F57BA4AE613E5EB6B7FC904579A77DC9EF874A5474B9F2927387695A575BF531891AEB4927964D97421CBE6DA1E30588A6022C2CDE8936C53C562AF39A3BD88242A931BE2733263035F9B2A3662BA68398208CDE4875410A331D277690C99DF08C64D18AD4837F191BCF4F7F717CD49B7D9CA30EBD779349D14DA915EFA82D5C803AFC82309B6A962E9B4BFF2EFA1718E8D76A497A08853F240658BBEF47BB6524C7FD2693DB1D239A325E9243CEC3CD952DA4506CD6D087D8ED54E1B6D4917630257423B54AF6F1C8E7DD5B74836447BD2C1F8C05D96FD6E316C5E03D17E407A14FB6C8B36A59D29919B2DFBDD60CC74068C2A1E283F72C9B18A6257C95E9F3F6EC4D8B0E5582B618E712CAB762A851FA1AA62DBFF1A303E58FB8FEEE5CE5173091FB71B8362BB4B3631BEFB9742A9498E91A1D8169276C7B6B16C767EA53B6FB78F9A49ECB831342AF6DAC4B2E1F165191692BDDE183C8DF5256B7BA903ED8F813911B65C2C1B3681D88143497ED62CBBA005323038B41F56726C69CBDCA00532302909A8633BBF5FC802DAA11AB372102B9EE3D88455120DDAA222F362902B9E20D97087D7006D92CAC40C4A0D5F6E0B9760B8C320F21340CBA43035125BC391129456C9CD25934E016D93CCF44C7C96851FF21CCBC4B340EB2482C9A456718C0406C536B64C390DB45039C8540A15C73870B663EA1B0ED04E257CA60B08A5D0718C05A73BB6C752964D75722A6325B339B6B3642F75C9479BF58334CD0991FB1D6B9CD367EF831DD35E2343CBF5469CE4B4CC7D92C54EEA24C52A4F5E1FEDD8FDD0FA3DA798309AF40DA0BF2CE91844B2FCB0942C083AA61F998EC5B0806274EC6C56506C59C70E7B6A0E6345C7669E7FEDC8942C80873B763FBE78E7CE5F4DB00A68C5E08ED5DF6641C57A013B963D1D9BDE279F760D07AB98FE49DA69D0B1F1601583FE5E994D60F6B11F03D631FC13B2C5BF27E00CA08AFDE5FA2500D3CFFE45C96601540C0F1D9BC3931D5BF79B9BCEE3E98EA1A7F1081EAA181D9BC8531D037F5BEBB39823D9DFFFAE251F1D9BC878C934B0E74DC52682930CEB191D9B07D431A864C0633F0CAC63E8874C3201B46274EC7CD08AD1B1F3412B46C98E072DD83FD02190A1A0F57A93CE8A17AF4E026DD70FF759F122FC41A0D5FAE53E2DBE647D1068B53EDCA6C5B7779D035AAC0BB779F17DAAE78016EBC26D5E7CC3FD39A0C5BA709B171D3B07B45857AEF3A263E780F6EACA6D6294EC18D05E5D4866C60F731F02DAAB2BC9D4B09F242741A0AD4A486647C90E00ED544A323D3A760068A75292E97D51B2FD413B9592CE8F926D0F5A29816486946C6FD03A69DC2659756C13FFB69864346893CA5C266A526CF10AD79FE110D0169549266B736C9D0EAFD359717E73404B54E3FF19FEFBDF0F36C71669319DD45AB39B02DA1F0FD59359B1463A86D6C649ED7416EC918EA1A5F1523DA1E58AA4636867DA787F8199C65A45D231B42D9D68A7B5528D746C770AE7B6488B4F57EC68C75621B78B8AED053A4203F90246C7F6223F2940906504C728D96E24E7040A53277FACA4633B229C927CC6F3D2FDC0E7FC0FE07AC288A0A9D8638039F697CD156BBB02836E1CC5F83E1476D5EB2F926286D341770D63462767A11856950CDD349039C51C448363E88EE14CACE70474C514C7D0FD2EC1DC8EF6A660181D2B31B7A6BD713B862E771126D7B4373EC7D0D52EC3F49E76C6B190A17B5D094857BB627F4686AE7529406D6D4951313AA603EA6B43CA8AD1311D50611B42C79A0135B62154AC1550613B5297EB45BF24CC01C7F6B52316C5E8988010E52B37AAF26464DF37EBF8F8174DF19CD1752E499EE335C2AA5BCF72ACC8FBA3FB24274DCA6C1525BB832E7265EE49B52AD62FD9EE9EA27B5C9A2CAD77DB7325DB7E4144B7B8365A6A3397B2E845713AE8121747CDCD2F59B31B81BA024037B8016A76F324DBD831747BBBA0C4075CC736910C5DDC5E4809CE736CBF7F3F05DDD7D65C729CE8D8469F1F47177406BF71D2B11C7439E7F01DE834C56AFF44CF32A08B398977A2B304DB07742F67F12FD2230CBB9F52D70E88220EE61DEAE67ADDAD70EF521C8DF4734F7755BBBEA7F9E7FB9F2DCBEED6CF48DA36DDA7341A09E09EEFA28A0933FEF963ED8CA491F2BD944391186E1DACA45869C6BEF392BE4257DEDC9D1E3171ED7521C7C2CEEBF3E7EE21492B976297710C9D0909A6CDB1EFFB47FC9E800E8484938A53B745124BDAADC938741C6400BA3D8D8AB52D6BE818C848347D6214334A860E818C45144893C1AD98C931740464309241548C842238D4EDD8BF8D2D7E51B147905BA4EA10B77651B0676137A2CB2FE938E85327B38873AC2C11157B2E618EDDFC5115A2620FC4EC98F9CB9FD167449623C0B1FB76E81322EBD129D9DD2F2A46245A1DCB36409F08599736C9E8177160954C063D7BB205348C0C877691F1D031321C2A468643C3C8682818190D0D23A3A15F6438348C0C877E9129502F321CEA45082184104208218410420821841042082184104208218410420821841042082184104208218410420821841042082143F90F13727856</ImageData>
+          <PixelClass Name="ExtraCel" ImagePixelValue="0" KeyValue="8384528" />
+          <PixelClass Name="IntraCel" ImagePixelValue="255" KeyValue="8384529" />
+          <PixelClass Name="ER" ImagePixelValue="96" KeyValue="8384530" />
+          <Version Name="2D Spacek Spine" KeyValue="8384524" BranchId="8383569" Archived="0" Date="14-Jun-2004 13:07:36" FromVersionable="false">
+            <Owner Name="pablo" Identifier="4509932" />
+            <GroupAccess Type="1" />
+            <Annotation>Spacek</Annotation>
+          </Version>
+        </Image>
+        <SubVolume Name="ExtraCel" Handle="0" Type="Image" ImagePixelValue="0" KeyValue="11880497" />
+        <SubVolume Name="IntraCel" Handle="1" Type="Image" ImagePixelValue="255" KeyValue="11880498" />
+        <SubVolume Name="ER" Handle="2" Type="Image" ImagePixelValue="96" KeyValue="11880499" />
+        <SurfaceClass Name="ExtraCel_IntraCel_membrane" SubVolume1Ref="ExtraCel" SubVolume2Ref="IntraCel" />
+        <SurfaceClass Name="ER_IntraCel_membrane" SubVolume1Ref="ER" SubVolume2Ref="IntraCel" />
+        <SurfaceDescription NumSamplesX="612" NumSamplesY="397" NumSamplesZ="1" CutoffFrequency="0.3">
+          <VolumeRegion Name="ExtraCel0" RegionID="0" SubVolume="ExtraCel" Size="0.45762660080345197" Unit="um2" />
+          <VolumeRegion Name="IntraCel1" RegionID="1" SubVolume="IntraCel" Size="0.2338503841690225" Unit="um2" />
+          <VolumeRegion Name="ER2" RegionID="2" SubVolume="ER" Size="0.005215040618955513" Unit="um2" />
+          <VolumeRegion Name="ER3" RegionID="3" SubVolume="ER" Size="0.002298357982443089" Unit="um2" />
+          <VolumeRegion Name="ER4" RegionID="4" SubVolume="ER" Size="0.0058333652730248485" Unit="um2" />
+          <VolumeRegion Name="ER5" RegionID="5" SubVolume="ER" Size="0.0023074066359172747" Unit="um2" />
+          <VolumeRegion Name="ER6" RegionID="6" SubVolume="ER" Size="0.008888793929474783" Unit="um2" />
+          <VolumeRegion Name="ER7" RegionID="7" SubVolume="ER" Size="7.691355453057582E-4" Unit="um2" />
+          <VolumeRegion Name="ER8" RegionID="8" SubVolume="ER" Size="4.886272876060111E-4" Unit="um2" />
+          <VolumeRegion Name="ER9" RegionID="9" SubVolume="ER" Size="3.740110102663295E-4" Unit="um2" />
+          <VolumeRegion Name="ER10" RegionID="10" SubVolume="ER" Size="2.6844338640083325E-4" Unit="um2" />
+          <VolumeRegion Name="ER11" RegionID="11" SubVolume="ER" Size="4.0115697068888567E-4" Unit="um2" />
+          <VolumeRegion Name="ER12" RegionID="12" SubVolume="ER" Size="8.777193869959829E-4" Unit="um2" />
+          <VolumeRegion Name="IntraCel13" RegionID="13" SubVolume="IntraCel" Size="1.0858384169022469E-4" Unit="um2" />
+          <VolumeRegion Name="ER14" RegionID="14" SubVolume="ER" Size="0.001281892575509597" Unit="um2" />
+          <VolumeRegion Name="ER15" RegionID="15" SubVolume="ER" Size="3.1971908942121717E-4" Unit="um2" />
+          <VolumeRegion Name="ER16" RegionID="16" SubVolume="ER" Size="7.631031096563013E-4" Unit="um2" />
+          <VolumeRegion Name="ER17" RegionID="17" SubVolume="ER" Size="5.610165153994943E-4" Unit="um2" />
+          <VolumeRegion Name="ER18" RegionID="18" SubVolume="ER" Size="3.498812676685018E-4" Unit="um2" />
+          <VolumeRegion Name="ER19" RegionID="19" SubVolume="ER" Size="9.682059217378369E-4" Unit="um2" />
+          <VolumeRegion Name="IntraCel20" RegionID="20" SubVolume="IntraCel" Size="3.619461389674157E-5" Unit="um2" />
+          <VolumeRegion Name="ER21" RegionID="21" SubVolume="ER" Size="0.00131507097158161" Unit="um2" />
+          <VolumeRegion Name="ER22" RegionID="22" SubVolume="ER" Size="0.002868423151316769" Unit="um2" />
+          <VolumeRegion Name="ER23" RegionID="23" SubVolume="ER" Size="3.7702722809105797E-4" Unit="um2" />
+          <VolumeRegion Name="ER24" RegionID="24" SubVolume="ER" Size="0.0016438387144770126" Unit="um2" />
+          <MembraneRegion Name="membrane_ExtraCel0_IntraCel1" VolumeRegion1="IntraCel1" VolumeRegion2="ExtraCel0" Size="2.498375775433069" Unit="um" />
+          <MembraneRegion Name="membrane_IntraCel1_ER9" VolumeRegion1="ER9" VolumeRegion2="IntraCel1" Size="0.07959329105730699" Unit="um" />
+          <MembraneRegion Name="membrane_IntraCel1_ER6" VolumeRegion1="ER6" VolumeRegion2="IntraCel1" Size="1.2487623419968952" Unit="um" />
+          <MembraneRegion Name="membrane_IntraCel1_ER4" VolumeRegion1="ER4" VolumeRegion2="IntraCel1" Size="0.7473273820959829" Unit="um" />
+          <MembraneRegion Name="membrane_IntraCel1_ER2" VolumeRegion1="ER2" VolumeRegion2="IntraCel1" Size="0.6543214906761948" Unit="um" />
+          <MembraneRegion Name="membrane_IntraCel1_ER3" VolumeRegion1="ER3" VolumeRegion2="IntraCel1" Size="0.35350195860846617" Unit="um" />
+          <MembraneRegion Name="membrane_IntraCel1_ER5" VolumeRegion1="ER5" VolumeRegion2="IntraCel1" Size="0.3308517939723093" Unit="um" />
+          <MembraneRegion Name="membrane_IntraCel1_ER7" VolumeRegion1="ER7" VolumeRegion2="IntraCel1" Size="0.13106105424701503" Unit="um" />
+          <MembraneRegion Name="membrane_IntraCel1_ER16" VolumeRegion1="ER16" VolumeRegion2="IntraCel1" Size="0.10310527162186785" Unit="um" />
+          <MembraneRegion Name="membrane_IntraCel1_ER17" VolumeRegion1="ER17" VolumeRegion2="IntraCel1" Size="0.09908768108089766" Unit="um" />
+          <MembraneRegion Name="membrane_IntraCel1_ER18" VolumeRegion1="ER18" VolumeRegion2="IntraCel1" Size="0.07744570791567129" Unit="um" />
+          <MembraneRegion Name="membrane_ER6_IntraCel13" VolumeRegion1="IntraCel13" VolumeRegion2="ER6" Size="0.03556130121367987" Unit="um" />
+          <MembraneRegion Name="membrane_IntraCel1_ER14" VolumeRegion1="ER14" VolumeRegion2="IntraCel1" Size="0.16893617154094254" Unit="um" />
+          <MembraneRegion Name="membrane_IntraCel1_ER19" VolumeRegion1="ER19" VolumeRegion2="IntraCel1" Size="0.12562030337280805" Unit="um" />
+          <MembraneRegion Name="membrane_ER19_IntraCel20" VolumeRegion1="IntraCel20" VolumeRegion2="ER19" Size="0.01792854081991078" Unit="um" />
+          <MembraneRegion Name="membrane_IntraCel1_ER22" VolumeRegion1="ER22" VolumeRegion2="IntraCel1" Size="0.27350955959996187" Unit="um" />
+          <MembraneRegion Name="membrane_IntraCel1_ER24" VolumeRegion1="ER24" VolumeRegion2="IntraCel1" Size="0.20432512097703784" Unit="um" />
+          <MembraneRegion Name="membrane_IntraCel1_ER8" VolumeRegion1="ER8" VolumeRegion2="IntraCel1" Size="0.08717997005747034" Unit="um" />
+          <MembraneRegion Name="membrane_IntraCel1_ER10" VolumeRegion1="ER10" VolumeRegion2="IntraCel1" Size="0.060857222925653265" Unit="um" />
+          <MembraneRegion Name="membrane_IntraCel1_ER11" VolumeRegion1="ER11" VolumeRegion2="IntraCel1" Size="0.08662477335555611" Unit="um" />
+          <MembraneRegion Name="membrane_IntraCel1_ER12" VolumeRegion1="ER12" VolumeRegion2="IntraCel1" Size="0.1415411508598215" Unit="um" />
+          <MembraneRegion Name="membrane_IntraCel1_ER23" VolumeRegion1="ER23" VolumeRegion2="IntraCel1" Size="0.07674200753823723" Unit="um" />
+          <MembraneRegion Name="membrane_IntraCel1_ER15" VolumeRegion1="ER15" VolumeRegion2="IntraCel1" Size="0.08375274736176828" Unit="um" />
+          <MembraneRegion Name="membrane_IntraCel1_ER21" VolumeRegion1="ER21" VolumeRegion2="IntraCel1" Size="0.14400270974145102" Unit="um" />
+        </SurfaceDescription>
+        <Version Name="2D Spacek Spine 2" KeyValue="11880495" BranchId="11880496" Archived="0" Date="18-Mar-2005 17:08:19" FromVersionable="false">
+          <Owner Name="pablo" Identifier="4509932" />
+          <GroupAccess Type="1" />
+        </Version>
+      </Geometry>
+      <GeometryContext>
+        <FeatureMapping Feature="Synapse" GeometryClass="IntraCel" SubVolume="IntraCel">
+          <BoundariesTypes Xm="Flux" Xp="Flux" Ym="Flux" Yp="Flux" Zm="Flux" Zp="Flux" />
+        </FeatureMapping>
+        <FeatureMapping Feature="ER" GeometryClass="ER" SubVolume="ER">
+          <BoundariesTypes Xm="Flux" Xp="Flux" Ym="Flux" Yp="Flux" Zm="Flux" Zp="Flux" />
+        </FeatureMapping>
+        <FeatureMapping Feature="Extracellular" GeometryClass="ExtraCel" SubVolume="ExtraCel">
+          <BoundariesTypes Xm="Flux" Xp="Flux" Ym="Flux" Yp="Flux" Zm="Flux" Zp="Flux" />
+        </FeatureMapping>
+        <MembraneMapping Membrane="Membrane" SurfaceToVolumeRatio="1.0" VolumeFraction="0.2" CalculateVoltage="true" SpecificCapacitance="1.0" InitialVoltage="-65.0" GeometryClass="ExtraCel_IntraCel_membrane">
+          <BoundariesTypes Xm="Flux" Xp="Flux" Ym="Flux" Yp="Flux" Zm="Flux" Zp="Flux" />
+        </MembraneMapping>
+        <MembraneMapping Membrane="ER_Memb" SurfaceToVolumeRatio="1.0" VolumeFraction="0.2" CalculateVoltage="false" SpecificCapacitance="1.0" InitialVoltage="0.0" GeometryClass="ER_IntraCel_membrane">
+          <BoundariesTypes Xm="Flux" Xp="Flux" Ym="Flux" Yp="Flux" Zm="Flux" Zp="Flux" />
+        </MembraneMapping>
+      </GeometryContext>
+      <ReactionContext>
+        <LocalizedCompoundSpec LocalizedCompoundRef="Ca_Synapse" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>0.06</InitialConcentration>
+          <Diffusion>250.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="B_Synapse" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>52.3</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="CaB_Synapse" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>6.276</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="Ca_Extracellular" ForceConstant="true" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>2000.0</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <ReactionSpec ReactionStepRef="Buffering" ReactionMapping="fast" />
+        <ReactionSpec ReactionStepRef="CaPump" ReactionMapping="included" />
+        <ReactionSpec ReactionStepRef="VSCC" ReactionMapping="included" />
+      </ReactionContext>
+      <ElectricalContext>
+        <Clamp Type="Voltage">
+          <Electrode Feature="Synapse">
+            <Coordinate X="0.0" Y="0.0" Z="0.0" />
+          </Electrode>
+          <Parameter Name="V" Role="potential difference" Unit="mV">( - 65.0 + (75.0 * (t &gt; 0.01) * exp( - (1000.0 * ( - 0.01 + t)))) + (25.0 * (t &gt; 0.01) * exp( - (3000.0 * ( - 0.01 + t)))) + (100.0 * (t &lt;= 0.01) * exp((5000.0 * ( - 0.01 + t)))))</Parameter>
+        </Clamp>
+        <Electrode Feature="Extracellular">
+          <Coordinate X="0.0" Y="0.0" Z="0.0" />
+        </Electrode>
+      </ElectricalContext>
+      <MathDescription Name="BAP in 2D Spine with C2A_generated">
+        <Constant Name="_F_">96480.0</Constant>
+        <Constant Name="_F_nmol_">9.648E-5</Constant>
+        <Constant Name="_K_GHK_">1.0E-9</Constant>
+        <Constant Name="_N_pmol_">6.02E11</Constant>
+        <Constant Name="_R_">8314.0</Constant>
+        <Constant Name="_T_">300.0</Constant>
+        <Constant Name="B_Synapse_init">52.3</Constant>
+        <Constant Name="C_ER_Memb">1.0</Constant>
+        <Constant Name="C_Membrane">1.0</Constant>
+        <Constant Name="Ca_basal">0.06</Constant>
+        <Constant Name="Ca_Extracellular">2000.0</Constant>
+        <Constant Name="Ca_Extracellular_diffusionRate">0.0</Constant>
+        <Constant Name="Ca_Extracellular_init">2000.0</Constant>
+        <Constant Name="Ca_Synapse_diffusionRate">250.0</Constant>
+        <Constant Name="Ca_Synapse_init">0.06</Constant>
+        <Constant Name="CaActivation">-20.0</Constant>
+        <Constant Name="CaB_Synapse_init">6.276</Constant>
+        <Constant Name="Cont2Area">11.07</Constant>
+        <Constant Name="Cont2Areal_factor">11.07</Constant>
+        <Constant Name="iVSCC">-0.017</Constant>
+        <Constant Name="K_millivolts_per_volt">1000.0</Constant>
+        <Constant Name="Kf_Buffering">1000.0</Constant>
+        <Constant Name="KMOLE">0.0016611295681063123</Constant>
+        <Constant Name="Kr_Buffering">500.0</Constant>
+        <Constant Name="Po">0.37</Constant>
+        <Constant Name="tauCa">0.00135</Constant>
+        <VolumeVariable Name="Ca" />
+        <VolumeVariable Name="CaB" />
+        <Function Name="B_Synapse">(K_B_Synapse_total - CaB)</Function>
+        <Function Name="device_voltClampElectrode.I">( - F_Membrane - (0.001 * C_Membrane * ( - (75000.0 * (t &gt; 0.01) * exp( - (1000.0 * ( - 0.01 + t)))) - (75000.0 * (t &gt; 0.01) * exp( - (3000.0 * ( - 0.01 + t)))) + (500000.0 * (t &lt;= 0.01) * exp((5000.0 * ( - 0.01 + t)))))))</Function>
+        <Function Name="device_voltClampElectrode.V">( - 65.0 + (75.0 * (t &gt; 0.01) * exp( - (1000.0 * ( - 0.01 + t)))) + (25.0 * (t &gt; 0.01) * exp( - (3000.0 * ( - 0.01 + t)))) + (100.0 * (t &lt;= 0.01) * exp((5000.0 * ( - 0.01 + t)))))</Function>
+        <Function Name="En">(12.66 * log((Ca_Extracellular / Ca_INSIDE)))</Function>
+        <Function Name="F_Membrane">( - I - I_VSCC)</Function>
+        <Function Name="I">(2.0 * J_CaPump * _F_nmol_)</Function>
+        <Function Name="I_Membrane">(F_Membrane + (0.001 * C_Membrane * ( - (75000.0 * (t &gt; 0.01) * exp( - (1000.0 * ( - 0.01 + t)))) - (75000.0 * (t &gt; 0.01) * exp( - (3000.0 * ( - 0.01 + t)))) + (500000.0 * (t &lt;= 0.01) * exp((5000.0 * ( - 0.01 + t)))))))</Function>
+        <Function Name="I_VSCC">((Voltage_Membrane &gt; CaActivation) * iVSCC * Nch * Po * (Voltage_Membrane - En))</Function>
+        <Function Name="J_Buffering">((B_Synapse * Kf_Buffering * Ca) - (Kr_Buffering * CaB))</Function>
+        <Function Name="J_CaPump">- ((Ca_INSIDE - Ca_basal) / tauCa / Cont2Areal_factor)</Function>
+        <Function Name="J_VSCC">(I_VSCC / (2.0 * _F_nmol_))</Function>
+        <Function Name="K_B_Synapse_total">(B_Synapse_init + CaB_Synapse_init)</Function>
+        <Function Name="Nch">(12.94 / Cont2Area)</Function>
+        <Function Name="Voltage_ER_Memb">0.0</Function>
+        <Function Name="Voltage_ER_Memb_init">0.0</Function>
+        <Function Name="Voltage_Membrane">device_voltClampElectrode.V</Function>
+        <CompartmentSubDomain Name="ExtraCel">
+          <BoundaryType Boundary="Xm" Type="Flux" />
+          <BoundaryType Boundary="Xp" Type="Flux" />
+          <BoundaryType Boundary="Ym" Type="Flux" />
+          <BoundaryType Boundary="Yp" Type="Flux" />
+          <BoundaryType Boundary="Zm" Type="Value" />
+          <BoundaryType Boundary="Zp" Type="Value" />
+          <OdeEquation Name="CaB" SolutionType="Unknown">
+            <Rate>0.0</Rate>
+            <Initial>0.0</Initial>
+          </OdeEquation>
+          <PdeEquation Name="Ca" SolutionType="Unknown">
+            <Rate>0.0</Rate>
+            <Diffusion>Ca_Synapse_diffusionRate</Diffusion>
+            <Initial>0.0</Initial>
+          </PdeEquation>
+        </CompartmentSubDomain>
+        <CompartmentSubDomain Name="IntraCel">
+          <BoundaryType Boundary="Xm" Type="Flux" />
+          <BoundaryType Boundary="Xp" Type="Flux" />
+          <BoundaryType Boundary="Ym" Type="Flux" />
+          <BoundaryType Boundary="Yp" Type="Flux" />
+          <BoundaryType Boundary="Zm" Type="Value" />
+          <BoundaryType Boundary="Zp" Type="Value" />
+          <OdeEquation Name="CaB" SolutionType="Unknown">
+            <Rate>0.0</Rate>
+            <Initial>CaB_Synapse_init</Initial>
+          </OdeEquation>
+          <PdeEquation Name="Ca" SolutionType="Unknown">
+            <Rate>0.0</Rate>
+            <Diffusion>Ca_Synapse_diffusionRate</Diffusion>
+            <Initial>Ca_Synapse_init</Initial>
+          </PdeEquation>
+          <FastSystem>
+            <FastInvariant>(Ca + CaB)</FastInvariant>
+            <FastRate>J_Buffering</FastRate>
+          </FastSystem>
+        </CompartmentSubDomain>
+        <CompartmentSubDomain Name="ER">
+          <BoundaryType Boundary="Xm" Type="Flux" />
+          <BoundaryType Boundary="Xp" Type="Flux" />
+          <BoundaryType Boundary="Ym" Type="Flux" />
+          <BoundaryType Boundary="Yp" Type="Flux" />
+          <BoundaryType Boundary="Zm" Type="Value" />
+          <BoundaryType Boundary="Zp" Type="Value" />
+          <OdeEquation Name="CaB" SolutionType="Unknown">
+            <Rate>0.0</Rate>
+            <Initial>0.0</Initial>
+          </OdeEquation>
+          <PdeEquation Name="Ca" SolutionType="Unknown">
+            <Rate>0.0</Rate>
+            <Diffusion>Ca_Synapse_diffusionRate</Diffusion>
+            <Initial>0.0</Initial>
+          </PdeEquation>
+        </CompartmentSubDomain>
+        <MembraneSubDomain Name="ExtraCel_IntraCel_membrane" InsideCompartment="IntraCel" OutsideCompartment="ExtraCel">
+          <BoundaryType Boundary="Xm" Type="Value" />
+          <BoundaryType Boundary="Xp" Type="Value" />
+          <BoundaryType Boundary="Ym" Type="Value" />
+          <BoundaryType Boundary="Yp" Type="Value" />
+          <BoundaryType Boundary="Zm" Type="Value" />
+          <BoundaryType Boundary="Zp" Type="Value" />
+          <JumpCondition Name="Ca">
+            <InFlux>(J_CaPump + J_VSCC)</InFlux>
+            <OutFlux>0.0</OutFlux>
+          </JumpCondition>
+        </MembraneSubDomain>
+        <MembraneSubDomain Name="ER_IntraCel_membrane" InsideCompartment="ER" OutsideCompartment="IntraCel">
+          <BoundaryType Boundary="Xm" Type="Value" />
+          <BoundaryType Boundary="Xp" Type="Value" />
+          <BoundaryType Boundary="Ym" Type="Value" />
+          <BoundaryType Boundary="Yp" Type="Value" />
+          <BoundaryType Boundary="Zm" Type="Value" />
+          <BoundaryType Boundary="Zp" Type="Value" />
+          <JumpCondition Name="Ca">
+            <InFlux>0.0</InFlux>
+            <OutFlux>0.0</OutFlux>
+          </JumpCondition>
+        </MembraneSubDomain>
+        <Version Name="BAP in 2D Spine with C2A_generated" KeyValue="11884909" BranchId="11884875" Archived="0" Date="20-Mar-2005 04:30:39" FromVersionable="false">
+          <Owner Name="pablo" Identifier="4509932" />
+          <GroupAccess Type="1" />
+        </Version>
+      </MathDescription>
+      <Simulation Name="BAP at 10ms in 2D">
+        <SolverTaskDescription TaskType="Unsteady" UseSymbolicJacobian="false" Solver="Finite Volume, Regular Grid">
+          <TimeBound StartTime="0.0" EndTime="0.03" />
+          <TimeStep DefaultTime="1.0E-5" MinTime="1.0E-8" MaxTime="1.0" />
+          <ErrorTolerance Absolut="1.0E-9" Relative="1.0E-9" />
+          <OutputOptions KeepEvery="100" KeepAtMost="1000" />
+          <NumberProcessors>1</NumberProcessors>
+        </SolverTaskDescription>
+        <MathOverrides />
+        <MeshSpecification>
+          <Size X="387" Y="237" Z="1" />
+        </MeshSpecification>
+        <Version Name="BAP at 10ms in 2D" KeyValue="11885067" BranchId="11885068" Archived="0" Date="20-Mar-2005 09:56:01" FromVersionable="false">
+          <Owner Name="pablo" Identifier="4509932" />
+          <GroupAccess Type="1" />
+        </Version>
+      </Simulation>
+      <Simulation Name="BAP at 10ms in 2D with step 0.1ms">
+        <SolverTaskDescription TaskType="Unsteady" UseSymbolicJacobian="false" Solver="Finite Volume, Regular Grid">
+          <TimeBound StartTime="0.0" EndTime="0.013" />
+          <TimeStep DefaultTime="1.0E-5" MinTime="1.0E-8" MaxTime="1.0" />
+          <ErrorTolerance Absolut="1.0E-9" Relative="1.0E-9" />
+          <OutputOptions KeepEvery="10" KeepAtMost="1000" />
+          <NumberProcessors>1</NumberProcessors>
+        </SolverTaskDescription>
+        <MathOverrides />
+        <MeshSpecification>
+          <Size X="387" Y="237" Z="1" />
+        </MeshSpecification>
+        <Version Name="BAP at 10ms in 2D with step 0.1ms" KeyValue="11885056" BranchId="11885057" Archived="0" Date="20-Mar-2005 09:55:05" FromVersionable="false">
+          <Owner Name="pablo" Identifier="4509932" />
+          <GroupAccess Type="1" />
+        </Version>
+      </Simulation>
+      <SpatialObjects>
+        <SpatialObject Name="vobj_ExtraCel0" Type="Volume" subVolume="ExtraCel" regionId="0">
+          <QuantityCategoryList>
+            <QuantityCategory Name="VolumeCentroid" Enabled="false" />
+            <QuantityCategory Name="InteriorVelocity" Enabled="false" />
+            <QuantityCategory Name="VolumeRegionSize" Enabled="true" />
+          </QuantityCategoryList>
+        </SpatialObject>
+        <SpatialObject Name="vobj_IntraCel1" Type="Volume" subVolume="IntraCel" regionId="1">
+          <QuantityCategoryList>
+            <QuantityCategory Name="VolumeCentroid" Enabled="false" />
+            <QuantityCategory Name="InteriorVelocity" Enabled="false" />
+            <QuantityCategory Name="VolumeRegionSize" Enabled="true" />
+          </QuantityCategoryList>
+        </SpatialObject>
+        <SpatialObject Name="vobj_ER2" Type="Volume" subVolume="ER" regionId="2">
+          <QuantityCategoryList>
+            <QuantityCategory Name="VolumeCentroid" Enabled="false" />
+            <QuantityCategory Name="InteriorVelocity" Enabled="false" />
+            <QuantityCategory Name="VolumeRegionSize" Enabled="true" />
+          </QuantityCategoryList>
+        </SpatialObject>
+        <SpatialObject Name="vobj_ER3" Type="Volume" subVolume="ER" regionId="3">
+          <QuantityCategoryList>
+            <QuantityCategory Name="VolumeCentroid" Enabled="false" />
+            <QuantityCategory Name="InteriorVelocity" Enabled="false" />
+            <QuantityCategory Name="VolumeRegionSize" Enabled="true" />
+          </QuantityCategoryList>
+        </SpatialObject>
+        <SpatialObject Name="vobj_ER4" Type="Volume" subVolume="ER" regionId="4">
+          <QuantityCategoryList>
+            <QuantityCategory Name="VolumeCentroid" Enabled="false" />
+            <QuantityCategory Name="InteriorVelocity" Enabled="false" />
+            <QuantityCategory Name="VolumeRegionSize" Enabled="true" />
+          </QuantityCategoryList>
+        </SpatialObject>
+        <SpatialObject Name="vobj_ER5" Type="Volume" subVolume="ER" regionId="5">
+          <QuantityCategoryList>
+            <QuantityCategory Name="VolumeCentroid" Enabled="false" />
+            <QuantityCategory Name="InteriorVelocity" Enabled="false" />
+            <QuantityCategory Name="VolumeRegionSize" Enabled="true" />
+          </QuantityCategoryList>
+        </SpatialObject>
+        <SpatialObject Name="vobj_ER6" Type="Volume" subVolume="ER" regionId="6">
+          <QuantityCategoryList>
+            <QuantityCategory Name="VolumeCentroid" Enabled="false" />
+            <QuantityCategory Name="InteriorVelocity" Enabled="false" />
+            <QuantityCategory Name="VolumeRegionSize" Enabled="true" />
+          </QuantityCategoryList>
+        </SpatialObject>
+        <SpatialObject Name="vobj_ER7" Type="Volume" subVolume="ER" regionId="7">
+          <QuantityCategoryList>
+            <QuantityCategory Name="VolumeCentroid" Enabled="false" />
+            <QuantityCategory Name="InteriorVelocity" Enabled="false" />
+            <QuantityCategory Name="VolumeRegionSize" Enabled="true" />
+          </QuantityCategoryList>
+        </SpatialObject>
+        <SpatialObject Name="vobj_ER8" Type="Volume" subVolume="ER" regionId="8">
+          <QuantityCategoryList>
+            <QuantityCategory Name="VolumeCentroid" Enabled="false" />
+            <QuantityCategory Name="InteriorVelocity" Enabled="false" />
+            <QuantityCategory Name="VolumeRegionSize" Enabled="true" />
+          </QuantityCategoryList>
+        </SpatialObject>
+        <SpatialObject Name="vobj_ER9" Type="Volume" subVolume="ER" regionId="9">
+          <QuantityCategoryList>
+            <QuantityCategory Name="VolumeCentroid" Enabled="false" />
+            <QuantityCategory Name="InteriorVelocity" Enabled="false" />
+            <QuantityCategory Name="VolumeRegionSize" Enabled="true" />
+          </QuantityCategoryList>
+        </SpatialObject>
+        <SpatialObject Name="vobj_ER10" Type="Volume" subVolume="ER" regionId="10">
+          <QuantityCategoryList>
+            <QuantityCategory Name="VolumeCentroid" Enabled="false" />
+            <QuantityCategory Name="InteriorVelocity" Enabled="false" />
+            <QuantityCategory Name="VolumeRegionSize" Enabled="true" />
+          </QuantityCategoryList>
+        </SpatialObject>
+        <SpatialObject Name="vobj_ER11" Type="Volume" subVolume="ER" regionId="11">
+          <QuantityCategoryList>
+            <QuantityCategory Name="VolumeCentroid" Enabled="false" />
+            <QuantityCategory Name="InteriorVelocity" Enabled="false" />
+            <QuantityCategory Name="VolumeRegionSize" Enabled="true" />
+          </QuantityCategoryList>
+        </SpatialObject>
+        <SpatialObject Name="vobj_ER12" Type="Volume" subVolume="ER" regionId="12">
+          <QuantityCategoryList>
+            <QuantityCategory Name="VolumeCentroid" Enabled="false" />
+            <QuantityCategory Name="InteriorVelocity" Enabled="false" />
+            <QuantityCategory Name="VolumeRegionSize" Enabled="true" />
+          </QuantityCategoryList>
+        </SpatialObject>
+        <SpatialObject Name="vobj_IntraCel13" Type="Volume" subVolume="IntraCel" regionId="13">
+          <QuantityCategoryList>
+            <QuantityCategory Name="VolumeCentroid" Enabled="false" />
+            <QuantityCategory Name="InteriorVelocity" Enabled="false" />
+            <QuantityCategory Name="VolumeRegionSize" Enabled="true" />
+          </QuantityCategoryList>
+        </SpatialObject>
+        <SpatialObject Name="vobj_ER14" Type="Volume" subVolume="ER" regionId="14">
+          <QuantityCategoryList>
+            <QuantityCategory Name="VolumeCentroid" Enabled="false" />
+            <QuantityCategory Name="InteriorVelocity" Enabled="false" />
+            <QuantityCategory Name="VolumeRegionSize" Enabled="true" />
+          </QuantityCategoryList>
+        </SpatialObject>
+        <SpatialObject Name="vobj_ER15" Type="Volume" subVolume="ER" regionId="15">
+          <QuantityCategoryList>
+            <QuantityCategory Name="VolumeCentroid" Enabled="false" />
+            <QuantityCategory Name="InteriorVelocity" Enabled="false" />
+            <QuantityCategory Name="VolumeRegionSize" Enabled="true" />
+          </QuantityCategoryList>
+        </SpatialObject>
+        <SpatialObject Name="vobj_ER16" Type="Volume" subVolume="ER" regionId="16">
+          <QuantityCategoryList>
+            <QuantityCategory Name="VolumeCentroid" Enabled="false" />
+            <QuantityCategory Name="InteriorVelocity" Enabled="false" />
+            <QuantityCategory Name="VolumeRegionSize" Enabled="true" />
+          </QuantityCategoryList>
+        </SpatialObject>
+        <SpatialObject Name="vobj_ER17" Type="Volume" subVolume="ER" regionId="17">
+          <QuantityCategoryList>
+            <QuantityCategory Name="VolumeCentroid" Enabled="false" />
+            <QuantityCategory Name="InteriorVelocity" Enabled="false" />
+            <QuantityCategory Name="VolumeRegionSize" Enabled="true" />
+          </QuantityCategoryList>
+        </SpatialObject>
+        <SpatialObject Name="vobj_ER18" Type="Volume" subVolume="ER" regionId="18">
+          <QuantityCategoryList>
+            <QuantityCategory Name="VolumeCentroid" Enabled="false" />
+            <QuantityCategory Name="InteriorVelocity" Enabled="false" />
+            <QuantityCategory Name="VolumeRegionSize" Enabled="true" />
+          </QuantityCategoryList>
+        </SpatialObject>
+        <SpatialObject Name="vobj_ER19" Type="Volume" subVolume="ER" regionId="19">
+          <QuantityCategoryList>
+            <QuantityCategory Name="VolumeCentroid" Enabled="false" />
+            <QuantityCategory Name="InteriorVelocity" Enabled="false" />
+            <QuantityCategory Name="VolumeRegionSize" Enabled="true" />
+          </QuantityCategoryList>
+        </SpatialObject>
+        <SpatialObject Name="vobj_IntraCel20" Type="Volume" subVolume="IntraCel" regionId="20">
+          <QuantityCategoryList>
+            <QuantityCategory Name="VolumeCentroid" Enabled="false" />
+            <QuantityCategory Name="InteriorVelocity" Enabled="false" />
+            <QuantityCategory Name="VolumeRegionSize" Enabled="true" />
+          </QuantityCategoryList>
+        </SpatialObject>
+        <SpatialObject Name="vobj_ER21" Type="Volume" subVolume="ER" regionId="21">
+          <QuantityCategoryList>
+            <QuantityCategory Name="VolumeCentroid" Enabled="false" />
+            <QuantityCategory Name="InteriorVelocity" Enabled="false" />
+            <QuantityCategory Name="VolumeRegionSize" Enabled="true" />
+          </QuantityCategoryList>
+        </SpatialObject>
+        <SpatialObject Name="vobj_ER22" Type="Volume" subVolume="ER" regionId="22">
+          <QuantityCategoryList>
+            <QuantityCategory Name="VolumeCentroid" Enabled="false" />
+            <QuantityCategory Name="InteriorVelocity" Enabled="false" />
+            <QuantityCategory Name="VolumeRegionSize" Enabled="true" />
+          </QuantityCategoryList>
+        </SpatialObject>
+        <SpatialObject Name="vobj_ER23" Type="Volume" subVolume="ER" regionId="23">
+          <QuantityCategoryList>
+            <QuantityCategory Name="VolumeCentroid" Enabled="false" />
+            <QuantityCategory Name="InteriorVelocity" Enabled="false" />
+            <QuantityCategory Name="VolumeRegionSize" Enabled="true" />
+          </QuantityCategoryList>
+        </SpatialObject>
+        <SpatialObject Name="vobj_ER24" Type="Volume" subVolume="ER" regionId="24">
+          <QuantityCategoryList>
+            <QuantityCategory Name="VolumeCentroid" Enabled="false" />
+            <QuantityCategory Name="InteriorVelocity" Enabled="false" />
+            <QuantityCategory Name="VolumeRegionSize" Enabled="true" />
+          </QuantityCategoryList>
+        </SpatialObject>
+        <SpatialObject Name="sobj_IntraCel1_ExtraCel0" Type="Surface" subVolumeInside="IntraCel" regionIdInside="1" subVolumeOutside="ExtraCel" regionIdOutside="0">
+          <QuantityCategoryList>
+            <QuantityCategory Name="SurfaceNormal" Enabled="false" />
+            <QuantityCategory Name="SurfaceVelocity" Enabled="false" />
+            <QuantityCategory Name="DistanceToSurface" Enabled="false" />
+            <QuantityCategory Name="DirectionToSurface" Enabled="false" />
+            <QuantityCategory Name="SurfaceSize" Enabled="true" />
+          </QuantityCategoryList>
+        </SpatialObject>
+        <SpatialObject Name="sobj_ER9_IntraCel1" Type="Surface" subVolumeInside="ER" regionIdInside="9" subVolumeOutside="IntraCel" regionIdOutside="1">
+          <QuantityCategoryList>
+            <QuantityCategory Name="SurfaceNormal" Enabled="false" />
+            <QuantityCategory Name="SurfaceVelocity" Enabled="false" />
+            <QuantityCategory Name="DistanceToSurface" Enabled="false" />
+            <QuantityCategory Name="DirectionToSurface" Enabled="false" />
+            <QuantityCategory Name="SurfaceSize" Enabled="true" />
+          </QuantityCategoryList>
+        </SpatialObject>
+        <SpatialObject Name="sobj_ER6_IntraCel1" Type="Surface" subVolumeInside="ER" regionIdInside="6" subVolumeOutside="IntraCel" regionIdOutside="1">
+          <QuantityCategoryList>
+            <QuantityCategory Name="SurfaceNormal" Enabled="false" />
+            <QuantityCategory Name="SurfaceVelocity" Enabled="false" />
+            <QuantityCategory Name="DistanceToSurface" Enabled="false" />
+            <QuantityCategory Name="DirectionToSurface" Enabled="false" />
+            <QuantityCategory Name="SurfaceSize" Enabled="true" />
+          </QuantityCategoryList>
+        </SpatialObject>
+        <SpatialObject Name="sobj_ER4_IntraCel1" Type="Surface" subVolumeInside="ER" regionIdInside="4" subVolumeOutside="IntraCel" regionIdOutside="1">
+          <QuantityCategoryList>
+            <QuantityCategory Name="SurfaceNormal" Enabled="false" />
+            <QuantityCategory Name="SurfaceVelocity" Enabled="false" />
+            <QuantityCategory Name="DistanceToSurface" Enabled="false" />
+            <QuantityCategory Name="DirectionToSurface" Enabled="false" />
+            <QuantityCategory Name="SurfaceSize" Enabled="true" />
+          </QuantityCategoryList>
+        </SpatialObject>
+        <SpatialObject Name="sobj_ER2_IntraCel1" Type="Surface" subVolumeInside="ER" regionIdInside="2" subVolumeOutside="IntraCel" regionIdOutside="1">
+          <QuantityCategoryList>
+            <QuantityCategory Name="SurfaceNormal" Enabled="false" />
+            <QuantityCategory Name="SurfaceVelocity" Enabled="false" />
+            <QuantityCategory Name="DistanceToSurface" Enabled="false" />
+            <QuantityCategory Name="DirectionToSurface" Enabled="false" />
+            <QuantityCategory Name="SurfaceSize" Enabled="true" />
+          </QuantityCategoryList>
+        </SpatialObject>
+        <SpatialObject Name="sobj_ER3_IntraCel1" Type="Surface" subVolumeInside="ER" regionIdInside="3" subVolumeOutside="IntraCel" regionIdOutside="1">
+          <QuantityCategoryList>
+            <QuantityCategory Name="SurfaceNormal" Enabled="false" />
+            <QuantityCategory Name="SurfaceVelocity" Enabled="false" />
+            <QuantityCategory Name="DistanceToSurface" Enabled="false" />
+            <QuantityCategory Name="DirectionToSurface" Enabled="false" />
+            <QuantityCategory Name="SurfaceSize" Enabled="true" />
+          </QuantityCategoryList>
+        </SpatialObject>
+        <SpatialObject Name="sobj_ER5_IntraCel1" Type="Surface" subVolumeInside="ER" regionIdInside="5" subVolumeOutside="IntraCel" regionIdOutside="1">
+          <QuantityCategoryList>
+            <QuantityCategory Name="SurfaceNormal" Enabled="false" />
+            <QuantityCategory Name="SurfaceVelocity" Enabled="false" />
+            <QuantityCategory Name="DistanceToSurface" Enabled="false" />
+            <QuantityCategory Name="DirectionToSurface" Enabled="false" />
+            <QuantityCategory Name="SurfaceSize" Enabled="true" />
+          </QuantityCategoryList>
+        </SpatialObject>
+        <SpatialObject Name="sobj_ER7_IntraCel1" Type="Surface" subVolumeInside="ER" regionIdInside="7" subVolumeOutside="IntraCel" regionIdOutside="1">
+          <QuantityCategoryList>
+            <QuantityCategory Name="SurfaceNormal" Enabled="false" />
+            <QuantityCategory Name="SurfaceVelocity" Enabled="false" />
+            <QuantityCategory Name="DistanceToSurface" Enabled="false" />
+            <QuantityCategory Name="DirectionToSurface" Enabled="false" />
+            <QuantityCategory Name="SurfaceSize" Enabled="true" />
+          </QuantityCategoryList>
+        </SpatialObject>
+        <SpatialObject Name="sobj_ER16_IntraCel1" Type="Surface" subVolumeInside="ER" regionIdInside="16" subVolumeOutside="IntraCel" regionIdOutside="1">
+          <QuantityCategoryList>
+            <QuantityCategory Name="SurfaceNormal" Enabled="false" />
+            <QuantityCategory Name="SurfaceVelocity" Enabled="false" />
+            <QuantityCategory Name="DistanceToSurface" Enabled="false" />
+            <QuantityCategory Name="DirectionToSurface" Enabled="false" />
+            <QuantityCategory Name="SurfaceSize" Enabled="true" />
+          </QuantityCategoryList>
+        </SpatialObject>
+        <SpatialObject Name="sobj_ER17_IntraCel1" Type="Surface" subVolumeInside="ER" regionIdInside="17" subVolumeOutside="IntraCel" regionIdOutside="1">
+          <QuantityCategoryList>
+            <QuantityCategory Name="SurfaceNormal" Enabled="false" />
+            <QuantityCategory Name="SurfaceVelocity" Enabled="false" />
+            <QuantityCategory Name="DistanceToSurface" Enabled="false" />
+            <QuantityCategory Name="DirectionToSurface" Enabled="false" />
+            <QuantityCategory Name="SurfaceSize" Enabled="true" />
+          </QuantityCategoryList>
+        </SpatialObject>
+        <SpatialObject Name="sobj_ER18_IntraCel1" Type="Surface" subVolumeInside="ER" regionIdInside="18" subVolumeOutside="IntraCel" regionIdOutside="1">
+          <QuantityCategoryList>
+            <QuantityCategory Name="SurfaceNormal" Enabled="false" />
+            <QuantityCategory Name="SurfaceVelocity" Enabled="false" />
+            <QuantityCategory Name="DistanceToSurface" Enabled="false" />
+            <QuantityCategory Name="DirectionToSurface" Enabled="false" />
+            <QuantityCategory Name="SurfaceSize" Enabled="true" />
+          </QuantityCategoryList>
+        </SpatialObject>
+        <SpatialObject Name="sobj_IntraCel13_ER6" Type="Surface" subVolumeInside="IntraCel" regionIdInside="13" subVolumeOutside="ER" regionIdOutside="6">
+          <QuantityCategoryList>
+            <QuantityCategory Name="SurfaceNormal" Enabled="false" />
+            <QuantityCategory Name="SurfaceVelocity" Enabled="false" />
+            <QuantityCategory Name="DistanceToSurface" Enabled="false" />
+            <QuantityCategory Name="DirectionToSurface" Enabled="false" />
+            <QuantityCategory Name="SurfaceSize" Enabled="true" />
+          </QuantityCategoryList>
+        </SpatialObject>
+        <SpatialObject Name="sobj_ER14_IntraCel1" Type="Surface" subVolumeInside="ER" regionIdInside="14" subVolumeOutside="IntraCel" regionIdOutside="1">
+          <QuantityCategoryList>
+            <QuantityCategory Name="SurfaceNormal" Enabled="false" />
+            <QuantityCategory Name="SurfaceVelocity" Enabled="false" />
+            <QuantityCategory Name="DistanceToSurface" Enabled="false" />
+            <QuantityCategory Name="DirectionToSurface" Enabled="false" />
+            <QuantityCategory Name="SurfaceSize" Enabled="true" />
+          </QuantityCategoryList>
+        </SpatialObject>
+        <SpatialObject Name="sobj_ER19_IntraCel1" Type="Surface" subVolumeInside="ER" regionIdInside="19" subVolumeOutside="IntraCel" regionIdOutside="1">
+          <QuantityCategoryList>
+            <QuantityCategory Name="SurfaceNormal" Enabled="false" />
+            <QuantityCategory Name="SurfaceVelocity" Enabled="false" />
+            <QuantityCategory Name="DistanceToSurface" Enabled="false" />
+            <QuantityCategory Name="DirectionToSurface" Enabled="false" />
+            <QuantityCategory Name="SurfaceSize" Enabled="true" />
+          </QuantityCategoryList>
+        </SpatialObject>
+        <SpatialObject Name="sobj_IntraCel20_ER19" Type="Surface" subVolumeInside="IntraCel" regionIdInside="20" subVolumeOutside="ER" regionIdOutside="19">
+          <QuantityCategoryList>
+            <QuantityCategory Name="SurfaceNormal" Enabled="false" />
+            <QuantityCategory Name="SurfaceVelocity" Enabled="false" />
+            <QuantityCategory Name="DistanceToSurface" Enabled="false" />
+            <QuantityCategory Name="DirectionToSurface" Enabled="false" />
+            <QuantityCategory Name="SurfaceSize" Enabled="true" />
+          </QuantityCategoryList>
+        </SpatialObject>
+        <SpatialObject Name="sobj_ER22_IntraCel1" Type="Surface" subVolumeInside="ER" regionIdInside="22" subVolumeOutside="IntraCel" regionIdOutside="1">
+          <QuantityCategoryList>
+            <QuantityCategory Name="SurfaceNormal" Enabled="false" />
+            <QuantityCategory Name="SurfaceVelocity" Enabled="false" />
+            <QuantityCategory Name="DistanceToSurface" Enabled="false" />
+            <QuantityCategory Name="DirectionToSurface" Enabled="false" />
+            <QuantityCategory Name="SurfaceSize" Enabled="true" />
+          </QuantityCategoryList>
+        </SpatialObject>
+        <SpatialObject Name="sobj_ER24_IntraCel1" Type="Surface" subVolumeInside="ER" regionIdInside="24" subVolumeOutside="IntraCel" regionIdOutside="1">
+          <QuantityCategoryList>
+            <QuantityCategory Name="SurfaceNormal" Enabled="false" />
+            <QuantityCategory Name="SurfaceVelocity" Enabled="false" />
+            <QuantityCategory Name="DistanceToSurface" Enabled="false" />
+            <QuantityCategory Name="DirectionToSurface" Enabled="false" />
+            <QuantityCategory Name="SurfaceSize" Enabled="true" />
+          </QuantityCategoryList>
+        </SpatialObject>
+        <SpatialObject Name="sobj_ER8_IntraCel1" Type="Surface" subVolumeInside="ER" regionIdInside="8" subVolumeOutside="IntraCel" regionIdOutside="1">
+          <QuantityCategoryList>
+            <QuantityCategory Name="SurfaceNormal" Enabled="false" />
+            <QuantityCategory Name="SurfaceVelocity" Enabled="false" />
+            <QuantityCategory Name="DistanceToSurface" Enabled="false" />
+            <QuantityCategory Name="DirectionToSurface" Enabled="false" />
+            <QuantityCategory Name="SurfaceSize" Enabled="true" />
+          </QuantityCategoryList>
+        </SpatialObject>
+        <SpatialObject Name="sobj_ER10_IntraCel1" Type="Surface" subVolumeInside="ER" regionIdInside="10" subVolumeOutside="IntraCel" regionIdOutside="1">
+          <QuantityCategoryList>
+            <QuantityCategory Name="SurfaceNormal" Enabled="false" />
+            <QuantityCategory Name="SurfaceVelocity" Enabled="false" />
+            <QuantityCategory Name="DistanceToSurface" Enabled="false" />
+            <QuantityCategory Name="DirectionToSurface" Enabled="false" />
+            <QuantityCategory Name="SurfaceSize" Enabled="true" />
+          </QuantityCategoryList>
+        </SpatialObject>
+        <SpatialObject Name="sobj_ER11_IntraCel1" Type="Surface" subVolumeInside="ER" regionIdInside="11" subVolumeOutside="IntraCel" regionIdOutside="1">
+          <QuantityCategoryList>
+            <QuantityCategory Name="SurfaceNormal" Enabled="false" />
+            <QuantityCategory Name="SurfaceVelocity" Enabled="false" />
+            <QuantityCategory Name="DistanceToSurface" Enabled="false" />
+            <QuantityCategory Name="DirectionToSurface" Enabled="false" />
+            <QuantityCategory Name="SurfaceSize" Enabled="true" />
+          </QuantityCategoryList>
+        </SpatialObject>
+        <SpatialObject Name="sobj_ER12_IntraCel1" Type="Surface" subVolumeInside="ER" regionIdInside="12" subVolumeOutside="IntraCel" regionIdOutside="1">
+          <QuantityCategoryList>
+            <QuantityCategory Name="SurfaceNormal" Enabled="false" />
+            <QuantityCategory Name="SurfaceVelocity" Enabled="false" />
+            <QuantityCategory Name="DistanceToSurface" Enabled="false" />
+            <QuantityCategory Name="DirectionToSurface" Enabled="false" />
+            <QuantityCategory Name="SurfaceSize" Enabled="true" />
+          </QuantityCategoryList>
+        </SpatialObject>
+        <SpatialObject Name="sobj_ER23_IntraCel1" Type="Surface" subVolumeInside="ER" regionIdInside="23" subVolumeOutside="IntraCel" regionIdOutside="1">
+          <QuantityCategoryList>
+            <QuantityCategory Name="SurfaceNormal" Enabled="false" />
+            <QuantityCategory Name="SurfaceVelocity" Enabled="false" />
+            <QuantityCategory Name="DistanceToSurface" Enabled="false" />
+            <QuantityCategory Name="DirectionToSurface" Enabled="false" />
+            <QuantityCategory Name="SurfaceSize" Enabled="true" />
+          </QuantityCategoryList>
+        </SpatialObject>
+        <SpatialObject Name="sobj_ER15_IntraCel1" Type="Surface" subVolumeInside="ER" regionIdInside="15" subVolumeOutside="IntraCel" regionIdOutside="1">
+          <QuantityCategoryList>
+            <QuantityCategory Name="SurfaceNormal" Enabled="false" />
+            <QuantityCategory Name="SurfaceVelocity" Enabled="false" />
+            <QuantityCategory Name="DistanceToSurface" Enabled="false" />
+            <QuantityCategory Name="DirectionToSurface" Enabled="false" />
+            <QuantityCategory Name="SurfaceSize" Enabled="true" />
+          </QuantityCategoryList>
+        </SpatialObject>
+        <SpatialObject Name="sobj_ER21_IntraCel1" Type="Surface" subVolumeInside="ER" regionIdInside="21" subVolumeOutside="IntraCel" regionIdOutside="1">
+          <QuantityCategoryList>
+            <QuantityCategory Name="SurfaceNormal" Enabled="false" />
+            <QuantityCategory Name="SurfaceVelocity" Enabled="false" />
+            <QuantityCategory Name="DistanceToSurface" Enabled="false" />
+            <QuantityCategory Name="DirectionToSurface" Enabled="false" />
+            <QuantityCategory Name="SurfaceSize" Enabled="true" />
+          </QuantityCategoryList>
+        </SpatialObject>
+      </SpatialObjects>
+      <Version Name="BAP in 2D Spine" KeyValue="13920723" BranchId="11885038" Archived="0" Date="25-Aug-2005 07:29:11" FromVersionable="false">
+        <Owner Name="pablo" Identifier="4509932" />
+        <GroupAccess Type="1" />
+        <Annotation>_</Annotation>
+      </Version>
+      <MicroscopeMeasurement Name="fluor">
+        <ConvolutionKernel Type="ProjectionZKernel" />
+      </MicroscopeMeasurement>
+    </SimulationSpec>
+    <Version Name="Ca Dynamics in Spine Public" KeyValue="13920739" BranchId="11902226" Archived="0" Date="25-Aug-2005 07:29:11" FromVersionable="false">
+      <Owner Name="pablo" Identifier="4509932" />
+      <GroupAccess Type="0" />
+    </Version>
+    <pathwayModel>
+      <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:bp="http://www.biopax.org/release/biopax-level3.owl#" version="3.0" />
+    </pathwayModel>
+    <relationshipModel>
+      <RMNS version="3.0" />
+    </relationshipModel>
+    <vcmetadata>
+      <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" />
+      <nonrdfAnnotationList />
+      <uriBindingList />
+    </vcmetadata>
+  </BioModel>
+</vcml>
+

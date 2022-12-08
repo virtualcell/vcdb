@@ -1,0 +1,747 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--This biomodel was generated in VCML Version Alpha_Version_7.4.0_build_87-->
+<vcml xmlns="http://sourceforge.net/projects/vcell/vcml" Version="Alpha_Version_7.4.0_build_87">
+  <BioModel Name="simulations">
+    <Model Name="unnamed">
+      <Compound Name="r">
+        <Annotation>RAN</Annotation>
+      </Compound>
+      <Compound Name="rB">
+        <Annotation>RAN-FITC</Annotation>
+      </Compound>
+      <Compound Name="rf">
+        <Annotation>RAN_bound</Annotation>
+      </Compound>
+      <Compound Name="BS">
+        <Annotation>Binding_sites</Annotation>
+      </Compound>
+      <Compound Name="rfB">
+        <Annotation>RAN_FITC_bound</Annotation>
+      </Compound>
+      <Compound Name="laser">
+        <Annotation>Light</Annotation>
+      </Compound>
+      <Feature Name="cytosol" KeyValue="31952860" />
+      <Feature Name="nucleus" KeyValue="31952863" />
+      <Feature Name="extracellular" KeyValue="31952858" />
+      <Membrane InsideFeature="nucleus" OutsideFeature="cytosol" PositiveFeature="nucleus" NegativeFeature="cytosol" MembraneVoltage="Voltage_NM" Name="NM" KeyValue="31952862" />
+      <Membrane InsideFeature="cytosol" OutsideFeature="extracellular" PositiveFeature="cytosol" NegativeFeature="extracellular" MembraneVoltage="Voltage_CM" Name="CM" KeyValue="31952859" />
+      <LocalizedCompound Name="r_nucleus" CompoundRef="r" Structure="nucleus" OverrideName="true" KeyValue="31952868" />
+      <LocalizedCompound Name="rB_nucleus" CompoundRef="rB" Structure="nucleus" OverrideName="true" KeyValue="31952869" />
+      <LocalizedCompound Name="rf_nucleus" CompoundRef="rf" Structure="nucleus" OverrideName="true" KeyValue="31952870" />
+      <LocalizedCompound Name="BS_nucleus" CompoundRef="BS" Structure="nucleus" OverrideName="true" KeyValue="31952871" />
+      <LocalizedCompound Name="rfB_nucleus" CompoundRef="rfB" Structure="nucleus" OverrideName="true" KeyValue="31952872" />
+      <LocalizedCompound Name="laser_nucleus" CompoundRef="laser" Structure="nucleus" OverrideName="true" KeyValue="31952873" />
+      <LocalizedCompound Name="r_cytosol" CompoundRef="r" Structure="cytosol" OverrideName="true" KeyValue="31952874" />
+      <LocalizedCompound Name="rf_cytosol" CompoundRef="rf" Structure="cytosol" OverrideName="true" KeyValue="31952875" />
+      <SimpleReaction Structure="nucleus" Name="RAN_FITC_binding" Reversible="true" FluxOption="MolecularOnly" KeyValue="31952876">
+        <Reactant LocalizedCompoundRef="BS_nucleus" Stoichiometry="1" KeyValue="31952877" />
+        <Reactant LocalizedCompoundRef="rf_nucleus" Stoichiometry="1" KeyValue="31952878" />
+        <Product LocalizedCompoundRef="rfB_nucleus" Stoichiometry="1" KeyValue="31952879" />
+        <Kinetics KineticsType="MassAction">
+          <Parameter Name="J" Role="reaction rate" Unit="uM.s-1">(((Kf * BS_nucleus) * rf_nucleus) - (Kr * rfB_nucleus))</Parameter>
+          <Parameter Name="Kf" Role="forward rate constant" Unit="s-1.uM-1">0.02</Parameter>
+          <Parameter Name="Kr" Role="reverse rate constant" Unit="s-1">0.1</Parameter>
+        </Kinetics>
+      </SimpleReaction>
+      <SimpleReaction Structure="nucleus" Name="bleaching 2" Reversible="true" FluxOption="MolecularOnly" KeyValue="31952880">
+        <Reactant LocalizedCompoundRef="rfB_nucleus" Stoichiometry="1" KeyValue="31952881" />
+        <Product LocalizedCompoundRef="rB_nucleus" Stoichiometry="1" KeyValue="31952882" />
+        <Modifier LocalizedCompoundRef="laser_nucleus" />
+        <Kinetics KineticsType="GeneralKinetics">
+          <Parameter Name="J" Role="reaction rate" Unit="uM.s-1">(Vmax2 * rfB_nucleus * laser_nucleus * ((t &gt; 10.0) &amp;&amp; (t &lt; 10.5)))</Parameter>
+          <Parameter Name="Vmax2" Role="user defined" Unit="1">50.0</Parameter>
+        </Kinetics>
+      </SimpleReaction>
+      <SimpleReaction Structure="nucleus" Name="RAN_binding" Reversible="true" FluxOption="MolecularOnly" KeyValue="31952884">
+        <Reactant LocalizedCompoundRef="r_nucleus" Stoichiometry="1" KeyValue="31952885" />
+        <Reactant LocalizedCompoundRef="BS_nucleus" Stoichiometry="1" KeyValue="31952886" />
+        <Product LocalizedCompoundRef="rB_nucleus" Stoichiometry="1" KeyValue="31952887" />
+        <Kinetics KineticsType="MassAction">
+          <Parameter Name="J" Role="reaction rate" Unit="uM.s-1">(((Kf * r_nucleus) * BS_nucleus) - (Kr * rB_nucleus))</Parameter>
+          <Parameter Name="Kf" Role="forward rate constant" Unit="s-1.uM-1">0.02</Parameter>
+          <Parameter Name="Kr" Role="reverse rate constant" Unit="s-1">0.1</Parameter>
+        </Kinetics>
+      </SimpleReaction>
+      <SimpleReaction Structure="nucleus" Name="bleaching 1" Reversible="true" FluxOption="MolecularOnly" KeyValue="31952888">
+        <Reactant LocalizedCompoundRef="rf_nucleus" Stoichiometry="1" KeyValue="31952889" />
+        <Product LocalizedCompoundRef="r_nucleus" Stoichiometry="1" KeyValue="31952890" />
+        <Modifier LocalizedCompoundRef="laser_nucleus" />
+        <Kinetics KineticsType="GeneralKinetics">
+          <Parameter Name="J" Role="reaction rate" Unit="uM.s-1">(Vmax * rf_nucleus * laser_nucleus * ((t &gt; 10.0) &amp;&amp; (t &lt; 10.5)))</Parameter>
+          <Parameter Name="Vmax" Role="user defined" Unit="1">50.0</Parameter>
+        </Kinetics>
+      </SimpleReaction>
+      <FluxStep Name="flux1" Structure="NM" Reversible="true" FluxOption="MolecularOnly" KeyValue="31952892">
+        <Reactant LocalizedCompoundRef="r_cytosol" Stoichiometry="1" />
+        <Product LocalizedCompoundRef="r_nucleus" Stoichiometry="1" />
+        <Kinetics KineticsType="GeneralKinetics">
+          <Parameter Name="J" Role="reaction rate" Unit="uM.um.s-1">(k1 * (r_cytosol - r_nucleus))</Parameter>
+          <Parameter Name="I" Role="inward current density" Unit="pA.um-2">0.0</Parameter>
+          <Parameter Name="netValence" Role="net charge valence" Unit="1">0.0</Parameter>
+          <Parameter Name="k1" Role="user defined" Unit="um.s-1">10.0</Parameter>
+        </Kinetics>
+      </FluxStep>
+      <FluxStep Name="flux2" Structure="NM" Reversible="true" FluxOption="MolecularOnly" KeyValue="31952895">
+        <Reactant LocalizedCompoundRef="rf_cytosol" Stoichiometry="1" />
+        <Product LocalizedCompoundRef="rf_nucleus" Stoichiometry="1" />
+        <Kinetics KineticsType="GeneralKinetics">
+          <Parameter Name="J" Role="reaction rate" Unit="uM.um.s-1">(k2 * (rf_cytosol - rf_nucleus))</Parameter>
+          <Parameter Name="I" Role="inward current density" Unit="pA.um-2">0.0</Parameter>
+          <Parameter Name="netValence" Role="net charge valence" Unit="1">0.0</Parameter>
+          <Parameter Name="k2" Role="user defined" Unit="um.s-1">10.0</Parameter>
+        </Kinetics>
+      </FluxStep>
+      <Diagram Name="extracellular" Structure="extracellular" />
+      <Diagram Name="CM" Structure="CM" />
+      <Diagram Name="Unnamed compartment" Structure="cytosol" />
+      <Diagram Name="NM" Structure="NM">
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="r_nucleus" LocationX="59" LocationY="300" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="rB_nucleus" LocationX="48" LocationY="189" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="rf_nucleus" LocationX="43" LocationY="56" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="BS_nucleus" LocationX="42" LocationY="135" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="rfB_nucleus" LocationX="32" LocationY="421" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="laser_nucleus" LocationX="48" LocationY="265" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="r_cytosol" LocationX="40" LocationY="297" />
+        <FluxReactionShape NodeReferenceModeAttrTag="full" FluxReactionRef="flux1" LocationX="273" LocationY="387" />
+        <FluxReactionShape NodeReferenceModeAttrTag="full" FluxReactionRef="flux2" LocationX="203" LocationY="157" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="rf_cytosol" LocationX="25" LocationY="223" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="r_nucleus" LocationX="59" LocationY="300" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="rB_nucleus" LocationX="48" LocationY="189" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="rf_nucleus" LocationX="43" LocationY="56" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="BS_nucleus" LocationX="42" LocationY="135" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="rfB_nucleus" LocationX="32" LocationY="421" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="laser_nucleus" LocationX="48" LocationY="265" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="r_cytosol" LocationX="40" LocationY="297" />
+        <FluxReactionShape NodeReferenceModeAttrTag="molecule" FluxReactionRef="flux1" LocationX="273" LocationY="387" />
+        <FluxReactionShape NodeReferenceModeAttrTag="molecule" FluxReactionRef="flux2" LocationX="203" LocationY="157" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="rf_cytosol" LocationX="25" LocationY="223" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="r_nucleus" LocationX="59" LocationY="300" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="rB_nucleus" LocationX="48" LocationY="189" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="rf_nucleus" LocationX="43" LocationY="56" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="BS_nucleus" LocationX="42" LocationY="135" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="rfB_nucleus" LocationX="32" LocationY="421" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="laser_nucleus" LocationX="48" LocationY="265" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="r_cytosol" LocationX="40" LocationY="297" />
+        <FluxReactionShape NodeReferenceModeAttrTag="rule" FluxReactionRef="flux1" LocationX="273" LocationY="387" />
+        <FluxReactionShape NodeReferenceModeAttrTag="rule" FluxReactionRef="flux2" LocationX="203" LocationY="157" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="rf_cytosol" LocationX="25" LocationY="223" />
+      </Diagram>
+      <Diagram Name="nucleus" Structure="nucleus">
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="r_nucleus" LocationX="85" LocationY="123" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="rB_nucleus" LocationX="367" LocationY="126" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="rf_nucleus" LocationX="83" LocationY="325" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="BS_nucleus" LocationX="233" LocationY="225" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="rfB_nucleus" LocationX="392" LocationY="340" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="laser_nucleus" LocationX="240" LocationY="39" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="full" SimpleReactionRef="RAN_FITC_binding" LocationX="234" LocationY="304" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="full" SimpleReactionRef="bleaching 2" LocationX="362" LocationY="199" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="full" SimpleReactionRef="RAN_binding" LocationX="228" LocationY="131" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="full" SimpleReactionRef="bleaching 1" LocationX="74" LocationY="212" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="r_nucleus" LocationX="85" LocationY="123" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="rB_nucleus" LocationX="367" LocationY="126" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="rf_nucleus" LocationX="83" LocationY="325" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="BS_nucleus" LocationX="233" LocationY="225" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="rfB_nucleus" LocationX="392" LocationY="340" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="laser_nucleus" LocationX="240" LocationY="39" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="molecule" SimpleReactionRef="RAN_FITC_binding" LocationX="234" LocationY="304" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="molecule" SimpleReactionRef="bleaching 2" LocationX="362" LocationY="199" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="molecule" SimpleReactionRef="RAN_binding" LocationX="228" LocationY="131" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="molecule" SimpleReactionRef="bleaching 1" LocationX="74" LocationY="212" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="r_nucleus" LocationX="85" LocationY="123" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="rB_nucleus" LocationX="367" LocationY="126" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="rf_nucleus" LocationX="83" LocationY="325" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="BS_nucleus" LocationX="233" LocationY="225" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="rfB_nucleus" LocationX="392" LocationY="340" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="laser_nucleus" LocationX="240" LocationY="39" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="rule" SimpleReactionRef="RAN_FITC_binding" LocationX="234" LocationY="304" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="rule" SimpleReactionRef="bleaching 2" LocationX="362" LocationY="199" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="rule" SimpleReactionRef="RAN_binding" LocationX="228" LocationY="131" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="rule" SimpleReactionRef="bleaching 1" LocationX="74" LocationY="212" />
+      </Diagram>
+      <Version Name="unnamed" KeyValue="31952850" BranchId="31869350" Archived="0" Date="16-Feb-2009 13:45:01" FromVersionable="false">
+        <Owner Name="arpitasingh" Identifier="31741099" />
+        <GroupAccess Type="1" />
+      </Version>
+      <ModelUnitSystem VolumeSubstanceUnit="uM.um3" MembraneSubstanceUnit="molecules" LumpedReactionSubstanceUnit="molecules" VolumeUnit="um3" AreaUnit="um2" LengthUnit="um" TimeUnit="s" />
+    </Model>
+    <SimulationSpec Name="compartmental" Stochastic="false" UseConcentration="true" RuleBased="false" MassConservationModelReduction="true" InsufficientIterations="false" InsufficientMaxMolecules="false">
+      <NetworkConstraints RbmMaxIteration="1" RbmMaxMoleculesPerSpecies="10" RbmSpeciesLimit="800" RbmReactionsLimit="2500" />
+      <Annotation />
+      <Geometry Name="non-spatial" Dimension="0">
+        <Extent X="10.0" Y="10.0" Z="10.0" />
+        <Origin X="0.0" Y="0.0" Z="0.0" />
+        <SubVolume Name="Compartment" Handle="0" Type="Compartmental" KeyValue="31899484" />
+        <Version Name="non-spatial" KeyValue="31899480" BranchId="31899481" Archived="0" Date="13-Feb-2009 04:38:56" FromVersionable="false">
+          <Owner Name="arpitasingh" Identifier="31741099" />
+          <GroupAccess Type="1" />
+        </Version>
+      </Geometry>
+      <GeometryContext>
+        <FeatureMapping Feature="cytosol" GeometryClass="Compartment" SubVolume="Compartment" Size="523.33">
+          <BoundariesTypes Xm="Flux" Xp="Flux" Ym="Flux" Yp="Flux" Zm="Flux" Zp="Flux" />
+        </FeatureMapping>
+        <FeatureMapping Feature="nucleus" GeometryClass="Compartment" SubVolume="Compartment" Size="130.8325">
+          <BoundariesTypes Xm="Flux" Xp="Flux" Ym="Flux" Yp="Flux" Zm="Flux" Zp="Flux" />
+        </FeatureMapping>
+        <FeatureMapping Feature="extracellular" GeometryClass="Compartment" SubVolume="Compartment" Size="865.0">
+          <BoundariesTypes Xm="Flux" Xp="Flux" Ym="Flux" Yp="Flux" Zm="Flux" Zp="Flux" />
+        </FeatureMapping>
+        <MembraneMapping Membrane="NM" SurfaceToVolumeRatio="0.19999999999999998" VolumeFraction="0.2" Size="26.1665" CalculateVoltage="false" SpecificCapacitance="1.0" InitialVoltage="0.0" GeometryClass="Compartment">
+          <BoundariesTypes Xm="Flux" Xp="Flux" Ym="Flux" Yp="Flux" Zm="Flux" Zp="Flux" />
+        </MembraneMapping>
+        <MembraneMapping Membrane="CM" SurfaceToVolumeRatio="0.15286721571474976" VolumeFraction="0.4306073247595304" Size="100.0" CalculateVoltage="false" SpecificCapacitance="1.0" InitialVoltage="0.0" GeometryClass="Compartment">
+          <BoundariesTypes Xm="Flux" Xp="Flux" Ym="Flux" Yp="Flux" Zm="Flux" Zp="Flux" />
+        </MembraneMapping>
+      </GeometryContext>
+      <ReactionContext>
+        <LocalizedCompoundSpec LocalizedCompoundRef="r_cytosol" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>0.0</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="rf_cytosol" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>0.0</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="r_nucleus" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>5.0</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="rB_nucleus" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>5.0</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="rf_nucleus" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>0.0</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="BS_nucleus" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>20.0</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="rfB_nucleus" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>0.0</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="laser_nucleus" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>0.0</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <ReactionSpec ReactionStepRef="RAN_FITC_binding" ReactionMapping="included" />
+        <ReactionSpec ReactionStepRef="bleaching 2" ReactionMapping="included" />
+        <ReactionSpec ReactionStepRef="RAN_binding" ReactionMapping="included" />
+        <ReactionSpec ReactionStepRef="bleaching 1" ReactionMapping="included" />
+        <ReactionSpec ReactionStepRef="flux1" ReactionMapping="included" />
+        <ReactionSpec ReactionStepRef="flux2" ReactionMapping="included" />
+      </ReactionContext>
+      <MathDescription Name="compartmental_generated">
+        <Constant Name="_F_">96480.0</Constant>
+        <Constant Name="_F_nmol_">9.648E-5</Constant>
+        <Constant Name="_K_GHK_">1.0E-9</Constant>
+        <Constant Name="_N_pmol_">6.02E11</Constant>
+        <Constant Name="_R_">8314.0</Constant>
+        <Constant Name="_T_">300.0</Constant>
+        <Constant Name="BS_nucleus_init">20.0</Constant>
+        <Constant Name="k1">10.0</Constant>
+        <Constant Name="k2">10.0</Constant>
+        <Constant Name="K_millivolts_per_volt">1000.0</Constant>
+        <Constant Name="Kf_RAN_binding">0.02</Constant>
+        <Constant Name="Kf_RAN_FITC_binding">0.02</Constant>
+        <Constant Name="KMOLE">0.0016611295681063123</Constant>
+        <Constant Name="Kr_RAN_binding">0.1</Constant>
+        <Constant Name="Kr_RAN_FITC_binding">0.1</Constant>
+        <Constant Name="laser_nucleus_init">0.0</Constant>
+        <Constant Name="r_cytosol_init">0.0</Constant>
+        <Constant Name="r_nucleus_init">5.0</Constant>
+        <Constant Name="rB_nucleus_init">5.0</Constant>
+        <Constant Name="rf_cytosol_init">0.0</Constant>
+        <Constant Name="rf_nucleus_init">0.0</Constant>
+        <Constant Name="rfB_nucleus_init">0.0</Constant>
+        <Constant Name="Size_CM">100.0</Constant>
+        <Constant Name="Size_cytosol">523.33</Constant>
+        <Constant Name="Size_extracellular">865.0</Constant>
+        <Constant Name="Size_NM">26.1665</Constant>
+        <Constant Name="Size_nucleus">130.8325</Constant>
+        <Constant Name="SurfToVol_CM">0.15286721571474976</Constant>
+        <Constant Name="SurfToVol_NM">0.19999999999999998</Constant>
+        <Constant Name="Vmax">50.0</Constant>
+        <Constant Name="Vmax2">50.0</Constant>
+        <Constant Name="VolFract_cytosol">0.4306073247595304</Constant>
+        <Constant Name="VolFract_nucleus">0.2</Constant>
+        <Constant Name="Voltage_CM">0.0</Constant>
+        <Constant Name="Voltage_NM">0.0</Constant>
+        <VolumeVariable Name="BS_nucleus" />
+        <VolumeVariable Name="r_nucleus" />
+        <VolumeVariable Name="rf_cytosol" />
+        <VolumeVariable Name="rf_nucleus" />
+        <VolumeVariable Name="rfB_nucleus" />
+        <Function Name="J_bleaching_1">(Vmax * rf_nucleus * laser_nucleus * ((t &gt; 10.0) &amp;&amp; (t &lt; 10.5)))</Function>
+        <Function Name="J_bleaching_2">(Vmax2 * rfB_nucleus * laser_nucleus * ((t &gt; 10.0) &amp;&amp; (t &lt; 10.5)))</Function>
+        <Function Name="J_flux1">(k1 * (r_cytosol - r_nucleus))</Function>
+        <Function Name="J_flux2">(k2 * (rf_cytosol - rf_nucleus))</Function>
+        <Function Name="J_RAN_binding">((BS_nucleus * Kf_RAN_binding * r_nucleus) - (Kr_RAN_binding * rB_nucleus))</Function>
+        <Function Name="J_RAN_FITC_binding">((rf_nucleus * Kf_RAN_FITC_binding * BS_nucleus) - (Kr_RAN_FITC_binding * rfB_nucleus))</Function>
+        <Function Name="K_laser_nucleus_total">(laser_nucleus_init * VolFract_nucleus * VolFract_cytosol)</Function>
+        <Function Name="K_r_cytosol_total">( - (BS_nucleus_init * VolFract_nucleus * VolFract_cytosol) + (rf_nucleus_init * VolFract_nucleus * VolFract_cytosol) + (r_nucleus_init * VolFract_nucleus * VolFract_cytosol) + (r_cytosol_init * (1.0 - VolFract_nucleus) * VolFract_cytosol) + (rf_cytosol_init * (1.0 - VolFract_nucleus) * VolFract_cytosol))</Function>
+        <Function Name="K_rB_nucleus_total">((rfB_nucleus_init * VolFract_nucleus * VolFract_cytosol) + (rB_nucleus_init * VolFract_nucleus * VolFract_cytosol) + (BS_nucleus_init * VolFract_nucleus * VolFract_cytosol))</Function>
+        <Function Name="KFlux_CM_mapping_cytosol">(SurfToVol_CM / (1.0 - VolFract_nucleus))</Function>
+        <Function Name="KFlux_CM_mapping_extracellular">(SurfToVol_CM * VolFract_cytosol / (1.0 - VolFract_cytosol))</Function>
+        <Function Name="KFlux_NM_mapping_cytosol">(SurfToVol_NM * VolFract_nucleus / (1.0 - VolFract_nucleus))</Function>
+        <Function Name="KFlux_NM_mapping_nucleus">SurfToVol_NM</Function>
+        <Function Name="laser_nucleus">(K_laser_nucleus_total / (VolFract_nucleus * VolFract_cytosol))</Function>
+        <Function Name="r_cytosol">(((BS_nucleus * VolFract_nucleus * VolFract_cytosol) - (rf_nucleus * VolFract_nucleus * VolFract_cytosol) - (r_nucleus * VolFract_nucleus * VolFract_cytosol) + K_r_cytosol_total - (rf_cytosol * (1.0 - VolFract_nucleus) * VolFract_cytosol)) / ((1.0 - VolFract_nucleus) * VolFract_cytosol))</Function>
+        <Function Name="rB_nucleus">(( - (rfB_nucleus * VolFract_nucleus * VolFract_cytosol) + K_rB_nucleus_total - (BS_nucleus * VolFract_nucleus * VolFract_cytosol)) / (VolFract_nucleus * VolFract_cytosol))</Function>
+        <CompartmentSubDomain Name="Compartment">
+          <BoundaryType Boundary="Xm" Type="Value" />
+          <BoundaryType Boundary="Xp" Type="Value" />
+          <BoundaryType Boundary="Ym" Type="Value" />
+          <BoundaryType Boundary="Yp" Type="Value" />
+          <BoundaryType Boundary="Zm" Type="Value" />
+          <BoundaryType Boundary="Zp" Type="Value" />
+          <OdeEquation Name="rf_cytosol" SolutionType="Unknown">
+            <Rate>- (KFlux_NM_mapping_cytosol * J_flux2)</Rate>
+            <Initial>rf_cytosol_init</Initial>
+          </OdeEquation>
+          <OdeEquation Name="r_nucleus" SolutionType="Unknown">
+            <Rate>((KFlux_NM_mapping_nucleus * J_flux1) - J_RAN_binding + J_bleaching_1)</Rate>
+            <Initial>r_nucleus_init</Initial>
+          </OdeEquation>
+          <OdeEquation Name="rf_nucleus" SolutionType="Unknown">
+            <Rate>((KFlux_NM_mapping_nucleus * J_flux2) - J_RAN_FITC_binding - J_bleaching_1)</Rate>
+            <Initial>rf_nucleus_init</Initial>
+          </OdeEquation>
+          <OdeEquation Name="BS_nucleus" SolutionType="Unknown">
+            <Rate>( - J_RAN_FITC_binding - J_RAN_binding)</Rate>
+            <Initial>BS_nucleus_init</Initial>
+          </OdeEquation>
+          <OdeEquation Name="rfB_nucleus" SolutionType="Unknown">
+            <Rate>(J_RAN_FITC_binding - J_bleaching_2)</Rate>
+            <Initial>rfB_nucleus_init</Initial>
+          </OdeEquation>
+        </CompartmentSubDomain>
+        <Version Name="compartmental_generated" KeyValue="31952845" BranchId="31899486" Archived="0" Date="16-Feb-2009 13:45:01" FromVersionable="false">
+          <Owner Name="arpitasingh" Identifier="31741099" />
+          <GroupAccess Type="1" />
+        </Version>
+      </MathDescription>
+      <Simulation Name="arpita compartmental simulation">
+        <SolverTaskDescription TaskType="Unsteady" UseSymbolicJacobian="false" Solver="IDA (Variable Order, Variable Time Step, ODE/DAE)">
+          <TimeBound StartTime="0.0" EndTime="10.0" />
+          <TimeStep DefaultTime="0.1" MinTime="1.0E-8" MaxTime="1.0" />
+          <ErrorTolerance Absolut="1.0E-9" Relative="1.0E-9" />
+          <OutputOptions KeepEvery="1" KeepAtMost="1000" />
+          <NumberProcessors>1</NumberProcessors>
+        </SolverTaskDescription>
+        <MathOverrides>
+          <Constant Name="Kr_RAN_FITC_binding">0.09</Constant>
+          <Constant Name="BS_nucleus_init">19.0</Constant>
+          <Constant Name="Kf_RAN_FITC_binding">0.015</Constant>
+        </MathOverrides>
+        <Version Name="arpita compartmental simulation" KeyValue="31952946" BranchId="31899549" Archived="0" Date="16-Feb-2009 13:45:01" FromVersionable="false">
+          <Owner Name="arpitasingh" Identifier="31741099" />
+          <GroupAccess Type="1" />
+        </Version>
+      </Simulation>
+      <Version Name="compartmental" KeyValue="31952903" BranchId="31899529" Archived="0" Date="16-Feb-2009 13:45:01" FromVersionable="false">
+        <Owner Name="arpitasingh" Identifier="31741099" />
+        <GroupAccess Type="1" />
+      </Version>
+      <MicroscopeMeasurement Name="fluor">
+        <ConvolutionKernel Type="ProjectionZKernel" />
+      </MicroscopeMeasurement>
+    </SimulationSpec>
+    <SimulationSpec Name="geometry" Stochastic="false" UseConcentration="true" RuleBased="false" MassConservationModelReduction="true" InsufficientIterations="false" InsufficientMaxMolecules="false" CharacteristicSize="0.14276470588235293">
+      <NetworkConstraints RbmMaxIteration="1" RbmMaxMoleculesPerSpecies="10" RbmSpeciesLimit="800" RbmReactionsLimit="2500" />
+      <Annotation />
+      <Geometry Name="N1E_for_PIP2" Dimension="2">
+        <Annotation>cloned from 'N1E_for_PIP2' owned by user les</Annotation>
+        <Extent X="48.54" Y="71.24" Z="1.0" />
+        <Origin X="0.0" Y="0.0" Z="0.0" />
+        <Image Name="N1E for PIP2">
+          <Annotation>cloned from 'N1E for PIP2' owned by user les
+NoName</Annotation>
+          <ImageData X="340" Y="499" Z="1" CompressedSize="2620">789CEDDDD976E24A104451FF797DBAEF35D00C42430D91754AAA380FBD6C1E9ACCBD300601F2CF8F73CECD515A899EE9ECAD995AB5AD7553B3B6B4696AD4FAB651AD5A9D4DF5D934209B0664D4808C1AD0F67DAA596BDB31356A6536D5B7676AD4BA6C1A905103326A40BBA82F5B33979483EADB6E6146D557686AD48C4A4D8D9A914DF5F9861A904D03326A40A5A8763DAEC2D4AA4755A15A75379B0664D3806C1A904D03B2A83E930664D3808CAAAFCCD4A839D934209BEAB3A93E9BEAB3A9BC32529BE664537985A4363DAA14D4A48799B4BE758D7251933EDBF03069755B22BE99D6B72152416AD4474B90C71755A436FD59F3787C55476AD325DCEBA25A529BD6C219753B9BCA8B20B5A94DD5D9549F4DE58590DAD4A6E2624CA7460D229DD9348AD4A6465566537D369567507551A21393FA075F5F1CE9A4A681A0B3A20693CEC6DA8173365393CAEB453A8D6937D079483B9AD29B76AB1FE934A61D49A740EDEA39076A7FD2AB9B02A217476544D3FD9D96F4F22161A20FD72B665379261507839AD4A487D19EB768046DB4E63D5A411A8DF968E343C1678CA65C447328A20DBFA241DAA305BFA3455AA3FDD6A24D1AA3F9DE7A4E439BB4C4122E7B8E04AB3445232E7ACE04B3B4441B2E7B0E05BB3444137EF59A0A96A90F165CE935146D5319AA7718AD531C0D9619CD54148D9519CD54126D951BED941D0D55104D9517AD54148D9517AD54148D95158D5416AD9517AD5416AD9517AD5418CD95136D541C0D96114D94DF690E4CB34C25FD9CE6E0140C95DB6B58962B27DAEAB8F7F7F3A633908E6F4A0395478B1D470B1547831D44F35444931DB598F5E704BFA360B1E33646E5C40E83A08A5A9D9465DB0D412A6E65521A6E2784A8B8954969B8ED10A1F25626A5E536237C2AFA1A75E4A7525108BFBFBFD2FFEF3CBFF343487F17455C07EDB653C0B64BD118541A6E27F1A62B9E31ACB4DB4ED23DB741F5A834DC66CA25F74125AAEF63936C7B353BBECA106D66A5B9729240169A36A0D25C5929481F48D9A4F5A8B456561AD29A4C2A06BD306A0366AB6825EAE02F42D782B66336A92E46FFFF1B1AF2D500A495AA5FD194F786F0BC18EA30A41A549AF3AFDAD96DBAD948A412541A74345281290D3A1CE9054C070395A09E52349454A07A42519B0690469B16A37EEEC3910EF26C5460FAB90F283AEA7D693D2A4D5A0BDA47B414F57DA5F399F6222D32FD58C9A412D3216EA7B5A4439BB2A8E38B16A27EAE7526D2BEA645A81FAFA09C897474D37FBB9D88B4AF689D29F391D3D390569AF6AF5AB43F6911AA41F5A826D59B52A897368558CF675A8CDA1BF77CA2D5C7FB4DAA37ED845A4D4A9AD60F3D36E9694C3F7634693BEA72CDA149CF61FABE683C67A3284B9A6DDAFBB16913A94DF5A4B06936EA894469D26C549316349C692B69A24587336D16B5E92549C7329D8A74F4E7F723919699C6D25E8534DB34853F2F5590269AF356E1CC638BDA3480740CD4214C65A26398E6A1C6BEB87735D22CD3E7E2A393265AF31E6DAA144D34E6A3AC59032C2F4CCA9A4A45134DF98C34D592269AF25995A9045A2C3A8E69E6B8AB1A839126DAF25905EADA6503908E839A3DF0B7844937CA9EF85B622CD1340EEABADEDAC4C2BF2721D77C44633E5AB3CBDC7A38D244633EDAA0CAD9C0A41B6D531DAE3016683A83E9F73B2305A691A489B6FCD736E9DA29655A4D43498741DD143D46198E34D198F70A491767EC1D8C34D19AF77A9A8693265AF35E37D378D0614C17A82538E391261AF35E3169DD51A93EA489D6BCB598A9046840D244732E3D0B9C4A4D7B919ED9B4F4A42836CD632A20B5A9BE6EA4F398F6239DC5B4A3E82CA673917631ED4A9A68D1DFDDC3D1E7344DB4680FD3CEA403A0869B7627C54D574632A99C546BDAD933F1A4BF6B4399B4ADB5A96C2A27559AF6E5BC4593FEAE0D756AD1C4A3AE8CA423B5E9B3B39BD2A86B239D9D744453116A5FC7F70624D5A0F6445C34A0A8C4B49FE0570382269BCA41FF3A3329857A34954DE5A4E7361D52D4A62392DAF4BB539BF647CD9AEADC37D4DEA87943D9542D7AF69FFDAEA619E30C7A428EB2C632FDD1FCF5C268B4FDC622551D3B8D56DB6F28519BEA456D6AD38DC6321591CE819A398CCCF4F28FA6F247B1A91834D9540E9A2E737F7A49D300A5B2C621BD8A699CE86FF12C2A52DA340CB57C1219E9454D2B06D191E2A8A3905EC93402B56A0EA5298D3A04E85F173215A3D6CFA134A55187004D360D203DFD6722DF1B43D4A6C3935E02B5790A9BAA454F7F768945B867BA1CE9FFA8B77F40D10B9ADE22452F6A8A8A5ED314053DFDA9CF36A238FF0A201DC2B400557ED511A667428DB8E6EB9A66A1865CF13CA6B787AD3D48AF6C9AD6E81EBC71A0E9DAA6297DE3C56ADE0A211D0CF5E0027D41A823B1762FCC7462D438D37955234D67450D359D133596744AD468529B5A555007D2D950BB90CE65DA87742E53A30664527D3695D787D4A6466DCBA6FA7A99CEA4DACF741ED48EA6D3A0F6349D04B52BE91CA67D49A730ED4C6A539BD6D49BD4A636ADA9BBE904A83695D79FD4A6362D0F30BD3A2A417A715486F4DAA836D547995E181523B5A9510BB2A93ED0F4AAA824E9455159D25B34813C1AF42FDA401DEDF9176DA08EF6BC452368A335EFD10AD268CC473483341AF35FB48332DAF2190D218CA67C454BE8A2255FD112BA68C9B7680A55B4E37BB4852ADAF13DDA4214CDF8118D218A66FC8CD69044232EA23924D188CB680F4134E177B4487BB4E077B4487BB4E04A34497334E04A34497334E04A34497334E04A34497334E04A34496334DF7AB44A5334DE56B44B4BB4DD56B44B4BB4DD56B44B4BB4DD56B44B4334DD66344C4334DD66344C7DB4DC76B44C7DB4DC76B44C7DB4DC4E344D6DB4DB5EB44D6DB4DB5EB44D6DB4DB6E344E6534DB7EB44E5534DA51B44F4DB4D951B44F4DB4594634517134584EB4516134575634526134577634544134557EB4547EB4547EB4547EB45441345576345449B45566345359B4565EB4526134575634526134575634526134574EB45169B4574EB45169B4574634517134D871B45079B4D871B45079B45846345179B4D871B45079B4D871B4505534DA41344F5DB4DA7EB44E6DB4DB6E344E7534DC4E344D4334DD66344C4BB4DD56B44B5334DE46344B5BB4DE6A344A6334DF5AB4497334E04A34497BB4E077B4487BB4E077B488209A7019ED218946FC8CD6104533BE475BC8A221DFA22974D192AF68096134E52B5A42184DF98A961046533EA32184D194CF680865B4E5331A42196DF98C8650465BBEA22584D194AF68096134E57BB4852ADAF1231A4315EDF81E6DA18A767C8FB6904543FE8B7650465BDEA211D4D9332093EA336940F6D467D2804C1A9051F5D934209BEAB36940360DC8A401D934209BEAB36840FFB635A9AEE7B636D5F5DCD6A821D934209BEA336944260DC8A401D93420A30614843A39AB510332AA3E9BEAB3A93E930664527D060DC8A4FA849A367DA4237D7B2DC1695CE925C6CBA601D934209BEAB3A83E930665D3806C1A9051F5D9549F4D23B2694036D567D2904C1A904D03B26940160DC8A401D934209B0664537D260DC8A40199342093C664D390D23A2C3DD605B26944AF9300C08338E79C73CE39E79C73CE3947F61F5D3DBA9D</ImageData>
+          <PixelClass Name="EC" ImagePixelValue="0" KeyValue="31952826" />
+          <PixelClass Name="Cyt" ImagePixelValue="127" KeyValue="31952827" />
+          <PixelClass Name="Nuc" ImagePixelValue="255" KeyValue="31952828" />
+          <Version Name="N1E for PIP2" KeyValue="31952820" BranchId="31952821" Archived="0" Date="16-Feb-2009 13:45:00" FromVersionable="false">
+            <Owner Name="arpitasingh" Identifier="31741099" />
+            <GroupAccess Type="1" />
+            <Annotation>cloned from 'N1E for PIP2' owned by user les
+NoName</Annotation>
+          </Version>
+        </Image>
+        <SubVolume Name="EC" Handle="0" Type="Image" ImagePixelValue="0" KeyValue="31952832" />
+        <SubVolume Name="Cyt" Handle="1" Type="Image" ImagePixelValue="127" KeyValue="31952833" />
+        <SubVolume Name="Nuc" Handle="2" Type="Image" ImagePixelValue="255" KeyValue="31952834" />
+        <SurfaceClass Name="Cyt_EC_membrane" SubVolume1Ref="Cyt" SubVolume2Ref="EC" />
+        <SurfaceClass Name="Cyt_Nuc_membrane" SubVolume1Ref="Cyt" SubVolume2Ref="Nuc" />
+        <SurfaceDescription NumSamplesX="83" NumSamplesY="122" NumSamplesZ="1" CutoffFrequency="0.3">
+          <VolumeRegion Name="Cyt1" RegionID="1" SubVolume="Cyt" Size="1316.6987209030435" Unit="um2" />
+          <VolumeRegion Name="EC2" RegionID="2" SubVolume="EC" Size="0.34851739568635354" Unit="um2" />
+          <VolumeRegion Name="Cyt3" RegionID="3" SubVolume="Cyt" Size="0.34851739568635354" Unit="um2" />
+          <VolumeRegion Name="Nuc4" RegionID="4" SubVolume="Nuc" Size="326.56079975811326" Unit="um2" />
+          <VolumeRegion Name="EC0" RegionID="0" SubVolume="EC" Size="1814.03304454747" Unit="um2" />
+          <MembraneRegion Name="membrane_EC0_Cyt1" VolumeRegion1="Cyt1" VolumeRegion2="EC0" Size="203.00288267612657" Unit="um" />
+          <MembraneRegion Name="membrane_Cyt1_Nuc4" VolumeRegion1="Nuc4" VolumeRegion2="Cyt1" Size="65.82913492935806" Unit="um" />
+          <MembraneRegion Name="membrane_Cyt1_EC2" VolumeRegion1="EC2" VolumeRegion2="Cyt1" Size="0.14134467371764714" Unit="um" />
+          <MembraneRegion Name="membrane_EC0_Cyt3" VolumeRegion1="Cyt3" VolumeRegion2="EC0" Size="0.5728754934943135" Unit="um" />
+        </SurfaceDescription>
+        <Version Name="N1E_for_PIP2" KeyValue="31952829" BranchId="31952830" Archived="0" Date="16-Feb-2009 13:45:01" FromVersionable="false">
+          <Owner Name="arpitasingh" Identifier="31741099" />
+          <GroupAccess Type="1" />
+          <Annotation>cloned from 'N1E_for_PIP2' owned by user les</Annotation>
+        </Version>
+      </Geometry>
+      <GeometryContext>
+        <FeatureMapping Feature="cytosol" GeometryClass="Cyt" SubVolume="Cyt">
+          <BoundariesTypes Xm="Flux" Xp="Flux" Ym="Flux" Yp="Flux" Zm="Flux" Zp="Flux" />
+        </FeatureMapping>
+        <FeatureMapping Feature="nucleus" GeometryClass="Nuc" SubVolume="Nuc">
+          <BoundariesTypes Xm="Flux" Xp="Flux" Ym="Flux" Yp="Flux" Zm="Flux" Zp="Flux" />
+        </FeatureMapping>
+        <FeatureMapping Feature="extracellular" GeometryClass="EC" SubVolume="EC">
+          <BoundariesTypes Xm="Flux" Xp="Flux" Ym="Flux" Yp="Flux" Zm="Flux" Zp="Flux" />
+        </FeatureMapping>
+        <MembraneMapping Membrane="NM" SurfaceToVolumeRatio="1.0" VolumeFraction="0.2" CalculateVoltage="false" SpecificCapacitance="1.0" InitialVoltage="0.0" GeometryClass="Cyt_Nuc_membrane">
+          <BoundariesTypes Xm="Flux" Xp="Flux" Ym="Flux" Yp="Flux" Zm="Flux" Zp="Flux" />
+        </MembraneMapping>
+        <MembraneMapping Membrane="CM" SurfaceToVolumeRatio="1.0" VolumeFraction="0.2" CalculateVoltage="false" SpecificCapacitance="1.0" InitialVoltage="0.0" GeometryClass="Cyt_EC_membrane">
+          <BoundariesTypes Xm="Flux" Xp="Flux" Ym="Flux" Yp="Flux" Zm="Flux" Zp="Flux" />
+        </MembraneMapping>
+      </GeometryContext>
+      <ReactionContext>
+        <LocalizedCompoundSpec LocalizedCompoundRef="r_cytosol" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>0.0</InitialConcentration>
+          <Diffusion>10.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="rf_cytosol" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>0.0</InitialConcentration>
+          <Diffusion>10.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="r_nucleus" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>10.0</InitialConcentration>
+          <Diffusion>10.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="rB_nucleus" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>0.0</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="rf_nucleus" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>10.0</InitialConcentration>
+          <Diffusion>10.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="BS_nucleus" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>(20.0 * ((x &gt; 27.5) &amp;&amp; (x &lt; 32.5) &amp;&amp; (y &gt; 27.5) &amp;&amp; (y &lt; 32.5)))</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="rfB_nucleus" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>0.0</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="laser_nucleus" ForceConstant="true" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>(((( - 30.0 + x) ^ 2.0) + (( - 30.0 + y) ^ 2.0)) &lt; 64.0)</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <ReactionSpec ReactionStepRef="RAN_FITC_binding" ReactionMapping="included" />
+        <ReactionSpec ReactionStepRef="bleaching 2" ReactionMapping="included" />
+        <ReactionSpec ReactionStepRef="RAN_binding" ReactionMapping="included" />
+        <ReactionSpec ReactionStepRef="bleaching 1" ReactionMapping="included" />
+        <ReactionSpec ReactionStepRef="flux1" ReactionMapping="included" />
+        <ReactionSpec ReactionStepRef="flux2" ReactionMapping="included" />
+      </ReactionContext>
+      <MathDescription Name="geometry_generated">
+        <Constant Name="_F_">96480.0</Constant>
+        <Constant Name="_F_nmol_">9.648E-5</Constant>
+        <Constant Name="_K_GHK_">1.0E-9</Constant>
+        <Constant Name="_N_pmol_">6.02E11</Constant>
+        <Constant Name="_R_">8314.0</Constant>
+        <Constant Name="_T_">300.0</Constant>
+        <Constant Name="k1">10.0</Constant>
+        <Constant Name="k2">10.0</Constant>
+        <Constant Name="K_millivolts_per_volt">1000.0</Constant>
+        <Constant Name="Kf_RAN_binding">0.02</Constant>
+        <Constant Name="Kf_RAN_FITC_binding">0.02</Constant>
+        <Constant Name="KMOLE">0.0016611295681063123</Constant>
+        <Constant Name="Kr_RAN_binding">0.1</Constant>
+        <Constant Name="Kr_RAN_FITC_binding">0.1</Constant>
+        <Constant Name="r_cytosol_diffusionRate">10.0</Constant>
+        <Constant Name="r_cytosol_init">0.0</Constant>
+        <Constant Name="r_nucleus_diffusionRate">10.0</Constant>
+        <Constant Name="r_nucleus_init">10.0</Constant>
+        <Constant Name="rB_nucleus_init">0.0</Constant>
+        <Constant Name="rf_cytosol_diffusionRate">10.0</Constant>
+        <Constant Name="rf_cytosol_init">0.0</Constant>
+        <Constant Name="rf_nucleus_diffusionRate">10.0</Constant>
+        <Constant Name="rf_nucleus_init">10.0</Constant>
+        <Constant Name="rfB_nucleus_init">0.0</Constant>
+        <Constant Name="Vmax">50.0</Constant>
+        <Constant Name="Vmax2">50.0</Constant>
+        <Constant Name="Voltage_CM">0.0</Constant>
+        <Constant Name="Voltage_NM">0.0</Constant>
+        <VolumeVariable Name="BS" />
+        <VolumeVariable Name="r" />
+        <VolumeVariable Name="rf" />
+        <VolumeVariable Name="rfB" />
+        <Function Name="BS_nucleus_init">(20.0 * ((x &gt; 27.5) &amp;&amp; (x &lt; 32.5) &amp;&amp; (y &gt; 27.5) &amp;&amp; (y &lt; 32.5)))</Function>
+        <Function Name="J_bleaching_1">(Vmax * rf * laser_nucleus * ((t &gt; 10.0) &amp;&amp; (t &lt; 10.5)))</Function>
+        <Function Name="J_bleaching_2">(Vmax2 * rfB * laser_nucleus * ((t &gt; 10.0) &amp;&amp; (t &lt; 10.5)))</Function>
+        <Function Name="J_flux1">(k1 * (r_OUTSIDE - r_INSIDE))</Function>
+        <Function Name="J_flux2">(k2 * (rf_OUTSIDE - rf_INSIDE))</Function>
+        <Function Name="J_RAN_binding">((BS * Kf_RAN_binding * r) - (Kr_RAN_binding * rB_nucleus))</Function>
+        <Function Name="J_RAN_FITC_binding">((rf * Kf_RAN_FITC_binding * BS) - (Kr_RAN_FITC_binding * rfB))</Function>
+        <Function Name="K_rB_nucleus_total">(rfB_nucleus_init + rB_nucleus_init + BS_nucleus_init)</Function>
+        <Function Name="laser_nucleus">(((( - 30.0 + x) ^ 2.0) + (( - 30.0 + y) ^ 2.0)) &lt; 64.0)</Function>
+        <Function Name="laser_nucleus_init">(((( - 30.0 + x) ^ 2.0) + (( - 30.0 + y) ^ 2.0)) &lt; 64.0)</Function>
+        <Function Name="rB_nucleus">( - rfB + K_rB_nucleus_total - BS)</Function>
+        <CompartmentSubDomain Name="EC">
+          <BoundaryType Boundary="Xm" Type="Flux" />
+          <BoundaryType Boundary="Xp" Type="Flux" />
+          <BoundaryType Boundary="Ym" Type="Flux" />
+          <BoundaryType Boundary="Yp" Type="Flux" />
+          <BoundaryType Boundary="Zm" Type="Value" />
+          <BoundaryType Boundary="Zp" Type="Value" />
+          <OdeEquation Name="BS" SolutionType="Unknown">
+            <Rate>0.0</Rate>
+            <Initial>0.0</Initial>
+          </OdeEquation>
+          <OdeEquation Name="rfB" SolutionType="Unknown">
+            <Rate>0.0</Rate>
+            <Initial>0.0</Initial>
+          </OdeEquation>
+          <PdeEquation Name="r" SolutionType="Unknown">
+            <Rate>0.0</Rate>
+            <Diffusion>r_cytosol_diffusionRate</Diffusion>
+            <Initial>0.0</Initial>
+          </PdeEquation>
+          <PdeEquation Name="rf" SolutionType="Unknown">
+            <Rate>0.0</Rate>
+            <Diffusion>rf_cytosol_diffusionRate</Diffusion>
+            <Initial>0.0</Initial>
+          </PdeEquation>
+        </CompartmentSubDomain>
+        <CompartmentSubDomain Name="Cyt">
+          <BoundaryType Boundary="Xm" Type="Flux" />
+          <BoundaryType Boundary="Xp" Type="Flux" />
+          <BoundaryType Boundary="Ym" Type="Flux" />
+          <BoundaryType Boundary="Yp" Type="Flux" />
+          <BoundaryType Boundary="Zm" Type="Value" />
+          <BoundaryType Boundary="Zp" Type="Value" />
+          <OdeEquation Name="BS" SolutionType="Unknown">
+            <Rate>0.0</Rate>
+            <Initial>0.0</Initial>
+          </OdeEquation>
+          <OdeEquation Name="rfB" SolutionType="Unknown">
+            <Rate>0.0</Rate>
+            <Initial>0.0</Initial>
+          </OdeEquation>
+          <PdeEquation Name="r" SolutionType="Unknown">
+            <Rate>0.0</Rate>
+            <Diffusion>r_cytosol_diffusionRate</Diffusion>
+            <Initial>r_cytosol_init</Initial>
+          </PdeEquation>
+          <PdeEquation Name="rf" SolutionType="Unknown">
+            <Rate>0.0</Rate>
+            <Diffusion>rf_cytosol_diffusionRate</Diffusion>
+            <Initial>rf_cytosol_init</Initial>
+          </PdeEquation>
+        </CompartmentSubDomain>
+        <CompartmentSubDomain Name="Nuc">
+          <BoundaryType Boundary="Xm" Type="Flux" />
+          <BoundaryType Boundary="Xp" Type="Flux" />
+          <BoundaryType Boundary="Ym" Type="Flux" />
+          <BoundaryType Boundary="Yp" Type="Flux" />
+          <BoundaryType Boundary="Zm" Type="Value" />
+          <BoundaryType Boundary="Zp" Type="Value" />
+          <OdeEquation Name="BS" SolutionType="Unknown">
+            <Rate>( - J_RAN_FITC_binding - J_RAN_binding)</Rate>
+            <Initial>BS_nucleus_init</Initial>
+          </OdeEquation>
+          <OdeEquation Name="rfB" SolutionType="Unknown">
+            <Rate>(J_RAN_FITC_binding - J_bleaching_2)</Rate>
+            <Initial>rfB_nucleus_init</Initial>
+          </OdeEquation>
+          <PdeEquation Name="r" SolutionType="Unknown">
+            <Rate>( - J_RAN_binding + J_bleaching_1)</Rate>
+            <Diffusion>r_nucleus_diffusionRate</Diffusion>
+            <Initial>r_nucleus_init</Initial>
+          </PdeEquation>
+          <PdeEquation Name="rf" SolutionType="Unknown">
+            <Rate>( - J_RAN_FITC_binding - J_bleaching_1)</Rate>
+            <Diffusion>rf_nucleus_diffusionRate</Diffusion>
+            <Initial>rf_nucleus_init</Initial>
+          </PdeEquation>
+        </CompartmentSubDomain>
+        <MembraneSubDomain Name="Cyt_EC_membrane" InsideCompartment="Cyt" OutsideCompartment="EC">
+          <BoundaryType Boundary="Xm" Type="Value" />
+          <BoundaryType Boundary="Xp" Type="Value" />
+          <BoundaryType Boundary="Ym" Type="Value" />
+          <BoundaryType Boundary="Yp" Type="Value" />
+          <BoundaryType Boundary="Zm" Type="Value" />
+          <BoundaryType Boundary="Zp" Type="Value" />
+          <JumpCondition Name="r">
+            <InFlux>0.0</InFlux>
+            <OutFlux>0.0</OutFlux>
+          </JumpCondition>
+          <JumpCondition Name="rf">
+            <InFlux>0.0</InFlux>
+            <OutFlux>0.0</OutFlux>
+          </JumpCondition>
+        </MembraneSubDomain>
+        <MembraneSubDomain Name="Cyt_Nuc_membrane" InsideCompartment="Nuc" OutsideCompartment="Cyt">
+          <BoundaryType Boundary="Xm" Type="Value" />
+          <BoundaryType Boundary="Xp" Type="Value" />
+          <BoundaryType Boundary="Ym" Type="Value" />
+          <BoundaryType Boundary="Yp" Type="Value" />
+          <BoundaryType Boundary="Zm" Type="Value" />
+          <BoundaryType Boundary="Zp" Type="Value" />
+          <JumpCondition Name="r">
+            <InFlux>J_flux1</InFlux>
+            <OutFlux>- J_flux1</OutFlux>
+          </JumpCondition>
+          <JumpCondition Name="rf">
+            <InFlux>J_flux2</InFlux>
+            <OutFlux>- J_flux2</OutFlux>
+          </JumpCondition>
+        </MembraneSubDomain>
+        <Version Name="geometry_generated" KeyValue="31953022" BranchId="31952848" Archived="0" Date="16-Feb-2009 13:49:14" FromVersionable="false">
+          <Owner Name="arpitasingh" Identifier="31741099" />
+          <GroupAccess Type="1" />
+        </Version>
+      </MathDescription>
+      <Simulation Name="Simulation0">
+        <SolverTaskDescription TaskType="Unsteady" UseSymbolicJacobian="false" Solver="Finite Volume, Regular Grid">
+          <TimeBound StartTime="0.0" EndTime="30.0" />
+          <TimeStep DefaultTime="0.001" MinTime="1.0E-8" MaxTime="1.0" />
+          <ErrorTolerance Absolut="1.0E-9" Relative="1.0E-9" />
+          <OutputOptions KeepEvery="1000" KeepAtMost="1000" />
+          <NumberProcessors>1</NumberProcessors>
+        </SolverTaskDescription>
+        <MathOverrides />
+        <MeshSpecification>
+          <Size X="83" Y="122" Z="1" />
+        </MeshSpecification>
+        <Version Name="Simulation0" KeyValue="31953045" BranchId="31952949" Archived="0" Date="16-Feb-2009 13:49:15" FromVersionable="false">
+          <Owner Name="arpitasingh" Identifier="31741099" />
+          <GroupAccess Type="1" />
+          <ParentSimRef KeyValue="31952948" />
+        </Version>
+      </Simulation>
+      <SpatialObjects>
+        <SpatialObject Name="vobj_Cyt1" Type="Volume" subVolume="Cyt" regionId="1">
+          <QuantityCategoryList>
+            <QuantityCategory Name="VolumeCentroid" Enabled="false" />
+            <QuantityCategory Name="InteriorVelocity" Enabled="false" />
+            <QuantityCategory Name="VolumeRegionSize" Enabled="true" />
+          </QuantityCategoryList>
+        </SpatialObject>
+        <SpatialObject Name="vobj_EC2" Type="Volume" subVolume="EC" regionId="2">
+          <QuantityCategoryList>
+            <QuantityCategory Name="VolumeCentroid" Enabled="false" />
+            <QuantityCategory Name="InteriorVelocity" Enabled="false" />
+            <QuantityCategory Name="VolumeRegionSize" Enabled="true" />
+          </QuantityCategoryList>
+        </SpatialObject>
+        <SpatialObject Name="vobj_Cyt3" Type="Volume" subVolume="Cyt" regionId="3">
+          <QuantityCategoryList>
+            <QuantityCategory Name="VolumeCentroid" Enabled="false" />
+            <QuantityCategory Name="InteriorVelocity" Enabled="false" />
+            <QuantityCategory Name="VolumeRegionSize" Enabled="true" />
+          </QuantityCategoryList>
+        </SpatialObject>
+        <SpatialObject Name="vobj_Nuc4" Type="Volume" subVolume="Nuc" regionId="4">
+          <QuantityCategoryList>
+            <QuantityCategory Name="VolumeCentroid" Enabled="false" />
+            <QuantityCategory Name="InteriorVelocity" Enabled="false" />
+            <QuantityCategory Name="VolumeRegionSize" Enabled="true" />
+          </QuantityCategoryList>
+        </SpatialObject>
+        <SpatialObject Name="vobj_EC0" Type="Volume" subVolume="EC" regionId="0">
+          <QuantityCategoryList>
+            <QuantityCategory Name="VolumeCentroid" Enabled="false" />
+            <QuantityCategory Name="InteriorVelocity" Enabled="false" />
+            <QuantityCategory Name="VolumeRegionSize" Enabled="true" />
+          </QuantityCategoryList>
+        </SpatialObject>
+        <SpatialObject Name="sobj_Cyt1_EC0" Type="Surface" subVolumeInside="Cyt" regionIdInside="1" subVolumeOutside="EC" regionIdOutside="0">
+          <QuantityCategoryList>
+            <QuantityCategory Name="SurfaceNormal" Enabled="false" />
+            <QuantityCategory Name="SurfaceVelocity" Enabled="false" />
+            <QuantityCategory Name="DistanceToSurface" Enabled="false" />
+            <QuantityCategory Name="DirectionToSurface" Enabled="false" />
+            <QuantityCategory Name="SurfaceSize" Enabled="true" />
+          </QuantityCategoryList>
+        </SpatialObject>
+        <SpatialObject Name="sobj_Nuc4_Cyt1" Type="Surface" subVolumeInside="Nuc" regionIdInside="4" subVolumeOutside="Cyt" regionIdOutside="1">
+          <QuantityCategoryList>
+            <QuantityCategory Name="SurfaceNormal" Enabled="false" />
+            <QuantityCategory Name="SurfaceVelocity" Enabled="false" />
+            <QuantityCategory Name="DistanceToSurface" Enabled="false" />
+            <QuantityCategory Name="DirectionToSurface" Enabled="false" />
+            <QuantityCategory Name="SurfaceSize" Enabled="true" />
+          </QuantityCategoryList>
+        </SpatialObject>
+        <SpatialObject Name="sobj_EC2_Cyt1" Type="Surface" subVolumeInside="EC" regionIdInside="2" subVolumeOutside="Cyt" regionIdOutside="1">
+          <QuantityCategoryList>
+            <QuantityCategory Name="SurfaceNormal" Enabled="false" />
+            <QuantityCategory Name="SurfaceVelocity" Enabled="false" />
+            <QuantityCategory Name="DistanceToSurface" Enabled="false" />
+            <QuantityCategory Name="DirectionToSurface" Enabled="false" />
+            <QuantityCategory Name="SurfaceSize" Enabled="true" />
+          </QuantityCategoryList>
+        </SpatialObject>
+        <SpatialObject Name="sobj_Cyt3_EC0" Type="Surface" subVolumeInside="Cyt" regionIdInside="3" subVolumeOutside="EC" regionIdOutside="0">
+          <QuantityCategoryList>
+            <QuantityCategory Name="SurfaceNormal" Enabled="false" />
+            <QuantityCategory Name="SurfaceVelocity" Enabled="false" />
+            <QuantityCategory Name="DistanceToSurface" Enabled="false" />
+            <QuantityCategory Name="DirectionToSurface" Enabled="false" />
+            <QuantityCategory Name="SurfaceSize" Enabled="true" />
+          </QuantityCategoryList>
+        </SpatialObject>
+      </SpatialObjects>
+      <Version Name="geometry" KeyValue="31953024" BranchId="31952925" Archived="0" Date="16-Feb-2009 13:49:15" FromVersionable="false">
+        <Owner Name="arpitasingh" Identifier="31741099" />
+        <GroupAccess Type="1" />
+      </Version>
+      <MicroscopeMeasurement Name="fluor">
+        <ConvolutionKernel Type="ProjectionZKernel" />
+      </MicroscopeMeasurement>
+    </SimulationSpec>
+    <Version Name="simulations" KeyValue="31953047" BranchId="31899467" Archived="0" Date="16-Feb-2009 13:49:15" FromVersionable="false">
+      <Owner Name="arpitasingh" Identifier="31741099" />
+      <GroupAccess Type="1" />
+    </Version>
+    <pathwayModel>
+      <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:bp="http://www.biopax.org/release/biopax-level3.owl#" version="3.0" />
+    </pathwayModel>
+    <relationshipModel>
+      <RMNS version="3.0" />
+    </relationshipModel>
+    <vcmetadata>
+      <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" />
+      <nonrdfAnnotationList>
+        <nonrdfAnnotation vcid="Species(BS)">
+          <freetext>Binding_sites</freetext>
+        </nonrdfAnnotation>
+        <nonrdfAnnotation vcid="Species(rfB)">
+          <freetext>RAN_FITC_bound</freetext>
+        </nonrdfAnnotation>
+        <nonrdfAnnotation vcid="Species(laser)">
+          <freetext>Light</freetext>
+        </nonrdfAnnotation>
+        <nonrdfAnnotation vcid="Species(r)">
+          <freetext>RAN</freetext>
+        </nonrdfAnnotation>
+        <nonrdfAnnotation vcid="Species(rB)">
+          <freetext>RAN-FITC</freetext>
+        </nonrdfAnnotation>
+        <nonrdfAnnotation vcid="Species(rf)">
+          <freetext>RAN_bound</freetext>
+        </nonrdfAnnotation>
+      </nonrdfAnnotationList>
+      <uriBindingList />
+    </vcmetadata>
+  </BioModel>
+</vcml>
+

@@ -1,0 +1,220 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--This biomodel was generated in VCML Version Alpha_Version_7.4.0_build_87-->
+<vcml xmlns="http://sourceforge.net/projects/vcell/vcml" Version="Alpha_Version_7.4.0_build_87">
+  <BioModel Name="BE306_Group5_proj6_prob2">
+    <Model Name="unnamed">
+      <ModelParameters>
+        <Parameter Name="kd" Role="user defined" Unit="s-1">30.0</Parameter>
+        <Parameter Name="r" Role="user defined" Unit="um.s-1">100.0</Parameter>
+        <Parameter Name="n" Role="user defined" Unit="1">5.8</Parameter>
+        <Parameter Name="rA" Role="user defined" Unit="um.s-1">5000.0</Parameter>
+        <Parameter Name="Kb" Role="user defined" Unit="uM-2">3.6E-6</Parameter>
+        <Parameter Name="alpha" Role="user defined" Unit="1">((r * (Kb ^ (1.0 / n))) / kd)</Parameter>
+        <Parameter Name="alphaA" Role="user defined" Unit="1">((rA * (Kb ^ (1.0 / n))) / kd)</Parameter>
+        <Parameter Name="u" Role="user defined" Unit="1">(P1 * (Kb ^ (1.0 / n)))</Parameter>
+        <Parameter Name="v" Role="user defined" Unit="1">(P2 * (Kb ^ (1.0 / n)))</Parameter>
+        <Parameter Name="tao" Role="user defined" Unit="1">(kd * t)</Parameter>
+        <Parameter Name="pboundP2" Role="user defined" Unit="1">(Kb * (P2 ^ n) / (1.0 + (Kb * (P2 ^ n))))</Parameter>
+        <Parameter Name="pboundP1" Role="user defined" Unit="1">(((Kb * (P1 ^ n)) + (Kb * (P2 ^ n))) / (1.0 + (Kb * (P1 ^ n)) + (Kb * (P2 ^ n))))</Parameter>
+        <Parameter Name="_1_pboundp1" Role="user defined" Unit="1">(1.0 / (1.0 + (Kb * (P1 ^ n)) + (Kb * (P2 ^ n))))</Parameter>
+      </ModelParameters>
+      <Compound Name="s1" />
+      <Compound Name="s0" />
+      <Feature Name="Reaction_Compartment" KeyValue="92962423" />
+      <LocalizedCompound Name="P2" CompoundRef="s1" Structure="Reaction_Compartment" OverrideName="true" KeyValue="92962425" />
+      <LocalizedCompound Name="P1" CompoundRef="s0" Structure="Reaction_Compartment" OverrideName="true" KeyValue="92962426" />
+      <SimpleReaction Structure="Reaction_Compartment" Name="P2_Synthesis" Reversible="true" FluxOption="MolecularOnly" KeyValue="92962427">
+        <Product LocalizedCompoundRef="P2" Stoichiometry="1" KeyValue="92962428" />
+        <Modifier LocalizedCompoundRef="P1" />
+        <Kinetics KineticsType="GeneralKinetics">
+          <Parameter Name="J" Role="reaction rate" Unit="uM.s-1">(r / (1.0 + (Kb * (P1 ^ n))))</Parameter>
+        </Kinetics>
+      </SimpleReaction>
+      <SimpleReaction Structure="Reaction_Compartment" Name="P1_Degradation" Reversible="true" FluxOption="MolecularOnly" KeyValue="92962429">
+        <Reactant LocalizedCompoundRef="P1" Stoichiometry="1" KeyValue="92962430" />
+        <Kinetics KineticsType="GeneralKinetics">
+          <Parameter Name="J" Role="reaction rate" Unit="uM.s-1">(kd * P1)</Parameter>
+        </Kinetics>
+      </SimpleReaction>
+      <SimpleReaction Structure="Reaction_Compartment" Name="P1_Synthesis" Reversible="true" FluxOption="MolecularOnly" KeyValue="92962431">
+        <Product LocalizedCompoundRef="P1" Stoichiometry="1" KeyValue="92962432" />
+        <Modifier LocalizedCompoundRef="P2" />
+        <Kinetics KineticsType="GeneralKinetics">
+          <Parameter Name="J" Role="reaction rate" Unit="uM.s-1">((r / (1.0 + (Kb * (P1 ^ n)) + (Kb * (P2 ^ n)))) + ((rA * Kb * (P1 ^ n)) / (1.0 + (Kb * (P1 ^ n)) + (Kb * (P2 ^ n)))))</Parameter>
+        </Kinetics>
+      </SimpleReaction>
+      <SimpleReaction Structure="Reaction_Compartment" Name="P2_Degradation" Reversible="true" FluxOption="MolecularOnly" KeyValue="92962433">
+        <Reactant LocalizedCompoundRef="P2" Stoichiometry="1" KeyValue="92962434" />
+        <Kinetics KineticsType="GeneralKinetics">
+          <Parameter Name="J" Role="reaction rate" Unit="uM.s-1">(kd * P2)</Parameter>
+        </Kinetics>
+      </SimpleReaction>
+      <Diagram Name="c0" Structure="Reaction_Compartment">
+        <SimpleReactionShape NodeReferenceModeAttrTag="full" SimpleReactionRef="P2_Synthesis" LocationX="35" LocationY="131" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="full" SimpleReactionRef="P2_Degradation" LocationX="211" LocationY="134" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="P1" LocationX="119" LocationY="76" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="full" SimpleReactionRef="P1_Synthesis" LocationX="59" LocationY="34" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="P2" LocationX="112" LocationY="131" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="full" SimpleReactionRef="P1_Degradation" LocationX="205" LocationY="78" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="full" SimpleReactionRef="P1_Synthesis2" LocationX="35" LocationY="110" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="molecule" SimpleReactionRef="P2_Synthesis" LocationX="35" LocationY="131" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="molecule" SimpleReactionRef="P2_Degradation" LocationX="211" LocationY="134" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="P1" LocationX="119" LocationY="76" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="molecule" SimpleReactionRef="P1_Synthesis" LocationX="59" LocationY="34" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="P2" LocationX="112" LocationY="131" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="molecule" SimpleReactionRef="P1_Degradation" LocationX="205" LocationY="78" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="molecule" SimpleReactionRef="P1_Synthesis2" LocationX="35" LocationY="110" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="rule" SimpleReactionRef="P2_Synthesis" LocationX="35" LocationY="131" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="rule" SimpleReactionRef="P2_Degradation" LocationX="211" LocationY="134" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="P1" LocationX="119" LocationY="76" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="rule" SimpleReactionRef="P1_Synthesis" LocationX="59" LocationY="34" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="P2" LocationX="112" LocationY="131" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="rule" SimpleReactionRef="P1_Degradation" LocationX="205" LocationY="78" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="rule" SimpleReactionRef="P1_Synthesis2" LocationX="35" LocationY="110" />
+      </Diagram>
+      <Version Name="unnamed" KeyValue="92962419" BranchId="92868433" Archived="0" Date="09-Dec-2014 21:05:45" FromVersionable="false">
+        <Owner Name="jskim" Identifier="92381979" />
+        <GroupAccess Type="1" />
+      </Version>
+      <ModelUnitSystem VolumeSubstanceUnit="uM.um3" MembraneSubstanceUnit="molecules" LumpedReactionSubstanceUnit="molecules" VolumeUnit="um3" AreaUnit="um2" LengthUnit="um" TimeUnit="s" />
+    </Model>
+    <SimulationSpec Name="Application0" Stochastic="false" UseConcentration="true" RuleBased="false" MassConservationModelReduction="true" InsufficientIterations="false" InsufficientMaxMolecules="false">
+      <NetworkConstraints RbmMaxIteration="1" RbmMaxMoleculesPerSpecies="10" RbmSpeciesLimit="800" RbmReactionsLimit="2500" />
+      <Annotation />
+      <Geometry Name="non-spatial1176275736" Dimension="0">
+        <Extent X="10.0" Y="10.0" Z="10.0" />
+        <Origin X="0.0" Y="0.0" Z="0.0" />
+        <SubVolume Name="Compartment" Handle="0" Type="Compartmental" KeyValue="92868427" />
+        <Version Name="non-spatial1176275736" KeyValue="92868423" BranchId="92868424" Archived="0" Date="08-Dec-2014 21:31:27" FromVersionable="false">
+          <Owner Name="jskim" Identifier="92381979" />
+          <GroupAccess Type="1" />
+        </Version>
+      </Geometry>
+      <GeometryContext>
+        <FeatureMapping Feature="Reaction_Compartment" GeometryClass="Compartment" SubVolume="Compartment" Size="50000.0">
+          <BoundariesTypes Xm="Flux" Xp="Flux" Ym="Flux" Yp="Flux" Zm="Flux" Zp="Flux" />
+        </FeatureMapping>
+      </GeometryContext>
+      <ReactionContext>
+        <LocalizedCompoundSpec LocalizedCompoundRef="P2" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>0.0</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="P1" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>0.0</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <ReactionSpec ReactionStepRef="P2_Synthesis" ReactionMapping="included" />
+        <ReactionSpec ReactionStepRef="P1_Degradation" ReactionMapping="included" />
+        <ReactionSpec ReactionStepRef="P1_Synthesis" ReactionMapping="included" />
+        <ReactionSpec ReactionStepRef="P2_Degradation" ReactionMapping="included" />
+      </ReactionContext>
+      <MathDescription Name="Application0_generated">
+        <Constant Name="_F_">96480.0</Constant>
+        <Constant Name="_F_nmol_">9.648E-5</Constant>
+        <Constant Name="_K_GHK_">1.0E-9</Constant>
+        <Constant Name="_N_pmol_">6.02E11</Constant>
+        <Constant Name="_PI_">3.141592653589793</Constant>
+        <Constant Name="_R_">8314.0</Constant>
+        <Constant Name="_T_">300.0</Constant>
+        <Constant Name="K_millivolts_per_volt">1000.0</Constant>
+        <Constant Name="Kb">3.6E-6</Constant>
+        <Constant Name="kd">30.0</Constant>
+        <Constant Name="KMOLE">(1.0 / 602.0)</Constant>
+        <Constant Name="n">5.8</Constant>
+        <Constant Name="P1_init_uM">0.0</Constant>
+        <Constant Name="P2_init_uM">0.0</Constant>
+        <Constant Name="r">100.0</Constant>
+        <Constant Name="rA">5000.0</Constant>
+        <Constant Name="Size_Reaction_Compartment">50000.0</Constant>
+        <VolumeVariable Name="P1" Domain="Compartment" />
+        <VolumeVariable Name="P2" Domain="Compartment" />
+        <Function Name="_1_pboundp1">(1.0 / (1.0 + (Kb * (P1 ^ n)) + (Kb * (P2 ^ n))))</Function>
+        <Function Name="alpha">((r * (Kb ^ (1.0 / n))) / kd)</Function>
+        <Function Name="alphaA">((rA * (Kb ^ (1.0 / n))) / kd)</Function>
+        <Function Name="J_P1_Degradation" Domain="Compartment">(kd * P1)</Function>
+        <Function Name="J_P1_Synthesis" Domain="Compartment">((r / (1.0 + (Kb * (P1 ^ n)) + (Kb * (P2 ^ n)))) + ((rA * Kb * (P1 ^ n)) / (1.0 + (Kb * (P1 ^ n)) + (Kb * (P2 ^ n)))))</Function>
+        <Function Name="J_P2_Degradation" Domain="Compartment">(kd * P2)</Function>
+        <Function Name="J_P2_Synthesis" Domain="Compartment">(r / (1.0 + (Kb * (P1 ^ n))))</Function>
+        <Function Name="pboundP1">(((Kb * (P1 ^ n)) + (Kb * (P2 ^ n))) / (1.0 + (Kb * (P1 ^ n)) + (Kb * (P2 ^ n))))</Function>
+        <Function Name="pboundP2">(Kb * (P2 ^ n) / (1.0 + (Kb * (P2 ^ n))))</Function>
+        <Function Name="tao">(kd * t)</Function>
+        <Function Name="u">(P1 * (Kb ^ (1.0 / n)))</Function>
+        <Function Name="v">(P2 * (Kb ^ (1.0 / n)))</Function>
+        <CompartmentSubDomain Name="Compartment">
+          <BoundaryType Boundary="Xm" Type="Value" />
+          <BoundaryType Boundary="Xp" Type="Value" />
+          <BoundaryType Boundary="Ym" Type="Value" />
+          <BoundaryType Boundary="Yp" Type="Value" />
+          <BoundaryType Boundary="Zm" Type="Value" />
+          <BoundaryType Boundary="Zp" Type="Value" />
+          <OdeEquation Name="P2" SolutionType="Unknown">
+            <Rate>(J_P2_Synthesis - J_P2_Degradation)</Rate>
+            <Initial>P2_init_uM</Initial>
+          </OdeEquation>
+          <OdeEquation Name="P1" SolutionType="Unknown">
+            <Rate>( - J_P1_Degradation + J_P1_Synthesis)</Rate>
+            <Initial>P1_init_uM</Initial>
+          </OdeEquation>
+        </CompartmentSubDomain>
+        <Version Name="Application0_generated" KeyValue="92962417" BranchId="92868430" Archived="0" Date="09-Dec-2014 21:05:45" FromVersionable="false">
+          <Owner Name="jskim" Identifier="92381979" />
+          <GroupAccess Type="1" />
+        </Version>
+      </MathDescription>
+      <Simulation Name="Simulation0">
+        <SolverTaskDescription TaskType="Unsteady" UseSymbolicJacobian="false" Solver="Combined Stiff Solver (IDA/CVODE)">
+          <TimeBound StartTime="0.0" EndTime="100.0" />
+          <TimeStep DefaultTime="0.1" MinTime="1.0E-8" MaxTime="1.0" />
+          <ErrorTolerance Absolut="1.0E-9" Relative="1.0E-9" />
+          <OutputOptions KeepEvery="1" KeepAtMost="1000" />
+          <NumberProcessors>1</NumberProcessors>
+        </SolverTaskDescription>
+        <MathOverrides>
+          <Constant Name="Kb" ConstantArraySpec="1001">2.87E-7 to 5.35E-4, log, 10 values</Constant>
+        </MathOverrides>
+        <Version Name="Simulation0" KeyValue="92962446" BranchId="92894995" Archived="0" Date="09-Dec-2014 21:05:45" FromVersionable="false">
+          <Owner Name="jskim" Identifier="92381979" />
+          <GroupAccess Type="1" />
+        </Version>
+      </Simulation>
+      <Simulation Name="Simulation1">
+        <SolverTaskDescription TaskType="Unsteady" UseSymbolicJacobian="false" Solver="Combined Stiff Solver (IDA/CVODE)">
+          <TimeBound StartTime="0.0" EndTime="1.0" />
+          <TimeStep DefaultTime="0.1" MinTime="1.0E-8" MaxTime="1.0" />
+          <ErrorTolerance Absolut="1.0E-9" Relative="1.0E-9" />
+          <OutputOptions KeepEvery="1" KeepAtMost="1000" />
+          <NumberProcessors>1</NumberProcessors>
+        </SolverTaskDescription>
+        <MathOverrides />
+        <Version Name="Simulation1" KeyValue="92962469" BranchId="92904596" Archived="0" Date="09-Dec-2014 21:07:04" FromVersionable="false">
+          <Owner Name="jskim" Identifier="92381979" />
+          <GroupAccess Type="1" />
+        </Version>
+      </Simulation>
+      <Version Name="Application0" KeyValue="92962437" BranchId="92868452" Archived="0" Date="09-Dec-2014 21:05:45" FromVersionable="false">
+        <Owner Name="jskim" Identifier="92381979" />
+        <GroupAccess Type="1" />
+      </Version>
+      <MicroscopeMeasurement Name="fluor">
+        <ConvolutionKernel Type="ProjectionZKernel" />
+      </MicroscopeMeasurement>
+    </SimulationSpec>
+    <Version Name="BE306_Group5_proj6_prob2" KeyValue="92962471" BranchId="92868465" Archived="0" Date="09-Dec-2014 21:07:04" FromVersionable="false">
+      <Owner Name="jskim" Identifier="92381979" />
+      <GroupAccess Type="0" />
+    </Version>
+    <pathwayModel>
+      <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:bp="http://www.biopax.org/release/biopax-level3.owl#" version="3.0" />
+    </pathwayModel>
+    <relationshipModel>
+      <RMNS version="3.0" />
+    </relationshipModel>
+    <vcmetadata>
+      <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" />
+      <nonrdfAnnotationList />
+      <uriBindingList />
+    </vcmetadata>
+  </BioModel>
+</vcml>
+

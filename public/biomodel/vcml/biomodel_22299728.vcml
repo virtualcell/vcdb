@@ -1,0 +1,353 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--This biomodel was generated in VCML Version Alpha_Version_7.4.0_build_87-->
+<vcml xmlns="http://sourceforge.net/projects/vcell/vcml" Version="Alpha_Version_7.4.0_build_87">
+  <BioModel Name="min">
+    <Model Name="unnamed">
+      <Compound Name="minD_ADP" />
+      <Compound Name="minD_ATP" />
+      <Compound Name="minE" />
+      <Compound Name="minD_ATP_minE" />
+      <Feature Name="Extracellular Space" KeyValue="22249418" />
+      <Feature Name="Cytosol" KeyValue="22249421" />
+      <Membrane InsideFeature="Cytosol" OutsideFeature="Extracellular Space" PositiveFeature="Cytosol" NegativeFeature="Extracellular Space" MembraneVoltage="Voltage_CM" Name="CM" KeyValue="22249420" />
+      <LocalizedCompound Name="minD_ADP_Cytosol" CompoundRef="minD_ADP" Structure="Cytosol" OverrideName="true" KeyValue="22249424" />
+      <LocalizedCompound Name="minD_ATP_Cytosol" CompoundRef="minD_ATP" Structure="Cytosol" OverrideName="true" KeyValue="22249425" />
+      <LocalizedCompound Name="minE_Cytosol" CompoundRef="minE" Structure="Cytosol" OverrideName="true" KeyValue="22249426" />
+      <LocalizedCompound Name="minD_ATP_CM" CompoundRef="minD_ATP" Structure="CM" OverrideName="true" KeyValue="22249427" />
+      <LocalizedCompound Name="minD_ATP_minE_CM" CompoundRef="minD_ATP_minE" Structure="CM" OverrideName="true" KeyValue="22249428" />
+      <SimpleReaction Structure="Cytosol" Name="Nucleotide Exchange" Reversible="true" FluxOption="MolecularOnly" KeyValue="22249429">
+        <Reactant LocalizedCompoundRef="minD_ADP_Cytosol" Stoichiometry="1" KeyValue="22249430" />
+        <Product LocalizedCompoundRef="minD_ATP_Cytosol" Stoichiometry="1" KeyValue="22249431" />
+        <Kinetics KineticsType="GeneralKinetics">
+          <Parameter Name="J" Role="reaction rate" Unit="uM.s-1">(sigDA * minD_ADP_Cytosol)</Parameter>
+          <Parameter Name="sigDA" Role="user defined" Unit="s-1">1.0</Parameter>
+        </Kinetics>
+      </SimpleReaction>
+      <SimpleReaction Structure="CM" Name="minE_Binding" Reversible="true" FluxOption="MolecularOnly" KeyValue="22249432">
+        <Reactant LocalizedCompoundRef="minD_ATP_CM" Stoichiometry="1" KeyValue="22249433" />
+        <Reactant LocalizedCompoundRef="minE_Cytosol" Stoichiometry="1" KeyValue="22249434" />
+        <Product LocalizedCompoundRef="minD_ATP_minE_CM" Stoichiometry="1" KeyValue="22249435" />
+        <Kinetics KineticsType="GeneralKinetics">
+          <Parameter Name="J" Role="reaction rate" Unit="molecules.um-2.s-1">(sigE * minD_ATP_CM * minE_Cytosol)</Parameter>
+          <Parameter Name="I" Role="inward current density" Unit="pA.um-2">0.0</Parameter>
+          <Parameter Name="netValence" Role="net charge valence" Unit="1">0.0</Parameter>
+          <Parameter Name="sigE" Role="user defined" Unit="um2.molecules-1.s-1">20.0</Parameter>
+        </Kinetics>
+      </SimpleReaction>
+      <SimpleReaction Structure="CM" Name="Hydrolysis" Reversible="true" FluxOption="MolecularOnly" KeyValue="22249436">
+        <Reactant LocalizedCompoundRef="minD_ATP_minE_CM" Stoichiometry="1" KeyValue="22249437" />
+        <Product LocalizedCompoundRef="minD_ADP_Cytosol" Stoichiometry="1" KeyValue="22249438" />
+        <Product LocalizedCompoundRef="minE_Cytosol" Stoichiometry="1" KeyValue="22249439" />
+        <Kinetics KineticsType="GeneralKinetics">
+          <Parameter Name="J" Role="reaction rate" Unit="molecules.um-2.s-1">(sigde * minD_ATP_minE_CM)</Parameter>
+          <Parameter Name="I" Role="inward current density" Unit="pA.um-2">0.0</Parameter>
+          <Parameter Name="netValence" Role="net charge valence" Unit="1">0.0</Parameter>
+          <Parameter Name="sigde" Role="user defined" Unit="s-1">0.7</Parameter>
+        </Kinetics>
+      </SimpleReaction>
+      <SimpleReaction Structure="CM" Name="minD_Attachment" Reversible="true" FluxOption="MolecularOnly" KeyValue="22249440">
+        <Reactant LocalizedCompoundRef="minD_ATP_Cytosol" Stoichiometry="1" KeyValue="22249441" />
+        <Product LocalizedCompoundRef="minD_ATP_CM" Stoichiometry="1" KeyValue="22249442" />
+        <Modifier LocalizedCompoundRef="minD_ATP_minE_CM" />
+        <Kinetics KineticsType="GeneralKinetics">
+          <Parameter Name="J" Role="reaction rate" Unit="molecules.um-2.s-1">((sigD + (sigdD * (minD_ATP_CM + minD_ATP_minE_CM))) * minD_ATP_Cytosol)</Parameter>
+          <Parameter Name="I" Role="inward current density" Unit="pA.um-2">0.0</Parameter>
+          <Parameter Name="netValence" Role="net charge valence" Unit="1">0.0</Parameter>
+          <Parameter Name="sigdD" Role="user defined" Unit="uM-1.s-1">0.9</Parameter>
+          <Parameter Name="sigD" Role="user defined" Unit="molecules.um-2.uM-1.s-1">15.0</Parameter>
+        </Kinetics>
+      </SimpleReaction>
+      <Diagram Name="Unnamed compartment" Structure="Extracellular Space" />
+      <Diagram Name="CM" Structure="CM">
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="minD_ATP_CM" LocationX="387" LocationY="206" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="minD_ATP_minE_CM" LocationX="361" LocationY="98" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="minD_ADP_Cytosol" LocationX="21" LocationY="39" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="minD_ATP_Cytosol" LocationX="36" LocationY="218" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="phosphate_Cytosol" LocationX="25" LocationY="78" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="minE_Cytosol" LocationX="21" LocationY="118" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="full" SimpleReactionRef="minE_Binding" LocationX="460" LocationY="127" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="full" SimpleReactionRef="Hydrolysis" LocationX="475" LocationY="46" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="full" SimpleReactionRef="minD_Attachment" LocationX="493" LocationY="221" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="minD_ATP_CM" LocationX="387" LocationY="206" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="minD_ATP_minE_CM" LocationX="361" LocationY="98" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="minD_ADP_Cytosol" LocationX="21" LocationY="39" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="minD_ATP_Cytosol" LocationX="36" LocationY="218" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="phosphate_Cytosol" LocationX="25" LocationY="78" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="minE_Cytosol" LocationX="21" LocationY="118" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="molecule" SimpleReactionRef="minE_Binding" LocationX="460" LocationY="127" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="molecule" SimpleReactionRef="Hydrolysis" LocationX="475" LocationY="46" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="molecule" SimpleReactionRef="minD_Attachment" LocationX="493" LocationY="221" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="minD_ATP_CM" LocationX="387" LocationY="206" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="minD_ATP_minE_CM" LocationX="361" LocationY="98" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="minD_ADP_Cytosol" LocationX="21" LocationY="39" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="minD_ATP_Cytosol" LocationX="36" LocationY="218" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="phosphate_Cytosol" LocationX="25" LocationY="78" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="minE_Cytosol" LocationX="21" LocationY="118" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="rule" SimpleReactionRef="minE_Binding" LocationX="460" LocationY="127" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="rule" SimpleReactionRef="Hydrolysis" LocationX="475" LocationY="46" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="rule" SimpleReactionRef="minD_Attachment" LocationX="493" LocationY="221" />
+      </Diagram>
+      <Diagram Name="Cell Membrane" Structure="Cytosol">
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="minD_ADP_Cytosol" LocationX="127" LocationY="135" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="minD_ATP_Cytosol" LocationX="217" LocationY="247" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="phosphate_Cytosol" LocationX="109" LocationY="68" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="minE_Cytosol" LocationX="102" LocationY="174" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="full" SimpleReactionRef="Nucleotide Exchange" LocationX="224" LocationY="181" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="minD_ADP_Cytosol" LocationX="127" LocationY="135" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="minD_ATP_Cytosol" LocationX="217" LocationY="247" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="phosphate_Cytosol" LocationX="109" LocationY="68" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="minE_Cytosol" LocationX="102" LocationY="174" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="molecule" SimpleReactionRef="Nucleotide Exchange" LocationX="224" LocationY="181" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="minD_ADP_Cytosol" LocationX="127" LocationY="135" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="minD_ATP_Cytosol" LocationX="217" LocationY="247" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="phosphate_Cytosol" LocationX="109" LocationY="68" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="minE_Cytosol" LocationX="102" LocationY="174" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="rule" SimpleReactionRef="Nucleotide Exchange" LocationX="224" LocationY="181" />
+      </Diagram>
+      <Version Name="unnamed" KeyValue="22249412" BranchId="22213051" Archived="0" Date="12-Jun-2007 17:33:42" FromVersionable="false">
+        <Owner Name="cshea" Identifier="22210577" />
+        <GroupAccess Type="1" />
+      </Version>
+      <ModelUnitSystem VolumeSubstanceUnit="uM.um3" MembraneSubstanceUnit="molecules" LumpedReactionSubstanceUnit="molecules" VolumeUnit="um3" AreaUnit="um2" LengthUnit="um" TimeUnit="s" />
+    </Model>
+    <SimulationSpec Name="App1" Stochastic="false" UseConcentration="true" RuleBased="false" MassConservationModelReduction="true" InsufficientIterations="false" InsufficientMaxMolecules="false" CharacteristicSize="0.008331925998972206">
+      <NetworkConstraints RbmMaxIteration="1" RbmMaxMoleculesPerSpecies="10" RbmSpeciesLimit="800" RbmReactionsLimit="2500" />
+      <Annotation />
+      <Geometry Name="EColi3D_long" Dimension="3">
+        <Extent X="14.2" Y="1.2" Z="1.2" />
+        <Origin X="-7.1" Y="-0.6" Z="-0.6" />
+        <SubVolume Name="subVolume1" Handle="0" Type="Analytical" KeyValue="22279667">
+          <AnalyticExpression>((((pow(z,2.0) + pow(y,2.0)) &lt; 0.25) * (x &gt;  - 6.5) * (x &lt; 6.5)) + ((pow((6.5 + x),2.0) + pow(y,2.0) + pow(z,2.0)) &lt; 0.25) + ((pow(( - 6.5 + x),2.0) + pow(y,2.0) + pow(z,2.0)) &lt; 0.25))</AnalyticExpression>
+        </SubVolume>
+        <SubVolume Name="subVolume0" Handle="1" Type="Analytical" KeyValue="22279668">
+          <AnalyticExpression>1.0</AnalyticExpression>
+        </SubVolume>
+        <SurfaceClass Name="subVolume0_subVolume1_membrane" SubVolume1Ref="subVolume0" SubVolume2Ref="subVolume1" />
+        <SurfaceDescription NumSamplesX="100" NumSamplesY="100" NumSamplesZ="100" CutoffFrequency="0.32">
+          <VolumeRegion Name="subVolume00" RegionID="0" SubVolume="subVolume0" Size="9.704686015341661" Unit="um3" />
+          <VolumeRegion Name="subVolume11" RegionID="1" SubVolume="subVolume1" Size="10.743313984658334" Unit="um3" />
+          <MembraneRegion Name="membrane_subVolume00_subVolume11" VolumeRegion1="subVolume11" VolumeRegion2="subVolume00" Size="44.36725283079899" Unit="um2" />
+        </SurfaceDescription>
+        <Version Name="EColi3D_long" KeyValue="22279664" BranchId="22279612" Archived="0" Date="13-Jun-2007 13:59:56" FromVersionable="false">
+          <Owner Name="cshea" Identifier="22210577" />
+          <GroupAccess Type="1" />
+        </Version>
+      </Geometry>
+      <GeometryContext>
+        <FeatureMapping Feature="Extracellular Space" GeometryClass="subVolume0" SubVolume="subVolume0">
+          <BoundariesTypes Xm="Flux" Xp="Flux" Ym="Flux" Yp="Flux" Zm="Flux" Zp="Flux" />
+        </FeatureMapping>
+        <FeatureMapping Feature="Cytosol" GeometryClass="subVolume1" SubVolume="subVolume1">
+          <BoundariesTypes Xm="Flux" Xp="Flux" Ym="Flux" Yp="Flux" Zm="Flux" Zp="Flux" />
+        </FeatureMapping>
+        <MembraneMapping Membrane="CM" SurfaceToVolumeRatio="1.0" VolumeFraction="0.2" CalculateVoltage="false" SpecificCapacitance="1.0" InitialVoltage="0.0" GeometryClass="subVolume0_subVolume1_membrane">
+          <BoundariesTypes Xm="Flux" Xp="Flux" Ym="Flux" Yp="Flux" Zm="Flux" Zp="Flux" />
+        </MembraneMapping>
+      </GeometryContext>
+      <ReactionContext>
+        <LocalizedCompoundSpec LocalizedCompoundRef="minD_ADP_Cytosol" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>(1.1 + (0.2 * x))</InitialConcentration>
+          <Diffusion>2.5</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="minD_ATP_Cytosol" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>1.1</InitialConcentration>
+          <Diffusion>2.5</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="minE_Cytosol" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>0.75</InitialConcentration>
+          <Diffusion>2.5</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="minD_ATP_CM" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>40.0</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="minD_ATP_minE_CM" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>20.0</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <ReactionSpec ReactionStepRef="Nucleotide Exchange" ReactionMapping="included" />
+        <ReactionSpec ReactionStepRef="minE_Binding" ReactionMapping="included" />
+        <ReactionSpec ReactionStepRef="Hydrolysis" ReactionMapping="included" />
+        <ReactionSpec ReactionStepRef="minD_Attachment" ReactionMapping="included" />
+      </ReactionContext>
+      <MathDescription Name="App1_generated">
+        <Constant Name="_F_">96480.0</Constant>
+        <Constant Name="_F_nmol_">9.648E-5</Constant>
+        <Constant Name="_K_GHK_">1.0E-9</Constant>
+        <Constant Name="_N_pmol_">6.02E11</Constant>
+        <Constant Name="_R_">8314.0</Constant>
+        <Constant Name="_T_">300.0</Constant>
+        <Constant Name="K_millivolts_per_volt">1000.0</Constant>
+        <Constant Name="KMOLE">0.0016611295681063123</Constant>
+        <Constant Name="minD_ADP_Cytosol_diffusionRate">2.5</Constant>
+        <Constant Name="minD_ATP_CM_diffusionRate">0.0</Constant>
+        <Constant Name="minD_ATP_CM_init">40.0</Constant>
+        <Constant Name="minD_ATP_Cytosol_diffusionRate">2.5</Constant>
+        <Constant Name="minD_ATP_Cytosol_init">1.1</Constant>
+        <Constant Name="minD_ATP_minE_CM_init">20.0</Constant>
+        <Constant Name="minE_Cytosol_diffusionRate">2.5</Constant>
+        <Constant Name="minE_Cytosol_init">0.75</Constant>
+        <Constant Name="sigD">15.0</Constant>
+        <Constant Name="sigDA">1.0</Constant>
+        <Constant Name="sigdD">0.9</Constant>
+        <Constant Name="sigde">0.7</Constant>
+        <Constant Name="sigE">20.0</Constant>
+        <Constant Name="Voltage_CM">0.0</Constant>
+        <VolumeVariable Name="minD_ADP" />
+        <VolumeVariable Name="minD_ATP" />
+        <MembraneVariable Name="minD_ATP_CM" />
+        <MembraneVariable Name="minD_ATP_minE_CM" />
+        <VolumeVariable Name="minE" />
+        <Function Name="J_Hydrolysis">(sigde * minD_ATP_minE_CM)</Function>
+        <Function Name="J_minD_Attachment">((sigD + (sigdD * (minD_ATP_CM + minD_ATP_minE_CM))) * minD_ATP_INSIDE)</Function>
+        <Function Name="J_minE_Binding">(sigE * minD_ATP_CM * minE_INSIDE)</Function>
+        <Function Name="J_Nucleotide_Exchange">(sigDA * minD_ADP)</Function>
+        <Function Name="minD_ADP_Cytosol_init">(1.1 + (0.2 * x))</Function>
+        <CompartmentSubDomain Name="subVolume1">
+          <BoundaryType Boundary="Xm" Type="Flux" />
+          <BoundaryType Boundary="Xp" Type="Flux" />
+          <BoundaryType Boundary="Ym" Type="Flux" />
+          <BoundaryType Boundary="Yp" Type="Flux" />
+          <BoundaryType Boundary="Zm" Type="Flux" />
+          <BoundaryType Boundary="Zp" Type="Flux" />
+          <PdeEquation Name="minD_ADP" SolutionType="Unknown">
+            <Rate>- J_Nucleotide_Exchange</Rate>
+            <Diffusion>minD_ADP_Cytosol_diffusionRate</Diffusion>
+            <Initial>minD_ADP_Cytosol_init</Initial>
+          </PdeEquation>
+          <PdeEquation Name="minD_ATP" SolutionType="Unknown">
+            <Rate>J_Nucleotide_Exchange</Rate>
+            <Diffusion>minD_ATP_Cytosol_diffusionRate</Diffusion>
+            <Initial>minD_ATP_Cytosol_init</Initial>
+          </PdeEquation>
+          <PdeEquation Name="minE" SolutionType="Unknown">
+            <Rate>0.0</Rate>
+            <Diffusion>minE_Cytosol_diffusionRate</Diffusion>
+            <Initial>minE_Cytosol_init</Initial>
+          </PdeEquation>
+        </CompartmentSubDomain>
+        <CompartmentSubDomain Name="subVolume0">
+          <BoundaryType Boundary="Xm" Type="Flux" />
+          <BoundaryType Boundary="Xp" Type="Flux" />
+          <BoundaryType Boundary="Ym" Type="Flux" />
+          <BoundaryType Boundary="Yp" Type="Flux" />
+          <BoundaryType Boundary="Zm" Type="Flux" />
+          <BoundaryType Boundary="Zp" Type="Flux" />
+          <PdeEquation Name="minD_ADP" SolutionType="Unknown">
+            <Rate>0.0</Rate>
+            <Diffusion>minD_ADP_Cytosol_diffusionRate</Diffusion>
+            <Initial>0.0</Initial>
+          </PdeEquation>
+          <PdeEquation Name="minD_ATP" SolutionType="Unknown">
+            <Rate>0.0</Rate>
+            <Diffusion>minD_ATP_Cytosol_diffusionRate</Diffusion>
+            <Initial>0.0</Initial>
+          </PdeEquation>
+          <PdeEquation Name="minE" SolutionType="Unknown">
+            <Rate>0.0</Rate>
+            <Diffusion>minE_Cytosol_diffusionRate</Diffusion>
+            <Initial>0.0</Initial>
+          </PdeEquation>
+        </CompartmentSubDomain>
+        <MembraneSubDomain Name="subVolume0_subVolume1_membrane" InsideCompartment="subVolume1" OutsideCompartment="subVolume0">
+          <BoundaryType Boundary="Xm" Type="Value" />
+          <BoundaryType Boundary="Xp" Type="Value" />
+          <BoundaryType Boundary="Ym" Type="Value" />
+          <BoundaryType Boundary="Yp" Type="Value" />
+          <BoundaryType Boundary="Zm" Type="Value" />
+          <BoundaryType Boundary="Zp" Type="Value" />
+          <OdeEquation Name="minD_ATP_minE_CM" SolutionType="Unknown">
+            <Rate>(J_minE_Binding - J_Hydrolysis)</Rate>
+            <Initial>minD_ATP_minE_CM_init</Initial>
+          </OdeEquation>
+          <PdeEquation Name="minD_ATP_CM" SolutionType="Unknown">
+            <Rate>( - J_minE_Binding + J_minD_Attachment)</Rate>
+            <Diffusion>minD_ATP_CM_diffusionRate</Diffusion>
+            <Initial>minD_ATP_CM_init</Initial>
+          </PdeEquation>
+          <JumpCondition Name="minD_ADP">
+            <InFlux>(KMOLE * J_Hydrolysis)</InFlux>
+            <OutFlux>0.0</OutFlux>
+          </JumpCondition>
+          <JumpCondition Name="minD_ATP">
+            <InFlux>- (KMOLE * J_minD_Attachment)</InFlux>
+            <OutFlux>0.0</OutFlux>
+          </JumpCondition>
+          <JumpCondition Name="minE">
+            <InFlux>( - (KMOLE * J_minE_Binding) + (KMOLE * J_Hydrolysis))</InFlux>
+            <OutFlux>0.0</OutFlux>
+          </JumpCondition>
+        </MembraneSubDomain>
+        <Version Name="App1_generated" KeyValue="22299710" BranchId="22213048" Archived="0" Date="13-Jun-2007 17:33:37" FromVersionable="false">
+          <Owner Name="cshea" Identifier="22210577" />
+          <GroupAccess Type="1" />
+        </Version>
+      </MathDescription>
+      <Simulation Name="Simulation0">
+        <SolverTaskDescription TaskType="Unsteady" UseSymbolicJacobian="false" Solver="Finite Volume, Regular Grid">
+          <TimeBound StartTime="0.0" EndTime="1.0" />
+          <TimeStep DefaultTime="0.1" MinTime="1.0E-8" MaxTime="1.0" />
+          <ErrorTolerance Absolut="1.0E-9" Relative="1.0E-9" />
+          <OutputOptions KeepEvery="1" KeepAtMost="1000" />
+          <NumberProcessors>1</NumberProcessors>
+        </SolverTaskDescription>
+        <MathOverrides />
+        <MeshSpecification>
+          <Size X="105" Y="35" Z="35" />
+        </MeshSpecification>
+        <Version Name="Simulation0" KeyValue="22299726" BranchId="22249462" Archived="0" Date="13-Jun-2007 17:33:37" FromVersionable="false">
+          <Owner Name="cshea" Identifier="22210577" />
+          <GroupAccess Type="1" />
+        </Version>
+      </Simulation>
+      <SpatialObjects>
+        <SpatialObject Name="vobj_subVolume00" Type="Volume" subVolume="subVolume0" regionId="0">
+          <QuantityCategoryList>
+            <QuantityCategory Name="VolumeCentroid" Enabled="false" />
+            <QuantityCategory Name="InteriorVelocity" Enabled="false" />
+            <QuantityCategory Name="VolumeRegionSize" Enabled="true" />
+          </QuantityCategoryList>
+        </SpatialObject>
+        <SpatialObject Name="vobj_subVolume11" Type="Volume" subVolume="subVolume1" regionId="1">
+          <QuantityCategoryList>
+            <QuantityCategory Name="VolumeCentroid" Enabled="false" />
+            <QuantityCategory Name="InteriorVelocity" Enabled="false" />
+            <QuantityCategory Name="VolumeRegionSize" Enabled="true" />
+          </QuantityCategoryList>
+        </SpatialObject>
+        <SpatialObject Name="sobj_subVolume11_subVolume00" Type="Surface" subVolumeInside="subVolume1" regionIdInside="1" subVolumeOutside="subVolume0" regionIdOutside="0">
+          <QuantityCategoryList>
+            <QuantityCategory Name="SurfaceNormal" Enabled="false" />
+            <QuantityCategory Name="SurfaceVelocity" Enabled="false" />
+            <QuantityCategory Name="DistanceToSurface" Enabled="false" />
+            <QuantityCategory Name="DirectionToSurface" Enabled="false" />
+            <QuantityCategory Name="SurfaceSize" Enabled="true" />
+          </QuantityCategoryList>
+        </SpatialObject>
+      </SpatialObjects>
+      <Version Name="App1" KeyValue="22299712" BranchId="22213089" Archived="0" Date="13-Jun-2007 17:33:37" FromVersionable="false">
+        <Owner Name="cshea" Identifier="22210577" />
+        <GroupAccess Type="1" />
+      </Version>
+      <MicroscopeMeasurement Name="fluor">
+        <ConvolutionKernel Type="ProjectionZKernel" />
+      </MicroscopeMeasurement>
+    </SimulationSpec>
+    <Version Name="min" KeyValue="22299728" BranchId="22213105" Archived="0" Date="13-Jun-2007 17:33:37" FromVersionable="false">
+      <Owner Name="cshea" Identifier="22210577" />
+      <GroupAccess Type="0" />
+    </Version>
+    <pathwayModel>
+      <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:bp="http://www.biopax.org/release/biopax-level3.owl#" version="3.0" />
+    </pathwayModel>
+    <relationshipModel>
+      <RMNS version="3.0" />
+    </relationshipModel>
+    <vcmetadata>
+      <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" />
+      <nonrdfAnnotationList />
+      <uriBindingList />
+    </vcmetadata>
+  </BioModel>
+</vcml>
+

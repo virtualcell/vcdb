@@ -1,0 +1,836 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--This biomodel was generated in VCML Version Alpha_Version_7.4.0_build_87-->
+<vcml xmlns="http://sourceforge.net/projects/vcell/vcml" Version="Alpha_Version_7.4.0_build_87">
+  <BioModel Name="PH-GFP-Start">
+    <Annotation>cloned from 'phgfp_full' owned by user schaff</Annotation>
+    <Model Name="unnamed">
+      <Annotation>cloned from 'unnamed' owned by user schaff</Annotation>
+      <ModelParameters>
+        <Parameter Name="Kd" Role="user defined" Unit="uM">2.0</Parameter>
+        <Parameter Name="Kf_PIP2PH" Role="user defined" Unit="uM-1.s-1">200.0</Parameter>
+        <Parameter Name="bleach_rate" Role="user defined" Unit="uM-1.s-1">1.0</Parameter>
+      </ModelParameters>
+      <Compound Name="hv" />
+      <Compound Name="PH_GFP" />
+      <Compound Name="PIP2" />
+      <Compound Name="PIP2_phgfp" />
+      <Compound Name="PIP2_phgfp_bl" />
+      <Compound Name="PH_GFP_bl" />
+      <Feature Name="cyt" KeyValue="34114915" />
+      <Feature Name="nuc" KeyValue="34114918" />
+      <Feature Name="ec" KeyValue="34114913" />
+      <Membrane InsideFeature="cyt" OutsideFeature="ec" PositiveFeature="cyt" NegativeFeature="ec" MembraneVoltage="Voltage_pm" Name="pm" KeyValue="34114914" />
+      <Membrane InsideFeature="nuc" OutsideFeature="cyt" PositiveFeature="nuc" NegativeFeature="cyt" MembraneVoltage="Voltage_nucMem" Name="nucMem" KeyValue="34114917" />
+      <LocalizedCompound Name="hv_cyt" CompoundRef="hv" Structure="cyt" OverrideName="true" KeyValue="34114924" />
+      <LocalizedCompound Name="PH_GFP_cyt" CompoundRef="PH_GFP" Structure="cyt" OverrideName="true" KeyValue="34114925" />
+      <LocalizedCompound Name="PIP2_pm" CompoundRef="PIP2" Structure="pm" OverrideName="true" KeyValue="34114926" />
+      <LocalizedCompound Name="PIP2_phgfp_pm" CompoundRef="PIP2_phgfp" Structure="pm" OverrideName="true" KeyValue="34114927" />
+      <LocalizedCompound Name="PIP2_phgfp_bl_pm" CompoundRef="PIP2_phgfp_bl" Structure="pm" OverrideName="true" KeyValue="34114928" />
+      <LocalizedCompound Name="PH_GFP_bl_cyt" CompoundRef="PH_GFP_bl" Structure="cyt" OverrideName="true" KeyValue="34114923" />
+      <SimpleReaction Structure="cyt" Name="bleach_cyt" Reversible="true" FluxOption="MolecularOnly" KeyValue="34114929">
+        <Reactant LocalizedCompoundRef="PH_GFP_cyt" Stoichiometry="1" KeyValue="34114930" />
+        <Product LocalizedCompoundRef="PH_GFP_bl_cyt" Stoichiometry="1" KeyValue="34114931" />
+        <Modifier LocalizedCompoundRef="hv_cyt" />
+        <Kinetics KineticsType="GeneralKinetics">
+          <Parameter Name="J" Role="reaction rate" Unit="uM.s-1">(k * PH_GFP_cyt)</Parameter>
+          <Parameter Name="k" Role="user defined" Unit="s-1">(bleach_rate * hv_cyt)</Parameter>
+        </Kinetics>
+      </SimpleReaction>
+      <SimpleReaction Structure="pm" Name="reaction1" Reversible="true" FluxOption="MolecularOnly" KeyValue="34114933">
+        <Reactant LocalizedCompoundRef="PIP2_pm" Stoichiometry="1" KeyValue="34114934" />
+        <Reactant LocalizedCompoundRef="PH_GFP_cyt" Stoichiometry="1" KeyValue="34114935" />
+        <Product LocalizedCompoundRef="PIP2_phgfp_pm" Stoichiometry="1" KeyValue="34114936" />
+        <Kinetics KineticsType="MassAction">
+          <Parameter Name="J" Role="reaction rate" Unit="molecules.um-2.s-1">(((Kf * PIP2_pm) * PH_GFP_cyt) - (Kr * PIP2_phgfp_pm))</Parameter>
+          <Parameter Name="I" Role="inward current density" Unit="pA.um-2">0.0</Parameter>
+          <Parameter Name="netValence" Role="net charge valence" Unit="1">0.0</Parameter>
+          <Parameter Name="Kf" Role="forward rate constant" Unit="s-1.uM-1">Kf_PIP2PH</Parameter>
+          <Parameter Name="Kr" Role="reverse rate constant" Unit="s-1">(Kf * Kd)</Parameter>
+        </Kinetics>
+      </SimpleReaction>
+      <SimpleReaction Structure="pm" Name="reaction2" Reversible="true" FluxOption="MolecularOnly" KeyValue="34114937">
+        <Reactant LocalizedCompoundRef="PIP2_pm" Stoichiometry="1" KeyValue="34114938" />
+        <Reactant LocalizedCompoundRef="PH_GFP_bl_cyt" Stoichiometry="1" KeyValue="34114939" />
+        <Product LocalizedCompoundRef="PIP2_phgfp_bl_pm" Stoichiometry="1" KeyValue="34114940" />
+        <Kinetics KineticsType="MassAction">
+          <Parameter Name="J" Role="reaction rate" Unit="molecules.um-2.s-1">(((Kf * PIP2_pm) * PH_GFP_bl_cyt) - (Kr * PIP2_phgfp_bl_pm))</Parameter>
+          <Parameter Name="I" Role="inward current density" Unit="pA.um-2">0.0</Parameter>
+          <Parameter Name="netValence" Role="net charge valence" Unit="1">0.0</Parameter>
+          <Parameter Name="Kf" Role="forward rate constant" Unit="s-1.uM-1">Kf_PIP2PH</Parameter>
+          <Parameter Name="Kr" Role="reverse rate constant" Unit="s-1">(Kf * Kd)</Parameter>
+        </Kinetics>
+      </SimpleReaction>
+      <Diagram Name="Unnamed compartment" Structure="ec" />
+      <Diagram Name="pm" Structure="pm">
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="PH_GFP_bl_cyt" LocationX="36" LocationY="86" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="hv_cyt" LocationX="52" LocationY="237" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="PH_GFP_cyt" LocationX="40" LocationY="180" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="full" SimpleReactionRef="reaction1" LocationX="115" LocationY="268" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="PIP2_pm" LocationX="52" LocationY="131" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="PIP2_phgfp_pm" LocationX="29" LocationY="333" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="full" SimpleReactionRef="reaction2" LocationX="204" LocationY="112" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="PIP2_phgfp_bl_pm" LocationX="247" LocationY="144" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="PH_GFP_bl_cyt" LocationX="36" LocationY="86" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="hv_cyt" LocationX="52" LocationY="237" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="PH_GFP_cyt" LocationX="40" LocationY="180" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="molecule" SimpleReactionRef="reaction1" LocationX="115" LocationY="268" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="PIP2_pm" LocationX="52" LocationY="131" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="PIP2_phgfp_pm" LocationX="29" LocationY="333" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="molecule" SimpleReactionRef="reaction2" LocationX="204" LocationY="112" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="PIP2_phgfp_bl_pm" LocationX="247" LocationY="144" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="PH_GFP_bl_cyt" LocationX="36" LocationY="86" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="hv_cyt" LocationX="52" LocationY="237" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="PH_GFP_cyt" LocationX="40" LocationY="180" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="rule" SimpleReactionRef="reaction1" LocationX="115" LocationY="268" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="PIP2_pm" LocationX="52" LocationY="131" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="PIP2_phgfp_pm" LocationX="29" LocationY="333" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="rule" SimpleReactionRef="reaction2" LocationX="204" LocationY="112" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="PIP2_phgfp_bl_pm" LocationX="247" LocationY="144" />
+      </Diagram>
+      <Diagram Name="cyt" Structure="cyt">
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="PH_GFP_bl_cyt" LocationX="170" LocationY="136" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="hv_cyt" LocationX="67" LocationY="106" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="PH_GFP_cyt" LocationX="44" LocationY="44" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="full" SimpleReactionRef="bleach_cyt" LocationX="105" LocationY="79" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="PH_GFP_bl_cyt" LocationX="170" LocationY="136" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="hv_cyt" LocationX="67" LocationY="106" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="PH_GFP_cyt" LocationX="44" LocationY="44" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="molecule" SimpleReactionRef="bleach_cyt" LocationX="105" LocationY="79" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="PH_GFP_bl_cyt" LocationX="170" LocationY="136" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="hv_cyt" LocationX="67" LocationY="106" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="PH_GFP_cyt" LocationX="44" LocationY="44" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="rule" SimpleReactionRef="bleach_cyt" LocationX="105" LocationY="79" />
+      </Diagram>
+      <Diagram Name="nucMem" Structure="nucMem">
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="PH_GFP_nuc" LocationX="25" LocationY="111" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="PH_GFP_bl_nuc" LocationX="21" LocationY="182" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="hv_nuc" LocationX="44" LocationY="39" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="PH_GFP_bl_cyt" LocationX="53" LocationY="200" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="hv_cyt" LocationX="75" LocationY="59" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="PH_GFP_cyt" LocationX="47" LocationY="116" />
+        <FluxReactionShape NodeReferenceModeAttrTag="full" FluxReactionRef="transport_PH_GFP" LocationX="115" LocationY="115" />
+        <FluxReactionShape NodeReferenceModeAttrTag="full" FluxReactionRef="transport_PH_GFP_bl" LocationX="128" LocationY="189" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="PH_GFP_nuc" LocationX="25" LocationY="111" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="PH_GFP_bl_nuc" LocationX="21" LocationY="182" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="hv_nuc" LocationX="44" LocationY="39" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="PH_GFP_bl_cyt" LocationX="53" LocationY="200" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="hv_cyt" LocationX="75" LocationY="59" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="PH_GFP_cyt" LocationX="47" LocationY="116" />
+        <FluxReactionShape NodeReferenceModeAttrTag="molecule" FluxReactionRef="transport_PH_GFP" LocationX="115" LocationY="115" />
+        <FluxReactionShape NodeReferenceModeAttrTag="molecule" FluxReactionRef="transport_PH_GFP_bl" LocationX="128" LocationY="189" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="PH_GFP_nuc" LocationX="25" LocationY="111" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="PH_GFP_bl_nuc" LocationX="21" LocationY="182" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="hv_nuc" LocationX="44" LocationY="39" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="PH_GFP_bl_cyt" LocationX="53" LocationY="200" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="hv_cyt" LocationX="75" LocationY="59" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="PH_GFP_cyt" LocationX="47" LocationY="116" />
+        <FluxReactionShape NodeReferenceModeAttrTag="rule" FluxReactionRef="transport_PH_GFP" LocationX="115" LocationY="115" />
+        <FluxReactionShape NodeReferenceModeAttrTag="rule" FluxReactionRef="transport_PH_GFP_bl" LocationX="128" LocationY="189" />
+      </Diagram>
+      <Diagram Name="nuc" Structure="nuc">
+        <SimpleReactionShape NodeReferenceModeAttrTag="full" SimpleReactionRef="bleach_nuc" LocationX="73" LocationY="68" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="PH_GFP_nuc" LocationX="44" LocationY="142" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="PH_GFP_bl_nuc" LocationX="158" LocationY="45" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="full" LocalizedCompoundRef="hv_nuc" LocationX="142" LocationY="124" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="molecule" SimpleReactionRef="bleach_nuc" LocationX="73" LocationY="68" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="PH_GFP_nuc" LocationX="44" LocationY="142" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="PH_GFP_bl_nuc" LocationX="158" LocationY="45" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="molecule" LocalizedCompoundRef="hv_nuc" LocationX="142" LocationY="124" />
+        <SimpleReactionShape NodeReferenceModeAttrTag="rule" SimpleReactionRef="bleach_nuc" LocationX="73" LocationY="68" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="PH_GFP_nuc" LocationX="44" LocationY="142" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="PH_GFP_bl_nuc" LocationX="158" LocationY="45" />
+        <LocalizedCompoundShape NodeReferenceModeAttrTag="rule" LocalizedCompoundRef="hv_nuc" LocationX="142" LocationY="124" />
+      </Diagram>
+      <Version Name="unnamed" KeyValue="34114905" BranchId="34100248" Archived="0" Date="28-Jun-2009 09:45:35" FromVersionable="false">
+        <Owner Name="ccb_spatial" Identifier="34076600" />
+        <GroupAccess Type="1" />
+        <Annotation>cloned from 'unnamed' owned by user schaff</Annotation>
+      </Version>
+      <ModelUnitSystem VolumeSubstanceUnit="uM.um3" MembraneSubstanceUnit="molecules" LumpedReactionSubstanceUnit="molecules" VolumeUnit="um3" AreaUnit="um2" LengthUnit="um" TimeUnit="s" />
+    </Model>
+    <SimulationSpec Name="comp_ss" Stochastic="false" UseConcentration="true" RuleBased="false" MassConservationModelReduction="true" InsufficientIterations="false" InsufficientMaxMolecules="false">
+      <NetworkConstraints RbmMaxIteration="1" RbmMaxMoleculesPerSpecies="10" RbmSpeciesLimit="800" RbmReactionsLimit="2500" />
+      <Annotation>cloned from 'comp_ss' owned by user schaff</Annotation>
+      <Geometry Name="non-spatial1583096641" Dimension="0">
+        <Annotation>cloned from 'non-spatial1583096641' owned by user schaff</Annotation>
+        <Extent X="10.0" Y="10.0" Z="10.0" />
+        <Origin X="0.0" Y="0.0" Z="0.0" />
+        <SubVolume Name="Compartment" Handle="0" Type="Compartmental" KeyValue="34100204" />
+        <Version Name="non-spatial1583096641" KeyValue="34100200" BranchId="34100201" Archived="0" Date="26-Jun-2009 23:13:18" FromVersionable="false">
+          <Owner Name="ccb_spatial" Identifier="34076600" />
+          <GroupAccess Type="1" />
+          <Annotation>cloned from 'non-spatial1583096641' owned by user schaff</Annotation>
+        </Version>
+      </Geometry>
+      <GeometryContext>
+        <FeatureMapping Feature="cyt" GeometryClass="Compartment" SubVolume="Compartment" Size="1316.0">
+          <BoundariesTypes Xm="Flux" Xp="Flux" Ym="Flux" Yp="Flux" Zm="Flux" Zp="Flux" />
+        </FeatureMapping>
+        <FeatureMapping Feature="nuc" GeometryClass="Compartment" SubVolume="Compartment" Size="326.0">
+          <BoundariesTypes Xm="Flux" Xp="Flux" Ym="Flux" Yp="Flux" Zm="Flux" Zp="Flux" />
+        </FeatureMapping>
+        <FeatureMapping Feature="ec" GeometryClass="Compartment" SubVolume="Compartment" Size="1814.0">
+          <BoundariesTypes Xm="Flux" Xp="Flux" Ym="Flux" Yp="Flux" Zm="Flux" Zp="Flux" />
+        </FeatureMapping>
+        <MembraneMapping Membrane="pm" SurfaceToVolumeRatio="6.090133982947625E-4" VolumeFraction="0.47511574074074076" Size="1.0" CalculateVoltage="false" SpecificCapacitance="1.0" InitialVoltage="0.0" GeometryClass="Compartment">
+          <BoundariesTypes Xm="Flux" Xp="Flux" Ym="Flux" Yp="Flux" Zm="Flux" Zp="Flux" />
+        </MembraneMapping>
+        <MembraneMapping Membrane="nucMem" SurfaceToVolumeRatio="0.003067484662576687" VolumeFraction="0.19853836784409257" Size="1.0" CalculateVoltage="false" SpecificCapacitance="1.0" InitialVoltage="0.0" GeometryClass="Compartment">
+          <BoundariesTypes Xm="Flux" Xp="Flux" Ym="Flux" Yp="Flux" Zm="Flux" Zp="Flux" />
+        </MembraneMapping>
+      </GeometryContext>
+      <ReactionContext>
+        <LocalizedCompoundSpec LocalizedCompoundRef="hv_cyt" ForceConstant="true" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>0.0</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="PH_GFP_cyt" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>1.0</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="PH_GFP_bl_cyt" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>9.999999999999911E-5</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="PIP2_pm" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>12000.0</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="PIP2_phgfp_pm" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>1.0</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="PIP2_phgfp_bl_pm" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>0.0</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <ReactionSpec ReactionStepRef="bleach_cyt" ReactionMapping="included" />
+        <ReactionSpec ReactionStepRef="reaction1" ReactionMapping="included" />
+        <ReactionSpec ReactionStepRef="reaction2" ReactionMapping="included" />
+      </ReactionContext>
+      <MathDescription Name="comp_ss_generated">
+        <Annotation>cloned from 'comp_ss_generated' owned by user schaff</Annotation>
+        <Constant Name="_F_">96480.0</Constant>
+        <Constant Name="_F_nmol_">9.648E-5</Constant>
+        <Constant Name="_K_GHK_">1.0E-9</Constant>
+        <Constant Name="_N_pmol_">6.02E11</Constant>
+        <Constant Name="_R_">8314.0</Constant>
+        <Constant Name="_T_">300.0</Constant>
+        <Constant Name="bleach_rate">1.0</Constant>
+        <Constant Name="hv_cyt">0.0</Constant>
+        <Constant Name="hv_cyt_init">0.0</Constant>
+        <Constant Name="K_millivolts_per_volt">1000.0</Constant>
+        <Constant Name="Kd">2.0</Constant>
+        <Constant Name="Kf_PIP2PH">200.0</Constant>
+        <Constant Name="KMOLE">0.0016611295681063123</Constant>
+        <Constant Name="PH_GFP_bl_cyt_init">9.999999999999911E-5</Constant>
+        <Constant Name="PH_GFP_cyt_init">1.0</Constant>
+        <Constant Name="PIP2_phgfp_bl_pm_init">0.0</Constant>
+        <Constant Name="PIP2_phgfp_pm_init">1.0</Constant>
+        <Constant Name="PIP2_pm_init">12000.0</Constant>
+        <Constant Name="Size_cyt">1316.0</Constant>
+        <Constant Name="Size_ec">1814.0</Constant>
+        <Constant Name="Size_nuc">326.0</Constant>
+        <Constant Name="Size_nucMem">1.0</Constant>
+        <Constant Name="Size_pm">1.0</Constant>
+        <Constant Name="SurfToVol_nucMem">0.003067484662576687</Constant>
+        <Constant Name="SurfToVol_pm">6.090133982947625E-4</Constant>
+        <Constant Name="VolFract_cyt">0.47511574074074076</Constant>
+        <Constant Name="VolFract_nuc">0.19853836784409257</Constant>
+        <Constant Name="Voltage_nucMem">0.0</Constant>
+        <Constant Name="Voltage_pm">0.0</Constant>
+        <VolumeVariable Name="PH_GFP_bl_cyt" />
+        <VolumeVariable Name="PIP2_phgfp_bl_pm" />
+        <VolumeVariable Name="PIP2_phgfp_pm" />
+        <Function Name="J_bleach_cyt">(k * PH_GFP_cyt)</Function>
+        <Function Name="J_reaction1">((PH_GFP_cyt * Kf_reaction1 * PIP2_pm) - (Kr_reaction1 * PIP2_phgfp_pm))</Function>
+        <Function Name="J_reaction2">((PH_GFP_bl_cyt * Kf_reaction2 * PIP2_pm) - (Kr_reaction2 * PIP2_phgfp_bl_pm))</Function>
+        <Function Name="k">(bleach_rate * hv_cyt)</Function>
+        <Function Name="K_PH_GFP_cyt_total">((PIP2_phgfp_bl_pm_init * SurfToVol_pm * VolFract_cyt * KMOLE) + (PIP2_phgfp_pm_init * SurfToVol_pm * VolFract_cyt * KMOLE) + (PH_GFP_cyt_init * (1.0 - VolFract_nuc) * VolFract_cyt) + (PH_GFP_bl_cyt_init * (1.0 - VolFract_nuc) * VolFract_cyt))</Function>
+        <Function Name="K_PIP2_pm_total">((PIP2_phgfp_bl_pm_init * SurfToVol_pm * VolFract_cyt * KMOLE) + (PIP2_pm_init * SurfToVol_pm * VolFract_cyt * KMOLE) + (PIP2_phgfp_pm_init * SurfToVol_pm * VolFract_cyt * KMOLE))</Function>
+        <Function Name="Kf_reaction1">Kf_PIP2PH</Function>
+        <Function Name="Kf_reaction2">Kf_PIP2PH</Function>
+        <Function Name="KFlux_nucMem_mapping_cyt">(SurfToVol_nucMem * VolFract_nuc / (1.0 - VolFract_nuc))</Function>
+        <Function Name="KFlux_nucMem_mapping_nuc">SurfToVol_nucMem</Function>
+        <Function Name="KFlux_pm_mapping_cyt">(SurfToVol_pm / (1.0 - VolFract_nuc))</Function>
+        <Function Name="KFlux_pm_mapping_ec">(SurfToVol_pm * VolFract_cyt / (1.0 - VolFract_cyt))</Function>
+        <Function Name="Kr_reaction1">(Kf_reaction1 * Kd)</Function>
+        <Function Name="Kr_reaction2">(Kf_reaction2 * Kd)</Function>
+        <Function Name="PH_GFP_cyt">(( - (PIP2_phgfp_bl_pm * SurfToVol_pm * VolFract_cyt * KMOLE) - (PIP2_phgfp_pm * SurfToVol_pm * VolFract_cyt * KMOLE) + K_PH_GFP_cyt_total - (PH_GFP_bl_cyt * (1.0 - VolFract_nuc) * VolFract_cyt)) / ((1.0 - VolFract_nuc) * VolFract_cyt))</Function>
+        <Function Name="PIP2_pm">(( - (PIP2_phgfp_bl_pm * SurfToVol_pm * VolFract_cyt * KMOLE) + K_PIP2_pm_total - (PIP2_phgfp_pm * SurfToVol_pm * VolFract_cyt * KMOLE)) / (SurfToVol_pm * VolFract_cyt * KMOLE))</Function>
+        <CompartmentSubDomain Name="Compartment">
+          <BoundaryType Boundary="Xm" Type="Value" />
+          <BoundaryType Boundary="Xp" Type="Value" />
+          <BoundaryType Boundary="Ym" Type="Value" />
+          <BoundaryType Boundary="Yp" Type="Value" />
+          <BoundaryType Boundary="Zm" Type="Value" />
+          <BoundaryType Boundary="Zp" Type="Value" />
+          <OdeEquation Name="PH_GFP_bl_cyt" SolutionType="Unknown">
+            <Rate>(J_bleach_cyt - (KFlux_pm_mapping_cyt * KMOLE * J_reaction2))</Rate>
+            <Initial>PH_GFP_bl_cyt_init</Initial>
+          </OdeEquation>
+          <OdeEquation Name="PIP2_phgfp_pm" SolutionType="Unknown">
+            <Rate>J_reaction1</Rate>
+            <Initial>PIP2_phgfp_pm_init</Initial>
+          </OdeEquation>
+          <OdeEquation Name="PIP2_phgfp_bl_pm" SolutionType="Unknown">
+            <Rate>J_reaction2</Rate>
+            <Initial>PIP2_phgfp_bl_pm_init</Initial>
+          </OdeEquation>
+        </CompartmentSubDomain>
+        <Version Name="comp_ss_generated" KeyValue="34117570" BranchId="34100236" Archived="0" Date="28-Jun-2009 13:19:59" FromVersionable="false">
+          <Owner Name="ccb_spatial" Identifier="34076600" />
+          <GroupAccess Type="1" />
+          <Annotation>cloned from 'comp_ss_generated' owned by user schaff</Annotation>
+        </Version>
+      </MathDescription>
+      <Simulation Name="Simulation0">
+        <Annotation>cloned from 'Simulation0' owned by user schaff</Annotation>
+        <SolverTaskDescription TaskType="Unsteady" UseSymbolicJacobian="false" Solver="Combined Stiff Solver (IDA/CVODE)">
+          <TimeBound StartTime="0.0" EndTime="20.0" />
+          <TimeStep DefaultTime="0.0" MinTime="1.0E-8" MaxTime="1.0" />
+          <ErrorTolerance Absolut="1.0E-9" Relative="1.0E-9" />
+          <OutputOptions KeepEvery="1" KeepAtMost="1000" />
+          <NumberProcessors>1</NumberProcessors>
+        </SolverTaskDescription>
+        <MathOverrides />
+        <Version Name="Simulation0" KeyValue="34117606" BranchId="34117607" Archived="0" Date="28-Jun-2009 13:19:59" FromVersionable="false">
+          <Owner Name="ccb_spatial" Identifier="34076600" />
+          <GroupAccess Type="1" />
+          <Annotation>cloned from 'Simulation0' owned by user schaff</Annotation>
+        </Version>
+      </Simulation>
+      <Version Name="comp_ss" KeyValue="34117574" BranchId="34100291" Archived="0" Date="28-Jun-2009 13:19:59" FromVersionable="false">
+        <Owner Name="ccb_spatial" Identifier="34076600" />
+        <GroupAccess Type="1" />
+        <Annotation>cloned from 'comp_ss' owned by user schaff</Annotation>
+      </Version>
+      <MicroscopeMeasurement Name="fluor">
+        <ConvolutionKernel Type="ProjectionZKernel" />
+      </MicroscopeMeasurement>
+    </SimulationSpec>
+    <SimulationSpec Name="comp_frap" Stochastic="false" UseConcentration="true" RuleBased="false" MassConservationModelReduction="true" InsufficientIterations="false" InsufficientMaxMolecules="false">
+      <NetworkConstraints RbmMaxIteration="1" RbmMaxMoleculesPerSpecies="10" RbmSpeciesLimit="800" RbmReactionsLimit="2500" />
+      <Annotation>cloned from 'comp_frap' owned by user schaff
+(copied from comp_ss)</Annotation>
+      <Geometry Name="non-spatial6187237" Dimension="0">
+        <Annotation>cloned from 'non-spatial1583096641' owned by user schaff</Annotation>
+        <Extent X="10.0" Y="10.0" Z="10.0" />
+        <Origin X="0.0" Y="0.0" Z="0.0" />
+        <SubVolume Name="Compartment" Handle="0" Type="Compartmental" KeyValue="34100209" />
+        <Version Name="non-spatial6187237" KeyValue="34100205" BranchId="34100206" Archived="0" Date="26-Jun-2009 23:13:18" FromVersionable="false">
+          <Owner Name="ccb_spatial" Identifier="34076600" />
+          <GroupAccess Type="1" />
+          <Annotation>cloned from 'non-spatial1583096641' owned by user schaff</Annotation>
+        </Version>
+      </Geometry>
+      <GeometryContext>
+        <FeatureMapping Feature="cyt" GeometryClass="Compartment" SubVolume="Compartment" Size="1.0">
+          <BoundariesTypes Xm="Flux" Xp="Flux" Ym="Flux" Yp="Flux" Zm="Flux" Zp="Flux" />
+        </FeatureMapping>
+        <FeatureMapping Feature="nuc" GeometryClass="Compartment" SubVolume="Compartment" Size="1.0">
+          <BoundariesTypes Xm="Flux" Xp="Flux" Ym="Flux" Yp="Flux" Zm="Flux" Zp="Flux" />
+        </FeatureMapping>
+        <FeatureMapping Feature="ec" GeometryClass="Compartment" SubVolume="Compartment" Size="1.0">
+          <BoundariesTypes Xm="Flux" Xp="Flux" Ym="Flux" Yp="Flux" Zm="Flux" Zp="Flux" />
+        </FeatureMapping>
+        <MembraneMapping Membrane="pm" SurfaceToVolumeRatio="0.5" VolumeFraction="0.6666666666666666" Size="1.0" CalculateVoltage="false" SpecificCapacitance="1.0" InitialVoltage="0.0" GeometryClass="Compartment">
+          <BoundariesTypes Xm="Flux" Xp="Flux" Ym="Flux" Yp="Flux" Zm="Flux" Zp="Flux" />
+        </MembraneMapping>
+        <MembraneMapping Membrane="nucMem" SurfaceToVolumeRatio="1.0" VolumeFraction="0.5" Size="1.0" CalculateVoltage="false" SpecificCapacitance="1.0" InitialVoltage="0.0" GeometryClass="Compartment">
+          <BoundariesTypes Xm="Flux" Xp="Flux" Ym="Flux" Yp="Flux" Zm="Flux" Zp="Flux" />
+        </MembraneMapping>
+      </GeometryContext>
+      <ReactionContext>
+        <LocalizedCompoundSpec LocalizedCompoundRef="hv_cyt" ForceConstant="true" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>(10.0 * ((t &gt; 0.2) &amp;&amp; (t &lt; 1.5)))</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="PH_GFP_cyt" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>0.9949689471138276</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="PH_GFP_bl_cyt" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>9.949676912093729E-5</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="PIP2_pm" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>8013.840234276138</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="PIP2_phgfp_pm" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>3986.76109011808</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="PIP2_phgfp_bl_pm" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>0.3986756057809255</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <ReactionSpec ReactionStepRef="bleach_cyt" ReactionMapping="included" />
+        <ReactionSpec ReactionStepRef="reaction1" ReactionMapping="included" />
+        <ReactionSpec ReactionStepRef="reaction2" ReactionMapping="included" />
+      </ReactionContext>
+      <MathDescription Name="comp_generated">
+        <Annotation>cloned from 'comp_generated' owned by user schaff</Annotation>
+        <Constant Name="_F_">96480.0</Constant>
+        <Constant Name="_F_nmol_">9.648E-5</Constant>
+        <Constant Name="_K_GHK_">1.0E-9</Constant>
+        <Constant Name="_N_pmol_">6.02E11</Constant>
+        <Constant Name="_R_">8314.0</Constant>
+        <Constant Name="_T_">300.0</Constant>
+        <Constant Name="bleach_rate">1.0</Constant>
+        <Constant Name="K_millivolts_per_volt">1000.0</Constant>
+        <Constant Name="Kd">2.0</Constant>
+        <Constant Name="Kf_PIP2PH">200.0</Constant>
+        <Constant Name="KMOLE">0.0016611295681063123</Constant>
+        <Constant Name="PH_GFP_bl_cyt_init">9.949676912093729E-5</Constant>
+        <Constant Name="PH_GFP_cyt_init">0.9949689471138276</Constant>
+        <Constant Name="PIP2_phgfp_bl_pm_init">0.3986756057809255</Constant>
+        <Constant Name="PIP2_phgfp_pm_init">3986.76109011808</Constant>
+        <Constant Name="PIP2_pm_init">8013.840234276138</Constant>
+        <Constant Name="Size_cyt">1.0</Constant>
+        <Constant Name="Size_ec">1.0</Constant>
+        <Constant Name="Size_nuc">1.0</Constant>
+        <Constant Name="Size_nucMem">1.0</Constant>
+        <Constant Name="Size_pm">1.0</Constant>
+        <Constant Name="SurfToVol_nucMem">1.0</Constant>
+        <Constant Name="SurfToVol_pm">0.5</Constant>
+        <Constant Name="VolFract_cyt">0.6666666666666666</Constant>
+        <Constant Name="VolFract_nuc">0.5</Constant>
+        <Constant Name="Voltage_nucMem">0.0</Constant>
+        <Constant Name="Voltage_pm">0.0</Constant>
+        <VolumeVariable Name="PH_GFP_bl_cyt" />
+        <VolumeVariable Name="PIP2_phgfp_bl_pm" />
+        <VolumeVariable Name="PIP2_phgfp_pm" />
+        <Function Name="hv_cyt">(10.0 * ((t &gt; 0.2) &amp;&amp; (t &lt; 1.5)))</Function>
+        <Function Name="hv_cyt_init">(10.0 * ((t &gt; 0.2) &amp;&amp; (t &lt; 1.5)))</Function>
+        <Function Name="J_bleach_cyt">(k * PH_GFP_cyt)</Function>
+        <Function Name="J_reaction1">((PH_GFP_cyt * Kf_reaction1 * PIP2_pm) - (Kr_reaction1 * PIP2_phgfp_pm))</Function>
+        <Function Name="J_reaction2">((PH_GFP_bl_cyt * Kf_reaction2 * PIP2_pm) - (Kr_reaction2 * PIP2_phgfp_bl_pm))</Function>
+        <Function Name="k">(bleach_rate * hv_cyt)</Function>
+        <Function Name="K_PH_GFP_cyt_total">((PIP2_phgfp_bl_pm_init * SurfToVol_pm * VolFract_cyt * KMOLE) + (PIP2_phgfp_pm_init * SurfToVol_pm * VolFract_cyt * KMOLE) + (PH_GFP_cyt_init * (1.0 - VolFract_nuc) * VolFract_cyt) + (PH_GFP_bl_cyt_init * (1.0 - VolFract_nuc) * VolFract_cyt))</Function>
+        <Function Name="K_PIP2_pm_total">((PIP2_phgfp_bl_pm_init * SurfToVol_pm * VolFract_cyt * KMOLE) + (PIP2_pm_init * SurfToVol_pm * VolFract_cyt * KMOLE) + (PIP2_phgfp_pm_init * SurfToVol_pm * VolFract_cyt * KMOLE))</Function>
+        <Function Name="Kf_reaction1">Kf_PIP2PH</Function>
+        <Function Name="Kf_reaction2">Kf_PIP2PH</Function>
+        <Function Name="KFlux_nucMem_mapping_cyt">(SurfToVol_nucMem * VolFract_nuc / (1.0 - VolFract_nuc))</Function>
+        <Function Name="KFlux_nucMem_mapping_nuc">SurfToVol_nucMem</Function>
+        <Function Name="KFlux_pm_mapping_cyt">(SurfToVol_pm / (1.0 - VolFract_nuc))</Function>
+        <Function Name="KFlux_pm_mapping_ec">(SurfToVol_pm * VolFract_cyt / (1.0 - VolFract_cyt))</Function>
+        <Function Name="Kr_reaction1">(Kf_reaction1 * Kd)</Function>
+        <Function Name="Kr_reaction2">(Kf_reaction2 * Kd)</Function>
+        <Function Name="PH_GFP_cyt">(( - (PIP2_phgfp_bl_pm * SurfToVol_pm * VolFract_cyt * KMOLE) - (PIP2_phgfp_pm * SurfToVol_pm * VolFract_cyt * KMOLE) + K_PH_GFP_cyt_total - (PH_GFP_bl_cyt * (1.0 - VolFract_nuc) * VolFract_cyt)) / ((1.0 - VolFract_nuc) * VolFract_cyt))</Function>
+        <Function Name="PIP2_pm">(( - (PIP2_phgfp_bl_pm * SurfToVol_pm * VolFract_cyt * KMOLE) + K_PIP2_pm_total - (PIP2_phgfp_pm * SurfToVol_pm * VolFract_cyt * KMOLE)) / (SurfToVol_pm * VolFract_cyt * KMOLE))</Function>
+        <CompartmentSubDomain Name="Compartment">
+          <BoundaryType Boundary="Xm" Type="Value" />
+          <BoundaryType Boundary="Xp" Type="Value" />
+          <BoundaryType Boundary="Ym" Type="Value" />
+          <BoundaryType Boundary="Yp" Type="Value" />
+          <BoundaryType Boundary="Zm" Type="Value" />
+          <BoundaryType Boundary="Zp" Type="Value" />
+          <OdeEquation Name="PH_GFP_bl_cyt" SolutionType="Unknown">
+            <Rate>(J_bleach_cyt - (KFlux_pm_mapping_cyt * KMOLE * J_reaction2))</Rate>
+            <Initial>PH_GFP_bl_cyt_init</Initial>
+          </OdeEquation>
+          <OdeEquation Name="PIP2_phgfp_pm" SolutionType="Unknown">
+            <Rate>J_reaction1</Rate>
+            <Initial>PIP2_phgfp_pm_init</Initial>
+          </OdeEquation>
+          <OdeEquation Name="PIP2_phgfp_bl_pm" SolutionType="Unknown">
+            <Rate>J_reaction2</Rate>
+            <Initial>PIP2_phgfp_bl_pm_init</Initial>
+          </OdeEquation>
+        </CompartmentSubDomain>
+        <Version Name="comp_generated" KeyValue="34121340" BranchId="34100239" Archived="0" Date="28-Jun-2009 13:36:17" FromVersionable="false">
+          <Owner Name="ccb_spatial" Identifier="34076600" />
+          <GroupAccess Type="1" />
+          <Annotation>cloned from 'comp_generated' owned by user schaff</Annotation>
+        </Version>
+      </MathDescription>
+      <Simulation Name="Simulation1">
+        <Annotation>cloned from 'Simulation1' owned by user schaff</Annotation>
+        <SolverTaskDescription TaskType="Unsteady" UseSymbolicJacobian="false" Solver="Combined Stiff Solver (IDA/CVODE)">
+          <TimeBound StartTime="0.0" EndTime="5.0" />
+          <TimeStep DefaultTime="0.1" MinTime="1.0E-8" MaxTime="1.0" />
+          <ErrorTolerance Absolut="1.0E-9" Relative="1.0E-9" />
+          <OutputOptions OutputTimeStep="0.05" />
+          <NumberProcessors>1</NumberProcessors>
+        </SolverTaskDescription>
+        <MathOverrides />
+        <Version Name="Simulation1" KeyValue="34121358" BranchId="34100362" Archived="0" Date="28-Jun-2009 13:36:18" FromVersionable="false">
+          <Owner Name="ccb_spatial" Identifier="34076600" />
+          <GroupAccess Type="1" />
+          <Annotation>cloned from 'Simulation1' owned by user schaff</Annotation>
+        </Version>
+      </Simulation>
+      <Version Name="comp_frap" KeyValue="34121342" BranchId="34100308" Archived="0" Date="28-Jun-2009 13:36:18" FromVersionable="false">
+        <Owner Name="ccb_spatial" Identifier="34076600" />
+        <GroupAccess Type="1" />
+        <Annotation>cloned from 'comp_frap' owned by user schaff
+(copied from comp_ss)</Annotation>
+      </Version>
+      <MicroscopeMeasurement Name="fluor">
+        <ConvolutionKernel Type="ProjectionZKernel" />
+      </MicroscopeMeasurement>
+    </SimulationSpec>
+    <SimulationSpec Name="spatial2D" Stochastic="false" UseConcentration="true" RuleBased="false" MassConservationModelReduction="true" InsufficientIterations="false" InsufficientMaxMolecules="false" CharacteristicSize="0.09247254013931522">
+      <NetworkConstraints RbmMaxIteration="1" RbmMaxMoleculesPerSpecies="10" RbmSpeciesLimit="800" RbmReactionsLimit="2500" />
+      <Annotation>cloned from 'spatial2D' owned by user schaff
+(copied from comp_frap) (copied from comp_ss)</Annotation>
+      <Geometry Name="N1E_for_PIP2" Dimension="2">
+        <Annotation>cloned from 'N1E_for_PIP2' owned by user les</Annotation>
+        <Extent X="48.54" Y="71.24" Z="1.0" />
+        <Origin X="0.0" Y="0.0" Z="0.0" />
+        <Image Name="N1E for PIP2">
+          <Annotation>cloned from 'N1E for PIP2' owned by user les
+NoName</Annotation>
+          <ImageData X="340" Y="499" Z="1" CompressedSize="2620">789CEDDDD976E24A104451FF797DBAEF35D00C42430D91754AAA380FBD6C1E9ACCBD300601F2CF8F73CECD515A899EE9ECAD995AB5AD7553B3B6B4696AD4FAB651AD5A9D4DF5D934209B0664D4808C1AD0F67DAA596BDB31356A6536D5B7676AD4BA6C1A905103326A40BBA82F5B33979483EADB6E6146D557686AD48C4A4D8D9A914DF5F9861A904D03326A40A5A8763DAEC2D4AA4755A15A75379B0664D3806C1A904D03B2A83E930664D3808CAAAFCCD4A839D934209BEAB3A93E9BEAB3A9BC32529BE664537985A4363DAA14D4A48799B4BE758D7251933EDBF03069755B22BE99D6B72152416AD4474B90C71755A436FD59F3787C55476AD325DCEBA25A529BD6C219753B9BCA8B20B5A94DD5D9549F4DE58590DAD4A6E2624CA7460D229DD9348AD4A6465566537D369567507551A21393FA075F5F1CE9A4A681A0B3A20693CEC6DA8173365393CAEB453A8D6937D079483B9AD29B76AB1FE934A61D49A740EDEA39076A7FD2AB9B02A217476544D3FD9D96F4F22161A20FD72B665379261507839AD4A487D19EB768046DB4E63D5A411A8DF968E343C1678CA65C447328A20DBFA241DAA305BFA3455AA3FDD6A24D1AA3F9DE7A4E439BB4C4122E7B8E04AB3445232E7ACE04B3B4441B2E7B0E05BB3444137EF59A0A96A90F165CE935146D5319AA7718AD531C0D9619CD54148D9519CD54126D951BED941D0D55104D9517AD54148D9517AD54148D95158D5416AD9517AD5416AD9517AD5418CD95136D541C0D96114D94DF690E4CB34C25FD9CE6E0140C95DB6B58962B27DAEAB8F7F7F3A633908E6F4A0395478B1D470B1547831D44F35444931DB598F5E704BFA360B1E33646E5C40E83A08A5A9D9465DB0D412A6E65521A6E2784A8B8954969B8ED10A1F25626A5E536237C2AFA1A75E4A7525108BFBFBFD2FFEF3CBFF343487F17455C07EDB653C0B64BD118541A6E27F1A62B9E31ACB4DB4ED23DB741F5A834DC66CA25F74125AAEF63936C7B353BBECA106D66A5B9729240169A36A0D25C5929481F48D9A4F5A8B456561AD29A4C2A06BD306A0366AB6825EAE02F42D782B66336A92E46FFFF1B1AF2D500A495AA5FD194F786F0BC18EA30A41A549AF3AFDAD96DBAD948A412541A74345281290D3A1CE9054C070395A09E52349454A07A42519B0690469B16A37EEEC3910EF26C5460FAB90F283AEA7D693D2A4D5A0BDA47B414F57DA5F399F6222D32FD58C9A412D3216EA7B5A4439BB2A8E38B16A27EAE7526D2BEA645A81FAFA09C897474D37FBB9D88B4AF689D29F391D3D390569AF6AF5AB43F6911AA41F5A826D59B52A897368558CF675A8CDA1BF77CA2D5C7FB4DAA37ED845A4D4A9AD60F3D36E9694C3F7634693BEA72CDA149CF61FABE683C67A3284B9A6DDAFBB16913A94DF5A4B06936EA894469D26C549316349C692B69A24587336D16B5E92549C7329D8A74F4E7F723919699C6D25E8534DB34853F2F5590269AF356E1CC638BDA3480740CD4214C65A26398E6A1C6BEB87735D22CD3E7E2A393265AF31E6DAA144D34E6A3AC59032C2F4CCA9A4A45134DF98C34D592269AF25995A9045A2C3A8E69E6B8AB1A839126DAF25905EADA6503908E839A3DF0B7844937CA9EF85B622CD1340EEABADEDAC4C2BF2721D77C44633E5AB3CBDC7A38D244633EDAA0CAD9C0A41B6D531DAE3016683A83E9F73B2305A691A489B6FCD736E9DA29655A4D43498741DD143D46198E34D198F70A491767EC1D8C34D19AF77A9A8693265AF35E37D378D0614C17A82538E391261AF35E3169DD51A93EA489D6BCB598A9046840D244732E3D0B9C4A4D7B919ED9B4F4A42836CD632A20B5A9BE6EA4F398F6239DC5B4A3E82CA673917631ED4A9A68D1DFDDC3D1E7344DB4680FD3CEA403A0869B7627C54D574632A99C546BDAD933F1A4BF6B4399B4ADB5A96C2A27559AF6E5BC4593FEAE0D756AD1C4A3AE8CA423B5E9B3B39BD2A86B239D9D744453116A5FC7F70624D5A0F6445C34A0A8C4B49FE0570382269BCA41FF3A3329857A34954DE5A4E7361D52D4A62392DAF4BB539BF647CD9AEADC37D4DEA87943D9542D7AF69FFDAEA619E30C7A428EB2C632FDD1FCF5C268B4FDC622551D3B8D56DB6F28519BEA456D6AD38DC6321591CE819A398CCCF4F28FA6F247B1A91834D9540E9A2E737F7A49D300A5B2C621BD8A699CE86FF12C2A52DA340CB57C1219E9454D2B06D191E2A8A3905EC93402B56A0EA5298D3A04E85F173215A3D6CFA134A55187004D360D203DFD6722DF1B43D4A6C3935E02B5790A9BAA454F7F768945B867BA1CE9FFA8B77F40D10B9ADE22452F6A8A8A5ED314053DFDA9CF36A238FF0A201DC2B400557ED511A667428DB8E6EB9A66A1865CF13CA6B787AD3D48AF6C9AD6E81EBC71A0E9DAA6297DE3C56ADE0A211D0CF5E0027D41A823B1762FCC7462D438D37955234D67450D359D133596744AD468529B5A555007D2D950BB90CE65DA87742E53A30664527D3695D787D4A6466DCBA6FA7A99CEA4DACF741ED48EA6D3A0F6349D04B52BE91CA67D49A730ED4C6A539BD6D49BD4A636ADA9BBE904A83695D79FD4A6362D0F30BD3A2A417A715486F4DAA836D547995E181523B5A9510BB2A93ED0F4AAA824E9455159D25B34813C1AF42FDA401DEDF9176DA08EF6BC452368A335EFD10AD268CC473483341AF35FB48332DAF2190D218CA67C454BE8A2255FD112BA68C9B7680A55B4E37BB4852ADAF13DDA4214CDF8118D218A66FC8CD69044232EA23924D188CB680F4134E177B4487BB4E077B4487BB4E04A34497334E04A34497334E04A34497334E04A34497334E04A34496334DF7AB44A5334DE56B44B4BB4DD56B44B4BB4DD56B44B4BB4DD56B44B4334DD66344C4334DD66344C7DB4DC76B44C7DB4DC76B44C7DB4DC4E344D6DB4DB5EB44D6DB4DB5EB44D6DB4DB6E344E6534DB7EB44E5534DA51B44F4DB4D951B44F4DB4594634517134584EB4516134575634526134577634544134557EB4547EB4547EB4547EB45441345576345449B45566345359B4565EB4526134575634526134575634526134574EB45169B4574EB45169B4574634517134D871B45079B4D871B45079B45846345179B4D871B45079B4D871B4505534DA41344F5DB4DA7EB44E6DB4DB6E344E7534DC4E344D4334DD66344C4BB4DD56B44B5334DE46344B5BB4DE6A344A6334DF5AB4497334E04A34497BB4E077B4487BB4E077B488209A7019ED218946FC8CD6104533BE475BC8A221DFA22974D192AF68096134E52B5A42184DF98A961046533EA32184D194CF680865B4E5331A42196DF98C8650465BBEA22584D194AF68096134E57BB4852ADAF1231A4315EDF81E6DA18A767C8FB6904543FE8B7650465BDEA211D4D9332093EA336940F6D467D2804C1A9051F5D934209BEAB36940360DC8A401D934209BEAB36840FFB635A9AEE7B636D5F5DCD6A821D934209BEA336944260DC8A401D93420A30614843A39AB510332AA3E9BEAB3A93E930664527D060DC8A4FA849A367DA4237D7B2DC1695CE925C6CBA601D934209BEAB3A83E930665D3806C1A9051F5D9549F4D23B2694036D567D2904C1A904D03B26940160DC8A401D934209B0664537D260DC8A40199342093C664D390D23A2C3DD605B26944AF9300C08338E79C73CE39E79C73CE3947F61F5D3DBA9D</ImageData>
+          <PixelClass Name="EC" ImagePixelValue="0" KeyValue="34102540" />
+          <PixelClass Name="Cyt" ImagePixelValue="127" KeyValue="34102541" />
+          <PixelClass Name="Nuc" ImagePixelValue="255" KeyValue="34102542" />
+          <Version Name="N1E for PIP2" KeyValue="34102534" BranchId="34102535" Archived="0" Date="27-Jun-2009 02:22:14" FromVersionable="false">
+            <Owner Name="ccb_spatial" Identifier="34076600" />
+            <GroupAccess Type="1" />
+            <Annotation>cloned from 'N1E for PIP2' owned by user les
+NoName</Annotation>
+          </Version>
+        </Image>
+        <SubVolume Name="EC" Handle="0" Type="Image" ImagePixelValue="0" KeyValue="34102699" />
+        <SubVolume Name="Cyt" Handle="1" Type="Image" ImagePixelValue="127" KeyValue="34102700" />
+        <SubVolume Name="Nuc" Handle="2" Type="Image" ImagePixelValue="255" KeyValue="34102701" />
+        <SurfaceClass Name="Cyt_EC_membrane" SubVolume1Ref="Cyt" SubVolume2Ref="EC" />
+        <SurfaceClass Name="Cyt_Nuc_membrane" SubVolume1Ref="Cyt" SubVolume2Ref="Nuc" />
+        <SurfaceDescription NumSamplesX="83" NumSamplesY="122" NumSamplesZ="1" CutoffFrequency="0.3">
+          <VolumeRegion Name="EC0" RegionID="0" SubVolume="EC" Size="1814.0330445474701" Unit="um2" />
+          <VolumeRegion Name="Cyt1" RegionID="1" SubVolume="Cyt" Size="1316.6987209030437" Unit="um2" />
+          <VolumeRegion Name="EC2" RegionID="2" SubVolume="EC" Size="0.34851739568635354" Unit="um2" />
+          <VolumeRegion Name="Cyt3" RegionID="3" SubVolume="Cyt" Size="0.34851739568635354" Unit="um2" />
+          <VolumeRegion Name="Nuc4" RegionID="4" SubVolume="Nuc" Size="326.56079975811326" Unit="um2" />
+          <MembraneRegion Name="membrane_EC0_Cyt1" VolumeRegion1="Cyt1" VolumeRegion2="EC0" Size="205.01741567879793" Unit="um" />
+          <MembraneRegion Name="membrane_Cyt1_EC2" VolumeRegion1="EC2" VolumeRegion2="Cyt1" Size="0.14279081069483723" Unit="um" />
+          <MembraneRegion Name="membrane_EC0_Cyt3" VolumeRegion1="Cyt3" VolumeRegion2="EC0" Size="0.5787644045211942" Unit="um" />
+          <MembraneRegion Name="membrane_Cyt1_Nuc4" VolumeRegion1="Nuc4" VolumeRegion2="Cyt1" Size="66.49365663784322" Unit="um" />
+        </SurfaceDescription>
+        <Version Name="N1E_for_PIP2" KeyValue="34102697" BranchId="34102554" Archived="0" Date="27-Jun-2009 02:45:26" FromVersionable="false">
+          <Owner Name="ccb_spatial" Identifier="34076600" />
+          <GroupAccess Type="1" />
+          <Annotation>cloned from 'N1E_for_PIP2' owned by user les</Annotation>
+        </Version>
+      </Geometry>
+      <GeometryContext>
+        <FeatureMapping Feature="cyt" GeometryClass="Cyt" SubVolume="Cyt">
+          <BoundariesTypes Xm="Flux" Xp="Flux" Ym="Flux" Yp="Flux" Zm="Flux" Zp="Flux" />
+        </FeatureMapping>
+        <FeatureMapping Feature="nuc" GeometryClass="Nuc" SubVolume="Nuc">
+          <BoundariesTypes Xm="Flux" Xp="Flux" Ym="Flux" Yp="Flux" Zm="Flux" Zp="Flux" />
+        </FeatureMapping>
+        <FeatureMapping Feature="ec" GeometryClass="EC" SubVolume="EC">
+          <BoundariesTypes Xm="Flux" Xp="Flux" Ym="Flux" Yp="Flux" Zm="Flux" Zp="Flux" />
+        </FeatureMapping>
+        <MembraneMapping Membrane="pm" SurfaceToVolumeRatio="1.0" VolumeFraction="0.2" CalculateVoltage="false" SpecificCapacitance="1.0" InitialVoltage="0.0" GeometryClass="Cyt_EC_membrane">
+          <BoundariesTypes Xm="Flux" Xp="Flux" Ym="Flux" Yp="Flux" Zm="Flux" Zp="Flux" />
+        </MembraneMapping>
+        <MembraneMapping Membrane="nucMem" SurfaceToVolumeRatio="1.0" VolumeFraction="0.2" CalculateVoltage="false" SpecificCapacitance="1.0" InitialVoltage="0.0" GeometryClass="Cyt_Nuc_membrane">
+          <BoundariesTypes Xm="Flux" Xp="Flux" Ym="Flux" Yp="Flux" Zm="Flux" Zp="Flux" />
+        </MembraneMapping>
+      </GeometryContext>
+      <ReactionContext>
+        <LocalizedCompoundSpec LocalizedCompoundRef="hv_cyt" ForceConstant="true" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>((t &gt; 0.2) &amp;&amp; (t &lt; 1.5) &amp;&amp; (x &lt; 40.0))</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="PH_GFP_cyt" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>0.9949689471138276</InitialConcentration>
+          <Diffusion>50.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="PH_GFP_bl_cyt" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>9.949676912093729E-5</InitialConcentration>
+          <Diffusion>50.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="PIP2_pm" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>8013.840234276138</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="PIP2_phgfp_pm" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>3986.76109011808</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <LocalizedCompoundSpec LocalizedCompoundRef="PIP2_phgfp_bl_pm" ForceConstant="false" WellMixed="false" ForceContinuous="false">
+          <InitialConcentration>0.3986756057809255</InitialConcentration>
+          <Diffusion>0.0</Diffusion>
+        </LocalizedCompoundSpec>
+        <ReactionSpec ReactionStepRef="bleach_cyt" ReactionMapping="included" />
+        <ReactionSpec ReactionStepRef="reaction1" ReactionMapping="included" />
+        <ReactionSpec ReactionStepRef="reaction2" ReactionMapping="included" />
+      </ReactionContext>
+      <MathDescription Name="spatial2D_generated">
+        <Annotation>cloned from 'spatial2D_generated' owned by user schaff</Annotation>
+        <Constant Name="_F_">96480.0</Constant>
+        <Constant Name="_F_nmol_">9.648E-5</Constant>
+        <Constant Name="_K_GHK_">1.0E-9</Constant>
+        <Constant Name="_N_pmol_">6.02E11</Constant>
+        <Constant Name="_R_">8314.0</Constant>
+        <Constant Name="_T_">300.0</Constant>
+        <Constant Name="bleach_rate">1.0</Constant>
+        <Constant Name="K_millivolts_per_volt">1000.0</Constant>
+        <Constant Name="Kd">2.0</Constant>
+        <Constant Name="Kf_PIP2PH">200.0</Constant>
+        <Constant Name="KMOLE">0.0016611295681063123</Constant>
+        <Constant Name="PH_GFP_bl_cyt_diffusionRate">50.0</Constant>
+        <Constant Name="PH_GFP_bl_cyt_init">9.949676912093729E-5</Constant>
+        <Constant Name="PH_GFP_cyt_diffusionRate">50.0</Constant>
+        <Constant Name="PH_GFP_cyt_init">0.9949689471138276</Constant>
+        <Constant Name="PIP2_phgfp_bl_pm_init">0.3986756057809255</Constant>
+        <Constant Name="PIP2_phgfp_pm_init">3986.76109011808</Constant>
+        <Constant Name="PIP2_pm_init">8013.840234276138</Constant>
+        <Constant Name="Voltage_nucMem">0.0</Constant>
+        <Constant Name="Voltage_pm">0.0</Constant>
+        <VolumeVariable Name="PH_GFP" />
+        <VolumeVariable Name="PH_GFP_bl" />
+        <MembraneVariable Name="PIP2_phgfp_bl_pm" />
+        <MembraneVariable Name="PIP2_phgfp_pm" />
+        <Function Name="hv_cyt">((t &gt; 0.2) &amp;&amp; (t &lt; 1.5) &amp;&amp; (x &lt; 40.0))</Function>
+        <Function Name="hv_cyt_init">((t &gt; 0.2) &amp;&amp; (t &lt; 1.5) &amp;&amp; (x &lt; 40.0))</Function>
+        <Function Name="J_bleach_cyt">(k * PH_GFP)</Function>
+        <Function Name="J_reaction1">((PH_GFP_INSIDE * Kf_reaction1 * PIP2_pm) - (Kr_reaction1 * PIP2_phgfp_pm))</Function>
+        <Function Name="J_reaction2">((PH_GFP_bl_INSIDE * Kf_reaction2 * PIP2_pm) - (Kr_reaction2 * PIP2_phgfp_bl_pm))</Function>
+        <Function Name="k">(bleach_rate * hv_cyt)</Function>
+        <Function Name="K_PIP2_pm_total">(PIP2_phgfp_bl_pm_init + PIP2_pm_init + PIP2_phgfp_pm_init)</Function>
+        <Function Name="Kf_reaction1">Kf_PIP2PH</Function>
+        <Function Name="Kf_reaction2">Kf_PIP2PH</Function>
+        <Function Name="Kr_reaction1">(Kf_reaction1 * Kd)</Function>
+        <Function Name="Kr_reaction2">(Kf_reaction2 * Kd)</Function>
+        <Function Name="PIP2_pm">( - PIP2_phgfp_bl_pm + K_PIP2_pm_total - PIP2_phgfp_pm)</Function>
+        <CompartmentSubDomain Name="EC">
+          <BoundaryType Boundary="Xm" Type="Flux" />
+          <BoundaryType Boundary="Xp" Type="Flux" />
+          <BoundaryType Boundary="Ym" Type="Flux" />
+          <BoundaryType Boundary="Yp" Type="Flux" />
+          <BoundaryType Boundary="Zm" Type="Value" />
+          <BoundaryType Boundary="Zp" Type="Value" />
+          <PdeEquation Name="PH_GFP" SolutionType="Unknown">
+            <Rate>0.0</Rate>
+            <Diffusion>PH_GFP_cyt_diffusionRate</Diffusion>
+            <Initial>0.0</Initial>
+          </PdeEquation>
+          <PdeEquation Name="PH_GFP_bl" SolutionType="Unknown">
+            <Rate>0.0</Rate>
+            <Diffusion>PH_GFP_bl_cyt_diffusionRate</Diffusion>
+            <Initial>0.0</Initial>
+          </PdeEquation>
+        </CompartmentSubDomain>
+        <CompartmentSubDomain Name="Cyt">
+          <BoundaryType Boundary="Xm" Type="Flux" />
+          <BoundaryType Boundary="Xp" Type="Flux" />
+          <BoundaryType Boundary="Ym" Type="Flux" />
+          <BoundaryType Boundary="Yp" Type="Flux" />
+          <BoundaryType Boundary="Zm" Type="Value" />
+          <BoundaryType Boundary="Zp" Type="Value" />
+          <PdeEquation Name="PH_GFP" SolutionType="Unknown">
+            <Rate>- J_bleach_cyt</Rate>
+            <Diffusion>PH_GFP_cyt_diffusionRate</Diffusion>
+            <Initial>PH_GFP_cyt_init</Initial>
+          </PdeEquation>
+          <PdeEquation Name="PH_GFP_bl" SolutionType="Unknown">
+            <Rate>J_bleach_cyt</Rate>
+            <Diffusion>PH_GFP_bl_cyt_diffusionRate</Diffusion>
+            <Initial>PH_GFP_bl_cyt_init</Initial>
+          </PdeEquation>
+        </CompartmentSubDomain>
+        <CompartmentSubDomain Name="Nuc">
+          <BoundaryType Boundary="Xm" Type="Flux" />
+          <BoundaryType Boundary="Xp" Type="Flux" />
+          <BoundaryType Boundary="Ym" Type="Flux" />
+          <BoundaryType Boundary="Yp" Type="Flux" />
+          <BoundaryType Boundary="Zm" Type="Value" />
+          <BoundaryType Boundary="Zp" Type="Value" />
+          <PdeEquation Name="PH_GFP" SolutionType="Unknown">
+            <Rate>0.0</Rate>
+            <Diffusion>PH_GFP_cyt_diffusionRate</Diffusion>
+            <Initial>0.0</Initial>
+          </PdeEquation>
+          <PdeEquation Name="PH_GFP_bl" SolutionType="Unknown">
+            <Rate>0.0</Rate>
+            <Diffusion>PH_GFP_bl_cyt_diffusionRate</Diffusion>
+            <Initial>0.0</Initial>
+          </PdeEquation>
+        </CompartmentSubDomain>
+        <MembraneSubDomain Name="Cyt_EC_membrane" InsideCompartment="Cyt" OutsideCompartment="EC">
+          <BoundaryType Boundary="Xm" Type="Value" />
+          <BoundaryType Boundary="Xp" Type="Value" />
+          <BoundaryType Boundary="Ym" Type="Value" />
+          <BoundaryType Boundary="Yp" Type="Value" />
+          <BoundaryType Boundary="Zm" Type="Value" />
+          <BoundaryType Boundary="Zp" Type="Value" />
+          <OdeEquation Name="PIP2_phgfp_pm" SolutionType="Unknown">
+            <Rate>J_reaction1</Rate>
+            <Initial>PIP2_phgfp_pm_init</Initial>
+          </OdeEquation>
+          <OdeEquation Name="PIP2_phgfp_bl_pm" SolutionType="Unknown">
+            <Rate>J_reaction2</Rate>
+            <Initial>PIP2_phgfp_bl_pm_init</Initial>
+          </OdeEquation>
+          <JumpCondition Name="PH_GFP">
+            <InFlux>- (KMOLE * J_reaction1)</InFlux>
+            <OutFlux>0.0</OutFlux>
+          </JumpCondition>
+          <JumpCondition Name="PH_GFP_bl">
+            <InFlux>- (KMOLE * J_reaction2)</InFlux>
+            <OutFlux>0.0</OutFlux>
+          </JumpCondition>
+        </MembraneSubDomain>
+        <MembraneSubDomain Name="Cyt_Nuc_membrane" InsideCompartment="Nuc" OutsideCompartment="Cyt">
+          <BoundaryType Boundary="Xm" Type="Value" />
+          <BoundaryType Boundary="Xp" Type="Value" />
+          <BoundaryType Boundary="Ym" Type="Value" />
+          <BoundaryType Boundary="Yp" Type="Value" />
+          <BoundaryType Boundary="Zm" Type="Value" />
+          <BoundaryType Boundary="Zp" Type="Value" />
+          <OdeEquation Name="PIP2_phgfp_pm" SolutionType="Unknown">
+            <Rate>0.0</Rate>
+            <Initial>0.0</Initial>
+          </OdeEquation>
+          <OdeEquation Name="PIP2_phgfp_bl_pm" SolutionType="Unknown">
+            <Rate>0.0</Rate>
+            <Initial>0.0</Initial>
+          </OdeEquation>
+          <JumpCondition Name="PH_GFP">
+            <InFlux>0.0</InFlux>
+            <OutFlux>0.0</OutFlux>
+          </JumpCondition>
+          <JumpCondition Name="PH_GFP_bl">
+            <InFlux>0.0</InFlux>
+            <OutFlux>0.0</OutFlux>
+          </JumpCondition>
+        </MembraneSubDomain>
+        <Version Name="spatial2D_generated" KeyValue="34121593" BranchId="34100242" Archived="0" Date="28-Jun-2009 13:37:09" FromVersionable="false">
+          <Owner Name="ccb_spatial" Identifier="34076600" />
+          <GroupAccess Type="1" />
+          <Annotation>cloned from 'spatial2D_generated' owned by user schaff</Annotation>
+        </Version>
+      </MathDescription>
+      <Simulation Name="Simulation2">
+        <SolverTaskDescription TaskType="Unsteady" UseSymbolicJacobian="false" Solver="Sundials Stiff PDE Solver (Variable Time Step)">
+          <TimeBound StartTime="0.0" EndTime="20.0" />
+          <TimeStep DefaultTime="0.1" MinTime="0.0" MaxTime="0.1" />
+          <ErrorTolerance Absolut="1.0E-9" Relative="1.0E-7" />
+          <OutputOptions OutputTimeStep="0.1" />
+          <SundialsSolverOptions>
+            <maxOrderAdvection>2</maxOrderAdvection>
+          </SundialsSolverOptions>
+          <NumberProcessors>1</NumberProcessors>
+        </SolverTaskDescription>
+        <MathOverrides />
+        <MeshSpecification>
+          <Size X="83" Y="122" Z="1" />
+        </MeshSpecification>
+        <Version Name="Simulation2" KeyValue="34121813" BranchId="34117549" Archived="0" Date="28-Jun-2009 13:38:09" FromVersionable="false">
+          <Owner Name="ccb_spatial" Identifier="34076600" />
+          <GroupAccess Type="1" />
+        </Version>
+      </Simulation>
+      <SpatialObjects>
+        <SpatialObject Name="vobj_EC0" Type="Volume" subVolume="EC" regionId="0">
+          <QuantityCategoryList>
+            <QuantityCategory Name="VolumeCentroid" Enabled="false" />
+            <QuantityCategory Name="InteriorVelocity" Enabled="false" />
+            <QuantityCategory Name="VolumeRegionSize" Enabled="true" />
+          </QuantityCategoryList>
+        </SpatialObject>
+        <SpatialObject Name="vobj_Cyt1" Type="Volume" subVolume="Cyt" regionId="1">
+          <QuantityCategoryList>
+            <QuantityCategory Name="VolumeCentroid" Enabled="false" />
+            <QuantityCategory Name="InteriorVelocity" Enabled="false" />
+            <QuantityCategory Name="VolumeRegionSize" Enabled="true" />
+          </QuantityCategoryList>
+        </SpatialObject>
+        <SpatialObject Name="vobj_EC2" Type="Volume" subVolume="EC" regionId="2">
+          <QuantityCategoryList>
+            <QuantityCategory Name="VolumeCentroid" Enabled="false" />
+            <QuantityCategory Name="InteriorVelocity" Enabled="false" />
+            <QuantityCategory Name="VolumeRegionSize" Enabled="true" />
+          </QuantityCategoryList>
+        </SpatialObject>
+        <SpatialObject Name="vobj_Cyt3" Type="Volume" subVolume="Cyt" regionId="3">
+          <QuantityCategoryList>
+            <QuantityCategory Name="VolumeCentroid" Enabled="false" />
+            <QuantityCategory Name="InteriorVelocity" Enabled="false" />
+            <QuantityCategory Name="VolumeRegionSize" Enabled="true" />
+          </QuantityCategoryList>
+        </SpatialObject>
+        <SpatialObject Name="vobj_Nuc4" Type="Volume" subVolume="Nuc" regionId="4">
+          <QuantityCategoryList>
+            <QuantityCategory Name="VolumeCentroid" Enabled="false" />
+            <QuantityCategory Name="InteriorVelocity" Enabled="false" />
+            <QuantityCategory Name="VolumeRegionSize" Enabled="true" />
+          </QuantityCategoryList>
+        </SpatialObject>
+        <SpatialObject Name="sobj_Cyt1_EC0" Type="Surface" subVolumeInside="Cyt" regionIdInside="1" subVolumeOutside="EC" regionIdOutside="0">
+          <QuantityCategoryList>
+            <QuantityCategory Name="SurfaceNormal" Enabled="false" />
+            <QuantityCategory Name="SurfaceVelocity" Enabled="false" />
+            <QuantityCategory Name="DistanceToSurface" Enabled="false" />
+            <QuantityCategory Name="DirectionToSurface" Enabled="false" />
+            <QuantityCategory Name="SurfaceSize" Enabled="true" />
+          </QuantityCategoryList>
+        </SpatialObject>
+        <SpatialObject Name="sobj_EC2_Cyt1" Type="Surface" subVolumeInside="EC" regionIdInside="2" subVolumeOutside="Cyt" regionIdOutside="1">
+          <QuantityCategoryList>
+            <QuantityCategory Name="SurfaceNormal" Enabled="false" />
+            <QuantityCategory Name="SurfaceVelocity" Enabled="false" />
+            <QuantityCategory Name="DistanceToSurface" Enabled="false" />
+            <QuantityCategory Name="DirectionToSurface" Enabled="false" />
+            <QuantityCategory Name="SurfaceSize" Enabled="true" />
+          </QuantityCategoryList>
+        </SpatialObject>
+        <SpatialObject Name="sobj_Cyt3_EC0" Type="Surface" subVolumeInside="Cyt" regionIdInside="3" subVolumeOutside="EC" regionIdOutside="0">
+          <QuantityCategoryList>
+            <QuantityCategory Name="SurfaceNormal" Enabled="false" />
+            <QuantityCategory Name="SurfaceVelocity" Enabled="false" />
+            <QuantityCategory Name="DistanceToSurface" Enabled="false" />
+            <QuantityCategory Name="DirectionToSurface" Enabled="false" />
+            <QuantityCategory Name="SurfaceSize" Enabled="true" />
+          </QuantityCategoryList>
+        </SpatialObject>
+        <SpatialObject Name="sobj_Nuc4_Cyt1" Type="Surface" subVolumeInside="Nuc" regionIdInside="4" subVolumeOutside="Cyt" regionIdOutside="1">
+          <QuantityCategoryList>
+            <QuantityCategory Name="SurfaceNormal" Enabled="false" />
+            <QuantityCategory Name="SurfaceVelocity" Enabled="false" />
+            <QuantityCategory Name="DistanceToSurface" Enabled="false" />
+            <QuantityCategory Name="DirectionToSurface" Enabled="false" />
+            <QuantityCategory Name="SurfaceSize" Enabled="true" />
+          </QuantityCategoryList>
+        </SpatialObject>
+      </SpatialObjects>
+      <Version Name="spatial2D" KeyValue="34121595" BranchId="34100325" Archived="0" Date="28-Jun-2009 13:37:09" FromVersionable="false">
+        <Owner Name="ccb_spatial" Identifier="34076600" />
+        <GroupAccess Type="1" />
+        <Annotation>cloned from 'spatial2D' owned by user schaff
+(copied from comp_frap) (copied from comp_ss)</Annotation>
+      </Version>
+      <MicroscopeMeasurement Name="fluor">
+        <ConvolutionKernel Type="ProjectionZKernel" />
+      </MicroscopeMeasurement>
+    </SimulationSpec>
+    <Version Name="PH-GFP-Start" KeyValue="34121815" BranchId="34114886" Archived="0" Date="28-Jun-2009 13:38:09" FromVersionable="false">
+      <Owner Name="ccb_spatial" Identifier="34076600" />
+      <GroupAccess Type="0" />
+      <Annotation>cloned from 'phgfp_full' owned by user schaff</Annotation>
+    </Version>
+    <pathwayModel>
+      <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:bp="http://www.biopax.org/release/biopax-level3.owl#" version="3.0" />
+    </pathwayModel>
+    <relationshipModel>
+      <RMNS version="3.0" />
+    </relationshipModel>
+    <vcmetadata>
+      <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" />
+      <nonrdfAnnotationList>
+        <nonrdfAnnotation vcid="BioModel(PH-GFP-Start)">
+          <freetext>cloned from 'phgfp_full' owned by user schaff</freetext>
+        </nonrdfAnnotation>
+      </nonrdfAnnotationList>
+      <uriBindingList />
+    </vcmetadata>
+  </BioModel>
+</vcml>
+
